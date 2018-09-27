@@ -70,7 +70,7 @@ sed -i -e 's/<kafka_host>:<kafka_port>/'$KAFKA_IP':9092/' /var/tmp/MsgRtrApi.pro
 
 docker-compose build
 docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d 
+docker-compose up  
 
 # Wait for initialization of Docker containers
 for i in {1..50}; do
@@ -85,6 +85,15 @@ for i in {1..50}; do
                 sleep $i
         fi
 done
+
+DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_dmaap_1)
+KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_kafka_1)
+ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_zookeeper_1)
+
+echo "After Kafka and Zookeeper ip addresses updated"
+echo DMAAP_MR_IP=${DMAAP_MR_IP}
+echo KAFKA_IP=${KAFKA_IP}
+echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
 
 # Wait for initialization of docker services
 for i in {1..50}; do
