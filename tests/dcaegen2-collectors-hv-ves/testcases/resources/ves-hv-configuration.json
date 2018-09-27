@@ -1,0 +1,9 @@
+{
+  "dmaap.kafkaBootstrapServers": "kafka:9092",
+  "collector.routing": [
+    {
+      "fromDomain": "HVMEAS",
+      "toTopic": "test-hv-ran-meas"
+    }
+  ]
+}
