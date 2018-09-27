@@ -17,7 +17,7 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/clamp/kill_and_remove_clamp_and_db_containers.sh"
+echo "This is ${WORKSPACE}/scripts/clamp/kill_and_remove_clamp_and_db_containers.sh"
 
 kill-instance.sh clamp_clamp_1
 kill-instance.sh clamp_db_1

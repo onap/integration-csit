@@ -18,5 +18,5 @@
 #
 # Place the scripts in run order:
 
-source ${WORKSPACE}/test/csit/scripts/modeling-toscaparsers-javatoscachecker/setup_containers.sh
+source ${WORKSPACE}/scripts/modeling-toscaparsers-javatoscachecker/setup_containers.sh
 

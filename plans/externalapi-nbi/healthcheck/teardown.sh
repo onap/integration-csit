@@ -14,4 +14,4 @@
 # limitations under the License.
 # ========================================================================
 
-source ${WORKSPACE}/test/csit/scripts/externalapi-nbi/delete_nbi_containers.sh
+source ${WORKSPACE}/scripts/externalapi-nbi/delete_nbi_containers.sh

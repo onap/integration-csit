@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 # $1 nickname for the MSB instance
-echo "This is ${WORKSPACE}/test/csit/scripts/cli/startup.sh"
+echo "This is ${WORKSPACE}/scripts/cli/startup.sh"

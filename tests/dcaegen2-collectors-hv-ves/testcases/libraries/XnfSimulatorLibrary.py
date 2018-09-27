@@ -8,7 +8,7 @@ XNF_SIMULATOR_NAME = "xNF Simulator"
 SIMULATOR_IMAGE_NAME = "onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-xnf-simulator"
 SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":latest"
 WORKSPACE_ENV = os.getenv("WORKSPACE")
-certificates_dir_path = WORKSPACE_ENV + "/test/csit/plans/dcaegen2-collectors-hv-ves/testsuites/ssl/"
+certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/ssl/"
 collector_certs_lookup_dir = "/etc/ves-hv/"
 ONE_SECOND_IN_NANOS = 10 ** 9
 

@@ -14,7 +14,7 @@
 # limitations under the License.
 # ========================================================================
 
-echo "This is ${WORKSPACE}/test/csit/scripts/externalapi-nbi/delete_nbi_containers.sh"
+echo "This is ${WORKSPACE}/scripts/externalapi-nbi/delete_nbi_containers.sh"
 
 # Check if docker-compose file exists
 if [ ! -f "$WORKSPACE/externalapi-nbi/docker-compose.yml" ]; then

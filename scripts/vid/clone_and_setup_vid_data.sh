@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/sdc/clone_and_setup_vid_data.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/clone_and_setup_vid_data.sh"
 
 # Clone sdc enviroment template 
 

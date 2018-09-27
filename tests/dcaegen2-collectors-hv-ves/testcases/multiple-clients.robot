@@ -27,7 +27,7 @@ Handle Multiple Connections
 
 
 *** Variables ***
-${VES_HV_SCENARIOS}                            %{WORKSPACE}/test/csit/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
+${VES_HV_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
 
 ${XNF_SMALLER_PAYLOAD_REQUEST}                 ${VES_HV_SCENARIOS}/multiple-simulators-payload/xnf-simulator-smaller-valid-request.json
 ${DCAE_SMALLER_PAYLOAD_REQUEST}                ${VES_HV_SCENARIOS}/multiple-simulators-payload/dcae-smaller-valid-request.json

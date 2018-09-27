@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-echo "### This is ${WORKSPACE}/test/csit/scripts/optf-has/has/simulator_script.sh"
+echo "### This is ${WORKSPACE}/scripts/optf-has/has/simulator_script.sh"
 #
 # add here whatever commands is needed to prepare the optf/has CSIT testing
 #
@@ -39,7 +39,7 @@ git clone https://gerrit.onap.org/r/optf/has
 if [ ${USER} != 'jenkins' ]; then
 
     # add proxy settings into this script when you work behind a proxy
-    ${WORKSPACE}/test/csit/scripts/optf-has/has/has_proxy_settings.sh ${WORK_DIR}
+    ${WORKSPACE}/scripts/optf-has/has/has_proxy_settings.sh ${WORK_DIR}
 
 fi
 
@@ -58,7 +58,7 @@ docker run -d --name aaisim -p 8081:8081  aaisim
 AAISIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' aaisim`
 echo "AAISIM_IP=${AAISIM_IP}"
 
-${WORKSPACE}/test/csit/scripts/optf-has/has/wait_for_port.sh ${AAISIM_IP} 8081
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${AAISIM_IP} 8081
 
 # prepare multicloudsim
 cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/multicloudsim/
@@ -75,7 +75,7 @@ docker run -d --name multicloudsim -p 8082:8082  multicloudsim
 MULTICLOUDSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' multicloudsim`
 echo "MULTICLOUDSIM_IP=${MULTICLOUDSIM_IP}"
 
-${WORKSPACE}/test/csit/scripts/optf-has/has/wait_for_port.sh ${MULTICLOUDSIM_IP} 8082
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${MULTICLOUDSIM_IP} 8082
 
 # wait a while before continuing
 sleep 2

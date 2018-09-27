@@ -17,5 +17,5 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-source ${WORKSPACE}/test/csit/scripts/modeling-toscaparsers-javatoscachecker/teardown_containers.sh
+source ${WORKSPACE}/scripts/modeling-toscaparsers-javatoscachecker/teardown_containers.sh
 

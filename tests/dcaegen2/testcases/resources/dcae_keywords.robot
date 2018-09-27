@@ -8,7 +8,7 @@ Variables         ../resources/DcaeVariables.py
 Resource          ../resources/dcae_properties.robot
 
 *** Variables ***
-${DCAE_HEALTH_CHECK_BODY}    %{WORKSPACE}/test/csit/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
+${DCAE_HEALTH_CHECK_BODY}    %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
 
 *** Keywords ***
 Create sessions

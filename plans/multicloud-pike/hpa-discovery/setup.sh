@@ -17,8 +17,8 @@ cd ${SCRIPTS}
 
 source common_functions.sh
 
-generic_sim_path=${WORKSPACE}/test/csit/scripts/multicloud-pike/generic_sim
-multicloud_provision_path=${WORKSPACE}/test/csit/tests/multicloud-pike/provision
+generic_sim_path=${WORKSPACE}/scripts/multicloud-pike/generic_sim
+multicloud_provision_path=${WORKSPACE}/tests/multicloud-pike/provision
 # start generic simulator for openstack mock and AAI mock
 if [[ -z $(docker images -q generic_sim) ]]; then
     pushd $generic_sim_path

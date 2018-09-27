@@ -17,6 +17,6 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-source ${WORKSPACE}/test/csit/scripts/clamp/kill_and_remove_clamp_and_db_containers.sh
+source ${WORKSPACE}/scripts/clamp/kill_and_remove_clamp_and_db_containers.sh
 
 # $WORKSPACE/archives/clamp-clone deleted with archives folder when tests starts so we keep it at the end for debugging

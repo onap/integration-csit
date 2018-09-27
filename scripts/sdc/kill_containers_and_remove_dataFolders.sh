@@ -17,7 +17,7 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/sdc/kill_and_remove_dataFolder.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/kill_and_remove_dataFolder.sh"
 
 # copy logs to archive
 

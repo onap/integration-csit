@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# $1 docker image path under ${WORKSPACE}/test/csit/docker/
+# $1 docker image path under ${WORKSPACE}/docker/
 # $2 nickname for the instance
 # $3 docker run options, e.g. variables
 

@@ -39,7 +39,7 @@ function start_mock() {
 	done
 
 	set -x
-	${WORKSPACE}/test/csit/scripts/dmaap-buscontroller/init-mock-${app}.sh ${IP}
+	${WORKSPACE}/scripts/dmaap-buscontroller/init-mock-${app}.sh ${IP}
 	set +x
 
 	# this is the output of this function	

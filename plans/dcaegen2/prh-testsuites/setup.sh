@@ -6,7 +6,7 @@ export PRH_SERVICE="prh"
 export DMAAP_SIMULATOR="dmaap_simulator"
 export AAI_SIMULATOR="aai_simulator"
 
-cd ${WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/resources/
+cd ${WORKSPACE}/tests/dcaegen2/prh-testcases/resources/
 
 pip uninstall -y docker-py
 pip uninstall -y docker

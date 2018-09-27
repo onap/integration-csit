@@ -18,7 +18,7 @@
 #
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/test/csit/scripts/appc/script1.sh
+source ${WORKSPACE}/scripts/appc/script1.sh
 
 export APPC_DOCKER_IMAGE_VERSION=1.4.0-SNAPSHOT-latest
 export CCSDK_DOCKER_IMAGE_VERSION=0.2-STAGING-latest

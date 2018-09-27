@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # put into this file local proxy settings in case they are needed on your local environment
-echo "### This is ${WORKSPACE}/test/csit/scripts/optf-has/has/has_proxy_settings.sh"
+echo "### This is ${WORKSPACE}/scripts/optf-has/has/has_proxy_settings.sh"
 
 echo "optf/has proxy settings"
 if [ "$#" -eq  "1" ]; then

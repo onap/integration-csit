@@ -8,7 +8,7 @@ function dmaapbc_launch() {
 	CONTAINER_NAME=dmaapbc
 	IP=""
 
-	cd ${WORKSPACE}/test/csit/scripts/dmaap-buscontroller
+	cd ${WORKSPACE}/scripts/dmaap-buscontroller
 
 	TMP_CFG=/tmp/docker-databus-controller.conf
 	. ./onapCSIT.env > $TMP_CFG

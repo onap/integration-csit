@@ -17,4 +17,4 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/sdnc/script1.sh"
+echo "This is ${WORKSPACE}/scripts/sdnc/script1.sh"
