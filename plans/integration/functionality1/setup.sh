@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # Place the scripts in run order:
-source ${WORKSPACE}/test/csit/scripts/integration/script1.sh
+source ${WORKSPACE}/scripts/integration/script1.sh
 
 docker run --name i-mock -d jamesdbloom/mockserver
 MOCK_IP=`get-instance-ip.sh i-mock`
@@ -27,7 +27,7 @@ for i in {1..10}; do
     sleep $i
 done
 
-${WORKSPACE}/test/csit/scripts/integration/mock-hello.sh ${MOCK_IP}
+${WORKSPACE}/scripts/integration/mock-hello.sh ${MOCK_IP}
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MOCK_IP:${MOCK_IP}"

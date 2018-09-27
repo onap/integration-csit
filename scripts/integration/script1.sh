@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-echo "This is ${WORKSPACE}/test/csit/scripts/integration/script1.sh"
+echo "This is ${WORKSPACE}/scripts/integration/script1.sh"

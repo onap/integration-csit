@@ -21,11 +21,11 @@
 # ===================================================================
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 
-echo "This is ${WORKSPACE}/test/csit/scripts/vid/start_vid_containers.sh"
+echo "This is ${WORKSPACE}/scripts/vid/start_vid_containers.sh"
 
 export IP=`ifconfig eth0 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
 
-cd ${WORKSPACE}/test/csit/tests/vid/resources
+cd ${WORKSPACE}/tests/vid/resources
 docker-compose up -d --build
 
 # WAIT 5 minutes maximum and test every 5 seconds if VID up using HealthCheck API

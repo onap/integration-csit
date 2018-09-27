@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/sdc/start_sdc_containers.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/start_sdc_containers.sh"
 
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest

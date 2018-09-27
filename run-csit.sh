@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 #
@@ -60,10 +60,10 @@ fi
 rm -rf $WORKSPACE/archives
 mkdir -p $WORKSPACE/archives
 
-if [ -f ${WORKSPACE}/test/csit/${1}/testplan.txt ]; then
+if [ -f ${WORKSPACE}/${1}/testplan.txt ]; then
     export TESTPLAN="${1}"
 else
-    echo "testplan not found: ${WORKSPACE}/test/csit/${TESTPLAN}/testplan.txt"
+    echo "testplan not found: ${WORKSPACE}/${TESTPLAN}/testplan.txt"
     exit 2
 fi
 
@@ -71,7 +71,7 @@ fi
 export TESTOPTIONS="${2}"
 
 if [ -z "$3" ]; then
-    CI=${WORKSPACE}/../ci-management
+    CI=${WORKSPACE}/../../ci-management
 else
     CI=${3}
 fi
@@ -79,18 +79,16 @@ fi
 
 
 
-TESTPLANDIR=${WORKSPACE}/test/csit/${TESTPLAN}
+TESTPLANDIR=${WORKSPACE}/${TESTPLAN}
 
 # Assume that if ROBOT_VENV is set, we don't need to reinstall robot
 if [ -f ${WORKSPACE}/env.properties ]; then
     source ${WORKSPACE}/env.properties
-    source ${ROBOT_VENV}/bin/activate
 fi
-if ! type pybot > /dev/null; then
-    rm -f ${WORKSPACE}/env.properties
-    source $CI/jjb/integration/include-raw-integration-install-robotframework.sh
-    source ${WORKSPACE}/env.properties
+if [ -f ${ROBOT_VENV}/bin/activate ]; then
     source ${ROBOT_VENV}/bin/activate
+else
+    source $CI/jjb/integration/include-raw-integration-install-robotframework.sh
 fi
 
 # install required Robot libraries
@@ -124,8 +122,8 @@ set -x
 
 
 # Add csit scripts to PATH
-export PATH=${PATH}:${WORKSPACE}/test/csit/docker/scripts:${WORKSPACE}/test/csit/scripts:${ROBOT_VENV}/bin
-export SCRIPTS=${WORKSPACE}/test/csit/scripts
+export PATH=${PATH}:${WORKSPACE}/docker/scripts:${WORKSPACE}/scripts:${ROBOT_VENV}/bin
+export SCRIPTS=${WORKSPACE}/scripts
 export ROBOT_VARIABLES=
 
 # Sign in to nexus3 docker repo
@@ -145,7 +143,7 @@ docker_stats | tee $WORKSPACE/archives/_sysinfo-1-after-setup.txt
 # Run test plan
 cd $WORKDIR
 echo "Reading the testplan:"
-cat ${TESTPLANDIR}/testplan.txt | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${WORKSPACE}/test/csit/tests/|" > testplan.txt
+cat ${TESTPLANDIR}/testplan.txt | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${WORKSPACE}/tests/|" > testplan.txt
 cat testplan.txt
 SUITES=$( xargs -a testplan.txt )
 

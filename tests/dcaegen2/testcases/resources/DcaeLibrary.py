@@ -74,13 +74,13 @@ class DcaeLibrary(object):
                 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                 
                 client.connect(os.environ['CSIT_IP'], port=22, username=os.environ['CSIT_USER'], password=os.environ['CSIT_PD'])
-                stdin, stdout, stderr = client.exec_command('%{WORKSPACE}/test/csit/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh')
+                stdin, stdout, stderr = client.exec_command('%{WORKSPACE}/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh')
                 logger.console(stdout.read())    
             finally:
                 client.close()
             return
         ws = os.environ['WORKSPACE']
-        script2run = ws + "/test/csit/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh"
+        script2run = ws + "/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh"
         logger.info("Running script: " + script2run)
         logger.console("Running script: " + script2run)
         subprocess.call(script2run)

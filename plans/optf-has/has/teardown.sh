@@ -24,11 +24,11 @@
 # optf/has scripts docker containers killing";
 #
 echo "# optf/has has scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/has_teardown_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/has_teardown_script.sh
 
 echo "# optf/has simulator scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/simulator_teardown_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/simulator_teardown_script.sh
 
 echo "# optf/has music scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/music_teardown_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/music_teardown_script.sh
 

@@ -18,10 +18,10 @@
 # Start all process required for executing test case
 
 #start mariadb
-docker run -d --name mariadb -h db.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -v ${WORKSPACE}/test/csit/scripts/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d  -v ${WORKSPACE}/test/csit/scripts/mariadb/conf.d:/etc/mysql/conf.d nexus3.onap.org:10001/mariadb
+docker run -d --name mariadb -h db.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -v ${WORKSPACE}/scripts/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d  -v ${WORKSPACE}/scripts/mariadb/conf.d:/etc/mysql/conf.d nexus3.onap.org:10001/mariadb
 
 #start so
-docker run -d --name so -h mso.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password --link=mariadb:db.mso.testlab.openecomp.org -p 8080:8080 -v ${WORKSPACE}/test/csit/scripts/so/chef-config:/shared nexus3.onap.org:10001/openecomp/mso:1.1-STAGING-latest
+docker run -d --name so -h mso.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password --link=mariadb:db.mso.testlab.openecomp.org -p 8080:8080 -v ${WORKSPACE}/scripts/so/chef-config:/shared nexus3.onap.org:10001/openecomp/mso:1.1-STAGING-latest
 
 
 SO_IP=`get-instance-ip.sh so`

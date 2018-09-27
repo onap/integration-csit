@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/clamp/clone_clamp_and_change_dockercompose.sh"
+echo "This is ${WORKSPACE}/scripts/clamp/clone_clamp_and_change_dockercompose.sh"
 
 firefox --version
 which firefox

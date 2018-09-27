@@ -19,16 +19,16 @@
 # Place the scripts in run order:
 
 
-source ${WORKSPACE}/test/csit/scripts/vvp/clone_and_setup_vvp_data.sh
+source ${WORKSPACE}/scripts/vvp/clone_and_setup_vvp_data.sh
 
-source ${WORKSPACE}/test/csit/scripts/vvp/start_vvp_containers.sh
+source ${WORKSPACE}/scripts/vvp/start_vvp_containers.sh
 
-source ${WORKSPACE}/test/csit/scripts/vvp/docker_health.sh
+source ${WORKSPACE}/scripts/vvp/docker_health.sh
 
-source ${WORKSPACE}/test/csit/scripts/vvp/start_vvp_sanity.sh
+source ${WORKSPACE}/scripts/vvp/start_vvp_sanity.sh
 
 
-VVP_IP=`${WORKSPACE}/test/csit/scripts/get-instance-ip.sh vvp-engagementmgr`
+VVP_IP=`${WORKSPACE}/scripts/get-instance-ip.sh vvp-engagementmgr`
 echo VVP_IP=${VVP_IP}
 
 

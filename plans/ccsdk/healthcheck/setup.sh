@@ -18,7 +18,7 @@
 #
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/test/csit/scripts/ccsdk/script1.sh
+source ${WORKSPACE}/scripts/ccsdk/script1.sh
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 export NEXUS_DOCKER_REPO="nexus3.onap.org:10001"

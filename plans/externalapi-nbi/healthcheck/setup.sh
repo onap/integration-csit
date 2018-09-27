@@ -14,4 +14,4 @@
 # limitations under the License.
 # ========================================================================
 
-source ${WORKSPACE}/test/csit/scripts/externalapi-nbi/start_nbi_containers.sh
+source ${WORKSPACE}/scripts/externalapi-nbi/start_nbi_containers.sh

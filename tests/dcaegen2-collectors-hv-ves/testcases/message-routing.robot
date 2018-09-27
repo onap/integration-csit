@@ -77,7 +77,7 @@ ${HTTP_METHOD_URL}                             http://
 
 ${XNF_SIM_API_PATH}                            /simulator/async
 
-${VES_HV_SCENARIOS}                            %{WORKSPACE}/test/csit/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
+${VES_HV_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
 ${XNF_FIXED_PAYLOAD_REQUEST}                   ${VES_HV_SCENARIOS}/fixed-payload/xnf-fixed-payload-request.json
 ${XNF_TOO_BIG_PAYLOAD_REQUEST}                 ${VES_HV_SCENARIOS}/too-big-payload/xnf-too-big-payload-request.json
 ${XNF_INVALID_WIRE_FRAME_REQUEST}              ${VES_HV_SCENARIOS}/invalid-wire-frame/xnf-invalid-wire-frame-request.json

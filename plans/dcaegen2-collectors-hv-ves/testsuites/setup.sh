@@ -37,4 +37,4 @@ docker-compose up -d
 
 mkdir -p ${WORKSPACE}/archives/containers_logs
 
-export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/test/csit/tests/dcaegen2-collectors-hv-ves/testcases/libraries"
+export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/libraries"

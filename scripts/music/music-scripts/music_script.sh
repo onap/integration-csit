@@ -16,7 +16,7 @@
 #
 echo "######################################################################"
 echo "### "
-echo "### This is ${WORKSPACE}/test/csit/scripts/music/music-scripts/music_script.sh"
+echo "### This is ${WORKSPACE}/scripts/music/music-scripts/music_script.sh"
 echo "### "
 echo "######################################################################"
 #

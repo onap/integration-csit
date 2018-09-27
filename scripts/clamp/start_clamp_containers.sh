@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/clamp/start_clamp_containers.sh"
+echo "This is ${WORKSPACE}/scripts/clamp/start_clamp_containers.sh"
 
 # start Clamp and MariaDB containers with docker compose and configuration from clamp/extra/docker/clamp/docker-compose.yml
 docker-compose up -d

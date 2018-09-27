@@ -54,7 +54,7 @@ Unencrypted connection on both ends
 
 
 *** Variables ***
-${VES_HV_SCENARIOS}                            %{WORKSPACE}/test/csit/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
+${VES_HV_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
 
 ${XNF_VALID_MESSAGES_REQUEST}                  ${VES_HV_SCENARIOS}/authorization/xnf-valid-messages-request.json
 

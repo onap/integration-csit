@@ -21,9 +21,9 @@
 /usr/bin/Xvfb :0 -screen 0 1024x768x24&
 export DISPLAY=:0
 
-source ${WORKSPACE}/test/csit/scripts/vid/clone_and_setup_vid_data.sh
+source ${WORKSPACE}/scripts/vid/clone_and_setup_vid_data.sh
 
-source ${WORKSPACE}/test/csit/scripts/vid/start_vid_containers.sh
+source ${WORKSPACE}/scripts/vid/start_vid_containers.sh
 
 
 BE_IP=`get-instance-ip.sh vid-server`

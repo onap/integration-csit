@@ -19,7 +19,7 @@ NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DOCKER_IMAGE_VERSION=latest
 
-echo "This is ${WORKSPACE}/test/csit/scripts/externalapi-nbi/start_nbi_containers.sh"
+echo "This is ${WORKSPACE}/scripts/externalapi-nbi/start_nbi_containers.sh"
 
 # Create directory
 mkdir -p $WORKSPACE/externalapi-nbi

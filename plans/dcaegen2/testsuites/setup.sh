@@ -31,7 +31,7 @@ VESC_IP=`get-instance-ip.sh vesc`
 export VESC_IP=${VESC_IP}
 export HOST_IP=${HOST_IP}
 
-export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/test/csit/tests/dcaegen2/testcases/resources"
+export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2/testcases/resources"
 
 pip install jsonschema uuid
 # Wait container ready

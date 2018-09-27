@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/vvp/clone_and_setup_vvp_data.sh"
+echo "This is ${WORKSPACE}/scripts/vvp/clone_and_setup_vvp_data.sh"
 
 # Clone vvp enviroment template
 mkdir -p ${WORKSPACE}/data/environments/

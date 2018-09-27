@@ -18,7 +18,7 @@
 #
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/test/csit/scripts/sdnc/script1.sh
+source ${WORKSPACE}/scripts/sdnc/script1.sh
 
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker

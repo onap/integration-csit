@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-echo "### This is ${WORKSPACE}/test/csit/scripts/optf-has/has/has_script.sh"
+echo "### This is ${WORKSPACE}/scripts/optf-has/has/has_script.sh"
 #
 # add here whatever commands is needed to prepare the optf/has CSIT testing
 #
@@ -38,11 +38,11 @@ BUNDLE=/tmp/conductor/properties/cert.pem
 
 mkdir -p /tmp/conductor/properties
 mkdir -p /tmp/conductor/logs
-cp ${WORKSPACE}/test/csit/scripts/optf-has/has/has-properties/conductor.conf.onap /tmp/conductor/properties/conductor.conf
-cp ${WORKSPACE}/test/csit/scripts/optf-has/has/has-properties/log.conf.onap /tmp/conductor/properties/log.conf
-cp ${WORKSPACE}/test/csit/scripts/optf-has/has/has-properties/cert.cer /tmp/conductor/properties/cert.cer
-cp ${WORKSPACE}/test/csit/scripts/optf-has/has/has-properties/cert.key /tmp/conductor/properties/cert.key
-cp ${WORKSPACE}/test/csit/scripts/optf-has/has/has-properties/cert.pem /tmp/conductor/properties/cert.pem
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/conductor.conf.onap /tmp/conductor/properties/conductor.conf
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/log.conf.onap /tmp/conductor/properties/log.conf
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.cer /tmp/conductor/properties/cert.cer
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.key /tmp/conductor/properties/cert.key
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.pem /tmp/conductor/properties/cert.pem
 #chmod -R 777 /tmp/conductor/properties
 
 MUSIC_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' music-tomcat`
@@ -68,7 +68,7 @@ echo "Query MUSIC to check for reachability. Query Version"
 curl -vvvvv --noproxy "*" --request GET http://${MUSIC_IP}:8080/MUSIC/rest/v2/version -H "Content-Type: application/json"
  
 echo "Onboard conductor into music"
-curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" --data @${WORKSPACE}/test/csit/tests/optf-has/has/data/onboard.json
+curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" --data @${WORKSPACE}/tests/optf-has/has/data/onboard.json
 
 docker run -d --name cond-cont -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
 sleep 20
@@ -82,7 +82,7 @@ docker run -d --name cond-data -v ${COND_CONF}:/usr/local/bin/conductor.conf -v 
 sleep 20
 
 COND_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' cond-api`
-${WORKSPACE}/test/csit/scripts/optf-has/has/wait_for_port.sh ${COND_IP} 8091
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${COND_IP} 8091
 
 echo "inspect docker things for tracing purpose"
 docker inspect cond-data

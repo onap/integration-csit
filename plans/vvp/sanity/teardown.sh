@@ -17,4 +17,4 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-source ${WORKSPACE}/test/csit/scripts/vvp/kill_containers_and_remove_dataFolders.sh
+source ${WORKSPACE}/scripts/vvp/kill_containers_and_remove_dataFolders.sh

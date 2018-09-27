@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-echo "### This is ${WORKSPACE}/test/csit/scripts/optf-has/has/music_script.sh"
+echo "### This is ${WORKSPACE}/scripts/optf-has/has/music_script.sh"
 #
 # add here whatever commands is needed to prepare the music setup for optf-has CSIT testing
 #
@@ -31,7 +31,7 @@ MUSIC_IMG=nexus3.onap.org:10001/onap/music/music:2.5.3
 WORK_DIR=/tmp/music
 CASS_USERNAME=nelson24
 CASS_PASSWORD=winman123
-MUSIC_SOURCE_PROPERTIES=${WORKSPACE}/test/csit/scripts/optf-has/has/music-properties
+MUSIC_SOURCE_PROPERTIES=${WORKSPACE}/scripts/optf-has/has/music-properties
 MUSIC_PROPERTIES=/tmp/music/properties
 MUSIC_LOGS=/tmp/music/logs
 mkdir -p ${MUSIC_PROPERTIES}
@@ -50,7 +50,7 @@ docker run -d --name music-db --network music-net -p "7000:7000" -p "7001:7001" 
 #CASSA_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' music-db`
 CASSA_IP=`docker inspect -f '{{ $network := index .NetworkSettings.Networks "music-net" }}{{ $network.IPAddress}}' music-db`
 echo "CASSANDRA_IP=${CASSA_IP}"
-${WORKSPACE}/test/csit/scripts/optf-has/has/wait_for_port.sh ${CASSA_IP} 9042
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${CASSA_IP} 9042
 sleep 150
 # Start Music war
 docker run -d --name music-war -v music-vol:/app ${MUSIC_IMG};
@@ -77,7 +77,7 @@ docker network connect bridge music-tomcat;
 TOMCAT_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' music-tomcat`
 echo "TOMCAT_IP=${TOMCAT_IP}"
 
-${WORKSPACE}/test/csit/scripts/optf-has/has/wait_for_port.sh ${TOMCAT_IP} 8080
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${TOMCAT_IP} 8080
 
 # wait a while to make sure music is totally up and configured
 sleep 90

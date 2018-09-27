@@ -19,7 +19,7 @@
 # ============LICENSE_END=========================================================
 # 
 #
-source ${WORKSPACE}/test/csit/scripts/dmaap-message-router/dmaap-mr-teardown.sh
+source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-teardown.sh
 
 if [ "$KEEP_DMAAP" != "Y" ]
 then

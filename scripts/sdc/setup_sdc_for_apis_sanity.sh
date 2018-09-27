@@ -2,7 +2,7 @@
 
 set -x
 
-echo "This is ${WORKSPACE}/test/csit/scripts/sdc/clone_and_setup_sdc_data.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/clone_and_setup_sdc_data.sh"
 
 # Clone sdc enviroment template 
 mkdir -p ${WORKSPACE}/data/environments/
@@ -39,15 +39,15 @@ source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
 export DEP_ENV=$ENV_NAME  
   
-cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/test/csit/scripts/sdc/
-#sed -i "s~/data~${WORKSPACE}\/data~g" ${WORKSPACE}/test/csit/scripts/sdc/docker_run.sh
-#sed -i "s/HOST_IP=\${IP}/HOST_IP=\${HOST_IP}/g" ${WORKSPACE}/test/csit/scripts/sdc/docker_run.sh
-#sed -i "s/ENVNAME=\"\${DEP_ENV}\"/ENVNAME=\"\${ENV_NAME}\"/g" ${WORKSPACE}/test/csit/scripts/sdc/docker_run.sh
+cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc/
+#sed -i "s~/data~${WORKSPACE}\/data~g" ${WORKSPACE}/scripts/sdc/docker_run.sh
+#sed -i "s/HOST_IP=\${IP}/HOST_IP=\${HOST_IP}/g" ${WORKSPACE}/scripts/sdc/docker_run.sh
+#sed -i "s/ENVNAME=\"\${DEP_ENV}\"/ENVNAME=\"\${ENV_NAME}\"/g" ${WORKSPACE}/scripts/sdc/docker_run.sh
 
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
 
-${WORKSPACE}/test/csit/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -tad
+${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -tad
 
 sleep 120
 

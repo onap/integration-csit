@@ -26,11 +26,11 @@ then
 else
 
 	# Place the scripts in run order:
-	source ${WORKSPACE}/test/csit/scripts/dmaap-message-router/dmaap-mr-launch.sh
+	source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-launch.sh
 	dmaap_mr_launch
 	MRC_IP=${IP}
 
-	source ${WORKSPACE}/test/csit/scripts/dmaap-buscontroller/start-mock.sh
+	source ${WORKSPACE}/scripts/dmaap-buscontroller/start-mock.sh
 	start_mock "aaf" 
 	AAF_IP=${IP}
 	#AAF_IP=0.0.0.0
@@ -38,7 +38,7 @@ else
 	#DRPS_IP=${IP}
 	DRPS_IP=0.0.0.0
 
-	source ${WORKSPACE}/test/csit/scripts/dmaap-buscontroller/dmaapbc-launch.sh 
+	source ${WORKSPACE}/scripts/dmaap-buscontroller/dmaapbc-launch.sh 
 	dmaapbc_launch $AAF_IP $MRC_IP $DRPS_IP
 	DMAAPBC_IP=${IP}
 
@@ -48,7 +48,7 @@ else
 	# Pass any variables required by Robot test suites in ROBOT_VARIABLES
 	ROBOT_VARIABLES="-v AAF_IP:${AAF_IP} -v MRC_IP:${MRC_IP} -v DRPS_IP:${DRPS_IP} -v DMAAPBC_IP:${DMAAPBC_IP}"
 	set -x
-	${WORKSPACE}/test/csit/scripts/dmaap-buscontroller/dmaapbc-init.sh ${DMAAPBC_IP} ${DRPS_IP} ${MRC_IP}
+	${WORKSPACE}/scripts/dmaap-buscontroller/dmaapbc-init.sh ${DMAAPBC_IP} ${DRPS_IP} ${MRC_IP}
 	set +x
 fi
 

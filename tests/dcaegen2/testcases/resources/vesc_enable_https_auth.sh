@@ -16,7 +16,7 @@
 
 docker exec -it vesc /opt/app/VESCollector/bin/VESrestfulCollector.sh stop
 sleep 2 
-docker cp ${WORKSPACE}/test/csit/tests/dcaegen2/testcases/resources/collector.properties vesc:/opt/app/VESCollector/etc
+docker cp ${WORKSPACE}/tests/dcaegen2/testcases/resources/collector.properties vesc:/opt/app/VESCollector/etc
 sleep 10 
 docker exec -id vesc /opt/app/VESCollector/bin/VESrestfulCollector.sh start
 sleep 5

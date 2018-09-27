@@ -52,5 +52,5 @@ ${DCAE_APP_API_MESSAGES_VALIDATION_PATH}       ${DCAE_APP_API_MESSAGES_PATH}/val
 
 ${ROUTED_MESSAGES_TOPIC}                       test-hv-ran-meas
 
-${VES_HV_RESOURCES}                            %{WORKSPACE}/test/csit/tests/dcaegen2-collectors-hv-ves/testcases/resources
+${VES_HV_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
 ${VES_HV_CONFIGURATION_JSON_FILEPATH}          ${VES_HV_RESOURCES}/ves-hv-configuration.json

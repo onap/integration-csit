@@ -18,9 +18,9 @@
 #
 # Place the scripts in run order:
 
-source ${WORKSPACE}/test/csit/scripts/clamp/clone_clamp_and_change_dockercompose.sh
+source ${WORKSPACE}/scripts/clamp/clone_clamp_and_change_dockercompose.sh
 
-source ${WORKSPACE}/test/csit/scripts/clamp/start_clamp_containers.sh
+source ${WORKSPACE}/scripts/clamp/start_clamp_containers.sh
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 #ROBOT_VARIABLES="-v TEST:${TEST}"

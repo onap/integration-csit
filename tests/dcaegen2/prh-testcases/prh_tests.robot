@@ -10,15 +10,15 @@ Resource          ../../common.robot
 ${DMAAP_SIMULATOR_URL}    http://${DMAAP_SIMULATOR}
 ${AAI_SIMULATOR_URL}    http://${AAI_SIMULATOR}
 ${PRH_URL}        http://${PRH}
-${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
-${EVENT_WITH_IPV4}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
-${EVENT_WITH_IPV6}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json
-${EVENT_WITH_MISSING_IPV4_AND_IPV6}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_IPV4_and_IPV6.json
-${EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName.json
-${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV4.json
-${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV6.json
-${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_IPV4_and_IPV6.json
-${Not_json_format}    %{WORKSPACE}/test/csit/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
+${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
+${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
+${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json
+${EVENT_WITH_MISSING_IPV4_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_IPV4_and_IPV6.json
+${EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName.json
+${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV4.json
+${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV6.json
+${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_IPV4_and_IPV6.json
+${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
 *** Test Cases ***
 Valid DMaaP event can be converted to PNF_READY notification

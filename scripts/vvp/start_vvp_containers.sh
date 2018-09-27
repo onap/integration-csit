@@ -22,7 +22,7 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
 
-echo "This is ${WORKSPACE}/test/csit/scripts/vvp/start_vvp_containers.sh"
+echo "This is ${WORKSPACE}/scripts/vvp/start_vvp_containers.sh"
 
 export IP=$HOST_IP
 export PREFIX='nexus3.onap.org:10001/openecomp/vvp'

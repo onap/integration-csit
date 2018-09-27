@@ -20,17 +20,17 @@
 # add here eventual scripts needed for music
 #
 echo "# music scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/music_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/music_script.sh
 
 
 #
 echo "# simulator scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/simulator_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/simulator_script.sh
 
 # add here eventual scripts needed for optf/has
 #
 echo "# optf/has scripts calling";
-source ${WORKSPACE}/test/csit/scripts/optf-has/has/has_script.sh
+source ${WORKSPACE}/scripts/optf-has/has/has_script.sh
 
 #
 # add here below the start of all docker containers needed for optf/has CSIT testing
