@@ -86,6 +86,15 @@ for i in {1..50}; do
         fi
 done
 
+DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_dmaap_1)
+KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_kafka_1)
+ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_zookeeper_1)
+
+echo "After kaka and zookeeper ip addresses updated"
+echo DMAAP_MR_IP=${DMAAP_MR_IP}
+echo KAFKA_IP=${KAFKA_IP}
+echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
+
 # Wait for initialization of docker services
 for i in {1..50}; do
     curl -sS -m 1 ${DMAAP_MR_IP}:3904/events/TestTopic && break 
