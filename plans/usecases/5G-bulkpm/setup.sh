@@ -129,7 +129,7 @@ docker restart dfc
 
 # SFTP Configuration:
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
-cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm-bulkpm/testcases/assets/json_events/FileExistNotificationUpdated.json
+cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
 sed -i 's/sftpserver/'${SFTP_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
 docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
 
