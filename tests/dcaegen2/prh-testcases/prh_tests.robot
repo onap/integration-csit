@@ -18,6 +18,7 @@ ${EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/as
 ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV4.json
 ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV6.json
 ${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_IPV4_and_IPV6.json
+${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_without_IPV6_field.json
 ${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
 *** Test Cases ***
@@ -28,6 +29,7 @@ Valid DMaaP event can be converted to PNF_READY notification
     ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
     ${EVENT_WITH_IPV4}
     ${EVENT_WITH_IPV6}
+    ${EVENT_WITHOUT_IPV6_FILED}
 
 Invalid DMaaP event cannot be converted to PNF_READY notification
     [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification

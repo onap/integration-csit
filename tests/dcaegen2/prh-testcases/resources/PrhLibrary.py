@@ -21,18 +21,18 @@ class PrhLibrary(object):
     @staticmethod
     def create_pnf_ready_notification(json_file):
         json_to_python = json.loads(json_file)
-        ipv4 = json_to_python["event"]["pnfRegistrationFields"]["oamV4IpAddress"]
-        ipv6 = json_to_python["event"]["pnfRegistrationFields"]["oamV6IpAddress"]
-        correlationId = json_to_python["event"]["commonEventHeader"]["sourceName"]
-        str_json = '{"correlationId":"' + correlationId + '","ipaddress-v4-oam":"' + ipv4 + '","ipaddress-v6-oam":"' + ipv6 + '"}'
+        ipv4 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV4IpAddress")
+        ipv6 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV6IpAddress") if "oamV6IpAddress" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
+        str_json = '{"correlationId":"' + correlation_id + '","ipaddress-v4-oam":"' + ipv4 + '","ipaddress-v6-oam":"' + ipv6 + '"}'
         python_to_json = json.dumps(str_json)
         return python_to_json.replace("\\", "")[1:-1]
 
     @staticmethod
     def create_pnf_name(json_file):
         json_to_python = json.loads(json_file)
-        correlationId = json_to_python["event"]["commonEventHeader"]["sourceName"]
-        return correlationId
+        correlation_id = json_to_python.get("sourceName")
+        return correlation_id
 
     @staticmethod
     def stop_aai():
