@@ -6,7 +6,6 @@ source ${SCRIPTS}/common_functions.sh
 mkdir -p $WORKSPACE/archives/dmaapmr
 cd $WORKSPACE/archives/dmaapmr
 git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
-git pull
 cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
 cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
 
@@ -126,6 +125,7 @@ sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
 sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
 docker cp /tmp/datafile_endpoints.json dfc:/config/
 docker restart dfc
+docker exec dfc /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
 
 # SFTP Configuration:
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
@@ -138,4 +138,6 @@ docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/ad
 curl -v -X POST -H "Content-Type:application/vnd.att-dr.feed" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
 cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
 sed -i 's/fileconsumer/'${DR_SUBSCIBER_IP}'/g' /tmp/addSubscriber.json
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.subscription" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1ii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
+curl -v -X POST -H "Content-Type:application/vnd.att-dr.subscription" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
+sleep 60
+curl -k https://$DR_PROV_IP:8443/internal/prov
