@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_b6d730ed",
+        "filename": "scripts/optf-osdf/osdf/simulator_script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I don\u0027t see that you use simulator.",
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_56d36438",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "Do you need check docker container in tests? It\u0027s env. I think it\u0027s better check it in setup script.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 44
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_969eac62",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I think that it\u0027s better create all session in new keyword and run it in Suite Setup.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 71
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_36b900ea",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "Create new keyword and use it in Suite Setup.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 96
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b69bb071",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I think that it\u0027s better create all session in new keyword and run it in Suite Setup.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 71
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_d6cd1488",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "Create new keyword and use it in Suite Setup.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 96
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_36e26004",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "You don\u0027t use it.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 53
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_1682bc00",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I think that it\u0027s better create all session in new keyword and run it in Suite Setup.\nRename session name.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 71
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_f6ca986d",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "Create new keyword and use it in Suite Setup.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 96
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_768d4831",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I think that it\u0027s better create all session in new keyword and run it in Suite Setup.\nRename session name.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 108
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_96c78c64",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "Create new keyword and use it in Suite Setup.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 96
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_56884422",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-01T07:53:20Z",
+      "side": 1,
+      "message": "I think that it\u0027s better create all session in new keyword and run it in Suite Setup.\nRename session name.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 112
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
