@@ -2,7 +2,7 @@
   {
     "commonEventHeader": {
       "version": "sample-version",
-      "domain": "HVMEAS",
+      "domain": "PERF3GPP",
       "sequence": 1,
       "priority": 1,
       "eventId": "sample-event-id",

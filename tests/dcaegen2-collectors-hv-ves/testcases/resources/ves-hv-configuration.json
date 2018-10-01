@@ -2,7 +2,7 @@
   "dmaap.kafkaBootstrapServers": "kafka:9092",
   "collector.routing": [
     {
-      "fromDomain": "HVMEAS",
+      "fromDomain": "PERF3GPP",
       "toTopic": "test-hv-ran-meas"
     }
   ]
