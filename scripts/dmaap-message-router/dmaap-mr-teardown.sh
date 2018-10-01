@@ -18,7 +18,14 @@
 #
 
 function dmaap_mr_teardown() {
-kill-instance.sh docker-compose_dmaap_1 
-kill-instance.sh docker-compose_kafka_1 
-kill-instance.sh docker-compose_zookeeper_1
+#
+# the default prefix for docker containers is the directory name containing the docker-compose.yml file.
+# It can be over-written by an env variable COMPOSE_PROJECT_NAME.  This env var seems to be set in the Jenkins CSIT environment
+COMPOSE_PREFIX=${COMPOSE_PROJECT_NAME:-dockercompose}
+COMPOSE_PROJECT_NAME=$COMPOSE_PREFIX
+echo "COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME"
+echo "COMPOSE_PREFIX=$COMPOSE_PREFIX"
+kill-instance.sh ${COMPOSE_PREFIX}_dmaap_1 
+kill-instance.sh ${COMPOSE_PREFIX}_kafka_1 
+kill-instance.sh ${COMPOSE_PREFIX}_zookeeper_1
 }

@@ -34,7 +34,8 @@ function dmaap_mr_launch() {
 		#
 		# the default prefix for docker containers is the directory name containing the docker-compose.yml file.
 		# It can be over-written by an env variable COMPOSE_PROJECT_NAME.  This env var seems to be set in the Jenkins CSIT environment
-		COMPOSE_PREFIX=${COMPOSE_PROJECT_NAME:-docker-compose}
+		COMPOSE_PREFIX=${COMPOSE_PROJECT_NAME:-dockercompose}
+		export COMPOSE_PROJECT_NAME=$COMPOSE_PREFIX
 		echo "COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME"
 		echo "COMPOSE_PREFIX=$COMPOSE_PREFIX"
 
