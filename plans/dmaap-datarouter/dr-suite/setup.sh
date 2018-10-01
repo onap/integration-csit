@@ -38,7 +38,6 @@ echo DR_PROV_IP=${DR_PROV_IP}
 echo DR_NODE_IP=${DR_NODE_IP}
 echo DR_GATEWAY_IP=${DR_GATEWAY_IP}
 
-docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$DR_GATEWAY_IP"
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
