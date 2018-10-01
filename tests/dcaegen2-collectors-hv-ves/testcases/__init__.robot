@@ -50,7 +50,7 @@ ${DCAE_APP_API_MESSAGES_PATH}                  /messages/all
 ${DCAE_APP_API_MESSAGES_COUNT_PATH}            ${DCAE_APP_API_MESSAGES_PATH}/count
 ${DCAE_APP_API_MESSAGES_VALIDATION_PATH}       ${DCAE_APP_API_MESSAGES_PATH}/validate
 
-${ROUTED_MESSAGES_TOPIC}                       test-hv-ran-meas
+${ROUTED_MESSAGES_TOPIC}                       TEST_HV_VES_PERF3GPP
 
 ${VES_HV_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
 ${VES_HV_CONFIGURATION_JSON_FILEPATH}          ${VES_HV_RESOURCES}/ves-hv-configuration.json
