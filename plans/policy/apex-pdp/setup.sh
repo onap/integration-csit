@@ -21,11 +21,12 @@ docker run -d --name apex -p 12561:12561 -p 23324:23324 -it nexus3.onap.org:1000
 
 APEX_IP=`get-instance-ip.sh apex`
 echo APEX IP IS ${APEX_IP}
-Wait for initialization
+#Wait for initialization
 for i in {1..10}; do
    curl -sS ${APEX_IP}:23324 && break
    echo sleep $i
    sleep $i
 done
+sleep 5
 
 ROBOT_VARIABLES="-v APEX_IP:${APEX_IP}"
