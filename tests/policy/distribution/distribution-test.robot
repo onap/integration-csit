@@ -7,7 +7,7 @@ Library     json
 *** Test Cases ***
 Healthcheck
      [Documentation]    Runs Policy Distribution Health check
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    demo@people.osaaf.org    demo123456! 
      Log    Creating session http://${POLICY_DISTRIBUTION_IP}:6969
      ${session}=    Create Session      policy  http://${POLICY_DISTRIBUTION_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
