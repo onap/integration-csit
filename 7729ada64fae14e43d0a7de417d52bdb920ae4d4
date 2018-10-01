@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_44888ee7",
+        "filename": "tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios/authorization/xnf-valid-messages-request.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2018-10-01T20:14:05Z",
+      "side": 1,
+      "message": "Not correct. Domain names is - \"perf3gpp\" per new spec\n\nPlease review/update per newer revision received from Marge/Alok; attached (ONAP_VES7.xPM_Proposals_v7) into https://jira.onap.org/browse/DCAEGEN2-847",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 25
+      },
+      "revId": "7729ada64fae14e43d0a7de417d52bdb920ae4d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
