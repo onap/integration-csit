@@ -5,7 +5,9 @@ from robot.api import logger
 from time import sleep
 
 XNF_SIMULATOR_NAME = "xNF Simulator"
-SIMULATOR_IMAGE_NAME = "onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-xnf-simulator"
+HV_VES_COLLECTOR_NAMESPACE="onap"
+HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
+SIMULATOR_IMAGE_NAME = HV_VES_COLLECTOR_NAMESPACE + "/" + HV_VES_GROUP_ID + ".hv-collector-xnf-simulator"
 SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":latest"
 WORKSPACE_ENV = os.getenv("WORKSPACE")
 certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/ssl/"
