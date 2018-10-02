@@ -44,8 +44,7 @@ export cassandra_service=$(get_docker_compose_service cassandra_container)
 for i in {1..12}; do
 
 	if [ $(docker inspect --format '{{ .State.Running }}' $aaf_service) ] && \
-		[ $(docker inspect --format '{{ .State.Running }}' $cassandra_service) ] && \
-		[ $(docker inspect --format '{{ .State.Running }}' $aaf_service) ]
+		[ $(docker inspect --format '{{ .State.Running }}' $cassandra_service) ]
 	then
 		echo "AAF Service Running"
 		break
