@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_05f5a082",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2018-10-02T15:24:26Z",
+      "side": 1,
+      "message": "Add modifications license?",
+      "revId": "fd98e3c936c4d3a0695dfee1af25e741bd892178",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
