@@ -11,3 +11,4 @@ kill-instance.sh fileconsumer-node
 kill-instance.sh mariadb
 kill-instance.sh dfc
 kill-instance.sh sftp
+docker rmi $(docker images -q)
