@@ -28,7 +28,7 @@ Send VES File Ready Event to VES Collector
     ${evtdata}=   Get Event Data From File   ${EVENT_DATA_FILE}
     ${headers}=   Create Header From String    ${HEADER_STRING}
     ${resp}=  Publish Event To VES Collector    ${VESC_URL}  ${VES_ANY_EVENT_PATH}  ${headers}  ${evtdata}
-    Sleep     5s
+    Sleep     15s
     ${resp}=  Publish Event To VES Collector    ${VESC_URL}  ${VES_ANY_EVENT_PATH}  ${headers}  ${evtdata}
     Sleep     5s
     ${resp}=  Publish Event To VES Collector    ${VESC_URL}  ${VES_ANY_EVENT_PATH}  ${headers}  ${evtdata}
