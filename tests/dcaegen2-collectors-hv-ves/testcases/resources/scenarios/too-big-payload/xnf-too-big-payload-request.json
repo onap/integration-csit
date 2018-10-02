@@ -2,7 +2,7 @@
   {
     "commonEventHeader": {
       "version": "sample-version",
-      "domain": "PERF3GPP",
+      "domain": "perf3gpp",
       "sequence": 1,
       "priority": 1,
       "eventId": "sample-event-id",
@@ -24,7 +24,7 @@
   {
     "commonEventHeader": {
       "version": "sample-version",
-      "domain": "PERF3GPP",
+      "domain": "perf3gpp",
       "sequence": 1,
       "priority": 1,
       "eventId": "sample-event-id",
@@ -46,7 +46,7 @@
   {
     "commonEventHeader": {
       "version": "sample-version",
-      "domain": "PERF3GPP",
+      "domain": "perf3gpp",
       "sequence": 1,
       "priority": 1,
       "eventId": "sample-event-id",
