@@ -15,11 +15,5 @@
 # limitations under the License.
 #
 
-docker cp sms:/sms/sms.log .
-cat sms.log
-rm sms.log
-rm -rf config
-docker stop sms vault
-docker rm sms vault
-docker rmi nexus3.onap.org:10001/onap/aaf/sms
-docker rmi docker.io/vault:0.10.0
+kill-instance.sh sms
+kill-instance.sh vault
