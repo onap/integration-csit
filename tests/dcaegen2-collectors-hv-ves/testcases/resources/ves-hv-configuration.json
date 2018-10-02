@@ -2,7 +2,7 @@
   "dmaap.kafkaBootstrapServers": "kafka:9092",
   "collector.routing": [
     {
-      "fromDomain": "PERF3GPP",
+      "fromDomain": "perf3gpp",
       "toTopic": "TEST_HV_VES_PERF3GPP"
     }
   ]
