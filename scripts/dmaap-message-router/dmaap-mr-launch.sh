@@ -84,12 +84,13 @@ function dmaap_mr_launch() {
 		docker-compose down 
 
 		# Update kafkfa and zookeeper properties in MsgRtrApi.propeties which will be copied to DMaaP Container
-		sed -i -e 's/<zookeeper_host>/'$ZOOKEEPER_IP'/' /var/tmp/MsgRtrApi.properties
-		sed -i -e 's/<kafka_host>:<kafka_port>/'$KAFKA_IP':9092/' /var/tmp/MsgRtrApi.properties
+		sed -i -e 's/<zookeeper_host>/zookeeper/' /var/tmp/MsgRtrApi.properties
+		sed -i -e 's/<kafka_host>:<kafka_port>/kafka:9092/' /var/tmp/MsgRtrApi.properties
 
 		docker-compose build
 		docker login -u docker -p docker nexus3.onap.org:10001
 		docker-compose up -d 
+		docker ps
 
 		# Wait for initialization of Docker containers
 		for i in {1..50}; do
@@ -104,6 +105,16 @@ function dmaap_mr_launch() {
 						sleep $i
 				fi
 		done
+		DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_dmaap_1)
+		IP=${DMAAP_MR_IP}
+		KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_kafka_1)
+		ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_zookeeper_1)
+
+		echo "After restart of ZK and Kafka..."
+		echo DMAAP_MR_IP=${DMAAP_MR_IP}
+		echo IP=${IP}
+		echo KAFKA_IP=${KAFKA_IP}
+		echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
 
 		# Wait for initialization of docker services
 		for i in {1..50}; do
