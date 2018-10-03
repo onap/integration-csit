@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_300fbde3",
+        "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-03T12:30:23Z",
+      "side": 1,
+      "message": "I think about it... and it can be also check in suite setup.",
+      "parentUuid": "bada0100_56d36438",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 44
+      },
+      "revId": "be1839bdf3a8411f49b797c5141f6bfbcc0516bd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_969eac62",
         "filename": "tests/optf-osdf/osdf/opt_osdf_test.robot",
         "patchSetId": 2
