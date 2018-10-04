@@ -35,14 +35,18 @@ IMAGE_VER=1.2.2-SNAPSHOT-latest
 BUNDLE=/tmp/conductor/properties/AAF_RootCA.cer
 
 mkdir -p /tmp/conductor/properties
+mkdir -p /tmp/sms/properties
 mkdir -p /tmp/conductor/logs
 cp ${WORKSPACE}/scripts/optf-has/has/has-properties/conductor.conf.onap /tmp/conductor/properties/conductor.conf
 cp ${WORKSPACE}/scripts/optf-has/has/has-properties/log.conf.onap /tmp/conductor/properties/log.conf
 cp ${WORKSPACE}/scripts/optf-has/has/has-properties/AAF_RootCA.cer /tmp/conductor/properties/AAF_RootCA.cer
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/has.json /tmp/sms/properties/has.json
 #chmod -R 777 /tmp/conductor/properties
 
 MUSIC_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' music-tomcat`
 echo "MUSIC_IP=${MUSIC_IP}"
+SMS_IP=`get-instance-ip.sh sms`
+echo "SMS_IP=${SMS_IP}"
 
 # change MUSIC reference to the local instance
 sed  -i -e "s%localhost:8080/MUSIC%${MUSIC_IP}:8080/MUSIC%g" /tmp/conductor/properties/conductor.conf
@@ -65,6 +69,14 @@ echo "AAFSIM_IP=${AAFSIM_IP}"
 # change AAF reference to the local instance
 sed  -i -e "s%localhost:8100/%${AAFSIM_IP}:8100/%g" /tmp/conductor/properties/conductor.conf
 
+#SMS
+sed  -i -e "s%aaf-sms.onap:10443%${SMS_IP}:10443%g" /tmp/conductor/properties/conductor.conf
+#Preload secrets
+docker exec -i sms /bin/sh -c "mkdir -p /preload/config"
+docker cp /tmp/sms/properties/has.json sms:/preload/config/has.json
+docker exec -i sms /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
+docker logs vault
+
 #onboard conductor into music
 echo "Query MUSIC to check for reachability. Query Version"
 curl -vvvvv --noproxy "*" --request GET http://${MUSIC_IP}:8080/MUSIC/rest/v2/version -H "Content-Type: application/json"
@@ -72,13 +84,13 @@ curl -vvvvv --noproxy "*" --request GET http://${MUSIC_IP}:8080/MUSIC/rest/v2/ve
 echo "Onboard conductor into music"
 curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" -H "Authorization: Basic Y29uZHVjdG9yOmMwbmR1Y3Qwcg==" --data @${WORKSPACE}/tests/optf-has/has/data/onboard.json
 
-docker run -d --name cond-cont -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-cont -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-api -p "8091:8091" -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-api --port=8091 -- --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-api -p "8091:8091" -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-api --port=8091 -- --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-solv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-solver --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-solv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-solver --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-resv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-reservation --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-resv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-reservation --config-file=/usr/local/bin/conductor.conf
 sleep 5
 docker run -d --name cond-data -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-data --config-file=/usr/local/bin/conductor.conf
 sleep 15
