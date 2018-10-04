@@ -17,6 +17,12 @@
 # Place the scripts in run order:
 source ${WORKSPACE}/scripts/integration/script1.sh
 
+# CLI internet speed test
+curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+
+# Test download a 100 MB file to check network speed to nexus.onap.org
+wget -O /dev/null  https://nexus.onap.org/content/repositories/releases/org/onap/appc/appc-dg-shared-installer/1.3.0/appc-dg-shared-installer-1.3.0.zip
+
 docker run --name i-mock -d jamesdbloom/mockserver
 MOCK_IP=`get-instance-ip.sh i-mock`
 
