@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+echo "# aaf-sms setup.sh script";
+source ${WORKSPACE}/plans/aaf/sms-test-plan/setup.sh
 
 #
 # add here eventual scripts needed for music
