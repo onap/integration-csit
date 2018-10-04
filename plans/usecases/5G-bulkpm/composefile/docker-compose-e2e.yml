@@ -70,7 +70,7 @@ services:
 
   dfc:
     container_name: dfc
-    image: quay.io/martin_yan_seu/datafile
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
     ports:
       - "8433:8433"
 
