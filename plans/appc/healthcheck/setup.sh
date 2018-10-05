@@ -21,7 +21,8 @@ SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${WORKSPACE}/scripts/appc/script1.sh
 
 export APPC_DOCKER_IMAGE_VERSION=1.4.0-SNAPSHOT-latest
-export CCSDK_DOCKER_IMAGE_VERSION=0.2-STAGING-latest
+export DGBUILDER_DOCKER_IMAGE_VERSION=0.3.0
+export ANSIBLE_DOCKER_IMAGE_VERSION=0.3.0
 export BRANCH=master
 export SOLUTION_NAME=onap
 
@@ -46,10 +47,16 @@ git pull
 cd $WORKSPACE/archives/appc/docker-compose
 sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="$DMAAP_TOPIC"/g" docker-compose.yml
 docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
+
 docker pull $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/appc-image:$APPC_DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/appc-image:$APPC_DOCKER_IMAGE_VERSION ${SOLUTION_NAME}/appc-image:latest
-docker pull $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION ${SOLUTION_NAME}/ccsdk-dgbuilder-image:latest
+
+docker pull $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-dgbuilder-image:$DGBUILDER_DOCKER_IMAGE_VERSION
+docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-dgbuilder-image:$DGBUILDER_DOCKER_IMAGE_VERSION ${SOLUTION_NAME}/ccsdk-dgbuilder-image:latest
+
+docker pull $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-ansible-server-image:$ANSIBLE_DOCKER_IMAGE_VERSION
+docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/ccsdk-ansible-server-image:$ANSIBLE_DOCKER_IMAGE_VERSION onap/ccsdk-ansible-server-image:latest
+
 docker pull $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/appc-cdt-image:$APPC_DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/appc-cdt-image:$APPC_DOCKER_IMAGE_VERSION ${SOLUTION_NAME}/appc-cdt-image:latest
 
