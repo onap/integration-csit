@@ -53,7 +53,7 @@ cat ./Dockerfile
 docker build -t aaisim .  
 
 # run aaisim
-docker run -d --name aaisim -p 8081:8081  aaisim
+docker run -d --name aaisim -p 8081:8081 aaisim
 
 AAISIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' aaisim`
 echo "AAISIM_IP=${AAISIM_IP}"
@@ -77,9 +77,32 @@ echo "MULTICLOUDSIM_IP=${MULTICLOUDSIM_IP}"
 
 ${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${MULTICLOUDSIM_IP} 8082
 
+# prepare aafsim
+echo "simulator_script: prepare aafsim "
+cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/aafsim/
+
+# check Dockerfile content
+echo "simulator_script: Dockerfile "
+cat ./Dockerfile
+
+# build aafsim
+echo "simulator_script: build docker "
+docker build -t aafsim .
+
+# run aafsim
+echo "simulator_script: run docker "
+docker run -d --name aafsim -p 8100:8100 aafsim
+
+AAFSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' aafsim`
+echo "simulator_script: AAFSIM_IP=${AAFSIM_IP}"
+
+#echo "simulator_script: wait_for_port"
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${AAFSIM_IP} 8100
+
 # wait a while before continuing
 sleep 2
 
 echo "inspect docker things for tracing purpose"
 docker inspect aaisim
 docker inspect multicloudsim
+docker inspect aafsim
