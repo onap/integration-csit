@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_a92b402f",
+        "filename": "scripts/optf-has/has/has_script.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2018-10-08T03:24:32Z",
+      "side": 1,
+      "message": "Should be AAF",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "2ce85ec2bcecd2ad6cd2a4e0af65599b2176c619",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
