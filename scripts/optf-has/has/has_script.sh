@@ -32,17 +32,13 @@ COND_CONF=/tmp/conductor/properties/conductor.conf
 LOG_CONF=/tmp/conductor/properties/log.conf
 IMAGE_NAME=nexus3.onap.org:10001/onap/optf-has
 IMAGE_VER=1.2.1-SNAPSHOT-latest
-CERT=/tmp/conductor/properties/cert.cer
-KEY=/tmp/conductor/properties/cert.key
-BUNDLE=/tmp/conductor/properties/cert.pem
+BUNDLE=/tmp/conductor/properties/AAF_RootCA.cer
 
 mkdir -p /tmp/conductor/properties
 mkdir -p /tmp/conductor/logs
 cp ${WORKSPACE}/scripts/optf-has/has/has-properties/conductor.conf.onap /tmp/conductor/properties/conductor.conf
 cp ${WORKSPACE}/scripts/optf-has/has/has-properties/log.conf.onap /tmp/conductor/properties/log.conf
-cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.cer /tmp/conductor/properties/cert.cer
-cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.key /tmp/conductor/properties/cert.key
-cp ${WORKSPACE}/scripts/optf-has/has/has-properties/cert.pem /tmp/conductor/properties/cert.pem
+cp ${WORKSPACE}/scripts/optf-has/has/has-properties/AAF_RootCA.cer /tmp/conductor/properties/AAF_RootCA.cer
 #chmod -R 777 /tmp/conductor/properties
 
 MUSIC_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' music-tomcat`
@@ -63,23 +59,29 @@ echo "MULTICLOUDSIM_IP=${MULTICLOUDSIM_IP}"
 # change MULTICLOUD reference to the local instance
 sed  -i -e "s%msb.onap.org:8082/%${MULTICLOUDSIM_IP}:8082/%g" /tmp/conductor/properties/conductor.conf
 
+AAFSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' aafsim`
+echo "AAFSIM_IP=${AAFSIM_IP}"
+
+# change AAF reference to the local instance
+sed  -i -e "s%localhost:8100/%${AAFSIM_IP}:8100/%g" /tmp/conductor/properties/conductor.conf
+
 #onboard conductor into music
 echo "Query MUSIC to check for reachability. Query Version"
 curl -vvvvv --noproxy "*" --request GET http://${MUSIC_IP}:8080/MUSIC/rest/v2/version -H "Content-Type: application/json"
- 
+
 echo "Onboard conductor into music"
-curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" --data @${WORKSPACE}/tests/optf-has/has/data/onboard.json
+curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" -H "Authorization: Basic Y29uZHVjdG9yOmMwbmR1Y3Qwcg==" --data @${WORKSPACE}/tests/optf-has/has/data/onboard.json
 
 docker run -d --name cond-cont -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
-sleep 20
+sleep 15
 docker run -d --name cond-api -p "8091:8091" -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-api --port=8091 -- --config-file=/usr/local/bin/conductor.conf
-sleep 20
+sleep 15
 docker run -d --name cond-solv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-solver --config-file=/usr/local/bin/conductor.conf
-sleep 20
+sleep 15
 docker run -d --name cond-resv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-reservation --config-file=/usr/local/bin/conductor.conf
-sleep 20
-docker run -d --name cond-data -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${CERT}:/usr/local/bin/cert.cer -v ${KEY}:/usr/local/bin/cert.key -v ${BUNDLE}:/usr/local/bin/cert.pem ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-data --config-file=/usr/local/bin/conductor.conf
-sleep 20
+sleep 5
+docker run -d --name cond-data -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-data --config-file=/usr/local/bin/conductor.conf
+sleep 15
 
 COND_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' cond-api`
 ${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${COND_IP} 8091
