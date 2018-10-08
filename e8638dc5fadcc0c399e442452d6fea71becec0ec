@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_a949008d",
+        "filename": "tests/vid/resources/simulators/SO.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3873
+      },
+      "writtenOn": "2018-10-08T09:08:06Z",
+      "side": 1,
+      "message": "\u0027GET called\u0027",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "e8638dc5fadcc0c399e442452d6fea71becec0ec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
