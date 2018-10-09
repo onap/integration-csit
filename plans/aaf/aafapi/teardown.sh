@@ -18,7 +18,7 @@
 #
 
 kill-instance.sh $aaf_service
-kill-instance.sh $cassandra_service
+kill-instance.sh $aaf_cass
 
 unset aaf_service
-unset cassandra_service
+unset aaf_cass
