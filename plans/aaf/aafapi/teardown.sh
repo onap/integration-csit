@@ -17,8 +17,7 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-kill-instance.sh $aaf_service
-kill-instance.sh $cassandra_service
 
-unset aaf_service
-unset cassandra_service
+kill-instance.sh $aaf_cass
+
+unset aaf_cass
