@@ -143,7 +143,7 @@ TIME_OUT=500
 INTERVAL=20
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://portal.api.simpledemo.onap.org:8989/ONAPPORTAL/portalApi/healthCheck); echo $response
+  response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://portal.api.simpledemo.onap.org:30215/ONAPPORTAL/portalApi/healthCheck); echo $response
 
   if [ "$response" == "200" ]; then
     echo Portal and its database well started in $TIME seconds
