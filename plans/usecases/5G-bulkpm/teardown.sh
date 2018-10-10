@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "Starting teardown script"
 docker exec dfc /bin/sh -c "cat /opt/log/application.log"
+sleep 5
 kill-instance.sh $DMAAP
 kill-instance.sh $KAFKA
 kill-instance.sh $ZOOKEEPER
