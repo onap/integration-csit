@@ -18,7 +18,7 @@ KAFKA=$(docker ps -a -q --filter="name=kafka_1")
 DMAAP=$(docker ps -a -q --filter="name=dmaap_1")
 
 # Wait for initialization of Docker contaienr for DMaaP MR, Kafka and Zookeeper
-for i in {1..50}; do
+for i in {1..10}; do
 if [ $(docker inspect --format '{{ .State.Running }}' $KAFKA) ] && \
 [ $(docker inspect --format '{{ .State.Running }}' $ZOOKEEPER) ] && \
 [ $(docker inspect --format '{{ .State.Running }}' $DMAAP) ]
@@ -65,11 +65,12 @@ docker kill vescollector
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
-sed -i 's/172.100.0.2/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/prov_data/provserver.properties
+#sed -i 's/172.100.0.2/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/prov_data/provserver.properties
+sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/prov_data/provserver.properties
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
-for i in {1..50}; do
+for i in {1..10}; do
     if [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ]
