@@ -60,7 +60,6 @@ cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKS
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 docker kill datarouter-prov
-docker kill datarouter-node
 docker kill vescollector
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
