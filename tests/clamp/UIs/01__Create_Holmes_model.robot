@@ -88,7 +88,7 @@ Save Model from Menu
     Set Selenium Speed      ${SELENIUM_SPEED_FAST}
     Click Element    locator=Save CL
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:SAVE
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: save
     Set Selenium Speed      ${SELENIUM_SPEED_SLOW}
 
 Close Browser

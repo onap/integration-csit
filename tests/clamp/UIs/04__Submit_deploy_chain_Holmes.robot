@@ -51,7 +51,7 @@ Validate-Test Holmes CL
     Wait Until Element Is Visible       locator=Validation Test       timeout=60
     Click Element    locator=Validation Test
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:TEST
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: test
     Element Should Contain      xpath=//*[@id="status_clds"]     DESIGN
 
 Submit Holmes CL
@@ -61,7 +61,7 @@ Submit Holmes CL
     Click Element    locator=Submit
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:SUBMIT
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: submit
     Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
 
 Resubmit Holmes CL
@@ -71,7 +71,7 @@ Resubmit Holmes CL
     Click Element    locator=Resubmit
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:RESUBMIT
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: resubmit
     Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
 
 Deploy Holmes CL
@@ -84,7 +84,7 @@ Deploy Holmes CL
     Click Button    locator=Deploy
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:deploy
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: deploy
     Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
 
 Update Holmes CL
@@ -94,7 +94,7 @@ Update Holmes CL
     Click Element    locator=Update
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:UPDATE
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: update
     Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
 
 Stop Holmes CL
@@ -104,7 +104,7 @@ Stop Holmes CL
     Click Element    locator=Stop
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:STOP
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: stop
     Element Should Contain      xpath=//*[@id="status_clds"]     STOPPED
 
 Restart Holmes CL
@@ -114,7 +114,7 @@ Restart Holmes CL
     Click Element    locator=Restart
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:RESTART
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: restart
     Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
 
 UnDeploy Holmes CL
@@ -124,7 +124,7 @@ UnDeploy Holmes CL
     Click Element    locator=UnDeploy
     Click Button    locator=Yes
     Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful:undeploy
+    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: undeploy
     Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
 
 Close Browser
