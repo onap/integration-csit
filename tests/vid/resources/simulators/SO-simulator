@@ -1,0 +1,8 @@
+FROM frolvlad/alpine-python3
+
+ADD SO.py /
+ADD so_post_response.json /
+
+EXPOSE 8443
+
+CMD [ "python", "./SO.py" ]
