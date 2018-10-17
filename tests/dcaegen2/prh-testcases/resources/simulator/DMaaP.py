@@ -4,7 +4,7 @@ import re
 import sys
 
 posted_event_from_prh = b'Empty'
-received_event_to_get_method = 'Empty'
+received_event_to_get_method = b'Empty'
 
 
 class DMaaPHandler(BaseHTTPRequestHandler):
