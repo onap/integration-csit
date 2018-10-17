@@ -8,8 +8,7 @@ Resource          ../../common.robot
 
 *** Variables ***
 ${DMAAP_SIMULATOR_URL}    http://${DMAAP_SIMULATOR}
-${AAI_SIMULATOR_URL}    http://${AAI_SIMULATOR}
-${PRH_URL}        http://${PRH}
+${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
 ${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
 ${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json

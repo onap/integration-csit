@@ -12,8 +12,8 @@ Create header
 Create sessions
     Create Session    dmaap_session    ${DMAAP_SIMULATOR_URL}
     Set Suite Variable    ${suite_dmaap_session}    dmaap_session
-    Create Session    aai_session    ${AAI_SIMULATOR_URL}
-    Set Suite Variable    ${suite_aai_session}    aai_session
+    Create Session    aai_setup_session    ${AAI_SIMULATOR_SETUP_URL}
+    Set Suite Variable    ${aai_setup_session}    aai_setup_session
 
 Invalid event processing
     [Arguments]    ${input_invalid_event_in_dmaap}
@@ -47,7 +47,7 @@ Check PNF_READY notification
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
-    ${resp}=    Put Request    ${suite_aai_session}    /set_pnfs    headers=${headers}    data=${pnfs_name}
+    ${resp}=    Put Request    ${aai_setup_session}    /set_pnfs    headers=${headers}    data=${pnfs_name}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set event in DMaaP

@@ -1,12 +1,11 @@
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
-import re
-import sys
+import _thread, ssl, time, re
 
 pnfs = 'Empty'
 
 
-class AAIHandler(BaseHTTPRequestHandler):
+class AAISetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         if re.search('/set_pnfs', self.path):
@@ -14,8 +13,11 @@ class AAIHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             pnfs = self.rfile.read(content_length)
             _header_200_and_json(self)
-            
+
         return
+
+
+class AAIHandler(BaseHTTPRequestHandler):
 
     def do_PATCH(self):
         pnfs_name = '/aai/v12/network/pnfs/pnf/' + pnfs.decode()
@@ -35,21 +37,30 @@ def _header_200_and_json(self):
     self.end_headers()
 
 
-def _main_(handler_class=AAIHandler, server_class=HTTPServer, protocol="HTTP/1.0"):
-
-    if sys.argv[1:]:
-        port = int(sys.argv[1])
-    else:
-        port = 3333
-
-    server_address = ('', port)
-
+def _main_(handler_class=AAIHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
-    httpd = server_class(server_address, handler_class)
+    _thread.start_new_thread(_init_http_endpoints, (3333, AAIHandler))
+    _thread.start_new_thread(_init_https_endpoints, (3334, AAIHandler))
+    _thread.start_new_thread(_init_http_endpoints, (3335, AAISetup))
+    while 1:
+        time.sleep(10)
 
-    sa = httpd.socket.getsockname()
-    print("Serving HTTP on", sa[0], "port", sa[1], "...")
-    httpd.serve_forever()
+
+def _init_http_endpoints(port, handler_class, server_class=HTTPServer):
+    server = server_class(('', port), handler_class)
+    sa = server.socket.getsockname()
+    print("Serving HTTP on", sa[0], "port", sa[1], "for", handler_class, "...")
+    server.serve_forever()
+
+
+def _init_https_endpoints(port, handler_class, server_class=HTTPServer):
+    server = server_class(('', port), handler_class)
+    server.socket = ssl.wrap_socket(server.socket,
+                                    keyfile="certs/server.key", certfile="certs/server.crt",
+                                    ca_certs="certs/client.crt", server_side=True)
+    sa = server.socket.getsockname()
+    print("Serving HTTPS on", sa[0], "port", sa[1], "for", handler_class, "...")
+    server.serve_forever()
 
 
 if __name__ == '__main__':
