@@ -37,7 +37,7 @@ CURRENT_DIR=$(pwd) export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | s
 NEXUS_USERNAME=anonymous
 NEXUS_PASSWD=anonymous
 NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-AAF_DOCKER_VERSION=2.1.3-SNAPSHOT
+AAF_DOCKER_VERSION=2.1.3
 
 docker login -u $NEXUS_USERNAME -p "$NEXUS_PASSWD" $NEXUS_DOCKER_REPO
 
