@@ -9,7 +9,6 @@ RUN apk add --no-cache python3 && \
 	rm -r /root/.cache
 
 ADD AAI.py /
-
-EXPOSE 3333
+COPY certs/* /certs/
 
 CMD [ "python", "./AAI.py" ]
