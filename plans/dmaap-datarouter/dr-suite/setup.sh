@@ -9,7 +9,7 @@ cd $WORKSPACE/archives/dmaapdr
 git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 cd datarouter
 git pull
-cd $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/
+cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 
 sed -i 's/10003/10001/g' docker-compose.yml
 # start DMaaP DR containers with docker compose and configuration from docker-compose.yml
@@ -17,7 +17,7 @@ docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
-for i in {1..50}; do
+for i in {1..10}; do
     if [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ]
