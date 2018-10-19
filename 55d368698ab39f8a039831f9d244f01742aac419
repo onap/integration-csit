@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_779d0259",
+        "filename": "tests/dcaegen2/prh-testcases/prh_tests.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-19T13:31:53Z",
+      "side": 1,
+      "message": "Teardown - will be better",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "55d368698ab39f8a039831f9d244f01742aac419",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_379f7a52",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-19T13:31:53Z",
+      "side": 1,
+      "message": "Currently TC don\u0027t check this service, if you want use this service please add new TC for it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "55d368698ab39f8a039831f9d244f01742aac419",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_57831e04",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-19T13:31:53Z",
+      "side": 1,
+      "message": "Now we have 2 prh services - is it correct?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "55d368698ab39f8a039831f9d244f01742aac419",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_17e836e1",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/AAI.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-19T13:31:53Z",
+      "side": 1,
+      "message": "PEP8 - each import should be in separate lines",
+      "revId": "55d368698ab39f8a039831f9d244f01742aac419",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_97d42621",
+        "filename": "tests/dcaegen2/prh-testcases/ssl_prh_tests.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-19T13:31:53Z",
+      "side": 1,
+      "message": "Duplicated file and have commented test. Why?",
+      "revId": "55d368698ab39f8a039831f9d244f01742aac419",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
