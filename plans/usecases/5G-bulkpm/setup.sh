@@ -54,10 +54,11 @@ sleep 5
 mkdir -p $WORKSPACE/archives/dmaapdr
 cd $WORKSPACE/archives/dmaapdr
 git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
-cd datarouter
-cd $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/
-rm -rf docker-compose.yml
-cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/docker-compose.yml
+cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+mkdir docker-compose
+cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
+cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
+
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 docker kill datarouter-prov
@@ -66,7 +67,7 @@ docker kill vescollector
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
-sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/prov_data/provserver.properties
+sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/prov_data/provserver.properties
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
