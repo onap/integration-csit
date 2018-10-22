@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_327d451d",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/DMaaP_simulator",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-22T12:03:57Z",
+      "side": 1,
+      "message": "use for both simulator\n\nFROM python:3-alpine\n\nWill look better",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "0fbe2c01290f23e9b84b2d11256ba8d597941d84",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_52c6c94a",
+        "filename": "tests/dcaegen2/prh-testcases/ssl_prh_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3905
+      },
+      "writtenOn": "2018-10-22T12:03:57Z",
+      "side": 1,
+      "message": "this is also not needed",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 103
+      },
+      "revId": "0fbe2c01290f23e9b84b2d11256ba8d597941d84",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
