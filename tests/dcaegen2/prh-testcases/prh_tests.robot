@@ -1,14 +1,15 @@
 *** Settings ***
 Documentation     Integration tests for PRH.
 ...               PRH receive events from DMaaP and produce or not PNF_READY notification depends on required fields in received event.
-Suite Setup       Run keywords    Create header    Create sessions
-Test Setup        Run keywords    Reset Simulators
+Suite Setup       Run keywords   Create header  AND  Create sessions  AND  Ensure Container Is Running  prh  AND  Ensure Container Is Exited  ssl_prh
+Suite Teardown    Ensure Container Is Running  ssl_prh
+Test Teardown     Reset Simulators
 Library           resources/PrhLibrary.py
 Resource          resources/prh_library.robot
 Resource          ../../common.robot
 
 *** Variables ***
-${DMAAP_SIMULATOR_URL}    http://${DMAAP_SIMULATOR}
+${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
 ${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
@@ -62,6 +63,7 @@ Get valid event from DMaaP and AAI is not responding
     [Tags]    PRH    AAI
     [Timeout]    180s
     ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Stop AAI
+    Ensure Container Is Exited   aai_simulator
     Set event in DMaaP    ${data}
     Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
+    Ensure Container Is Running  aai_simulator

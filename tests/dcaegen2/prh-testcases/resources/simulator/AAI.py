@@ -1,6 +1,9 @@
+import _thread
+import re
+import ssl
+import time
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
-import _thread, ssl, time, re
 
 pnfs = 'Empty'
 

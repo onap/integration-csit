@@ -31,9 +31,9 @@ services:
           --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
           --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap
           --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
-          --aai.aaiClientConfiguration.aaiHostPortNumber=3334
+          --aai.aaiClientConfiguration.aaiHostPortNumber=3333
           --aai.aaiClientConfiguration.aaiHost=aai
-          --aai.aaiClientConfiguration.aaiProtocol=https
+          --aai.aaiClientConfiguration.aaiProtocol=http
       entrypoint:
         - java
         - -Dspring.profiles.active=dev
@@ -54,6 +54,8 @@ services:
       dockerfile: DMaaP_simulator
     ports:
       - "2222:2222"
+      - "2223:2223"
+      - "2224:2224"
     container_name: dmaap_simulator
 
   aai:
