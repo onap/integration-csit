@@ -1,6 +1,7 @@
 import json
 
 import docker
+import time
 
 
 class PrhLibrary(object):
@@ -35,10 +36,45 @@ class PrhLibrary(object):
         return correlation_id
 
     @staticmethod
-    def stop_aai():
+    def ensure_container_is_running(name):
         client = docker.from_env()
-        container = client.containers.get('aai_simulator')
-        container.stop()
+
+        if not PrhLibrary.is_in_status(client, name, "running"):
+            print ("starting container", name)
+            container = client.containers.get(name)
+            container.start()
+            PrhLibrary.wait_for_status(client, name, "running")
+
+        PrhLibrary.print_status(client)
+
+    @staticmethod
+    def ensure_container_is_exited(name):
+        client = docker.from_env()
+
+        if not PrhLibrary.is_in_status(client, name, "exited"):
+            print ("stopping container", name)
+            container = client.containers.get(name)
+            container.stop()
+            PrhLibrary.wait_for_status(client, name, "exited")
+
+        PrhLibrary.print_status(client)
+
+    @staticmethod
+    def print_status(client):
+        print("containers status")
+        for c in client.containers.list(all=True):
+            print(c.name, "   ", c.status)
+
+    @staticmethod
+    def wait_for_status(client, name, status):
+        while not PrhLibrary.is_in_status(client, name, status):
+            print ("waiting for container: ", name, "to be in status: ", status)
+            time.sleep(3)
+
+    @staticmethod
+    def is_in_status(client, name, status):
+        return len(client.containers.list(all=True, filters={"name": "^/"+name+"$", "status": status})) == 1
+
 
     def create_invalid_notification(self, json_file):
         return self.create_pnf_ready_notification(json_file).replace("\":", "\": ")\

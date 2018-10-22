@@ -10,13 +10,14 @@ Create header
     Set Suite Variable    ${suite_headers}    ${headers}
 
 Create sessions
-    Create Session    dmaap_session    ${DMAAP_SIMULATOR_URL}
-    Set Suite Variable    ${suite_dmaap_session}    dmaap_session
+    Create Session    dmaap_setup_session    ${DMAAP_SIMULATOR_SETUP_URL}
+    Set Suite Variable    ${dmaap_setup_session}    dmaap_setup_session
     Create Session    aai_setup_session    ${AAI_SIMULATOR_SETUP_URL}
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
 
 Reset Simulators
     Reset AAI simulator
+    Reset DMaaP simulator
 
 Invalid event processing
     [Arguments]    ${input_invalid_event_in_dmaap}
@@ -44,7 +45,7 @@ Check PRH log
 
 Check PNF_READY notification
     [Arguments]    ${posted_event_to_dmaap}
-    ${resp}=    Get Request    ${suite_dmaap_session}    /events/pnfReady    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
     Should Be Equal    ${resp.text}    ${posted_event_to_dmaap}
 
 Set PNF name in AAI
@@ -55,9 +56,13 @@ Set PNF name in AAI
 
 Set event in DMaaP
     [Arguments]    ${event_in_dmaap}
-    ${resp}=    Put Request    ${suite_dmaap_session}    /set_get_event    headers=${suite_headers}    data=${event_in_dmaap}
+    ${resp}=    Put Request    ${dmaap_setup_session}    /set_get_event    headers=${suite_headers}    data=${event_in_dmaap}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset AAI simulator
     ${resp}=    Post Request     ${aai_setup_session}    /reset
+    Should Be Equal As Strings    ${resp.status_code}    200
+
+Reset DMaaP simulator
+    ${resp}=    Post Request     ${dmaap_setup_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200

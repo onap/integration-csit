@@ -9,7 +9,6 @@ RUN apk add --no-cache python3 && \
 	rm -r /root/.cache
 
 ADD DMaaP.py /
-
-EXPOSE 2222
+COPY certs/* /certs/
 
 CMD [ "python", "./DMaaP.py" ]

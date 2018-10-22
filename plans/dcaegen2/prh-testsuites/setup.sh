@@ -2,17 +2,6 @@
 
 source ${SCRIPTS}/common_functions.sh
 
-function check_heartbeat ()
-{
-    local port=$1
-
-    for i in {1..10}; do
-        curl -sS -m 1 localhost:$port/heartbeat && break
-        echo sleep ${i}
-        sleep ${i}
-    done
-}
-
 export PRH_SERVICE="prh"
 export SSL_PRH_SERVICE="ssl_prh"
 export DMAAP_SIMULATOR="dmaap_simulator"
@@ -41,9 +30,9 @@ echo DMAAP_SIMULATOR_IP=${DMAAP_SIMULATOR_IP}
 echo AAI_SIMULATOR_IP=${AAI_SIMULATOR_IP}
 
 # Wait for initialization of PRH services
-check_heartbeat 8100
-check_heartbeat 8200
+wait_for_service_init localhost:8100/heartbeat
+wait_for_service_init localhost:8200/heartbeat
 
 # #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DMAAP_SIMULATOR:${DMAAP_SIMULATOR_IP}:2222 -v AAI_SIMULATOR:${AAI_SIMULATOR_IP}:3333 -v SSL_AAI_SIMULATOR:${AAI_SIMULATOR_IP}:3334 -v AAI_SIMULATOR_SETUP:${AAI_SIMULATOR_IP}:3335"
+ROBOT_VARIABLES="-v DMAAP_SIMULATOR_SETUP:${DMAAP_SIMULATOR_IP}:2224 -v AAI_SIMULATOR_SETUP:${AAI_SIMULATOR_IP}:3335"
 
