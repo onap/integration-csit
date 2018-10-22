@@ -25,12 +25,12 @@ source ${WORKSPACE}/scripts/music/music-scripts/music_script.sh
 # add here all the configuration steps eventually needed to be carried out for music CSIT testing
 #
 echo "########## music configuration step ##########";
-CASS_IMG=nexus3.onap.org:10001/onap/music/cassandra_3_11:latest
-CASS_IMG_JOB=nexus3.onap.org:10001/onap/music/cassandra_job:latest
+CASS_IMG=nexus3.onap.org:10001/onap/music/cassandra_3_11:3.0.23
+CASS_IMG_JOB=nexus3.onap.org:10001/onap/music/cassandra_job:3.0.23
 TOMCAT_IMG=nexus3.onap.org:10001/library/tomcat:8.5
 ZK_IMG=nexus3.onap.org:10001/library/zookeeper:3.4
 BUSYBOX_IMG=nexus3.onap.org:10001/library/busybox:latest
-MUSIC_IMG=nexus3.onap.org:10001/onap/music/music:latest
+MUSIC_IMG=nexus3.onap.org:10001/onap/music/music:3.0.23
 TT=10
 WORK_DIR=/tmp/music
 CASS_USERNAME=nelson24
@@ -77,10 +77,10 @@ echo "########## Running Test to see if Cassandra is up ##########"
 docker run --name music-casstest --network music-net \
 $BUSYBOX_IMG sh -c "until nc -z music-db 9042 && echo "success"; do echo 'No connection .. Sleeping for $TT seconds';sleep $TT; done;"
 
+# Sleep 60 seconds to ensure Cassandra is up and running. 
+sleep 60;
 # Check to see if Keyspaces are there. 
 docker exec music-db cqlsh -u cassandra -p cassandra -e "DESCRIBE keyspaces;"
-
-sleep 10;
 
 # Load data into Cassandra via Cassandra Job 
 echo "########## Running Cassandra Job (music-job) to load cql files ##########"
@@ -92,10 +92,33 @@ docker run -d --name music-job --network music-net \
 -e CASS_HOSTNAME=music-db \
 -e USERNAME=$CASS_USERNAME \
 -e PASSWORD=$CASS_PASSWORD \
-$CASS_IMG_JOB
+$CASS_IMG_JOB \
+cqlsh -u cassandra -p cassandra -f /cql/admin.cql  music-db 9042
+
+docker run -d --name music-job1 --network music-net \
+-v $CQL_FILES/admin.cql:/cql/admin.cql \
+-v $CQL_FILES/admin_pw.cql:/cql/admin_pw.cql \
+-v $CQL_FILES/extra:/cql/extra \
+-e PORT=9042 \
+-e CASS_HOSTNAME=music-db \
+-e USERNAME=$CASS_USERNAME \
+-e PASSWORD=$CASS_PASSWORD \
+$CASS_IMG_JOB \
+cqlsh -u cassandra -p cassandra -f /cql/admin_pw.cql  music-db 9042
+
 # Logs
 echo "########## Cassandra Job logs ##########"
 docker logs music-job
+# Check to see if Keyspaces are there. 
+# "############## Check if new username and password work ##########"
+docker exec music-db cqlsh -u $CASS_USERNAME -p $CASS_PASSWORD -e "DESCRIBE keyspaces;"
+# Check to see if Keyspaces are there. 
+# "############## Check if original username and password work ##########"
+docker exec music-db cqlsh -u cassandra -p cassandra -e "DESCRIBE keyspaces;"
+# Check to see if Keyspaces are there. 
+# "############## Check if new cassandra username and password work ##########"
+docker exec music-db cqlsh -u cassandra -p SomeLongRandomStringNoonewillthinkof -e "DESCRIBE keyspaces;"
+
 
 # Start Music war
 echo "########## Start music-war ##########"
@@ -109,7 +132,7 @@ ZOO_IP=`docker inspect -f '{{ $network := index .NetworkSettings.Networks "music
 echo "ZOOKEEPER_IP=${ZOO_IP}"
 
 # Delay  between Cassandra/Zookeeper and Tomcat
-sleep 10;
+sleep 120;
 
 # Start Up tomcat - Needs to have properties,logs dir and war file volume mapped.
 echo "########## Start Tomcat (music-tomcat) ##########"
