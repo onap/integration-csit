@@ -20,9 +20,8 @@ function dmaap_dr_launch() {
 	git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 	cd datarouter
 	git pull
-	cd $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/
+	cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 
-	sed -i 's/10003/10001/g' docker-compose.yml
 	# start DMaaP DR containers with docker compose and configuration from docker-compose.yml
 	docker login -u docker -p docker nexus3.onap.org:10001
 	docker-compose up -d

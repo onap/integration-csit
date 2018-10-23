@@ -21,6 +21,6 @@
 if [ "$KEEP_DMAAP" != "Y" ]
 then
 kill-instance.sh dmaapbc
-cd $WORKSPACE/archives/dmaapdr/datarouter/docker-compose/
+cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 docker-compose down -v
 fi
