@@ -32,3 +32,6 @@ source ${WORKSPACE}/scripts/optf-has/has/simulator_teardown_script.sh
 echo "# optf/has music scripts calling";
 source ${WORKSPACE}/scripts/optf-has/has/music_teardown_script.sh
 
+echo "# aaf-sms teardown.sh script";
+source ${WORKSPACE}/plans/aaf/sms-test-plan/teardown.sh
+

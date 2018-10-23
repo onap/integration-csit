@@ -162,9 +162,12 @@ aaf_url = http://localhost:8100/authz/perms/user/
 # From conductor
 #
 
+# Is Secret Management service enabled (boolean value)
+#is_enabled = true
+
 # Base URL for SMS, up to and not including the version, and without a trailing
 # slash. (string value)
-#aaf_sms_url = https://aaf-sms.onap:10443
+aaf_sms_url = http://aaf-sms.onap:10443
 
 # Timeout for SMS API Call (integer value)
 #aaf_sms_timeout = 30
@@ -172,9 +175,9 @@ aaf_url = http://localhost:8100/authz/perms/user/
 # Path to the cacert that will be used to verify If this is None, verify will
 # be False and the server certis not verified by the client. (string value)
 #aaf_ca_certs = AAF_RootCA.cer
+aaf_ca_certs = /usr/local/bin/AAF_RootCA.cer
 
-# Domain UUID - A unique UUID generated when the domainfor HAS is created by
-# administrator during deployment (string value)
+# Domain Name for HAS (string value)
 #secret_domain = has
 
 
@@ -224,13 +227,6 @@ certificate_key_file =
 #certificate_authority_bundle_file = certificate_authority_bundle.pem
 certificate_authority_bundle_file = /usr/local/bin/AAF_RootCA.cer
 
-# Username for AAI. (string value)
-username = OOF
-
-# Password for AAI. (string value)
-password = OOF
-
-
 [api]
 
 #
@@ -253,14 +249,6 @@ password = OOF
 
 # Base URL for plans. (string value)
 #server_url =
-
-# username for plans. (string value)
-#username =
-username = admin1
-
-# password for plans. (string value)
-#password =
-password = plan.15
 
 # auth toggling. (boolean value)
 basic_auth_secure = false
@@ -463,21 +451,6 @@ music_new_version = True
 #music_version = <None>
 music_version = "3.0.21"
 
-# username value that used for creating basic authorization header (string
-# value)
-#aafuser = <None>
-aafuser = conductor
-
-# password value that used for creating basic authorization header (string
-# value)
-#aafpass = <None>
-aafpass = c0nduct0r
-
-# AAF namespace field used in MUSIC request header (string value)
-#aafns = <None>
-aafns = conductor
-
-
 [prometheus]
 
 #
@@ -533,14 +506,6 @@ concurrent = true
 # Base URL for SDN-C, up to and including the version. (string value)
 #server_url = https://controller:8443/restconf/
 server_url = http://localhost:8083/restconf/
-
-# Basic Authentication Username (string value)
-#username = <None>
-username = admin
-
-# Basic Authentication Password (string value)
-#password = <None>
-password = Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
 
 # Timeout for SDNC Rest Call (string value)
 #sdnc_rest_timeout = 30
