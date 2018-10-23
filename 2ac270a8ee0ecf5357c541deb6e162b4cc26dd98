@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_79109001",
+        "filename": "plans/vid/healthCheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 653
+      },
+      "writtenOn": "2018-10-23T11:05:19Z",
+      "side": 1,
+      "message": "Better to add another line of Modification, as both Nokia and AT\u0026T had changes in this file",
+      "revId": "2ac270a8ee0ecf5357c541deb6e162b4cc26dd98",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_9913f40c",
+        "filename": "plans/vid/healthCheck/teardown.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 653
+      },
+      "writtenOn": "2018-10-23T11:05:19Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "2ac270a8ee0ecf5357c541deb6e162b4cc26dd98",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
