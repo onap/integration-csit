@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 #
@@ -16,8 +16,23 @@
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
+# Place the scripts in run order:
+/usr/bin/Xvfb :0 -screen 0 1024x768x24&
+export DISPLAY=:0
 
-source ${WORKSPACE}/scripts/vid/kill_containers_and_remove_dataFolders.sh
-docker stop so-simulator
+source ${SCRIPTS}/common_functions.sh
+source ${WORKSPACE}/scripts/vid/clone_and_setup_vid_data.sh
+source ${WORKSPACE}/scripts/vid/start_vid_containers.sh
 
-# $WORKSPACE/archives/clamp-clone deleted with archives folder when tests starts so we keep it at the end for debugging
+
+VID_IP=`get-instance-ip.sh vid-server`
+SO_SIMULATOR_IP=`get-instance-ip.sh so-simulator`
+
+bypass_ip_address ${VID_IP}
+bypass_ip_address ${SO_SIMULATOR_IP}
+
+echo VID_IP=${VID_IP}
+echo SO_SIMULATOR_IP=${SO_SIMULATOR_IP}
+
+# Pass any variables required by Robot test suites in ROBOT_VARIABLES
+ROBOT_VARIABLES="-v VID_IP:${VID_IP} -v SO_SIMULATOR_IP:${SO_SIMULATOR_IP}"

@@ -1,5 +1,4 @@
 *** Settings ***
-Library       SeleniumLibrary
 Library 	  RequestsLibrary
 Library       OperatingSystem
 Library       json
@@ -13,17 +12,21 @@ ${EXPECTED_SO_RESPONSES_FILEPATH}  ${VID_TEST_ASSET_DIR}/expected_so_responses.j
 ${EXPECTED_SO_REQUESTS_FILEPATH}   ${VID_TEST_ASSET_DIR}/expected_so_requests.json
 ${SO_SIMULATOR_BASE_URL}           http://${SO_SIMULATOR_IP}:8443
 ${VID_HTTP_BASE_URL}               http://${VID_IP}:8080
-${VID_SCALEOUT_ENDPOINT}           vid/mso/mso_create_vfmodule_instance/0d8a98d8-d7ca-4c26-b7ab-81d3729e3b6c/vnfs/61c19619-2714-46f8-90c9-39734e4f545f
-${VALID_SCALEOUT_REQ_FILEPATH}     ${VID_TEST_ASSET_DIR}/vid_create_vfmodule_request.json
+${VID_SCALEOUT_ENDPOINT}           vid/change-management/workflow/ws-test-0310-8
+${VALID_SCALEOUT_REQ_FILEPATH}     ${VID_TEST_ASSET_DIR}/vid_scaleout_request.json
 ${VALID_SCALEOUT_RESP_FILEPATH}    ${VID_TEST_ASSET_DIR}/so_action_response.json
 
 
 *** Test Cases ***
-Triggering create vfmodule operation in SO is performed using HTTPS
+Triggering scaleout workflow operation succeeds
     Setup Expected Data In SO Simulator  ${EXPECTED_SO_RESPONSES_FILEPATH}  ${SO_SIMULATOR_BASE_URL}  setResponse
-    ${jsessionIdCookie}=  Login to VID Internally  ${VID_HTTP_BASE_URL}/vid/login.htm  demo  Kp8bJ4SXszM0WX
-    Log to console  loginResponse:  ${jsessionIdCookie}
     ${soExpectedJsonResp}=  json_from_file  ${VALID_SCALEOUT_RESP_FILEPATH}
-    ${soResponse}=  Send Post request from VID FE  ${VID_HTTP_BASE_URL}  ${VID_SCALEOUT_ENDPOINT}  ${VALID_SCALEOUT_REQ_FILEPATH}  ${VALID_SCALEOUT_RESP_FILEPATH}  ${jsessionIdCookie}
-    Dictionaries Should Be Equal  ${soExpectedJsonResp}  ${soResponse.json()['entity']}
-    [Teardown]    Close Browser
+    ${vidRequest}=  json_from_file  ${VALID_SCALEOUT_REQ_FILEPATH}
+    ${headers}=  Create Dictionary     Content-Type=application/json
+    ${session}=  Create Session  alias=vid  url=${VID_HTTP_BASE_URL}  headers=${headers}
+    ${resp}=  Post Request  vid  uri=/${VID_SCALEOUT_ENDPOINT}  data=${vidRequest}  headers=${headers}
+    Should Be Equal As Strings  ${resp.status_code}     200
+    Dictionaries Should Be Equal  ${soExpectedJsonResp}  ${resp.json()['entity']}
+
+
+

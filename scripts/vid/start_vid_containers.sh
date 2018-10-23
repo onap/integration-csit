@@ -33,8 +33,21 @@ docker-compose up -d --build
 TIME_OUT=1200
 INTERVAL=5
 TIME=0
+
+	for i in {1..10}; do
+	    if [ $(docker inspect -f '{{ .State.Running }}' vid-server) ]
+	    then
+		echo "VID service is running"
+		VID_DOCKER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' vid-server)
+		break
+	    else
+		echo "Waiting for vid-server docker initialization... $i"
+		sleep $i
+	    fi
+	done
+
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://localhost:8080/vid/healthCheck); echo $response
+  response=$(curl --write-out '%{http_code}' --silent --output /dev/null http://"$VID_DOCKER_IP":8080/vid/healthCheck); echo $response
 
   if [ "$response" == "200" ]; then
     echo VID and its database well started in $TIME seconds

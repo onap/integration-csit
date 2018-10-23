@@ -1,0 +1,23 @@
+{
+  "requestDetails":[
+    {
+      "vnfName":"ws-test-0310-8",
+      "vnfInstanceId":"980fe98e-47f8-4164-862d-4ebb026cec75",
+      "relatedInstanceList":[
+        {
+          "relatedInstance":{
+            "instanceId":"fd84f066-ea75-4b23-acd0-3cf3fce7a99b",
+            "modelInfo":{
+              "modelVersionId":"0e0bb964-e687-4439-9a9e-de9cd1ff5367",
+              "modelName":"ws-service",
+              "modelInvariantId":"734f0952-6678-44e7-8918-f9aa4694b687",
+              "modelType":"service",
+              "modelVersion":"1.0"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "requestType":"VNF Scale Out"
+}
