@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_5e7332e7",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/lib.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2729
+      },
+      "writtenOn": "2018-10-23T07:19:47Z",
+      "side": 1,
+      "message": "Could you rename file to be more meaningful? Like for example httpServerLib.py/serverLib.py/httpServer.py?",
+      "revId": "cc86c4a4867acb8bbf13f258d81cbc767ddc6388",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
