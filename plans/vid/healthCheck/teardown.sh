@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2018 Nokia Intellectual Property
 #
 
 source ${WORKSPACE}/scripts/vid/kill_containers_and_remove_dataFolders.sh

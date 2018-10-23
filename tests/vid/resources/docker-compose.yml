@@ -14,7 +14,7 @@ services:
         - vid-mariadb:vid-mariadb-docker-instance
 
     vid-mariadb:
-        image: mariadb:10
+        image: nexus3.onap.org:10001/library/mariadb:10
         environment:
         - MYSQL_DATABASE=vid_openecomp_epsdk
         - MYSQL_USER=vidadmin
@@ -28,7 +28,7 @@ services:
     so-simulator:
         build:
             context: simulators
-            dockerfile: SO-simulator
+            dockerfile: Dockerfile
         ports:
         - "8444:8443"
         container_name: so-simulator
