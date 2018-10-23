@@ -1,6 +1,6 @@
 FROM python:3-alpine
 
-ADD AAI.py /
+ADD AAI.py lib.py /
 COPY certs/* /certs/
 
 CMD [ "python", "./AAI.py" ]
