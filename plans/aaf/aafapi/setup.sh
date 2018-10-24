@@ -37,7 +37,7 @@ CURRENT_DIR=$(pwd) export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | s
 NEXUS_USERNAME=anonymous
 NEXUS_PASSWD=anonymous
 NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-AAF_DOCKER_VERSION=2.1.3
+AAF_DOCKER_VERSION=2.1.5
 
 docker login -u $NEXUS_USERNAME -p "$NEXUS_PASSWD" $NEXUS_DOCKER_REPO
 
@@ -52,6 +52,9 @@ docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
 docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
 
 docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
+
 git clone --depth 1 http://gerrit.onap.org/r/aaf/authz -b master
 git pull
 chmod -R 777 authz
@@ -68,16 +71,12 @@ if [ ! -e auth/docker/d.props ]; then
   cp auth/docker/d.props.init auth/docker/d.props
 fi
 
-
-
 NEXUS_USERNAME=anonymous
 NEXUS_PASSWD=anonymous
 NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 sed -i "s/DOCKER_REPOSITORY=.*/DOCKER_REPOSITORY=$NEXUS_DOCKER_REPO/" auth/csit/d.props
 . auth/csit/d.props
 
-sed -i "s/DOCKER_REPOSITORY=.*/DOCKER_REPOSITORY=$NEXUS_DOCKER_REPO/" auth/docker/d.props
-. auth/docker/d.props
 
 
 HOSTNAME=`hostname`
@@ -104,11 +103,7 @@ fi
 
 sed -i "s/CASS_HOST=.*/CASS_HOST="$CASS_HOST"/g" $WORKSPACE/archives/opt/authz/auth/csit/cass.props
 
-if [ ! -e $WORKSPACE/archives/opt/authz/auth/docker/cass.props ]; then
-  cp $WORKSPACE/archives/opt/authz/auth/docker/cass.props.init $WORKSPACE/archives/opt/authz/auth/docker/cass.props
-fi
 
-sed -i "s/CASS_HOST=.*/CASS_HOST="$CASS_HOST"/g" $WORKSPACE/archives/opt/authz/auth/docker/cass.props
 # TODO Pull from Config Dir
 if [ "$LATITUDE" = "" ]; then
   LATITUDE=37.781
