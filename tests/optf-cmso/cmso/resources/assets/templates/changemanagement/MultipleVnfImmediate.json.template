@@ -1,0 +1,24 @@
+{
+	"domain" : "ChangeManagement",
+	"scheduleId" : "${uuid}",
+	"userId" : "${userId}",
+	"domainData" : [{
+			"CallbackUrl" : "${callbackUrl}",
+			"CallbackData" : "${callbackData}",
+			"WorkflowName" : "${workflow}"
+		}
+	],
+	"schedulingInfo" : {
+		"normalDurationInSeconds" : 100,
+		"additionalDurationInSeconds" : 10,
+		"vnfDetails" : [{
+				"groupId" : "group",
+				"node" : [
+					"${node1}",
+					"${node2}",
+					"${node3}"
+				]
+			}
+		]
+	}
+}
