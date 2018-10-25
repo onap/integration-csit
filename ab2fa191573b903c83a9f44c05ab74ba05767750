@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_a19f97b3",
+        "filename": "scripts/cmso/kill_and_remove_cmso_containers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 89
+      },
+      "writtenOn": "2018-10-25T10:43:33Z",
+      "side": 1,
+      "message": "Update Copyright or remove",
+      "revId": "ab2fa191573b903c83a9f44c05ab74ba05767750",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_819cd3c1",
+        "filename": "scripts/cmso/kill_and_remove_cmso_containers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 89
+      },
+      "writtenOn": "2018-10-25T10:43:33Z",
+      "side": 1,
+      "message": "name\u003dvid?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "ab2fa191573b903c83a9f44c05ab74ba05767750",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_61a9afde",
+        "filename": "scripts/cmso/start_cmso_containers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 89
+      },
+      "writtenOn": "2018-10-25T10:43:33Z",
+      "side": 1,
+      "message": "Update or remove",
+      "range": {
+        "startLine": 3,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "ab2fa191573b903c83a9f44c05ab74ba05767750",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_21aba7d7",
+        "filename": "scripts/cmso/start_cmso_containers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 89
+      },
+      "writtenOn": "2018-10-25T10:43:33Z",
+      "side": 1,
+      "message": "We should reinstate with CMSO healthcheck",
+      "revId": "ab2fa191573b903c83a9f44c05ab74ba05767750",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
