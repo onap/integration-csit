@@ -1,0 +1,14 @@
+{
+	"domain" : "ChangeManagement",
+	"scheduleId" : "${uuid}",
+	"scheduleName" : "${uuid}",
+	"userId" : "${userId}",
+	"domainData" : [{
+			"CallbackUrl" : "${callbackUrl}",
+			"CallbackData" : "${callbackData}",
+			"WorkflowName" : "Replace"
+		}
+	],
+	"schedulingInfo" : {
+	}
+}
