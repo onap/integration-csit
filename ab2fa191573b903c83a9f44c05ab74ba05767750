@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bada0100_4184abd3",
+        "filename": "plans/cmso/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2018-10-25T13:09:38Z",
+      "side": 1,
+      "message": "Correct the copyright headers.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "ab2fa191573b903c83a9f44c05ab74ba05767750",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_a19f97b3",
         "filename": "scripts/cmso/kill_and_remove_cmso_containers.sh",
         "patchSetId": 1
