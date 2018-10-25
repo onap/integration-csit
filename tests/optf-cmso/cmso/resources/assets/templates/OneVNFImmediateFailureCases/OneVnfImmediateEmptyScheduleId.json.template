@@ -1,0 +1,20 @@
+{
+	"domain" : "ChangeManagement",
+	"scheduleId" : "${uuid}",
+	"scheduleName" : "${uuid}",
+	"userId" : "${userId}",
+	"domainData" : [{
+			"CallbackUrl" : "${callbackUrl}",
+			"CallbackData" : "${callbackData}",
+			"WorkflowName" : "Replace"
+		}
+	],
+	"schedulingInfo" : {
+		"vnfDetails" : [{
+				"node" : [
+					"ZRDM1MMSC04${testid}"
+				]
+			}
+		]
+	}
+}
