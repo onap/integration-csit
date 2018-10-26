@@ -17,20 +17,16 @@
 # Place the scripts in run order:
 # Start all process required for executing test case
 
-#start mariadb
-docker run -d --name mariadb -h db.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -v ${WORKSPACE}/scripts/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d  -v ${WORKSPACE}/scripts/mariadb/conf.d:/etc/mysql/conf.d nexus3.onap.org:10001/mariadb
+git clone http://gerrit.onap.org/r/so/docker-config.git test_lab
 
-#start so
-docker run -d --name so -h mso.mso.testlab.openecomp.org -e MYSQL_ROOT_PASSWORD=password --link=mariadb:db.mso.testlab.openecomp.org -p 8080:8080 -v ${WORKSPACE}/scripts/so/chef-config:/shared nexus3.onap.org:10001/openecomp/mso:1.1-STAGING-latest
+export NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
+export TAG=1.3.1
 
+# bring the so dockers
+docker-compose pull
+docker-compose up -d
 
-SO_IP=`get-instance-ip.sh so`
-# Wait for initialization
-for i in {1..10}; do
-    curl -sS ${SO_IP}:1080 && break
-    echo sleep $i
-    sleep $i
-done
+sleep 4m
 
 #REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' so`
 REPO_IP='127.0.0.1'
