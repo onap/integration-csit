@@ -61,6 +61,7 @@ cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKS
 
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
+echo "Disregard the message ERROR: for datarouter-node  Container 1234456 is unhealthy, this is expected behaiour at this stage"
 docker kill datarouter-prov
 docker kill datarouter-node
 docker kill vescollector
@@ -126,6 +127,8 @@ cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
 sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
 sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
 docker cp /tmp/datafile_endpoints.json dfc:/config/
+#Increase Logging
+docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /config/application.yaml"
 docker restart dfc
 docker exec dfc /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
 
