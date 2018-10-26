@@ -15,8 +15,9 @@
 # limitations under the License.
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2018 Nokia Intellectual Property
 #
 
 source ${WORKSPACE}/scripts/vid/kill_containers_and_remove_dataFolders.sh
-
+docker kill so-simulator
 # $WORKSPACE/archives/clamp-clone deleted with archives folder when tests starts so we keep it at the end for debugging

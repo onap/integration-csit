@@ -1,0 +1,57 @@
+{
+  "get": {
+    "get_request": "accepted"
+  },
+  "post":  {
+    "requestDetails": {
+      "cloudConfiguration": {
+        "lcpCloudRegionId": "RegionOne",
+        "tenantId": "982c540f6e69488eb6be5664255e00c0"
+      },
+      "modelInfo": {
+        "modelInvariantId": "41b3c314-dfab-4501-9c5e-1c9fe5d8e151",
+        "modelName": "SoWs1..base_ws..module-0",
+        "modelType": "vfModule",
+        "modelVersion": "1",
+        "modelVersionId": "7ea96ae9-9eac-4eaa-882e-077478a6c44a"
+      },
+      "relatedInstanceList": [{
+        "relatedInstance": {
+          "instanceId": "0d8a98d8-d7ca-4c26-b7ab-81d3729e3b6c",
+          "modelInfo": {
+            "modelInvariantId": "a4413616-cf96-4615-a94e-0dc5a6a65430",
+            "modelName": "SC_WS_SW_2",
+            "modelType": "service",
+            "modelVersion": "3.0",
+            "modelVersionId": "0fdaaf44-3c6c-4d81-9c57-b2ce7224dbb9"
+          }
+        }
+      },
+        {
+          "relatedInstance": {
+            "instanceId": "61c19619-2714-46f8-90c9-39734e4f545f",
+            "modelInfo": {
+              "modelCustomizationName": "SO_WS_1 0",
+              "modelInvariantId": "3b2c9dcb-6ef8-4c3c-8d5b-43d5776f7110",
+              "modelName": "SO_WS_1",
+              "modelType": "vnf",
+              "modelVersion": "1.0",
+              "modelVersionId": "0fdaaf44-3c6c-4d81-9c57-b2ce7224dbb9"
+            }
+          }
+        }
+      ],
+      "requestInfo": {
+        "source": "VID",
+        "suppressRollback": "false",
+        "requestorId": "az2016",
+        "instanceName": "SC_WS_VNF_1_2"
+      },
+      "requestParameters": {
+        "controllerType": "SDNC",
+        "userParams": []
+      }
+
+    }
+  }
+}

@@ -1,11 +1,10 @@
 *** Settings ***
-Documentation     Logins to VID
-Library 	    Selenium2Library
-Library    Collections
-Library         String
-Library 	      RequestsLibrary
-#Library           OSUtils
-Library           OperatingSystem
+Documentation  Logins to VID
+Library 	   Selenium2Library
+Library        Collections
+Library        String
+Library        RequestsLibrary
+Library        OperatingSystem
 
 *** Variables ***
 ${GLOBAL_APPLICATION_ID}           robot-ete
@@ -40,6 +39,7 @@ Login To VID GUI
     Click Button    xpath=//input[@id='loginBtn']
     Wait Until Page Contains  Welcome to VID    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
     Log    Logged in to ${VID_ENDPOINT}${VID_ENV}
+    [Teardown]    Close Browser
 
 	
 *** Keywords ***

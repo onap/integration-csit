@@ -14,4 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-docker inspect --format '{{ .NetworkSettings.IPAddress }}' $1
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1

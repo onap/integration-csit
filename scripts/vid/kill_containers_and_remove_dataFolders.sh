@@ -28,4 +28,3 @@ docker rm $(docker ps -a -q --filter="name=vid")
 
 rm -rf ${WORKSPACE}/data/*
 
-

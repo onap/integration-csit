@@ -2,3 +2,5 @@
 # Place the suites in run order.
 vid/healthCheck
 vid/login
+vid/https-connection
+vid/scaleOut
