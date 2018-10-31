@@ -131,7 +131,7 @@ log_dir = /var/log
 #fatal_deprecations = false
 
 
-[aaf_authentication]
+[aaf_api]
 
 #
 # From conductor
@@ -146,6 +146,16 @@ log_dir = /var/log
 # aaf_url. (string value)
 aaf_url = http://localhost:8100/authz/perms/user/
 
+# aaf_cert_file. (string value)
+#aaf_cert_file = <None>
+
+# aaf_cert_key_file. (string value)
+#aaf_cert_key_file = <None>
+
+# aaf_ca_bundle_file. (string value)
+#aaf_ca_bundle_file =
+aaf_ca_bundle_file = /usr/local/bin/AAF_RootCA.cer
+
 # aaf_retries. (integer value)
 #aaf_retries = 3
 
@@ -153,7 +163,7 @@ aaf_url = http://localhost:8100/authz/perms/user/
 #aaf_timeout = 100
 
 # aaf_user_roles. (list value)
-#aaf_user_roles = {"type": "org.onap.oof","instance": "plans","action": "GET"},{"type": "org.onap.oof","instance": "plans","action": "POST"}
+#aaf_permissions = {"type": "org.onap.oof.access","instance": "*","action": "*"}
 
 
 [aaf_sms]
