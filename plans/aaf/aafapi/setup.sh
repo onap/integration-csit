@@ -54,6 +54,10 @@ docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
 docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.7-SNAPSHOT
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.7-SNAPSHOT
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.8-SNAPSHOT
+docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.8-SNAPSHOT
 
 git clone --depth 1 http://gerrit.onap.org/r/aaf/authz -b master
 git pull
