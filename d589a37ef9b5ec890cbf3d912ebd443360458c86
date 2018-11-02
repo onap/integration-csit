@@ -1,0 +1,10 @@
+Code-Review+1: Wojciech Sliwka <wojciech.sliwka@nokia.com>
+Code-Review+1: Ofir Sonsino <ofir.sonsino@intl.att.com>
+Code-Review+1: Piotr Darosz <piotr.darosz@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Gary Wu <gary.i.wu@huawei.com>
+Submitted-by: Gary Wu <gary.i.wu@huawei.com>
+Submitted-at: Fri, 02 Nov 2018 22:23:20 +0000
+Reviewed-on: https://gerrit.onap.org/r/71434
+Project: integration/csit
+Branch: refs/heads/casablanca
