@@ -18,128 +18,114 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ============LICENSE_END============================================
-# ===================================================================
-# ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
+
+echo "AAF setup.sh"
+# Starting Directory
+CURRENT_DIR=$(pwd)
+
+if [ "$(uname)" = "Darwin" ]; then
+  SED="sed -i .bak"
+else
+  SED="sed -i"
+fi
+
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
 # Clone AAF Authz repo
-mkdir -p $WORKSPACE/archives/opt
-cd $WORKSPACE/archives/opt
+CODE_DIR="$WORKSPACE/archives/opt"
+mkdir -p $CODE_DIR
+cd $CODE_DIR
+
+# Get or refresh AAF Code set
+if [ -e authz ]; then
+  cd authz
+  git pull
+else
+  git clone --depth 1 http://gerrit.onap.org/r/aaf/authz -b master
+  chmod -R 777 authz
+  cd authz
+fi
 
 
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-export HOST_IP=${HOST_IP}
+# Locate to Docker dir
+cd auth/docker
+if [ ! -e d.props ]; then
+  cp d.props.init d.props
+fi
+source d.props
 
-CURRENT_DIR=$(pwd) export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
+# Fill in anything missing
+$SED "s/^LATITUDE=.*/LATITUDE=${LATITUDE:=38.0}/" d.props
+$SED "s/^LONGITUDE=.*/LONGITUDE=${LONGITUDE:=-72.0}/" d.props
+# For Jenkins, gotta use 10001, not 10003
+DOCKER_REPOSITORY=nexus3.onap.org:10001
+$SED "s/DOCKER_REPOSITORY=.*/DOCKER_REPOSITORY=$DOCKER_REPOSITORY/"  d.props
 
+$SED "s/HOSTNAME=.*/HOSTNAME=aaf.api.simpledemo.onap.org/"  d.props
+DOCKER_NAME=$(docker info | grep Name | awk '{print $2}' )
+echo "Docker Name is $DOCKER_NAME"
+echo "Host lookup of "$DOCKER_NAME"
+host $DOCKER_NAME
+echo "Jenkins Route Info"
+ip route get 8.8.8.8
+
+if [ "$DOCKER_NAME" = "minikube" ]; then
+  echo "Minikube IP"
+  HOST_IP=$(minikube ip)
+else 
+  echo "Getting IP from Docker $DOCKER_NAME with 'host' method"
+  HOST_IP=$(host $DOCKER_NAME | grep -v IPv6 | head -1 | awk '{print $4}')
+  if [ -z "$HOST_IP" ]; then
+    echo "Trying to get IP from Docker $DOCKER_NAME with 'ip route' method"
+    HOST_IP=$(ip route get 8.8.8.8 | awk '{print $3}')
+  fi
+  if [ -z "$HOST_IP" ]; then
+     echo "Critical HOST_IP could not be obtained by 2 different methods.  Exiting..."
+     exit
+  fi
+  echo 
+fi
+$SED "s/HOST_IP=.*/HOST_IP=$HOST_IP/" d.props
+
+cat d.props
+
+# Pull latest Dockers
+AAF_DOCKER_VERSION=${VERSION}
 NEXUS_USERNAME=anonymous
 NEXUS_PASSWD=anonymous
-NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-AAF_DOCKER_VERSION=2.1.5
+echo "$NEXUS_PASSWD" | docker login -u $NEXUS_USERNAME --password-stdin $DOCKER_REPOSITORY
 
-docker login -u $NEXUS_USERNAME -p "$NEXUS_PASSWD" $NEXUS_DOCKER_REPO
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_config:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cm:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_fs:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_gui:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
+docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
 
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_config:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_cm:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_fs:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_gui:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
-docker pull $NEXUS_DOCKER_REPO/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
+# Cassandra Install/Start
+cd ../auth-cass/docker
+echo Cassandra Install
+bash ./dinstall.sh
+cd -
 
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.6-SNAPSHOT
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.7-SNAPSHOT
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.7-SNAPSHOT
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION nexus3.onap.org:10003/onap/aaf/aaf_cass:2.1.8-SNAPSHOT
-docker tag $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION $NEXUS_DOCKER_REPO/onap/aaf/aaf_cass:2.1.8-SNAPSHOT
+source d.props
+cat d.props
 
-git clone --depth 1 http://gerrit.onap.org/r/aaf/authz -b master
-git pull
-chmod -R 777 authz
-cd authz
-CURRENT_DIR=$(pwd)
-
-pwd
-
-if [ ! -e auth/csit/d.props ]; then
-  cp auth/csit/d.props.init auth/csit/d.props
-fi
-
-if [ ! -e auth/docker/d.props ]; then
-  cp auth/docker/d.props.init auth/docker/d.props
-fi
-
-NEXUS_USERNAME=anonymous
-NEXUS_PASSWD=anonymous
-NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-sed -i "s/DOCKER_REPOSITORY=.*/DOCKER_REPOSITORY=$NEXUS_DOCKER_REPO/" auth/csit/d.props
-. auth/csit/d.props
-
-
-
-HOSTNAME=`hostname`
-FQDN=aaf.api.simpledemo.onap.org
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-export HOST_IP=${HOST_IP}
-
-
-CASS_IP=`docker inspect aaf_cass | grep '"IPAddress' | head -1 | cut -d '"' -f 4`
-CASS_HOST="cass.aaf.osaaf.org:"$CASS_IP
-
-cd auth/auth-cass/docker
-if [ "`docker container ls | grep aaf_cass`" = "" ]; then
-  # Cassandra Install
-  echo Cassandra Install
-  bash ./dinstall.sh
-fi
-
-CASS_IP=`docker inspect aaf_cass | grep '"IPAddress' | head -1 | cut -d '"' -f 4`
-CASS_HOST="cass.aaf.osaaf.org:"$CASS_IP
-if [ ! -e $WORKSPACE/archives/opt/authz/auth/csit/cass.props ]; then
-  cp $WORKSPACE/archives/opt/authz/auth/csit/cass.props.init $WORKSPACE/archives/opt/authz/auth/csit/cass.props
-fi
-
-sed -i "s/CASS_HOST=.*/CASS_HOST="$CASS_HOST"/g" $WORKSPACE/archives/opt/authz/auth/csit/cass.props
-
-
-# TODO Pull from Config Dir
-if [ "$LATITUDE" = "" ]; then
-  LATITUDE=37.781
-  LONGITUDE=-122.261
-  sed -i "s/LATITUDE=.*/LATITUDE=$LATITUDE/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-  sed -i "s/LONGITUDE=.*/LONGITUDE=$LONGITUDE/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-fi
-
-sed -i "s/VERSION=.*/VERSION=$VERSION/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-sed -i "s/HOSTNAME=.*/HOSTNAME=$HOSTNAME/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-sed -i "s/HOST_IP=.*/HOST_IP=$HOST_IP/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-sed -i "s/AAF_REGISTER_AS=.*/AAF_REGISTER_AS=$FQDN/g" $WORKSPACE/archives/opt/authz/auth/csit/d.props
-
-pwd
-
-cd ../../
-
-pwd
-
-cd csit
-tty
-# Need new Deployment system properties
-bash ./aaf.sh
-
-# run it
+# AAF Run
 bash ./drun.sh
+
+bash ./aaf.sh cat /opt/app/osaaf/local/org.osaaf.aaf.props
+
+bash ./aaf.sh cat /opt/app/osaaf/local/org.osaaf.aaf.cred.props
 
 docker images
 
 docker ps -a
-
-cat /etc/sudoers
 
 docker logs aaf_hello
 
@@ -155,38 +141,8 @@ docker logs aaf_oauth
 
 docker logs aaf_service
 
-# Wait for initialization of Docker containers
-for i in {1..50}; do
-        if [ $(docker inspect --format '{{ .State.Running }}' aaf_hello) ] && \
-                [ $(docker inspect --format '{{ .State.Running }}' aaf_cm) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' aaf_fs) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' aaf_gui) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' aaf_oauth) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' aaf_locate) ] && \
-                [ $(docker inspect --format '{{ .State.Running }}' aaf_service) ]
-        then
-                echo "aaf Service Running"
-                break
-        else
-                echo sleep $i
-                sleep $i
-        fi
-done
-
-
-
 AAF_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aaf_service)
-CASSANDRA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aaf_cass)
-
 echo AAF_IP=${AAF_IP}
-echo CASSANDRA_IP=${CASSANDRA_IP}
-
-# Wait for initialization of docker services
-for i in {1..12}; do
-   curl -k -u aaf_admin@people.osaaf.org:demo123456! https://${AAF_IP}:8100/authz/nss/org.osaaf.people && break
-    echo sleep $i
-    sleep $i
-done
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v AAF_IP:${AAF_IP}"
