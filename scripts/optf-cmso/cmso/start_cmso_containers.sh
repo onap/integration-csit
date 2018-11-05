@@ -20,6 +20,9 @@
 
 echo "This is ${WORKSPACE}/scripts/opft-cmso/cmso/start_cmso_containers.sh"
 
+DB_IMAGE_VERSION=1.0-SNAPSHOT-latest
+SERVICE_IMAGE_VERSION=1.0-SNAPSHOT-latest
+
 # start cmso mariadb and  db-init containers with docker compose and configuration from cmso/cmso-service/extra/docker/cmso-service/docker-compose.yml
 
 docker run -p 3306:3306 --name cmso-mariadb -v $(pwd)/mariadb/conf1:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=beer -d mariadb:10.1.11
@@ -32,11 +35,13 @@ sed  -i -e "s%192.168.56.101:3306%${CMSO_DB_IP}:3306%g" ./etc/config/cmso.proper
 sed  -i -e "s%192.168.56.101:3306%${CMSO_DB_IP}:3306%g" ./etc/config/liquibase.properties
 
 
-docker run --name cmso-db-init -v $(pwd)/etc:/share/etc -v $(pwd)/logs:/share/logs -d nexus3.onap.org:10001/onap/optf-cmso-dbinit
+docker run --name cmso-db-init -v $(pwd)/etc:/share/etc -v $(pwd)/logs:/share/logs \
+ -d nexus3.onap.org:10001/onap/optf-cmso-dbinit:${DB_IMAGE_VERSION}
 
 sleep 30
 
-docker run --name cmso-service -p 8080:8080 -v $(pwd)/etc:/share/etc -v $(pwd)/logs:/share/logs -v $(pwd)/debug-logs:/share/debug-logs -d nexus3.onap.org:10001/onap/optf-cmso-service
+docker run --name cmso-service -p 8080:8080 -v $(pwd)/etc:/share/etc -v $(pwd)/logs:/share/logs\
+ -v $(pwd)/debug-logs:/share/debug-logs -d nexus3.onap.org:10001/onap/optf-cmso-service:${SERVICE_IMAGE_VERSION}
 
 CMSO_SERVICE_IP=`get-instance-ip.sh  cmso-service`
 
