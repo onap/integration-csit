@@ -26,7 +26,7 @@ Verify HolmesModel1
     Should Contain Match    ${resp}   *DC3*
     Should Contain Match    ${resp}   *Policy1*
     Should Contain Match    ${resp}   *07e266fc-49ab-4cd7-8378-ca4676f1b9ec*
-    Should Contain Match    ${resp}   *migrate*
+    Should Contain Match    ${resp}   *Migrate*
     Should Contain Match    ${resp}   *240*
     Should Contain Match    ${resp}   *390*
     Should Contain Match    ${resp}   *Logic1*
@@ -40,7 +40,7 @@ Verify TCAModel1
     Should Contain Match    ${resp}   *DC1*
     Should Contain Match    ${resp}   *DC3*
     Should Contain Match    ${resp}   *Policy2*
-    Should Contain Match    ${resp}   *restart*
+    Should Contain Match    ${resp}   *Restart*
     Should Contain Match    ${resp}   *280*
     Should Contain Match    ${resp}   *400*
 
