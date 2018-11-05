@@ -68,17 +68,15 @@ docker run -d --name music-db --network music-net -p "7000:7000" -p "7001:7001" 
 -v $MUSIC_TRIGGER_DIR/$TRIGGER_JAR:/etc/cassandra/triggers/$TRIGGER_JAR \
 ${CASS_IMG};
 
+# See if cassandra is up.
+echo "########## Running Test to see if Cassandra is up ##########"
 CASSA_IP=`docker inspect -f '{{ $network := index .NetworkSettings.Networks "music-net" }}{{ $network.IPAddress}}' music-db`
 echo "CASSANDRA_IP=${CASSA_IP}"
 ${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${CASSA_IP} 9042
 
-# See if cassandra is up.
-echo "########## Running Test to see if Cassandra is up ##########"
-docker run --name music-casstest --network music-net \
-$BUSYBOX_IMG sh -c "until nc -z music-db 9042 && echo "success"; do echo 'No connection .. Sleeping for $TT seconds';sleep $TT; done;"
-
 # Sleep 60 seconds to ensure Cassandra is up and running. 
 sleep 60;
+
 # Check to see if Keyspaces are there. 
 docker exec music-db cqlsh -u cassandra -p cassandra -e "DESCRIBE keyspaces;"
 
