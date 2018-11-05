@@ -116,19 +116,11 @@ docker images
 
 docker ps -a
 
-docker logs aaf_hello
+for C in aaf_service aaf_locate aaf_oauth aaf_cm aaf_gui aaf_hello aaf_fs; do
+  docker logs $C
+done
 
-docker logs aaf_locate
-
-docker logs aaf_cm
-
-docker logs aaf_gui
-
-docker logs aaf_fs
-
-docker logs aaf_oauth
-
-docker logs aaf_service
+bash ./aaf.sh wait aaf_service
 
 AAF_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aaf_service)
 echo AAF_IP=${AAF_IP}

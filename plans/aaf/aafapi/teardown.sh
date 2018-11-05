@@ -25,6 +25,6 @@ cd "$WORKSPACE/archives/opt/authz/auth/docker"
 bash dstop.sh
 bash dstop.sh cass
 echo "Y" | docker container prune
-docker volume remove aaf_config aaf_cass_data
+docker volume remove aaf_config aaf_cass_data aaf_status
 cd -
 
