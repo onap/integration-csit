@@ -3,9 +3,9 @@ services:
   prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
     command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
         --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
         --aai.aaiClientConfiguration.aaiHostPortNumber=3333
         --aai.aaiClientConfiguration.aaiHost=aai
@@ -21,19 +21,27 @@ services:
       - "8433:8433"
     container_name: prh
     depends_on:
-     - dmaap
+     - dmaap-bc
      - aai
 
   ssl_prh:
-      image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
+      image: onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
       command: >
-          --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap
-          --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
-          --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap
-          --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
-          --aai.aaiClientConfiguration.aaiHostPortNumber=3333
+          --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+          --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
+          --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
+          --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+          --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
+          --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
+          --aai.aaiClientConfiguration.aaiHostPortNumber=3334
           --aai.aaiClientConfiguration.aaiHost=aai
-          --aai.aaiClientConfiguration.aaiProtocol=http
+          --aai.aaiClientConfiguration.aaiProtocol=https
+          --security.enableAaiCertAuth=true
+          --security.enableDmaapCertAuth=true
+          --security.keyStorePath=/tmp/certs/org.onap.dcae.jks
+          --security.keyStorePasswordPath=/tmp/certs/keystore.password
+          --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
+          --security.trustStorePasswordPath=/tmp/certs/truststore.password
       entrypoint:
         - java
         - -Dspring.profiles.active=dev
@@ -43,12 +51,14 @@ services:
       ports:
         - "8200:8100"
         - "8533:8433"
+      volumes:
+        - ./simulator/certs:/tmp/certs
       container_name: ssl_prh
       depends_on:
-       - dmaap
+       - dmaap-bc
        - aai
 
-  dmaap:
+  dmaap-bc:
     build:
       context: simulator
       dockerfile: DMaaP_simulator
