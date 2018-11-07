@@ -13,8 +13,7 @@ def start_http_endpoint(port, handler_class):
     _thread.start_new_thread(init_http_endpoints, (port, handler_class))
 
 
-def start_https_endpoint(port, handler_class, keyfile="certs/server.key",
-                         certfile="certs/server.crt", ca_certs="certs/client.crt"):
+def start_https_endpoint(port, handler_class, keyfile, certfile, ca_certs):
     _thread.start_new_thread(init_https_endpoints, (port, handler_class, keyfile, certfile, ca_certs))
 
 
