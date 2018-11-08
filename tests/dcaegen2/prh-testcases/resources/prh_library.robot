@@ -21,7 +21,7 @@ Invalid event processing
     ${data}=    Get Data From File    ${input_invalid_event_in_dmaap}
     Set event in DMaaP    ${data}
     ${invalid_notification}=    Create invalid notification    ${data}
-    ${notification}=    Catenate    SEPARATOR= \\n    |org.onap.dcaegen2.services.prh.exceptions.DmaapNotFoundException: Incorrect json, consumerDmaapModel can not be created:    ${invalid_notification}
+    ${notification}=    Catenate    SEPARATOR= \\n    |Incorrect json, consumerDmaapModel can not be created:     ${invalid_notification}
     Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
 
 Valid event processing
