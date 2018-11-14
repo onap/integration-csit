@@ -9,9 +9,9 @@ services:
      - "8443:8443"
      - "8080:8080"
     volumes:
-     - ./prov_data/provserver.properties:/opt/app/datartr/etc/provserver.properties
-     - ./prov_data/addSubscriber.txt:/opt/app/datartr/addSubscriber.txt
-     - ./prov_data/addFeed3.txt:/opt/app/datartr/addFeed3.txt
+     - ../prov_data/provserver.properties:/opt/app/datartr/etc/provserver.properties
+     - ../prov_data/addSubscriber.txt:/opt/app/datartr/addSubscriber.txt
+     - ../prov_data/addFeed3.txt:/opt/app/datartr/addFeed3.txt
     depends_on:
       mariadb_container:
         condition: service_healthy
@@ -29,7 +29,7 @@ services:
      - "9443:8443"
      - "9090:8080"
     volumes:
-     - ./node_data/node.properties:/opt/app/datartr/etc/node.properties
+     - ../node_data/node.properties:/opt/app/datartr/etc/node.properties
     depends_on:
       datarouter-prov:
         condition: service_healthy
@@ -41,7 +41,7 @@ services:
       ports:
        - "7070:7070"
       volumes:
-       - ./subscriber_data/subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
+       - ../subscriber_data/subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
 
   mariadb_container:
     image: mariadb:10.2.14
@@ -70,7 +70,7 @@ services:
 
   dfc:
     container_name: dfc
-    image: quay.io/martin_yan_seu/datafile
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
     ports:
       - "8433:8433"
 
