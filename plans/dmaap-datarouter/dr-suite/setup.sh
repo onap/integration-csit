@@ -6,7 +6,7 @@ source ${SCRIPTS}/common_functions.sh
 mkdir -p $WORKSPACE/archives/dmaapdr
 cd $WORKSPACE/archives/dmaapdr
 
-git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
+git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b casablanca
 cd datarouter
 git pull
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
