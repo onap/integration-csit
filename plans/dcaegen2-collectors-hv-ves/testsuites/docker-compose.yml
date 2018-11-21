@@ -42,7 +42,7 @@ services:
     command: ["-server", "-bootstrap"]
 
   ves-hv-collector:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:latest
+    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:1.0-SNAPSHOT
     ports:
       - "6060:6060"
       - "6061:6061/tcp"
@@ -64,7 +64,7 @@ services:
       - ves-hv-default
 
   unencrypted-ves-hv-collector:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:latest
+    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:1.0-SNAPSHOT
     ports:
       - "7060:6060"
       - "7061:6061/tcp"
@@ -83,7 +83,7 @@ services:
       - ves-hv-default
 
   dcae-app-simulator:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-dcae-app-simulator:latest
+    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-dcae-app-simulator:1.0-SNAPSHOT
     ports:
       - "6063:6063/tcp"
     command: ["--listen-port", "6063", "--kafka-bootstrap-servers", "kafka:9092", "--kafka-topics", "ves_hvRanMeas"]

@@ -6,7 +6,7 @@ from time import sleep
 
 XNF_SIMULATOR_NAME = "xNF Simulator"
 SIMULATOR_IMAGE_NAME = "onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-xnf-simulator"
-SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":latest"
+SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":1.0-SNAPSHOT"
 WORKSPACE_ENV = os.getenv("WORKSPACE")
 certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/ssl/"
 collector_certs_lookup_dir = "/etc/ves-hv/"
