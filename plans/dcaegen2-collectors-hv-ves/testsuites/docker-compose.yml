@@ -42,7 +42,7 @@ services:
     command: ["-server", "-bootstrap"]
 
   ves-hv-collector:
-    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}:${HV_VES_VERSION}
     ports:
     - "6060:6060"
     - "6061:6061/tcp"
@@ -63,7 +63,7 @@ services:
     - ves-hv-default
 
   unencrypted-ves-hv-collector:
-    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}:${HV_VES_VERSION}
     ports:
     - "7060:6060"
     - "7061:6061/tcp"
@@ -82,7 +82,7 @@ services:
     - ves-hv-default
 
   dcae-app-simulator:
-    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${DCAE_APP_SIMULATOR_IMAGE}
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${DCAE_APP_SIMULATOR_IMAGE}:${HV_VES_VERSION}
     ports:
     - "6063:6063/tcp"
     command: ["--listen-port", "6063", "--kafka-bootstrap-servers", "kafka:9092", "--kafka-topics", "non-existing-topic"]
