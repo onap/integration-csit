@@ -42,20 +42,20 @@ services:
     command: ["-server", "-bootstrap"]
 
   ves-hv-collector:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:latest
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}.${HV_VES_IMAGE}
     ports:
       - "6060:6060"
       - "6061:6061/tcp"
-    entrypoint: ["java", "-Dio.netty.leakDetection.level=paranoid", "-cp", "*:", "org.onap.dcae.collectors.veshv.main.MainKt"]
+    entrypoint: ["java", "-Dio.netty.leakDetection.level=paranoid", "-cp", "*:", "${HV_VES_MAIN_CLASS}"]
     command: ["--listen-port", "6061",
-              "--config-url", "http://consul:8500/v1/kv/veshv-config",
+              "--config-url", "${HV_VES_CONFIG_URL}",
               "--key-store-password", "onaponap",
               "--trust-store-password", "onaponap"]
     healthcheck:
       interval: 10s
       timeout: 5s
       retries: 2
-      test: "curl --request GET --fail --silent --show-error localhost:6060/health/ready && nc -vz localhost 6061"
+      test: ${HV_VES_HEALTHCHECK_CMD}
     depends_on:
       - kafka
     volumes:
@@ -64,17 +64,17 @@ services:
       - ves-hv-default
 
   unencrypted-ves-hv-collector:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-main:latest
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}.${HV_VES_IMAGE}
     ports:
       - "7060:6060"
       - "7061:6061/tcp"
-    entrypoint: ["java", "-Dio.netty.leakDetection.level=paranoid", "-cp", "*:", "org.onap.dcae.collectors.veshv.main.MainKt"]
-    command: ["--listen-port", "6061","--config-url", "http://consul:8500/v1/kv/veshv-config", "--ssl-disable"]
+    entrypoint: ["java", "-Dio.netty.leakDetection.level=paranoid", "-cp", "*:", "${HV_VES_MAIN_CLASS}"]
+    command: ["--listen-port", "6061","--config-url", "${HV_VES_CONFIG_URL}", "--ssl-disable"]
     healthcheck:
       interval: 10s
       timeout: 5s
       retries: 2
-      test: "curl --request GET --fail --silent --show-error localhost:6060/health/ready && nc -vz localhost 6061"
+      test: ${HV_VES_HEALTHCHECK_CMD}
     depends_on:
       - kafka
     volumes:
@@ -83,7 +83,7 @@ services:
       - ves-hv-default
 
   dcae-app-simulator:
-    image: ${DOCKER_REGISTRY_PREFIX}onap/org.onap.dcaegen2.collectors.hv-ves.hv-collector-dcae-app-simulator:latest
+    image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}.${DCAE_APP_SIMULATOR_IMAGE}
     ports:
       - "6063:6063/tcp"
     command: ["--listen-port", "6063", "--kafka-bootstrap-servers", "kafka:9092", "--kafka-topics", "ves_hvRanMeas"]
