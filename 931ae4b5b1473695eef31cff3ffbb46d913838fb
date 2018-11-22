@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_dfbabebf",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/.env",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2683
+      },
+      "writtenOn": "2018-11-22T09:30:28Z",
+      "side": 1,
+      "message": "Frankly speaking namespace (in the context of docker) is everything between `registry/` and last `/`. So in our case namespace is onap.",
+      "revId": "931ae4b5b1473695eef31cff3ffbb46d913838fb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
