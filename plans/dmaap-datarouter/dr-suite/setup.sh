@@ -30,6 +30,26 @@ for i in {1..10}; do
     fi
 done
 
+# Wait for healthy container datarouter-prov
+for i in {1..10}; do
+    if [ "$(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)" = 'healthy' ]
+    then
+        echo datarouter-prov.State.Health.Status is $(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)
+        echo "DR Service Running"
+        break
+    else
+        echo datarouter-prov.State.Health.Status is $(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)
+        echo sleep $i
+        sleep $i
+        if [ $i = 10 ]
+        then
+            echo datarouter-prov container is not in healthy state - the test is not made, teardown...
+            cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+            docker-compose down -v
+        fi
+    fi
+done
+
 DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
 DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
 DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
