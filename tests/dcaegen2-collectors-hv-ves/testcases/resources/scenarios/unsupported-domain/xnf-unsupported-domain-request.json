@@ -16,7 +16,7 @@
       "reportingEntityName": "sample-reporting-entity-name",
       "sourceId": "sample-source-id",
       "sourceName": "sample-source-name",
-      "vesEventListenerVersion": "another-version"
+      "vesEventListenerVersion": "7.2.0"
     },
     "messageType": "VALID",
     "messagesAmount": 25000
@@ -38,7 +38,7 @@
       "reportingEntityName": "sample-reporting-entity-name",
       "sourceId": "sample-source-id",
       "sourceName": "sample-source-name",
-      "vesEventListenerVersion": "another-version"
+      "vesEventListenerVersion": "7.2.0"
     },
     "messageType": "VALID",
     "messagesAmount": 100
@@ -60,7 +60,7 @@
       "reportingEntityName": "sample-reporting-entity-name",
       "sourceId": "sample-source-id",
       "sourceName": "sample-source-name",
-      "vesEventListenerVersion": "another-version"
+      "vesEventListenerVersion": "7.2.0"
     },
     "messageType": "VALID",
     "messagesAmount": 25000
