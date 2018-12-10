@@ -9,8 +9,7 @@ httpPut
     ${headers}    create dictionary    Content-Type=application/json;charset=utf-8    Accept=application/json
     create session    microservices    ${restHost}    ${headers}
     log    ${data}
-    ${putResponse}    put request    microservices    ${restUrl}    ${data}    \    ${EMPTY}
-    ...    ${headers}
+    ${putResponse}    put request    microservices    ${restUrl}    ${data}    ${headers}
     log    ${putResponse}
     [Return]    ${putResponse}
 
