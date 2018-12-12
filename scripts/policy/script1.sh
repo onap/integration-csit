@@ -46,23 +46,15 @@ cd ..
 
 ifconfig
 
-if ! ifconfig eth0; then
-	if ! ifconfig ens3; then
-		echo "Could not determine IP address"
-		exit 1
-	fi
-	export IP=`ifconfig ens3 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
-else
-	export IP=`ifconfig eth0 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
+export IP=`ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}'`
+if [ -z "$IP" ]; then
+	echo "Could not determine IP address"
+	exit 1
 fi
 echo $IP
 
 if ! ifconfig docker0; then
-	if ! ifconfig ens3; then
-		echo "Could not determine IP address"
-		exit 1
-	fi
-	export DOCKER_IP_IP=`ifconfig ens3 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
+	export DOCKER_IP="$IP"
 else
 	export DOCKER_IP=`ifconfig docker0 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
 fi
@@ -70,13 +62,15 @@ echo $DOCKER_IP
 
 git clone http://gerrit.onap.org/r/oparent
 
-git clone http://gerrit.onap.org/r/policy/engine
+#git clone http://gerrit.onap.org/r/policy/engine
+ln -s ~/git/onap/engine .
 cd engine/packages/docker 
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
 docker build -t onap/policy-pe target/policy-pe
 
 cd ${WORK_DIR}
-git clone http://gerrit.onap.org/r/policy/drools-pdp
+#git clone http://gerrit.onap.org/r/policy/drools-pdp
+ln -s ~/git/onap/drools-pdp .
 cd drools-pdp/packages/docker 
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
 docker build -t onap/policy-drools target/policy-drools
@@ -121,7 +115,49 @@ echo ${NEXUS_IP}
 MARIADB_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' mariadb`
 echo ${MARIADB_IP}
 
-sleep 5m
+sleep 3m
+
+docker logs mariadb 2>&1 | grep -q "mysqld: ready for connections"
+if [ $? -eq 0 ]; then
+	# mariadb is ok - sleep a little longer for others
+	sleep 2m
+
+else
+	echo mariadb is not ready
+	echo Restarting...
+
+	docker kill drools pdp pap brmsgw nexus mariadb
+	docker rm -f drools pdp pap brmsgw nexus mariadb
+
+	docker-compose -f docker-compose-integration.yml up -d 
+	
+	if [ ! $? -eq 0 ]; then
+		echo "Docker compose failed"
+		exit 1
+	fi 
+	
+	docker ps
+	
+	POLICY_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' drools`
+	echo ${POLICY_IP}
+	
+	PDP_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' pdp`
+	echo ${PDP_IP}
+	
+	PAP_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' pap`
+	echo ${PAP_IP}
+	
+	BRMS_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' brmsgw`
+	echo ${BRMS_IP}
+	
+	NEXUS_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' nexus`
+	echo ${NEXUS_IP}
+	
+	MARIADB_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' mariadb`
+	echo ${MARIADB_IP}
+	
+	sleep 5m
+fi
 
 netstat -tnl
 
@@ -160,7 +196,7 @@ INTERVAL=20
 TIME=0 
 while [ "$TIME" -lt "$TIME_OUT" ]; do 
 	
-	curl -k -i -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'ClientAuth: cHl0aG9uOnRlc3Q=' -H 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' -H 'Environment: TEST' -X POST -d '{"policyName": ".*"}' https://${PDP_IP}:8081/pdp/api/getConfig && break
+	curl -k -i -v -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'ClientAuth: cHl0aG9uOnRlc3Q=' -H 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' -H 'Environment: TEST' -d '{"policyName": ".*"}' https://${PDP_IP}:8081/pdp/api/getConfig && break
 	
 echo Sleep: $INTERVAL seconds before testing if Policy is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds 
   sleep $INTERVAL 
