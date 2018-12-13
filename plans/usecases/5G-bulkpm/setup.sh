@@ -5,7 +5,7 @@ source ${SCRIPTS}/common_functions.sh
 # Clone DMaaP Message Router repo
 mkdir -p $WORKSPACE/archives/dmaapmr
 cd $WORKSPACE/archives/dmaapmr
-git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
+git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b casablanca
 sed -i 's/enableCadi: false/enableCadi: "false"/g' /$WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose/docker-compose.yml
 cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
 cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
@@ -53,7 +53,7 @@ sleep 5
 # Clone DMaaP Data Router repo
 mkdir -p $WORKSPACE/archives/dmaapdr
 cd $WORKSPACE/archives/dmaapdr
-git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
+git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b casablanca
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
