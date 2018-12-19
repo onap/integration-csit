@@ -25,7 +25,15 @@
 
 echo "This is ${WORKSPACE}/scripts/vid/start_vid_containers.sh"
 
-export IP=`ifconfig eth0 | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
+case "$(uname -m)" in
+        aarch64)
+            INTERFACE_NAME="enp1s0"
+            ;;
+        *)
+            INTERFACE_NAME="eth0" 
+esac
+
+export IP=`ifconfig $INTERFACE_NAME | awk -F: '/inet addr/ {gsub(/ .*/,"",$2); print $2}'`
 
 cd ${WORKSPACE}/tests/vid/resources
 docker-compose up -d --build
