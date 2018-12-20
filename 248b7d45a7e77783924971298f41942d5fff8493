@@ -16,6 +16,24 @@
       "revId": "248b7d45a7e77783924971298f41942d5fff8493",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_6b1b8f73",
+        "filename": "scripts/vid/start_vid_containers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3873
+      },
+      "writtenOn": "2018-12-20T07:38:15Z",
+      "side": 1,
+      "message": "if this\u0027s possible then i\u0027d also prefer this approach",
+      "parentUuid": "9adffdf1_0b0d2337",
+      "revId": "248b7d45a7e77783924971298f41942d5fff8493",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
