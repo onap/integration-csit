@@ -1,5 +1,4 @@
 {
-  "dmaap.kafkaBootstrapServers": "kafka:9092",
   "collector.routing": [
     {
       "fromDomain": "perf3gpp",
@@ -7,3 +6,4 @@
     }
   ]
 }
+

@@ -46,10 +46,13 @@ services:
     ports:
     - "6060:6060"
     - "6061:6061/tcp"
-    entrypoint: ["java", "-Dio.netty.leakDetection.level=paranoid", "-cp", "*:", "${HV_VES_MAIN_CLASS}"]
-    command: ["--listen-port", "6061","--config-url", "${HV_VES_CONFIG_URL}",
+    command: ["--listen-port", "6061",
+              "--config-url", "${HV_VES_CONFIG_URL}",
+              "--kafka-bootstrap-servers", "kafka:9092",
               "--key-store-password", "onaponap",
               "--trust-store-password", "onaponap"]
+    environment:
+      JAVA_OPTS:  "-Dio.netty.leakDetection.level=paranoid"
     healthcheck:
       interval: 10s
       timeout: 5s
@@ -97,3 +100,4 @@ services:
       ves-hv-default:
         aliases:
         - dcae-app-simulator
+
