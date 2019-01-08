@@ -131,6 +131,7 @@ class XnfSimulator:
                  should_disable_ssl,
                  should_connect_to_unencrypted_hv_ves):
         self.port = port
+        self.healthcheck_server_port = "6063"
         cert_name_prefix = "" if should_use_valid_certs else "untrusted"
         certificates_path_with_file_prefix = collector_certs_lookup_dir + cert_name_prefix
         self.key_store_path = certificates_path_with_file_prefix + "client.p12"
@@ -142,6 +143,7 @@ class XnfSimulator:
 
     def get_startup_command(self):
         startup_command = ["--listen-port", self.port,
+                           "--health-check-api-port", self.healthcheck_server_port,
                            "--ves-host", self.hv_collector_host,
                            "--ves-port", "6061",
                            "--key-store", self.key_store_path,
@@ -160,7 +162,7 @@ class XnfSimulator:
             "retries": 1,
             "test": ["CMD", "curl", "--request", "GET",
                      "--fail", "--silent", "--show-error",
-                     "localhost:" + self.port + "/healthcheck"]
+                     "localhost:" + self.healthcheck_server_port + "/health/ready"]
         }
 
 
