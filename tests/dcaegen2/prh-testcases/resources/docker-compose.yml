@@ -1,7 +1,7 @@
 version: '3'
 services:
   prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.1.1
     command: >
         --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
@@ -25,7 +25,7 @@ services:
      - aai
 
   ssl_prh:
-      image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
+      image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.1.1
       command: >
           --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
           --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
