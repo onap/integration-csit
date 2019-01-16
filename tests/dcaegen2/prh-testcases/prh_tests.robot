@@ -49,7 +49,8 @@ Get valid event from DMaaP and record in AAI does not exist
     ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
     Set PNF name in AAI    wrong_aai_record
     Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.io.IOException: Connection closed prematurely
+    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |AAIProducerTask exception has been registered
+    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
 
 Event in DMaaP is not JSON format
     [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
