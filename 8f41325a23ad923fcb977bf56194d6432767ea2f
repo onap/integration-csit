@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_ef3aef97",
+        "filename": "plans/dmaap-datarouter/ssl-dr-suite/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2019-01-24T15:01:50Z",
+      "side": 1,
+      "message": "Not sure we need this.",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "8f41325a23ad923fcb977bf56194d6432767ea2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_2f6b1786",
+        "filename": "plans/dmaap-datarouter/ssl-dr-suite/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2019-01-24T15:01:50Z",
+      "side": 1,
+      "message": "Do we need to verify the subscriber container. Prob not but it is needed for the test cases.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "8f41325a23ad923fcb977bf56194d6432767ea2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_ef08afdb",
+        "filename": "plans/dmaap-datarouter/ssl-dr-suite/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2019-01-24T15:01:50Z",
+      "side": 1,
+      "message": "I\u0027d just update the hosts file here instead of separate script.\n\nThen you could prob curl the gateway IP in directly instead of going through the docker container?",
+      "range": {
+        "startLine": 61,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "8f41325a23ad923fcb977bf56194d6432767ea2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_ef2f4f3d",
+        "filename": "scripts/dmaap-datarouter/datarouterCA.crt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2019-01-24T15:01:50Z",
+      "side": 1,
+      "message": "I think this cert might be good across all ONAP so not sure about publishing it in gerrit.",
+      "range": {
+        "startLine": 2,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "8f41325a23ad923fcb977bf56194d6432767ea2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_8f1ec30a",
+        "filename": "tests/dmaap-datarouter/ssl-dr-suite/ssl-dr-suite.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2019-01-24T15:01:50Z",
+      "side": 1,
+      "message": "\"to Feed\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "8f41325a23ad923fcb977bf56194d6432767ea2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
