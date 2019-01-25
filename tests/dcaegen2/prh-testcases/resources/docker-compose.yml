@@ -10,53 +10,41 @@ services:
         --aai.aaiClientConfiguration.aaiHostPortNumber=3333
         --aai.aaiClientConfiguration.aaiHost=aai
         --aai.aaiClientConfiguration.aaiProtocol=http
-    entrypoint:
-      - java
-      - -Dspring.profiles.active=dev
-      - -Dlogging.level.org.onap.dcaegen2.services.prh=TRACE
-      - -jar
-      - /opt/prh-app-server.jar
     ports:
       - "8100:8100"
       - "8433:8433"
     container_name: prh
     depends_on:
-     - dmaap-bc
-     - aai
+      - dmaap-bc
+      - aai
 
   ssl_prh:
-      image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-      command: >
-          --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
-          --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
-          --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
-          --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
-          --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
-          --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
-          --aai.aaiClientConfiguration.aaiHostPortNumber=3334
-          --aai.aaiClientConfiguration.aaiHost=aai
-          --aai.aaiClientConfiguration.aaiProtocol=https
-          --security.enableAaiCertAuth=true
-          --security.enableDmaapCertAuth=true
-          --security.keyStorePath=/tmp/certs/org.onap.dcae.jks
-          --security.keyStorePasswordPath=/tmp/certs/keystore.password
-          --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
-          --security.trustStorePasswordPath=/tmp/certs/truststore.password
-      entrypoint:
-        - java
-        - -Dspring.profiles.active=dev
-        - -Dlogging.level.org.onap.dcaegen2.services.prh=TRACE
-        - -jar
-        - /opt/prh-app-server.jar
-      ports:
-        - "8200:8100"
-        - "8533:8433"
-      volumes:
-        - ./simulator/certs:/tmp/certs
-      container_name: ssl_prh
-      depends_on:
-       - dmaap-bc
-       - aai
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
+    command: >
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
+        --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
+        --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
+        --aai.aaiClientConfiguration.aaiHostPortNumber=3334
+        --aai.aaiClientConfiguration.aaiHost=aai
+        --aai.aaiClientConfiguration.aaiProtocol=https
+        --security.enableAaiCertAuth=true
+        --security.enableDmaapCertAuth=true
+        --security.keyStorePath=/tmp/certs/org.onap.dcae.jks
+        --security.keyStorePasswordPath=/tmp/certs/keystore.password
+        --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
+        --security.trustStorePasswordPath=/tmp/certs/truststore.password
+    ports:
+      - "8200:8100"
+      - "8533:8433"
+    volumes:
+      - ./simulator/certs:/tmp/certs
+    container_name: ssl_prh
+    depends_on:
+      - dmaap-bc
+      - aai
 
   dmaap-bc:
     build:
@@ -69,11 +57,11 @@ services:
     container_name: dmaap_simulator
 
   aai:
-     build:
-       context: simulator
-       dockerfile: AAI_simulator
-     ports:
+    build:
+      context: simulator
+      dockerfile: AAI_simulator
+    ports:
       - "3333:3333"
       - "3334:3334"
       - "3335:3335"
-     container_name: aai_simulator
+    container_name: aai_simulator
