@@ -10,12 +10,6 @@ services:
         --aai.aaiClientConfiguration.aaiHostPortNumber=3333
         --aai.aaiClientConfiguration.aaiHost=aai
         --aai.aaiClientConfiguration.aaiProtocol=http
-    entrypoint:
-      - java
-      - -Dspring.profiles.active=dev
-      - -Dlogging.level.org.onap.dcaegen2.services.prh=TRACE
-      - -jar
-      - /opt/prh-app-server.jar
     ports:
       - "8100:8100"
       - "8433:8433"
@@ -42,12 +36,6 @@ services:
           --security.keyStorePasswordPath=/tmp/certs/keystore.password
           --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
           --security.trustStorePasswordPath=/tmp/certs/truststore.password
-      entrypoint:
-        - java
-        - -Dspring.profiles.active=dev
-        - -Dlogging.level.org.onap.dcaegen2.services.prh=TRACE
-        - -jar
-        - /opt/prh-app-server.jar
       ports:
         - "8200:8100"
         - "8533:8433"
