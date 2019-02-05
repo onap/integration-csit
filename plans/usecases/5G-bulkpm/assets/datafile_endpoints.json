@@ -11,7 +11,7 @@
                 "dmaapContentType": "application/json",
                 "consumerId": "C12",
                 "consumerGroup": "OpenDcae-c12",
-                "timeoutMS": -1,
+                "timeoutMs": -1,
                 "messageLimit": 1
             },
             "dmaapProducerConfiguration": {
