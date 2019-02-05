@@ -123,9 +123,15 @@ pip install jsonschema uuid
 sleep 2
 
 # Data File Collector configuration :
+
+docker cp dfc:/config/datafile_endpoints.json /tmp/ 
+cat /tmp/datafile_endpoints.json
+
 cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
 sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
 sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
+cat /tmp/datafile_endpoints.json
+
 docker cp /tmp/datafile_endpoints.json dfc:/config/
 #Increase Logging
 docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /config/application.yaml"
