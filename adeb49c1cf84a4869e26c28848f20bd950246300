@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f000517_a6c88820",
+        "filename": "plans/usecases/5G-bulkpm/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-05T10:17:10Z",
+      "side": 1,
+      "message": "Remove trailing space",
+      "range": {
+        "startLine": 127,
+        "startChar": 51,
+        "endLine": 127,
+        "endChar": 52
+      },
+      "revId": "adeb49c1cf84a4869e26c28848f20bd950246300",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
