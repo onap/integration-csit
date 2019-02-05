@@ -13,3 +13,6 @@ kill-instance.sh fileconsumer-node
 kill-instance.sh mariadb
 kill-instance.sh dfc
 kill-instance.sh sftp
+rm /tmp/addSubscriber.json
+rm /tmp/datafile_endpoints.json
+rm /tmp/dfc_docker.log
