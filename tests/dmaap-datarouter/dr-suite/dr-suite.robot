@@ -16,8 +16,8 @@ ${CREATE_FEED_DATA}             {"name": "CSIT_Test", "version": "m1.0", "descri
 ${UPDATE_FEED_DATA}             {"name": "CSIT_Test", "version": "m1.0", "description": "UPDATED-CSIT_Test", "business_description": "CSIT_Test", "suspend": true, "deleted": false, "changeowner": true, "authorization": {"classification": "unclassified", "endpoint_addrs": [],  "endpoint_ids": [{"password": "rs873m", "id": "rs873m"}]}}
 ${SUBSCRIBE_DATA}               {"delivery":{ "url":"https://${DR_PROV_IP}:8080/",  "user":"rs873m", "password":"rs873m", "use100":true}, "metadataOnly":false, "suspend":false, "groupid":29, "subscriber":"sg481n"}
 ${UPDATE_SUBSCRIPTION_DATA}     {"delivery":{ "url":"https://${DR_PROV_IP}:8080/",  "user":"sg481n", "password":"sg481n", "use100":true}, "metadataOnly":false, "suspend":true, "groupid":29, "subscriber":"sg481n"}
-${FEED_CONTENT_TYPE}            application/vnd.att-dr.feed
-${SUBSCRIBE_CONTENT_TYPE}       application/vnd.att-dr.subscription
+${FEED_CONTENT_TYPE}            application/vnd.dmaap-dr.feed
+${SUBSCRIBE_CONTENT_TYPE}       application/vnd.dmaap-dr.subscription
 ${PUBLISH_FEED_CONTENT_TYPE}    application/octet-stream
 
 *** Test Cases ***
@@ -95,24 +95,24 @@ Run Delete Feed
 *** Keywords ***
 PostCall
     [Arguments]      ${url}              ${data}            ${content_type}        ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
     ${resp}=         Evaluate            requests.post('${url}', data='${data}', headers=${headers}, verify=False)    requests
     [Return]         ${resp}
 
 PutCall
     [Arguments]      ${url}              ${data}            ${content_type}        ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}    Authorization=Basic cnM4NzNtOnJzODczbQ==
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}    Authorization=Basic cnM4NzNtOnJzODczbQ==
     ${resp}=         Evaluate            requests.put('${url}', data='${data}', headers=${headers}, verify=False, allow_redirects=False)    requests
     [Return]         ${resp}
 
 GetCall
     [Arguments]      ${url}              ${content_type}        ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
     ${resp}=         Evaluate            requests.get('${url}', headers=${headers}, verify=False)    requests
     [Return]         ${resp}
 
 DeleteCall
     [Arguments]      ${url}              ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}
     ${resp}=         Evaluate            requests.delete('${url}', headers=${headers}, verify=False)    requests
     [Return]         ${resp}

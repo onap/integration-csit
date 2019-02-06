@@ -10,8 +10,8 @@ Library           Process
 ${TARGET_URL}                      https://dmaap-dr-prov:8443/
 ${CREATE_FEED_DATA}                {"name": "CSIT_Test", "version": "v1.0.0", "description": "CSIT_Test", "business_description": "CSIT_Test", "suspend": false, "deleted": false, "changeowner": true, "authorization": {"classification": "unclassified", "endpoint_addrs": [],  "endpoint_ids": [{"password": "dradmin", "id": "dradmin"}]}}
 ${SUBSCRIBE_DATA}                  {"delivery":{ "url":"http://${DR_SUB_IP}:7070/",  "user":"LOGIN", "password":"PASSWORD", "use100":true}, "metadataOnly":false, "suspend":false, "groupid":29, "subscriber":"dmaap-subscriber"}
-${FEED_CONTENT_TYPE}               application/vnd.att-dr.feed
-${SUBSCRIBE_CONTENT_TYPE}          application/vnd.att-dr.subscription
+${FEED_CONTENT_TYPE}               application/vnd.dmaap-dr.feed
+${SUBSCRIBE_CONTENT_TYPE}          application/vnd.dmaap-dr.subscription
 ${PUBLISH_FEED_CONTENT_TYPE}       application/octet-stream
 ${CLI_VERIFY_SUB_RECEIVED_FILE}    docker exec subscriber-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep csit_test"
 
@@ -59,18 +59,18 @@ Verify Subscriber Received Published File
 *** Keywords ***
 PostCall
     [Arguments]      ${url}              ${data}            ${content_type}        ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}
     ${resp}=         Evaluate            requests.post('${url}', data='${data}', headers=${headers}, verify=True)    requests
     [Return]         ${resp}
 
 PutCall
     [Arguments]      ${url}              ${data}            ${content_type}        ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}    Authorization=Basic ZHJhZG1pbjpkcmFkbWlu
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}    Content-Type=${content_type}    Authorization=Basic ZHJhZG1pbjpkcmFkbWlu
     ${resp}=         Evaluate            requests.put('${url}', data='${data}', headers=${headers}, verify=True, allow_redirects=False)    requests
     [Return]         ${resp}
 
 DeleteCall
     [Arguments]      ${url}              ${user}
-    ${headers}=      Create Dictionary   X-ATT-DR-ON-BEHALF-OF=${user}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-ON-BEHALF-OF=${user}
     ${resp}=         Evaluate            requests.delete('${url}', headers=${headers}, verify=True)    requests
     [Return]         ${resp}
