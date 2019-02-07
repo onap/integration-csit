@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "79a45c46_258e4255",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4719
+      },
+      "writtenOn": "2019-02-07T09:40:39Z",
+      "side": 1,
+      "message": "This config file is dummy file ..it will be replace once we have blueprint solution. Not changing anything now.",
+      "parentUuid": "5a631db0_43a552bd",
+      "range": {
+        "startLine": 1,
+        "startChar": 93,
+        "endLine": 1,
+        "endChar": 107
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36aa588c_0a471d64",
         "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
         "patchSetId": 1
