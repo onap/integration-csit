@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c634c6_d5521462",
+        "filename": "plans/usecases/5G-bulkpm/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-07T12:45:50Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "range": {
+        "startLine": 126,
+        "startChar": 51,
+        "endLine": 126,
+        "endChar": 52
+      },
+      "revId": "d436278247b68a1b1d546474c2e5aa28d28a6d12",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
