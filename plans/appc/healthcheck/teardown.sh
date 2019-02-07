@@ -17,7 +17,7 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-kill-instance.sh ccsdk_ansible_container
+kill-instance.sh appc_ansible_container
 kill-instance.sh ccsdk_dgbuilder_container
 kill-instance.sh appc_cdt_container
 kill-instance.sh appc_controller_container
