@@ -45,6 +45,99 @@
       "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a631db0_43a552bd",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-07T08:42:28Z",
+      "side": 1,
+      "message": "3gpp-ts32.435-v15-relaxed.xsd would match up with what we currently have in the pm-mapper application (https://jira.nordix.org/browse/ONAP-27)",
+      "parentUuid": "c99dfd2a_6b0c7afb",
+      "range": {
+        "startLine": 1,
+        "startChar": 93,
+        "endLine": 1,
+        "endChar": 107
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96e60ca7_7ab46668",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-07T08:42:28Z",
+      "side": 1,
+      "message": "Can this key be something more descriptive, \"pm_mapper_publish_mr\" for example?",
+      "range": {
+        "startLine": 1,
+        "startChar": 166,
+        "endLine": 1,
+        "endChar": 186
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36aa588c_0a471d64",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-07T08:42:28Z",
+      "side": 1,
+      "message": "Replace this tab with spaces",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 14
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "999799a3_6ed242ff",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-07T08:42:28Z",
+      "side": 1,
+      "message": "Remove this trailing space",
+      "range": {
+        "startLine": 16,
+        "startChar": 51,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
