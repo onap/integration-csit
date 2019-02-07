@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89be4329_9ae5d098",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-02-07T07:52:37Z",
+      "side": 1,
+      "message": "Can this be formatted so that it can be more readable.",
+      "range": {
+        "startLine": 1,
+        "startChar": 54,
+        "endLine": 1,
+        "endChar": 55
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c99dfd2a_6b0c7afb",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-02-07T07:52:37Z",
+      "side": 1,
+      "message": "Can you check with Mark  name you should give..:-)..",
+      "range": {
+        "startLine": 1,
+        "startChar": 93,
+        "endLine": 1,
+        "endChar": 107
+      },
+      "revId": "e4977e82e6347457d6a60474dff50041ef9611ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
