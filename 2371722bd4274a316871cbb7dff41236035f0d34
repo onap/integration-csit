@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c85c37_c9477c52",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-02-11T14:26:50Z",
+      "side": 1,
+      "message": "I think the below is a comment, and forgot to prefix with \"#\"",
+      "revId": "2371722bd4274a316871cbb7dff41236035f0d34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c779515b_84911bb7",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-02-11T14:26:50Z",
+      "side": 1,
+      "message": "is the default no authentication and no https?  If not would have to add the \"-k\" and the authentication options to curl.",
+      "revId": "2371722bd4274a316871cbb7dff41236035f0d34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
