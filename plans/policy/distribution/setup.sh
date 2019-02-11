@@ -17,11 +17,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker run -d --name policy-distribution -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-distribution:2.0.0-SNAPSHOT-latest 
+docker run -d --name policy-distribution -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-distribution:2.1.0-SNAPSHOT-latest
 
 POLICY_DISTRIBUTION_IP=`get-instance-ip.sh policy-distribution`
 echo DISTRIBUTION IP IS ${POLICY_DISTRIBUTION_IP}
-Wait for initialization
+# Wait for initialization
 for i in {1..10}; do
    curl -sS ${POLICY_DISTRIBUTION_IP}:6969 && break
    echo sleep $i
