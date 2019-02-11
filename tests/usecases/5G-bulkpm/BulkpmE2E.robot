@@ -8,7 +8,7 @@ Resource          resources/bulkpm_keywords.robot
 
 
 *** Variables ***
-${VESC_URL}                              http://%{VESC_IP}:8080
+${VESC_URL}                              http://%{VESC_IP}:%{VESC_PORT}
 ${GLOBAL_APPLICATION_ID}                 robot-ves
 ${VES_ANY_EVENT_PATH}                    /eventListener/v7
 ${HEADER_STRING}                         content-type=application/json
@@ -17,7 +17,6 @@ ${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/usecases/5G-bulkpm/a
 ${TARGETURL_TOPICS}                      http://${DMAAP_MR_IP}:3904/topics
 ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12?timeout=1000
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
-${CLI_EXEC_CLI_DFC}                      docker exec dfc /bin/sh -c "ls /target | grep .gz"
 ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .gz"
 
 *** Test Cases ***
