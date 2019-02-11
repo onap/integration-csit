@@ -5,7 +5,13 @@
     },
     "pnfRegistrationFields": {
       "oamV4IpAddress":"",
-      "oamV6IpAddress":""
+      "oamV6IpAddress":"",
+      "serial-number":"NOkkaaa123",
+      "equip-vendor":"equipVendor",
+      "equip-model":"equipModel",
+      "equip-type":"equipType",
+      "nf-role":"nf-role",
+      "sw-version":"swVersion"
     }
   }
 }
