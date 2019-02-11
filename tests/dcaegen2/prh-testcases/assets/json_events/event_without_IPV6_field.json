@@ -4,7 +4,13 @@
       "sourceName":"NOK6061ZW9"
     },
     "pnfRegistrationFields": {
-      "oamV4IpAddress":"10.17.123.24"
+      "oamV4IpAddress":"10.17.123.24",
+      "serial-number":"NOkkaaa123",
+      "equip-vendor":"equipVendor",
+      "equip-model":"equipModel",
+      "equip-type":"equipType",
+      "nf-role":"nf-role",
+      "sw-version":"swVersion"
     }
   }
 }
