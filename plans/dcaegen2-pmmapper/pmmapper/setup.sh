@@ -70,6 +70,10 @@ sed -i -e '/CONSUL_HOST:/ s/:.*/: '$CONSUL_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
 sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/prov_data/provserver.properties
 docker-compose up -d
+DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
+docker kill buscontroller
+sed -i 's/dr-prov-ip/'$DR_PROV_IP'/g' docker-compose.yml
+docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
 for i in {1..10}; do
@@ -104,9 +108,10 @@ docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/i
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 docker exec datarouter-prov /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
 docker exec datarouter-node /bin/sh -c "echo '${DR_PROV_IP}' dmaap-dr-prov >> /etc/hosts"
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.feed" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
-sleep 5
-curl -k https://$DR_PROV_IP:8443/internal/prov
+
+# Bus Controller Configuration
+DMAAPBC_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' buscontroller)
+$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/dmaapbc.sh ${DMAAPBC_IP}
 
 # Consul Configuration for PM Mapper
 cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cbs.json /tmp/cbs.json
@@ -115,4 +120,4 @@ curl --request PUT --data @/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service
 curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/config.json
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
+ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DMAAPBC_IP:${DMAAPBC_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
