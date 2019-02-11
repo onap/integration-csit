@@ -24,8 +24,8 @@ export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.4-STAGING-latest
-export CCSDK_DOCKER_IMAGE_VERSION=0.3-STAGING-latest
+export DOCKER_IMAGE_VERSION=1.5-STAGING-latest
+export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -100,9 +100,8 @@ while [ "$TIME" -lt "$TIME_OUT" ]; do
 docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
 response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
 docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
-num_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
 
-  if [ "$response" == "Level 100" ] && [ "$num_bundles" -ge 333 ]; then
+  if [ "$response" == "Level 100" ] ; then
     echo SDNC karaf started in $TIME seconds
     break;
   fi
@@ -117,10 +116,8 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
 fi
 
 response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-num_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
 
-  if [ "$response" == "Level 100" ] && [ "$num_bundles" -ge 333 ]; then
-    num_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
+  if [ "$response" == "Level 100" ] ; then
     num_failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
     failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
     echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
