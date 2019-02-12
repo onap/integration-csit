@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc8e7685_b78fc88f",
+        "filename": "tests/dcaegen2/prh-testcases/resources/PrhLibrary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2019-02-12T14:29:23Z",
+      "side": 1,
+      "message": "should be \"nf-role\" if \"nf-role\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 80,
+        "endLine": 31,
+        "endChar": 90
+      },
+      "revId": "afbcee602fc646dd17ed117d546f5e3aecbe9f52",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
