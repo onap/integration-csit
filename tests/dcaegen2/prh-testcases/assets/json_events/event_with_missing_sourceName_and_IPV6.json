@@ -5,13 +5,8 @@
     },
     "pnfRegistrationFields": {
       "oamV4IpAddress":"10.17.163.234",
-      "oamV6IpAddress":"",
-      "serial-number":"NOkkaaa123",
-      "equip-vendor":"equipVendor",
-      "equip-model":"equipModel",
-      "equip-type":"equipType",
-      "nf-role":"nf-role",
-      "sw-version":"swVersion"
+      "oamV6IpAddress":""
+
     }
   }
 }
