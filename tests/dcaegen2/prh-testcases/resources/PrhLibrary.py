@@ -20,18 +20,35 @@ class PrhLibrary(object):
             return False
 
     @staticmethod
-    def create_pnf_ready_notification(json_file):
+    def create_pnf_ready_notification_from_ves(json_file):
         json_to_python = json.loads(json_file)
         ipv4 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV4IpAddress")
         ipv6 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV6IpAddress") if "oamV6IpAddress" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        serial_number = json_to_python.get("event").get("pnfRegistrationFields").get("serial-number") if "serial-number" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        equip_vendor = json_to_python.get("event").get("pnfRegistrationFields").get("equip-vendor") if "equip-vendor" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        equip_model = json_to_python.get("event").get("pnfRegistrationFields").get("equip-model") if "equip-model" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        equip_type = json_to_python.get("event").get("pnfRegistrationFields").get("equip-type") if "equip-type" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        nf_role = json_to_python.get("event").get("pnfRegistrationFields").get("nf-role") if "nf-role" in json_to_python["event"]["pnfRegistrationFields"] else ""
-        sw_version = json_to_python.get("event").get("pnfRegistrationFields").get("sw-version") if "sw-version" in json_to_python["event"]["pnfRegistrationFields"] else ""
         correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
-        str_json = '{"correlationId":"' + correlation_id + '","ipaddress-v4-oam":"' + ipv4 + '","ipaddress-v6-oam":"' + ipv6 + '","serial-number":"' + serial_number + '","equip-vendor":"' + equip_vendor + '","equip-model":"' + equip_model + '","equip-type":"' + equip_type + '","nf-role":"' + nf_role + '","sw-version":"' + sw_version + '"}'
+
+        serial_number = json_to_python.get("event").get("pnfRegistrationFields").get("serialNumber") if "serialNumber" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        vendor_name = json_to_python.get("event").get("pnfRegistrationFields").get("vendorName") if "vendorName" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        model_number = json_to_python.get("event").get("pnfRegistrationFields").get("modelNumber") if "modelNumber" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        unit_type = json_to_python.get("event").get("pnfRegistrationFields").get("unitType") if "unitType" in json_to_python["event"]["pnfRegistrationFields"] else ""
+
+        str_json = '{"correlationId":"' + correlation_id + '","ipaddress-v4-oam":"' + ipv4 + '","ipaddress-v6-oam":"' + ipv6 + '","serialNumber":"' + serial_number + '","vendorName":"' + vendor_name  + '","modelNumber":"' + model_number + '","unitType":"' + unit_type + '"}'
+        python_to_json = json.dumps(str_json)
+        return python_to_json.replace("\\", "")[1:-1]
+
+    @staticmethod
+    def create_pnf_ready_notification_as_pnf_ready(json_file):
+        json_to_python = json.loads(json_file)
+        ipv4 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV4IpAddress")
+        ipv6 = json_to_python.get("event").get("pnfRegistrationFields").get("oamV6IpAddress") if "oamV6IpAddress" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
+
+        serial_number = json_to_python.get("event").get("pnfRegistrationFields").get("serialNumber") if "serialNumber" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        vendor_name = json_to_python.get("event").get("pnfRegistrationFields").get("vendorName") if "vendorName" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        model_number = json_to_python.get("event").get("pnfRegistrationFields").get("modelNumber") if "modelNumber" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        unit_type = json_to_python.get("event").get("pnfRegistrationFields").get("unitType") if "unitType" in json_to_python["event"]["pnfRegistrationFields"] else ""
+        nf_role  = json_to_python.get("event").get("commonEventHeader").get("nfNamingCode") if "nfNamingCode" in json_to_python["event"]["commonEventHeader"] else ""
+
+        str_json = '{"correlationId":"' + correlation_id + '","ipaddress-v4-oam":"' + ipv4 + '","ipaddress-v6-oam":"' + ipv6 + '","serial-number":"' + serial_number + '","equip-vendor":"' + vendor_name  + '","equip-model":"' + model_number + '","equip-type":"' + unit_type + '","nf-role":"' + nf_role + '","sw-version":""}'
         python_to_json = json.dumps(str_json)
         return python_to_json.replace("\\", "")[1:-1]
 
@@ -83,6 +100,8 @@ class PrhLibrary(object):
 
 
     def create_invalid_notification(self, json_file):
-        return self.create_pnf_ready_notification(json_file).replace("\":", "\": ")\
-            .replace("ipaddress-v4-oam", "oamV4IpAddress").replace("ipaddress-v6-oam", "oamV6IpAddress")\
-            .replace("}", "\\n}")
+        return self.create_pnf_ready_notification_from_ves(json_file).replace("\":", "\": ")\
+            .replace("ipaddress-v4-oam", "oamV4IpAddress").replace("ipaddress-v6-oam", "oamV6IpAddress") \
+            .replace("serial-number", "serialNumber").replace("equip-vendor", "vendorName") \
+            .replace("equip-model", "modelNumber").replace("equip-type", "unitType") \
+            .replace("nf-role", "nfNamingCode").replace("}", "\\n}")

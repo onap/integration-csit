@@ -5,7 +5,10 @@
     },
     "pnfRegistrationFields": {
       "oamV4IpAddress":"",
-      "oamV6IpAddress":""
+      "oamV6IpAddress":"",
+      "serialNumber":"123",
+      "modelNumber":"sn123243",
+      "unitType": "unitType"
     }
   }
 }

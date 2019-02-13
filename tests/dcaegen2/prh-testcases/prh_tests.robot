@@ -19,6 +19,10 @@ ${EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/as
 ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV4.json
 ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_and_IPV6.json
 ${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_sourceName_IPV4_and_IPV6.json
+${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_ALL_FILLED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_optional_registration_fields_all_filled.json
+${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_EMPTY}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_optional_registration_fields_empty.json
+${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_ALL}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_optional_registration_fields_missing_all.json
+${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_PARTIAL}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_optional_registration_fields_missing_partial.json
 ${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_without_IPV6_field.json
 ${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
