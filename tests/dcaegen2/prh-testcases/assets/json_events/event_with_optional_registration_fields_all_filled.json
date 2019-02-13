@@ -1,12 +1,14 @@
 {
   "event": {
     "commonEventHeader": {
-      "sourceName":"NOK6061ZW4"
+      "sourceName":"NOK6061ZW4",
+      "nfNamingCode": "nfNamingCode",
+      "nfcNamingCode": "nfcNamingCode"
     },
     "pnfRegistrationFields": {
-      "oamV4IpAddress":"",
+      "oamV4IpAddress":"ipv4",
       "oamV6IpAddress":"",
-      "serialNumber":"serialNumber",
+      "serialNumber":"sn1234",
       "vendorName":"vendorName",
       "modelNumber":"modelNumber",
       "unitType":"unitType"
