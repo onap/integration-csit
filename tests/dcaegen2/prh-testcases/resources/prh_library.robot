@@ -32,11 +32,12 @@ Valid event processing
     [Arguments]    ${input_valid_event_in_dmaap}
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_valid_event_in_dmaap}
-    ${posted_event_to_dmaap}=    Create PNF_Ready notification    ${data}
+    ${posted_event_to_dmaap}=    create pnf ready notification from ves    ${data}
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
     Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${posted_event_to_dmaap}
+    ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
+    Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
 
 Check PRH log
     [Arguments]    ${searched_log}
