@@ -6,10 +6,9 @@
     "pnfRegistrationFields": {
       "oamV4IpAddress":"",
       "oamV6IpAddress":"",
-      "serialNumber":"NOkkaaa123",
-      "vendorName":"equipVendor",
-      "modelNumber":"equipModel",
-      "unitType":"equipType"
+      "serialNumber":"123",
+      "modelNumber":"sn123243",
+      "unitType": "unitType"
     }
   }
 }
