@@ -32,7 +32,7 @@ Valid event processing
     [Arguments]    ${input_valid_event_in_dmaap}
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_valid_event_in_dmaap}
-    ${posted_event_to_dmaap}=    Create PNF_Ready notification    ${data}
+    ${posted_event_to_dmaap}=    create pnf ready notification from ves    ${data}
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
     Set event in DMaaP    ${data}
