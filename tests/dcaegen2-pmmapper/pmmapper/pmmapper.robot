@@ -7,14 +7,23 @@ Library           Process
 
 
 *** Variables ***
-${CLI_EXEC_CLI}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
+${CLI_EXEC_CLI_CONFIG}                   cat /tmp/pmmapper.log
+${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 
 *** Test Cases ***
 
-Verify 3GPP PM Mapper Subscribes to Data Router
+Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
+    [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_CONFIG}                     shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
+    Should Contain                  ${cli_cmd_output.stdout}        "3gpppmmapper"
+
+Verify 3GPP PM Mapper Subscribes to Data Router
+    [Tags]                          PM_MAPPER_02
     [Documentation]                 Verify 3gpp pm mapper subscribes to data router
-    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI}                     shell=yes
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_SUBS}                     shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
     Should Contain                  ${cli_cmd_output.stdout}        "3gpppmmapper"

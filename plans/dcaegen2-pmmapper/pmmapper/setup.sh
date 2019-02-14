@@ -88,7 +88,7 @@ for i in {1..10}; do
         [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' buscontroller) ]
     then
-        echo "DR Service Running"
+        echo "Data Router, Consul, Config Binding Service, Buscontroller Services Running"
         break
     else
         echo sleep $i
@@ -122,9 +122,22 @@ CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddres
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/BUSIP/'$DMAAPBC_IP'/g' docker-compose.yml
 docker-compose up -d
+
+# Wait for initialization of Docker container for 3GPP PM Mapper
+for i in {1..10}; do
+    if [ $(docker inspect --format '{{ .State.Running }}' pmmapper) ]
+    then
+        echo "PM Mapper Service Running"
+        break
+    else
+        echo sleep $i
+        sleep $i
+    fi
+done
 PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
+docker exec datarouter-prov /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
 sleep 10
-docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
+docker exec pmmapper /bin/sh -c "head -n 5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" >> /tmp/pmmapper.log
 curl -k https://$DR_PROV_IP:8443/internal/prov
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
