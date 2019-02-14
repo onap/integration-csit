@@ -1,1 +1,34 @@
-{"pm-mapper-filter": "{ \"filters\":[]}", "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}", "streams_subscribes": {}, "streams_publishes": {"pm_mapper_handle_out": {"type": "message_router", "aaf_password": null, "dmaap_info": {"topic_url": "https://we-are-message-router.us:3905/events/some-topic", "client_role": null, "location": null, "client_id": null}, "aaf_username": null}}, "streams_subscribes.pm_mapper_handle_out.message_router_topic": "unauthenticated.PM_VES_OUTPUT", "streams_subscribes.pm_mapper_handle_in.feed_id": "1", "services_calls": {}}
+{
+    "pm-mapper-filter": "{ \"filters\":[]}",
+    "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}",
+    "streams_subscribes": {
+        "dmaap_subscriber": {
+            "type": "data_router",
+            "aaf_username": null,
+            "aaf_password": null,
+            "dmaap_info": {
+                "location": "csit-pmmapper",
+                "delivery_url": "delivery_url",
+                "username": "username",
+                "password": "password",
+                "subscriber_id": "subsriber_id"
+            }
+        }
+    },
+    "streams_publishes": {
+        "pm_mapper_handle_out": {
+            "type": "message_router",
+            "aaf_password": null,
+            "dmaap_info": {
+                "topic_url": "https://message-router:3904/events/org.onap.dmaap.onapCSIT.pm_mapper",
+                "client_role": "org.onap.dmaap.client.pub",
+                "location": "csit-pmmapper",
+                "client_id": null
+            },
+            "aaf_username": null
+        }
+    },
+    "buscontroller_feed_id": "1",
+    "buscontroller_feed_subscription_endpoint": "http://dmaap-bc:8080/webapi/dr_subs",
+    "services_calls": {}
+}
