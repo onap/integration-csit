@@ -2,6 +2,7 @@
 Documentation     The main interface for interacting with VES. It handles low level stuff like managing the http request library and VES required fields
 Library 	      RequestsLibrary
 Library	          ../resources/xNFLibrary.py
+Library           ../resources/JsonValidatorLibrary.py
 Library           OperatingSystem
 Library           Collections
 Library           requests
