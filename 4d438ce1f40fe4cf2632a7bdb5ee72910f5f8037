@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "764045c5_7bdcb839",
+        "filename": "tests/usecases/5G-bulkpm/resources/JsonValidatorLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-14T14:54:40Z",
+      "side": 1,
+      "message": "This commented line can be removed",
+      "revId": "4d438ce1f40fe4cf2632a7bdb5ee72910f5f8037",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
