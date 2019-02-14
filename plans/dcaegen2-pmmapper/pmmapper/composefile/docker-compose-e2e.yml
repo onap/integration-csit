@@ -64,7 +64,12 @@ services:
     container_name: buscontroller
     image: nexus3.onap.org:10001/onap/dmaap/buscontroller
     ports:
-     - "18080:8080"
-     - "18443:8443"
+      - "18080:8080"
+      - "18443:8443"
     extra_hosts:
-      - "dmaap-dr-prov: dr-prov-ip"
+      - "dmaap-dr-prov: DMAAPDR"
+      - "message-router: DMAAPMR"
+    volumes:
+      - /tmp/docker-databus-controller.conf:/opt/app/config/conf
+    depends_on:
+      - datarouter-prov

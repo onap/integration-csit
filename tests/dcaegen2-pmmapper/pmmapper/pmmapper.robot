@@ -1,35 +1,23 @@
 *** Settings ***
 Documentation     Testing PM Mapper functionality
-Resource          ../../common.robot
 Library           Collections
-Library           json
 Library           OperatingSystem
 Library           RequestsLibrary
-Library           HttpLibrary.HTTP
-Library           String
 Library           Process
 
 
 *** Variables ***
-${BC_URL}                     http://${DMAAPBC_IP}:8080/webapi
-${CLI_EXEC_CLI}               curl http://${CBS_IP}:10000/service_component/pmmapper
-${FEED1_DATA}                 { "feedName":"feed1", "feedVersion": "csit", "feedDescription":"generated for CSIT", "owner":"dgl", "asprClassification": "unclassified" }
-
+${CLI_EXEC_CLI}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 
 *** Test Cases ***
 
-Verify pmmapper configuration in consul through CBS
+Verify 3GPP PM Mapper Subscribes to Data Router
     [Tags]                          PM_MAPPER_01
-    [Documentation]                 Verify pmmapper configuraiton in consul through CBS
+    [Documentation]                 Verify 3gpp pm mapper subscribes to data router
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI}                     shell=yes
     Log                             ${cli_cmd_output.stdout}
-    Should Contain                  ${cli_cmd_output.stdout}        pm-mapper-filter
-
-Create DR Feed through Bus Controller
-    [Tags]                          PM_MAPPER_02
-    [Documentation]                 Create Feed on Data Router through Bus Controller
-    ${resp}=                        PostCall    ${BC_URL}/feeds    ${FEED1_DATA}
-    Should Be Equal As Integers     ${resp.status_code}  200
+    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
+    Should Contain                  ${cli_cmd_output.stdout}        "3gpppmmapper"
 
 *** Keywords ***
 
