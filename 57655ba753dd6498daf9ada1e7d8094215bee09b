@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82edb270_47bfbfdb",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/dmaapbc.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4593
+      },
+      "writtenOn": "2019-02-14T11:51:41Z",
+      "side": 1,
+      "message": "Remove trailing space",
+      "range": {
+        "startLine": 31,
+        "startChar": 99,
+        "endLine": 31,
+        "endChar": 100
+      },
+      "revId": "57655ba753dd6498daf9ada1e7d8094215bee09b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
