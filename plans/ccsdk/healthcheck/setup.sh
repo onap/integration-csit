@@ -35,7 +35,7 @@ fi
 # Clone CCSDK repo to get docker-compose for CCSDK
 mkdir -p $WORKSPACE/archives/ccsdk
 cd $WORKSPACE/archives
-git clone -b master --single-branch http://gerrit.onap.org/r/ccsdk/distribution.git ccsdk
+git clone -b casablanca --single-branch http://gerrit.onap.org/r/ccsdk/distribution.git ccsdk
 cd $WORKSPACE/archives/ccsdk
 git pull
 unset http_proxy https_proxy
