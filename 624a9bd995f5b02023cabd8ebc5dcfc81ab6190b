@@ -1,0 +1,9 @@
+Code-Review+1: Paul Dennehy <paul.p.dennehy@est.tech>
+Code-Review+1: Ronan Keogh <ronan.keogh@est.tech>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Gary Wu <gary.i.wu@huawei.com>
+Submitted-by: Gary Wu <gary.i.wu@huawei.com>
+Submitted-at: Fri, 15 Feb 2019 18:06:16 +0000
+Reviewed-on: https://gerrit.onap.org/r/78123
+Project: integration/csit
+Branch: refs/heads/master
