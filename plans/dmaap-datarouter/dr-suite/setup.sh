@@ -10,15 +10,17 @@ git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 cd datarouter
 git pull
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+cp $WORKSPACE/plans/dmaap-datarouter/dr-suite/docker-compose/docker-compose.yml .
 
-sed -i 's/10003/10001/g' docker-compose.yml
 # start DMaaP DR containers with docker compose and configuration from docker-compose.yml
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
 for i in {1..10}; do
-    if [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
+    if [ $(docker inspect --format '{{ .State.Running }}' subscriber-node2) ] && \
+        [ $(docker inspect --format '{{ .State.Running }}' subscriber-node) ] && \
+        [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ]
     then
@@ -51,15 +53,19 @@ for i in {1..10}; do
     fi
 done
 
-DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
-DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
+DR_PROV_IP=`get-instance-ip.sh datarouter-prov`
+DR_NODE_IP=`get-instance-ip.sh datarouter-node`
+DR_SUB_IP=`get-instance-ip.sh subscriber-node`
+DR_SUB2_IP=`get-instance-ip.sh subscriber-node2`
 DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
 
 echo DR_PROV_IP=${DR_PROV_IP}
 echo DR_NODE_IP=${DR_NODE_IP}
+echo DR_SUB_IP=${DR_SUB_IP}
+echo DR_SUB2_IP=${DR_SUB2_IP}
 echo DR_GATEWAY_IP=${DR_GATEWAY_IP}
 
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP}"
+ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DR_SUB_IP:${DR_SUB_IP} -v DR_SUB2_IP:${DR_SUB2_IP}"
