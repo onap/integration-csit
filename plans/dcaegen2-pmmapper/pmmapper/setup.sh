@@ -137,7 +137,8 @@ done
 PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
 docker exec datarouter-prov /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
 sleep 10
-docker exec pmmapper /bin/sh -c "head -n 5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" >> /tmp/pmmapper.log
+docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper.log
+cat /tmp/pmmapper.log
 curl -k https://$DR_PROV_IP:8443/internal/prov
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
