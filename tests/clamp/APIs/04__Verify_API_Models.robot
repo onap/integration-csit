@@ -11,7 +11,7 @@ ${passw}                     password
 *** Test Cases ***
 Verify HolmesModel1
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/clds/model/ClHolmes1
-    Should Contain Match    ${resp}   *templateHolmes1*
+    Should Contain Match    ${resp}   *plateHolmes1*
     Should Contain Match    ${resp}   *DC1*
     Should Contain Match    ${resp}   *DC2*
     Should Contain Match    ${resp}   *Policy1*
@@ -22,7 +22,7 @@ Verify HolmesModel1
 
 Verify HolmesModel2
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/clds/model/ClHolmes2
-    Should Contain Match    ${resp}   *templateHolmes2*
+    Should Contain Match    ${resp}   *plateHolmes2*
     Should Contain Match    ${resp}   *DC2*
     Should Contain Match    ${resp}   *DC3*
     Should Contain Match    ${resp}   *Policy2*
@@ -34,7 +34,7 @@ Verify HolmesModel2
 
 Verify TCAModel1
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/clds/model/ClTCA1
-    Should Contain Match    ${resp}   *templateTCA1*
+    Should Contain Match    ${resp}   *plateTCA1*
     Should Contain Match    ${resp}   *enbRecipe*
     Should Contain Match    ${resp}   *DC1*
     Should Contain Match    ${resp}   *DC2*
@@ -45,7 +45,7 @@ Verify TCAModel1
 
 Verify TCAModel2
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/clds/model/ClTCA2
-    Should Contain Match    ${resp}   *templateTCA2*
+    Should Contain Match    ${resp}   *lateTCA2*
     Should Contain Match    ${resp}   *enbRecipe*
     Should Contain Match    ${resp}   *DC1*
     Should Contain Match    ${resp}   *DC2*
