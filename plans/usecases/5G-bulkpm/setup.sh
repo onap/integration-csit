@@ -69,7 +69,7 @@ git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
-cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
+cp $WORKSPACE/plans//5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
 
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
@@ -138,7 +138,7 @@ sleep 2
 docker cp dfc:/config/datafile_endpoints.json /tmp/
 echo data_endpoints.json from DFC containter
 cat /tmp/datafile_endpoints.json
-cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
+cp $WORKSPACE/plans//5G-bulkpm/assets/datafile_endpoints.json /tmp/
 sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
 sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
 echo data_endpoints.json copied onto the DFC containter
@@ -151,15 +151,15 @@ docker exec dfc /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
 
 # SFTP Configuration:
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
-cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpserver/'${SFTP_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
+cp $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+sed -i 's/sftpserver/'${SFTP_IP}'/g' $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+docker cp $WORKSPACE/plans//5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
 
 # Data Router Configuration:
 # Create default feed and create file consumer subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
-cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans//5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+cp $WORKSPACE/plans//5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
 sed -i 's/fileconsumer/'${DR_SUBSCIBER_IP}'/g' /tmp/addSubscriber.json
 curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 sleep 10
@@ -174,8 +174,8 @@ else
 ############################################################
 SFTP_PORT=2222
 
-cp $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh.orig
-cp $WORKSPACE/plans/usecases/5G-bulkpm/onap.teardown.sh $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh
+cp $WORKSPACE/plans//5G-bulkpm/teardown.sh $WORKSPACE/plans//5G-bulkpm/teardown.sh.orig
+cp $WORKSPACE/plans//5G-bulkpm/onap.teardown.sh $WORKSPACE/plans//5G-bulkpm/teardown.sh
 
 #Get DataFileCollector POD name in this ONAP Deployment
 DFC_POD=$(kubectl -n onap get pods | grep datafile-collector | awk '{print $1}')
@@ -204,7 +204,7 @@ export DMAAP_MR_IP=${DMAAP_MR_IP}
 DFC_POD=$(kubectl -n onap get pods | grep datafile-collector | awk '{print $1}')
 export DFC_POD=${DFC_POD}
 
-pip install jsonschema uuid
+pip install jsonschema simplejson uuid
 
 # Clone DMaaP Data Router repo
 mkdir -p $WORKSPACE/archives/dmaapdr
@@ -213,7 +213,7 @@ git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
-cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/onap.docker-compose-e2e $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
+cp $WORKSPACE/plans//5G-bulkpm/composefile/onap.docker-compose-e2e $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
 
 #Statup the SFTP and FileConsumer containers.
 docker login -u docker -p docker nexus3.onap.org:10001
@@ -224,20 +224,21 @@ sleep 2
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 # SFTP Configuration:
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
-cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpserver/'${HOST_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
+cp $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+sed -i 's/sftpserver/'${HOST_IP}'/g' $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests//5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+docker cp $WORKSPACE/plans//5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
 
 # Create default feed and create file consumer subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.feed" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
-cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans//5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+cp $WORKSPACE/plans//5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
 sed -i 's/fileconsumer/'${HOST_IP}'/g' /tmp/addSubscriber.json
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.subscription" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 sleep 10
 curl -k https://$DR_PROV_IP:8443/internal/prov
 
+DR_SUBSCIBER_IP=${HOST_IP}
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v DFC_POD:${DFC_POD} -v HOST_IP:${HOST_IP} "
+ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DFC_POD:${DFC_POD} -v HOST_IP:${HOST_IP} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
 
 fi;
