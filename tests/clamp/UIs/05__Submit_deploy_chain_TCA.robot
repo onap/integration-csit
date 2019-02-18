@@ -35,97 +35,97 @@ Good Login to Clamp UI and Verify logged in
     Wait Until Element Is Visible       xpath=//*[@class="navbar-brand logo_name ng-binding"]       timeout=60
     Element Text Should Be      xpath=//*[@class="navbar-brand logo_name ng-binding"]       expected=Hello:admin
 
-Open TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[1]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[1]/a
-    Wait Until Element Is Visible       locator=Open CL       timeout=60
-    Click Element    locator=Open CL
-    Select From List By Label       id=modelName      TCAModel1
-    Click Button    locator=OK
-    Element Should Contain      xpath=//*[@id="modeler_name"]     Closed Loop Modeler - TCAModel1
-    Element Should Contain      xpath=//*[@id="status_clds"]     DESIGN
-
-Validate-Test TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Validation Test       timeout=60
-    Click Element    locator=Validation Test
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: test
-    Element Should Contain      xpath=//*[@id="status_clds"]     DESIGN
-
-Submit TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Submit       timeout=60
-    Click Element    locator=Submit
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: submit
-    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
-
-Resubmit TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Resubmit       timeout=60
-    Click Element    locator=Resubmit
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: resubmit
-    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
-
-Deploy TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Deploy       timeout=60
-    Click Element    locator=Deploy
-#    Wait Until Element Is Visible       xpath=//*[@id="deployProperties"]       timeout=60
-#    Input Text      xpath=//*[@id="deployProperties"]      text={}
-    Click Button    locator=Deploy
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: deploy
-    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
-
-Update TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Update       timeout=60
-    Click Element    locator=Update
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: update
-    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
-
-Stop TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Stop       timeout=60
-    Click Element    locator=Stop
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: stop
-    Element Should Contain      xpath=//*[@id="status_clds"]     STOPPED
-
-Restart TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=Restart       timeout=60
-    Click Element    locator=Restart
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: restart
-    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
-
-UnDeploy TCA CL
-    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
-    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
-    Wait Until Element Is Visible       locator=UnDeploy       timeout=60
-    Click Element    locator=UnDeploy
-    Click Button    locator=Yes
-    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
-    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: undeploy
-    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
+#Open TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[1]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[1]/a
+#    Wait Until Element Is Visible       locator=Open CL       timeout=60
+#    Click Element    locator=Open CL
+#    Select From List By Label       id=modelName      TCAModel1
+#    Click Button    locator=OK
+#    Element Should Contain      xpath=//*[@id="modeler_name"]     Closed Loop Modeler - TCAModel1
+#    Element Should Contain      xpath=//*[@id="status_clds"]     DESIGN
+#
+#Validate-Test TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Validation Test       timeout=60
+#    Click Element    locator=Validation Test
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: test
+#    Element Should Contain      xpath=//*[@id="status_clds"]     DESIGN
+#
+#Submit TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Submit       timeout=60
+#    Click Element    locator=Submit
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: submit
+#    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
+#
+#Resubmit TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Resubmit       timeout=60
+#    Click Element    locator=Resubmit
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: resubmit
+#    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
+#
+#Deploy TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Deploy       timeout=60
+#    Click Element    locator=Deploy
+##    Wait Until Element Is Visible       xpath=//*[@id="deployProperties"]       timeout=60
+##    Input Text      xpath=//*[@id="deployProperties"]      text={}
+#    Click Button    locator=Deploy
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: deploy
+#    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
+#
+#Update TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Update       timeout=60
+#    Click Element    locator=Update
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: update
+#    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
+#
+#Stop TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Stop       timeout=60
+#    Click Element    locator=Stop
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: stop
+#    Element Should Contain      xpath=//*[@id="status_clds"]     STOPPED
+#
+#Restart TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=Restart       timeout=60
+#    Click Element    locator=Restart
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: restart
+#    Element Should Contain      xpath=//*[@id="status_clds"]     ACTIVE
+#
+#UnDeploy TCA CL
+#    Wait Until Element Is Visible       xpath=//*[@id="navbar"]/ul/li[2]/a       timeout=60
+#    Click Element    xpath=//*[@id="navbar"]/ul/li[2]/a
+#    Wait Until Element Is Visible       locator=UnDeploy       timeout=60
+#    Click Element    locator=UnDeploy
+#    Click Button    locator=Yes
+#    Wait Until Element Is Visible       xpath=//*[@id="alert_message_"]      timeout=60
+#    Element Text Should Be      xpath=//*[@id="alert_message_"]       expected=Action Successful: undeploy
+#    Element Should Contain      xpath=//*[@id="status_clds"]     DISTRIBUTED
 
 Close Browser
     Close Browser
