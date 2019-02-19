@@ -12,6 +12,7 @@ ${RESOURCE_PATH_CREATE}        /pdp/api/createPolicy
 ${RESOURCE_PATH_CREATE_PUSH}        /pdp/api/pushPolicy
 ${RESOURCE_PATH_CREATE_DELETE}        /pdp/api/deletePolicy
 ${RESOURCE_PATH_GET_CONFIG}    /pdp/api/getConfig
+${RESOURCE_PATH_LISTPOLICY}        /pdp/api/listPolicy
 ${CREATE_CONFIG_VFW_TEMPLATE}    ${CURDIR}/configpolicy_vFW_R1.template
 ${CREATE_CONFIG_VDNS_TEMPLATE}    ${CURDIR}/configpolicy_vDNS_R1.template
 ${CREATE_CONFIG_VCPE_TEMPLATE}    ${CURDIR}/configpolicy_vCPE_R1.template
@@ -24,6 +25,7 @@ ${CREATE_OPS_VDNS_TEMPLATE}    ${CURDIR}/opspolicy_VDNS_R1.template
 ${DEL_POLICY_TEMPLATE}   ${CURDIR}/deletepolicy.template
 ${GETCONFIG_TEMPLATE}    ${CURDIR}/getconfigpolicy.template
 ${GETOOF_TEMPLATE}       ${CURDIR}/getoofpolicy.template
+${LISTPOLICY_TEMPLATE}    ${CURDIR}/listpolicy.template
 ${CONFIG_POLICY_VFW_NAME}    vFirewall
 ${CONFIG_POLICY_VFW_TYPE}    MicroService
 ${CONFIG_POLICY_VDNS_NAME}    vLoadBalancer
@@ -114,6 +116,11 @@ VCPE Get Configs Policy
 HPA Get OOF Policy
     Sleep    5s
     Get OOF HPA Policy
+
+ListPolicy
+    ${LISTPOLICY_NAME}=    com.Config_Sample.1.xml
+    ListPolicy    ${LISTPOLICY_NAME}
+    #ListPolicy Tests
 
 *** Keywords ***
 
@@ -358,3 +365,11 @@ Upload DRL file
    # ${files}=  Create Dictionary  file  ${file_data}
     ${put_resp} =    Run Policy Post form Request    ${RESOURCE_PATH_UPLOAD}    ${files}      
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
+
+ListPolicy
+    [Documentation]    Listing Config Policies
+    [Arguments]    ${policy_name}
+    ${LISTPOLICY_NAME}=    Set Test Variable    ${policyname}
+    ${put_resp} =    Run Policy Post form Request    ${RESOURCE_PATH_LISTPOLICY}
+    Should Be Equal As Strings 	${put_resp.status_code} 	200
+	
