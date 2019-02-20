@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbc26a2_39f5fe17",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T16:41:10Z",
+      "side": 1,
+      "message": "I think its looking for an environment variable:\n\n${policy_name} \u003d com.Config_Sample.1.xml",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "857abd32e7ab1fbf9a624cd695d2277d033be571",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d4d80dd_d593d02e",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T16:41:10Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "857abd32e7ab1fbf9a624cd695d2277d033be571",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a560f964_cfc9f2a4",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T16:41:10Z",
+      "side": 1,
+      "message": "Or change this to ${LISTPOLICY_NAME}",
+      "range": {
+        "startLine": 372,
+        "startChar": 47,
+        "endLine": 372,
+        "endChar": 61
+      },
+      "revId": "857abd32e7ab1fbf9a624cd695d2277d033be571",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
