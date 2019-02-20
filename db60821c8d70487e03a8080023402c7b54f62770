@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d07f95d_01487653",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T14:52:00Z",
+      "side": 1,
+      "message": "The test exepcts ${policy_name} to be set.",
+      "range": {
+        "startLine": 122,
+        "startChar": 25,
+        "endLine": 122,
+        "endChar": 40
+      },
+      "revId": "db60821c8d70487e03a8080023402c7b54f62770",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
