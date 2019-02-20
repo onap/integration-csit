@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "be24f9e7_cacc287c",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1757
+      },
+      "writtenOn": "2019-02-20T17:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d4d80dd_d593d02e",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "857abd32e7ab1fbf9a624cd695d2277d033be571",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a560f964_cfc9f2a4",
         "filename": "tests/policy/suite1/Policy-CSIT.robot",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2019-02-20T16:41:10Z",
       "side": 1,
       "message": "Or change this to ${LISTPOLICY_NAME}",
+      "range": {
+        "startLine": 372,
+        "startChar": 47,
+        "endLine": 372,
+        "endChar": 61
+      },
+      "revId": "857abd32e7ab1fbf9a624cd695d2277d033be571",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f32b62c1_fc0b513e",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1757
+      },
+      "writtenOn": "2019-02-20T17:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a560f964_cfc9f2a4",
       "range": {
         "startLine": 372,
         "startChar": 47,
