@@ -120,7 +120,6 @@ HPA Get OOF Policy
 ListPolicy
     ${LISTPOLICY_NAME}=    com.Config_Sample.1.xml
     ListPolicy test    com.Config_Sample.1.xml
-    #ListPolicy Tests
 
 *** Keywords ***
 
@@ -369,7 +368,7 @@ Upload DRL file
 ListPolicy test
 	[Documentation]    Listing Config Policies
 	[Arguments]    ${policy_name}
-	${dict}=     Create Dictionary    policy_name=${policy_name}
+	${dict}=     Create Dictionary    policy_name=${LISTPOLICY_NAME}
 	${output} =     Fill JSON Template File     ${LISTPOLICY_TEMPLATE}    ${dict}
 	${put_resp} =    Run Policy Post form Request    ${RESOURCE_PATH_LISTPOLICY}  ${output}
 		Should Be Equal As Strings 	${put_resp.status_code} 	200
