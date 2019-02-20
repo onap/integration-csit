@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bff31a7_1d4ade97",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T17:24:40Z",
+      "side": 1,
+      "message": "Since you are passing as an argument, then this wouldn\u0027t be needed.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 50
+      },
+      "revId": "3b88afcb15f96aced28514fbac39dc82e5ca1458",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7f8fbf_58172268",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-02-20T17:24:40Z",
+      "side": 1,
+      "message": "So now this should work {policy_name}\nMy bad",
+      "range": {
+        "startLine": 371,
+        "startChar": 49,
+        "endLine": 371,
+        "endChar": 64
+      },
+      "revId": "3b88afcb15f96aced28514fbac39dc82e5ca1458",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
