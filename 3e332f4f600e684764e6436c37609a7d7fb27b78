@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613ad2dc_551e6811",
+        "filename": "tests/policy/suite1/Policy-CSIT.robot",
+        "patchSetId": 12
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-02-21T19:57:06Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces\n\nsame comment for the remaining lines",
+      "revId": "3e332f4f600e684764e6436c37609a7d7fb27b78",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
