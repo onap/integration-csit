@@ -47,17 +47,19 @@ else
   chmod -R 777 authz
   cd authz
 fi
-
+echo "Current Dir: ${PWD}"
 
 # Locate to Docker dir
 cd auth/docker
 if [ ! -e d.props ]; then
   cp d.props.init d.props
 fi
+echo "Current Dir: ${PWD}"
 source d.props
 
 # Fill in anything missing
 $SED "s/^LATITUDE=.*/LATITUDE=${LATITUDE:=38.0}/" d.props
+$SED "s/^LONGITUDE=.*/LONGITUDE=${LONGITUDE:=-72.0}/" d.props
 $SED "s/^LONGITUDE=.*/LONGITUDE=${LONGITUDE:=-72.0}/" d.props
 # For Jenkins, gotta use 10001, not 10003
 DOCKER_REPOSITORY=nexus3.onap.org:10001
@@ -67,39 +69,39 @@ $SED "s/HOSTNAME=.*/HOSTNAME=aaf.api.simpledemo.onap.org/"  d.props
 DOCKER_NAME=$(docker info | grep Name | awk '{print $2}' )
 echo "Docker Name is $DOCKER_NAME"
 
-if [ "$DOCKER_NAME" = "minikube" ]; then
-  echo "Minikube IP"
-  HOST_IP=$(minikube ip)
-else 
-  echo "Trying to get IP from Docker $DOCKER_NAME with 'ip route' method"
-  # ip route get 8.8.8.8
-  HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7}')
-  if [ -z "$HOST_IP" ]; then
-     echo "Critical HOST_IP could not be obtained by 2 different methods.  Exiting..."
-     exit
-  fi
-  echo 
+
+#if [ "$DOCKER_NAME" = "minikube" ]; then
+#  echo "Minikube IP"
+#  HOST_IP=$(minikube ip)
+#else 
+#  echo "Trying to get IP from Docker $DOCKER_NAME with 'ip route' method"
+#  # ip route get 8.8.8.8
+#  HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7}')
+#  if [ -z "$HOST_IP" ]; then
+#     echo "Critical HOST_IP could not be obtained by 2 different methods.  Exiting..."
+#     exit
+#  fi
+#  echo 
+#fi
+#$SED "s/HOST_IP=.*/HOST_IP=$HOST_IP/" d.props
+
+if [ -z "$SKIP_PULL" ]; then
+  # Pull latest Dockers
+  AAF_DOCKER_VERSION=${VERSION}
+  NEXUS_USERNAME=anonymous
+  NEXUS_PASSWD=anonymous
+  echo "$NEXUS_PASSWD" | docker login -u $NEXUS_USERNAME --password-stdin $DOCKER_REPOSITORY
+
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_config:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cm:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_fs:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_gui:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
 fi
-$SED "s/HOST_IP=.*/HOST_IP=$HOST_IP/" d.props
-
-cat d.props
-
-# Pull latest Dockers
-AAF_DOCKER_VERSION=${VERSION}
-NEXUS_USERNAME=anonymous
-NEXUS_PASSWD=anonymous
-echo "$NEXUS_PASSWD" | docker login -u $NEXUS_USERNAME --password-stdin $DOCKER_REPOSITORY
-
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_config:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cm:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_fs:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_gui:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
-docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
-
 # Cassandra Install/Start
 cd ../auth-cass/docker
 echo Cassandra Install
@@ -116,14 +118,14 @@ docker images
 
 docker ps -a
 
-for C in aaf_service aaf_locate aaf_oauth aaf_cm aaf_gui aaf_hello aaf_fs; do
+for C in aaf-service aaf-locate aaf-oauth aaf-cm aaf-gui aaf-hello aaf-fs; do
   docker logs $C
 done
 
-bash ./aaf.sh wait aaf_service
+bash ./aaf.sh wait aaf-service
 
-AAF_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aaf_service)
+AAF_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aaf-service)
 echo AAF_IP=${AAF_IP}
 
-#Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v AAF_IP:${AAF_IP}"
+openssl s_client -connect $AAF_IP:8100
+expor ROBOT_VARIABLES="-v AAF_IP:${AAF_IP}"
