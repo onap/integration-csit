@@ -9,6 +9,8 @@ Library           String
 *** Variables ***
 ${TARGET_URL}                       https://${DR_PROV_IP}:8443
 ${TARGET_URL_FEED}                  https://${DR_PROV_IP}:8443/feed/1
+${TARGET_URL_EXISTS_LOGGING}        https://${DR_PROV_IP}:8443/feedlog/1?type=pub&filename=csit_test
+${TARGET_URL_NOT_EXISTS_LOGGING}    https://${DR_PROV_IP}:8443/feedlog/1?type=pub&filename=file_that_doesnt_exist
 ${TARGET_URL_SUBSCRIBE}             https://${DR_PROV_IP}:8443/subscribe/1
 ${TARGET_URL_SUBSCRIPTION}          https://${DR_PROV_IP}:8443/subs/1
 ${TARGET_URL_PUBLISH_PROV}          https://${DR_PROV_IP}:8443/publish/1/csit_test
@@ -116,6 +118,24 @@ Run Update Feed
     log                             ${resp.text}
     Should Contain                  ${resp.text}                     "UPDATED-CSIT_Test"
     log                             'JSON Response Code:'${resp}
+
+Run Get With Filename That Exists
+    [Documentation]                 Get publish record with a specified filename
+    [Timeout]                       2 minutes
+    sleep                           1 minute                         45 seconds needed to ensure logs have been updated
+    ${resp}=                        GetCall                          ${TARGET_URL_EXISTS_LOGGING}    ${FEED_CONTENT_TYPE}    rs873m
+    log                             ${resp.text}
+    Should Contain                  ${resp.text}                     "fileName":"csit_test"
+    log                             'JSON Response Code:'${resp}
+
+Run Get With Filename That Doesnt Exist
+    [Documentation]                 Get publish record with a specified filename
+    [Timeout]                       1 minute
+    ${resp}=                        GetCall                          ${TARGET_URL_NOT_EXISTS_LOGGING}    ${FEED_CONTENT_TYPE}    rs873m
+    log                             ${resp.text}
+    Should Contain                  ${resp.text}                     []
+    log                             'JSON Response Code:'${resp}
+
 
 Run Delete Subscription
     [Documentation]                 Delete Subscription
