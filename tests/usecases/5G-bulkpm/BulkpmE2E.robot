@@ -18,6 +18,8 @@ ${TARGETURL_TOPICS}                      http://${DMAAP_MR_IP}:3904/topics
 ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12?timeout=1000
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .gz"
+${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /opt/log/application.log" > /tmp/dfc_docker.log.robot
+${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Publish to DR successful!" /tmp/dfc_docker.log.robot
 
 ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/xNF.pm.xml.gz.M %{WORKSPACE}
 ${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/xNF.pm.xml.gz.M  %{WORKSPACE}/metadata.json
@@ -56,13 +58,16 @@ Check VES Notification Topic is existing in Message Router
     log                             ${ListLength}
     List Should Contain Value       ${topics}                       unauthenticated.VES_NOTIFICATION_OUTPUT
 
-Verify Downloaded PM file from xNF exist on Data File Collector
+Verify Data File Collector successfully publishes the PM XML file to the Data Router
     [Tags]                          Bulk_PM_E2E_03
-    [Documentation]                 Check the PM XML file exists on the data file collector
-    ${cli_cmd_output}=              Run Process                     %{CLI_EXEC_CLI_DFC}                 shell=yes
+    [Documentation]                 Check that DFC publishes the PM XML to the Data Router
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_DFC_LOG}        shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        xNF.pm.xml.gz
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_DFC_LOG_GREP}    shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
+    Should Contain                  ${cli_cmd_output.stdout}        Publish to DR successful!
 
 
 Verify Default Feed And File Consumer Subscription On Datarouter

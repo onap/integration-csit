@@ -3,6 +3,7 @@ echo "Starting teardown script"
 docker exec dfc /bin/sh -c "less /opt/log/application.log" > /tmp/dfc_docker.log
 cat /tmp/dfc_docker.log
 sleep 3
+rm /tmp/dfc_docker.log.robot
 kill-instance.sh $DMAAP
 kill-instance.sh $KAFKA
 kill-instance.sh $ZOOKEEPER
