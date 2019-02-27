@@ -95,7 +95,7 @@ for i in {1..10}; do
         sleep $i
     fi
 done
-sleep 5
+sleep 15
 # Data Router Configuration.
 DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
 DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
