@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Thu, 28 Feb 2019 12:18:04 +0000
+Reviewed-on: https://gerrit.onap.org/r/79348
+Project: integration/csit
+Branch: refs/heads/casablanca
