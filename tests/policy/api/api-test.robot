@@ -11,7 +11,7 @@ Healthcheck
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Get Request     policy  /healthcheck     headers=${headers}
+     ${resp}=   Get Request     policy  /policy/api/v1/healthcheck     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
@@ -22,7 +22,7 @@ Statistics
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Get Request     policy  /statistics     headers=${headers}
+     ${resp}=   Get Request     policy  /policy/api/v1/statistics     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
