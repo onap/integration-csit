@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82df9dd3_fe07b22b",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 805
+      },
+      "writtenOn": "2019-03-04T19:35:26Z",
+      "side": 1,
+      "message": "I dont have https working in xacml pdp yet.. I can come back and change this when I get it working later.. I am currently workign on that step now",
+      "parentUuid": "c681f791_6e131779",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "a1cb550945ef2ba1338c9bdc477a8ed2eb9c5ba0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f43448_5d7795a8",
         "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-04T19:21:33Z",
       "side": 1,
       "message": "https. http will not work as in default config it is https\u003dtrue. However, https://gerrit.onap.org/r/#/c/79263/ this one needs to merged first to make this csit work.",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "a1cb550945ef2ba1338c9bdc477a8ed2eb9c5ba0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69f7a676_377bc8eb",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 805
+      },
+      "writtenOn": "2019-03-04T19:35:26Z",
+      "side": 1,
+      "message": "This has all been tested and works.. tests pass. Again, Https has not been implemented yet for xacml pdp",
+      "parentUuid": "08f43448_5d7795a8",
       "range": {
         "startLine": 12,
         "startChar": 48,
