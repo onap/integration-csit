@@ -121,6 +121,7 @@ cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-pmmapp
 CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cbs)
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/BUSIP/'$DMAAPBC_IP'/g' docker-compose.yml
+sed -i 's/DRNODEIP/'$DR_NODE_IP'/g' docker-compose.yml
 docker-compose up -d
 
 # Wait for initialization of Docker container for 3GPP PM Mapper
@@ -136,6 +137,7 @@ for i in {1..10}; do
 done
 PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
 docker exec datarouter-prov /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
+docker exec datarouter-node /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
 sleep 10
 docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper.log
 cat /tmp/pmmapper.log

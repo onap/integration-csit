@@ -1,6 +1,5 @@
 {
     "pm-mapper-filter": "{ \"filters\":[]}",
-    "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}",
     "streams_subscribes": {
         "dmaap_subscriber": {
             "type": "data_router",
@@ -8,15 +7,15 @@
             "aaf_password": null,
             "dmaap_info": {
                 "location": "csit-pmmapper",
-                "delivery_url": "3gpppmmapper",
+                "delivery_url": "http://3gpppmmapper:8081/delivery",
                 "username": "username",
                 "password": "password",
-                "subscriber_id": "subsriber_id"
+                "subscriber_id": "subscriber_id"
             }
         }
     },
     "streams_publishes": {
-        "pm_mapper_handle_out": {
+        "dmaap_publisher": {
             "type": "message_router",
             "aaf_password": null,
             "dmaap_info": {
@@ -28,7 +27,8 @@
             "aaf_username": null
         }
     },
-    "buscontroller_feed_id": "1",
+    "dmaap_dr_feed_id": "1",
     "buscontroller_feed_subscription_endpoint": "http://dmaap-bc:8080/webapi/dr_subs",
+    "dmaap_dr_delete_endpoint": "http://dmaap-dr-node:8443/delete",
     "services_calls": {}
 }
