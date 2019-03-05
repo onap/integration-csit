@@ -38,7 +38,7 @@ Verify 3GPP PM Mapper responds appropriately when no metadata is provided
     [Documentation]                 Verify 3GPP PM Mapper responds 400 with the message "Missing Metadata." when no metadata is provided
     [Timeout]                       1 minute
     ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  Content-Type=application/xml
-    ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}    data='${EMPTY}'    headers=${headers}
+    ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}/filename    data='${EMPTY}'    headers=${headers}
     Should Be Equal As Strings      ${resp.status_code}             400
     Should Be Equal As Strings      ${resp.content}                 Missing Metadata.
 
@@ -46,8 +46,8 @@ Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
     [Tags]                          PM_MAPPER_11
     [Documentation]                 Verify 3GPP PM Mapper responds 400 with the message "Malformed Metadata." when invalid metadata is provided
     [Timeout]                       1 minute
-    ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  X-ATT-DR-META='not metadata'  Content-Type=application/xml
-    ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}  data='${EMPTY}'  headers=${headers}
+    ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  X-DMAAP-DR-META='not metadata'  Content-Type=application/xml
+    ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}/filename  data='${EMPTY}'  headers=${headers}
     Should Be Equal As Strings      ${resp.status_code}             400
     Should Be Equal As Strings      ${resp.content}                 Malformed Metadata.
 

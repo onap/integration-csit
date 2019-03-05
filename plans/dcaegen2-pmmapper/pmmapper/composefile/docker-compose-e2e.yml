@@ -67,8 +67,8 @@ services:
       - "18080:8080"
       - "18443:8443"
     extra_hosts:
-      - "dmaap-dr-prov: DMAAPDR"
-      - "message-router: DMAAPMR"
+      - "dmaap-dr-prov:DMAAPDR"
+      - "message-router:DMAAPMR"
     volumes:
       - /tmp/docker-databus-controller.conf:/opt/app/config/conf
     depends_on:
