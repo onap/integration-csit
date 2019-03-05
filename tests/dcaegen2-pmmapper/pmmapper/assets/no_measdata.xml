@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+    <fileHeader dnPrefix="some dnPrefix" vendorName="FooBar Ltd"
+                fileFormatVersion="32.435 V10.0">
+        <fileSender localDn="Dublin"/>
+        <measCollec beginTime="2018-10-02T12:00:00+01:00"/>
+    </fileHeader>
+    <fileFooter>
+        <measCollec endTime="2018-10-02T12:15:00+01:00"/>
+    </fileFooter>
+</measCollecFile>
