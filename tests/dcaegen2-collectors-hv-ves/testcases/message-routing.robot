@@ -37,7 +37,8 @@ Too big payload message handling
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_TOO_BIG_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed Less Equal Than   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_25000}
+    ...    Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_25000}
+    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_TOO_BIG_PAYLOAD_REQUEST}
 
 
 Invalid wire frame message handling
@@ -85,6 +86,7 @@ ${XNF_INVALID_GPB_DATA_REQUEST}                ${VES_HV_SCENARIOS}/invalid-gpb-d
 ${XNF_UNSUPPORTED_DOMAIN_REQUEST}              ${VES_HV_SCENARIOS}/unsupported-domain/xnf-unsupported-domain-request.json
 
 ${DCAE_FIXED_PAYLOAD_REQUEST}                  ${VES_HV_SCENARIOS}/fixed-payload/dcae-fixed-payload-request.json
+${DCAE_TOO_BIG_PAYLOAD_REQUEST}                ${VES_HV_SCENARIOS}/too-big-payload/dcae-too-big-payload-request.json
 ${DCAE_INVALID_WIRE_FRAME_REQUEST}             ${VES_HV_SCENARIOS}/invalid-wire-frame/dcae-invalid-wire-frame-request.json
 ${DCAE_INVALID_GPB_DATA_REQUEST}               ${VES_HV_SCENARIOS}/invalid-gpb-data/dcae-invalid-gpb-data-request.json
 ${DCAE_UNSUPPORTED_DOMAIN_REQUEST}             ${VES_HV_SCENARIOS}/unsupported-domain/dcae-unsupported-domain-request.json
