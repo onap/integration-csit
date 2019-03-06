@@ -53,7 +53,18 @@ cat << EOF > $JSON
 "feedVersion": "1",
 "feedDescription":"PM Mapper Feed",
 "owner":"bulkpm",
-"asprClassification": "unclassified"
+"asprClassification": "unclassified",
+"pubs": [
+        {
+            "dcaeLocationName": "csit-pmmapper",
+            "feedId": "1",
+            "lastMod": "2015-01-01T15:00:00.000Z",
+            "pubId": "10",
+            "status": "EMPTY",
+            "username": "pmmapper",
+            "userpwd": "pmmapper"
+        }
+        ]
 }
 EOF
 echo "Initializing /feeds endpoint"

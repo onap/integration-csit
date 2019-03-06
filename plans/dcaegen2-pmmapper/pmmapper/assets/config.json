@@ -1,5 +1,5 @@
 {
-    "pm-mapper-filter": "{ \"filters\":[]}",
+    "pm-mapper-filter": { "filters":[]},
     "streams_subscribes": {
         "dmaap_subscriber": {
             "type": "data_router",
