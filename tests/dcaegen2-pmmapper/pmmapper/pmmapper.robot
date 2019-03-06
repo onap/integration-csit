@@ -20,6 +20,10 @@ ${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${MEASD_RESULT_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/meas_result.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
+${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/pm.xml
+${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/validPM.xml
+${PUBLISH_CONTENT_TYPE}                  application/octet-stream
+
 
 *** Test Cases ***
 
@@ -46,7 +50,6 @@ Verify Health Check returns 200 when a REST GET request to healthcheck url
     ${resp}=                        Get Request                      mapper_session  ${HEALTHCHECK_ENDPOINT}
     Should Be Equal As Strings      ${resp.status_code}              200
 
-
 Verify 3GPP PM Mapper responds appropriately when no metadata is provided
     [Tags]                          PM_MAPPER_10
     [Documentation]                 Verify 3GPP PM Mapper responds 400 with the message "Missing Metadata." when no metadata is provided
@@ -65,6 +68,20 @@ Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
     Should Be Equal As Strings      ${resp.status_code}             400
     Should Be Equal As Strings      ${resp.content}                 Malformed Metadata.
 
+Verify 3GPP PM Mapper received pushed PM data from Data Router
+    [Tags]                          PM_MAPPER_03
+    [Documentation]                 Verify 3GPP PM Mapper received pushed PM data from Data Router
+    [Timeout]                       2 minute
+    ${PM_DATA}=                     Get File                         ${PM_DATA_FILE_PATH}
+    ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
+    ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}    ${PM_DATA.replace("\n","")}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
+    Log                             ${resp.text}
+    Should Be Equal As Strings      ${resp.status_code}              204
+    Sleep     10s
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
 
 Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
     [Tags]                          PM_MAPPER_12
@@ -119,3 +136,9 @@ PostCall
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     ${resp}=       Evaluate    requests.post('${url}',data='${data}', headers=${headers},verify=False)    requests
     [Return]       ${resp}
+
+PutCall
+    [Arguments]      ${url}              ${data}            ${content_type}           ${meta}          ${user}
+    ${headers}=      Create Dictionary   X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
+    ${resp}=         Evaluate            requests.put('${url}', data='${data}', headers=${headers}, verify=False, allow_redirects=False)    requests
+    [Return]         ${resp}
