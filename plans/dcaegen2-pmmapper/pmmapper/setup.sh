@@ -145,4 +145,4 @@ docker exec buscontroller /bin/sh -c "cat /opt/app/dmaapbc/logs/ONAP/application
 curl -k https://$DR_PROV_IP:8443/internal/prov
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DMAAPBC_IP:${DMAAPBC_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP}"
+ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DMAAPBC_IP:${DMAAPBC_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP} -v DR_NODE_IP:${DR_NODE_IP}"
