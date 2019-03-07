@@ -51,7 +51,7 @@ Verify Health Check returns 200 when a REST GET request to healthcheck url
     Should Be Equal As Strings      ${resp.status_code}              200
 
 Verify 3GPP PM Mapper responds appropriately when no metadata is provided
-    [Tags]                          PM_MAPPER_10
+    [Tags]                          PM_MAPPER_04
     [Documentation]                 Verify 3GPP PM Mapper responds 400 with the message "Missing Metadata." when no metadata is provided
     [Timeout]                       1 minute
     ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  Content-Type=application/xml
@@ -60,21 +60,21 @@ Verify 3GPP PM Mapper responds appropriately when no metadata is provided
     Should Be Equal As Strings      ${resp.content}                 Missing Metadata.
 
 Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
-    [Tags]                          PM_MAPPER_11
+    [Tags]                          PM_MAPPER_05
     [Documentation]                 Verify 3GPP PM Mapper responds 400 with the message "Malformed Metadata." when invalid metadata is provided
     [Timeout]                       1 minute
-    ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  X-DMAAP-DR-META='not metadata'  Content-Type=application/xml
+    ${headers}=                     Create Dictionary               X-ONAP-RequestID=2  X-DMAAP-DR-META='not metadata'  Content-Type=application/xml
     ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}/filename  data='${EMPTY}'  headers=${headers}
     Should Be Equal As Strings      ${resp.status_code}             400
     Should Be Equal As Strings      ${resp.content}                 Malformed Metadata.
 
 Verify 3GPP PM Mapper received pushed PM data from Data Router
-    [Tags]                          PM_MAPPER_03
+    [Tags]                          PM_MAPPER_06
     [Documentation]                 Verify 3GPP PM Mapper received pushed PM data from Data Router
     [Timeout]                       1 minute
     ${PM_DATA}=                     Get File                         ${PM_DATA_FILE_PATH}
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
-    ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}    ${PM_DATA}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
+    ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}     3    ${PM_DATA}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
     Log                             ${resp.text}
     Should Be Equal As Strings      ${resp.status_code}              204
     Sleep     10s
@@ -83,38 +83,8 @@ Verify 3GPP PM Mapper received pushed PM data from Data Router
     Should Be Equal As Strings      ${cli_cmd_output.rc}             0
     Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
 
-Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
-    [Tags]                          PM_MAPPER_12
-    [Documentation]                 Verify 3gpp pm mapper responds with an error when no managed element content is provided
-    [Timeout]                       1 minute
-    ${no_managed_element_content}=  Get File                         ${NO_MANAGED_ELEMENT_PATH}
-    ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
-    ${headers}=                     Create Dictionary                X-ONAP-RequestID=2  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${no_managed_element_content}    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}              200
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation failed
-
-
-Verify that PM Mapper logs successful when a file that contains no measdata is provided
-    [Tags]                          PM_MAPPER_13
-    [Documentation]                 Verify that PM Mapper logs successful when a file that contains no measdata is provided
-    [Timeout]                       1 minute
-    ${valid_no_measdata_content}=   Get File                         ${NO_MEASDATA_PATH}
-    ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
-    ${headers}=                     Create Dictionary                X-ONAP-RequestID=3  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=3  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_no_measdata_content}    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}              200
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
-
-
 Verify that PM Mapper logs successful when a file that contains measdata is provided
-    [Tags]                          PM_MAPPER_14
+    [Tags]                          PM_MAPPER_07
     [Documentation]                 Verify that PM Mapper logs successful when a file that contains measdata is provided
     [Timeout]                       1 minute
     ${valid_meas_result_content}=   Get File                         ${MEASD_RESULT_PATH}
@@ -127,6 +97,33 @@ Verify that PM Mapper logs successful when a file that contains measdata is prov
     Should Be Equal As Strings      ${cli_cmd_output.rc}             0
     Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
 
+Verify that PM Mapper logs successful when a file that contains no measdata is provided
+    [Tags]                          PM_MAPPER_08
+    [Documentation]                 Verify that PM Mapper logs successful when a file that contains no measdata is provided
+    [Timeout]                       1 minute
+    ${valid_no_measdata_content}=   Get File                         ${NO_MEASDATA_PATH}
+    ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
+    ${headers}=                     Create Dictionary                X-ONAP-RequestID=5  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=3  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_no_measdata_content}    headers=${headers}
+    Should Be Equal As Strings      ${resp.status_code}              200
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
+
+Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
+    [Tags]                          PM_MAPPER_09
+    [Documentation]                 Verify 3gpp pm mapper responds with an error when no managed element content is provided
+    [Timeout]                       1 minute
+    ${no_managed_element_content}=  Get File                         ${NO_MANAGED_ELEMENT_PATH}
+    ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
+    ${headers}=                     Create Dictionary                X-ONAP-RequestID=6  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${no_managed_element_content}    headers=${headers}
+    Should Be Equal As Strings      ${resp.status_code}              200
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    Should Contain                  ${cli_cmd_output.stdout}         XML validation failed
 
 
 *** Keywords ***
@@ -138,7 +135,7 @@ PostCall
     [Return]       ${resp}
 
 PutCall
-    [Arguments]      ${url}              ${data}            ${content_type}           ${meta}          ${user}
-    ${headers}=      Create Dictionary   X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
+    [Arguments]      ${url}       ${request_id}       ${data}            ${content_type}           ${meta}          ${user}
+    ${headers}=      Create Dictionary   X-ONAP-RequestID=${request_id}    X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
     ${resp}=         Evaluate            requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=False)    requests
     [Return]         ${resp}
