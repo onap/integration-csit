@@ -21,7 +21,7 @@ ${MEASD_RESULT_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/pm.xml
-${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_pm.xml
+${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${PUBLISH_CONTENT_TYPE}                  application/octet-stream
 
 
