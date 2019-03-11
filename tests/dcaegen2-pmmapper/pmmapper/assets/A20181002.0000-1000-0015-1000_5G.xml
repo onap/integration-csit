@@ -1,678 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="MeasDataCollection.xsl"?>
-<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
-    <fileHeader dnPrefix="SubNetwork=NETSimW,MeContext=LTE73dg2ERBS00019" vendorName="Ericsson AB" fileFormatVersion="32.435 V10.0">
-        <fileSender localDn="Dublin"/>
-        <measCollec beginTime="2018-10-02T12:00:00Z"/>
-    </fileHeader>
-    <measData>
-        <managedElement swVersion="r0.1" localDn="Dublin"/>
-        <measInfo measInfoId="ENodeBFunction">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmLicConnectedUsersLevSamp</measType>
-            <measType p="2">pmPagS1Discarded</measType>
-            <measType p="3">pmRrcConnBrEnbMax</measType>
-            <measType p="4">pmLic5MHzSectorCarrierActual</measType>
-            <measType p="5">pmLic5Plus5MHzScTddActual</measType>
-            <measType p="6">pmZtemporary34</measType>
-            <measType p="7">pmLicDlCapLicense</measType>
-            <measType p="8">pmPagS1EdrxReceived</measType>
-            <measType p="9">pmZtemporary35</measType>
-            <measType p="10">pmLicConnectedUsersLevSum</measType>
-            <measType p="11">pmLicDlPrbCapLicense</measType>
-            <measType p="12">pmPagS1RecDistr</measType>
-            <measType p="13">pmRrcConnBrEnbLevSamp</measType>
-            <measType p="14">pmLicUlPrbCapLicense</measType>
-            <measType p="15">pmPagS1EdrxDiscarded</measType>
-            <measType p="16">pmRimAssocMax</measType>
-            <measType p="17">pmLicUlCapLicense</measType>
-            <measType p="18">pmLicConnectedUsersDistr</measType>
-            <measType p="19">pmMoFootprintMax</measType>
-            <measType p="20">pmLic5Plus5MHzScFddActual</measType>
-            <measType p="21">pmLicConnectedUsersTimeCong</measType>
-            <measType p="22">pmPagS1Received</measType>
-            <measType p="23">pmPagS1DiscDistr</measType>
-            <measType p="24">pmRimReportErr</measType>
-            <measType p="25">pmLicConnectedUsersMax</measType>
-            <measType p="26">pmRrcConnBrEnbLevSum</measType>
-            <measType p="27">pmLicConnectedUsersActual</measType>
-            <measType p="28">pmLicConnectedUsersLicense</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1">
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+	<fileHeader fileFormatVersion="32.435 V7.0" vendorName="Company NN" dnPrefix="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1">
+		<fileSender localDn="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1" elementType="RNC"/>
+		<measCollec beginTime="2000-03-01T14:00:00+02:00"/>
+	</fileHeader>
+	<measData>
+		<managedElement localDn="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1" userLabel="RNC Telecomville"/>
+		<measInfo>
+			<job jobId="1231"/>
+			<granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+			<repPeriod duration="PT1800S"/>
+			<measType p="1">attTCHSeizures</measType>
+			<measType p="2">succTCHSeizures</measType>
+			<measType p="3">attImmediateAssignProcs</measType>
+			<measType p="4">succImmediateAssignProcs</measType>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-997">
+				<r p="1">234</r>
+				<r p="2">345</r>
+				<r p="3">567</r>
+				<r p="4">789</r>
+			</measValue>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-998">
+				<r p="1">890</r>
+				<r p="2">901</r>
+				<r p="3">123</r>
+				<r p="4">234</r>
+			</measValue>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-999">
+				<r p="1">456</r>
+				<r p="2">567</r>
+				<r p="3">678</r>
+				<r p="4">789</r>
+				<suspect>true</suspect>
+			</measValue>
+		</measInfo>
+		<measInfo measInfoId="ENodeBFunction">
+            <job jobId="1232"/>
+			<granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+			<repPeriod duration="PT1800S"/>
+            <measType p="1">attTCHSeizures1</measType>
+            <measType p="2">succTCHSeizures2</measType>
+            <measType p="3">attImmediateAssignProcs3</measType>
+            <measType p="4">succImmediateAssignProcs4</measType>
+            <measValue measObjLdn="ManagedElement=RNC-Gbg-1,ENodeBFunction=1">
                 <r p="1">4</r>
-                <r p="2">6</r>
-                <r p="3">68</r>
-                <r p="4">2759</r>
-                <r p="5">2738</r>
-                <r p="6">50</r>
-                <r p="7">20</r>
-                <r p="8">8</r>
-                <r p="9">45</r>
-                <r p="10">9</r>
-                <r p="11">87</r>
                 <r p="12">86,87,2,6,77,96,75,33,24</r>
                 <r p="13">40</r>
                 <r p="14">90</r>
-                <r p="15">2</r>
-                <r p="16">98</r>
-                <r p="17">75</r>
-                <r p="18">36,30,45,68,74,44,64,83,17,52,36,99,46,59,71,24,49,33,83,75,43,30,74,28</r>
-                <r p="19">83</r>
-                <r p="20">2634</r>
-                <r p="21">10</r>
-                <r p="22">69</r>
-                <r p="23">58,2,40,80,81,47,73,100,91</r>
-                <r p="24">32</r>
-                <r p="25">37</r>
-                <r p="26">16</r>
-                <r p="27">38</r>
-                <r p="28">92</r>
                 <suspect>false</suspect>
             </measValue>
         </measInfo>
-        <measInfo measInfoId="EUtranCellRelation">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmHoExeSuccLteInterFRedirectCsg</measType>
-            <measType p="2">pmHoPrepSuccNonMob</measType>
-            <measType p="3">pmZtemporary73</measType>
-            <measType p="4">pmHoOscInterF</measType>
-            <measType p="5">pmLbQualifiedUe</measType>
-            <measType p="6">pmHoPrepAttLteInterFRedirectCsg</measType>
-            <measType p="7">pmZtemporary74</measType>
-            <measType p="8">pmLbTpAcceptedUe</measType>
-            <measType p="9">pmHoExeSuccLteInterF</measType>
-            <measType p="10">pmHoExeAttLteIntraFTuneOut</measType>
-            <measType p="11">pmHoPrepSuccLteIntraF</measType>
-            <measType p="12">pmLbTpEvalUe</measType>
-            <measType p="13">pmHoPrepAttLteInterFMbms</measType>
-            <measType p="14">pmHoExeAttLteSpifho</measType>
-            <measType p="15">pmCaRedirectQualifiedUe</measType>
-            <measType p="16">pmHoWrongCellReestIntraF</measType>
-            <measType p="17">pmAtoQualifiedUe</measType>
-            <measType p="18">pmHoWrongCellInterF</measType>
-            <measType p="19">pmHoExeAttLteInterFMbms</measType>
-            <measType p="20">pmHoExeAttLteIntraF</measType>
-            <measType p="21">pmZtemporary76</measType>
-            <measType p="22">pmHoExeAttNonMob</measType>
-            <measType p="23">pmHoExeSuccNonMob</measType>
-            <measType p="24">pmHoTooEarlyHoIntraF</measType>
-            <measType p="25">pmCaRedirectMeasRepUe</measType>
-            <measType p="26">pmHoPrepSuccLteInterFUl</measType>
-            <measType p="27">pmHoExeSuccLteInterFLb</measType>
-            <measType p="28">pmHoExeSuccLteIntraF</measType>
-            <measType p="29">pmHoExeSuccLteInterFMbms</measType>
-            <measType p="30">pmHoWrongCellReestInterF</measType>
-            <measType p="31">pmHoPrepSuccLteInterFRedirectCsg</measType>
-            <measType p="32">pmHoExeAttLteInterFRedirectCsg</measType>
-            <measType p="33">pmSpifhoReportedUe</measType>
-            <measType p="34">pmZtemporary75</measType>
-            <measType p="35">pmZtemporary79</measType>
-            <measType p="36">pmHoPrepAttLteSpifho</measType>
-            <measType p="37">pmAtoMeasRepUe</measType>
-            <measType p="38">pmHoTooEarlyHoInterF</measType>
-            <measType p="39">pmZtemporary78</measType>
-            <measType p="40">pmHoPrepAttLteInterFUl</measType>
-            <measType p="41">pmHoExeOutAttLteInterFQci1</measType>
-            <measType p="42">pmHoExeAttLteInterF</measType>
-            <measType p="43">pmZtemporary36</measType>
-            <measType p="44">pmZtemporary77</measType>
-            <measType p="45">pmHoPrepAttLteInterF</measType>
-            <measType p="46">pmHoPrepSuccLteInterFCaRedirect</measType>
-            <measType p="47">pmHoPrepSuccLteInterFLb</measType>
-            <measType p="48">pmZtemporary72</measType>
-            <measType p="49">pmHoExeSuccLteIntraFTuneOut</measType>
-            <measType p="50">pmHoExecSuccLteInterFCaRedirect</measType>
-            <measType p="51">pmHoExecAttLteInterFCaRedirect</measType>
-            <measType p="52">pmHoPrepAttLteInterFLb</measType>
-            <measType p="53">pmHoOscIntraF</measType>
-            <measType p="54">pmHoPrepAttLteIntraF</measType>
-            <measType p="55">pmHoPrepSuccLteInterF</measType>
-            <measType p="56">pmHoTooLateHoInterF</measType>
-            <measType p="57">pmHoPrepAttLteInterFCaRedirect</measType>
-            <measType p="58">pmHoExeAttLteInterFLb</measType>
-            <measType p="59">pmHoTooLateHoIntraF</measType>
-            <measType p="60">pmHoPrepSuccLteInterFMbms</measType>
-            <measType p="61">pmHoPrepAttNonMob</measType>
-            <measType p="62">pmLbTpUlAcceptedUe</measType>
-            <measType p="63">pmHoExeSuccLteSpifho</measType>
-            <measType p="64">pmHoExeOutSuccLteInterFQci1</measType>
-            <measType p="65">pmLbMeasRepUe</measType>
-            <measType p="66">pmHoPrepSuccLteSpifho</measType>
-            <measType p="67">pmHoWrongCellIntraF</measType>
-<measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtranCellFDD=LTE73dg2ERBS00019-1,EUtranFreqRelation=1,EUtranCellRelation=3">
-                <r p="1">2</r>
-                <r p="2">5</r>
-                <r p="3">91</r>
-                <r p="4">4</r>
-                <r p="5">37</r>
-                <r p="6">57</r>
-                <r p="7">23</r>
-                <r p="8">57</r>
-                <r p="9">94</r>
-                <r p="10">1</r>
-                <r p="11">88</r>
-                <r p="12">88</r>
-                <r p="13">92</r>
-                <r p="14">54</r>
-                <r p="15">43</r>
-                <r p="16">15</r>
-                <r p="17">97</r>
-                <r p="18">58</r>
-                <r p="19">40</r>
-                <r p="20">57</r>
-                <r p="21">24</r>
-                <r p="22">94</r>
-                <r p="23">92</r>
-                <r p="24">40</r>
-                <r p="25">2</r>
-                <r p="26">52</r>
-                <r p="27">17</r>
-                <r p="28">70</r>
-                <r p="29">40</r>
-                <r p="30">24</r>
-                <r p="31">64</r>
-                <r p="32">49</r>
-                <r p="33">11</r>
-                <r p="34">52</r>
-                <r p="35">74</r>
-                <r p="36">73</r>
-                <r p="37">45</r>
-                <r p="38">26</r>
-                <r p="39">74</r>
-                <r p="40">16</r>
-                <r p="41">80</r>
-                <r p="42">41</r>
-                <r p="43">99</r>
-                <r p="44">36</r>
-                <r p="45">73</r>
-                <r p="46">86</r>
-                <r p="47">92</r>
-                <r p="48">49</r>
-                <r p="49">22</r>
-                <r p="50">36</r>
-                <r p="51">43</r>
-                <r p="52">98</r>
-                <r p="53">74</r>
-                <r p="54">23</r>
-                <r p="55">76</r>
-                <r p="56">78</r>
-                <r p="57">22</r>
-                <r p="58">57</r>
-                <r p="59">37</r>
-                <r p="60">78</r>
-                <r p="61">56</r>
-                <r p="62">21</r>
-                <r p="63">44</r>
-                <r p="64">70</r>
-                <r p="65">6</r>
-                <r p="66">29</r>
-                <r p="67">75</r>
-                <suspect>false</suspect>
-            </measValue>
-<measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtranCellFDD=LTE73dg2ERBS00019-1,EUtranFreqRelation=1,EUtranCellRelation=4">
-                <r p="1">22</r>
-                <r p="2">59</r>
-                <r p="3">10</r>
-                <r p="4">79</r>
-                <r p="5">17</r>
-                <r p="6">20</r>
-                <r p="7">47</r>
-                <r p="8">92</r>
-                <r p="9">41</r>
-                <r p="10">11</r>
-                <r p="11">6</r>
-                <r p="12">9</r>
-                <r p="13">54</r>
-                <r p="14">37</r>
-                <r p="15">8</r>
-                <r p="16">66</r>
-                <r p="17">96</r>
-                <r p="18">65</r>
-                <r p="19">66</r>
-                <r p="20">91</r>
-                <r p="21">44</r>
-                <r p="22">73</r>
-                <r p="23">86</r>
-                <r p="24">7</r>
-                <r p="25">33</r>
-                <r p="26">54</r>
-                <r p="27">97</r>
-                <r p="28">54</r>
-                <r p="29">39</r>
-                <r p="30">3</r>
-                <r p="31">28</r>
-                <r p="32">20</r>
-                <r p="33">65</r>
-                <r p="34">85</r>
-                <r p="35">59</r>
-                <r p="36">53</r>
-                <r p="37">41</r>
-                <r p="38">9</r>
-                <r p="39">60</r>
-                <r p="40">65</r>
-                <r p="41">55</r>
-                <r p="42">12</r>
-                <r p="43">83</r>
-                <r p="44">44</r>
-                <r p="45">96</r>
-                <r p="46">30</r>
-                <r p="47">16</r>
-                <r p="48">64</r>
-                <r p="49">58</r>
-                <r p="50">53</r>
-                <r p="51">80</r>
-                <r p="52">58</r>
-                <r p="53">66</r>
-                <r p="54">13</r>
-                <r p="55">51</r>
-                <r p="56">44</r>
-                <r p="57">93</r>
-                <r p="58">82</r>
-                <r p="59">38</r>
-                <r p="60">38</r>
-                <r p="61">17</r>
-                <r p="62">26</r>
-                <r p="63">64</r>
-                <r p="64">49</r>
-                <r p="65">63</r>
-                <r p="66">43</r>
-                <r p="67">46</r>
-                <suspect>false</suspect>
-            </measValue>
-<measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtranCellFDD=LTE73dg2ERBS00019-1,EUtranFreqRelation=1,EUtranCellRelation=5">
-                <r p="1">78</r>
-                <r p="2">37</r>
-                <r p="3">1</r>
-                <r p="4">11</r>
-                <r p="5">85</r>
-                <r p="6">26</r>
-                <r p="7">13</r>
-                <r p="8">1</r>
-                <r p="9">75</r>
-                <r p="10">3</r>
-                <r p="11">92</r>
-                <r p="12">4</r>
-                <r p="13">33</r>
-                <r p="14">93</r>
-                <r p="15">41</r>
-                <r p="16">70</r>
-                <r p="17">14</r>
-                <r p="18">52</r>
-                <r p="19">81</r>
-                <r p="20">82</r>
-                <r p="21">72</r>
-                <r p="22">38</r>
-                <r p="23">26</r>
-                <r p="24">52</r>
-                <r p="25">65</r>
-                <r p="26">93</r>
-                <r p="27">59</r>
-                <r p="28">59</r>
-                <r p="29">70</r>
-                <r p="30">3</r>
-                <r p="31">22</r>
-                <r p="32">40</r>
-                <r p="33">94</r>
-                <r p="34">19</r>
-                <r p="35">92</r>
-                <r p="36">11</r>
-                <r p="37">73</r>
-                <r p="38">51</r>
-                <r p="39">6</r>
-                <r p="40">71</r>
-                <r p="41">43</r>
-                <r p="42">64</r>
-                <r p="43">49</r>
-                <r p="44">88</r>
-                <r p="45">74</r>
-                <r p="46">15</r>
-                <r p="47">67</r>
-                <r p="48">42</r>
-                <r p="49">94</r>
-                <r p="50">16</r>
-                <r p="51">10</r>
-                <r p="52">38</r>
-                <r p="53">18</r>
-                <r p="54">7</r>
-                <r p="55">20</r>
-                <r p="56">99</r>
-                <r p="57">51</r>
-                <r p="58">87</r>
-                <r p="59">69</r>
-                <r p="60">74</r>
-                <r p="61">34</r>
-                <r p="62">74</r>
-                <r p="63">8</r>
-                <r p="64">15</r>
-                <r p="65">66</r>
-                <r p="66">84</r>
-                <r p="67">71</r>
-                <suspect>false</suspect>
-            </measValue>
-<measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtranCellFDD=LTE73dg2ERBS00019-1,EUtranFreqRelation=1,EUtranCellRelation=6">
-                <r p="1">70</r>
-                <r p="2">3</r>
-                <r p="3">65</r>
-                <r p="4">56</r>
-                <r p="5">36</r>
-                <r p="6">62</r>
-                <r p="7">97</r>
-                <r p="8">82</r>
-                <r p="9">18</r>
-                <r p="10">82</r>
-                <r p="11">41</r>
-                <r p="12">80</r>
-                <r p="13">31</r>
-                <r p="14">84</r>
-                <r p="15">44</r>
-                <r p="16">34</r>
-                <r p="17">78</r>
-                <r p="18">35</r>
-                <r p="19">3</r>
-                <r p="20">76</r>
-                <r p="21">41</r>
-                <r p="22">64</r>
-                <r p="23">51</r>
-                <r p="24">30</r>
-                <r p="25">49</r>
-                <r p="26">56</r>
-                <r p="27">72</r>
-                <r p="28">25</r>
-                <r p="29">43</r>
-                <r p="30">51</r>
-                <r p="31">84</r>
-                <r p="32">99</r>
-                <r p="33">71</r>
-                <r p="34">74</r>
-                <r p="35">28</r>
-                <r p="36">44</r>
-                <r p="37">28</r>
-                <r p="38">47</r>
-                <r p="39">43</r>
-                <r p="40">78</r>
-                <r p="41">56</r>
-                <r p="42">7</r>
-                <r p="43">66</r>
-                <r p="44">65</r>
-                <r p="45">29</r>
-                <r p="46">19</r>
-                <r p="47">47</r>
-                <r p="48">48</r>
-                <r p="49">21</r>
-                <r p="50">25</r>
-                <r p="51">32</r>
-                <r p="52">58</r>
-                <r p="53">64</r>
-                <r p="54">88</r>
-                <r p="55">23</r>
-                <r p="56">22</r>
-                <r p="57">98</r>
-                <r p="58">37</r>
-                <r p="59">80</r>
-                <r p="60">52</r>
-                <r p="61">30</r>
-                <r p="62">27</r>
-                <r p="63">26</r>
-                <r p="64">65</r>
-                <r p="65">71</r>
-                <r p="66">91</r>
-                <r p="67">64</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="EUtranFreqRelation">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmCaRedirectMeasuredUe</measType>
-            <measType p="2">pmMbmsInterestIndicationNonServ</measType>
-            <measType p="3">pmMbmsInterestIndication</measType>
-            <measType p="4">pmLbMeasuredUe</measType>
-            <measType p="5">pmMbmsInterestIndicationPCell</measType>
-            <measType p="6">pmMbmsInterestIndicationSCell</measType>
-            <measType p="7">pmSpifhoMeasuredUe</measType>
-            <measType p="8">pmAtoMeasuredUe</measType>
-<measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtranCellFDD=LTE73dg2ERBS00019-1,EUtranFreqRelation=1">
-                <r p="1">14</r>
-                <r p="2">25</r>
-                <r p="3">60</r>
-                <r p="4">63</r>
-                <r p="5">10</r>
-                <r p="6">71</r>
-                <r p="7">16</r>
-                <r p="8">43</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="EnergyMeter">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmPowerConsumption</measType>
-            <measType p="2">pmVoltage</measType>
-            <measType p="3">pmConsumedEnergy</measType>
-            <measType p="4">pmConsumedEnergyAccumulated</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,Equipment=1,FieldReplaceableUnit=1,EFuse=1,EnergyMeter=1">
-                <r p="1">44,88,3,61,33,74,92,10,14,83,96,34,13,7,6,92,77,1,69,5,85,19,11,11,12,56,93,94,0,48,96,50,83,20,66,31,90,9,97,11,30,40,89,20,64,84,7,24,76,61,5,39,55,39,31,70,96,58,38,38,39,48,20,55,9,71,49,56,39,59,91,45,2,81,5,31,35,34,8,91,20,65,8,57,89,45,5,83,12,55,84,3,20,54,73,96,45,35,99,52,42,17,92,47,86,87,29,93,34,59,66,50,46,40,84,76,72,90,75,28,98,87,36,44,24,0,57,35,77,34,29,69,90,86,47,61,76,39,22,59,15,4,80,7,99,83,54,25,25,53</r>
-                <r p="2">19,69,83,75,92,1,65,86,80,24,2,89,61,38,47,76,4,80,19,57,76,28,74,20,19,49,10,99,50,98,7,57,2,1,28,97,92,56,39,48,33,72,58,86,77,91,15,14,78,50,10,78,67,5,76,98,50,4,80,38,13,16,63,27,68,72,95,33,98,60,50,26,91,52,61,57,89,23,81,10,54,85,30,25,69,54,86,28,33,67,1,92,61,38,78,24,78,49,65,15,39,71,49,70,2,20,33,39,9,23,94,25,95,40,66,13,59,91,27,27,16,63,81,84,68,84,87,21,86,70,69,55,97,66,35,49,7,70,37,69,51,42,13,5,84,1,63,47,77,71</r>
-                <r p="3">39</r>
-                <r p="4">2460</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="EthernetPort">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">ifHCOutBroadcastPkts</measType>
-            <measType p="2">ifHCOutUcastPkts</measType>
-            <measType p="3">ifOutErrors</measType>
-            <measType p="4">ifHCInUcastPkts</measType>
-            <measType p="5">ifInErrors</measType>
-            <measType p="6">ifHCInBroadcastPkts</measType>
-            <measType p="7">ifOutDiscards</measType>
-            <measType p="8">ifInUnknownTags</measType>
-            <measType p="9">ifInOctetRatePercentiles</measType>
-            <measType p="10">ifHCInMulticastPkts</measType>
-            <measType p="11">ifHCOutOctets</measType>
-            <measType p="12">ifHCInOctets</measType>
-            <measType p="13">ifInUnknownProtos</measType>
-            <measType p="14">ifTotalLossOfSignalDuration</measType>
-            <measType p="15">ifInDiscards</measType>
-            <measType p="16">ifHCOutMulticastPkts</measType>
-            <measType p="17">ifMaxLossOfSignalDuration</measType>
-            <measType p="18">ifHCLossOfSignal</measType>
-            <measType p="19">ifOutOctetRatePercentiles</measType>
-            <measType p="20">ifMinLossOfSignalDuration</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,Transport=1,EthernetPort=1">
-                <r p="1">86</r>
-                <r p="2">67</r>
-                <r p="3">14</r>
-                <r p="4">17</r>
-                <r p="5">5</r>
-                <r p="6">6</r>
-                <r p="7">82</r>
-                <r p="8">51</r>
-                <r p="9">72,28,74,73,54,70,74</r>
-                <r p="10">98</r>
-                <r p="11">35</r>
-                <r p="12">96</r>
-                <r p="13">90</r>
-                <r p="14">43</r>
-                <r p="15">24</r>
-                <r p="16">36</r>
-                <r p="17">93</r>
-                <r p="18">21</r>
-                <r p="19">67,33,63,55,85,18,76</r>
-                <r p="20">63</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="ExternalENodeBFunction">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmZtemporary222</measType>
-            <measType p="2">pmEranCaPartnerBlock</measType>
-            <measType p="3">pmEenbPktLateDlCa</measType>
-            <measType p="4">pmCaCrntiUnavail</measType>
-            <measType p="5">pmEenbPktLostDlCa</measType>
-            <measType p="6">pmEenbPktDiscDlCa</measType>
-            <measType p="7">pmZtemporary223</measType>
-            <measType p="8">pmEenbPktTransDlCa</measType>
-            <measType p="9">pmEenbPktRecDlCa</measType>
-            <measType p="10">pmZtemporary206</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,EUtraNetwork=1,ExternalENodeBFunction=1">
-                <r p="1">30</r>
-                <r p="2">66</r>
-                <r p="3">51</r>
-                <r p="4">20</r>
-                <r p="5">95</r>
-                <r p="6">69</r>
-                <r p="7">83</r>
-                <r p="8">0</r>
-                <r p="9">100</r>
-                <r p="10">44</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="ExternalGeranCell">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmRimAssocAtt</measType>
-            <measType p="2">pmRimAssocAttRetry</measType>
-            <measType p="3">pmRimUpdateReceived</measType>
-            <measType p="4">pmRimAssocRemoved</measType>
-            <measType p="5">pmZtemporary99</measType>
-            <measType p="6">pmZtemporary98</measType>
-            <measType p="7">pmRimAssocTO</measType>
-            <measType p="8">pmRimAssocSucc</measType>
-            <measType p="9">pmRimUpdateAckSent</measType>
-            <measType p="10">pmRimReportErr</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,GeraNetwork=1,ExternalGeranCell=1">
-                <r p="1">89</r>
-                <r p="2">4</r>
-                <r p="3">70</r>
-                <r p="4">48</r>
-                <r p="5">89</r>
-                <r p="6">72</r>
-                <r p="7">38</r>
-                <r p="8">1</r>
-                <r p="9">2</r>
-                <r p="10">10</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="ExternalUtranCellFDD">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmRimAssocSucc</measType>
-            <measType p="2">pmRimAssocRemoved</measType>
-            <measType p="3">pmZtemporary100</measType>
-            <measType p="4">pmRimUpdateReceived</measType>
-            <measType p="5">pmRimAssocTO</measType>
-            <measType p="6">pmRimUpdateAckSent</measType>
-            <measType p="7">pmZtemporary101</measType>
-            <measType p="8">pmRimAssocAttRetry</measType>
-            <measType p="9">pmRimReportErr</measType>
-            <measType p="10">pmRimAssocAtt</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,ENodeBFunction=1,UtraNetwork=1,UtranFrequency=1,ExternalUtranCellFDD=1">
-                <r p="1">62</r>
-                <r p="2">46</r>
-                <r p="3">45</r>
-                <r p="4">68</r>
-                <r p="5">39</r>
-                <r p="6">37</r>
-                <r p="7">81</r>
-                <r p="8">19</r>
-                <r p="9">73</r>
-                <r p="10">49</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="NodeBFunction">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmCapacityOfNodeBUlCeExt</measType>
-            <measType p="2">pmCapacityOfNodeBDlCe</measType>
-            <measType p="3">pmCapacityNodeBLimitUlCe</measType>
-            <measType p="4">pmCapacityNodeBLimitDlCe</measType>
-            <measType p="5">pmCapacityOfNodeBUlCe</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,NodeBFunction=1">
-                <r p="1">51,27,56,76,61,76,24,1,24,52,61,6,85,94,53,97,14,80,60,79,58,88,69,81,98,94,78,70,26,10,61,9,94,46,33,55,51,3,31,67,11,39,33,22,3,9,94</r>
-                <r p="2">14,46,49,30,86,1,55,50,52,41</r>
-                <r p="3">2620</r>
-                <r p="4">2849</r>
-                <r p="5">87,4,90,14,22,9,36,94,60,72</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-        <measInfo measInfoId="NodeBLocalCellGroup">
-            <job jobId="1_USERDEF.ALL_COUNTERS.Profile_1.Continuous_Y.MEASJOB"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
-            <repPeriod duration="PT900S"/>
-            <measType p="1">pmSumCapacityUlCe</measType>
-            <measType p="2">pmSetupRejSwLoad</measType>
-            <measType p="3">pmCapacityOfDlCe</measType>
-            <measType p="4">pmCapacityOfUlCeExt</measType>
-            <measType p="5">pmCapacityAllocAttDlCe</measType>
-            <measType p="6">pmNoUlHwLimitEul</measType>
-            <measType p="7">pmCapacityLimitDlCe</measType>
-            <measType p="8">pmCapacityAllocRejDlCe</measType>
-            <measType p="9">pmSetupAttempts</measType>
-            <measType p="10">pmCpcUlActivityFactor</measType>
-            <measType p="11">pmSumCapacityUlCeEulFach</measType>
-            <measType p="12">pmCapacityOfUlCe</measType>
-            <measType p="13">pmCapacityAllocAttUlCe</measType>
-            <measType p="14">pmSamplesCapacityUlCe</measType>
-            <measType p="15">pmCapacityAllocRejUlCe</measType>
-            <measType p="16">pmIsUsersRatio</measType>
-            <measType p="17">pmSamplesCapacityDlCe</measType>
-            <measType p="18">pmSumCapacityUlCeStatic</measType>
-            <measType p="19">pmCapacityUlCeEulFach</measType>
-            <measType p="20">pmHwCePoolEul</measType>
-            <measType p="21">pmSetupFailures</measType>
-            <measType p="22">pmCapacityLimitUlCe</measType>
-            <measType p="23">pmStaticHwCePoolEul</measType>
-            <measType p="24">pmSumCapacityDlCe</measType>
-            <measType p="25">pmSamplesCapacityUlCeStatic</measType>
-            <measValue measObjLdn="ManagedElement=LTE73dg2ERBS00019,NodeBFunction=1,NodeBLocalCellGroup=1">
-                <r p="1">91</r>
-                <r p="2">5</r>
-                <r p="3">61,11,27,47,65,88,67,59,78,51</r>
-                <r p="4">97,81,23,87,89,44,11,68,77,0,72,5,45,11,11,56,11,1,87,86,83,5,36,37,82,25,99,77,5,72,90,23,74,99,53,72,48,13,52,24,90,74,2,15,63,96,27</r>
-                <r p="5">2</r>
-                <r p="6">72</r>
-                <r p="7">2503</r>
-                <r p="8">70</r>
-                <r p="9">24</r>
-                <r p="10">33,38,12,21,91,0,52,84,99,32,40,8,15,39,92,27,41,43,63,41</r>
-                <r p="11">93</r>
-                <r p="12">10,100,48,71,68,59,69,36,64,66</r>
-                <r p="13">14</r>
-                <r p="14">88</r>
-                <r p="15">75</r>
-                <r p="16">18</r>
-                <r p="17">84</r>
-                <r p="18">17</r>
-                <r p="19">90,24,50,62,83,25,7,36,85,70,63</r>
-                <r p="20">6,63,96,1,94,85,82,17,30,46,39,59,11,14,7,60,61,36,1,39,20,82,77,95,50,26,43,81,2,95,84,32,1,70,31,48,11,24,2,43,74,94,46,99,63,47,68,28,62,22,54,91,84,81,46,50,45,32,25,100,14,67,86,62,85,22,80,18,19,21,45,59,41,81,70,65,43,28,93,91,36,20,17,56,9,78,31,98,44,97,45,2,72,85,61,65,21,23,95,36,90,10,19,60,41,96,84,25,96,91,33,73,48,46,92,82,8,80,8,88,21,95,61,86,58,89,48,86,63</r>
-                <r p="21">83</r>
-                <r p="22">2824</r>
-                <r p="23">7,66,20,8,41,18,98,71,57,28,13,53,53,77,70,31,99,62,50,19,63,3,75,43,17,91,30,34,21,62,77,67,90,11,66,11,77,51,27,55,95,66,98,45,67,60,76,42,55,94,17,87,61,8,52,24,71,7,36,5,73,63,59</r>
-                <r p="24">38</r>
-                <r p="25">65</r>
-                <suspect>false</suspect>
-            </measValue>
-        </measInfo>
-    </measData>
-    <fileFooter>
-        <measCollec endTime="2018-10-02T12:15:00Z"/>
-    </fileFooter>
+		<measInfo>
+			<job jobId="1233"/>
+			<granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+			<repPeriod duration="PT1800S"/>
+			<measType p="1">attTCHSeizures5</measType>
+			<measType p="2">succTCHSeizures6</measType>
+			<measType p="3">attImmediateAssignProcs7</measType>
+			<measType p="4">succImmediateAssignProcs8</measType>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-997">
+				<r p="1">238</r>
+				<r p="2">344</r>
+				<r p="3">563</r>
+				<r p="4">787</r>
+			</measValue>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-998">
+				<r p="1">898</r>
+				<r p="2">905</r>
+				<r p="3">127</r>
+				<r p="4">238</r>
+			</measValue>
+			<measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-999">
+				<r p="1">454</r>
+				<r p="2">569</r>
+				<r p="3">672</r>
+				<r p="4">785</r>
+				<suspect>true</suspect>
+			</measValue>
+		</measInfo>
+	</measData>
+	<fileFooter>
+		<measCollec endTime="2000-03-01T14:15:00+02:00"/>
+	</fileFooter>
 </measCollecFile>
