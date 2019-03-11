@@ -40,7 +40,7 @@ ${HTTP_METHOD_URL}                             http://
 
 ${CONSUL_CONTAINER_HOST}                       consul
 ${CONSUL_CONTAINER_PORT}                       8500
-${CONSUL_VES_HV_CONFIGURATION_KEY_PATH}        /v1/kv/veshv-config
+${CONSUL_VES_HV_CONFIGURATION_KEY_PATH}        /v1/kv/dcae-hv-ves-collector
 
 ${DCAE_APP_CONTAINER_HOST}                     dcae-app-simulator
 ${DCAE_APP_CONTAINER_PORT}                     6063

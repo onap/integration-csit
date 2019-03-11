@@ -1,0 +1,10 @@
+{
+  "service": {
+    "name": "cbs",
+    "tags": [
+      "cbs"
+    ],
+    "port": 10000,
+    "address": "config-binding-service"
+  }
+}
