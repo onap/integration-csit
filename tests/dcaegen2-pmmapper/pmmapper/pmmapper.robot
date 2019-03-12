@@ -30,25 +30,19 @@ ${PUBLISH_CONTENT_TYPE}                  application/octet-stream
 Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
     [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
-    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_CONFIG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        Received pm-mapper configuration
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Received pm-mapper configuration
 
 Verify 3GPP PM Mapper Subscribes to Data Router
     [Tags]                          PM_MAPPER_02
     [Documentation]                 Verify 3gpp pm mapper subscribes to data router
-    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_SUBS}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        3gpppmmapper
+    CheckLog                        ${CLI_EXEC_CLI_SUBS}             3gpppmmapper
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_03
     [Documentation]                 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Timeout]                       1 minute
     ${resp}=                        Get Request                      mapper_session  ${HEALTHCHECK_ENDPOINT}
-    Should Be Equal As Strings      ${resp.status_code}              200
+    VerifyResponse                  ${resp.status_code}              200
 
 Verify 3GPP PM Mapper responds appropriately when no metadata is provided
     [Tags]                          PM_MAPPER_04
@@ -56,8 +50,9 @@ Verify 3GPP PM Mapper responds appropriately when no metadata is provided
     [Timeout]                       1 minute
     ${headers}=                     Create Dictionary               X-ONAP-RequestID=1  Content-Type=application/xml
     ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}/filename    data='${EMPTY}'    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}             400
-    Should Be Equal As Strings      ${resp.content}                 Missing Metadata.
+    VerifyResponse                  ${resp.status_code}             400
+    VerifyResponse                  ${resp.content}                 Missing Metadata.
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}          RequestID=1
 
 Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
     [Tags]                          PM_MAPPER_05
@@ -65,8 +60,9 @@ Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
     [Timeout]                       1 minute
     ${headers}=                     Create Dictionary               X-ONAP-RequestID=2  X-DMAAP-DR-META='not metadata'  Content-Type=application/xml
     ${resp}=                        Put Request                     mapper_session  ${DELIVERY_ENDPOINT}/filename  data='${EMPTY}'  headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}             400
-    Should Be Equal As Strings      ${resp.content}                 Malformed Metadata.
+    VerifyResponse                  ${resp.status_code}             400
+    VerifyResponse                  ${resp.content}                 Malformed Metadata.
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}          RequestID=2
 
 Verify 3GPP PM Mapper received pushed PM data from Data Router
     [Tags]                          PM_MAPPER_06
@@ -75,13 +71,10 @@ Verify 3GPP PM Mapper received pushed PM data from Data Router
     ${PM_DATA}=                     Get File                         ${PM_DATA_FILE_PATH}
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}     3    ${PM_DATA}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
-    Log                             ${resp.text}
-    Should Be Equal As Strings      ${resp.status_code}              204
+    VerifyResponse                  ${resp.status_code}              204
     Sleep     10s
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=3 
 
 Verify that PM Mapper logs successful when a file that contains measdata is provided
     [Tags]                          PM_MAPPER_07
@@ -91,11 +84,9 @@ Verify that PM Mapper logs successful when a file that contains measdata is prov
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=4  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=4  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
     ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_meas_result_content}    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}              200
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
+    VerifyResponse                  ${resp.status_code}              200
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=4  
 
 Verify that PM Mapper logs successful when a file that contains no measdata is provided
     [Tags]                          PM_MAPPER_08
@@ -105,11 +96,9 @@ Verify that PM Mapper logs successful when a file that contains no measdata is p
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=5  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=3  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
     ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_no_measdata_content}    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}              200
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation successful
+    VerifyResponse                  ${resp.status_code}              200
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=5  
 
 Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
     [Tags]                          PM_MAPPER_09
@@ -119,12 +108,10 @@ Verify that PM Mapper throws Event failed validation against schema error when n
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=6  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
     ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${no_managed_element_content}    headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}              200
-    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_CLI_PM_LOG}                     shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
-    Should Contain                  ${cli_cmd_output.stdout}         XML validation failed
-
+    VerifyResponse                  ${resp.status_code}              200
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation failed
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=6  
+ 
 
 *** Keywords ***
 
@@ -139,3 +126,17 @@ PutCall
     ${headers}=      Create Dictionary   X-ONAP-RequestID=${request_id}    X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
     ${resp}=         Evaluate            requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=False)    requests
     [Return]         ${resp}
+
+
+CheckLog
+    [Arguments]     ${cli_exec_log_Path}    ${string_to_check_in_log}  
+    ${cli_cmd_output}=              Run Process                      ${cli_exec_log_Path}                     shell=yes
+    Log                             ${cli_cmd_output.stdout}
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    Should Contain                  ${cli_cmd_output.stdout}         ${string_to_check_in_log}   
+
+VerifyResponse
+    [Arguments]                     ${actual_response_value}         ${expected_response_value}
+    Should Be Equal As Strings      ${actual_response_value}         ${expected_response_value}
+      
+    
