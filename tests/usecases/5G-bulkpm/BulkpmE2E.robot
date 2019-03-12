@@ -18,7 +18,7 @@ ${TARGETURL_TOPICS}                      http://${DMAAP_MR_IP}:3904/topics
 ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12?timeout=1000
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .gz"
-${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /opt/log/application.log" > /tmp/dfc_docker.log.robot
+${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /var/log/ONAP/application.log" > /tmp/dfc_docker.log.robot
 ${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Publish to DR successful!" /tmp/dfc_docker.log.robot
 
 ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/xNF.pm.xml.gz.M %{WORKSPACE}
