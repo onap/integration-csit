@@ -1,11 +1,11 @@
-version: '3'
+version: "3"
 services:
   prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
     command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap
         --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
         --aai.aaiClientConfiguration.aaiHostPortNumber=3333
         --aai.aaiClientConfiguration.aaiHost=aai
@@ -15,16 +15,17 @@ services:
       - "8433:8433"
     container_name: prh
     depends_on:
-      - dmaap-bc
+      - cbs
+      - dmaap
       - aai
 
   ssl_prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
     command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
         --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap
         --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
         --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
         --aai.aaiClientConfiguration.aaiHostPortNumber=3334
@@ -43,10 +44,11 @@ services:
       - ./simulator/certs:/tmp/certs
     container_name: ssl_prh
     depends_on:
-      - dmaap-bc
+      - cbs
+      - dmaap
       - aai
 
-  dmaap-bc:
+  dmaap:
     build:
       context: simulator
       dockerfile: DMaaP_simulator
@@ -65,3 +67,42 @@ services:
       - "3334:3334"
       - "3335:3335"
     container_name: aai_simulator
+
+  consul:
+    image: docker.io/consul:1.0.6
+    ports:
+      - "8500:8500"
+    command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-config-dir=/consul/consul.d"]
+    volumes:
+      - ./consul.d/:/consul/consul.d
+
+  consul-cfg:
+    image: docker.io/consul:1.0.6
+    restart: on-failure
+    command: ["kv", "put", "-http-addr=http://consul-server:8500", "dcae-prh", '{
+                                              "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap",
+                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
+                                              "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"https",
+                                              "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap",
+                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
+                                              "dmaap.dmaapProducerConfiguration.dmaapProtocol":"https",
+                                              "aai.aaiClientConfiguration.aaiHostPortNumber":3334,
+                                              "aai.aaiClientConfiguration.aaiHost":"aai",
+                                              "aai.aaiClientConfiguration.aaiProtocol":"https",
+                                              "security.enableAaiCertAuth":"true",
+                                              "security.enableDmaapCertAuth":"true",
+                                              "security.keyStorePath":"/tmp/certs/org.onap.dcae.jks",
+                                              "security.keyStorePasswordPath":"/tmp/certs/keystore.password",
+                                              "security.trustStorePath":"/tmp/certs/org.onap.dcae.trust.jks",
+                                              "security.trustStorePasswordPath":"/tmp/certs/truststore.password"
+                                            }'
+    ]
+    depends_on:
+      - consul
+
+  cbs:
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.2.4
+    ports:
+      - "10000:10000"
+    depends_on:
+      - consul-cfg
