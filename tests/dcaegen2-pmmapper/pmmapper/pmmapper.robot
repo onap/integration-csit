@@ -36,6 +36,8 @@ Verify 3GPP PM Mapper Subscribes to Data Router
     [Tags]                          PM_MAPPER_02
     [Documentation]                 Verify 3gpp pm mapper subscribes to data router
     CheckLog                        ${CLI_EXEC_CLI_SUBS}             3gpppmmapper
+    CheckLog                        ${CLI_EXEC_CLI_SUBS}             "privilegedSubscriber":true
+
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_03
