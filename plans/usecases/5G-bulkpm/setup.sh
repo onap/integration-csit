@@ -70,6 +70,8 @@ cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/res
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
 cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
+cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/docker-databus-controller.conf /tmp/
+sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' /tmp/docker-databus-controller.conf
 
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
@@ -77,6 +79,9 @@ echo "Disregard the message ERROR: for datarouter-node  Container 1234456 is unh
 docker kill datarouter-prov
 docker kill datarouter-node
 docker kill vescollector
+docker kill cbs
+CONSUL_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' consul )
+sed -i -e '/CONSUL_HOST:/ s/:.*/: '$CONSUL_IP'/' docker-compose.yml
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
@@ -98,7 +103,6 @@ for i in {1..10}; do
 done
 
 sleep 5
-
 # Get IP address of datarrouger-prov, datarouter-node, fileconsumer-node.
 DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
 DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
@@ -127,6 +131,27 @@ export VESC_IP=${VESC_IP}
 export HOST_IP=${HOST_IP}
 export DMAAP_MR_IP=${DMAAP_MR_IP}
 
+docker kill buscontroller
+sed -i 's/DMAAPDR/'$DR_PROV_IP'/g' docker-compose.yml
+sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' docker-compose.yml
+docker-compose up -d
+sed -i 's/DMAAPDR/'$DR_PROV_IP'/g' /tmp/docker-databus-controller.conf
+
+# Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS, Buscontroller
+for i in {1..10}; do
+    if  [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
+        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
+        [ $(docker inspect --format '{{ .State.Running }}' buscontroller) ]
+    then
+        echo "Data Router, Consul, Config Binding Service, Buscontroller Services Running"
+        break
+    else
+        echo sleep $i
+        sleep $i
+    fi
+done
+sleep 10
+
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
 
@@ -135,21 +160,26 @@ pip install jsonschema uuid
 sleep 2
 
 # Data File Collector configuration :
-docker cp dfc:/config/datafile_endpoints.json /tmp/
-echo data_endpoints.json from DFC containter
-cat /tmp/datafile_endpoints.json
+mkdir /tmp/docker-compose
+cd /tmp/docker-compose
+cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-dfc.yml /tmp/docker-compose/docker-compose.yml
+sed -i 's/DR_NODE_IP/'$DR_NODE_IP'/g' /tmp/docker-compose/docker-compose.yml
 cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
 sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
 sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
-echo data_endpoints.json copied onto the DFC containter
+echo data_endpoints.json to be copied onto the DFC containter
 cat /tmp/datafile_endpoints.json
-docker cp /tmp/datafile_endpoints.json dfc:/config/
+docker-compose up -d
+sleep 2
+docker cp dfc:/opt/app/datafile/config/datafile_endpoints.json /tmp/datafile_endpoints.json.fromcontainer
+echo data_endpoints.json from DFC containter
+cat /tmp/datafile_endpoints.json.fromcontainer
+docker cp /tmp/datafile_endpoints.json dfc:/opt/app/datafile/config/
 #Increase Logging
-docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /config/application.yaml"
+docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
 docker restart dfc
-docker exec dfc /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
+sleep 2
 
-# SFTP Configuration:
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
 cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
 sed -i 's/sftpserver/'${SFTP_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
