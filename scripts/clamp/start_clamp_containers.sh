@@ -49,22 +49,5 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    exit 1;
 fi
 
-# To avoid some problem because templates not yet read
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -u admin:password -vk --key config/org.onap.clamp.keyfile https://localhost:8443/restservices/clds/v1/cldsTempate/template-names); echo $response
+sleep 30
 
-  if [ "$response" == "200" ]; then
-    echo Templates well available
-    break;
-  fi
-
-  echo Sleep: $INTERVAL seconds before testing if templates available. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
-done
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: Templates not available in $TIME_OUT seconds... Could cause problems for tests...
-   exit 1;
-fi
