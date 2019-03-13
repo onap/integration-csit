@@ -1,5 +1,5 @@
 #!/bin/bash
-# Place the scripts in run order:
+#Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
 CSIT=TRUE
@@ -137,6 +137,25 @@ sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' docker-compose.yml
 docker-compose up -d
 sed -i 's/DMAAPDR/'$DR_PROV_IP'/g' /tmp/docker-databus-controller.conf
 
+# Data File Collector configuration :
+sed -i 's/DR_NODE_IP/'$DR_NODE_IP'/g' docker-compose.yml
+cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
+sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
+sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
+echo data_endpoints.json to be copied onto the DFC containter
+cat /tmp/datafile_endpoints.json
+docker-compose up -d
+sleep 2
+# DFC is now online
+docker cp dfc:/opt/app/datafile/config/datafile_endpoints.json /tmp/datafile_endpoints.json.fromcontainer
+echo data_endpoints.json from DFC containter
+cat /tmp/datafile_endpoints.json.fromcontainer
+docker cp /tmp/datafile_endpoints.json dfc:/opt/app/datafile/config/
+#Increase Logging
+docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
+docker restart dfc
+sleep 2
+
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS, Buscontroller
 for i in {1..10}; do
     if  [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
@@ -157,27 +176,6 @@ ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAA
 
 pip install jsonschema uuid
 # Wait container ready
-sleep 2
-
-# Data File Collector configuration :
-mkdir /tmp/docker-compose
-cd /tmp/docker-compose
-cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-dfc.yml /tmp/docker-compose/docker-compose.yml
-sed -i 's/DR_NODE_IP/'$DR_NODE_IP'/g' /tmp/docker-compose/docker-compose.yml
-cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/datafile_endpoints.json /tmp/
-sed -i 's/dmaapmrhost/'${DMAAP_MR_IP}'/g' /tmp/datafile_endpoints.json
-sed -i 's/dmaapdrhost/'${DR_PROV_IP}'/g' /tmp/datafile_endpoints.json
-echo data_endpoints.json to be copied onto the DFC containter
-cat /tmp/datafile_endpoints.json
-docker-compose up -d
-sleep 2
-docker cp dfc:/opt/app/datafile/config/datafile_endpoints.json /tmp/datafile_endpoints.json.fromcontainer
-echo data_endpoints.json from DFC containter
-cat /tmp/datafile_endpoints.json.fromcontainer
-docker cp /tmp/datafile_endpoints.json dfc:/opt/app/datafile/config/
-#Increase Logging
-docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
-docker restart dfc
 sleep 2
 
 # Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
@@ -271,3 +269,4 @@ curl -k https://$DR_PROV_IP:8443/internal/prov
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v DFC_POD:${DFC_POD} -v HOST_IP:${HOST_IP} "
 
 fi;
+
