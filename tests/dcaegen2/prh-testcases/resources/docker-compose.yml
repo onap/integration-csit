@@ -18,28 +18,11 @@ services:
       - PRH_LOG_LEVEL
     container_name: prh
     depends_on:
-      - cbs
       - dmaap-bc
       - aai
 
   ssl_prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-    command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
-        --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
-        --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
-        --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
-        --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
-        --aai.aaiClientConfiguration.aaiHostPortNumber=3334
-        --aai.aaiClientConfiguration.aaiHost=aai
-        --aai.aaiClientConfiguration.aaiProtocol=https
-        --security.enableAaiCertAuth=true
-        --security.enableDmaapCertAuth=true
-        --security.keyStorePath=/tmp/certs/org.onap.dcae.jks
-        --security.keyStorePasswordPath=/tmp/certs/keystore.password
-        --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
-        --security.trustStorePasswordPath=/tmp/certs/truststore.password
     ports:
       - "8200:8100"
       - "8533:8433"
@@ -78,7 +61,7 @@ services:
     container_name: aai_simulator
 
   consul:
-    image: docker.io/consul:1.0.6
+    image: consul:1.0.6
     ports:
       - "8500:8500"
     command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-config-dir=/consul/consul.d"]
@@ -86,9 +69,9 @@ services:
       - ./consul.d/:/consul/consul.d
 
   consul-cfg:
-    image: docker.io/consul:1.0.6
+    image: consul:1.0.6
     restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul-server:8500", "dcae-prh", '{
+    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
                                               "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-bc",
                                               "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"https",
