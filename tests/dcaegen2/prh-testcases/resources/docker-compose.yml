@@ -2,14 +2,6 @@ version: "3"
 services:
   prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-    command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-mr
-        --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-mr
-        --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
-        --aai.aaiClientConfiguration.aaiHostPortNumber=3333
-        --aai.aaiClientConfiguration.aaiHost=aai
-        --aai.aaiClientConfiguration.aaiProtocol=http
     ports:
       - "8100:8100"
       - "8433:8433"
@@ -24,22 +16,6 @@ services:
 
   ssl_prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-    command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-mr
-        --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
-        --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-mr
-        --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
-        --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
-        --aai.aaiClientConfiguration.aaiHostPortNumber=3334
-        --aai.aaiClientConfiguration.aaiHost=aai
-        --aai.aaiClientConfiguration.aaiProtocol=https
-        --security.enableAaiCertAuth=true
-        --security.enableDmaapCertAuth=true
-        --security.keyStorePath=/tmp/certs/org.onap.dcae.jks
-        --security.keyStorePasswordPath=/tmp/certs/keystore.password
-        --security.trustStorePath=/tmp/certs/org.onap.dcae.trust.jks
-        --security.trustStorePasswordPath=/tmp/certs/truststore.password
     ports:
       - "8200:8100"
       - "8533:8433"
@@ -78,7 +54,7 @@ services:
     container_name: aai_simulator
 
   consul:
-    image: docker.io/consul:1.0.6
+    image: consul:1.0.6
     ports:
       - "8500:8500"
     command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
@@ -86,9 +62,9 @@ services:
       - ./consul.d/:/consul/consul.d
 
   consul-cfg:
-    image: docker.io/consul:1.0.6
+    image: consul:1.0.6
     restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul-server:8500", "dcae-prh", '{
+    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
                                               "dmaap.dmaapConsumerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
                                               "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
