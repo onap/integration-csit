@@ -6,7 +6,7 @@ Library     json
 
 *** Variables ***
 @{return_ok_list}=   200  201  202
-${querysample_fcaps_url}    /api/multicloud-fcaps/v0/samples
+${querysample_fcaps_url}    /samples
 
 *** Test Cases ***
 FcapsSampleTest
