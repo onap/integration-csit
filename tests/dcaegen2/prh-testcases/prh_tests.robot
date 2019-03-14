@@ -35,6 +35,10 @@ Valid DMaaP event can be converted to PNF_READY notification
     ${EVENT_WITH_IPV4}
     ${EVENT_WITH_IPV6}
     ${EVENT_WITHOUT_IPV6_FILED}
+    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_ALL_FILLED}
+    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_EMPTY}
+    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_ALL}
+    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_PARTIAL}
 
 Invalid DMaaP event cannot be converted to PNF_READY notification
     [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification

@@ -10,7 +10,12 @@
       "serialNumber":"serialNumber",
       "vendorName":"vendorName",
       "modelNumber":"modelNumber",
-      "unitType":"unitType"
+      "unitType":"unitType",
+      "additionalFields": {
+        "attachmentPoint": "bla-bla-30-3",
+        "svlan": "1005",
+        "cvlan": "678"
+      }
     }
   }
 }
