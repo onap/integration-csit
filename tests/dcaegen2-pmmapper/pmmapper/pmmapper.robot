@@ -19,10 +19,12 @@ ${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/no_measdata.xml
 ${MEASD_RESULT_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/meas_result.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
+${DIFF_VENDOR_METADATA}                  %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/pm.xml
 ${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${PUBLISH_CONTENT_TYPE}                  application/octet-stream
+
 
 
 *** Test Cases ***
@@ -113,6 +115,18 @@ Verify that PM Mapper throws Event failed validation against schema error when n
     VerifyResponse                  ${resp.status_code}              200
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation failed
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=6
+
+Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
+    [Tags]                          PM_MAPPER_10
+    [Documentation]                 Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
+    [Timeout]                       1 minute
+    ${valid_meas_result_content}=   Get File                         ${MEASD_RESULT_PATH}
+    ${diff_vendor_metadata}=        Get File                         ${DIFF_VENDOR_METADATA}  
+    ${headers}=                     Create Dictionary                X-ONAP-RequestID=7  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${diff_vendor_metadata.replace("\n","")}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_meas_result_content}    headers=${headers}
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Metadata does not match any filters,
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=7
+
 
 
 *** Keywords ***
