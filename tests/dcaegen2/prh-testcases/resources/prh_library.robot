@@ -29,10 +29,9 @@ Invalid event processing
     Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
 
 Valid event processing
-    [Arguments]    ${input_valid_event_in_dmaap}
+    [Arguments]    ${input_valid__ves_event_in_dmaap}
     [Timeout]    30s
-    ${data}=    Get Data From File    ${input_valid_event_in_dmaap}
-    ${posted_event_to_dmaap}=    create pnf ready notification from ves    ${data}
+    ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
     Set event in DMaaP    ${data}
@@ -45,9 +44,9 @@ Check PRH log
     Should Be Equal As Strings    ${status}    True
 
 Check PNF_READY notification
-    [Arguments]    ${posted_event_to_dmaap}
+    [Arguments]    ${expected_event_pnf_ready_in_dpaap}
     ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
-    Should Be Equal    ${resp.text}    ${posted_event_to_dmaap}
+    Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
 
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
