@@ -1,7 +1,7 @@
 {
   "event": {
     "commonEventHeader": {
-      "sourceName":"NOK6061ZW1",
+      "sourceName":"mama",
       "nfNamingCode": ""
     },
     "pnfRegistrationFields": {
@@ -10,7 +10,8 @@
       "serialNumber":"",
       "vendorName":"",
       "modelNumber":"",
-      "unitType":""
+      "unitType":"",
+      "additionalFields": {}
     }
   }
 }
