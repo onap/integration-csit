@@ -45,9 +45,9 @@ Check PRH log
     Should Be Equal As Strings    ${status}    True
 
 Check PNF_READY notification
-    [Arguments]    ${posted_event_to_dmaap}
+    [Arguments]    ${expected_event_pnf_ready_in_dpaap}
     ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
-    Should Be Equal    ${resp.text}    ${posted_event_to_dmaap}
+    Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
 
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
