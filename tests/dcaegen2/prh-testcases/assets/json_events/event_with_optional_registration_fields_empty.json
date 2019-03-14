@@ -10,7 +10,8 @@
       "serialNumber":"",
       "vendorName":"",
       "modelNumber":"",
-      "unitType":""
+      "unitType":"",
+      "additionalFields": {}
     }
   }
 }

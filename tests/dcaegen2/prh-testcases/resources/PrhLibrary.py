@@ -13,9 +13,9 @@ class PrhLibrary(object):
     def check_for_log(search_for):
         client = docker.from_env()
         container = client.containers.get('prh')
-        #print ("Check for log searches for pattern: ", search_for )
+        print ("Check for log searches for pattern: ", search_for )
         for line in container.logs(stream=True):
-            #print ("Check for log analysis line: ", line )
+            print ("Check for log analysis line: ", line )
             if search_for in line.strip():
                 return True
         else:
