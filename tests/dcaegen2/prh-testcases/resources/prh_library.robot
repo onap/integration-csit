@@ -37,7 +37,10 @@ Valid event processing
     Set PNF name in AAI    ${pnf_name}
     Set event in DMaaP    ${data}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    100x    300ms    Print log    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+
+Print log
+    Loooog
 
 Check PRH log
     [Arguments]    ${searched_log}
@@ -45,9 +48,9 @@ Check PRH log
     Should Be Equal As Strings    ${status}    True
 
 Check PNF_READY notification
-    [Arguments]    ${posted_event_to_dmaap}
+    [Arguments]    ${expected_event_pnf_ready_in_dpaap}
     ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
-    Should Be Equal    ${resp.text}    ${posted_event_to_dmaap}
+    Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
 
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
