@@ -24,6 +24,11 @@ ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/pm.xml
 ${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${PUBLISH_CONTENT_TYPE}                  application/octet-stream
+${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/vendor_filter_config.json
+${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_config.json
+${CLI_RESTART_PMMAPPER}                  docker restart pmmapper
+${CLI_DELETE_SUB1}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/1
+${CLI_DELETE_SUB2}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/2
 
 
 *** Test Cases ***
@@ -75,8 +80,8 @@ Verify 3GPP PM Mapper received pushed PM data from Data Router
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}     3    ${PM_DATA}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
     VerifyResponse                  ${resp.status_code}              204
-    Sleep     10s
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
+    Sleep                           10s
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Event Processed
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=3
 
 Verify that PM Mapper logs successful when a file that contains measdata is provided
@@ -119,13 +124,18 @@ Verify that PM Mapper correctly identifies a file that should not be mapped base
     [Tags]                          PM_MAPPER_10
     [Documentation]                 Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
     [Timeout]                       1 minute
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_VENDOR_FILTER}                   shell=yes
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    ${cli_cmd_output}=              Run Process                      ${CLI_DELETE_SUB1}                          shell=yes
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    ${cli_cmd_output}=              Run Process                      ${CLI_RESTART_PMMAPPER}                     shell=yes
+    Sleep                           10s
     ${valid_meas_result_content}=   Get File                         ${MEASD_RESULT_PATH}
     ${diff_vendor_metadata}=        Get File                         ${DIFF_VENDOR_METADATA}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=7  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${diff_vendor_metadata.replace("\n","")}
     ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_meas_result_content}    headers=${headers}
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Metadata does not match any filters,
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=7
-
 
 
 *** Keywords ***
@@ -141,7 +151,6 @@ PutCall
     ${headers}=      Create Dictionary   X-ONAP-RequestID=${request_id}    X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
     ${resp}=         Evaluate            requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=False)    requests
     [Return]         ${resp}
-
 
 CheckLog
     [Arguments]                     ${cli_exec_log_Path}    ${string_to_check_in_log}
