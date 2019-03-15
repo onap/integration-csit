@@ -1,5 +1,5 @@
 #!/bin/bash
-#Place the scripts in run order:
+# Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
 CSIT=TRUE
@@ -174,7 +174,7 @@ sleep 10
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
 
-pip install jsonschema uuid
+pip install jsonschema uuid simplejson
 # Wait container ready
 sleep 2
 
@@ -232,7 +232,7 @@ export DMAAP_MR_IP=${DMAAP_MR_IP}
 DFC_POD=$(kubectl -n onap get pods | grep datafile-collector | awk '{print $1}')
 export DFC_POD=${DFC_POD}
 
-pip install jsonschema uuid
+pip install jsonschema uuid simplejson
 
 # Clone DMaaP Data Router repo
 mkdir -p $WORKSPACE/archives/dmaapdr
@@ -269,4 +269,3 @@ curl -k https://$DR_PROV_IP:8443/internal/prov
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v DFC_POD:${DFC_POD} -v HOST_IP:${HOST_IP} "
 
 fi;
-
