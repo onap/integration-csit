@@ -15,16 +15,20 @@ ${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/inte
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
 ${HEALTHCHECK_ENDPOINT}                  /healthcheck
-${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/no_managed_element.xml
-${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/no_measdata.xml
-${MEASD_RESULT_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/meas_result.xml
+${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_managed_element.xml
+${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_measdata.xml
+${MEASD_RESULT_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_meas_result.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
 ${DIFF_VENDOR_METADATA}                  %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -5 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
-${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/pm.xml
+${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1/A20181002.0000-1000-0015-1000_5G.xml
 ${PM_DATA_FILE_PATH}                     %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${PUBLISH_CONTENT_TYPE}                  application/octet-stream
-
+${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/vendor_filter_config.json
+${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_config.json
+${CLI_RESTART_PMMAPPER}                  docker restart pmmapper
+${CLI_DELETE_SUB1}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/1
+${CLI_DELETE_SUB2}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/2
 
 *** Test Cases ***
 
@@ -75,8 +79,8 @@ Verify 3GPP PM Mapper received pushed PM data from Data Router
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}     3    ${PM_DATA}    ${PUBLISH_CONTENT_TYPE}    ${valid_metatdata.replace("\n","")}    pmmapper
     VerifyResponse                  ${resp.status_code}              204
-    Sleep     10s
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
+    Sleep                           10s
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Event Processed
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=3
 
 Verify that PM Mapper logs successful when a file that contains measdata is provided
@@ -86,7 +90,7 @@ Verify that PM Mapper logs successful when a file that contains measdata is prov
     ${valid_meas_result_content}=   Get File                         ${MEASD_RESULT_PATH}
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=4  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=4  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_meas_result_content}    headers=${headers}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/A_meas_result.xml    data=${valid_meas_result_content}    headers=${headers}
     VerifyResponse                  ${resp.status_code}              200
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=4
@@ -98,7 +102,7 @@ Verify that PM Mapper logs successful when a file that contains no measdata is p
     ${valid_no_measdata_content}=   Get File                         ${NO_MEASDATA_PATH}
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=5  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=3  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_no_measdata_content}    headers=${headers}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/A_no_measdata.xml    data=${valid_no_measdata_content}    headers=${headers}
     VerifyResponse                  ${resp.status_code}              200
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation successful
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=5
@@ -110,7 +114,7 @@ Verify that PM Mapper throws Event failed validation against schema error when n
     ${no_managed_element_content}=  Get File                         ${NO_MANAGED_ELEMENT_PATH}
     ${valid_metatdata}              Get File                         ${VALID_METADATA_PATH}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=6  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${valid_metatdata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${no_managed_element_content}    headers=${headers}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/A_no_managed_element.xml    data=${no_managed_element_content}    headers=${headers}
     VerifyResponse                  ${resp.status_code}              200
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation failed
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=6
@@ -119,13 +123,18 @@ Verify that PM Mapper correctly identifies a file that should not be mapped base
     [Tags]                          PM_MAPPER_10
     [Documentation]                 Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
     [Timeout]                       1 minute
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_VENDOR_FILTER}                   shell=yes
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    ${cli_cmd_output}=              Run Process                      ${CLI_DELETE_SUB1}                          shell=yes
+    Should Be Equal As Strings      ${cli_cmd_output.rc}             0
+    ${cli_cmd_output}=              Run Process                      ${CLI_RESTART_PMMAPPER}                     shell=yes
+    Sleep                           10s
     ${valid_meas_result_content}=   Get File                         ${MEASD_RESULT_PATH}
     ${diff_vendor_metadata}=        Get File                         ${DIFF_VENDOR_METADATA}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=7  Content-Type=application/xml  X-DMAAP-DR-PUBLISH-ID=2  X-DMAAP-DR-META=${diff_vendor_metadata.replace("\n","")}
-    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/filename    data=${valid_meas_result_content}    headers=${headers}
+    ${resp}=                        Put Request                      mapper_session  ${DELIVERY_ENDPOINT}/A_meas_result.xml    data=${valid_meas_result_content}    headers=${headers}
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Metadata does not match any filters,
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=7
-
 
 
 *** Keywords ***
@@ -141,7 +150,6 @@ PutCall
     ${headers}=      Create Dictionary   X-ONAP-RequestID=${request_id}    X-DMAAP-DR-META=${meta}    Content-Type=${content_type}   X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
     ${resp}=         Evaluate            requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=False)    requests
     [Return]         ${resp}
-
 
 CheckLog
     [Arguments]                     ${cli_exec_log_Path}    ${string_to_check_in_log}

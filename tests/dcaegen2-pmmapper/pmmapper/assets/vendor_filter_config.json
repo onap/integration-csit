@@ -1,5 +1,12 @@
 {
-    "pm-mapper-filter": { "filters":[]},
+    "pm-mapper-filter": { 
+        "filters":[{
+            "pmDefVsn": "1.0",
+            "nfType": "5G",
+            "vendor": "Ericsson",
+            "measTypes": []
+        }]
+    },
     "streams_subscribes": {
         "dmaap_subscriber": {
             "type": "data_router",
