@@ -21,7 +21,7 @@ docker run -d --name policy-api -p 6969:6969 -it nexus3.onap.org:10001/onap/poli
 
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 echo API IP IS ${POLICY_API_IP}
-Wait for initialization
+# Wait for initialization
 for i in {1..10}; do
    curl -sS ${POLICY_API_IP}:6969 && break
    echo sleep $i
