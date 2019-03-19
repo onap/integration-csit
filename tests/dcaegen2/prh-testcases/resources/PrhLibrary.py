@@ -31,7 +31,8 @@ class PrhLibrary(object):
         vendor_name = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "vendorName", "vendorName")
         model_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "modelNumber", "modelNumber")
         unit_type = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "unitType", "unitType")
-        additional_fields = PrhLibrary.extract_additional_fields(json_to_python, "additionalFields")
+
+        additional_fields = PrhLibrary.extract_additional_fields(json_to_python, '"additionalFields":null')
 
         str_json = '{' + correlation_id + ipv4 + ipv6 + serial_number + vendor_name + model_number + unit_type + '"nfNamingCode":""' + "," + '"softwareVersion":"",' + additional_fields
         return json.dumps(str_json).replace("\\", "")[1:-1].replace("\":", "\": ").rstrip(',') + '\\n}'
@@ -44,7 +45,8 @@ class PrhLibrary(object):
         vendor_name = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-vendor", "vendorName")
         model_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-model", "modelNumber")
         unit_type = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-type", "unitType")
-        additional_fields = PrhLibrary.extract_additional_fields_value(json_to_python, "additionalFields")
+
+        additional_fields = PrhLibrary.extract_additional_fields_value(json_to_python, "")
 
         nf_role  = json_to_python.get("event").get("commonEventHeader").get("nfNamingCode") if "nfNamingCode" in json_to_python["event"]["commonEventHeader"] else ""
 
@@ -53,23 +55,31 @@ class PrhLibrary(object):
         return json.dumps(str_json.rstrip(',') + '}').replace("\\", "")[1:-1]
 
     @staticmethod
-    def extract_additional_fields(content, name):
-        fields = content.get("event").get("pnfRegistrationFields").get(name) if name in content["event"]["pnfRegistrationFields"] else []
-        if fields == []:
-            return '"additionalFields":' + 'null'
-        res = '"' + name + '":{'
-        for f in fields:
-            res += '"' + f + '"' + ':' + '"' + fields.get(f) + '",'
-        return res.rstrip(',') + '},'
+    def extract_additional_fields_value(content, alternative_value):
+        fields = PrhLibrary.get_additional_fields_as_key_value_pairs(content)
+        if len(fields) == 0:
+            return alternative_value
+        return PrhLibrary.build_additional_fields_json(fields)
 
     @staticmethod
-    def extract_additional_fields_value(content, name):
-        fields = content.get("event").get("pnfRegistrationFields").get(name) if name in content["event"]["pnfRegistrationFields"] else []
-        if fields == [] or len(fields) == 0:
-            return ""
-        res = '"' + name + '":{'
+    def extract_additional_fields(content, alternative_value):
+        fields = PrhLibrary.get_additional_fields_as_key_value_pairs(content)
+        if fields == []:
+            return '"additionalFields":null'
+        # if len(fields) == 0:
+        #     return alternative_value
+        return PrhLibrary.build_additional_fields_json(fields)
+
+    @staticmethod
+    def get_additional_fields_as_key_value_pairs(content):
+        return content.get("event").get("pnfRegistrationFields").get(
+            "additionalFields") if "additionalFields" in content["event"]["pnfRegistrationFields"] else []
+
+    @staticmethod
+    def build_additional_fields_json(fields):
+        res = '"additionalFields":{'
         for f in fields:
-            res += '"' + f + '"' + ':' + '"' + fields.get(f) + '",'
+            res += '"' + f + '":"' + fields.get(f) + '",'
         return res.rstrip(',') + '},'
 
     @staticmethod
