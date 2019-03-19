@@ -70,7 +70,7 @@ services:
 
   ves:
     container_name: vescollector
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.4.1
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:latest
     environment:
        DMAAPHOST:
 
