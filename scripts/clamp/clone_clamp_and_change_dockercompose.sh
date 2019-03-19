@@ -31,7 +31,7 @@ which firefox
 # Clone Clamp repo to get extra folder that has all needed to run docker with docker-compose to start DB and Clamp
 mkdir -p $WORKSPACE/archives/clamp-clone
 cd $WORKSPACE/archives/clamp-clone
-git clone --depth 1 http://gerrit.onap.org/r/clamp -b master
+git clone --depth 1 http://gerrit.onap.org/r/clamp -b $GERRIT_BRANCH
 cd clamp/extra/docker/clamp/
 
 # Pull the Clamp docker image from nexus instead of local image by default in the docker-compose.yml
