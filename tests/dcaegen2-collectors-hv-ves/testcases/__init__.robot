@@ -38,7 +38,7 @@ Configure Dcae App
 *** Variables ***
 ${HTTP_METHOD_URL}                             http://
 
-${CONSUL_CONTAINER_HOST}                       consul
+${CONSUL_CONTAINER_HOST}                       consul-server
 ${CONSUL_CONTAINER_PORT}                       8500
 ${CONSUL_VES_HV_CONFIGURATION_KEY_PATH}        /v1/kv/dcae-hv-ves-collector
 
