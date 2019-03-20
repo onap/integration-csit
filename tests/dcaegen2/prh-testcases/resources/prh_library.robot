@@ -37,6 +37,7 @@ Valid event processing
     Set event in DMaaP    ${data}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
     Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |co tam sie dzieje
 
 Check PRH log
     [Arguments]    ${searched_log}
