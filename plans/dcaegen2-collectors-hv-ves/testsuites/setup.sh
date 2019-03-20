@@ -13,7 +13,7 @@ else
   pip uninstall -y docker-py
   pip install docker
 
-  COMPOSE_VERSION=1.22.0
+  COMPOSE_VERSION=1.23.2
   COMPOSE_LOCATION='/usr/local/bin/docker-compose'
   sudo curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o ${COMPOSE_LOCATION}
   sudo chmod +x ${COMPOSE_LOCATION}
