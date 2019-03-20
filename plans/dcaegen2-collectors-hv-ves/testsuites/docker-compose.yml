@@ -56,13 +56,14 @@ services:
     ports:
       - "10000:10000"
     environment:
-      CONSUL_HOST: "consul-server"
+      - CONSUL_HOST
     depends_on:
       - consul-server
     networks:
       ves-hv-default:
         aliases:
           - cbs
+
   #
   # DCAE HV VES Collector
   #
@@ -72,22 +73,19 @@ services:
     ports:
       - "6060:6060"
       - "6061:6061/tcp"
-    command: ["--listen-port", "6061",
-              "--kafka-bootstrap-servers", "kafka:9092",
-              "--key-store-password", "onaponap",
-              "--trust-store-password", "onaponap"]
+    command: ["--configuration-file", "/etc/hv-ves/configuration/secure.json"]
     environment:
-      JAVA_OPTS: "-Dio.netty.leakDetection.level=paranoid"
-      CONSUL_HOST: "consul-server"
-      CONFIG_BINDING_SERVICE: "cbs"
-      HOSTNAME: "dcae-hv-ves-collector"
+      - JAVA_OPTS
+      - HOSTNAME=${HV_VES_HOSTNAME}
+      - CONSUL_HOST
+      - CONFIG_BINDING_SERVICE
     healthcheck:
       interval: 10s
       timeout: 5s
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./ssl/:/etc/ves-hv/
+      - ./collector/:/etc/hv-ves/
     depends_on:
       - config-binding-service
       - kafka
@@ -99,21 +97,19 @@ services:
     ports:
       - "7060:6060"
       - "7061:6061/tcp"
-    command: ["--listen-port", "6061",
-              "--kafka-bootstrap-servers", "kafka:9092",
-              "--ssl-disable"]
+    command: ["--configuration-file", "/etc/hv-ves/configuration/insecure.json"]
     environment:
-      JAVA_OPTS: "-Dio.netty.leakDetection.level=paranoid"
-      CONSUL_HOST: "consul-server"
-      CONFIG_BINDING_SERVICE: "cbs"
-      HOSTNAME: "dcae-hv-ves-collector"
+      - JAVA_OPTS
+      - HOSTNAME=${HV_VES_HOSTNAME}
+      - CONSUL_HOST
+      - CONFIG_BINDING_SERVICE
     healthcheck:
       interval: 10s
       timeout: 5s
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./ssl/:/etc/ves-hv/
+      - ./collector/:/etc/hv-ves/
     depends_on:
       - config-binding-service
       - kafka
@@ -133,7 +129,5 @@ services:
     depends_on:
       - kafka
     networks:
-      ves-hv-default:
-        aliases:
-          - dcae-app-simulator
+      - ves-hv-default
 
