@@ -29,9 +29,9 @@ export CONTAINERS_NETWORK=ves-hv-default
 echo "Creating network for containers: ${CONTAINERS_NETWORK}"
 docker network create ${CONTAINERS_NETWORK}
 
-cd ssl
+cd collector/ssl
 ./gen-certs.sh
-cd ..
+cd ../..
 
 docker-compose up -d
 

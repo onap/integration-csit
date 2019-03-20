@@ -1,0 +1,28 @@
+{
+  "server": {
+    "listenPort": 6061,
+    "idleTimeoutSec": 60,
+    "maxPayloadSizeBytes": 1048576
+  },
+  "cbs": {
+    "firstRequestDelaySec": 5,
+    "requestIntervalSec": 10
+  },
+  "security": {
+    "sslDisable": true
+  },
+  "collector": {
+    "maxRequestSizeBytes": 1048576,
+    "kafkaServers": [
+      "kafka:9092"
+    ],
+    "routing": [
+      {
+        "fromDomain": "perf3gpp",
+        "toTopic": "TEST_HV_VES_PERF3GPP"
+      }
+    ],
+    "dummyMode": false
+  },
+  "logLevel": "DEBUG"
+}

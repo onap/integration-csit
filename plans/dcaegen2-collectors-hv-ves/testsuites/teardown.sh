@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-cd ssl
+cd collector/ssl
 ./gen-certs.sh clean
-cd ..
+cd ../..
 
 COMPOSE_LOGS_FILE=${WORKSPACE}/archives/containers_logs/docker-compose.log
 docker-compose logs > ${COMPOSE_LOGS_FILE}
