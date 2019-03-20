@@ -11,7 +11,7 @@ SIMULATOR_IMAGE_NAME = HV_VES_COLLECTOR_NAMESPACE + "/" + HV_VES_GROUP_ID + ".hv
 HV_VES_VERSION="1.1-SNAPSHOT"
 SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":" + HV_VES_VERSION
 WORKSPACE_ENV = os.getenv("WORKSPACE")
-certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/ssl/"
+certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/collector/ssl/"
 collector_certs_lookup_dir = "/etc/ves-hv/"
 ONE_SECOND_IN_NANOS = 10 ** 9
 
