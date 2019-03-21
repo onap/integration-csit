@@ -62,7 +62,7 @@ services:
 
   buscontroller:
     container_name: buscontroller
-    image: nexus3.onap.org:10001/onap/dmaap/dmaap-bc:latest
+    image: nexus3.onap.org:10001/onap/dmaap/dmaap-bc:1.1.1-STAGING-latest
     ports:
       - "18080:8080"
       - "18443:8443"
