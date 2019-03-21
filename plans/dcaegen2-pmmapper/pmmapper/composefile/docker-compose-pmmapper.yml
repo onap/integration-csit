@@ -12,3 +12,4 @@ services:
     extra_hosts:
       - "dmaap-bc:BUSIP"
       - "dmaap-dr-node:DRNODEIP"
+      - "message-router:DMAAPMRIP"
