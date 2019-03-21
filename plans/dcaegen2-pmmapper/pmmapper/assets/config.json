@@ -19,8 +19,8 @@
             "type": "message_router",
             "aaf_password": null,
             "dmaap_info": {
-                "topic_url": "https://message-router:3904/events/org.onap.dmaap.onapCSIT.pm_mapper",
-                "client_role": "org.onap.dmaap.client.pub",
+                "topic_url": "https://message-router:3904/events/topic.org.onap.dmaap.mr.test1",
+                "client_role": "org.onap.dmaap.mr.topic",
                 "location": "csit-pmmapper",
                 "client_id": null
             },

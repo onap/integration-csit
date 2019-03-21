@@ -122,6 +122,7 @@ CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddres
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/BUSIP/'$DMAAPBC_IP'/g' docker-compose.yml
 sed -i 's/DRNODEIP/'$DR_NODE_IP'/g' docker-compose.yml
+sed -i 's/DMAAPMRIP/'$DMAAP_MR_IP'/g' docker-compose.yml
 docker-compose up -d
 
 # Wait for initialization of Docker container for 3GPP PM Mapper
