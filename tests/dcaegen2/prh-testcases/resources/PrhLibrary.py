@@ -10,6 +10,14 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
+    def print_docker_log_aai():
+        client = docker.from_env()
+        container = client.containers.get('aai_simulator')
+        for line in container.logs(stream=False):
+            print ("Docker content: ", line )
+        return True
+
+    @staticmethod
     def check_for_log(search_for):
         client = docker.from_env()
         container = client.containers.get('prh')
@@ -20,6 +28,9 @@ class PrhLibrary(object):
                 return True
         else:
             return False
+
+
+
 
     @staticmethod
     def create_invalid_notification(json_file):
