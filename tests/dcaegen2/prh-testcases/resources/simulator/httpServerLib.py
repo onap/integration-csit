@@ -1,10 +1,23 @@
 import _thread
 import ssl
+import json
 from http.server import HTTPServer
 
 
 def header_200_and_json(self):
     self.send_response(200)
+    self.send_header('Content-Type', 'application/json')
+    self.end_headers()
+
+def header_200_and_json_content(self,contentToSend):
+    self.send_response(200)
+    self.send_header('Content-Type', 'application/json')
+    self.end_headers()
+    self.wfile.write(contentToSend)
+
+
+def header_400_and_json(self):
+    self.send_response(400)
     self.send_header('Content-Type', 'application/json')
     self.end_headers()
 
