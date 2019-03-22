@@ -76,3 +76,4 @@ Get valid event from DMaaP and AAI is not responding
     Set event in DMaaP    ${data}
     Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
     Ensure Container Is Running  aai_simulator
+
