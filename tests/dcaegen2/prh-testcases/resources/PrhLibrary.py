@@ -9,6 +9,8 @@ class PrhLibrary(object):
     def __init__(self):
         pass
 
+
+
     @staticmethod
     def check_for_log(search_for):
         client = docker.from_env()
@@ -17,6 +19,19 @@ class PrhLibrary(object):
         for line in container.logs(stream=True):
             print ("Check for log analysis line: ", line )
             if search_for in line.strip():
+                return True
+        else:
+            return False
+
+    @staticmethod
+    def check_for_log_aai():
+        valueToFind = 'Przegladamy loga z AAI sima'
+        client = docker.from_env()
+        container = client.containers.get('aai_simulator')
+        print ("Check for log searches for pattern: ", valueToFind )
+        for line in container.logs(stream=True):
+            print ("Check for log analysis line: ", line )
+            if valueToFind in line.strip():
                 return True
         else:
             return False
