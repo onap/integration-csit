@@ -22,7 +22,35 @@ class PrhLibrary(object):
             return False
 
     @staticmethod
-    def create_invalid_notification(json_file):
+    def check_for_log_aai():
+        valueToFind = 'Inspecting log AAI sim'
+        client = docker.from_env()
+        container = client.containers.get('aai_simulator')
+        print ("Check for log searches for pattern: ", valueToFind )
+        for line in container.logs(stream=True):
+            print ("Check for log analysis line: ", line )
+            if valueToFind in line.strip():
+                return True
+        else:
+            return False
+
+
+    @staticmethod
+    def check_for_log_prh():
+        valueToFind = 'Inspecting log PRH'
+        client = docker.from_env()
+        container = client.containers.get('prh')
+        print ("Check for log searches for pattern: ", valueToFind )
+        for line in container.logs(stream=True):
+            print ("Check for log analysis line: ", line )
+            if valueToFind in line.strip():
+                return True
+        else:
+            return False
+
+
+    @staticmethod
+    def create_ves_notification(json_file):
         json_to_python = json.loads(json_file)
         correlation_id = PrhLibrary.extract_correlation_id_value(json_to_python, "correlationId")
         ipv4 = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "oamV4IpAddress", "oamV4IpAddress")
@@ -91,7 +119,7 @@ class PrhLibrary(object):
     @staticmethod
     def create_pnf_name(json_file):
         json_to_python = json.loads(json_file)
-        correlation_id = json_to_python.get("sourceName")
+        correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
         return correlation_id
 
     @staticmethod
@@ -133,3 +161,6 @@ class PrhLibrary(object):
     @staticmethod
     def is_in_status(client, name, status):
         return len(client.containers.list(all=True, filters={"name": "^/"+name+"$", "status": status})) == 1
+
+
+
