@@ -21,7 +21,7 @@ Valid DMaaP event can be converted to PNF_READY notification with ssl connection
     [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
-    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    ${EVENT_WITH_IPV4}
-    ${EVENT_WITH_IPV6}
-    ${EVENT_WITHOUT_IPV6_FILED}
+    ${EVENT_PNF_REGISTARTION_SIMPLE}
+    #${EVENT_WITH_IPV4}
+    #${EVENT_WITH_IPV6}
+    #${EVENT_WITHOUT_IPV6_FILED}
