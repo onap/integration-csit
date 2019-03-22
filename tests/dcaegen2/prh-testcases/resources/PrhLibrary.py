@@ -10,6 +10,13 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
+    def print_docker_log():
+        client = docker.from_env()
+        container = client.containers.get('prh')
+        for line in container.logs(stream=True):
+            print ("Docker content: ", line )
+
+    @staticmethod
     def check_for_log(search_for):
         client = docker.from_env()
         container = client.containers.get('prh')

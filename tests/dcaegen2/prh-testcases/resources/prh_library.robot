@@ -36,6 +36,7 @@ Valid event processing
     Set PNF name in AAI    ${pnf_name}
     Set event in DMaaP    ${data}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
+    print docker log
     Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
 
 Check PRH log
