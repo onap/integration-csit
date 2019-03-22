@@ -13,6 +13,7 @@ pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker
 docker-compose up -d --build
+docker ps -a
 
 PRH_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${PRH_SERVICE})
 SSL_PRH_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${SSL_PRH_SERVICE})

@@ -18,13 +18,14 @@ Create sessions
 Reset Simulators
     Reset AAI simulator
     Reset DMaaP simulator
+    Wait Until Keyword Succeeds    100x    100ms    Check PRH log docker
 
 Invalid event processing
     [Arguments]    ${input_invalid_event_in_dmaap}
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_invalid_event_in_dmaap}
     Set event in DMaaP    ${data}
-    ${invalid_notification}=    Create invalid notification    ${data}
+    ${invalid_notification}=    create ves notification    ${data}
     ${notification}=    Catenate    SEPARATOR= \\n    |Incorrect json, consumerDmaapModel can not be created:     ${invalid_notification}
     Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
 
@@ -33,7 +34,9 @@ Valid event processing
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
     ${pnf_name}=    Create PNF name    ${data}
+    ${pnf_content}=    Create ves notification    ${data}
     Set PNF name in AAI    ${pnf_name}
+    Set PNF content in AAI    ${pnf_content}
     Set event in DMaaP    ${data}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
     Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
@@ -51,7 +54,19 @@ Check PNF_READY notification
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
+    Log    AAI setip is ${aai_setup_session}
+    Log    Headers ${headers}
+    Log    PNFS name ${pnfs_name}
     ${resp}=    Put Request    ${aai_setup_session}    /set_pnfs    headers=${headers}    data=${pnfs_name}
+    Should Be Equal As Strings    ${resp.status_code}    200
+
+Set PNF content in AAI
+    [Arguments]    ${content}
+    ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
+    Log    AAI setip is ${aai_setup_session}
+    Log    Headers ${headers}
+    Log    PNFS content ${content}
+    ${resp}=    Put Request    ${aai_setup_session}    /set_pnfs/content    headers=${headers}    data=${content}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set event in DMaaP
@@ -60,9 +75,21 @@ Set event in DMaaP
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset AAI simulator
+    #Show docker log aai
     ${resp}=    Post Request     ${aai_setup_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset DMaaP simulator
     ${resp}=    Post Request     ${dmaap_setup_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
+
+#Diagnostics
+Check AAI log docker
+    [Arguments]
+    ${status}=   check for log aai
+    Should Be Equal As Strings    ${status}    True
+
+Check PRH log docker
+    [Arguments]
+    ${status}=   check for log prh
+    Should Be Equal As Strings    ${status}    True
