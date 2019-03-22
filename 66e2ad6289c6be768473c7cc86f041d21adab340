@@ -1,0 +1,8 @@
+Code-Review+1: Jakub Dudycz <jakub.dudycz@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Fri, 22 Mar 2019 06:24:29 +0000
+Reviewed-on: https://gerrit.onap.org/r/82801
+Project: integration/csit
+Branch: refs/heads/master
