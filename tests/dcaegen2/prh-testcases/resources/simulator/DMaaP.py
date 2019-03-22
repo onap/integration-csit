@@ -1,3 +1,4 @@
+import logging
 import re
 import time
 from http.server import BaseHTTPRequestHandler
@@ -6,10 +7,20 @@ import httpServerLib
 posted_event_from_prh = b'Empty'
 received_event_to_get_method = b'Empty'
 
+ch = logging.StreamHandler(sys.stdout)
+handlers = [ch]
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+    handlers=handlers
+)
+
+logger = logging.getLogger('DMaaP-simulator-logger')
 
 class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
+        logger.info('PUT basic execution')
         if re.search('/set_get_event', self.path):
             global received_event_to_get_method
             content_length = int(self.headers['Content-Length'])
@@ -19,6 +30,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
+        logger.info('GET basic execution')
         if re.search('/events/pnfReady', self.path):
             httpServerLib.header_200_and_json(self)
             self.wfile.write(posted_event_from_prh)
@@ -26,6 +38,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
+        logger.info('POST basic execution')
         if re.search('/reset', self.path):
             global posted_event_from_prh
             global received_event_to_get_method
