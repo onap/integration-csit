@@ -8,6 +8,11 @@ def header_200_and_json(self):
     self.send_header('Content-Type', 'application/json')
     self.end_headers()
 
+def header_400_and_json(self):
+    self.send_response(400)
+    self.send_header('Content-Type', 'application/json')
+    self.end_headers()
+
 
 def start_http_endpoint(port, handler_class):
     _thread.start_new_thread(init_http_endpoints, (port, handler_class))
