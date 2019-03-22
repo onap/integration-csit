@@ -60,19 +60,21 @@ Get valid event from DMaaP and record in AAI does not exist
     Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |AAIProducerTask exception has been registered
     Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
 
-Event in DMaaP is not JSON format
-    [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
-    [Tags]    PRH
-    ${data}=    Get Data From File    ${Not_json_format}
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+#Event in DMaaP is not JSON format
+#    [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
+#    [Tags]    PRH
+#    ${data}=    Get Data From File    ${Not_json_format}
+#    Set event in DMaaP    ${data}
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
 
-Get valid event from DMaaP and AAI is not responding
-    [Documentation]    PRH get valid event from DMaaP with all required fields and AAI is not responding - PRH does not produce PNF_READY notification
-    [Tags]    PRH    AAI
-    [Timeout]    180s
-    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Ensure Container Is Exited   aai_simulator
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
-    Ensure Container Is Running  aai_simulator
+#Get valid event from DMaaP and AAI is not responding
+#    [Documentation]    PRH get valid event from DMaaP with all required fields and AAI is not responding - PRH does not produce PNF_READY notification
+#    [Tags]    PRH    AAI
+#    [Timeout]    180s
+#    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
+#    Ensure Container Is Exited   aai_simulator
+#    Set event in DMaaP    ${data}
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
+#    Ensure Container Is Running  aai_simulator
+
+
