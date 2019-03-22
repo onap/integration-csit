@@ -11,7 +11,8 @@ Resource          ../../common.robot
 *** Variables ***
 ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
-${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
+${EVENT_PNF_REGISTARTION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_pnf_registration_simple.json
+${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_pnf_registration_all_fields.json
 ${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
 ${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json
 ${EVENT_WITH_MISSING_IPV4_AND_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_missing_IPV4_and_IPV6.json
@@ -31,48 +32,54 @@ Valid DMaaP event can be converted to PNF_READY notification
     [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
-    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    ${EVENT_WITH_IPV4}
-    ${EVENT_WITH_IPV6}
-    ${EVENT_WITHOUT_IPV6_FILED}
-    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_ALL_FILLED}
-    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_EMPTY}
-    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_ALL}
-    ${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_PARTIAL}
+    ${EVENT_PNF_REGISTARTION_SIMPLE}
+    #${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
+    #${EVENT_WITH_IPV4}
+    #${EVENT_WITH_IPV6}
+    #${EVENT_WITHOUT_IPV6_FILED}
+    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_ALL_FILLED}
+    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_EMPTY}
+    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_ALL}
+    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_PARTIAL}
 
-Invalid DMaaP event cannot be converted to PNF_READY notification
-    [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification
-    [Tags]    PRH    Invalid event
-    [Template]    Invalid event processing
-    ${EVENT_WITH_MISSING_IPV4_AND_IPV6}
-    ${EVENT_WITH_MISSING_SOURCENAME}
-    ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}
-    ${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}
-    ${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}
+#Invalid DMaaP event cannot be converted to PNF_READY notification
+#    [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification
+#    [Tags]    PRH    Invalid event
+#    [Template]    Invalid event processing
+#    #${EVENT_WITH_MISSING_IPV4_AND_IPV6}
+#    ${EVENT_WITH_MISSING_SOURCENAME}
+    #${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}
+    #${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}
+    #${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}
 
-Get valid event from DMaaP and record in AAI does not exist
-    [Documentation]    PRH get valid event from DMaaP with all required fields and in AAI record doesn't exist - PRH does not produce PNF_READY notification
-    [Tags]    PRH    Missing AAI record
-    [Timeout]    30s
-    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Set PNF name in AAI    wrong_aai_record
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |AAIProducerTask exception has been registered
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
+#Get valid event from DMaaP and record in AAI does not exist
+#    [Documentation]    PRH get valid event from DMaaP with all required fields and in AAI record doesn't exist - PRH does not produce PNF_READY notification
+#    [Tags]    PRH    Missing AAI record
+#    [Timeout]    30s
+#    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
+#    Set PNF name in AAI    wrong_aai_record
+#    Set event in DMaaP    ${data}
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |AAIProducerTask exception has been registered
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
 
-Event in DMaaP is not JSON format
-    [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
-    [Tags]    PRH
-    ${data}=    Get Data From File    ${Not_json_format}
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+#Event in DMaaP is not JSON format
+#    [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
+#    [Tags]    PRH
+#    ${data}=    Get Data From File    ${Not_json_format}
+#    Set event in DMaaP    ${data}
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
 
-Get valid event from DMaaP and AAI is not responding
-    [Documentation]    PRH get valid event from DMaaP with all required fields and AAI is not responding - PRH does not produce PNF_READY notification
-    [Tags]    PRH    AAI
-    [Timeout]    180s
-    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Ensure Container Is Exited   aai_simulator
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
-    Ensure Container Is Running  aai_simulator
+#Get valid event from DMaaP and AAI is not responding
+#    [Documentation]    PRH get valid event from DMaaP with all required fields and AAI is not responding - PRH does not produce PNF_READY notification
+#    [Tags]    PRH    AAI
+#    [Timeout]    180s
+#    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
+#    Ensure Container Is Exited   aai_simulator
+#    Set event in DMaaP    ${data}
+#    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
+#    Ensure Container Is Running  aai_simulator
+
+
+
+
+
