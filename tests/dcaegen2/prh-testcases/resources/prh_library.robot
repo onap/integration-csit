@@ -51,6 +51,9 @@ Check PNF_READY notification
 Set PNF name in AAI
     [Arguments]    ${pnfs_name}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
+    Log    AAI setip is ${aai_setup_session}
+    Log    Headers ${headers}
+    Log    PNFS name ${pnfs_name}
     ${resp}=    Put Request    ${aai_setup_session}    /set_pnfs    headers=${headers}    data=${pnfs_name}
     Should Be Equal As Strings    ${resp.status_code}    200
 
