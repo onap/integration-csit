@@ -11,6 +11,8 @@ cd datarouter
 git pull
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 cp $WORKSPACE/plans/dmaap-datarouter/dr-suite/docker-compose/docker-compose.yml .
+cp $WORKSPACE/plans/dmaap-datarouter/dr-suite/docker-compose/provserver.properties ./prov_data/provserver.properties
+cp $WORKSPACE/plans/dmaap-datarouter/dr-suite/docker-compose/node.properties ./node_data/node.properties
 
 # start DMaaP DR containers with docker compose and configuration from docker-compose.yml
 docker login -u docker -p docker nexus3.onap.org:10001
@@ -47,7 +49,7 @@ for i in {1..10}; do
         then
             echo datarouter-prov container is not in healthy state - the test is not made, teardown...
             cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
-            docker-compose down -v
+            docker-compose rm -sf
             exit 1
         fi
     fi
