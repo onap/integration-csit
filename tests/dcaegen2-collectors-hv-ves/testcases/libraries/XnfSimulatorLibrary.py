@@ -22,15 +22,21 @@ import docker
 from robot.api import logger
 from time import sleep
 
+HV_VES_VERSION = os.getenv("HV_VES_VERSION")
+HV_VES_COLLECTOR_NETWORK = os.getenv("CONTAINERS_NETWORK")
+HV_VES_COLLECTOR_NAMESPACE = os.getenv("HV_VES_COLLECTOR_NAMESPACE")
+HV_VES_GROUP_ID = os.getenv("HV_VES_GROUP_ID")
+HV_VES_SERVICE_NAME = os.getenv("HV_VES_SERVICE_NAME")
+UNENCRYPTED_HV_VES_SERVICE_NAME = os.getenv("UNENCRYPTED_HV_VES_SERVICE_NAME")
+
 XNF_SIMULATOR_NAME = "xNF Simulator"
-HV_VES_COLLECTOR_NAMESPACE="onap"
-HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
+XNF_SIMULATOR_CONTAINER_PREFIX = os.getenv("XNF_SIMULATOR_IMAGE")
 SIMULATOR_IMAGE_NAME = HV_VES_COLLECTOR_NAMESPACE + "/" + HV_VES_GROUP_ID + ".hv-collector-xnf-simulator"
-HV_VES_VERSION="1.1-SNAPSHOT"
+
 SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":" + HV_VES_VERSION
 WORKSPACE_ENV = os.getenv("WORKSPACE")
-certificates_dir_path = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/collector/ssl/"
-collector_certs_lookup_dir = "/etc/ves-hv/"
+CERTIFICATES_DIR_PATH = WORKSPACE_ENV + "/plans/dcaegen2-collectors-hv-ves/testsuites/collector/ssl/"
+COLLECTOR_CERTS_LOOKUP_DIR = "/etc/ves-hv/"
 ONE_SECOND_IN_NANOS = 10 ** 9
 
 
@@ -88,13 +94,13 @@ class XnfSimulatorLibrary:
                                            command=xNF_startup_command,
                                            healthcheck=xNF_healthcheck_command,
                                            detach=True,
-                                           network="ves-hv-default",
+                                           network=HV_VES_COLLECTOR_NETWORK,
                                            ports={port + "/tcp": port},
                                            volumes=self.container_volumes(),
-                                           name=xnf.container_name_prefix + port)
+                                           name=XNF_SIMULATOR_CONTAINER_PREFIX + port)
 
     def container_volumes(self):
-        return {certificates_dir_path: {"bind": collector_certs_lookup_dir, "mode": 'rw'}}
+        return {CERTIFICATES_DIR_PATH: {"bind": COLLECTOR_CERTS_LOOKUP_DIR, "mode": 'rw'}}
 
     def assert_containers_startup_was_successful(self, dockerClient):
         checks_amount = 6
@@ -119,7 +125,7 @@ class XnfSimulatorLibrary:
             log_filename = WORKSPACE_ENV + "/archives/containers_logs/" + \
                            suite_name.split(".")[-1] + "_" + container.name + ".log"
             file = open(log_filename, "w+")
-            file.write(container.logs())
+            file.write(str(container.logs()))
             file.close()
             container.stop()
             container.remove()
@@ -141,7 +147,6 @@ class XnfSimulatorLibrary:
 
 
 class XnfSimulator:
-    container_name_prefix = "ves-hv-collector-xnf-simulator"
 
     def __init__(self,
                  port,
@@ -151,13 +156,13 @@ class XnfSimulator:
         self.port = port
         self.healthcheck_server_port = "6063"
         cert_name_prefix = "" if should_use_valid_certs else "untrusted"
-        certificates_path_with_file_prefix = collector_certs_lookup_dir + cert_name_prefix
+        certificates_path_with_file_prefix = COLLECTOR_CERTS_LOOKUP_DIR + cert_name_prefix
         self.key_store_path = certificates_path_with_file_prefix + "client.p12"
         self.trust_store_path = certificates_path_with_file_prefix + "trust.p12"
         self.sec_store_passwd = "onaponap"
         self.disable_ssl = should_disable_ssl
-        self.hv_collector_host = "unencrypted-ves-hv-collector" \
-            if should_connect_to_unencrypted_hv_ves else "ves-hv-collector"
+        self.hv_collector_host = UNENCRYPTED_HV_VES_SERVICE_NAME \
+            if should_connect_to_unencrypted_hv_ves else HV_VES_SERVICE_NAME
 
     def get_startup_command(self):
         startup_command = ["--listen-port", self.port,
@@ -167,8 +172,7 @@ class XnfSimulator:
                            "--key-store", self.key_store_path,
                            "--trust-store", self.trust_store_path,
                            "--key-store-password", self.sec_store_passwd,
-                           "--trust-store-password", self.sec_store_passwd
-                           ]
+                           "--trust-store-password", self.sec_store_passwd]
         if self.disable_ssl:
             startup_command.append("--ssl-disable")
         return startup_command

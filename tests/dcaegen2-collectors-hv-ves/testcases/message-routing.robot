@@ -96,18 +96,18 @@ ${HTTP_METHOD_URL}                             http://
 
 ${XNF_SIM_API_PATH}                            /simulator/async
 
-${VES_HV_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
-${XNF_FIXED_PAYLOAD_REQUEST}                   ${VES_HV_SCENARIOS}/fixed-payload/xnf-fixed-payload-request.json
-${XNF_TOO_BIG_PAYLOAD_REQUEST}                 ${VES_HV_SCENARIOS}/too-big-payload/xnf-too-big-payload-request.json
-${XNF_INVALID_WIRE_FRAME_REQUEST}              ${VES_HV_SCENARIOS}/invalid-wire-frame/xnf-invalid-wire-frame-request.json
-${XNF_INVALID_GPB_DATA_REQUEST}                ${VES_HV_SCENARIOS}/invalid-gpb-data/xnf-invalid-gpb-data-request.json
-${XNF_UNSUPPORTED_DOMAIN_REQUEST}              ${VES_HV_SCENARIOS}/unsupported-domain/xnf-unsupported-domain-request.json
+${HV_VES_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
+${XNF_FIXED_PAYLOAD_REQUEST}                   ${HV_VES_SCENARIOS}/fixed-payload/xnf-fixed-payload-request.json
+${XNF_TOO_BIG_PAYLOAD_REQUEST}                 ${HV_VES_SCENARIOS}/too-big-payload/xnf-too-big-payload-request.json
+${XNF_INVALID_WIRE_FRAME_REQUEST}              ${HV_VES_SCENARIOS}/invalid-wire-frame/xnf-invalid-wire-frame-request.json
+${XNF_INVALID_GPB_DATA_REQUEST}                ${HV_VES_SCENARIOS}/invalid-gpb-data/xnf-invalid-gpb-data-request.json
+${XNF_UNSUPPORTED_DOMAIN_REQUEST}              ${HV_VES_SCENARIOS}/unsupported-domain/xnf-unsupported-domain-request.json
 
-${DCAE_FIXED_PAYLOAD_REQUEST}                  ${VES_HV_SCENARIOS}/fixed-payload/dcae-fixed-payload-request.json
-${DCAE_TOO_BIG_PAYLOAD_REQUEST}                ${VES_HV_SCENARIOS}/too-big-payload/dcae-too-big-payload-request.json
-${DCAE_INVALID_WIRE_FRAME_REQUEST}             ${VES_HV_SCENARIOS}/invalid-wire-frame/dcae-invalid-wire-frame-request.json
-${DCAE_INVALID_GPB_DATA_REQUEST}               ${VES_HV_SCENARIOS}/invalid-gpb-data/dcae-invalid-gpb-data-request.json
-${DCAE_UNSUPPORTED_DOMAIN_REQUEST}             ${VES_HV_SCENARIOS}/unsupported-domain/dcae-unsupported-domain-request.json
+${DCAE_FIXED_PAYLOAD_REQUEST}                  ${HV_VES_SCENARIOS}/fixed-payload/dcae-fixed-payload-request.json
+${DCAE_TOO_BIG_PAYLOAD_REQUEST}                ${HV_VES_SCENARIOS}/too-big-payload/dcae-too-big-payload-request.json
+${DCAE_INVALID_WIRE_FRAME_REQUEST}             ${HV_VES_SCENARIOS}/invalid-wire-frame/dcae-invalid-wire-frame-request.json
+${DCAE_INVALID_GPB_DATA_REQUEST}               ${HV_VES_SCENARIOS}/invalid-gpb-data/dcae-invalid-gpb-data-request.json
+${DCAE_UNSUPPORTED_DOMAIN_REQUEST}             ${HV_VES_SCENARIOS}/unsupported-domain/dcae-unsupported-domain-request.json
 
 ${AMOUNT_25000}                                25000
 ${AMOUNT_50000}                                50000

@@ -45,9 +45,9 @@ Handle Multiple Connections
 
 
 *** Variables ***
-${VES_HV_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
+${HV_VES_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
 
-${XNF_SMALLER_PAYLOAD_REQUEST}                 ${VES_HV_SCENARIOS}/multiple-simulators-payload/xnf-simulator-smaller-valid-request.json
-${DCAE_SMALLER_PAYLOAD_REQUEST}                ${VES_HV_SCENARIOS}/multiple-simulators-payload/dcae-smaller-valid-request.json
+${XNF_SMALLER_PAYLOAD_REQUEST}                 ${HV_VES_SCENARIOS}/multiple-simulators-payload/xnf-simulator-smaller-valid-request.json
+${DCAE_SMALLER_PAYLOAD_REQUEST}                ${HV_VES_SCENARIOS}/multiple-simulators-payload/dcae-smaller-valid-request.json
 
 ${AMOUNT_15000}                                15000
