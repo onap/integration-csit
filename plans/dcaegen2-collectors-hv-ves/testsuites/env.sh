@@ -2,7 +2,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018-2019 NOKIA
+# Copyright (C) 2019 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,35 +17,22 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-set -euo pipefail
+# using WORKSPACE variable defined in run-csit.sh
+export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/libraries"
 
-RUN_CSIT_LOCAL=${RUN_CSIT_LOCAL:-false}
+export JAVA_OPTS="-Dio.netty.leakDetection.level=paranoid"
+export CONSUL_HOST="consul-server"
+export CONFIG_BINDING_SERVICE="config-binding-service"
 
-if ${RUN_CSIT_LOCAL} ; then
-  echo "Building locally - assuming all dependencies are installed"
-  source env_local.sh
-else
-  echo "Default run - install all dependencies"
-  pip uninstall -y docker-py
-  pip install docker
+export DOCKER_REGISTRY="nexus3.onap.org:10001"
+export DOCKER_REGISTRY_PREFIX="${DOCKER_REGISTRY}/"
 
-  COMPOSE_VERSION=1.23.2
-  COMPOSE_LOCATION='/usr/local/bin/docker-compose'
-  sudo curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o ${COMPOSE_LOCATION}
-  sudo chmod +x ${COMPOSE_LOCATION}
-  source env.sh
-fi
+export HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
+export HV_VES_HOSTNAME="dcae-hv-ves-collector"
+export HV_VES_COLLECTOR_NAMESPACE="onap"
+export HV_VES_IMAGE="hv-collector-main"
+export HV_VES_VERSION="1.1-SNAPSHOT"
+export HV_VES_HEALTHCHECK_CMD=$(curl --request GET --fail --silent --show-error localhost:6060/health/ready && nc -vz localhost 6061)
+export DCAE_APP_SIMULATOR_IMAGE="hv-collector-dcae-app-simulator"
+export CONTAINERS_NETWORK="hv-ves-default"
 
-echo "Removing not used docker networks"
-docker network prune -f
-
-echo "Creating network for containers: ${CONTAINERS_NETWORK}"
-docker network create ${CONTAINERS_NETWORK}
-
-cd collector/ssl
-./gen-certs.sh
-cd ../..
-
-docker-compose up -d
-
-mkdir -p ${WORKSPACE}/archives/containers_logs
