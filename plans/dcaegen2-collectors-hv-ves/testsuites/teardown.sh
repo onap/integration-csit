@@ -17,16 +17,34 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
+RUN_CSIT_LOCAL=${RUN_CSIT_LOCAL:-false}
+
 cd collector/ssl
 ./gen-certs.sh clean
 cd ../..
+
+if ${RUN_CSIT_LOCAL} ; then
+  echo "Tearing down local setup"
+  source env_local.sh
+else
+  echo "Tearing down"
+  source env.sh
+fi
+
+set +e
 
 COMPOSE_LOGS_FILE=${WORKSPACE}/archives/containers_logs/docker-compose.log
 docker-compose logs > ${COMPOSE_LOGS_FILE}
 docker-compose down
 docker-compose rm -f
 
+echo "Stopping leftover containers"
+LEFTOVER_CONTAINERS=$(docker ps -aqf network=${CONTAINERS_NETWORK} | awk '{print $1}')
+docker stop ${LEFTOVER_CONTAINERS}
+docker rm ${LEFTOVER_CONTAINERS}
 docker network rm ${CONTAINERS_NETWORK}
+
+set -e
 
 if grep "LEAK:" ${COMPOSE_LOGS_FILE}; then
     echo "WARNING: Memory leak detected in docker-compose logs."
