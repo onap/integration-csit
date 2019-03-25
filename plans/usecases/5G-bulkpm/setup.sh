@@ -172,7 +172,7 @@ done
 sleep 10
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP}"
+ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v SFTP_IP:${SFTP_IP}"
 
 pip install jsonschema uuid simplejson
 # Wait container ready
