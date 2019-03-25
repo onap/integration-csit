@@ -23,8 +23,8 @@ from robot.api import logger
 from time import sleep
 
 XNF_SIMULATOR_NAME = "xNF Simulator"
-HV_VES_COLLECTOR_NAMESPACE="onap"
-HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
+HV_VES_COLLECTOR_NAMESPACE = "onap"
+HV_VES_GROUP_ID = "org.onap.dcaegen2.collectors.hv-ves"
 SIMULATOR_IMAGE_NAME = HV_VES_COLLECTOR_NAMESPACE + "/" + HV_VES_GROUP_ID + ".hv-collector-xnf-simulator"
 HV_VES_VERSION="1.1-SNAPSHOT"
 SIMULATOR_IMAGE_FULL_NAME = os.getenv("DOCKER_REGISTRY_PREFIX") + SIMULATOR_IMAGE_NAME + ":" + HV_VES_VERSION
@@ -119,7 +119,7 @@ class XnfSimulatorLibrary:
             log_filename = WORKSPACE_ENV + "/archives/containers_logs/" + \
                            suite_name.split(".")[-1] + "_" + container.name + ".log"
             file = open(log_filename, "w+")
-            file.write(container.logs())
+            file.write(str(container.logs()))
             file.close()
             container.stop()
             container.remove()
