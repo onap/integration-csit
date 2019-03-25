@@ -10,6 +10,7 @@
 | | Page should contain link | Home
 | | Page should contain link | MY VNFs
 | | Page should contain link | Test
+| | Page should contain link | Admin
 | | Page should contain link | About us
 | | Page Should Not Contain | ${USER_ID}
 # Verify MY VNFs link will will ask for user entry
@@ -79,8 +80,8 @@
 | | Input Text | id=vnfType | csit${THEDATE}
 | | Click Button | Next
 | | Page Should Contain Element | id=cmbAction
-# Verify 17 selections available
-| | Select From List By Index | id=cmbAction | 17
+# Verify 19 selections available
+| | Select From List By Index | id=cmbAction | 19
 # Select HealthCheck and ANSIBLE and verify it gets created
 | | Select From List By Value | id=cmbAction | HealthCheck
 | | Select From List By Value | id=txtDeviceProtocol | ANSIBLE

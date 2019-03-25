@@ -12,7 +12,7 @@
 |  ${LONGTIME} | 90s
 |  ${TENMINUTES} | 600s
 #|  ${FFPROFILE_DIR} |  /home/dvz/.mozilla/firefox/s87c07vn.AppCZoomed50
-|  ${MAINURL} | http://localhost:8080/index.html
+|  ${MAINURL} | https://localhost:8080/index.html
 |  ${USER_ID} | csituser
 
 *** Keywords ***
