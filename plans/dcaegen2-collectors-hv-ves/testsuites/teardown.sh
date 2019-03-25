@@ -17,15 +17,27 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
+RUN_CSIT_LOCAL=${RUN_CSIT_LOCAL:-false}
+
 cd collector/ssl
 ./gen-certs.sh clean
 cd ../..
+
+if ${RUN_CSIT_LOCAL} ; then
+  echo "Tearing down local setup"
+  source setup_env_local.sh
+else
+  echo "Tearing down"
+  source setup_env.sh
+fi
 
 COMPOSE_LOGS_FILE=${WORKSPACE}/archives/containers_logs/docker-compose.log
 docker-compose logs > ${COMPOSE_LOGS_FILE}
 docker-compose down
 docker-compose rm -f
 
+echo "Stopping running xnf simulators"
+docker rm -f $(docker ps -a | grep ves-hv-collector-xnf-simulator700\. | awk '{print $1}')
 docker network rm ${CONTAINERS_NETWORK}
 
 if grep "LEAK:" ${COMPOSE_LOGS_FILE}; then
