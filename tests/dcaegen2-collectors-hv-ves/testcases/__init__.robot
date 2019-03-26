@@ -71,4 +71,4 @@ ${DCAE_APP_API_MESSAGES_VALIDATION_PATH}       ${DCAE_APP_API_MESSAGES_PATH}/val
 ${ROUTED_MESSAGES_TOPIC}                       TEST_HV_VES_PERF3GPP
 
 ${HV_VES_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
-${HV_VES_CONFIGURATION_JSON_FILEPATH}          ${HV_VES_RESOURCES}/ves-hv-configuration.json
+${HV_VES_CONFIGURATION_JSON_FILEPATH}          ${HV_VES_RESOURCES}/hv-ves-configuration.json

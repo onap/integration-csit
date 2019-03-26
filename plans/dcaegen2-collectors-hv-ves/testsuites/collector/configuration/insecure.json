@@ -11,18 +11,5 @@
   "security": {
     "sslDisable": true
   },
-  "collector": {
-    "maxRequestSizeBytes": 1048576,
-    "kafkaServers": [
-      "kafka:9092"
-    ],
-    "routing": [
-      {
-        "fromDomain": "perf3gpp",
-        "toTopic": "TEST_HV_VES_PERF3GPP"
-      }
-    ],
-    "dummyMode": false
-  },
   "logLevel": "DEBUG"
 }
