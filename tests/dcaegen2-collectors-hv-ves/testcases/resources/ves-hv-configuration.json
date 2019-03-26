@@ -1,9 +1,16 @@
 {
-  "collector.routing": [
-    {
-      "fromDomain": "perf3gpp",
-      "toTopic": "TEST_HV_VES_PERF3GPP"
+  "streams_publishes": {
+    "perf3gpp": {
+      "type": "kafka",
+      "aaf_credentials": {
+        "username": "client",
+        "password": "very secure password"
+      },
+      "kafka_info": {
+        "bootstrap_servers": "kafka:9092",
+        "topic_name": "TEST_HV_VES_PERF3GPP"
+      }
     }
-  ]
+  }
 }
 
