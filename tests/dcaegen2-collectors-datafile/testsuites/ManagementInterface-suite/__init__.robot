@@ -1,2 +1,2 @@
 *** Settings ***
-Documentation    Management Interface suite
+Documentation    DFC Management Interface suite

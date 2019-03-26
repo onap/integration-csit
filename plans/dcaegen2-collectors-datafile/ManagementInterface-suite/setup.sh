@@ -1,21 +1,8 @@
 #!/usr/bin/env bash
 
-docker-compose up -d
-
-
-DFC=$(docker ps -a -q --filter="name=dfc")
-
-# Wait for initialization of Docker contaienr for DFC
-for i in {1..10}; do
-if [ $(docker inspect --format '{{ .State.Running }}' $DFC) ]
-then
-   echo "DFC Container Running"
-   break
-else
-   echo sleep $i
-   sleep $i
-fi
-done
+DFC_ROOT=$WORKSPACE/scripts/dcaegen2-collectors-datafile/dfc-management
+cd $DFC_ROOT
+source dfc-start.sh
 
 #Wait for initialization of the DFC service
 for i in {1..10}; do

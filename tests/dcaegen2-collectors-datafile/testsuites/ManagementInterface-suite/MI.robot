@@ -1,11 +1,13 @@
 *** Settings ***
 Library       OperatingSystem
 Library       RequestsLibrary
+Library  Process
 
 *** Variables ***
 
 
 *** Test Cases ***
+
 
 Heartbeat test
     [Documentation]    Check DFC heartbeat
