@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "926b9beb_52a8e41a",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/setup_env.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "Good time to change it to hv-ves :) (both files)",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1c2874a_791df417",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/setup_env_local.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "Not \nexport DOCKER_REGISTRY_PREFIX\u003d\"${DOCKER_REGISTRY}/\" \n?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84809de2_7d65b880",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/teardown.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "rename these files to env_local/env (without \u0027setup\u0027 prefix)",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab76d825_a3caaf65",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/teardown.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "xNFs should be stopped in similar fashion as in XnfLibrary.\n\n1. assign \n`\nSIMSY\u003d$(docker ps -a | grep xnf-simulator | awk \u0027{ print $1 }\u0027)  \n`\nor I believe you can use go-templates. It was something like\n`\ndocker ps -a --filter\u003d\u0027Image\u003donap/org....xnf\u0027 --format\u003d\u0027{ .ContainerID }\u0027\n`\nThis should give you IDs array\n\n2. In a loop first write xNF logs (this is important for debugging)\n3. Then STOP and later REMOVE container. Don\u0027t force-remove, be gentle.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 90
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dbf2216_2f574e4c",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/teardown.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "Before this call, we can do (extracting just hashes will require some more play)\n`\ndocker network inspect development_default --format\u003d\u0027{{ .Containers }}\u0027\n`\nAnd dump all logs to single file (network_leftover_containers.log) and this time `docker rm -f` on all containers.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd441a54_6713032e",
+        "filename": "tests/dcaegen2-collectors-hv-ves/testcases/libraries/XnfSimulatorLibrary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3701
+      },
+      "writtenOn": "2019-03-27T07:52:19Z",
+      "side": 1,
+      "message": "Is there possibility to \u0027os.getenv\u0027 this? We could define it in env.sh files (along with HV_VES_COLLECTOR_NAMESPACE, HV_VES_GROUP_ID)",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "48a814152ee51d2c6d3020ce79e31444c6d6bafc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
