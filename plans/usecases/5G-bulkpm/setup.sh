@@ -152,7 +152,7 @@ echo data_endpoints.json from DFC containter
 cat /tmp/datafile_endpoints.json.fromcontainer
 docker cp /tmp/datafile_endpoints.json dfc:/opt/app/datafile/config/
 #Increase Logging
-docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: ERROR/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
+docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: WARN/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
 docker restart dfc
 sleep 2
 
@@ -258,10 +258,10 @@ sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/
 docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
 
 # Create default feed and create file consumer subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.feed" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
 cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
 sed -i 's/fileconsumer/'${HOST_IP}'/g' /tmp/addSubscriber.json
-curl -v -X POST -H "Content-Type:application/vnd.att-dr.subscription" -H "X-ATT-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 sleep 10
 curl -k https://$DR_PROV_IP:8443/internal/prov
 

@@ -21,8 +21,8 @@ ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -
 ${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /var/log/ONAP/application.log" > /tmp/dfc_docker.log.robot
 ${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Publish to DR successful!" /tmp/dfc_docker.log.robot
 
-${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/${SFTP_IP}_xNF.pm.xml.gz.M %{WORKSPACE}
-${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/${SFTP_IP}_xNF.pm.xml.gz.M  %{WORKSPACE}/metadata.json
+${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/oteNB5309_xNF.pm.xml.gz.M %{WORKSPACE}
+${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/oteNB5309_xNF.pm.xml.gz.M  %{WORKSPACE}/metadata.json
 ${metadataSchemaPath}                    %{WORKSPACE}/tests/usecases/5G-bulkpm/assets/metadata.schema.json
 ${metadataJsonPath}                      %{WORKSPACE}/metadata.json
 
@@ -86,7 +86,7 @@ Verify Fileconsumer Receive PM file from Data Router
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER}        shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        xNF.pm.xml.gz
+    Should Contain                  ${cli_cmd_output.stdout}        oteNB5309_xNF.pm.xml.gz
 
 Verify File Consumer Receive valid metadata from Data Router
     [Tags]                          Bulk_PM_E2E_06
@@ -94,7 +94,7 @@ Verify File Consumer Receive valid metadata from Data Router
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER}        shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        ${SFTP_IP}_xNF.pm.xml.gz.M
+    Should Contain                  ${cli_cmd_output.stdout}        oteNB5309_xNF.pm.xml.gz.M
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER_CP}     shell=yes
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_RENAME_METADATA}         shell=yes
     ${validation_result}=           Validate                        ${metadataSchemaPath}    ${metadataJsonPath}
