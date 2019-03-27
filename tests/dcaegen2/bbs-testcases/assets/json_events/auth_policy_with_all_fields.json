@@ -1,0 +1,23 @@
+[
+	{
+		"closedLoopEventClient": "DCAE.BBS_event_processor_mSInstance",
+		"policyVersion": "1.0.0.5",
+		"policyName": "CPE_Authentication",
+		"policyScope": "policyScopeCpeAuth",
+		"target_type": "VM",
+		"AAI":
+			{
+				"cpe.old-authentication-state": "outOfService",
+				"cpe.new-authentication-state": "inService",
+				"cpe.swVersion": "1.2.3",
+				"service-information.hsia-cfs-service-instance-id": "1923eaa8-8ab7-49ef-b4c2-e185efbbe832"
+			},
+		"closedLoopAlarmStart": 1552997462,
+		"closedLoopEventStatus": "ONSET",
+		"closedLoopControlName": "clControlNameCpeAuth",
+		"version": "1.0.2",
+		"target": "vserver.vserver-name",
+		"requestID": "d76541f3-7f55-4c80-b0a0-ec5dee2a56cb",
+		"from": "DCAE"
+	}
+]
