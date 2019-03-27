@@ -1,0 +1,46 @@
+[
+{
+    "pnf-name": "NVendor-Equip_Model-SN1234",
+    "in-maint": true,
+    "resource-version": "1551889263181",
+    "relationship-list": {
+        "relationship": [
+            {
+                "related-to": "service-instance",
+                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+                "related-link": "/aai/v14/business/customers/customer/766162a3-53a9-42b8-8fe2-ebaa2213a6dd/service-subscriptions/service-subscription/BBS-CFS11/service-instances/service-instance/1923eaa8-8ab7-49ef-b4c2-e185efbbe832",
+                "relationship-data": [
+                    {
+                        "relationship-key": "customer.global-customer-id",
+                        "relationship-value": "766162a3-53a9-42b8-8fe2-ebaa2213a6dd"
+                    },
+                    {
+                        "relationship-key": "service-subscription.service-type",
+                        "relationship-value": "BBS-CFS11"
+                    },
+                    {
+                        "relationship-key": "service-instance.service-instance-id",
+                        "relationship-value": "1923eaa8-8ab7-49ef-b4c2-e185efbbe832"
+                    }
+                ],
+                "related-to-property": [
+                    {
+                        "property-key": "service-instance.service-instance-name"
+                    }
+                ]
+            },
+            {
+                "related-to": "logical-link",
+                "relationship-label": "org.onap.relationships.inventory.BridgedTo",
+                "related-link": "/aai/v14/network/logical-links/logical-link/olt11-11-11",
+                "relationship-data": [
+                    {
+                        "relationship-key": "logical-link.link-name",
+                        "relationship-value": "olt11-11-11"
+                    }
+                ]
+            }
+        ]
+    }
+}
+]
