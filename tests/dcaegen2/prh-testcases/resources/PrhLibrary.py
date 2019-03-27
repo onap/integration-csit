@@ -41,16 +41,10 @@ class PrhLibrary(object):
     def create_pnf_ready_notification_as_pnf_ready(json_file):
         json_to_python = json.loads(json_file)
         correlation_id = PrhLibrary.extract_correlation_id_value(json_to_python, "correlationId")
-        serial_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "serial-number", "serialNumber")
-        vendor_name = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-vendor", "vendorName")
-        model_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-model", "modelNumber")
-        unit_type = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "equip-type", "unitType")
 
         additional_fields = PrhLibrary.extract_additional_fields_value(json_to_python)
 
-        nf_role  = json_to_python.get("event").get("commonEventHeader").get("nfNamingCode") if "nfNamingCode" in json_to_python["event"]["commonEventHeader"] else ""
-
-        str_json = '{' + correlation_id + serial_number + vendor_name + model_number + unit_type + '"nf-role":"' + nf_role + '","sw-version":"",' + additional_fields
+        str_json = '{' + correlation_id + additional_fields
 
         return json.dumps(str_json.rstrip(',') + '}').replace("\\", "")[1:-1]
 
