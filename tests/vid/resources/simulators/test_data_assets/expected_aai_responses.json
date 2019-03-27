@@ -1,0 +1,9 @@
+{
+  "get": {
+    "cloud-region": [{
+        "cloud-owner": "CloudOwner",
+        "cloud-region-id": "RegionOne"
+      }
+    ]
+  }
+}
