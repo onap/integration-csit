@@ -20,8 +20,9 @@
 echo "This is ${WORKSPACE}/scripts/vid/kill_and_remove_dataFolder.sh"
 
 #kill and remove all vid dockers
-docker stop $(docker ps -a -q --filter="name=vid")
-docker rm $(docker ps -a -q --filter="name=vid")
+cd ${WORKSPACE}/tests/vid/resources
+docker-compose down
+docker-compose rm -f
 
 
 #delete data folder

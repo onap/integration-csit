@@ -25,7 +25,7 @@ source ${SCRIPTS}/common_functions.sh
 source ${WORKSPACE}/scripts/vid/clone_and_setup_vid_data.sh
 source ${WORKSPACE}/scripts/vid/start_vid_containers.sh
 
-echo `Obtaining ip of VID server...`
+echo "Obtaining ip of VID server..."
 VID_IP=`get-instance-ip.sh vid-server`
 SO_SIMULATOR_IP=`get-instance-ip.sh so-simulator`
 
