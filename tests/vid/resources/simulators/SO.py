@@ -103,7 +103,7 @@ class JsonFileToDictReader(object):
 def init_so_simulator():
     expected_so_requests = JsonFileToDictReader.read_expected_test_data(argv[1])
     expected_so_responses = JsonFileToDictReader.read_expected_test_data(argv[2])
-    logging.basicConfig(filename='output.log', level=logging.INFO)
+    logging.basicConfig(level=logging.INFO)
     handler = partial(SOHandler, expected_so_requests, expected_so_responses)
     handler.protocol_version = "HTTP/1.0"
     httpd = HTTPServer(('', DEFAULT_PORT), handler)
