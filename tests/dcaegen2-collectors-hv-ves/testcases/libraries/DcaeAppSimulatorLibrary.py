@@ -33,8 +33,8 @@ class DcaeAppSimulatorLibrary:
         resp = HttpRequests.session_without_env().get(app_url, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
 
-        assert resp.content == expected_messages_amount, \
-            "Messages consumed by simulator: " + resp.content + " expecting: " + expected_messages_amount
+        assert int(resp.content) == int(expected_messages_amount), \
+            "Messages consumed by simulator: " + str(resp.content) + " expecting: " + str(expected_messages_amount)
 
     def assert_DCAE_app_consumed_less_equal_than(self, app_url, messages_threshold):
         logger.info("GET at: " + app_url)
@@ -45,8 +45,8 @@ class DcaeAppSimulatorLibrary:
                      " expecting more than 0 and less/equal than " + messages_threshold)
 
         assert 0 < int(resp.content) <= int(messages_threshold), \
-            "Messages consumed by simulator: " + resp.content + \
-            " expecting more than 0 and less/equal than " + messages_threshold
+            "Messages consumed by simulator: " + str(resp.content) + \
+            " expecting more than 0 and less/equal than " + str(messages_threshold)
 
     def reset_DCAE_app_simulator(self, app_url):
         logger.info("DELETE at: " + app_url)

@@ -33,8 +33,8 @@ HV-VES Collector Suites Setup
 
 Configure collector
     ${CONSUL_API_ACCESS}=   Get Consul Api Access Url   ${HTTP_METHOD_URL}   ${CONSUL_CONTAINER_HOST}   ${CONSUL_CONTAINER_PORT}
-    ${CONSUL_API_URL}=  Catenate   SEPARATOR=   ${CONSUL_API_ACCESS}   ${CONSUL_VES_HV_CONFIGURATION_KEY_PATH}
-    Publish HV VES Configuration In Consul    ${CONSUL_API_URL}   ${VES_HV_CONFIGURATION_JSON_FILEPATH}
+    ${CONSUL_API_URL}=  Catenate   SEPARATOR=   ${CONSUL_API_ACCESS}   ${CONSUL_HV_VES_CONFIGURATION_KEY_PATH}
+    Publish HV VES Configuration In Consul    ${CONSUL_API_URL}   ${HV_VES_CONFIGURATION_JSON_FILEPATH}
 
 Configure Dcae App
     ${DCAE_APP_API_ACCESS}=   Get Dcae App Api Access Url   ${HTTP_METHOD_URL}   ${DCAE_APP_CONTAINER_HOST}   ${DCAE_APP_CONTAINER_PORT}
@@ -58,7 +58,7 @@ ${HTTP_METHOD_URL}                             http://
 
 ${CONSUL_CONTAINER_HOST}                       consul-server
 ${CONSUL_CONTAINER_PORT}                       8500
-${CONSUL_VES_HV_CONFIGURATION_KEY_PATH}        /v1/kv/dcae-hv-ves-collector
+${CONSUL_HV_VES_CONFIGURATION_KEY_PATH}        /v1/kv/dcae-hv-ves-collector
 
 ${DCAE_APP_CONTAINER_HOST}                     dcae-app-simulator
 ${DCAE_APP_CONTAINER_PORT}                     6063
@@ -70,5 +70,5 @@ ${DCAE_APP_API_MESSAGES_VALIDATION_PATH}       ${DCAE_APP_API_MESSAGES_PATH}/val
 
 ${ROUTED_MESSAGES_TOPIC}                       TEST_HV_VES_PERF3GPP
 
-${VES_HV_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
-${VES_HV_CONFIGURATION_JSON_FILEPATH}          ${VES_HV_RESOURCES}/ves-hv-configuration.json
+${HV_VES_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
+${HV_VES_CONFIGURATION_JSON_FILEPATH}          ${HV_VES_RESOURCES}/ves-hv-configuration.json

@@ -19,7 +19,7 @@ version: "3"
 
 
 networks:
-  ves-hv-default:
+  hv-ves-default:
     external:
       name: $CONTAINERS_NETWORK
 
@@ -34,7 +34,7 @@ services:
     ports:
       - "2181:2181"
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
   kafka:
     image: wurstmeister/kafka
@@ -50,7 +50,7 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
   #
   # Consul / CBS
@@ -63,7 +63,7 @@ services:
     volumes:
       - ./consul/:/consul/config
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
   config-binding-service:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.2.4
@@ -74,13 +74,13 @@ services:
     depends_on:
       - consul-server
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
   #
   # DCAE HV VES Collector
   #
 
-  ves-hv-collector:
+  hv-ves-collector:
     image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}:${HV_VES_VERSION}
     ports:
       - "6060:6060"
@@ -102,9 +102,9 @@ services:
       - config-binding-service
       - kafka
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
-  unencrypted-ves-hv-collector:
+  unencrypted-hv-ves-collector:
     image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${HV_VES_IMAGE}:${HV_VES_VERSION}
     ports:
       - "7060:6060"
@@ -126,7 +126,7 @@ services:
       - config-binding-service
       - kafka
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
   dcae-app-simulator:
     image: ${DOCKER_REGISTRY}/${HV_VES_COLLECTOR_NAMESPACE}/${HV_VES_GROUP_ID}.${DCAE_APP_SIMULATOR_IMAGE}:${HV_VES_VERSION}
@@ -141,5 +141,5 @@ services:
     depends_on:
       - kafka
     networks:
-      - ves-hv-default
+      - hv-ves-default
 
