@@ -1,0 +1,46 @@
+[
+{
+    "service-instance-id": "1923eaa8-8ab7-49ef-b4c2-e185efbbe832",
+    "resource-version": "1551889260591",
+    "orchestration-status": "assigned",
+    "relationship-list": {
+        "relationship": [
+            {
+                "related-to": "pnf",
+                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+                "related-link": "/aai/v14/network/pnfs/pnf/NVendor-Equip_Model-SN1234",
+                "relationship-data": [
+                    {
+                        "relationship-key": "pnf.pnf-name",
+                        "relationship-value": "NVendor-Equip_Model-SN1234"
+                    }
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "metadatum": [
+            {
+                "metaname": "cvlan",
+                "metaval": "1005",
+                "resource-version": "1551889260599"
+            },
+            {
+                "metaname": "svlan",
+                "metaval": "100",
+                "resource-version": "1551889260608"
+            },
+            {
+                "metaname": "oltName",
+                "metaval": "olt1",
+                "resource-version": "1551889260616"
+            },
+            {
+                "metaname": "rgw-mac-address",
+                "metaval": "01:02:03:04:05:06",
+                "resource-version": "1551889260624"
+            }
+        ]
+    }
+}
+]

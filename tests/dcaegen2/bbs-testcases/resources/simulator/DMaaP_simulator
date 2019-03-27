@@ -1,0 +1,6 @@
+FROM python:3-alpine
+
+ADD DMaaP.py httpServerLib.py /
+COPY certs/* /certs/
+
+CMD [ "python", "./DMaaP.py" ]
