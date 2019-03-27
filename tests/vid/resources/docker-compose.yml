@@ -1,11 +1,12 @@
 version: '3'
 services:
     vid-server:
-        image: nexus3.onap.org:10001/onap/vid:3.0-STAGING-latest
+        image: nexus3.onap.org:10001/onap/vid:4.0-STAGING-latest
         environment:
         - VID_MYSQL_DBNAME=vid_openecomp_epsdk
         - VID_MYSQL_PASS=Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
         - VID_MSO_SERVER_URL=https://so-simulator:8443
+        - VID_AAI_URL=http://aai-simulator:8443
         ports:
         - "8080:8080"
         - "8443:8443"
@@ -29,6 +30,19 @@ services:
         build:
             context: simulators
             dockerfile: Dockerfile
+            args:
+                component: so
         ports:
         - "8444:8443"
         container_name: so-simulator
+        
+    aai-simulator:
+        build:
+            context: simulators
+            dockerfile: Dockerfile
+            args:
+                component: aai
+        ports:
+        - "8445:8443"
+        container_name: aai-simulator
+
