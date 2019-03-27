@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c8e4d0_f6d2066c",
+        "filename": "plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4447
+      },
+      "writtenOn": "2019-03-27T11:21:29Z",
+      "side": 1,
+      "message": "We haven\u0027t released 2.0.2 just yet so will have to go with SNAPSHOT-latest for the time being",
+      "range": {
+        "startLine": 4,
+        "startChar": 64,
+        "endLine": 4,
+        "endChar": 81
+      },
+      "revId": "161a243a1bc0ab0b8bba9b337f7f36f06d6c2dae",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
