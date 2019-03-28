@@ -1,8 +1,9 @@
 version: '2'
 services:
   dfc:
+    network_mode: "host"
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
-    container_name: dfc
+    container_name: dfc_app
     ports:
       - "8100:8100"
       - "8433:8433"
