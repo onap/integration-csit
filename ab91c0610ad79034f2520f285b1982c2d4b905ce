@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17dc2ada_581426e5",
+        "filename": "tests/dcaegen2-collectors-hv-ves/testcases/resources/ves-hv-configuration.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2683
+      },
+      "writtenOn": "2019-03-28T08:19:47Z",
+      "side": 1,
+      "message": "We use unsecure connections to Kafka so aaf_credentials should be absent.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "ab91c0610ad79034f2520f285b1982c2d4b905ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
