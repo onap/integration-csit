@@ -1,9 +1,0 @@
-{
-  "collector.routing": [
-    {
-      "fromDomain": "perf3gpp",
-      "toTopic": "TEST_HV_VES_PERF3GPP"
-    }
-  ]
-}
-
