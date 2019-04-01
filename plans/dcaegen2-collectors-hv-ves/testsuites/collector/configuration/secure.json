@@ -17,5 +17,8 @@
       "trustStorePassword": "onaponap"
     }
   },
+  "collector": {
+    "maxRequestSizeBytes": 1048576
+  },
   "logLevel": "DEBUG"
 }

@@ -11,5 +11,8 @@
   "security": {
     "sslDisable": true
   },
+  "collector": {
+    "maxRequestSizeBytes": 1048576
+  },
   "logLevel": "DEBUG"
 }
