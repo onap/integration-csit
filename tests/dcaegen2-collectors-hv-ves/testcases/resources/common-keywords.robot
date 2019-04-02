@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018 NOKIA
+# Copyright (C) 2018-2019 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,12 @@ Library       VesHvContainersUtilsLibrary
 Library       Collections
 
 *** Keywords ***
+Configure Single xNF Simulator
+    ${XNF_PORTS_LIST}=    Create List    7000
+    ${XNF_SIMULATORS_ADDRESSES}=   Configure xNF Simulators   ${XNF_PORTS_LIST}
+    ${XNF_SIMULATOR}=   Get Slice From List   ${XNF_SIMULATORS_ADDRESSES}   0   1
+    Set Suite Variable   ${XNF_SIMULATOR}
+
 Configure xNF Simulators Using Valid Certificates On Ports
     [Arguments]    ${XNF_PORTS_LIST}
     ${VALID_XNF_SIMULATORS_ADDRESSES}=   Configure xNF Simulators   ${XNF_PORTS_LIST}

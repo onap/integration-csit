@@ -31,8 +31,7 @@ Test Teardown     VES-HV Collector Test Shutdown
 *** Keywords ***
 Message Routing Suite Setup
     Log   Started Suite: VES-HV Message Routing
-    ${XNF_PORTS_LIST}=    Create List    7000
-    Configure xNF Simulators Using Valid Certificates On Ports    ${XNF_PORTS_LIST}
+    Configure Single xNF Simulator
     Log   Suite setup finished
 
 *** Test Cases ***
@@ -40,7 +39,6 @@ Correct Messages Routing
     [Documentation]   VES-HV Collector should route all valid messages to topics specified in configuration
     ...               and do not change message payload generated in XNF simulator
 
-    ${XNF_SIMULATOR}=   Get xNF Simulators Using Valid Certificates
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_FIXED_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
@@ -51,7 +49,6 @@ Correct Messages Routing
 Too big payload message handling
     [Documentation]   VES-HV Collector should interrupt the stream when encountered message with too big payload
 
-    ${XNF_SIMULATOR}=   Get xNF Simulators Using Valid Certificates
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_TOO_BIG_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
@@ -62,7 +59,6 @@ Too big payload message handling
 Invalid wire frame message handling
     [Documentation]  VES-HV Collector should skip messages with invalid wire frame
 
-    ${XNF_SIMULATOR}=   Get xNF Simulators Using Valid Certificates
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_INVALID_WIRE_FRAME_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
@@ -73,7 +69,6 @@ Invalid wire frame message handling
 Invalid GPB data message handling
     [Documentation]   VES-HV Collector should skip messages with invalid GPB data
 
-    ${XNF_SIMULATOR}=   Get xNF Simulators Using Valid Certificates
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_INVALID_GPB_DATA_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
@@ -84,7 +79,6 @@ Invalid GPB data message handling
 Unsupported domain message handling
     [Documentation]   VES-HV Collector should skip messages with unsupported domain
 
-    ${XNF_SIMULATOR}=   Get xNF Simulators Using Valid Certificates
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_UNSUPPORTED_DOMAIN_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
