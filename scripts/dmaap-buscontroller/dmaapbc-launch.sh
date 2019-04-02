@@ -24,6 +24,9 @@ function dmaapbc_launch() {
 	docker run -d $ADDHOSTS --name $CONTAINER_NAME -v $TMP_CFG:/opt/app/config/conf $TAG
 	IP=`get-instance-ip.sh ${CONTAINER_NAME}`
 
+    source ${SCRIPTS}/common_functions.sh
+    bypass_ip_adress ${IP}
+
 	# Wait for initialization
 	for i in {1..10}; do
     	curl -sS ${IP}:8080 && break
