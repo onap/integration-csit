@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14313994_c8e86903",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 947
+      },
+      "writtenOn": "2019-04-02T18:09:25Z",
+      "side": 1,
+      "message": "This patch does two things:\n 1. Fixes the CSIT broken execution.\n 2. Add RB profile instructions.\n\nMaybe this commit should need to be split in two.",
+      "revId": "2741686209e1891bb72195f11a7c04ed2a87e525",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
