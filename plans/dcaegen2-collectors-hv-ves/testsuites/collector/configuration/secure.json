@@ -5,8 +5,8 @@
     "maxPayloadSizeBytes": 1048576
   },
   "cbs": {
-    "firstRequestDelaySec": 5,
-    "requestIntervalSec": 10
+    "firstRequestDelaySec": 3,
+    "requestIntervalSec": 5
   },
   "security": {
     "sslDisable": false,

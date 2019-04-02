@@ -24,8 +24,9 @@ DCAE_APP_NAME = "DCAE App"
 class DcaeAppSimulatorLibrary:
 
     def configure_dcae_app_simulator_to_consume_messages_from_topics(self, app_url, topics):
-        logger.info("PUT at: " + app_url)
-        resp = HttpRequests.session_without_env().put(app_url, data={'topics': topics}, timeout=10)
+        data = {'topics': topics}
+        logger.info("PUT " + str(data) +  " at: " + app_url)
+        resp = HttpRequests.session_without_env().put(app_url, data=data, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
 
     def assert_DCAE_app_consumed(self, app_url, expected_messages_amount):
