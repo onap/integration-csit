@@ -1,8 +1,10 @@
 {
     "rb-name": "test-rbdef",
     "rb-version": "v1",
-    "chart-name": "testchart",
-    "description": "testing resource bundle definition api",
+    "profile-name": "profile1",
+    "release-name": "testrelease",
+    "namespace": "testnamespace",
+    "kubernetes-version": "1.12.3",
     "labels": {
         "vnf_customization_module_uuid": "7eb09e38-4363-9942-1234-3beb2e95fd85"
     }

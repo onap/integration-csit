@@ -12,12 +12,24 @@ Create Definition
 
 Get Definition
     [Template]  Get template
-    /v1/rb/definition
-    /v1/rb/definition/7eb09e38-4363-9942-1234-3beb2e95fd85
+    /v1/rb/definition/test-rbdef
+    /v1/rb/definition/test-rbdef/v1
+
+Create Profile
+    [Template]      Post template
+    /v1/rb/definition/test-rbdef/v1/profile      create_rbprofile.json
+
+Get Profile
+    [Template]  Get template
+    /v1/rb/definition/test-rbdef/v1/profile/profile1
+
+Delete Profile
+    [Template]  Delete template
+    /v1/rb/definition/test-rbdef/v1/profile/profile1
 
 Delete Definition
     [Template]  Delete template
-    /v1/rb/definition/7eb09e38-4363-9942-1234-3beb2e95fd85
+    /v1/rb/definition/test-rbdef/v1
 
 *** Keywords ***
 Created session
