@@ -34,6 +34,7 @@ HV-VES Collector Suites Setup
 Configure collector
     ${CONSUL_API_ACCESS}=   Get Consul Api Access Url   ${HTTP_METHOD_URL}   ${CONSUL_CONTAINER_HOST}   ${CONSUL_CONTAINER_PORT}
     ${CONSUL_API_URL}=  Catenate   SEPARATOR=   ${CONSUL_API_ACCESS}   ${CONSUL_HV_VES_CONFIGURATION_KEY_PATH}
+    Set Suite Variable    ${CONSUL_API_URL}   children=True
     Publish HV VES Configuration In Consul    ${CONSUL_API_URL}   ${HV_VES_CONFIGURATION_JSON_FILEPATH}
 
 Configure Dcae App
@@ -48,7 +49,9 @@ Configure Dcae App
     ${DCAE_APP_API_MESSAGES_VALIDATION_URL}=  Catenate   SEPARATOR=   ${DCAE_APP_API_ACCESS}   ${DCAE_APP_API_MESSAGES_VALIDATION_PATH}
     Set Suite Variable    ${DCAE_APP_API_MESSAGES_VALIDATION_URL}    children=True
 
+
     ${DCAE_APP_API_TOPIC_CONFIGURATION_URL}=  Catenate   SEPARATOR=   ${DCAE_APP_API_ACCESS}   ${DCAE_APP_API_TOPIC_CONFIGURATION_PATH}
+    Set Suite Variable    ${DCAE_APP_API_TOPIC_CONFIGURATION_URL}    children=True
     Wait until keyword succeeds   10 sec   5 sec
     ...    Configure Dcae App Simulator To Consume Messages From Topics   ${DCAE_APP_API_TOPIC_CONFIGURATION_URL}  ${ROUTED_MESSAGES_TOPIC}
 
