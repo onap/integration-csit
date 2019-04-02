@@ -16,6 +16,24 @@
       "revId": "2741686209e1891bb72195f11a7c04ed2a87e525",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2ad1d43_240fbb00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 301
+      },
+      "writtenOn": "2019-04-02T18:10:53Z",
+      "side": 1,
+      "message": "Yes. Let me do that.",
+      "parentUuid": "14313994_c8e86903",
+      "revId": "2741686209e1891bb72195f11a7c04ed2a87e525",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
