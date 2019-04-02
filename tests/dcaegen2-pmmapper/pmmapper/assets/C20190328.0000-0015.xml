@@ -1,0 +1,49 @@
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+    <fileHeader dnPrefix="some dnPrefix" vendorName="FooBar Ltd"
+                fileFormatVersion="32.435 V10.0">
+        <fileSender localDn="Dublin"/>
+        <measCollec beginTime="2018-10-02T12:00:00+01:00"/>
+    </fileHeader>
+    <measData>
+        <managedElement swVersion="r0.1" localDn="Dublin1"/>
+        <measInfo measInfoId="measInfoId1">
+            <job jobId="jobId1"/>
+            <granPeriod endTime="2001-10-02T12:15:00Z" duration="PT100S"/>
+            <repPeriod duration="PT100S"/>
+            <measTypes>z1 a1 zz1 b1</measTypes>
+            <measValue measObjLdn="objLdn">
+                <measResults>1 11 111 1111</measResults>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <measData>
+        <managedElement swVersion="r0.2" localDn="Dublin2"/>
+        <measInfo measInfoId="measInfoId2">
+            <job jobId="jobId"/>
+            <granPeriod endTime="2002-10-02T12:15:00Z" duration="PT200S"/>
+            <repPeriod duration="PT200S"/>
+            <measTypes>z2 a2 zz2 b2</measTypes>
+            <measValue measObjLdn="objLdn">
+                <measResults>2 22 222 2222</measResults>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <measData>
+        <managedElement swVersion="r0.3" localDn="Dublin3"/>
+        <measInfo measInfoId="measInfoId3">
+            <job jobId="jobId"/>
+            <granPeriod endTime="2003-10-02T12:15:00Z" duration="PT300S"/>
+            <repPeriod duration="PT300S"/>
+            <measTypes>z3 a3 zz3 b3</measTypes>
+            <measValue measObjLdn="objLdn">
+                <measResults>3 33 333 3333</measResults>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <fileFooter>
+        <measCollec endTime="2018-10-02T12:15:00+01:00"/>
+    </fileFooter>
+</measCollecFile>

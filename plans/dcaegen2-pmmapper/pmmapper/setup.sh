@@ -85,8 +85,7 @@ for i in {1..10}; do
         [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' buscontroller) ]
+        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] 
     then
         echo "Data Router, Consul, Config Binding Service, Buscontroller Services Running"
         break
@@ -103,16 +102,19 @@ docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/i
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 docker exec datarouter-prov /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
 docker exec datarouter-node /bin/sh -c "echo '${DR_PROV_IP}' dmaap-dr-prov >> /etc/hosts"
+sleep 5
+# Create PM Mapper feed and create PM Mapper subscriber on data router
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 
-# Bus Controller Configuration
-DMAAPBC_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' buscontroller)
-$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/dmaapbc.sh ${DMAAPBC_IP}
+# Create PM Mapper tocic in Message Router
+curl -v -X POST http://${DMAAP_MR_IP}:3904/topics/create -d @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createTopic.json -H "Content-Type: application/json"
 
 # Consul Configuration for PM Mapper
 cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cbs.json /tmp/cbs.json
 sed -i 's/ipaddress/'${CBS_IP}'/g' /tmp/cbs.json
 curl --request PUT --data @/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service/register
-curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/config.json
+curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/config.json
 
 # PM Mapper startup and configuration
 mkdir /tmp/docker-compose
@@ -120,7 +122,6 @@ cd /tmp/docker-compose
 cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-pmmapper.yml /tmp/docker-compose/docker-compose.yml
 CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cbs)
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
-sed -i 's/BUSIP/'$DMAAPBC_IP'/g' docker-compose.yml
 sed -i 's/DRNODEIP/'$DR_NODE_IP'/g' docker-compose.yml
 sed -i 's/DMAAPMRIP/'$DMAAP_MR_IP'/g' docker-compose.yml
 docker-compose up -d
@@ -137,14 +138,14 @@ for i in {1..10}; do
     fi
 done
 PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
-docker exec datarouter-prov /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
-docker exec datarouter-node /bin/sh -c "echo '${PMMAPPER_IP}' 3gpppmmapper >> /etc/hosts"
+docker exec datarouter-prov /bin/sh -c "echo '${PMMAPPER_IP}' dcae-pm-mapper.onap.svc.cluster.local >> /etc/hosts"
+docker exec datarouter-node /bin/sh -c "echo '${PMMAPPER_IP}' dcae-pm-mapper.onap.svc.cluster.local >> /etc/hosts"
 sleep 10
 docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper.log
 cat /tmp/pmmapper.log
-docker exec buscontroller /bin/sh -c "cat /opt/app/dmaapbc/logs/ONAP/application.log"
+docker exec -it datarouter-prov sh -c "curl http://dmaap-dr-node:8080/internal/fetchProv"
 curl -k https://$DR_PROV_IP:8443/internal/prov
-curl http://${DMAAP_MR_IP}:3904/events/topic.org.onap.dmaap.mr.test1/CG1/C1?timeout=1000
+curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DMAAP_MR_IP:${DMAAP_MR_IP} -v CONSUL_IP:${CONSUL_IP} -v DR_PROV_IP:${DR_PROV_IP} -v DMAAPBC_IP:${DMAAPBC_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP} -v DR_NODE_IP:${DR_NODE_IP}"
+ROBOT_VARIABLES="-v DMAAP_MR_IP:${DMAAP_MR_IP} -v CONSUL_IP:${CONSUL_IP} -v DR_PROV_IP:${DR_PROV_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP} -v DR_NODE_IP:${DR_NODE_IP}"
