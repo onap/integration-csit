@@ -33,6 +33,9 @@ fi
 
 set +e
 
+METRICS_FILE=${WORKSPACE}/archives/containers_logs/hv-ves-metrics.dump
+docker-compose exec hv-ves-collector curl -qs localhost:6060/monitoring/prometheus > ${METRICS_FILE}
+
 COMPOSE_LOGS_FILE=${WORKSPACE}/archives/containers_logs/docker-compose.log
 docker-compose logs > ${COMPOSE_LOGS_FILE}
 docker-compose down
