@@ -1,0 +1,12 @@
+{
+  "streams_publishes": {
+    "perf3gpp": {
+      "type": "kafka",
+      "kafka_info": {
+        "bootstrap_servers": "kafka:9092",
+        "topic_name": "TEST_HV_VES_PERF3GPP_BUT_WITH_EXTRA_WORDS"
+      }
+    }
+  }
+}
+

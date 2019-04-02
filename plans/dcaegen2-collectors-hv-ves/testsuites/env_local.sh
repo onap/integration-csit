@@ -18,7 +18,7 @@
 # ============LICENSE_END=========================================================
 
 export WORKSPACE=$(git rev-parse --show-toplevel)
-export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/libraries"
+export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/libraries --noncritical non-critical"
 
 export JAVA_OPTS="-Dio.netty.leakDetection.level=paranoid"
 export CONSUL_HOST="consul-server"
