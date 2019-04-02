@@ -44,31 +44,6 @@ cat << EOF > $JSON
 EOF
 curl -v -X POST -d @${JSON} -H "Content-Type: application/json" http://$1:8080/webapi/mr_clusters
 
-# CREATING: DR feed
-echo $'\nInitializing /feeds endpoint'
-JSON=/tmp/feed.json
-cat << EOF > $JSON
-{
-"feedName":"pmmapper",
-"feedVersion": "1",
-"feedDescription":"PM Mapper Feed",
-"owner":"bulkpm",
-"asprClassification": "unclassified",
-"pubs": [
-        {
-            "dcaeLocationName": "csit-pmmapper",
-            "feedId": "1",
-            "lastMod": "2015-01-01T15:00:00.000Z",
-            "pubId": "10",
-            "status": "EMPTY",
-            "username": "pmmapper",
-            "userpwd": "pmmapper"
-        }
-        ]
-}
-EOF
-curl -v -X POST -d @${JSON} -H "Content-Type: application/json" http://$1:8080/webapi/feeds
-
 # CREATING: MR Topic
 echo $'\nInitializing /topic endpoint'
 JSON=/tmp/topic.json
