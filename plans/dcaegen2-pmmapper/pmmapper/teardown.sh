@@ -9,5 +9,4 @@ kill-instance.sh datarouter-prov
 kill-instance.sh mariadb
 kill-instance.sh cbs
 kill-instance.sh consul
-kill-instance.sh buscontroller
 kill-instance.sh pmmapper

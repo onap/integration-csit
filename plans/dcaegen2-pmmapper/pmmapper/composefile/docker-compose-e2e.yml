@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   datarouter-prov:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:2.0.1
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:2.0.2-SNAPSHOT-latest
     container_name: datarouter-prov
     hostname: dmaap-dr-prov
     ports:
@@ -20,9 +20,12 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
+    extra_hosts:
+      - "dmaap-dr-node:1.1.1.1"
+      - "dcae-pm-mapper.onap.svc.cluster.local:3.3.3.3"
 
   datarouter-node:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:2.0.1
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:2.0.2-SNAPSHOT-latest
     container_name: datarouter-node
     hostname: dmaap-dr-node
     ports:
@@ -33,6 +36,9 @@ services:
     depends_on:
       datarouter-prov:
         condition: service_healthy
+    extra_hosts:
+      - "dmaap-dr-prov:2.2.2.2"
+      - "dcae-pm-mapper.onap.svc.cluster.local:3.3.3.3"
 
   mariadb_container:
     image: mariadb:10.2.14
@@ -59,17 +65,3 @@ services:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
     environment:
        CONSUL_HOST:
-
-  buscontroller:
-    container_name: buscontroller
-    image: nexus3.onap.org:10001/onap/dmaap/dmaap-bc:latest
-    ports:
-      - "18080:8080"
-      - "18443:8443"
-    extra_hosts:
-      - "dmaap-dr-prov:DMAAPDR"
-      - "message-router:DMAAPMR"
-    volumes:
-      - /tmp/docker-databus-controller.conf:/opt/app/config/conf
-    depends_on:
-      - datarouter-prov
