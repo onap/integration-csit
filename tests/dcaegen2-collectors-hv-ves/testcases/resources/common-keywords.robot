@@ -61,6 +61,7 @@ Send Messages From xNF Simulators
 
 VES-HV Collector Test Shutdown
     Reset DCAE App Simulator  ${DEFAULT_PERF3GPP_TOPIC}
+    Reset DCAE App Simulator  ${SECOND_PERF3GPP_TOPIC}
 
 
 VES-HV Collector Suite Teardown

@@ -47,7 +47,7 @@ class DcaeAppSimulatorLibrary:
 
     def assert_DCAE_app_consumed(self, topic, expected_messages_amount):
         app_url = MESSAGES_COUNT_PATH % topic
-        logger.info("GET at: " + app_url)
+        logger.info("GET at: " + str(app_url))
         resp = HttpRequests.session_without_env().get(app_url, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
 
