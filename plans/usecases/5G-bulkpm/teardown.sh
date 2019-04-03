@@ -16,4 +16,3 @@ kill-instance.sh dfc
 kill-instance.sh sftp
 kill-instance.sh cbs
 kill-instance.sh consul
-kill-instance.sh buscontroller

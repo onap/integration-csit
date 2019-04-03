@@ -14,5 +14,6 @@
        "log": "https://dmaap-dr-prov/feedlog/1",
        "feed": "https://dmaap-dr-prov/feed/1"
     },
-    "subscriber":"admin"
+    "subscriber":"admin",
+    "decompress":true
  }

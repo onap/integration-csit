@@ -17,12 +17,12 @@ ${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/usecases/5G-bulkpm/a
 ${TARGETURL_TOPICS}                      http://${DMAAP_MR_IP}:3904/topics
 ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12?timeout=1000
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
-${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .gz"
+${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .xml"
 ${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /var/log/ONAP/application.log" > /tmp/dfc_docker.log.robot
 ${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Publish to DR successful!" /tmp/dfc_docker.log.robot
 
-${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/oteNB5309_xNF.pm.xml.gz.M %{WORKSPACE}
-${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/oteNB5309_xNF.pm.xml.gz.M  %{WORKSPACE}/metadata.json
+${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/xNF.pm.xml.M %{WORKSPACE}
+${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/xNF.pm.xml.M  %{WORKSPACE}/metadata.json
 ${metadataSchemaPath}                    %{WORKSPACE}/tests/usecases/5G-bulkpm/assets/metadata.schema.json
 ${metadataJsonPath}                      %{WORKSPACE}/metadata.json
 
@@ -86,7 +86,7 @@ Verify Fileconsumer Receive PM file from Data Router
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER}        shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        oteNB5309_xNF.pm.xml.gz
+    Should Contain                  ${cli_cmd_output.stdout}        xNF.pm.xml
 
 Verify File Consumer Receive valid metadata from Data Router
     [Tags]                          Bulk_PM_E2E_06
@@ -94,7 +94,7 @@ Verify File Consumer Receive valid metadata from Data Router
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER}        shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        oteNB5309_xNF.pm.xml.gz.M
+    Should Contain                  ${cli_cmd_output.stdout}        xNF.pm.xml.M
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_FILECONSUMER_CP}     shell=yes
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_RENAME_METADATA}         shell=yes
     ${validation_result}=           Validate                        ${metadataSchemaPath}    ${metadataJsonPath}
