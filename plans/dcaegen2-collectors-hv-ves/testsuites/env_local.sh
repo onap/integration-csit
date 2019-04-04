@@ -39,5 +39,3 @@ export HV_VES_IMAGE="hv-collector-main"
 export DCAE_APP_SIMULATOR_IMAGE="hv-collector-dcae-app-simulator"
 export XNF_SIMULATOR_IMAGE="hv-ves-collector-xnf-simulator"
 
-
-
