@@ -1,26 +1,46 @@
+import logging
+import sys
 import re
 import time
 from http.server import BaseHTTPRequestHandler
 import httpServerLib
 
-pnfs = 'Empty'
+ch = logging.StreamHandler(sys.stdout)
+handlers = [ch]
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+    handlers=handlers
+)
 
+logger = logging.getLogger('AAI-simulator-logger')
+
+pnfs = 'Empty'
+pnf_entry = 'Empty'
 
 class AAISetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
-        if re.search('/set_pnfs', self.path):
+        logger.info('AAI SIM Setup Put execution')
+        if re.search('/set_pnf', self.path):
             global pnfs
             content_length = int(self.headers['Content-Length'])
             pnfs = self.rfile.read(content_length)
+            logger.info('Execution status 200')
+            httpServerLib.header_200_and_json(self)
+
+        if re.search('/set_pnf_entry',self.path):
+            logger.info('Execution status 200')
             httpServerLib.header_200_and_json(self)
 
         return
 
     def do_POST(self):
+        logger.info('AAI SIM Setup Post execution')
         if re.search('/reset', self.path):
             global pnfs
             pnfs = 'Empty'
+            logger.info('Execution status 200')
             httpServerLib.header_200_and_json(self)
 
         return
@@ -29,12 +49,15 @@ class AAISetup(BaseHTTPRequestHandler):
 class AAIHandler(BaseHTTPRequestHandler):
 
     def do_PATCH(self):
+        logger.info('AAI SIM Patch execution')
         pnfs_name = '/aai/v12/network/pnfs/pnf/' + pnfs.decode()
         if re.search('wrong_aai_record', self.path):
             self.send_response(400)
+            logger.info('Execution status 400')
             self.end_headers()
         elif re.search(pnfs_name, self.path):
             self.send_response(200)
+            logger.info('Execution status 200')
             self.end_headers()
             
         return
