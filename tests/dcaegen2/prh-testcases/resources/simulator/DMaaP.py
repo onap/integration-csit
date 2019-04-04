@@ -1,7 +1,19 @@
+import logging
 import re
+import sys
 import time
 from http.server import BaseHTTPRequestHandler
 import httpServerLib
+
+ch = logging.StreamHandler(sys.stdout)
+handlers = [ch]
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
+    handlers=handlers
+)
+
+logger = logging.getLogger('DMaaP-simulator-logger')
 
 posted_event_from_prh = b'Empty'
 received_event_to_get_method = b'Empty'
@@ -10,6 +22,7 @@ received_event_to_get_method = b'Empty'
 class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
+        logger.info('DMaaP SIM Setup Put execution')
         if re.search('/set_get_event', self.path):
             global received_event_to_get_method
             content_length = int(self.headers['Content-Length'])
@@ -19,6 +32,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
+        logger.info('DMaaP SIM Setup Get execution')
         if re.search('/events/pnfReady', self.path):
             httpServerLib.header_200_and_json(self)
             self.wfile.write(posted_event_from_prh)
@@ -26,6 +40,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
+        logger.info('DMaaP SIM Setup Post execution')
         if re.search('/reset', self.path):
             global posted_event_from_prh
             global received_event_to_get_method
@@ -39,6 +54,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
 class DMaaPHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
+        logger.info('DMaaP SIM Post execution')
         if re.search('/events/unauthenticated.PNF_READY', self.path):
             global posted_event_from_prh
             content_length = int(self.headers['Content-Length'])
@@ -48,6 +64,7 @@ class DMaaPHandler(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
+        logger.info('DMaaP SIM Get execution')
         if re.search('/events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12', self.path):
             httpServerLib.header_200_and_json(self)
             self.wfile.write(received_event_to_get_method)
