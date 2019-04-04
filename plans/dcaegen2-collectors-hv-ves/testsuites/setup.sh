@@ -21,14 +21,15 @@ set -euo pipefail
 
 RUN_CSIT_LOCAL=${RUN_CSIT_LOCAL:-false}
 
+echo "Replacing obsolete 'docker-py' with 'docker' package"
+pip uninstall -y docker-py
+pip install docker
+
 if ${RUN_CSIT_LOCAL} ; then
-  echo "Building locally - assuming all dependencies are installed"
+  echo "Local run"
   source env_local.sh
 else
-  echo "Default run - install all dependencies"
-  pip uninstall -y docker-py
-  pip install docker
-
+  echo "Default (CI) run"
   COMPOSE_VERSION=1.23.2
   COMPOSE_LOCATION='/usr/local/bin/docker-compose'
   sudo curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o ${COMPOSE_LOCATION}
