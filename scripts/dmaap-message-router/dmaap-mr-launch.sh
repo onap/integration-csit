@@ -116,6 +116,11 @@ function dmaap_mr_launch() {
 		echo KAFKA_IP=${KAFKA_IP}
 		echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
 
+        source ${SCRIPTS}/common_functions.sh
+        bypass_ip_adress ${DMAAP_MR_IP}
+        bypass_ip_adress ${KAFKA_IP}
+        bypass_ip_adress ${ZOOKEEPER_IP}
+
 		# Wait for initialization of docker services
 		for i in {1..50}; do
 			curl -sS -m 1 ${DMAAP_MR_IP}:3904/events/TestTopic && break 

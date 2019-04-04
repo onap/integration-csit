@@ -31,6 +31,9 @@ function start_mock() {
 	docker run --name ${app}-mock -d jamesdbloom/mockserver /opt/mockserver/run_mockserver.sh -logLevel INFO -serverPort ${port} -proxyPort 1090
 	IP=`get-instance-ip.sh ${app}-mock`
 
+    source ${SCRIPTS}/common_functions.sh
+    bypass_ip_adress ${IP}
+
 	# Wait for initialization
 	for i in {1..10}; do
     	curl -sS ${IP}:${port} && break
