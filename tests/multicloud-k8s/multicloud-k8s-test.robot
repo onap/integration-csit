@@ -12,12 +12,12 @@ Create Definition
 
 Get Definition
     [Template]  Get template
-    /v1/rb/definition
-    /v1/rb/definition/7eb09e38-4363-9942-1234-3beb2e95fd85
+    /v1/rb/definition/test-rbdef
+    /v1/rb/definition/test-rbdef/v1
 
 Delete Definition
     [Template]  Delete template
-    /v1/rb/definition/7eb09e38-4363-9942-1234-3beb2e95fd85
+    /v1/rb/definition/test-rbdef/v1
 
 *** Keywords ***
 Created session
