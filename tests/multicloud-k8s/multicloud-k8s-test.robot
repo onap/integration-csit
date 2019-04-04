@@ -15,6 +15,18 @@ Get Definition
     /v1/rb/definition/test-rbdef
     /v1/rb/definition/test-rbdef/v1
 
+Create Profile
+    [Template]      Post template
+    /v1/rb/definition/test-rbdef/v1/profile      create_rbprofile.json
+
+Get Profile
+    [Template]  Get template
+    /v1/rb/definition/test-rbdef/v1/profile/profile1
+
+Delete Profile
+    [Template]  Delete template
+    /v1/rb/definition/test-rbdef/v1/profile/profile1
+
 Delete Definition
     [Template]  Delete template
     /v1/rb/definition/test-rbdef/v1
