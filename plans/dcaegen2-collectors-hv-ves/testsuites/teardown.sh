@@ -36,7 +36,12 @@ set +e
 METRICS_FILE=${WORKSPACE}/archives/containers_logs/hv-ves-metrics.dump
 docker-compose exec hv-ves-collector curl -qs localhost:6060/monitoring/prometheus > ${METRICS_FILE}
 
-COMPOSE_LOGS_FILE=${WORKSPACE}/archives/containers_logs/docker-compose.log
+CONTAINER_LOGS=${WORKSPACE}/archives/containers_logs/
+COMPOSE_LOGS_FILE=${CONTAINER_LOGS}/docker-compose.log
+
+docker-compose logs hv-ves-collector > ${CONTAINER_LOGS}/hv-ves-collector.log
+docker-compose logs unencrypted-hv-ves-collector > ${CONTAINER_LOGS}/unencrypted-hv-ves-collector.log
+docker-compose logs dcae-app-simulator > ${CONTAINER_LOGS}/dcae-app-simulator.log
 docker-compose logs > ${COMPOSE_LOGS_FILE}
 docker-compose down
 docker-compose rm -f
