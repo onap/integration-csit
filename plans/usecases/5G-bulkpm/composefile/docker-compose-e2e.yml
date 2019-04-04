@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   datarouter-prov:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:1.0.8
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:1.0.9
     container_name: datarouter-prov
     hostname: dmaap-dr-prov
     ports:
@@ -22,7 +22,7 @@ services:
       retries: 5
 
   datarouter-node:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:1.0.8
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:1.0.9
     container_name: datarouter-node
     hostname: dmaap-dr-node
     ports:
@@ -35,7 +35,7 @@ services:
         condition: service_healthy
 
   datarouter-subscriber:
-      image: nexus3.onap.org:10001/onap/dmaap/datarouter-subscriber:1.0.8
+      image: nexus3.onap.org:10001/onap/dmaap/datarouter-subscriber:1.0.9
       container_name: fileconsumer-node
       hostname: subscriber.com
       ports:
