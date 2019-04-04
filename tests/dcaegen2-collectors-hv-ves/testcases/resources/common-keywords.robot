@@ -19,6 +19,7 @@
 *** Settings ***
 Library       XnfSimulatorLibrary
 Library       VesHvContainersUtilsLibrary
+Library       KafkaLibrary
 Library       Collections
 
 *** Keywords ***
@@ -63,6 +64,7 @@ VES-HV Collector Test Shutdown
 
 
 VES-HV Collector Suite Teardown
+    Log Kafka Status
     Stop And Remove All Xnf Simulators   ${SUITE NAME}
 
 *** Variables ***
