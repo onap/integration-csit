@@ -76,16 +76,32 @@ sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' /tmp/docker-databus-controller.conf
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 echo "Disregard the message ERROR: for datarouter-node  Container 1234456 is unhealthy, this is expected behaiour at this stage"
-docker kill datarouter-prov
-docker kill datarouter-node
 docker kill vescollector
 docker kill cbs
+sleep 10
 CONSUL_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' consul )
 sed -i -e '/CONSUL_HOST:/ s/:.*/: '$CONSUL_IP'/' docker-compose.yml
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
 sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/prov_data/provserver.properties
+docker-compose up -d
+sleep 5
+# Get IP address of datarrouger-prov, datarouter-node, fileconsumer-node.
+DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
+DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
+DR_SUBSCIBER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' fileconsumer-node)
+DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
+
+echo DR_PROV_IP=${DR_PROV_IP}
+echo DR_NODE_IP=${DR_NODE_IP}
+echo DR_GATEWAY_IP=${DR_GATEWAY_IP}
+echo DR_SUBSCIBER_IP=${DR_SUBSCIBER_IP}
+
+docker kill datarouter-node
+docker kill datarouter-prov
+sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
+sed -i 's/2.2.2.2/'$DR_PROV_IP'/g' docker-compose.yml
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
@@ -103,22 +119,11 @@ for i in {1..10}; do
 done
 
 sleep 5
-# Get IP address of datarrouger-prov, datarouter-node, fileconsumer-node.
-DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
-DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
-DR_SUBSCIBER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' fileconsumer-node)
-DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
-
-echo DR_PROV_IP=${DR_PROV_IP}
-echo DR_NODE_IP=${DR_NODE_IP}
-echo DR_GATEWAY_IP=${DR_GATEWAY_IP}
-echo DR_SUBSCIBER_IP=${DR_SUBSCIBER_IP}
 
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$DR_GATEWAY_IP"
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
-docker exec datarouter-prov /bin/sh -c "echo '${DR_NODE_IP}' dmaap-dr-node >> /etc/hosts"
-docker exec datarouter-node /bin/sh -c "echo '${DR_PROV_IP}' dmaap-dr-prov >> /etc/hosts"
 docker exec datarouter-node /bin/sh -c "echo '${DR_SUBSCIBER_IP}' dmaap-dr-subscriber >> /etc/hosts"
+
 
 # Get IP address of DMAAP, KAFKA, Zookeeper
 DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $DMAAP)
@@ -131,11 +136,6 @@ export VESC_IP=${VESC_IP}
 export HOST_IP=${HOST_IP}
 export DMAAP_MR_IP=${DMAAP_MR_IP}
 
-docker kill buscontroller
-sed -i 's/DMAAPDR/'$DR_PROV_IP'/g' docker-compose.yml
-sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' docker-compose.yml
-docker-compose up -d
-sed -i 's/DMAAPDR/'$DR_PROV_IP'/g' /tmp/docker-databus-controller.conf
 
 # Data File Collector configuration :
 sed -i 's/DR_NODE_IP/'$DR_NODE_IP'/g' docker-compose.yml
@@ -156,13 +156,12 @@ docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: WA
 docker restart dfc
 sleep 2
 
-# Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS, Buscontroller
+# Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
 for i in {1..10}; do
     if  [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' buscontroller) ]
+        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] 
     then
-        echo "Data Router, Consul, Config Binding Service, Buscontroller Services Running"
+        echo "Data Router, Consul, Config Binding Service Services Running"
         break
     else
         echo sleep $i
