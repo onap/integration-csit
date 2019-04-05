@@ -53,9 +53,9 @@ Check PNF_READY notification
 Set PNF name in AAI
     [Arguments]    ${pnf_name}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
-    #Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
-    #Log    Http headers ${headers}
-    #Log    PNF name ${pnf_name}
+    Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
+    Log    Http headers ${headers}
+    Log    PNF name ${pnf_name}
     ${resp}=    Put Request    ${aai_setup_session}    /set_pnf    headers=${headers}    data=${pnf_name}
     Should Be Equal As Strings    ${resp.status_code}    200
 
