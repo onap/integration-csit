@@ -9,8 +9,9 @@ Library     HttpLibrary.HTTP
 *** Variables ***
 @{return_ok_list}=   200  201  202  204
 ${queryswagger_url}    /api/nslcm/v1/swagger.json
-${create_ns_url}    /api/nslcm/v1/ns
-${delete_ns_url}    /api/nslcm/v1/ns
+${create_ns_url}       /api/nslcm/v1/ns
+${delete_ns_url}       /api/nslcm/v1/ns
+${healthcheck_url}     /api/nslcm/v1/health_check
 
 #json files
 ${create_ns_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/create_ns.json
@@ -62,3 +63,14 @@ DeleteNS Test
     ${resp}=    Delete Request    web_session     ${delete_ns_url}/${nsInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
+
+LcmHealthCheckTest
+    [Documentation]    check health for nslcm by MSB
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    ${resp}=  Get Request    web_session    ${healthcheck_url}
+    ${responese_code}=     Convert To String      ${resp.status_code}
+    List Should Contain Value    ${return_ok_list}   ${responese_code}
+    ${response_json}    json.loads    ${resp.content}
+    ${health_status}=    Convert To String      ${response_json['status']}
+    Should Be Equal    ${health_status}    active
