@@ -1,0 +1,16 @@
+{
+  "event": {
+    "commonEventHeader": {
+      "sourceName":"NVendor-Equip_Model-SN1234"
+    },
+    "stateChangeFields": {
+      "stateChangeFieldsVersion": 1,
+      "newState": "inService",
+      "oldState": "outOfService",
+      "stateInterface": "",
+      "additionalFields": {
+          "macAddress": "00:11:22:33:44:55"
+      }
+    }
+  }
+}
