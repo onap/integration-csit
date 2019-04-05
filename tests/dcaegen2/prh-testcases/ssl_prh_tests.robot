@@ -11,6 +11,8 @@ Resource          ../../common.robot
 *** Variables ***
 ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
+
+${VES_EVENT_PNF_REGISTRATION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/ves-event-pnf-registration-simple.json
 ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
 ${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
 ${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json
@@ -21,7 +23,8 @@ Valid DMaaP event can be converted to PNF_READY notification with ssl connection
     [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
-    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    ${EVENT_WITH_IPV4}
-    ${EVENT_WITH_IPV6}
-    ${EVENT_WITHOUT_IPV6_FILED}
+
+    #${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
+    #${EVENT_WITH_IPV4}
+    #${EVENT_WITH_IPV6}
+    #${EVENT_WITHOUT_IPV6_FILED}
