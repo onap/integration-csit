@@ -1,4 +1,5 @@
 import logging
+import json
 import sys
 import re
 import time
@@ -16,22 +17,29 @@ logging.basicConfig(
 logger = logging.getLogger('AAI-simulator-logger')
 
 pnfs = 'Empty'
-pnf_entry = 'Empty'
+pnf_entry = {}
+
+
+def _mark_response_as_http_ok(http_endpoint):
+    logger.info('Execution status 200')
+    httpServerLib.header_200_and_json(http_endpoint)
+
 
 class AAISetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         logger.info('AAI SIM Setup Put execution')
-        if re.search('/set_pnf', self.path):
+        if re.search('/set_pnf$', self.path):
             global pnfs
-            content_length = int(self.headers['Content-Length'])
+            content_length = self._get_content_length()
             pnfs = self.rfile.read(content_length)
-            logger.info('Execution status 200')
-            httpServerLib.header_200_and_json(self)
+            _mark_response_as_http_ok(self)
 
         if re.search('/set_pnf_entry',self.path):
-            logger.info('Execution status 200')
-            httpServerLib.header_200_and_json(self)
+            global pnf_entry
+            content_length = self._get_content_length()
+            pnf_entry = json.loads(self.rfile.read(content_length))
+            _mark_response_as_http_ok(self)
 
         return
 
@@ -40,13 +48,25 @@ class AAISetup(BaseHTTPRequestHandler):
         if re.search('/reset', self.path):
             global pnfs
             pnfs = 'Empty'
-            logger.info('Execution status 200')
-            httpServerLib.header_200_and_json(self)
+            _mark_response_as_http_ok(self)
 
         return
 
+    def _get_content_length(self):
+        return int(self.headers['Content-Length'])
+
 
 class AAIHandler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        logger.info('AAI SIM Get execution')
+        if re.search('/get_pnf_entry', self.path):
+            _mark_response_as_http_ok(self)
+            body = json.dumps(pnf_entry)
+            self.wfile.write(body.encode())
+
+        return
+
 
     def do_PATCH(self):
         logger.info('AAI SIM Patch execution')
