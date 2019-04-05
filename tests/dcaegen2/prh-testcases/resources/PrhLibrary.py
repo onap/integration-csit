@@ -91,7 +91,7 @@ class PrhLibrary(object):
     @staticmethod
     def create_pnf_name(json_file):
         json_to_python = json.loads(json_file)
-        correlation_id = json_to_python.get("sourceName")
+        correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName") + '",' if "sourceName" in json_to_python["event"]["commonEventHeader"] else '",'
         return correlation_id
 
     @staticmethod
