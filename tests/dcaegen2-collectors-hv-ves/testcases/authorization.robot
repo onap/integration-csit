@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018 NOKIA
+# Copyright (C) 2018-2019 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ Authorization
     Send Messages From xNF Simulators   ${XNF_WITH_INVALID_CERTIFICATES}   ${XNF_VALID_MESSAGES_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...     Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_0}
+    ...     Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_0}
 
 Unencrypted connection from client
     [Documentation]   VES-HV Collector should not authorize XNF trying to connect through unencrypted connection
@@ -59,7 +59,7 @@ Unencrypted connection from client
     Send Messages From xNF Simulators   ${XNF_WITHOUT_SSL}   ${XNF_VALID_MESSAGES_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...     Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_0}
+    ...     Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_0}
 
 Unencrypted connection on both ends
     [Documentation]   When run without SSL turned on, VES-HV Collector should route all valid messages
@@ -68,7 +68,7 @@ Unencrypted connection on both ends
     Send Messages From xNF Simulators   ${XNF_WITHOUT_SSL_CONNECTING_TO_UNENCRYPTED_HV_VES}   ${XNF_VALID_MESSAGES_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...     Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_5000}
+    ...     Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_5000}
 
 
 *** Variables ***
