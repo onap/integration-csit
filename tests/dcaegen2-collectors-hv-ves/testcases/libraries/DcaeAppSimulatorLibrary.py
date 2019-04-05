@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018 NOKIA
+# Copyright (C) 2018-2019 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,19 +16,37 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 import HttpRequests
+from VesHvContainersUtilsLibrary import VesHvContainersUtilsLibrary
 from robot.api import logger
+import json
 
-DCAE_APP_NAME = "DCAE App"
+DCAE_APP_NAME = "DCAE App Simulator"
+
+DCAE_APP_HOST = "dcae-app-simulator"
+DCAE_APP_PORT = "6063"
+DCAE_APP_ADDRESS = VesHvContainersUtilsLibrary().get_dcae_app_api_access_url("http://", DCAE_APP_HOST, DCAE_APP_PORT)
+
+TOPIC_CONFIGURATION_PATH = DCAE_APP_ADDRESS + "/configuration/topics"
+
+MESSAGES_PATH = "/messages/%s"
+MESSAGES_RESET_PATH = DCAE_APP_ADDRESS + MESSAGES_PATH
+MESSAGES_COUNT_PATH = DCAE_APP_ADDRESS + MESSAGES_PATH + "/count"
+MESSAGES_VALIDATION_PATH = DCAE_APP_ADDRESS + MESSAGES_PATH + "/validate"
 
 
 class DcaeAppSimulatorLibrary:
 
-    def configure_dcae_app_simulator_to_consume_messages_from_topics(self, app_url, topics):
-        logger.info("PUT at: " + app_url)
-        resp = HttpRequests.session_without_env().put(app_url, data={'topics': topics}, timeout=10)
+    def configure_dcae_app_simulator_to_consume_messages_from_topics(self, topics):
+        app_url = TOPIC_CONFIGURATION_PATH
+        logger.info("PUT " + str(topics) + " at: " + app_url)
+        resp = HttpRequests.session_without_env().put(app_url, data=self.not_escaped(topics), timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
 
-    def assert_DCAE_app_consumed(self, app_url, expected_messages_amount):
+    def not_escaped(self, data):
+        return json.dumps(data)
+
+    def assert_DCAE_app_consumed(self, topic, expected_messages_amount):
+        app_url = MESSAGES_COUNT_PATH % topic
         logger.info("GET at: " + app_url)
         resp = HttpRequests.session_without_env().get(app_url, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
@@ -36,28 +54,18 @@ class DcaeAppSimulatorLibrary:
         assert int(resp.content) == int(expected_messages_amount), \
             "Messages consumed by simulator: " + str(resp.content) + " expecting: " + str(expected_messages_amount)
 
-    def assert_DCAE_app_consumed_less_equal_than(self, app_url, messages_threshold):
-        logger.info("GET at: " + app_url)
-        resp = HttpRequests.session_without_env().get(app_url, timeout=10)
-        HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
-
-        logger.debug("Messages consumed by simulator: " + resp.content +
-                     " expecting more than 0 and less/equal than " + messages_threshold)
-
-        assert 0 < int(resp.content) <= int(messages_threshold), \
-            "Messages consumed by simulator: " + str(resp.content) + \
-            " expecting more than 0 and less/equal than " + str(messages_threshold)
-
-    def reset_DCAE_app_simulator(self, app_url):
+    def reset_DCAE_app_simulator(self, topic):
+        app_url = MESSAGES_RESET_PATH % topic
         logger.info("DELETE at: " + app_url)
         resp = HttpRequests.session_without_env().delete(app_url, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)
 
-    def assert_DCAE_app_consumed_proper_messages(self, app_url, message_filepath):
-        logger.info("POST at: " + app_url)
+    def assert_DCAE_app_consumed_proper_messages(self, topic, message_filepath):
+        app_url = MESSAGES_VALIDATION_PATH % topic
         file = open(message_filepath, "rb")
         data = file.read()
         file.close()
+        logger.info("POST " + str(data) + "at: " + app_url)
 
         resp = HttpRequests.session_without_env().post(app_url, data=data, timeout=10)
         HttpRequests.checkStatusCode(resp.status_code, DCAE_APP_NAME)

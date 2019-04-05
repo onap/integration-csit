@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018 NOKIA
+# Copyright (C) 2018-2019 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ Handle Multiple Connections
     Send Messages From xNF Simulators   ${SIMULATORS_LIST}   ${XNF_SMALLER_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...     Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_15000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_SMALLER_PAYLOAD_REQUEST}
+    ...     Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_15000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_SMALLER_PAYLOAD_REQUEST}
 
 
 *** Variables ***

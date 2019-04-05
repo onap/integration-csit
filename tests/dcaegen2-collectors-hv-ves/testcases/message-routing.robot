@@ -42,8 +42,8 @@ Correct Messages Routing
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_FIXED_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_25000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_FIXED_PAYLOAD_REQUEST}
+    ...    Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_25000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_FIXED_PAYLOAD_REQUEST}
 
 
 Too big payload message handling
@@ -52,8 +52,8 @@ Too big payload message handling
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_TOO_BIG_PAYLOAD_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_25000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_TOO_BIG_PAYLOAD_REQUEST}
+    ...    Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_25000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_TOO_BIG_PAYLOAD_REQUEST}
 
 
 Invalid wire frame message handling
@@ -62,8 +62,8 @@ Invalid wire frame message handling
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_INVALID_WIRE_FRAME_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_50000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_INVALID_WIRE_FRAME_REQUEST}
+    ...    Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_50000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_INVALID_WIRE_FRAME_REQUEST}
 
 
 Invalid GPB data message handling
@@ -72,8 +72,8 @@ Invalid GPB data message handling
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_INVALID_GPB_DATA_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed   ${DCAE_APP_API_MESSAGES_COUNT_URL}  ${AMOUNT_50000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_INVALID_GPB_DATA_REQUEST}
+    ...    Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}  ${AMOUNT_50000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_INVALID_GPB_DATA_REQUEST}
 
 
 Unsupported domain message handling
@@ -82,8 +82,8 @@ Unsupported domain message handling
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_UNSUPPORTED_DOMAIN_REQUEST}
 
     Wait until keyword succeeds   60 sec   5 sec
-    ...    Assert Dcae App Consumed  ${DCAE_APP_API_MESSAGES_COUNT_URL}   ${AMOUNT_50000}
-    Assert Dcae App Consumed Proper Messages   ${DCAE_APP_API_MESSAGES_VALIDATION_URL}   ${DCAE_UNSUPPORTED_DOMAIN_REQUEST}
+    ...    Assert Dcae App Consumed  ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_50000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_UNSUPPORTED_DOMAIN_REQUEST}
 
 *** Variables ***
 ${HTTP_METHOD_URL}                             http://
