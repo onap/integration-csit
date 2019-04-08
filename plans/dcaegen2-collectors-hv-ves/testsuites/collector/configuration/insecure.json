@@ -1,15 +1,9 @@
 {
-  "server": {
-    "listenPort": 6061,
-    "idleTimeoutSec": 60,
-    "maxPayloadSizeBytes": 1048576
-  },
-  "cbs": {
-    "firstRequestDelaySec": 5,
-    "requestIntervalSec": 10
-  },
-  "security": {
-    "sslDisable": true
-  },
-  "logLevel": "DEBUG"
+  "logLevel": "DEBUG",
+  "server.listenPort": 6061,
+  "server.idleTimeoutSec": 60,
+  "server.maxPayloadSizeBytes": 1048576,
+  "cbs.firstRequestDelaySec": 3,
+  "cbs.requestIntervalSec": 5,
+  "security.sslDisable": true
 }
