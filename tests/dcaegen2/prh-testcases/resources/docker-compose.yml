@@ -97,7 +97,7 @@ services:
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
                                               "dmaap.dmaapConsumerConfiguration.consumerId": "c12",
-                                              "dmaap.dmaapConsumerConfiguration.consumerGroup: "OpenDCAE-c12",
+                                              "dmaap.dmaapConsumerConfiguration.consumerGroup": "OpenDCAE-c12",
                                               "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
                                               "dmaap.dmaapConsumerConfiguration.messageLimit": -1,
 
@@ -111,8 +111,8 @@ services:
 
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-bc",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName: "events/unauthenticated.PNF_UPDATE",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol: "http"
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "http",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
