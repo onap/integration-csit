@@ -29,10 +29,10 @@ class AAISetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         logger.info('AAI SIM Setup Put execution')
-        if re.search('/set_pnf', self.path):
+        if re.search('/set_pnf$', self.path): # to avoid regex collisions '$' must be added
             global pnf_name
             content_length = self._get_content_length()
-            pnf_name = self.rfile.read(content_length)
+            pnf_name = self.rfile.read(content_length).decode()
             _mark_response_as_http_ok(self)
 
         if re.search('/set_pnf_entry',self.path):
