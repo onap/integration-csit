@@ -22,5 +22,6 @@ env.properties
 .DS_Store
 .idea
 *.iml
+*.pyc
 
 /bin/
