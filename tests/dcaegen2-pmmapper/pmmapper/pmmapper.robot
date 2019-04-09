@@ -21,7 +21,7 @@ ${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_measdata.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
 ${DIFF_VENDOR_METADATA}                  %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
-${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -10 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
+${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -15 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
 ${TYPE-A_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${TYPE-C_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/C20190328.0000-0015.xml
