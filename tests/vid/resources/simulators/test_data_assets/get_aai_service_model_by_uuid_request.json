@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "path": "/aai/v13/service-design-and-creation/models",
+  "queryParams": {
+    "depth": "2",
+    "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353"
+  }
+}

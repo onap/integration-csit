@@ -30,6 +30,8 @@ class SOHandler(BaseHTTPRequestHandler):
 
         self._expected_requests = expected_requests
         self._expected_responses = expected_responses
+        self._endpoint_not_found_json = \
+            JsonFileToDictReader.read_expected_test_data("test_data_assets/endpoint_not_found.json")
         super().__init__(*args, **kwargs)
 
     def do_POST(self):
@@ -44,15 +46,29 @@ class SOHandler(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
-        logging.info(
-            'GET called. Expected GET REQUEST: ' + json.dumps(
-                self._expected_requests["get"]) + '\nExpected GET response: ' +
-            json.dumps(self._expected_responses["get"]))
-        self.send_response(200)
-        self._set_headers()
+        if argv[1] == "test_data_assets/expected_so_requests.json":
+            logging.info(
+                'GET called. Expected GET REQUEST: ' + json.dumps(
+                    self._expected_requests["get"]) + '\nExpected GET response: ' +
+                json.dumps(self._expected_responses["get"]))
+            self.send_response(200)
+            self._set_headers()
 
-        self.wfile.write(json.dumps(self._expected_responses["get"]).encode("utf-8"))
-        return self._expected_responses["get"]
+            self.wfile.write(json.dumps(self._expected_responses["get"]).encode("utf-8"))
+            return self._expected_responses["get"]
+        else:
+            expected_path = self._create_expected_path()
+            print("Avaliable endpoint [GET]: " + expected_path)
+            if expected_path == self.path:
+                self.send_response(self._get_response_code())
+                self._set_headers()
+                self.wfile.write(json.dumps(self._expected_responses["body"]).encode("utf-8"))
+                return self._expected_responses["body"]
+            else:
+                self.send_response(self._endpoint_not_found_json["responseCode"])
+                self._set_headers()
+                self.wfile.write(json.dumps(self._endpoint_not_found_json).encode("utf-8"))
+                return expected_path
 
     def do_PUT(self):
         request_body_json = self._get_request_body()
@@ -90,6 +106,32 @@ class SOHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
+
+    def _get_response_code(self):
+        return self._expected_responses["responseCode"]
+
+    def _get_base_uri(self):
+        return self._expected_requests["path"]
+
+    def _get_query_params(self):
+        return self._expected_requests["queryParams"]
+
+    def _create_expected_path(self):
+        base_uri = self._get_base_uri()
+        query_params = self._get_query_params()
+        if len(query_params) != 0:
+            base_uri += '?'
+            return self._add_query_params_to_path(base_uri, query_params)
+        else:
+            return base_uri
+
+    @staticmethod
+    def _add_query_params_to_path(base_uri, query_params):
+        expected_uri = base_uri
+        for param in query_params:
+            expected_uri += param + '=' + query_params.get(param, '') + '&'
+        expected_uri = expected_uri[:(len(expected_uri) - 1)]  # truncate last char (=&)
+        return expected_uri
 
 
 class JsonFileToDictReader(object):

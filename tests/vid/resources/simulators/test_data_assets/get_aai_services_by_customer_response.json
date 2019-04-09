@@ -1,0 +1,68 @@
+{
+  "responseCode": 200,
+  "body": {
+    "global-customer-id": "MSO_1610_ST",
+    "subscriber-name": "MSO_1610_ST",
+    "subscriber-type": "INFRA",
+    "resource-version": "1549008901724",
+    "service-subscriptions": {
+      "service-subscription": [
+        {
+          "service-type": "gNB",
+          "resource-version": "1549008901954",
+          "service-instances": {
+            "service-instance": [
+              {
+                "service-instance-id": "40003c27-2876-4f3a-8a23-ef1ad7ef665a",
+                "service-instance-name": "AwServicePreload3",
+                "service-type": "vAwServiceType",
+                "environment-context": "General_Revenue-Bearing",
+                "workload-context": "Production",
+                "model-invariant-id": "33ebe1a9-1df3-4c35-b8a0-cd0504159511",
+                "model-version-id": "41658d87-b37c-4237-9a56-d27d1e430da6",
+                "resource-version": "1550761112266",
+                "orchestration-status": "Active",
+                "relationship-list": {
+                  "relationship": [
+                    {
+                      "related-to": "project",
+                      "relationship-label": "org.onap.relationships.inventory.Uses",
+                      "related-link": "/aai/v13/business/projects/project/AwTestProject",
+                      "relationship-data": [
+                        {
+                          "relationship-key": "project.project-name",
+                          "relationship-value": "AwTestProject"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "relationship-list": {
+            "relationship": [
+              {
+                "related-to": "tenant",
+                "relationship-label": "org.onap.relationships.inventory.Uses",
+                "related-link": "/aai/v13/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/RegionOne/tenants/tenant/982c540f6e69488eb6be5664255e00c0",
+                "relationship-data": [
+                  {
+                    "relationship-key": "cloud-region.cloud-owner",
+                    "relationship-value": "CloudOwner"
+                  }
+                ],
+                "related-to-property": [
+                  {
+                    "property-key": "tenant.tenant-name",
+                    "property-value": "onap-wro"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
