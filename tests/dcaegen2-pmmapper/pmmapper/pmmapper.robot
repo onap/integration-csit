@@ -21,6 +21,7 @@ ${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_measdata.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
 ${DIFF_VENDOR_METADATA}                  %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
+${NON_XML_FILE}                          %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -15 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
 ${TYPE-A_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
@@ -117,6 +118,15 @@ Verify that PM Mapper correctly identifies a file that should not be mapped base
     SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${DIFF_VENDOR_METADATA}           X-ONAP-RequestID=7
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Metadata does not match any filters
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=7
+
+Verify that PM Mapper correctly identifies a non-xml file.
+    [Tags]                          PM_MAPPER_10
+    [Documentation]                 Verify that PM Mapper correctly identifies a non-xml file.
+    [Timeout]                       1 minute
+    SendToDatarouter                ${NON_XML_FILE}                  ${VALID_METADATA_PATH}             X-ONAP-RequestID=8
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           PM measurement file type not supported
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=8
+
 
 *** Keywords ***
 
