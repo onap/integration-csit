@@ -1,0 +1,43 @@
+{
+  "responseCode": 200,
+  "body": {
+    "workflowSpecificationList": [
+      {
+        "workflowSpecification": {
+          "artifactInfo": {
+            "artifactType": "workflow",
+            "artifactUuid": "ab6478e4-ea33-3346-ac12-ab121484a333",
+            "artifactName": "inPlaceSoftwareUpdate-1_0.bpmn",
+            "artifactVersion": "1.0",
+            "artifactDescription": "xyz xyz",
+            "workflowName": "inPlaceSoftwareUpdate",
+            "operationName": "inPlaceSoftwareUpdate",
+            "workflowSource": "sdc",
+            "workflowResourceTarget": "vnf"
+          },
+          "activitySequence": [
+            {
+              "name": "VNFQuiesceTrafficActivity",
+              "description": "Activity to QuiesceTraffic on VNF"
+            }
+          ],
+          "workflowInputParameters": [
+            {
+              "label": "Cloud Owner",
+              "inputType": "text",
+              "required": true,
+              "validation": [
+                {
+                  "maxLength": "7",
+                  "allowableChars": "[a-zA-Z0-9]*"
+                }
+              ],
+              "soFieldName": "cloudOwner",
+              "soPayloadLocation": "cloudConfiguration"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

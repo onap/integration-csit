@@ -1,0 +1,7 @@
+{
+  "method": "PUT",
+  "path": "/aai/v13/query",
+  "queryParams": {
+    "format": "simple"
+  }
+}
