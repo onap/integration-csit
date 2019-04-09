@@ -41,5 +41,5 @@ sed -i '/image: onap\/clamp/c\    image: nexus3.onap.org:10001\/onap\/clamp' doc
 sed -i 's/}/,\"clamp.config.policy.pdpUrl1\":\"http:\/\/third_party_proxy:8085\/pdp\/ , testpdp, alpha123\",\"clamp.config.policy.pdpUrl2\":\"http:\/\/third_party_proxy:8085\/pdp\/ , testpdp, alpha123\",\"clamp.config.policy.papUrl\":\"http:\/\/third_party_proxy:8085\/pap\/ , testpap, alpha123\",\"clamp.config.policy.clientId\":\"python\",\"clamp.config.policy.clientKey\":\"dGVzdA==\",\"clamp.config.sdc.catalog.url\":\"http:\/\/third_party_proxy:8085\/sdc\/v1\/catalog\/\",\"clamp.config.sdc.hostUrl\":\"http:\/\/third_party_proxy:8085\",\"clamp.config.sdc.serviceUrl\":\"http:\/\/third_party_proxy:8085\/sdc\/v1\/catalog\/services\",\"clamp.config.dcae.inventory.url\":\"http:\/\/third_party_proxy:8085\",\"clamp.config.dcae.dispatcher.url\":\"http:\/\/third_party_proxy:8085\",\"spring.profiles.active\":\"clamp-default,clamp-default-user,clamp-sdc-controller\",\"server.ssl.client-auth\":\"want\"}/g' clamp.env
 
 # Add the sql to create template so it is played by docker-compose later
-cp ../../../src/test/resources/sql/four_templates_only.sql ../../sql/bulkload/
-echo 'mysql -uroot -p$MYSQL_ROOT_PASSWORD -f < four_templates_only.sql' >> ../../sql/load-sql-files-tests-automation.sh
+cp ../../../src/test/resources/sql/loop-examples.sql ../../sql/bulkload/
+echo 'mysql -uroot -p$MYSQL_ROOT_PASSWORD -f < loop-examples.sql' >> ../../sql/load-sql-files-tests-automation.sh

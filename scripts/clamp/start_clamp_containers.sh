@@ -49,5 +49,5 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    exit 1;
 fi
 
-sleep 30
+sleep 20
 
