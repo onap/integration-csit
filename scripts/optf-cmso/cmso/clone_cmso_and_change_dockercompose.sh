@@ -25,14 +25,34 @@ echo "This is ${WORKSPACE}/scripts/cmso/clone_cmso_and_change_dockercompose.sh"
 
 
 # Clone cmso repo to get extra folder that has all needed to run docker with docker-compose to start DB and cmso-service and cmso-dbinit
-mkdir -p $WORKSPACE/archives/cmso-clone
-cd $WORKSPACE/archives/cmso-clone
+mkdir -p /tmp/$WORKSPACE/archives/cmso-clone
+cd /tmp/$WORKSPACE/archives/cmso-clone
 git clone --depth 1 https://gerrit.onap.org/r/optf/cmso -b master
-cd cmso/cmso-service/extra/docker
+cd cmso/cmso-robot/docker/cmso-service
 
-# Pull the cmso docker image from nexus instead of local image by default in the docker-compose.yml
-sed -i '/image: onap\/optf-cmso-service/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-service' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-service/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-service:latest' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-dbinit/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-dbinit:latest' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-topology/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-topology:latest' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-ticketmgt/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-ticketmgt:latest' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-optimizer/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-optimizer:latest' docker-compose.yml
+sed -i '/image: onap\/optf-cmso-robot/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-robot:latest' docker-compose.yml
 
-sed -i '/image: onap\/optf-cmso-dbinit/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-dbinit' docker-compose.yml
+pip uninstall docker-py; pip uninstall docker; pip install docker
 
+#!/bin/bash
+docker-compose up >up.txt 2>&1 &
+
+
+### Wait for docker compose to complete
+sleep 300
+echo =======================up.txt
+cat up.txt
+echo =======================
+
+### Wait for robot to finish
+docker exec cmsoservice_cmso-robot_1 ls
+while [ $? -ne 1 ]; do
+  sleep 120
+  docker exec cmsoservice_cmso-robot_1 ls
+done
 
