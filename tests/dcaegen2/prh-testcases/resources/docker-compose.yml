@@ -89,6 +89,7 @@ services:
     image: docker.io/consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul-server:8500", "dcae-prh", '{
+                                              "dmaap.dmaapConsumerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
                                               "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapConsumerConfiguration.dmaapTopicName": "events/unauthenticated.VES_PNFREG_OUTPUT",
@@ -101,6 +102,7 @@ services:
                                               "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
                                               "dmaap.dmaapConsumerConfiguration.messageLimit": -1,
 
+                                              "dmaap.dmaapProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY",
                                               "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-mr",
                                               "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_READY",
@@ -109,6 +111,7 @@ services:
                                               "dmaap.dmaapProducerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
 
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-mr",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
@@ -117,6 +120,7 @@ services:
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
 
+                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3333/aai/v12/network/pnfs/pnf"
                                               "aai.aaiClientConfiguration.aaiHost":"aai",
                                               "aai.aaiClientConfiguration.aaiHostPortNumber":3334,
                                               "aai.aaiClientConfiguration.aaiProtocol":"https",
