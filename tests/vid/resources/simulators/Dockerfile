@@ -5,8 +5,9 @@ ARG component
 ENV component=$component
 
 COPY SO.py /
-ADD ./test_data_assets/ /
+RUN mkdir test_data_assets
+ADD ./test_data_assets/ /test_data_assets
 
 EXPOSE 8443
 
-CMD python ./SO.py expected_${component}_requests.json expected_${component}_responses.json
+CMD python ./SO.py /test_data_assets/expected_${component}_requests.json /test_data_assets/expected_${component}_responses.json

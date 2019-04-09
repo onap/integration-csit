@@ -17,6 +17,7 @@
 # ============LICENSE_END=========================================================
 
 import json
+import re
 import logging
 from functools import partial
 from sys import argv
@@ -26,10 +27,13 @@ DEFAULT_PORT = 8443
 
 
 class SOHandler(BaseHTTPRequestHandler):
-    def __init__(self, expected_requests, expected_responses, *args, **kwargs):
+    def __init__(self, expected_requests, expected_responses, requests, responses, *args, **kwargs):
 
         self._expected_requests = expected_requests
         self._expected_responses = expected_responses
+        self._requests = requests["requests"]
+        self._responses = responses["responses"]
+        self._known_endpoints = self._get_known_endpoints()
         super().__init__(*args, **kwargs)
 
     def do_POST(self):
@@ -44,15 +48,29 @@ class SOHandler(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
-        logging.info(
-            'GET called. Expected GET REQUEST: ' + json.dumps(
-                self._expected_requests["get"]) + '\nExpected GET response: ' +
-            json.dumps(self._expected_responses["get"]))
-        self.send_response(200)
-        self._set_headers()
-
-        self.wfile.write(json.dumps(self._expected_responses["get"]).encode("utf-8"))
-        return self._expected_responses["get"]
+        self._print_endpoints()
+        if self._does_path_exist_as_endpoint():
+            expected_response = self._get_response_by_endpoint(self.path)
+            if expected_response != "":
+                self.send_response(expected_response["responseCode"])
+                self._set_headers()
+                self.wfile.write(json.dumps(expected_response["body"]).encode("utf-8"))
+                return expected_response["body"]
+            else:
+                response_body = "{\"message:\" \"no response for endpoint\"}"
+                self.send_response(400)
+                self._set_headers()
+                self.wfile.write(json.dumps(response_body).encode("utf-8"))
+                return response_body
+        else:
+            logging.info('GET called. Expected GET REQUEST: '
+                         + json.dumps(self._expected_requests["get"])
+                         + '\nExpected GET response: '
+                         + json.dumps(self._expected_responses["get"]))
+            self.send_response(200)
+            self._set_headers()
+            self.wfile.write(json.dumps(self._expected_responses["get"]).encode("utf-8"))
+            return self._expected_responses["get"]
 
     def do_PUT(self):
         request_body_json = self._get_request_body()
@@ -91,6 +109,46 @@ class SOHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
 
+    def _get_response_by_endpoint(self, endpoint):
+        for response in self._responses:
+            if response["path"] == endpoint:
+                return response
+        return ""
+
+    def _does_path_exist_as_endpoint(self):
+        for ep in self._known_endpoints:
+            if ep == self.path:
+                return True
+        return False
+
+    def _create_path_from_request(self, request):
+        base_uri = request["path"]
+        query_params = request["queryParams"]
+        if len(query_params) != 0:
+            base_uri += '?'
+            return self._add_query_params_to_path(base_uri, query_params)
+        else:
+            return base_uri
+
+    def _get_known_endpoints(self):
+        endpoints = []
+        for request in self._requests:
+            endpoints.append(self._create_path_from_request(request))
+        return endpoints
+
+    def _print_endpoints(self):
+        print("GET ENDPOINTS:")
+        for ep in self._known_endpoints:
+            print("\t" + ep)
+
+    @staticmethod
+    def _add_query_params_to_path(base_uri, query_params):
+        expected_uri = base_uri
+        for param in query_params:
+            expected_uri += param + '=' + query_params.get(param, '') + '&'
+        expected_uri = expected_uri[:-1]
+        return expected_uri
+
 
 class JsonFileToDictReader(object):
 
@@ -101,10 +159,13 @@ class JsonFileToDictReader(object):
 
 
 def init_so_simulator():
+    requests = JsonFileToDictReader.read_expected_test_data("test_data_assets/requests.json")
+    responses = JsonFileToDictReader.read_expected_test_data("test_data_assets/responses.json")
+
     expected_so_requests = JsonFileToDictReader.read_expected_test_data(argv[1])
     expected_so_responses = JsonFileToDictReader.read_expected_test_data(argv[2])
     logging.basicConfig(level=logging.INFO)
-    handler = partial(SOHandler, expected_so_requests, expected_so_responses)
+    handler = partial(SOHandler, expected_so_requests, expected_so_responses, requests, responses)
     handler.protocol_version = "HTTP/1.0"
     httpd = HTTPServer(('', DEFAULT_PORT), handler)
     logging.info("serving on: " + str(httpd.socket.getsockname()))
