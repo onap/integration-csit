@@ -22,8 +22,3 @@
 # Place the scripts in run order:
 
 source ${WORKSPACE}/scripts/optf-cmso/cmso/clone_cmso_and_change_dockercompose.sh
-
-source ${WORKSPACE}/scripts/optf-cmso/cmso/start_cmso_containers.sh
-
-# Pass any variables required by Robot test suites in ROBOT_VARIABLES
-#ROBOT_VARIABLES="-v TEST:${TEST}"
