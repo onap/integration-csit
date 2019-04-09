@@ -3,9 +3,9 @@ services:
   prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
     command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-mr
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-mr
         --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2222
         --aai.aaiClientConfiguration.aaiHostPortNumber=3333
         --aai.aaiClientConfiguration.aaiHost=aai
@@ -19,16 +19,16 @@ services:
     container_name: prh
     depends_on:
       - cbs
-      - dmaap-bc
+      - dmaap-mr
       - aai
 
   ssl_prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
     command: >
-        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap-mr
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2223
         --dmaap.dmaapConsumerConfiguration.dmaapProtocol=https
-        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-bc
+        --dmaap.dmaapProducerConfiguration.dmaapHostName=dmaap-mr
         --dmaap.dmaapProducerConfiguration.dmaapPortNumber=2223
         --dmaap.dmaapProducerConfiguration.dmaapProtocol=https
         --aai.aaiClientConfiguration.aaiHostPortNumber=3334
@@ -54,10 +54,10 @@ services:
     container_name: ssl_prh
     depends_on:
       - cbs
-      - dmaap-bc
+      - dmaap-mr
       - aai
 
-  dmaap-bc:
+  dmaap-mr:
     build:
       context: simulator
       dockerfile: DMaaP_simulator
@@ -89,7 +89,7 @@ services:
     image: docker.io/consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul-server:8500", "dcae-prh", '{
-                                              "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-bc",
+                                              "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
                                               "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapConsumerConfiguration.dmaapTopicName": "events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"http",
@@ -101,7 +101,7 @@ services:
                                               "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
                                               "dmaap.dmaapConsumerConfiguration.messageLimit": -1,
 
-                                              "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-bc",
+                                              "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-mr",
                                               "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_READY",
                                               "dmaap.dmaapProducerConfiguration.dmaapProtocol":"http",
@@ -109,7 +109,7 @@ services:
                                               "dmaap.dmaapProducerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
 
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-bc",
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-mr",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "http",
@@ -132,7 +132,27 @@ services:
                                               "security.keyStorePath":"change it",
                                               "security.keyStorePasswordPath":"change it",
                                               "security.enableAaiCertAuth":false,
-                                              "security.enableDmaapCertAuth":false
+                                              "security.enableDmaapCertAuth":false,
+
+                                              "streams_publishes":{
+                                                "pnf-update":{
+                                                  "dmaap_info":{
+                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE"
+                                                  }
+                                                },
+                                                "pnf-ready":{
+                                                  "dmaap_info":{
+                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY"
+                                                  }
+                                                }
+                                              },
+                                              "streams_subscribes":{
+                                                "ves-reg-output":{
+                                                  "dmaap_info":{
+                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT"
+                                                  }
+                                                }
+                                              }
                                             }'
     ]
     depends_on:

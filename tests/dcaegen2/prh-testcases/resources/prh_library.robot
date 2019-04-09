@@ -33,9 +33,9 @@ Valid event processing
     [Arguments]    ${input_valid__ves_event_in_dmaap}
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
+    Set event in DMaaP    ${data}
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
-    Set event in DMaaP    ${data}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
     #TODO to fix after CBS merge
     #Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
