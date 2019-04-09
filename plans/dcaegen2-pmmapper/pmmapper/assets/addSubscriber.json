@@ -1,6 +1,6 @@
 {
     "delivery":{
-       "url":"http://dcae-pm-mapper.onap.svc.cluster.local:8081/delivery",
+       "url":"http://dcae-pm-mapper:8081/delivery",
        "user":"username",
        "password":"password",
        "use100":true
