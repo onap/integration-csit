@@ -1,0 +1,220 @@
+{
+  "responses": [
+    {
+      "responseCode": 200,
+      "path": "/aai/v13/service-design-and-creation/models?depth=2&model-invariant-id=88a71d72-ec80-4357-808e-f288823cb353",
+      "body": {
+        "model": [
+          {
+            "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353",
+            "model-type": "resource",
+            "resource-version": "1549550682576",
+            "model-vers": {
+              "model-ver": [
+                {
+                  "model-version-id": "d2dcf256-2687-4631-9e36-1b7fc352b7bf",
+                  "model-name": "HealthVF",
+                  "model-version": "1.0",
+                  "model-description": "HealthVSP",
+                  "resource-version": "1549550682585",
+                  "model-elements": {
+                    "model-element": [
+                      {
+                        "model-element-uuid": "ad8c74b6-d2ff-48a7-8fcb-4cf653efc1f9",
+                        "new-data-del-flag": "T",
+                        "cardinality": "unbounded",
+                        "resource-version": "1549550682592",
+                        "relationship-list": {
+                          "relationship": [
+                            {
+                              "related-to": "model-ver",
+                              "relationship-label": "org.onap.relationships.inventory.IsA",
+                              "related-link": "/aai/v13/service-design-and-creation/models/model/acc6edd8-a8d4-4b93-afaa-0994068be14c/model-vers/model-ver/93a6166f-b3d5-4f06-b4ba-aed48d009ad9",
+                              "relationship-data": [
+                                {
+                                  "relationship-key": "model.model-invariant-id",
+                                  "relationship-value": "acc6edd8-a8d4-4b93-afaa-0994068be14c"
+                                }
+                              ],
+                              "related-to-property": [
+                                {
+                                  "property-key": "model-ver.model-name",
+                                  "property-value": "generic-vnf"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "relationship-list": {
+                    "relationship": [
+                      {
+                        "related-to": "model-element",
+                        "relationship-label": "org.onap.relationships.inventory.IsA",
+                        "related-link": "/aai/v13/service-design-and-creation/models/model/4b5158b9-a0d5-4aeb-90a8-474bc2ccd8af/model-vers/model-ver/ba463093-6f2c-4d22-aa8d-fb4615660db2/model-elements/model-element/57d23b71-d5a0-484d-ac7c-1b94e9a1563e/model-elements/model-element/5d290a6a-3b35-46bb-a2d7-1b9c9f520c39",
+                        "relationship-data": [
+                          {
+                            "relationship-key": "model.model-invariant-id",
+                            "relationship-value": "4b5158b9-a0d5-4aeb-90a8-474bc2ccd8af"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "responseCode": 200,
+      "path": "/aai/v../business/customers/customer/MSO_1610_ST?depth=2",
+      "body": {
+        "global-customer-id": "MSO_1610_ST",
+        "subscriber-name": "MSO_1610_ST",
+        "subscriber-type": "INFRA",
+        "resource-version": "1549008901724",
+        "service-subscriptions": {
+          "service-subscription": [
+            {
+              "service-type": "gNB",
+              "resource-version": "1549008901954",
+              "service-instances": {
+                "service-instance": [
+                  {
+                    "service-instance-id": "40003c27-2876-4f3a-8a23-ef1ad7ef665a",
+                    "service-instance-name": "AwServicePreload3",
+                    "service-type": "vAwServiceType",
+                    "environment-context": "General_Revenue-Bearing",
+                    "workload-context": "Production",
+                    "model-invariant-id": "33ebe1a9-1df3-4c35-b8a0-cd0504159511",
+                    "model-version-id": "41658d87-b37c-4237-9a56-d27d1e430da6",
+                    "resource-version": "1550761112266",
+                    "orchestration-status": "Active",
+                    "relationship-list": {
+                      "relationship": [
+                        {
+                          "related-to": "project",
+                          "relationship-label": "org.onap.relationships.inventory.Uses",
+                          "related-link": "/aai/v13/business/projects/project/AwTestProject",
+                          "relationship-data": [
+                            {
+                              "relationship-key": "project.project-name",
+                              "relationship-value": "AwTestProject"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "relationship-list": {
+                "relationship": [
+                  {
+                    "related-to": "tenant",
+                    "relationship-label": "org.onap.relationships.inventory.Uses",
+                    "related-link": "/aai/v13/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/RegionOne/tenants/tenant/982c540f6e69488eb6be5664255e00c0",
+                    "relationship-data": [
+                      {
+                        "relationship-key": "cloud-region.cloud-owner",
+                        "relationship-value": "CloudOwner"
+                      }
+                    ],
+                    "related-to-property": [
+                      {
+                        "property-key": "tenant.tenant-name",
+                        "property-value": "onap-wro"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "responseCode": 200,
+      "path": "/aai/v13/query?format=simple",
+      "body": {
+        "results": [
+          {
+            "id": "385160",
+            "node-type": "service-instance",
+            "url": "/aai/v13/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vLB/service-instances/service-instance/12965035-a690-400c-bf18-211a5b4710c8",
+            "properties": {
+              "service-instance-id": "12965035-a690-400c-bf18-211a5b4710c8",
+              "service-instance-name": "ws-service-02",
+              "service-type": "vAwServiceType",
+              "environment-context": "General_Revenue-Bearing",
+              "workload-context": "Production",
+              "model-invariant-id": "33ebe1a9-1df3-4c35-b8a0-cd0504159511",
+              "model-version-id": "cb8501da-6e03-40e0-900c-ef0df30d1183",
+              "resource-version": "1551434658559",
+              "selflink": "restconf/config/GENERIC-RESOURCE-API:services/service/12965035-a690-400c-bf18-211a5b4710c8/service-data/service-topology/",
+              "orchestration-status": "Active"
+            },
+            "related-to": [
+              {
+                "id": "200768",
+                "relationship-label": "org.onap.relationships.inventory.Uses",
+                "node-type": "project",
+                "url": "/aai/v13/business/projects/project/Project-Demonstration"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "responseCode": 200,
+      "path": "/workflowSpecifications/v1/workflows?vnfModelVersionId=103b4a1b-4a15-4559-a019-1ff132180c7c",
+      "body": {
+        "workflowSpecificationList": [
+          {
+            "workflowSpecification": {
+              "artifactInfo": {
+                "artifactType": "workflow",
+                "artifactUuid": "ab6478e4-ea33-3346-ac12-ab121484a333",
+                "artifactName": "inPlaceSoftwareUpdate-1_0.bpmn",
+                "artifactVersion": "1.0",
+                "artifactDescription": "xyz xyz",
+                "workflowName": "inPlaceSoftwareUpdate",
+                "operationName": "inPlaceSoftwareUpdate",
+                "workflowSource": "sdc",
+                "workflowResourceTarget": "vnf"
+              },
+              "activitySequence": [
+                {
+                  "name": "VNFQuiesceTrafficActivity",
+                  "description": "Activity to QuiesceTraffic on VNF"
+                }
+              ],
+              "workflowInputParameters": [
+                {
+                  "label": "Cloud Owner",
+                  "inputType": "text",
+                  "required": true,
+                  "validation": [
+                    {
+                      "maxLength": "7",
+                      "allowableChars": "[a-zA-Z0-9]*"
+                    }
+                  ],
+                  "soFieldName": "cloudOwner",
+                  "soPayloadLocation": "cloudConfiguration"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
