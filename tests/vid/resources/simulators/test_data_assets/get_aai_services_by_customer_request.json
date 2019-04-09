@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/aai/v../business/customers/customer/MSO_1610_ST",
+  "queryParams": {
+    "depth": "2"
+  }
+}

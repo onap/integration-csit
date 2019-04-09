@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "path": "/workflowSpecifications/v1/workflows",
+  "queryParams": {
+    "vnfModelVersionId": "103b4a1b-4a15-4559-a019-1ff132180c7c"
+  }
+}

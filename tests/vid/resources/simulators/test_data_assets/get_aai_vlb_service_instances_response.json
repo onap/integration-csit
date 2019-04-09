@@ -1,0 +1,32 @@
+{
+  "responseCode": 200,
+  "body": {
+    "results": [
+      {
+        "id": "385160",
+        "node-type": "service-instance",
+        "url": "/aai/v13/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vLB/service-instances/service-instance/12965035-a690-400c-bf18-211a5b4710c8",
+        "properties": {
+          "service-instance-id": "12965035-a690-400c-bf18-211a5b4710c8",
+          "service-instance-name": "ws-service-02",
+          "service-type": "vAwServiceType",
+          "environment-context": "General_Revenue-Bearing",
+          "workload-context": "Production",
+          "model-invariant-id": "33ebe1a9-1df3-4c35-b8a0-cd0504159511",
+          "model-version-id": "cb8501da-6e03-40e0-900c-ef0df30d1183",
+          "resource-version": "1551434658559",
+          "selflink": "restconf/config/GENERIC-RESOURCE-API:services/service/12965035-a690-400c-bf18-211a5b4710c8/service-data/service-topology/",
+          "orchestration-status": "Active"
+        },
+        "related-to": [
+          {
+            "id": "200768",
+            "relationship-label": "org.onap.relationships.inventory.Uses",
+            "node-type": "project",
+            "url": "/aai/v13/business/projects/project/Project-Demonstration"
+          }
+        ]
+      }
+    ]
+  }
+}
