@@ -120,7 +120,7 @@ services:
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
 
-                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3333/aai/v12/network/pnfs/pnf"
+                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3333/aai/v12/network/pnfs/pnf",
                                               "aai.aaiClientConfiguration.aaiHost":"aai",
                                               "aai.aaiClientConfiguration.aaiHostPortNumber":3334,
                                               "aai.aaiClientConfiguration.aaiProtocol":"https",
@@ -130,6 +130,13 @@ services:
                                               "aai.aaiClientConfiguration.aaiBasePath": "/aai/v12",
                                               "aai.aaiClientConfiguration.aaiPnfPath": "/network/pnfs/pnf",
                                               "aai.aaiClientConfiguration.aaiServiceInstancePath":"/business/customers/customer/${customer}/service-subscriptions/service-subscription/${serviceType}/service-instances/service-instance/${serviceInstanceId}",
+                                              "aai.aaiClientConfiguration.aaiHeaders":{
+                                                        "X-FromAppId": "prh",
+                                                        "X-TransactionId": "9999",
+                                                        "Accept": "application/json",
+                                                        "Real-Time": "true",
+                                                        "Authorization": "Basic QUFJOkFBSQ=="
+                                              },
 
                                               "security.trustStorePath":"change it",
                                               "security.trustStorePasswordPath":"change it",
