@@ -32,7 +32,7 @@ docker-compose up -d --build
 
 # WAIT 5 minutes maximum and test every 5 seconds if VID up using HealthCheck API
 
-TIME_OUT=1200
+TIME_OUT=300
 INTERVAL=5
 TIME=0
 
