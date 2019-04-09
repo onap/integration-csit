@@ -28,11 +28,21 @@ echo "This is ${WORKSPACE}/scripts/cmso/clone_cmso_and_change_dockercompose.sh"
 mkdir -p $WORKSPACE/archives/cmso-clone
 cd $WORKSPACE/archives/cmso-clone
 git clone --depth 1 https://gerrit.onap.org/r/optf/cmso -b master
-cd cmso/cmso-service/extra/docker
+cd cmso/cmso-robot/docker/cmso-service
+#!/bin/bash
+docker-compose up >up.txt 2>&1 &
 
-# Pull the cmso docker image from nexus instead of local image by default in the docker-compose.yml
-sed -i '/image: onap\/optf-cmso-service/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-service' docker-compose.yml
+### Wait for robot to finish
+sleep 120
+docker exec -it cmso-service_cmso-robot_1 ls
+while [ $? -ne 1 ]; do
+  sleep 120
+  docker exec -it cmso-service_cmso-robot_1 ls
+done
 
-sed -i '/image: onap\/optf-cmso-dbinit/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-dbinit' docker-compose.yml
+
+cp -f ./cmso-robot/logs/output.xml $WORKSPACE/archives
+cp -f ./cmso-robot/logs/log.html $WORKSPACE/archives
+cp -f ./cmso-robot/logs/report.html $WORKSPACE/archives
 
 

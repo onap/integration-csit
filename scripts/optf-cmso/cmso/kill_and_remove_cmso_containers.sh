@@ -19,13 +19,10 @@
 #
 
 echo "This is ${WORKSPACE}/scripts/optf-cmso/cmso/kill_and_remove_cmso_containers.sh"
-
-kill-instance.sh cmso-service
-kill-instance.sh cmso-mariadb
-kill-instance.sh cmso-db-init
-
-#delete cmso-clone folder
-
+cd $WORKSPACE/archives/cmso-clone
+cd cmso/cmso-robot/docker/cmso-service
+#!/bin/bash
+docker-compose down
 rm -rf ${WORKSPACE}archives/cmso-clone
 
 
