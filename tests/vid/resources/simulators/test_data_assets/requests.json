@@ -1,0 +1,33 @@
+{
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/aai/v13/service-design-and-creation/models",
+      "queryParams": {
+        "depth": "2",
+        "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/aai/v../business/customers/customer/MSO_1610_ST",
+      "queryParams": {
+        "depth": "2"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/aai/v13/query",
+      "queryParams": {
+        "format": "simple"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/workflowSpecifications/v1/workflows",
+      "queryParams": {
+        "vnfModelVersionId": "103b4a1b-4a15-4559-a019-1ff132180c7c"
+      }
+    }
+  ]
+}
