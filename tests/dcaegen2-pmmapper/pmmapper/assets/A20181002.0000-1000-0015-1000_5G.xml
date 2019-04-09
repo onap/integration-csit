@@ -47,9 +47,9 @@ xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measC
             <measType p="4">succImmediateAssignProcs4</measType>
             <measValue measObjLdn="ManagedElement=RNC-Gbg-1,ENodeBFunction=1">
                 <r p="1">4</r>
-                <r p="12">86,87,2,6,77,96,75,33,24</r>
-                <r p="13">40</r>
-                <r p="14">90</r>
+                <r p="2">86,87,2,6,77,96,75,33,24</r>
+                <r p="3">40</r>
+                <r p="4">90</r>
                 <suspect>false</suspect>
             </measValue>
         </measInfo>

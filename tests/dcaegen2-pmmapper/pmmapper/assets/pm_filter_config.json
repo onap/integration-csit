@@ -2,9 +2,9 @@
     "pm-mapper-filter": { 
         "filters":[{
             "pmDefVsn": "1.0",
-            "nfType": "5G",
+            "nfType": "gnb",
             "vendor": "Ericsson",
-            "measTypes": ["attTCHSeizures","succImmediateAssignProcs"]
+            "measTypes": ["attTCHSeizures","succTCHSeizures2","succImmediateAssignProcs8"]
         }]
     },
     "streams_subscribes": {
@@ -14,7 +14,7 @@
             "aaf_password": null,
             "dmaap_info": {
                 "location": "csit-pmmapper",
-                "delivery_url": "http://dcae-pm-mapper.onap.svc.cluster.local:8081/delivery",
+                "delivery_url": "http://dcae-pm-mapper:8081/delivery",
                 "username": "username",
                 "password": "password",
                 "subscriber_id": "1"
@@ -38,8 +38,8 @@
     "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
     "services_calls": {},
     "enable_http": true,
-    "key_store_path": "/opt/app/pm-mapper/etc/cert/cert.jks.b64",
-    "key_store_pass_path": "/opt/app/pm-mapper/etc/cert/jks.pass",
-    "trust_store_path": "/opt/app/pm-mapper/etc/cert/trust.jks.b64",
-    "trust_store_pass_path": "/opt/app/pm-mapper/etc/cert/trust.pass"
+    "key_store_path": "/opt/app/pm-mapper/etc/cert.jks.b64",
+    "key_store_pass_path": "/opt/app/pm-mapper/etc/jks.pass",
+    "trust_store_path": "/opt/app/pm-mapper/etc/trust.jks.b64",
+    "trust_store_pass_path": "/opt/app/pm-mapper/etc/trust.pass"
 }

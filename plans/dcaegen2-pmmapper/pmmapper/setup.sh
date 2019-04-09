@@ -83,6 +83,13 @@ sed -i 's/2.2.2.2/'$DR_PROV_IP'/g' docker-compose.yml
 sed -i 's/3.3.3.3/'$PMMAPPER_IP'/g' docker-compose.yml
 docker-compose up -d
 
+# Setting up PM Mapper certs.
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
+docker restart pmmapper
+
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
 for i in {1..5}; do
     if [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
@@ -124,4 +131,3 @@ curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v CONSUL_IP:${CONSUL_IP} -v DR_PROV_IP:${DR_PROV_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP} -v DR_NODE_IP:${DR_NODE_IP}"
-export ROBOT_VARIABLES
