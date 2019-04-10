@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec3c40f_e56426de",
+        "filename": "tests/vid/resources/simulators/SO.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3717
+      },
+      "writtenOn": "2019-04-10T05:43:44Z",
+      "side": 1,
+      "message": "It\u0027s OK to remove the commented out code - it would still be in version control in case someone needs it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 102
+      },
+      "revId": "c49d91b6473092183a489d706e3f55cce37f1611",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
