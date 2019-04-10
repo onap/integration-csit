@@ -6,7 +6,7 @@
   "cbs.firstRequestDelaySec": 3,
   "cbs.requestIntervalSec": 5,
   "security.keys.keyStoreFile": "/etc/hv-ves/ssl/server.p12",
-  "security.keys.keyStorePassword": "onaponap",
+  "security.keys.keyStorePasswordFile": "/etc/hv-ves/ssl/server.pass",
   "security.keys.trustStoreFile": "/etc/hv-ves/ssl/trust.p12",
-  "security.keys.trustStorePassword": "onaponap"
+  "security.keys.trustStorePasswordFile": "/etc/hv-ves/ssl/trust.pass"
 }
