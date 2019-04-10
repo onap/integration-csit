@@ -21,57 +21,9 @@
 # ===================================================================
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 #
-# Place the scripts in run order:
-source ${SCRIPTS}/common_functions.sh
-
-# Clone DMaaP Message Router repo
-mkdir -p $WORKSPACE/archives/dmaapmr
-cd $WORKSPACE/archives/dmaapmr
-#unset http_proxy https_proxy
-git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
-git pull
-cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
-cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
-
-
-
-# Update kafkfa and zookeeper properties in MsgRtrApi.propeties which will be copied to DMaaP Container
-sed -i -e 's/<zookeeper_host>/zookeeper/' /var/tmp/MsgRtrApi.properties
-sed -i -e 's/<kafka_host>:<kafka_port>/kafka:9092/' /var/tmp/MsgRtrApi.properties
-
-# start DMaaP MR containers with docker compose and configuration from docker-compose.yml
-docker-compose build
-docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d  
-
-# Wait for initialization of Docker containers
-for i in {1..50}; do
-        if [ $(docker inspect --format '{{ .State.Running }}' dockercompose_dmaap_1) ] && \
-                [ $(docker inspect --format '{{ .State.Running }}' dockercompose_zookeeper_1) ] && \
-                [ $(docker inspect --format '{{ .State.Running }}' dockercompose_dmaap_1) ]
-        then
-                echo "DMaaP Service Running"
-                break
-        else
-                echo sleep $i
-                sleep $i
-        fi
-done
-
-DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_dmaap_1)
-KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_kafka_1)
-ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dockercompose_zookeeper_1)
-
-echo DMAAP_MR_IP=${DMAAP_MR_IP}
-echo KAFKA_IP=${KAFKA_IP}
-echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
-
-# Wait for initialization of docker services
-for i in {1..50}; do
-    curl -sS -m 1 ${DMAAP_MR_IP}:3904/events/TestTopic && break 
-    echo sleep $i
-    sleep $i
-done
+source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-launch.sh
+dmaap_mr_launch
+DMAAP_MR_IP=${IP}
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v DMAAP_MR_IP:${DMAAP_MR_IP}" 
