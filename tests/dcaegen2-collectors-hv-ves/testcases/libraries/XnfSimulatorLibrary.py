@@ -158,8 +158,9 @@ class XnfSimulator:
         cert_name_prefix = "" if should_use_valid_certs else "untrusted"
         certificates_path_with_file_prefix = COLLECTOR_CERTS_LOOKUP_DIR + cert_name_prefix
         self.key_store_path = certificates_path_with_file_prefix + "client.p12"
+        self.key_store_passwd_path = certificates_path_with_file_prefix + "client.pass"
         self.trust_store_path = certificates_path_with_file_prefix + "trust.p12"
-        self.sec_store_passwd = "onaponap"
+        self.trust_store_passwd_path = certificates_path_with_file_prefix + "trust.pass"
         self.disable_ssl = should_disable_ssl
         self.hv_collector_host = UNENCRYPTED_HV_VES_SERVICE_NAME \
             if should_connect_to_unencrypted_hv_ves else HV_VES_SERVICE_NAME
@@ -171,8 +172,8 @@ class XnfSimulator:
                            "--ves-port", "6061",
                            "--key-store", self.key_store_path,
                            "--trust-store", self.trust_store_path,
-                           "--key-store-password", self.sec_store_passwd,
-                           "--trust-store-password", self.sec_store_passwd]
+                           "--key-store-password-file", self.key_store_passwd_path,
+                           "--trust-store-password-file", self.trust_store_passwd_path]
         if self.disable_ssl:
             startup_command.append("--ssl-disable")
         return startup_command
