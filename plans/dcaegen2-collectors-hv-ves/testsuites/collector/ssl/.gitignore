@@ -4,3 +4,4 @@
 *.csr
 *.pkcs12
 *.p12
+*.pass
