@@ -32,8 +32,7 @@ ${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pm
 ${CLI_RESTART_PMMAPPER}                  docker restart pmmapper
 ${CLI_DELETE_SUB1}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/1
 ${CLI_DELETE_SUB2}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/2
-${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000
-${CLI_MR_EVENT_COUNT}                    curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 | egrep -o 'measInfoId1|measInfoId2|measInfoId3' > /tmp/mr.log
+${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
 *** Test Cases ***
@@ -69,43 +68,55 @@ Verify 3GPP PM Mapper responds appropriately when invalid metadata is provided
     VerifyResponse                  ${resp.content}                 Malformed Metadata.
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}          RequestID=2
 
-Verify 3GPP PM Mapper maps Type-A file and publish 3gpp perf VES evnets to message router
+Verify that PM Mapper logs successful when a file that contains no measdata is provided
     [Tags]                          PM_MAPPER_05
-    [Documentation]                 Verify 3GPP PM Mapper maps Type-A file and publish 3gpp perf VES evnets to message router.
+    [Documentation]                 Verify that PM Mapper logs successful when a file that contains no measdata is provided
     [Timeout]                       1 minute
-    SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}            X-ONAP-RequestID=3
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
+    SendToDatarouter                ${NO_MEASDATA_PATH}              ${VALID_METADATA_PATH}            X-ONAP-RequestID=3
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           MeasData is empty
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=3
-    Sleep                           10s
-    CheckLog                        ${CLI_MESSAGE_ROUTER_TOPIC}      perf3gpp_gnb-Ericsson_pmMeasResult
 
-Verify that PM Mapper maps Type-C xml file and publish 3gpp perf VES evnets to message router.
+Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
     [Tags]                          PM_MAPPER_06
+    [Documentation]                 Verify 3gpp pm mapper responds with an error when no managed element content is provided
+    [Timeout]                       1 minute
+    SendToDatarouter                ${NO_MANAGED_ELEMENT_PATH}       ${VALID_METADATA_PATH}             X-ONAP-RequestID=4
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation failed
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=4
+
+Verify that PM Mapper maps Type-C xml file and publish 3gpp perf VES evnets to message router
+    [Tags]                          PM_MAPPER_07
     [Documentation]                 Verify that PM Mapper maps Type-C xml file and publish 3gpp perf VES evnets to message router.
     [Timeout]                       1 minute
-    SendToDatarouter                ${TYPE-C_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}           X-ONAP-RequestID=4
+    SendToDatarouter                ${TYPE-C_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}           X-ONAP-RequestID=5
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=4
-    Run Process                     ${CLI_MR_EVENT_COUNT}            shell=yes
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=5
+    Run Process                     ${CLI_MESSAGE_ROUTER_TOPIC}      shell=yes
     CheckLog                        ${CLI_MR_LOG}                    measInfoId1
     CheckLog                        ${CLI_MR_LOG}                    measInfoId2
     CheckLog                        ${CLI_MR_LOG}                    measInfoId3
 
-Verify that PM Mapper logs successful when a file that contains no measdata is provided
-    [Tags]                          PM_MAPPER_07
-    [Documentation]                 Verify that PM Mapper logs successful when a file that contains no measdata is provided
-    [Timeout]                       1 minute
-    SendToDatarouter                ${NO_MEASDATA_PATH}              ${VALID_METADATA_PATH}            X-ONAP-RequestID=5
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           MeasData is empty
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=5
-
-Verify that PM Mapper throws Event failed validation against schema error when no managed element content is provided
+Verify 3GPP PM Mapper maps Type-A file based on counter filtering and publish 3gpp perf VES evnets to message router
     [Tags]                          PM_MAPPER_08
-    [Documentation]                 Verify 3gpp pm mapper responds with an error when no managed element content is provided
+    [Documentation]                 Verify 3GPP PM Mapper maps Type-A file and publish 3gpp perf VES evnets to message router.
     [Timeout]                       1 minute
-    SendToDatarouter                ${NO_MANAGED_ELEMENT_PATH}       ${VALID_METADATA_PATH}             X-ONAP-RequestID=6
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           XML validation failed
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_PM_FILTER}             shell=yes
+    ${resp}=                        Get Request                      mapper_session                    ${RECONFIGURE_ENDPOINT}
+    Sleep                           5s
+    SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}            X-ONAP-RequestID=6
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=6
+    Run Process                     ${CLI_MESSAGE_ROUTER_TOPIC}      shell=yes
+    CheckLog                        ${CLI_MR_LOG}                    attTCHSeizures
+    CheckLog                        ${CLI_MR_LOG}                    234
+    CheckLog                        ${CLI_MR_LOG}                    890
+    CheckLog                        ${CLI_MR_LOG}                    456
+    CheckLog                        ${CLI_MR_LOG}                    succTCHSeizures2
+    CheckLog                        ${CLI_MR_LOG}                    86,87,2,6,77,96,75,33,24
+    CheckLog                        ${CLI_MR_LOG}                    succImmediateAssignProcs8
+    CheckLog                        ${CLI_MR_LOG}                    787
+    CheckLog                        ${CLI_MR_LOG}                    238
+    CheckLog                        ${CLI_MR_LOG}                    785
 
 Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
     [Tags]                          PM_MAPPER_09
@@ -137,7 +148,7 @@ SendToDatarouter
     ${filename}                     Fetch From Right                 ${filepath}                /
     ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}/${filename}        ${request_id}    ${pmdata}    ${metatdata.replace("\n","")}    pmmapper
     VerifyResponse                  ${resp.status_code}              204
-    Sleep                           10s
+    Sleep                           5s
 
 PutCall
     [Arguments]                     ${url}                           ${request_id}              ${data}            ${meta}          ${user}
