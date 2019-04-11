@@ -123,11 +123,13 @@ services:
 
                                               "streams_publishes":{
                                                 "pnf-update":{
+                                                  "type": "message_router",
                                                   "dmaap_info":{
                                                     "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE"
                                                   }
                                                 },
                                                 "pnf-ready":{
+                                                  "type": "message_router",
                                                   "dmaap_info":{
                                                     "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY"
                                                   }
@@ -135,6 +137,7 @@ services:
                                               },
                                               "streams_subscribes":{
                                                 "ves-reg-output":{
+                                                  "type": "message_router",
                                                   "dmaap_info":{
                                                     "topic_url":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT"
                                                   }
