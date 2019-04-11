@@ -4,6 +4,7 @@ import sys
 import re
 import time
 from http.server import BaseHTTPRequestHandler
+from os.path import basename
 import httpServerLib
 
 ch = logging.StreamHandler(sys.stdout)
@@ -16,72 +17,125 @@ logging.basicConfig(
 
 logger = logging.getLogger('AAI-simulator-logger')
 
-pnf_name = 'Empty'
-pnf_entry = {}
+AAI_RESOURCE_NOT_FOUND = b'{}'
 
-
-def _mark_response_as_http_ok(http_endpoint):
-    logger.info('Execution status 200')
-    httpServerLib.header_200_and_json(http_endpoint)
-
+pnf_entries = {}
+patched_pnf = AAI_RESOURCE_NOT_FOUND
+created_logical_link = AAI_RESOURCE_NOT_FOUND
 
 class AAISetup(BaseHTTPRequestHandler):
 
+    def do_GET(self):
+        try:
+            if re.search('/setup/patched_pnf', self.path):
+                httpServerLib.set_response_200_ok(self, payload = patched_pnf)
+                logger.debug('AAISetup GET /setup/patched_pnf -> 200 OK')
+            elif re.search('/setup/created_logical_link', self.path):
+                httpServerLib.set_response_200_ok(self, payload = created_logical_link)
+                logger.debug('AAISetup GET /setup/created_logical_link -> 200 OK')
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAISetup GET ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
+
     def do_PUT(self):
-        logger.info('AAI SIM Setup Put execution')
-        if re.search('/set_pnf$', self.path): # to avoid regex collisions '$' must be added
-            global pnf_name
-            content_length = self._get_content_length()
-            pnf_name = self.rfile.read(content_length).decode()
-            _mark_response_as_http_ok(self)
+        try:
+            if re.search('/setup/add_pnf_entry', self.path):
+                pnf_entry = httpServerLib.get_payload(self)
+                pnf_name = json.loads(pnf_entry).get("pnf-name")
+                if pnf_name == None:
+                    raise Exception("Invalid PNF entry, could not extract `pnf-name`")
 
-        if re.search('/set_pnf_entry',self.path):
-            global pnf_entry
-            content_length = self._get_content_length()
-            pnf_entry = json.loads(self.rfile.read(content_length))
-            _mark_response_as_http_ok(self)
+                global pnf_entries
+                pnf_entries[pnf_name] = pnf_entry
 
-        return
+                httpServerLib.set_response_200_ok(self)
+                logger.debug('AAISetup PUT /setup/add_pnf_entry [' + pnf_name + '] -> 200 OK')
+            elif re.search('/set_pnf', self.path):
+                pnf_name = httpServerLib.get_payload(self).decode()
+                pnf_entries[pnf_name] = AAI_RESOURCE_NOT_FOUND
+                httpServerLib.set_response_200_ok(self)
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAISetup PUT ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
     def do_POST(self):
-        logger.info('AAI SIM Setup Post execution')
-        if re.search('/reset', self.path):
-            global pnf_name
-            pnf_name = 'Empty'
-            _mark_response_as_http_ok(self)
+        try:
+            if re.search('/reset', self.path):
+                global pnf_entries
+                global patched_pnf
+                global created_logical_link
+                pnf_entries = {}
+                patched_pnf = AAI_RESOURCE_NOT_FOUND
+                created_logical_link = AAI_RESOURCE_NOT_FOUND
 
-        return
-
-    def _get_content_length(self):
-        return int(self.headers['Content-Length'])
-
+                httpServerLib.set_response_200_ok(self)
+                logger.debug('AAISetup POST /reset -> 200 OK')
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAISetup POST ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
 class AAIHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        logger.info('AAI SIM Get execution')
-        full_request_path = '/aai/v12/network/pnfs/pnf/' + pnf_name
-        if re.search(full_request_path, self.path):
-            _mark_response_as_http_ok(self)
-            body = json.dumps(pnf_entry)
-            logger.info('AAI SIM Get json prepared')
-            self.wfile.write(body.encode())
-        return
-
+        try:
+            if re.search('/aai/v12/network/pnfs/pnf/[^/]*$', self.path):
+                pnf_name = basename(self.path)
+                if pnf_name in pnf_entries:
+                    httpServerLib.set_response_200_ok(self, payload = pnf_entries[pnf_name])
+                    logger.debug('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
+                else:
+                    httpServerLib.set_response_404_not_found(self)
+                    logger.info('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
     def do_PATCH(self):
-        logger.info('AAI SIM Patch execution')
-        pnfs_name = '/aai/v12/network/pnfs/pnf/' + pnf_name
-        if re.search('wrong_aai_record', self.path):
-            self.send_response(400)
-            logger.info('Execution status 400')
-            self.end_headers()
-        elif re.search(pnfs_name, self.path):
-            self.send_response(200)
-            logger.info('Execution status 200')
-            self.end_headers()
-            
-        return
+        try:
+            if re.search('/aai/v12/network/pnfs/pnf/[^/]*$', self.path):
+                pnf_name = basename(self.path)
+                if pnf_name in pnf_entries:
+                    global patched_pnf
+                    patched_pnf = httpServerLib.get_payload(self)
+
+                    httpServerLib.set_response_200_ok(self)
+                    logger.debug('AAIHandler PATCH /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
+                else:
+                    httpServerLib.set_response_404_not_found(self)
+                    logger.info('AAIHandler PATCH /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAIHandler PATCH ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
+
+    def do_PUT(self):
+        try:
+            if re.search('/aai/v12/network/logical-links/logical-link/[^/]*$', self.path):
+                global created_logical_link
+                created_logical_link = httpServerLib.get_payload(self)
+
+                httpServerLib.set_response_200_ok(self)
+                logger.debug('AAIHandler PUT /aai/v12/network/logical-links/logical-link/' + created_logical_link + ' -> 200 OK')
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAIHandler PUT ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
 
 def _main_(handler_class=AAIHandler, protocol="HTTP/1.0"):
