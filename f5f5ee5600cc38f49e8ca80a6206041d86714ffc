@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Liam Burke <liam.burke@ericsson.com>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Thu, 11 Apr 2019 11:31:30 +0000
+Reviewed-on: https://gerrit.onap.org/r/85015
+Project: integration/csit
+Branch: refs/heads/master
