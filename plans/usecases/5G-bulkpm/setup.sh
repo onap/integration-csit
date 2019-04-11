@@ -70,8 +70,6 @@ cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/res
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
 cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
-cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/docker-databus-controller.conf /tmp/
-sed -i 's/DMAAPMR/'$DMAAP_MR_IP'/g' /tmp/docker-databus-controller.conf
 
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
@@ -179,6 +177,7 @@ cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.
 sed -i 's/sftpserver/'${SFTP_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
 sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
 docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
+docker cp $WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml.gz sftp:/home/admin/
 
 # Data Router Configuration:
 # Create default feed and create file consumer subscriber on data router
@@ -205,15 +204,25 @@ sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
 sed -i 's/4.4.4.4/'$DMAAP_MR_IP'/g' docker-compose.yml
 docker-compose up -d
 
+cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
+PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
+docker kill datarouter-node
+docker kill datarouter-prov
+sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
+sed -i 's/2.2.2.2/'$DR_PROV_IP'/g' docker-compose.yml
+sed -i 's/3.3.3.3/'$PMMAPPER_IP'/g' docker-compose.yml
+docker-compose up -d
+
 # Setting up PM Mapper certs.
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
 docker restart pmmapper
+sleep 5
 
 # Create PM Mapper feed and create PM Mapper subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+#curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
 curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 
 # Create PM Mapper tocic in Message Router
