@@ -13,6 +13,7 @@ ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 
 ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/ves-event-pnf-registration-simple.json
+${AAI_PNF_REGISTRATION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/aai-pnf-registration-simple.json
 ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_all_fields.json
 ${EVENT_WITH_IPV4}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV4.json
 ${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_with_IPV6.json
@@ -29,11 +30,11 @@ ${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/
 ${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
 *** Test Cases ***
-Valid DMaaP event can be converted to PNF_READY notification
+Process valid simple PNF Registration DMaaP event which can be converted to PNF_READY notification
     [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
-    ${VES_EVENT_PNF_REGISTRATION_SIMPLE}
+    ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    ${AAI_PNF_REGISTRATION_SIMPLE}
     #${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
     #${EVENT_WITH_IPV4}
     #${EVENT_WITH_IPV6}
