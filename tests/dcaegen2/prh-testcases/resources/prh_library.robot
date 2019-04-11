@@ -37,8 +37,7 @@ Valid event processing
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
-    #TODO to fix after CBS merge
-    #Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
 
 Check PRH log
     [Arguments]    ${searched_log}

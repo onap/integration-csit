@@ -29,7 +29,7 @@ ${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/
 ${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
 *** Test Cases ***
-Valid DMaaP event can be converted to PNF_READY notification
+Process valid simple PNF Registration DMaaP event which can be converted to PNF_READY notification
     [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
