@@ -81,7 +81,7 @@ services:
     image: docker.io/consul:1.0.6
     ports:
       - "8500:8500"
-    command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-config-dir=/consul/consul.d"]
+    command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
     volumes:
       - ./consul.d/:/consul/consul.d
 
