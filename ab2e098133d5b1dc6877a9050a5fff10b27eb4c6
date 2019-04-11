@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b6aead_b3d63949",
+        "filename": "plans/usecases/5G-bulkpm/teardown.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-04-11T12:13:39Z",
+      "side": 1,
+      "message": "Should this be commented out?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "ab2e098133d5b1dc6877a9050a5fff10b27eb4c6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59f9b99d_5e32d529",
+        "filename": "plans/usecases/5G-bulkpm/teardown.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-04-11T12:13:39Z",
+      "side": 1,
+      "message": "should this be commented out?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "ab2e098133d5b1dc6877a9050a5fff10b27eb4c6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
