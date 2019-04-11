@@ -26,12 +26,8 @@ ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
 ${TYPE-A_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${TYPE-C_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/C20190328.0000-0015.xml
-${PUBLISH_CONTENT_TYPE}                  application/octet-stream
 ${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/vendor_filter_config.json
 ${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_config.json
-${CLI_RESTART_PMMAPPER}                  docker restart pmmapper
-${CLI_DELETE_SUB1}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/1
-${CLI_DELETE_SUB2}                       curl -i -X DELETE -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:DGL" -k https://localhost:8443/subs/2
 ${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
