@@ -60,6 +60,7 @@ services:
     command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
     volumes:
       - ./consul.d/:/consul/consul.d
+    container_name: consul
 
   consul-cfg:
     image: consul:1.0.6
@@ -145,6 +146,7 @@ services:
                                               }
                                             }'
     ]
+    container_name: consul-cfg
     depends_on:
       - consul
 
@@ -156,3 +158,4 @@ services:
       - CONSUL_HOST
     depends_on:
       - consul-cfg
+    container_name: cbs
