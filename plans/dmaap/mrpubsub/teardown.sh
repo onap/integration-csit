@@ -17,6 +17,5 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
-kill-instance.sh dockercompose_dmaap_1 
-kill-instance.sh dockercompose_kafka_1 
-kill-instance.sh dockercompose_zookeeper_1
+source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-teardown.sh
+dmaap_mr_teardown
