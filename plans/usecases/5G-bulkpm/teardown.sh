@@ -1,9 +1,15 @@
 #!/bin/bash
 echo "Starting teardown script"
 docker exec dfc /bin/sh -c "less /var/log/ONAP/application.log" > /tmp/dfc_docker.log
+echo "===== DFC LOG ========"
 cat /tmp/dfc_docker.log
 sleep 3
-rm /tmp/dfc_docker.log.robot
+echo "===== PM MAPPER LOG ========"
+#cat /tmp/pmmapper_docker.log.robot
+sleep 2
+echo "===== MR LOG ========"
+#cat /tmp/mr.log
+sleep 2
 kill-instance.sh $DMAAP
 kill-instance.sh $KAFKA
 kill-instance.sh $ZOOKEEPER
