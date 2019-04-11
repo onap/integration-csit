@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c9befa_9f4de33b",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/AAI.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2815
+      },
+      "writtenOn": "2019-04-11T12:24:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the AAI simulator be as generic as possible ?\nI am not convinced that having hardcoded usecase-specific endpoints is a good approach since now the simulator needs to be extended/modified each time additional test cases require different information from AAI (i.e. reading service instance resource, etc)",
+      "revId": "0de17cccb4a235cd467496df7a7a4ca29c81f97d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
