@@ -30,15 +30,16 @@ Invalid event processing
     #Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
 
 Valid event processing
-    [Arguments]    ${input_valid__ves_event_in_dmaap}
+    [Arguments]    ${input_valid__ves_event_in_dmaap}    ${input_aai}
     [Timeout]    30s
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
+    ${aai_entry_to_be_set}=    Get Data From File    ${input_aai}
     Set event in DMaaP    ${data}
     ${pnf_name}=    Create PNF name    ${data}
     Set PNF name in AAI    ${pnf_name}
+    Set PNF content in AAI    ${aai_entry_to_be_set}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
-    #TODO to fix after CBS merge
-    #Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    100x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
 
 Check PRH log
     [Arguments]    ${searched_log}
@@ -57,6 +58,15 @@ Set PNF name in AAI
     Log    Http headers ${headers}
     Log    PNF name ${pnf_name}
     ${resp}=    Put Request    ${aai_setup_session}    /set_pnf    headers=${headers}    data=${pnf_name}
+    Should Be Equal As Strings    ${resp.status_code}    200
+
+Set PNF content in AAI
+    [Arguments]    ${aai_pnf_content}
+    ${headers}=    Create Dictionary    Accept=application/json    Content-Type=text/html
+    Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
+    Log    Http headers ${headers}
+    Log    PNF content ${aai_pnf_content}
+    ${resp}=    Put Request    ${aai_setup_session}    /setup/add_pnf_entry    headers=${headers}    data=${aai_pnf_content}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set event in DMaaP
