@@ -1,0 +1,23 @@
+{
+    "pnf-name": "NOK6061ZW9",
+    "pnf-name2": "example-pnf-name2-val-58071",
+    "pnf-name2-source": "example-pnf-name2-source-val-22408",
+    "pnf-id": "example-pnf-id-val-55834",
+    "equip-type": "example-equip-type-val-5497",
+    "equip-vendor": "example-equip-vendor-val-85730",
+    "equip-model": "example-equip-model-val-38526",
+    "management-option": "example-management-option-val-15776",
+    "ipaddress-v4-oam": "example-ipaddress-v4-oam-val-33556",
+    "sw-version": "example-sw-version-val-64239",
+    "in-maint": true,
+    "frame-id": "example-frame-id-val-76733",
+    "serial-number": "example-serial-number-val-79366",
+    "ipaddress-v4-loopback-0": "example-ipaddress-v4-loopback0-val-34781",
+    "ipaddress-v6-loopback-0": "example-ipaddress-v6-loopback0-val-29979",
+    "ipaddress-v4-aim": "example-ipaddress-v4-aim-val-53703",
+    "ipaddress-v6-aim": "example-ipaddress-v6-aim-val-93386",
+    "ipaddress-v6-oam": "example-ipaddress-v6-oam-val-92665",
+    "inv-status": "example-inv-status-val-8477",
+    "prov-status": "example-prov-status-val-68268",
+    "nf-role": "example-nf-role-val-68489"
+}
