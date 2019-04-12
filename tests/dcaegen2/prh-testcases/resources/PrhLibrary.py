@@ -10,6 +10,10 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
+    def extract_pnf_name(pnf_entry):
+        return pnf_entry.get("pnf-name")
+
+    @staticmethod
     def check_for_log(search_for):
         client = docker.from_env()
         container = client.containers.get('prh')
