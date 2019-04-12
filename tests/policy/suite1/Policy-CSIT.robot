@@ -21,6 +21,8 @@ ${CREATE_OOF_HPA_TEMPLATE}    ${CURDIR}/oofpolicy_HPA_R1.template
 ${CREATE_SDNC_VFW_TEMPLATE}     ${CURDIR}/sdncnamingpolicy_vFW.template
 ${CREATE_SDNC_VPG_TEMPLATE}     ${CURDIR}/sdncnamingpolicy_vPG.template
 ${PUSH_POLICY_TEMPLATE}   ${CURDIR}/pushpolicy.template
+${MULTIPLE_PUSH_POLICY_TEMPLATE}   ${CURDIR}/multiple_pushpolicy.template
+${MULTIPLE_UNPUSH_POLICY_TEMPLATE}   ${CURDIR}/multiple_unpushpolicy.template
 ${CREATE_OPS_VDNS_TEMPLATE}    ${CURDIR}/opspolicy_VDNS_R1.template
 ${DEL_POLICY_TEMPLATE}   ${CURDIR}/deletepolicy.template
 ${GETCONFIG_TEMPLATE}    ${CURDIR}/getconfigpolicy.template
@@ -44,6 +46,9 @@ ${OOF_POLICY_HPA_NAME}    HPA
 ${OOF_POLICY_HPA_TYPE}    Optimization 
 ${SDNC_POLICY_VFW_NAME}   ONAP_vFW_Naming
 ${SDNC_POLICY_VPG_NAME}   ONAP_vPG_Naming
+${MULTIPLE_PUSH_POLICY_NAME1}   com.testBase1
+${MULTIPLE_PUSH_POLICY_NAME2}   com.testBase2
+${MULTIPLE_PUSH_POLICY_NAME3}   com.testBase3
 ${file_path}        ../testsuite/robot/assets/templates/ControlLoopDemo__closedLoopControlName.drl
 ${RESOURCE_PATH_UPLOAD}  /pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%22Manyu456%22%2C%20%22serviceType%22%3A%22BRMSPARAM%22%7D
 ${CREATE_OPS_VCPE_TEMPLATE}      ${CURDIR}/opspolicy_vCPE_R1.template  
@@ -119,6 +124,14 @@ HPA Get OOF Policy
 
 ListPolicy
     ListPolicy test    com.Config_Sample.1.xml
+
+Multiple Push Policy
+    ${MULTIPLE_PUSH_POLICY_NAME1}=    Create Ops VDNS Policy
+    ${MULTIPLE_PUSH_POLICY_NAME2}=    Create Ops VDNS Policy
+    ${MULTIPLE_PUSH_POLICY_NAME3}=    Create Ops VDNS Policy
+    Push Multiple Policy test    ${MULTIPLE_PUSH_POLICY_NAME1}	${MULTIPLE_PUSH_POLICY_NAME2}	${MULTIPLE_PUSH_POLICY_NAME3}      ${OPS_POLICY_VDNS_TYPE}
+    Sleep    5s
+    Delete Multiple Policy test    ${MULTIPLE_PUSH_POLICY_NAME1}	${MULTIPLE_PUSH_POLICY_NAME2}	${MULTIPLE_PUSH_POLICY_NAME3}      ${OPS_POLICY_VDNS_TYPE}
 
 *** Keywords ***
 
@@ -371,4 +384,20 @@ ListPolicy test
 	${output} =     Fill JSON Template File     ${LISTPOLICY_TEMPLATE}    ${dict}
 	${put_resp} =        policy_interface.Run Policy Post Request    ${RESOURCE_PATH_LISTPOLICY}    ${output}
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
+
+Push Multiple Policy test
+    [Documentation]    Push Multiple Policy
+    [Arguments]    ${policyname1}	${policyname2}		${policyname3}    ${policytype}
+    ${dict}=     Create Dictionary     policy_name1=${policyname1}  policy_name2=${policyname2}  policy_name3=${policyname3}    policy_type=${policytype}
+	${output} =     Fill JSON Template File    ${MULTIPLE_PUSH_POLICY_TEMPLATE}     ${dict}
+    ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE_PUSH}  ${output}
+    Should Be Equal As Strings 	${put_resp.status_code} 	200
+
+Delete Multiple Policy test
+    [Documentation]    Delete Multiple Policy
+    [Arguments]    ${policyname1}	${policyname2}		${policyname3}    ${policytype}
+    ${dict}=     Create Dictionary     policy_name1=${policyname1}  policy_name2=${policyname2}  policy_name3=${policyname3}    policy_type=${policytype}
+	${output} =     Fill JSON Template File    ${MULTIPLE_UNPUSH_POLICY_TEMPLATE}     ${dict}
+    ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
+    Should Be Equal As Strings 	${put_resp.status_code} 	200
 
