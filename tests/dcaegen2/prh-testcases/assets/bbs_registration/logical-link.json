@@ -1,0 +1,11 @@
+{
+  "link-name": "bbs-link",
+  "link-type": "attachmentPoint",
+  "relationship-list": {
+    "relationship": [
+      {
+        "related-link": "/aai/v12/network/pnfs/pnf/NOK6061ZW3"
+      }
+    ]
+  }
+}
