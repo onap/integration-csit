@@ -24,7 +24,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/setup/pnf_ready', self.path) or re.search('events/pnfReady', self.path):
+            if re.search('/setup/pnf_ready', self.path):
                 global captured_prh_event
                 httpServerLib.set_response_200_ok(self, payload = captured_prh_event)
                 logger.debug('DmaapSetup GET /setup/pnf_ready -> 200 OK')
@@ -37,7 +37,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         try:
-            if re.search('/setup/ves_event', self.path) or re.search('/set_get_event', self.path):
+            if re.search('/setup/ves_event', self.path):
                 global ves_event
                 ves_event = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)

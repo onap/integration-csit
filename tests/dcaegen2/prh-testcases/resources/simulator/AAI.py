@@ -24,6 +24,21 @@ patched_pnf = AAI_RESOURCE_NOT_FOUND
 created_logical_link = AAI_RESOURCE_NOT_FOUND
 
 class AAISetup(BaseHTTPRequestHandler):
+   
+    def do_GET(self):
+        try:
+            if re.search('/setup/patched_pnf', self.path):
+                httpServerLib.set_response_200_ok(self, payload = patched_pnf)
+                logger.debug('AAISetup GET /setup/patched_pnf -> 200 OK')
+            elif re.search('/setup/created_logical_link', self.path):
+                httpServerLib.set_response_200_ok(self, payload = created_logical_link)
+                logger.debug('AAISetup GET /setup/created_logical_link -> 200 OK')
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAISetup GET ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
     def do_GET(self):
         try:
