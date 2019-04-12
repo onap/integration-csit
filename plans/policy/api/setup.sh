@@ -17,15 +17,29 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker run -d --name policy-api -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-api:2.0.0-SNAPSHOT-latest 
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml up -d
+sleep 3
 
 POLICY_API_IP=`get-instance-ip.sh policy-api`
+MARIADB_IP=`get-instance-ip.sh mariadb`
+
 echo API IP IS ${POLICY_API_IP}
+echo MARIADB IP IS ${MARIADB_IP}
+
 # Wait for initialization
 for i in {1..10}; do
    curl -sS ${POLICY_API_IP}:6969 && break
    echo sleep $i
    sleep $i
 done
+for i in {1..10}; do
+   curl -sS ${MARIADB_IP}:3306 && break
+   echo sleep $i
+   sleep $i
+done
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 ROBOT_VARIABLES="-v POLICY_API_IP:${POLICY_API_IP}"
