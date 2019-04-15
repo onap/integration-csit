@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "812a27f4_1329ceef",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-15T11:43:30Z",
+      "side": 1,
+      "message": "Is there a bug in the integration/csit scripts/setup? Should we let them know to upgrade to this docker version?\nThis can be a concern.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "81176627311077bbdcb703815c8dbc51008e0e3d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7836ed9_a58e5f63",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-15T11:43:30Z",
+      "side": 1,
+      "message": "You should ensure the mariaDB comes up BEFORE the API, so maybe makes more sense to check for this IP first?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 4
+      },
+      "revId": "81176627311077bbdcb703815c8dbc51008e0e3d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
