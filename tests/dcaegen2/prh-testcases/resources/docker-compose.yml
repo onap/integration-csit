@@ -159,3 +159,6 @@ services:
     depends_on:
       - consul-cfg
     container_name: cbs
+
+
+
