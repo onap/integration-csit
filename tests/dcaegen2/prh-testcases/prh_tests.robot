@@ -11,6 +11,7 @@ Resource          ../../common.robot
 *** Variables ***
 ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
+${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
 
 ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/ves-event-pnf-registration-simple.json
 ${AAI_PNF_REGISTRATION_SIMPLE}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/aai-pnf-registration-simple.json
