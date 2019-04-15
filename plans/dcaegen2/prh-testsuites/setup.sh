@@ -15,6 +15,8 @@ cd ${WORKSPACE}/tests/dcaegen2/prh-testcases/resources/
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker
+docker login -u docker -p docker https://nexus3.onap.org:10003
+
 docker-compose up -d --build
 
 # Extract docker images IPs
@@ -47,4 +49,4 @@ wait_for_service_init localhost:8100/heartbeat
 wait_for_service_init localhost:8200/heartbeat
 
 # #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DMAAP_SIMULATOR_SETUP:${DMAAP_SIMULATOR_IP}:2224 -v AAI_SIMULATOR_SETUP:${AAI_SIMULATOR_IP}:3335"
+ROBOT_VARIABLES="-v DMAAP_SIMULATOR_SETUP:${DMAAP_SIMULATOR_IP}:2224 -v AAI_SIMULATOR_SETUP:${AAI_SIMULATOR_IP}:3335 -v CONSUL_SETUP:${CONSUL_IP}:8500"
