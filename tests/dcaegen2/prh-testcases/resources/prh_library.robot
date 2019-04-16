@@ -92,5 +92,5 @@ Reset DMaaP simulator
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/service/cbs
     Should Be Equal As Strings    ${resp.status_code}    200
-    #${json_as_str}    Convert JSON To String    ${resp.content}
-    #Log    CBS    ${json_as_str}
+    ${json_as_str}    convert json 2 string    ${resp.content}
+    Log    CBS    ${json_as_str}

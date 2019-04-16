@@ -127,3 +127,8 @@ class PrhLibrary(object):
     @staticmethod
     def is_in_status(client, name, status):
         return len(client.containers.list(all=True, filters={"name": "^/"+name+"$", "status": status})) == 1
+
+
+    @staticmethod
+    def convert_json_2_string(json_file):
+        return  json.loads(json_file)
