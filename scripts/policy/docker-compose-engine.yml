@@ -1,0 +1,75 @@
+# Copyright 2018 AT&T Intellectual Property. All rights reserved
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+version: '2'
+services:
+   mariadb:
+      image: mariadb:10.2.14
+      container_name: mariadb
+      hostname: mariadb
+      command: ['--lower-case-table-names=1', '--wait_timeout=28800']
+      env_file: config/db/db.conf
+      volumes:
+         - ./config/db:/docker-entrypoint-initdb.d
+      expose:
+       - 3306
+   nexus:
+      image: sonatype/nexus:2.14.8-01
+      container_name: nexus
+      hostname: nexus
+   pap:
+      image: onap/policy-pe
+      environment:
+       - PRELOAD_POLICIES=${PRELOAD_POLICIES}
+      container_name: pap
+      depends_on: 
+       - mariadb
+      hostname: pap
+      expose:
+       - 8443
+       - 9091
+      command: pap
+      volumes:
+       - ./config/pe:/tmp/policy-install/config
+   pdp:
+      image: onap/policy-pe
+      container_name: pdp
+      depends_on: 
+       - pap
+      hostname: pdp
+      expose:
+       - 8081
+      command: pdp
+      volumes:
+       - ./config/pe:/tmp/policy-install/config
+   brmsgw:
+      image: onap/policy-pe
+      container_name: brmsgw
+      depends_on: 
+       - pap
+      hostname: brmsgw
+      command: brmsgw
+      volumes:
+       - ./config/pe:/tmp/policy-install/config
+   drools:
+      image: onap/policy-drools
+      container_name: drools
+      depends_on: 
+       - mariadb
+       - nexus
+      hostname: drools
+      expose:
+       - 6969
+       - 9696
+      volumes:
+       - ./config/drools:/tmp/policy-install/config
