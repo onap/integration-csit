@@ -36,14 +36,7 @@ Process valid simple PNF Registration DMaaP event which can be converted to PNF_
     [Tags]    PRH    Valid event
     [Template]    Valid event processing
     ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    ${AAI_PNF_REGISTRATION_SIMPLE}
-    #${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    #${EVENT_WITH_IPV4}
-    #${EVENT_WITH_IPV6}
-    #${EVENT_WITHOUT_IPV6_FILED}
-    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_ALL_FILLED}
-    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_EMPTY}
-    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_ALL}
-    #${EVENT_WITH_OPTIONAL_REGISTRATION_FIELDS_MISSING_PARTIAL}
+    #${VES_EVENT_PNF_REGISTRATION_SIMPLE_AND_ATTACHMENT_POINT}
 
 Invalid DMaaP event cannot be converted to PNF_READY notification
     [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification
