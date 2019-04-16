@@ -52,6 +52,18 @@ done
 # wait for container initalization
 echo sleep 60
 sleep 60
+
+# start vfc-vnflcm
+docker run -d --name vfc-vnflcm -e MSB_ADDR=${MSB_IAG_IP}:80 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/vnflcm
+VNFLCM_IP=`get-instance-ip.sh vfc-vnflcm`
+
+# Wait for initialization
+for i in {1..10}; do
+    curl -sS -m 1 ${VNFLCM_IP}:8801 && break
+    echo sleep $i
+    sleep $i
+done
+
 # start vfc-vnfres
 docker run -d --name vfc-vnfres -e MSB_ADDR=${MSB_IAG_IP}:80 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/vnfres
 VNFRES_IP=`get-instance-ip.sh vfc-vnfres`
