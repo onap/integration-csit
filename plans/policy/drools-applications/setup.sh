@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 AT&T Intellectual Property. All rights reserved.
+# Copyright 2019 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
-source ${WORKSPACE}/scripts/policy/drools-pdp-script.sh
+source ${WORKSPACE}/scripts/policy/drools-applications-script.sh
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v IP:${IP} -v POLICY_IP:${POLICY_IP} -v PDP_IP:${PDP_IP} -v DOCKER_IP:${DOCKER_IP}" 
