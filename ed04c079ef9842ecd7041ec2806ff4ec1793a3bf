@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "913d6ea1_ae10d047",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-16T21:34:20Z",
+      "side": 1,
+      "message": "I think for drools-applications if we follow the same model as in the other projects, the docker-compose can be done in the set up .. and it will only bring up the mariadb and the new \"pdpd-cl\" image.\n\nI think most of this code can be removed if we follow that model.   Let me look tomorrow into a minimalistic docker-compose and give it to you.   With only those 2 components I should be able to run the use cases I think.",
+      "revId": "ed04c079ef9842ecd7041ec2806ff4ec1793a3bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6de217_7f2f18be",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-16T21:34:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we have to do this, it should pick up from the docker compose the latest image.\n\nI think most of the code can go away.",
+      "revId": "ed04c079ef9842ecd7041ec2806ff4ec1793a3bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
