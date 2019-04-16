@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d61930d2_2e78e3f9",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-16T18:58:23Z",
+      "side": 1,
+      "message": "This is what I\u0027m trying to get to work right now.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 55
+      },
+      "revId": "3a2f4a8d49d9b842c7ab7e88472cfc3b5b0947d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4467a952_b648a02a",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-16T18:58:23Z",
+      "side": 1,
+      "message": "I will follow what Bilal did and create a custom docker-compose for drools-applications.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 9
+      },
+      "revId": "3a2f4a8d49d9b842c7ab7e88472cfc3b5b0947d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "789faf64_3f3315dc",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-16T18:58:23Z",
+      "side": 1,
+      "message": "Still needed?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "3a2f4a8d49d9b842c7ab7e88472cfc3b5b0947d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "563100d8_eaacf2d0",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-04-16T18:58:23Z",
+      "side": 1,
+      "message": "eg. remove this from policy/docker and keep it in integration repo.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "3a2f4a8d49d9b842c7ab7e88472cfc3b5b0947d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
