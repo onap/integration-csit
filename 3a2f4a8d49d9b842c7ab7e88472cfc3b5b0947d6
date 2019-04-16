@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9636d3f8_b82604fa",
+        "filename": "scripts/policy/drools-applications-script.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-16T21:34:20Z",
+      "side": 1,
+      "message": "For CSIT tests I think we don\u0027t need to do anything of",
+      "revId": "3a2f4a8d49d9b842c7ab7e88472cfc3b5b0947d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61930d2_2e78e3f9",
         "filename": "scripts/policy/drools-applications-script.sh",
         "patchSetId": 2
