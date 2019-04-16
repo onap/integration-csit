@@ -68,7 +68,7 @@ services:
     command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
                                               "dmaap.dmaapConsumerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
+                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2222,
                                               "dmaap.dmaapConsumerConfiguration.dmaapTopicName": "events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"http",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
@@ -81,7 +81,7 @@ services:
 
                                               "dmaap.dmaapProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY",
                                               "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
+                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2222,
                                               "dmaap.dmaapProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_READY",
                                               "dmaap.dmaapProducerConfiguration.dmaapProtocol":"http",
                                               "dmaap.dmaapProducerConfiguration.dmaapUserName":"admin",
@@ -90,14 +90,14 @@ services:
 
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-mr",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2222,
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "http",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
 
-                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3333/aai/v12/network/pnfs/pnf",
+                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3334/aai/v12/network/pnfs/pnf",
                                               "aai.aaiClientConfiguration.aaiHost":"aai",
                                               "aai.aaiClientConfiguration.aaiHostPortNumber":3334,
                                               "aai.aaiClientConfiguration.aaiProtocol":"https",
