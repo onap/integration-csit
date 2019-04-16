@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017, 2019 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,25 +17,10 @@
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
-docker run --name i-mock -d jamesdbloom/mockserver
-MOCK_IP=`get-instance-ip.sh i-mock`
-echo ${MOCK_IP}
-
-docker inspect i-mock
-
-# Wait for initialization
-for i in {1..10}; do
-    curl -sS ${MOCK_IP}:1080 && break
-    echo sleep $i
-    sleep $i
-done
-
-${WORKSPACE}/scripts/policy/mock-hello.sh ${MOCK_IP}
-
-source ${WORKSPACE}/scripts/policy/script1.sh
+source ${WORKSPACE}/scripts/policy/engine.sh
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v MOCK_IP:${MOCK_IP} -v IP:${IP} -v POLICY_IP:${POLICY_IP} -v PDP_IP:${PDP_IP} -v DOCKER_IP:${DOCKER_IP}" 
+ROBOT_VARIABLES="-v IP:${IP} -v POLICY_IP:${POLICY_IP} -v PDP_IP:${PDP_IP} -v DOCKER_IP:${DOCKER_IP}" 
 export PDP_IP=${PDP_IP}
 export POLICY_IP=${POLICY_IP}
 export DOCKER_IP=${DOCKER_IP}
