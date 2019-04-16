@@ -44,7 +44,7 @@ Valid event processing
     Set PNF content in AAI    ${aai_entry_to_be_set}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
     #TODO to fix after CBS merge
-    #Wait Until Keyword Succeeds    10x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    10x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
     #Wait Until Keyword Succeeds    10x    5000ms    Check PRH log    Mandingo
 
 Check PRH log
