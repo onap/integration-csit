@@ -35,7 +35,7 @@ Valid event processing
     [Arguments]    ${input_valid__ves_event_in_dmaap}    ${input_aai}
     [Timeout]    100s
     Sleep    50s
-    Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
+    #Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
     ${aai_entry_to_be_set}=    Get Data From File    ${input_aai}
     Set event in DMaaP    ${data}
@@ -44,7 +44,7 @@ Valid event processing
     Set PNF content in AAI    ${aai_entry_to_be_set}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
     #TODO to fix after CBS merge
-    #Wait Until Keyword Succeeds    10x    300ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
+    Wait Until Keyword Succeeds    10x    3000ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
     #Wait Until Keyword Succeeds    10x    5000ms    Check PRH log    Mandingo
 
 Check PRH log
@@ -52,7 +52,7 @@ Check PRH log
     ${status}=    Check for log    ${searched_log}
     Should Be Equal As Strings    ${status}    True
 
-Check PNF_READY nojson_objectification
+Check PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
     ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
     Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
