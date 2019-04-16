@@ -15,8 +15,10 @@ cd ${WORKSPACE}/tests/dcaegen2/prh-testcases/resources/
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker
-docker login -u docker -p docker https://nexus3.onap.org:10001
 
+set -e
+
+docker login -u docker -p docker https://nexus3.onap.org:10001
 docker-compose up -d --build
 
 # Extract docker images IPs
