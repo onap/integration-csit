@@ -14,6 +14,8 @@ Create sessions
     Set Suite Variable    ${dmaap_setup_session}    dmaap_setup_session
     Create Session    aai_setup_session    ${AAI_SIMULATOR_SETUP_URL}
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
+    Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
+    Set Suite Variable    ${consul_setup_session}    consul_setup_session
 
 Reset Simulators
     Reset AAI simulator
@@ -31,7 +33,9 @@ Invalid event processing
 
 Valid event processing
     [Arguments]    ${input_valid__ves_event_in_dmaap}    ${input_aai}
-    [Timeout]    30s
+    [Timeout]    100s
+    Sleep    50s
+    Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
     ${aai_entry_to_be_set}=    Get Data From File    ${input_aai}
     Set event in DMaaP    ${data}
@@ -48,7 +52,7 @@ Check PRH log
     ${status}=    Check for log    ${searched_log}
     Should Be Equal As Strings    ${status}    True
 
-Check PNF_READY notification
+Check PNF_READY nojson_objectification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
     ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
     Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
@@ -83,3 +87,10 @@ Reset AAI simulator
 Reset DMaaP simulator
     ${resp}=    Post Request     ${dmaap_setup_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
+
+
+Check CBS ready
+    ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/service/cbs
+    Should Be Equal As Strings    ${resp.status_code}    200
+    #${json_as_str}    Convert JSON To String    ${resp.content}
+    #Log    CBS    ${json_as_str}
