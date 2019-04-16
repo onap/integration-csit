@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-echo "This is ${WORKSPACE}/scripts/policy/script1.sh"
+echo "This is ${WORKSPACE}/scripts/policy/engine.sh"
 
 
 # the directory of the script

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 AT&T Intellectual Property. All rights reserved.
+# Copyright 2019 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# $1 ip address of the mock server
-
-curl -v -X PUT -d @- http://$1:1080/expectation <<EOF
-{
-    "httpRequest": {
-        "method": "GET",
-        "path": "/hello"
-    },
-    "httpResponse": {
-        "body": "Hello world!",
-        "statusCode": 200
-    }
-}
-EOF
-
+kill-instance.sh pap
+kill-instance.sh drools
+kill-instance.sh mariadb
+kill-instance.sh nexus
