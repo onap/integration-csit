@@ -20,4 +20,5 @@ kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery
 kill-instance.sh msb_consul
 kill-instance.sh vfc-db
+kill-instance.sh vfc-vnflcm
 kill-instance.sh vfc-vnfres
