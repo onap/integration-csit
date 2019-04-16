@@ -9,8 +9,7 @@ Library     HttpLibrary.HTTP
 *** Variables ***
 @{return_ok_list}=   200  201  202  204
 ${queryswagger_url}    /api/vnflcm/v1/swagger.json
-${create_vnf_url}    /api/vnflcm/v1/vnf_instances
-${delete_vnf_url}    /api/vnflcm/v1/vnf_instances
+${query_vnfs_url}    /api/vnflcm/v1/vnf_instances
 ${healthcheck_url}   /api/vnflcm/v1/health_check
 
 #json files
@@ -41,3 +40,11 @@ VnflcmHealthCheckTest
     ${response_json}    json.loads    ${resp.content}
     ${health_status}=    Convert To String      ${response_json['status']}
     Should Be Equal    ${health_status}    active
+
+VnflcmQueryVnfsTest
+    [Documentation]    check health for vnflcm by MSB
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+    Create Session    web_session    http://${VNFLCM_IP}:8801    headers=${headers}
+    ${resp}=  Get Request    web_session    ${query_vnfs_url}
+    ${responese_code}=     Convert To String      ${resp.status_code}
+    List Should Contain Value    ${return_ok_list}   ${responese_code}
