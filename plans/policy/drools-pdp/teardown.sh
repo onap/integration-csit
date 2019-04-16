@@ -24,7 +24,6 @@ docker rm -v "${name}"
 
 mkdir -p "${WORKSPACE}"/archives
 
-kill_instance i-mock
 kill_instance drools
 kill_instance pdp
 kill_instance brmsgw

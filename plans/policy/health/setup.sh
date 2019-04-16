@@ -17,22 +17,7 @@
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
-docker run --name i-mock -d jamesdbloom/mockserver
-MOCK_IP=`get-instance-ip.sh i-mock`
-echo ${MOCK_IP}
-
-docker inspect i-mock
-
-# Wait for initialization
-for i in {1..10}; do
-    curl -sS ${MOCK_IP}:1080 && break
-    echo sleep $i
-    sleep $i
-done
-
-${WORKSPACE}/scripts/policy/mock-hello.sh ${MOCK_IP}
-
-source ${WORKSPACE}/scripts/policy/script1.sh
+source ${WORKSPACE}/scripts/policy/engine.sh
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MOCK_IP:${MOCK_IP} -v IP:${IP} -v POLICY_IP:${POLICY_IP} -v PDP_IP:${PDP_IP} -v DOCKER_IP:${DOCKER_IP}" 
