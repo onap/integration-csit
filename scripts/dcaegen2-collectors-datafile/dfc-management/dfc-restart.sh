@@ -7,7 +7,7 @@ docker restart dfc_app
 DFC_APP="$(docker ps -q --filter='name=dfc_app')"
 
 
-#Wait for initialization of docker containers for dfc app and all simulators
+#Wait for initialization of docker container for dfc app
 for i in {1..10}; do
 if [ $(docker inspect --format '{{ .State.Running }}' $DFC_APP) ]
  then

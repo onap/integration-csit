@@ -4,10 +4,10 @@
 docker kill "$(docker ps -q -a)"
 docker rm "$(docker ps -q -a)"
 
-# Clone Simulators for DFC from integration repo. 
+# Clone Simulators for DFC from integration repo.
 mkdir -p $WORKSPACE/archives/dfc
 cd $WORKSPACE/archives/dfc
-git clone --depth 1 https://gerrit.onap.org/r/integration -b master   #How to make this version controlled for Dublin, El Alto etc etc
+git clone --depth 1 https://gerrit.onap.org/r/integration -b master
 
 #Location of all individual simulators for DFC
 SIM_ROOT=$WORKSPACE/archives/dfc/integration/test/mocks/datafilecollector-testharness
