@@ -29,8 +29,8 @@ Invalid event processing
     Set event in DMaaP    ${data}
     ${invalid_notification}=    Create invalid notification    ${data}
     ${notification}=    Catenate    SEPARATOR= \\n    |Incorrect json, consumerDmaapModel can not be created:     ${invalid_notification}
-    #TODO to fix after CBS merge
-    #Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
+    #TODO to fix after CBS merge - ongoing
+    Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
 
 Valid event processing
     [Arguments]    ${input_valid__ves_event_in_dmaap}    ${input_aai}
@@ -43,9 +43,7 @@ Valid event processing
     Set PNF name in AAI    ${pnf_name}
     Set PNF content in AAI    ${aai_entry_to_be_set}
     ${expected_event_pnf_ready_in_dpaap}=    create pnf ready_notification as pnf ready    ${data}
-    #TODO to fix after CBS merge
     Wait Until Keyword Succeeds    10x    3000ms    Check PNF_READY notification    ${expected_event_pnf_ready_in_dpaap}
-    #Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    Mandingo
 
 Check PRH log
     [Arguments]    ${searched_log}
