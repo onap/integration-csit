@@ -42,11 +42,7 @@ Invalid DMaaP event cannot be converted to PNF_READY notification
     [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification
     [Tags]    PRH    Invalid event
     [Template]    Invalid event processing
-    #${EVENT_WITH_MISSING_IPV4_AND_IPV6}
     ${EVENT_WITH_MISSING_SOURCENAME}
-    #${EVENT_WITH_MISSING_SOURCENAME_AND_IPV4}
-    #${EVENT_WITH_MISSING_SOURCENAME_AND_IPV6}
-    #${EVENT_WITH_MISSING_SOURCENAME_IPV4_AND_IPV6}
 
 Get valid event from DMaaP and record in AAI does not exist
     [Documentation]    PRH get valid event from DMaaP with all required fields and in AAI record doesn't exist - PRH does not produce PNF_READY notification
