@@ -11,6 +11,7 @@ Library     HttpLibrary.HTTP
 ${queryswagger_url}    /api/nslcm/v1/swagger.json
 ${create_ns_url}       /api/nslcm/v1/ns
 ${delete_ns_url}       /api/nslcm/v1/ns
+${get_ns_url}          /api/nslcm/v1/ns
 ${healthcheck_url}     /api/nslcm/v1/health_check
 
 #json files
@@ -74,3 +75,11 @@ LcmHealthCheckTest
     ${response_json}    json.loads    ${resp.content}
     ${health_status}=    Convert To String      ${response_json['status']}
     Should Be Equal    ${health_status}    active
+
+LcmGetNsTest
+    [Documentation]    get ns instances for nslcm by MSB
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    ${resp}=  Get Request    web_session    ${get_ns_url}
+    ${responese_code}=     Convert To String      ${resp.status_code}
+    List Should Contain Value    ${return_ok_list}   ${responese_code}
