@@ -10,7 +10,8 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
-    def check_for_log(search_for):
+    def find_log_entry(search_for):
+        print (type(search_for))
         client = docker.from_env()
         container = client.containers.get('prh')
         print ("Check for log searches for pattern: ", search_for )
