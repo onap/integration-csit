@@ -16,7 +16,7 @@ Create sessions
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
     Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
     Set Suite Variable    ${consul_setup_session}    consul_setup_session
-    Sleep    60s
+    Sleep    30s
 
 Reset Simulators
     Reset AAI simulator
@@ -46,12 +46,12 @@ Invalid event processing
 
 Check PRH log
     [Arguments]    ${searched_log}
-    ${status}=    Check for log    ${searched_log}
+    ${status}=    Find log entry    ${searched_log}
     Should Be Equal As Strings    ${status}    True
 
 Check PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
-    ${resp}=    Get Request    ${dmaap_setup_session}    /setup/get_pnf_ready    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_setup_session}    /setup/pnf_ready    headers=${suite_headers}
     Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
 
 Set PNF name in AAI
@@ -74,7 +74,7 @@ Set PNF content in AAI
 
 Set event in DMaaP
     [Arguments]    ${event_in_dmaap}
-    ${resp}=    Put Request    ${dmaap_setup_session}    /setup/set_ves_event    headers=${suite_headers}    data=${event_in_dmaap}
+    ${resp}=    Put Request    ${dmaap_setup_session}    /setup/ves_event    headers=${suite_headers}    data=${event_in_dmaap}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset AAI simulator
@@ -84,7 +84,6 @@ Reset AAI simulator
 Reset DMaaP simulator
     ${resp}=    Post Request     ${dmaap_setup_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
-
 
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/service/cbs
