@@ -10,7 +10,8 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
-    def check_for_log(search_for):
+    def find_log_entry(search_for):
+        print (type(search_for))
         client = docker.from_env()
         container = client.containers.get('prh')
         print ("Check for log searches for pattern: ", search_for )
@@ -127,3 +128,26 @@ class PrhLibrary(object):
     @staticmethod
     def is_in_status(client, name, status):
         return len(client.containers.list(all=True, filters={"name": "^/"+name+"$", "status": status})) == 1
+
+def main():
+    s = '''{
+  "event": {
+    "commonEventHeader": {
+      "sourceName":""
+    },
+    "pnfRegistrationFields": {
+      "oamV4IpAddress":"10.18.123.234",
+      "oamV6IpAddress":"2001:0db8:85a3:0000:0000:8a2a:0370:7334",
+      "serialNumber":"",
+      "vendorName":"",
+      "modelNumber":"",
+      "unitType":"",
+      "additionalFields": {}
+    }
+  }
+}'''
+    print(PrhLibrary.create_invalid_notification(s))
+
+
+if __name__ == '__main__':
+    main()

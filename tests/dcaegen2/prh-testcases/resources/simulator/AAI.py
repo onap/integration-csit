@@ -27,12 +27,12 @@ class AAISetup(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/setup/get_patched_pnf', self.path):
+            if re.search('/setup/patched_pnf', self.path):
                 httpServerLib.set_response_200_ok(self, payload = patched_pnf)
-                logger.debug('AAISetup GET /setup/get_patched_pnf -> 200 OK')
-            elif re.search('/setup/get_created_logical_link', self.path):
+                logger.debug('AAISetup GET /setup/patched_pnf -> 200 OK')
+            elif re.search('/setup/created_logical_link', self.path):
                 httpServerLib.set_response_200_ok(self, payload = created_logical_link)
-                logger.debug('AAISetup GET /setup/get_created_logical_link -> 200 OK')
+                logger.debug('AAISetup GET /setup/created_logical_link -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAISetup GET ' + self.path + ' -> 404 Not found')
@@ -129,7 +129,9 @@ class AAIHandler(BaseHTTPRequestHandler):
                 created_logical_link = httpServerLib.get_payload(self)
 
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('AAIHandler PUT /aai/v12/network/logical-links/logical-link/' + created_logical_link + ' -> 200 OK')
+
+                logical_link_name = basename(self.path)
+                logger.debug('AAIHandler PUT /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler PUT ' + self.path + ' -> 404 Not found')
