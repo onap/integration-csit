@@ -43,8 +43,6 @@ Invalid event processing
     ${invalid_notification}=    Create invalid notification    ${data}
     ${notification}=    Catenate    SEPARATOR= \\n    |Incorrect json, consumerDmaapModel can not be created:     ${invalid_notification}
     Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
-    #Wait Until Keyword Succeeds    100x    100ms    Check PRH log    ${notification}
-
 
 Check PRH log
     [Arguments]    ${searched_log}
@@ -53,7 +51,7 @@ Check PRH log
 
 Check PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
-    ${resp}=    Get Request    ${dmaap_setup_session}    /events/pnfReady    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_setup_session}    /setup/get_pnf_ready    headers=${suite_headers}
     Should Be Equal    ${resp.text}    ${expected_event_pnf_ready_in_dpaap}
 
 Set PNF name in AAI
@@ -76,7 +74,7 @@ Set PNF content in AAI
 
 Set event in DMaaP
     [Arguments]    ${event_in_dmaap}
-    ${resp}=    Put Request    ${dmaap_setup_session}    /set_get_event    headers=${suite_headers}    data=${event_in_dmaap}
+    ${resp}=    Put Request    ${dmaap_setup_session}    /setup/set_ves_event    headers=${suite_headers}    data=${event_in_dmaap}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset AAI simulator
