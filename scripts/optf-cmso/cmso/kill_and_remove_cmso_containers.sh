@@ -20,7 +20,7 @@
 
 echo "This is ${WORKSPACE}/scripts/optf-cmso/cmso/kill_and_remove_cmso_containers.sh"
 cd /tmp/$WORKSPACE/archives/cmso-clone
-cd cmso/cmso-robot/docker/cmso-service
+cd cmso/cmso-sonar/docker/integration
 docker-compose down
 
 cp -f ./cmso-robot/logs/output.xml $WORKSPACE/archives
