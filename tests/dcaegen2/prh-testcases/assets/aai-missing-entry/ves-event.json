@@ -1,0 +1,37 @@
+{
+  "event": {
+    "commonEventHeader": {
+      "startEpochMicrosec": 1540212137393,
+      "sourceId": "val13",
+      "eventId": "registration_40212137",
+      "nfcNamingCode": "oam",
+      "internalHeaderFields": {
+        "collectorTimeStamp": "Mon, 10 22 2018 12:42:18 UTC"
+      },
+      "eventType": "pnfRegistration",
+      "priority": "Normal",
+      "version": "4.0.1",
+      "reportingEntityName": "NOK6061ZW8",
+      "sequence": 0,
+      "domain": "pnfRegistration",
+      "lastEpochMicrosec": 1540212137393,
+      "eventName": "pnfRegistration_Nokia_5gDu",
+      "vesEventListenerVersion": "7.0.1",
+      "sourceName": "NOK6061ZW8",
+      "nfNamingCode": "gNB"
+    },
+    "pnfRegistrationFields": {
+      "unitType": "val8",
+      "serialNumber": "6061ZW9",
+      "pnfRegistrationFieldsVersion": "2.0",
+      "manufactureDate": "1540212137393",
+      "modelNumber": "val6",
+      "lastServiceDate": "1540212137393",
+      "unitFamily": "BBU",
+      "vendorName": "Nokia",
+      "oamV4IpAddress": "val3",
+      "oamV6IpAddress": "val4",
+      "softwareVersion": "val7"
+    }
+  }
+}
