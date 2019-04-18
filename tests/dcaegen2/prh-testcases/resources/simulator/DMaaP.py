@@ -85,7 +85,9 @@ class DMaaPHandler(BaseHTTPRequestHandler):
         try:
             if re.search('/events/unauthenticated.VES_PNFREG_OUTPUT/OpenDCAE-c12/c12', self.path):
                 global ves_event
-                httpServerLib.set_response_200_ok(self, payload = ves_event)
+                local_list = []
+                local_list.append(ves_event)
+                httpServerLib.set_response_200_ok(self, payload = local_list)
                 ves_event = DMAAP_EMPTY
                 logger.debug('DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200')
             else:

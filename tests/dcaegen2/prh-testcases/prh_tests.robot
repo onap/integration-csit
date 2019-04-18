@@ -31,43 +31,15 @@ ${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/
 ${Not_json_format}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/not_json_format.json
 
 *** Test Cases ***
-Process valid simple PNF Registration DMaaP event which can be converted to PNF_READY notification
-    [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
-    [Tags]    PRH    Valid event
-    [Template]    Valid event processing
-    ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    ${AAI_PNF_REGISTRATION_SIMPLE}
-    #${VES_EVENT_PNF_REGISTRATION_SIMPLE_AND_ATTACHMENT_POINT}
-
-Invalid DMaaP event cannot be converted to PNF_READY notification
-    [Documentation]    PRH get invalid event from DMaaP with missing required fields - PRH does not produce PNF_READY notification
-    [Tags]    PRH    Invalid event
-    [Template]    Invalid event processing
-    ${EVENT_WITH_MISSING_SOURCENAME}
-
-Get valid event from DMaaP and record in AAI does not exist
-    [Documentation]    PRH get valid event from DMaaP with all required fields and in AAI record doesn't exist - PRH does not produce PNF_READY notification
-    [Tags]    PRH    Missing AAI record
-    [Timeout]    30s
-    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Set PNF name in AAI    wrong_aai_record
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |AAIProducerTask exception has been registered
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
 
 Event in DMaaP is not JSON format
     [Documentation]    PRH get not JSON format event from DMaaP - PRH does not produce PNF_READY notification
     [Tags]    PRH
+    [Timeout]    150s
+    Sleep    90s
     ${data}=    Get Data From File    ${Not_json_format}
     Set event in DMaaP    ${data}
     #TODO hangs up build
-    #Wait Until Keyword Succeeds    100x    300ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
 
-Get valid event from DMaaP and AAI is not responding
-    [Documentation]    PRH get valid event from DMaaP with all required fields and AAI is not responding - PRH does not produce PNF_READY notification
-    [Tags]    PRH    AAI
-    [Timeout]    180s
-    ${data}=    Get Data From File    ${EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}
-    Ensure Container Is Exited   aai_simulator
-    Set event in DMaaP    ${data}
-    Wait Until Keyword Succeeds    100x    300ms    Check PRH log    java.net.UnknownHostException: aai
-    Ensure Container Is Running  aai_simulator
+
