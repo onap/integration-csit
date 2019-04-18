@@ -20,8 +20,3 @@ ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 ${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
 
 *** Test Cases ***
-
-Correct VES event with additional fields
-    [Tags]    PRH
-    [Template]    VES event with additional fields
-    ${TEST_CASE_DIR}/bbs_registration
