@@ -24,10 +24,10 @@ class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/setup/get_pnf_ready', self.path):
+            if re.search('/setup/pnf_ready', self.path):
                 global captured_prh_event
                 httpServerLib.set_response_200_ok(self, payload = captured_prh_event)
-                logger.debug('DmaapSetup GET /setup/get_pnf_ready -> 200 OK')
+                logger.debug('DmaapSetup GET /setup/pnf_ready -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DmaapSetup GET ' + self.path + ' -> 404 Not found')
@@ -37,11 +37,11 @@ class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         try:
-            if re.search('/setup/set_ves_event', self.path):
+            if re.search('/setup/ves_event', self.path):
                 global ves_event
                 ves_event = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('DmaapSetup PUT /setup/set_ves_event -> 200 OK')
+                logger.debug('DmaapSetup PUT /setup/ves_event -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DmaapSetup PUT ' + self.path + ' -> 404 Not found')
