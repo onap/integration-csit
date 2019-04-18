@@ -25,6 +25,7 @@ Reset Simulators
 Valid event processing
     [Arguments]    ${input_valid__ves_event_in_dmaap}    ${input_aai}
     [Timeout]    150s
+    Sleep    60s
     Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     ${data}=    Get Data From File    ${input_valid__ves_event_in_dmaap}
     ${aai_entry_to_be_set}=    Get Data From File    ${input_aai}

@@ -21,8 +21,4 @@ ${EVENT_WITH_IPV6}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_even
 ${EVENT_WITHOUT_IPV6_FILED}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets/json_events/event_without_IPV6_field.json
 
 *** Test Cases ***
-Valid DMaaP event can be converted to PNF_READY notification with ssl connection to AAI
-    [Documentation]    PRH get valid event from DMaaP with required fields - PRH produce PNF_READY notification
-    [Tags]    PRH    Valid event
-    [Template]    Valid event processing
-    ${VES_EVENT_PNF_REGISTRATION_SIMPLE}    ${AAI_PNF_REGISTRATION_SIMPLE}
+
