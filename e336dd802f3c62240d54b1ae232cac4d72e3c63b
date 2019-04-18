@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4918b13_e1d08f33",
+        "filename": "tests/vid/newVNFChange/test1.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3873
+      },
+      "writtenOn": "2019-04-18T11:53:10Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "e336dd802f3c62240d54b1ae232cac4d72e3c63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
