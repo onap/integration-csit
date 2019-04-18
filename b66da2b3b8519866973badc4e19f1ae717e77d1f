@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e832fb7d_3549d9ed",
+        "filename": "tests/dcaegen2/prh-testcases/resources/prh_library.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove get",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3099d43_2b9de164",
+        "filename": "tests/dcaegen2/prh-testcases/resources/prh_library.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove set",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5df73376_ed9ea8f4",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/AAI.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove get",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ae60f9f_d1774d5b",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/AAI.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove get",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "357711e0_57f20078",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/DMaaP.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove get",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ecccb94_194e407c",
+        "filename": "tests/dcaegen2/prh-testcases/resources/simulator/DMaaP.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-18T08:40:32Z",
+      "side": 1,
+      "message": "remove set",
+      "revId": "b66da2b3b8519866973badc4e19f1ae717e77d1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
