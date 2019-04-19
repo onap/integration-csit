@@ -12,6 +12,7 @@ ${queryswagger_url}    /api/nslcm/v1/swagger.json
 ${create_ns_url}       /api/nslcm/v1/ns
 ${delete_ns_url}       /api/nslcm/v1/ns
 ${get_ns_url}          /api/nslcm/v1/ns
+${get_subscriptions_url}          /api/nslcm/v1/subscriptions
 ${healthcheck_url}     /api/nslcm/v1/health_check
 
 #json files
@@ -81,5 +82,13 @@ LcmGetNsTest
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
     ${resp}=  Get Request    web_session    ${get_ns_url}
+    ${responese_code}=     Convert To String      ${resp.status_code}
+    List Should Contain Value    ${return_ok_list}   ${responese_code}
+
+LcmGetSubscriptionsTest
+    [Documentation]    get subscriptions for nslcm by MSB
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    ${resp}=  Get Request    web_session    ${get_subscriptions_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
