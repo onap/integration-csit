@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+2: Yang Xu <yang.xu3@huawei.com>
+Submitted-by: Yang Xu <yang.xu3@huawei.com>
+Submitted-at: Fri, 19 Apr 2019 22:33:09 +0000
+Reviewed-on: https://gerrit.onap.org/r/85845
+Project: integration/csit
+Branch: refs/heads/master
