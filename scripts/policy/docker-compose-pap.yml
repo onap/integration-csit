@@ -34,6 +34,14 @@ services:
       hostname: policy-pap
       ports:
        - "6969:6969"
+   api:
+      image: nexus3.onap.org:10001/onap/policy-api
+      container_name: policy-api
+      depends_on:
+       - mariadb
+      hostname: policy-api
+      ports:
+       - "9969:6969"
    start_dependencies:
       image: dadarek/wait-for-dependencies
       container_name: policy-wait
