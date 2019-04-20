@@ -50,11 +50,11 @@ for i in {1..3}; do
     sleep $i
 done
 
-docker ps > 1.txt
-cat 1.txt
+docker ps > ps.txt
+cat ps.txt
 echo "****************************"
-docker logs -f vfc-db > 2.txt &
-cat 2.txt
+docker logs -f vfc-db > db.txt &
+cat db.txt
 
 # Need some time so service info can be synced from discovery to api gateway
 echo sleep 60
@@ -71,15 +71,11 @@ for i in {1..10}; do
     sleep $i
 done
 
-curl http://${NSLCM_IP}:8403/api/nslcm/v1/swagger.json
-
-docker logs -f vfc-nslcm > 3.txt &
-cat 3.txt
+docker logs -f vfc-nslcm > dockerlogs.txt &
+cat dockerlogs.txt
 
 docker cp vfc-nslcm:/service/vfc/nfvo/lcm/logs/runtime_lcm.log ./
 cat runtime_lcm.log
-
-
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IAG_IP:${MSB_IAG_IP} -v NSLCM_IP:${NSLCM_IP} -v SCRIPTS:${SCRIPTS}"
