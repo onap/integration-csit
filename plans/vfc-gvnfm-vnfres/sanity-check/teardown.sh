@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# print log for vnfres
+docker cp vfc-vnfres:/service/vfc/gvnfm/vnfres/res/logs/runtime_res.log ./
+cat runtime_res.log
+
 # This script is sourced by run-csit.sh after Robot test completion.
 kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery

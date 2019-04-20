@@ -75,5 +75,11 @@ for i in {1..10}; do
     sleep $i
 done
 
+docker cp vfc-vnfres:/service/vfc/gvnfm/vnfres/res/res/pub/config/config.py ./
+cat config.py
+
+docker cp vfc-vnfres:/service/vfc/gvnfm/vnfres/res/logs/runtime_res.log ./
+cat runtime_res.log
+
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IAG_IP:${MSB_IAG_IP} -v VNFRES_IP:${VNFRES_IP} -v SCRIPTS:${SCRIPTS}"
