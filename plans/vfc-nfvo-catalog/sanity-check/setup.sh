@@ -64,5 +64,8 @@ for i in {1..10}; do
     sleep $i
 done
 
+docker cp vfc-catalog:/service/vfc/nfvo/catalog/logs/runtime_catalog.log ./
+cat runtime_catalog.log
+
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IP:${MSB_IP} -v CATALOG_IP:${CATALOG_IP} -v MSB_DISCOVERY_IP:${DISCOVERY_IP}"

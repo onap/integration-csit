@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# print log file for catalog
+docker cp vfc-catalog:/service/vfc/nfvo/catalog/logs/runtime_catalog.log ./
+cat runtime_catalog.log
+
 # This script is sourced by run-csit.sh after Robot test completion.
 kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery
