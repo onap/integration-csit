@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# print log for vnfmgr
+docker cp vfc-vnfmgr:/service/vfc/gvnfm/vnfmgr/mgr/logs/runtime_mgr.log ./
+cat runtime_mgr.log
+
 # This script is sourced by run-csit.sh after Robot test completion.
 kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery

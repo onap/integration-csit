@@ -75,5 +75,11 @@ for i in {1..10}; do
     sleep $i
 done
 
+docker cp vfc-vnfmgr:/service/vfc/gvnfm/vnfmgr/mgr/mgr/pub/config/config.py ./
+cat config.py
+
+docker cp vfc-vnfmgr:/service/vfc/gvnfm/vnfmgr/mgr/logs/runtime_mgr.log ./
+cat runtime_mgr.log
+
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IAG_IP:${MSB_IAG_IP} -v VNFMGR_IP:${VNFMGR_IP} -v SCRIPTS:${SCRIPTS}"
