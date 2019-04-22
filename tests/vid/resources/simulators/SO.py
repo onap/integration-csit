@@ -47,18 +47,8 @@ class SOHandler(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
-        print(self._known_endpoints)
         if self._does_path_exist_as_endpoint():
-            expected_response = self._get_response_by_path()
-            if expected_response:
-                self.send_response(expected_response["responseCode"])
-                self._set_headers()
-                self.wfile.write(json.dumps(expected_response["body"]).encode("utf-8"))
-            else:
-                response_body = "{\"message:\" \"no response for endpoint\"}"
-                self.send_response(400)
-                self._set_headers()
-                self.wfile.write(json.dumps(response_body).encode("utf-8"))
+            self.rest_method("GET")
         else:
             logging.info('GET called. Expected GET REQUEST: '
                          + json.dumps(self._expected_requests["get"])
@@ -69,16 +59,31 @@ class SOHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(self._expected_responses["get"]).encode("utf-8"))
 
     def do_PUT(self):
-        request_body_json = self._get_request_body()
-        if request_body_json is not None:
-            self._apply_expected_data(request_body_json)
-            logging.info("EXPECTED RESPONSES: " + str(self._expected_responses))
-            logging.info("EXPECTED REQUESTS: " + str(self._expected_requests))
-            response_status = 200
+        if self._does_path_exist_as_endpoint():
+            self.rest_method("PUT")
         else:
-            response_status = 400
-        self.send_response(response_status)
-        self._set_headers()
+            request_body_json = self._get_request_body()
+            if request_body_json is not None:
+                self._apply_expected_data(request_body_json)
+                logging.info("EXPECTED RESPONSES: " + str(self._expected_responses))
+                logging.info("EXPECTED REQUESTS: " + str(self._expected_requests))
+                response_status = 200
+            else:
+                response_status = 400
+            self.send_response(response_status)
+            self._set_headers()
+
+    def rest_method(self,method):
+        expected_response = self._get_response_by_endpoint(self.path,method)
+        if expected_response:
+            self.send_response(expected_response["responseCode"])
+            self._set_headers()
+            self.wfile.write(json.dumps(expected_response["body"]).encode("utf-8"))
+        else:
+            response_body = "{\"message:\" \"no response for endpoint\"}"
+            self.send_response(400)
+            self._set_headers()
+            self.wfile.write(json.dumps(response_body).encode("utf-8"))
 
     def _get_request_body(self):
         content_len = int(self.headers['Content-Length'], 0)
@@ -103,9 +108,9 @@ class SOHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
 
-    def _get_response_by_path(self):
+    def _get_response_by_endpoint(self, endpoint, method):
         for response in self._responses:
-            if response["path"] == self.path:
+            if response["path"] == endpoint and response["method"] == method:
                 return response
 
     def _does_path_exist_as_endpoint(self):

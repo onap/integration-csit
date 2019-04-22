@@ -10,7 +10,7 @@
     },
     {
       "method": "GET",
-      "path": "/aai/v../business/customers/customer/MSO_1610_ST",
+      "path": "/aai/v13/business/customers/customer/CAR_2020_ER",
       "queryParams": {
         "depth": "2"
       }
@@ -27,6 +27,29 @@
       "path": "/workflowSpecifications/v1/workflows",
       "queryParams": {
         "vnfModelVersionId": "103b4a1b-4a15-4559-a019-1ff132180c7c"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/aai/v13/business/customers",
+      "queryParams": {
+        "subscriber-type": "INFRA",
+        "depth": "0"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/aai/v13/service-design-and-creation/models",
+      "queryParams": {
+        "depth": "2",
+        "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/orchestrationRequests/v6",
+      "queryParams": {
+        "filter": "modelType:EQUALS:vnf"
       }
     }
   ]
