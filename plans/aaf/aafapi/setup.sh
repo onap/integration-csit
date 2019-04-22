@@ -51,9 +51,8 @@ echo "Current Dir: ${PWD}"
 
 # Locate to Docker dir
 cd auth/docker
-if [ ! -e d.props ]; then
-  cp d.props.init d.props
-fi
+cp d.props.csit d.props
+
 echo "Current Dir: ${PWD}"
 source d.props
 
