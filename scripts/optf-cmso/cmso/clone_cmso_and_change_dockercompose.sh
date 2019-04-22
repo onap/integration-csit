@@ -28,7 +28,7 @@ echo "This is ${WORKSPACE}/scripts/cmso/clone_cmso_and_change_dockercompose.sh"
 mkdir -p /tmp/$WORKSPACE/archives/cmso-clone
 cd /tmp/$WORKSPACE/archives/cmso-clone
 git clone --depth 1 https://gerrit.onap.org/r/optf/cmso -b master
-cd cmso/cmso-robot/docker/cmso-service
+cd cmso/cmso-sonar/docker/integration
 
 sed -i '/image: onap\/optf-cmso-service/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-service:latest' docker-compose.yml
 sed -i '/image: onap\/optf-cmso-dbinit/c\    image: nexus3.onap.org:10001\/onap\/optf-cmso-dbinit:latest' docker-compose.yml
@@ -50,9 +50,9 @@ cat up.txt
 echo =======================
 
 ### Wait for robot to finish
-docker exec cmsoservice_cmso-robot_1 ls
+docker exec integration_cmso-robot_1 ls
 while [ $? -ne 1 ]; do
   sleep 120
-  docker exec cmsoservice_cmso-robot_1 ls
+  docker exec integration_cmso-robot_1 ls
 done
 
