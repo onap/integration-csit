@@ -29,6 +29,7 @@ export DOCKER_REGISTRY_PREFIX="${DOCKER_REGISTRY}/"
 export CONTAINERS_NETWORK="hv-ves-default"
 export HV_VES_SERVICE_NAME="hv-ves-collector"
 export UNENCRYPTED_HV_VES_SERVICE_NAME="unencrypted-hv-ves-collector"
+export KAFKA_IMAGE_FULL_NAME="${DOCKER_REGISTRY_PREFIX}onap/dmaap/kafka111:0.0.6"
 
 export HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
 export HV_VES_HOSTNAME="dcae-hv-ves-collector"
