@@ -19,7 +19,7 @@
 import docker
 from robot.api import logger
 
-KAFKA_IMAGE_FULL_NAME = "wurstmeister/kafka"
+KAFKA_IMAGE_FULL_NAME = "nexus3.onap.org:10001/onap/dmaap/kafka111:0.0.6"
 KAFKA_ADDRESS = "kafka:9092"
 ZOOKEEPER_ADDRESS = "zookeeper:2181"
 
