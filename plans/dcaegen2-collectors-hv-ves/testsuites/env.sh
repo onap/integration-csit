@@ -24,8 +24,13 @@ export JAVA_OPTS="-Dio.netty.leakDetection.level=paranoid"
 export CONSUL_HOST="consul-server"
 export CONFIG_BINDING_SERVICE="config-binding-service"
 
-export DOCKER_REGISTRY="nexus3.onap.org:10001"
+export ONAP_NEXUS_REGISTRY="nexus3.onap.org:10001"
+export DOCKER_REGISTRY=${ONAP_NEXUS_REGISTRY}
 export DOCKER_REGISTRY_PREFIX="${DOCKER_REGISTRY}/"
+
+export KAFKA_IMAGE_FULL_NAME="${DOCKER_REGISTRY_PREFIX}onap/dmaap/kafka111:0.0.6"
+export ZOOKEEPER_IMAGE_FULL_NAME="${DOCKER_REGISTRY_PREFIX}onap/dmaap/zookeeper:4.0.0"
+
 export CONTAINERS_NETWORK="hv-ves-default"
 export HV_VES_SERVICE_NAME="hv-ves-collector"
 export UNENCRYPTED_HV_VES_SERVICE_NAME="unencrypted-hv-ves-collector"
