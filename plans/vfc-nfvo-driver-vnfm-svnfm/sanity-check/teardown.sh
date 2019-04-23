@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# print log for ztevnfmdriver
+docker cp vfc-ztevnfmdriver:/service/vfc/nfvo/driver/vnfm/svnfm/zte/vmanager/logs/runtime_ztevnfmdriver.log ./
+cat runtime_ztevnfmdriver.log
+
 # This script is sourced by run-csit.sh after Robot test completion.
 kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery
