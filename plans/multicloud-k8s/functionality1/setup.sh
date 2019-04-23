@@ -17,8 +17,22 @@ pushd ${SCRIPTS}
 ./run-instance.sh docker.io/mongo:4.0 multicloud-k8s-mongodb
 MONGO_IP=$(./get-instance-ip.sh multicloud-k8s-mongodb)
 
+# setup multicloud-k8s configuration
+CONFIG_FILE=$(pwd)/k8sconfig.json
+cat << EOF > $CONFIG_FILE
+{
+    "database-address": "$MONGO_IP",
+    "database-type": "mongo",
+    "plugin-dir": "plugins",
+    "kube-config-dir": "kubeconfigs"
+}
+EOF
+
+cat $CONFIG_FILE
+
 # start multicloud-k8s
-./run-instance.sh nexus3.onap.org:10001/onap/multicloud/k8s:latest multicloud-k8s "-e PLUGINS_DIR=/opt/multicloud/k8s -e DATABASE_TYPE=mongo -e DATABASE_IP=$MONGO_IP"
+docker run --name multicloud-k8s -v $CONFIG_FILE:/opt/multicloud/k8splugin/k8sconfig.json \
+           -d nexus3.onap.org:10001/onap/multicloud/k8s:latest
 SERVICE_IP=$(./get-instance-ip.sh multicloud-k8s)
 SERVICE_PORT=8081
 popd
