@@ -26,9 +26,11 @@ export CONFIG_BINDING_SERVICE="config-binding-service"
 
 export DOCKER_REGISTRY="docker.io"
 export DOCKER_REGISTRY_PREFIX=""
+export ONAP_NEXUS_REGISTRY="nexus3.onap.org:10001"
 export CONTAINERS_NETWORK="hv-ves-default"
 export HV_VES_SERVICE_NAME="hv-ves-collector"
 export UNENCRYPTED_HV_VES_SERVICE_NAME="unencrypted-hv-ves-collector"
+export KAFKA_IMAGE_FULL_NAME="${ONAP_NEXUS_REGISTRY}/onap/dmaap/kafka111:0.0.6"
 
 export HV_VES_GROUP_ID="org.onap.dcaegen2.collectors.hv-ves"
 export HV_VES_HOSTNAME="dcae-hv-ves-collector"
@@ -38,4 +40,3 @@ export HV_VES_VERSION="latest"
 export HV_VES_IMAGE="hv-collector-main"
 export DCAE_APP_SIMULATOR_IMAGE="hv-collector-dcae-app-simulator"
 export XNF_SIMULATOR_IMAGE="hv-ves-collector-xnf-simulator"
-
