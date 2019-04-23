@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# print log for gvnfmdriver
+docker cp vfc-gvnfmdriver:/service/vfc/nfvo/driver/vnfm/gvnfm/gvnfmadapter/logs/runtime_gvnfmdriver.log ./
+cat runtime_gvnfmdriver.log
+
 # This script is sourced by run-csit.sh after Robot test completion.
 kill-instance.sh msb_internal_apigateway
 kill-instance.sh msb_discovery
