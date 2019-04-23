@@ -52,5 +52,8 @@ for i in {1..10}; do
     sleep $i
 done
 
+docker cp vfc-gvnfmdriver:/service/vfc/nfvo/driver/vnfm/gvnfm/gvnfmadapter/logs/runtime_gvnfmdriver.log ./
+cat runtime_gvnfmdriver.log
+
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IAG_IP:${MSB_IAG_IP} -v GVNFMDRIVER_IP:${GVNFMDRIVER_IP}"
