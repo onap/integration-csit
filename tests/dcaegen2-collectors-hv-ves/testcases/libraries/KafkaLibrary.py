@@ -17,9 +17,10 @@
 # ============LICENSE_END=====================================
 
 import docker
+import os
 from robot.api import logger
 
-KAFKA_IMAGE_FULL_NAME = "wurstmeister/kafka"
+KAFKA_IMAGE_FULL_NAME = os.getenv("KAFKA_IMAGE_FULL_NAME")
 KAFKA_ADDRESS = "kafka:9092"
 ZOOKEEPER_ADDRESS = "zookeeper:2181"
 
