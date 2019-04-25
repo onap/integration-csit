@@ -86,6 +86,12 @@ cat config/pe/ip_addr.txt
 export MTU=9126
 
 export PRELOAD_POLICIES=false
+
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
 docker-compose -f docker-compose-integration.yml up -d 
 
 if [ ! $? -eq 0 ]; then
