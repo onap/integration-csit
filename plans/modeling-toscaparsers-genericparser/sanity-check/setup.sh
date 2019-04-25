@@ -56,7 +56,7 @@ echo sleep 60
 sleep 60
 
 # start modeling-genericparser
-docker run -d --name modeling-genericparser -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/catalog
+docker run -d --name modeling-genericparser -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/modeling/genericparser
 GenericParser_IP=`get-instance-ip.sh modeling-genericparser`
 for i in {1..10}; do
     curl -sS -m 1 ${GenericParser_IP}:8806 && break
