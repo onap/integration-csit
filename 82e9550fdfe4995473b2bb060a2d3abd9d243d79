@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5867f8dd_c9b847b2",
+        "filename": "tests/modeling-toscaparsers-genericparser/test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2019-04-25T09:24:09Z",
+      "side": 1,
+      "message": "need be changed",
+      "range": {
+        "startLine": 17,
+        "startChar": 54,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "82e9550fdfe4995473b2bb060a2d3abd9d243d79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "169030ad_f8c5d56f",
+        "filename": "tests/modeling-toscaparsers-genericparser/test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2019-04-25T09:24:09Z",
+      "side": 1,
+      "message": "need be changed",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "82e9550fdfe4995473b2bb060a2d3abd9d243d79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cac3ce90_ee4ddd80",
+        "filename": "tests/modeling-toscaparsers-genericparser/test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1389
+      },
+      "writtenOn": "2019-04-25T09:24:09Z",
+      "side": 1,
+      "message": "need be changed",
+      "range": {
+        "startLine": 25,
+        "startChar": 44,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "82e9550fdfe4995473b2bb060a2d3abd9d243d79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
