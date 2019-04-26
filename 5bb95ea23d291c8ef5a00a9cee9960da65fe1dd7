@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "715e7dd1_6762f834",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/docker-compose.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2019-04-26T09:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0513872_8eb5fcf2",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "5bb95ea23d291c8ef5a00a9cee9960da65fe1dd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aaecc0f_50e3541b",
         "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/env_local.sh",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c2b6c911_f02f1882",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/env_local.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2019-04-26T09:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aaecc0f_50e3541b",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "5bb95ea23d291c8ef5a00a9cee9960da65fe1dd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c56c9e_f9caf967",
         "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/env_local.sh",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2019-04-26T09:05:28Z",
       "side": 1,
       "message": "we don\u0027t need this variable, inline it. Also revert removing of DOCKER_REGISTRY_PREFIX",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "5bb95ea23d291c8ef5a00a9cee9960da65fe1dd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa7cb828_2a2b75ce",
+        "filename": "plans/dcaegen2-collectors-hv-ves/testsuites/env_local.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2019-04-26T09:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c56c9e_f9caf967",
       "range": {
         "startLine": 29,
         "startChar": 7,
