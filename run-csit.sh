@@ -97,7 +97,7 @@ pip install robotframework-selenium2library==1.8.0 robotframework-extendedseleni
 # install eteutils
 mkdir -p ${ROBOT_VENV}/src/onap
 rm -rf ${ROBOT_VENV}/src/onap/testsuite
-git clone https://gerrit.onap.org/r/testsuite/python-testing-utils.git ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils
+git clone -b casablanca https://gerrit.onap.org/r/testsuite/python-testing-utils.git ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils
 pip install --upgrade ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils
 
 pip freeze
