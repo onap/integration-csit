@@ -48,5 +48,6 @@ cd collector/ssl
 cd ../..
 
 docker-compose up -d
+docker images --digests
 
 mkdir -p ${WORKSPACE}/archives/containers_logs
