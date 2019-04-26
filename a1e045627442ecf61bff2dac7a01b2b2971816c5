@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e6317f0_7ec17a69",
+        "filename": "tests/dcaegen2/prh-testcases/bbs_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-26T08:06:57Z",
+      "side": 1,
+      "message": "Do we need to duplicate these cases?",
+      "revId": "a1e045627442ecf61bff2dac7a01b2b2971816c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71024413_ee3f06b5",
+        "filename": "tests/dcaegen2/prh-testcases/resources/PrhLibrary.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-26T08:06:57Z",
+      "side": 1,
+      "message": "Why is has been added here?",
+      "revId": "a1e045627442ecf61bff2dac7a01b2b2971816c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e10f79de_78a258a4",
+        "filename": "tests/dcaegen2/prh-testcases/resources/prh_library2.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-26T08:06:57Z",
+      "side": 1,
+      "message": "Do we need to duplicate simple registartion cases?",
+      "revId": "a1e045627442ecf61bff2dac7a01b2b2971816c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
