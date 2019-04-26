@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "450d12f8_6887fc7d",
+        "filename": "tests/dcaegen2/prh-testcases/bbs_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-04-26T09:21:50Z",
+      "side": 1,
+      "message": "Rename it as Simple registration",
+      "revId": "9b124e81d20b7b8af5fe248dd24da969c3c01b87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
