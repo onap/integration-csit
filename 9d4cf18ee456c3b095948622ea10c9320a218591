@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73df3cf4_a19369fd",
+        "filename": "run-csit.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-04-26T07:49:31Z",
+      "side": 1,
+      "message": "How is this going to work for previous branches? It should checkout casablanca when run-csit.sh is from casablanca etc. ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 70,
+        "endLine": 101,
+        "endChar": 76
+      },
+      "revId": "9d4cf18ee456c3b095948622ea10c9320a218591",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
