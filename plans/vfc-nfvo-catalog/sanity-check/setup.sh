@@ -64,9 +64,11 @@ for i in {1..10}; do
     sleep $i
 done
 
+# print catalog config
 docker cp vfc-catalog:/service/vfc/nfvo/catalog/catalog/pub/config/config.py ./
 cat config.py
 
+# print catalog log
 docker cp vfc-catalog:/service/vfc/nfvo/catalog/logs/runtime_catalog.log ./
 cat runtime_catalog.log
 
