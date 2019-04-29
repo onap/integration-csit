@@ -53,8 +53,6 @@ add new VNF Change in VID GUI From Local worfkow
     Click Element   xpath=//a[contains(text(),'vnf-ws')]
 
     Select From List  xpath=//select[@name='workflow']  VNF In Place Software Update
-    #temp solution
-    #Click Button    xpath=//button[@id='cancel']
 
     Wait Until Page Contains    Operations timeout    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
     Input Text    xpath=//input[@id='internal-workflow-parameter-text-2']    10

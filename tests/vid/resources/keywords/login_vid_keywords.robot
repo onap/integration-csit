@@ -37,8 +37,6 @@ Setup Browser Firefox
     Set Global Variable    ${GLOBAL_SELENIUM_BROWSER_CAPABILITIES}    ${dc}
 
 Setup Browser Chrome
-    #${os}=   Get Normalized Os
-    #Log    Normalized OS=${os}
     ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     Call Method    ${chrome options}    add_argument    no-sandbox
     ${dc}   Evaluate    sys.modules['selenium.webdriver'].DesiredCapabilities.CHROME  sys, selenium.webdriver

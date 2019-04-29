@@ -4,3 +4,4 @@ vid/healthCheck
 vid/login
 vid/https-connection
 vid/scaleOut
+vid/newVNFChange
