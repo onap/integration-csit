@@ -1,6 +1,11 @@
 version: '3'
 services:
 ################################################################################
+  mockserver:
+    image: jamesdbloom/mockserver
+    hostname:
+      mockserver
+################################################################################
   mariadb:
     image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:10.1.11
     ports:
