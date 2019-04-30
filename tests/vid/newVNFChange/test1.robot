@@ -18,6 +18,7 @@ add new VNF Change in VID GUI From Local worfkow
     Setup Browser
     Go To    ${VID_LOGIN_URL}
 
+
     Set Selenium Speed    ${GLOBAL_SELENIUM_DELAY}
     Set Browser Implicit Wait    ${GLOBAL_SELENIUM_BROWSER_IMPLICIT_WAIT}
 
@@ -27,6 +28,8 @@ add new VNF Change in VID GUI From Local worfkow
     Click Button    xpath=//input[@id='loginBtn']
     Wait Until Page Contains  Welcome to VID    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
 
+    Run Process  ${CURDIR}/../resources/scripts/SetFeatureFlag.sh FLAG_HANDLE_SO_WORKFLOWS false  shell=True  cwd=${CURDIR}/../resources/scripts/
+    Reload Page
     Wait Until Page Contains  VNF Changes    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
     Set Browser Implicit Wait    ${GLOBAL_SELENIUM_BROWSER_IMPLICIT_WAIT}
 
