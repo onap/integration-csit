@@ -1,18 +1,18 @@
-version: '3'
+version: '2'
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: ${MTU}
 services:
 ################################################################################
-  mockserver:
-    image: jamesdbloom/mockserver
-    hostname:
-      mockserver
-################################################################################
   mariadb:
-    image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:10.1.11
+    image: mariadb:10.1.11
     ports:
-      - "3306:3306"
+      - "3306"
     volumes:
-      - ./test_lab/volumes/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./test_lab/volumes/mariadb/conf.d:/etc/mysql/conf.d
+      - ./volumes/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./volumes/mariadb/conf.d:/etc/mysql/conf.d
     environment:
       - MYSQL_ROOT_PASSWORD=password
     hostname:
@@ -24,12 +24,12 @@ services:
         max-file: "5"
 ################################################################################
   catalog-db-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/catalog-db-adapter:${TAG}
+    image: onap/so/catalog-db-adapter
     ports:
       - "8082:8082"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/catalog-db-adapter/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/catalog-db-adapter/onapheat:/app/config
     environment:
       - APP=catalog-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -57,12 +57,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   request-db-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/request-db-adapter:${TAG}
+    image: onap/so/request-db-adapter
     ports:
       - "8083:8083"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/request-db-adapter/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/request-db-adapter/onapheat:/app/config
     environment:
       - APP=request-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -91,12 +91,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   sdnc-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdnc-adapter:${TAG}
+    image: onap/so/sdnc-adapter
     ports:
       - "8086:8086"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/sdnc-adapter/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/sdnc-adapter/onapheat:/app/config
     environment:
       - APP=sdnc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -126,12 +126,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   openstack-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/openstack-adapter:${TAG}
+    image: onap/so/openstack-adapter
     ports:
       - "8087:8087"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/openstack-adapter/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/openstack-adapter/onapheat:/app/config
     environment:
       - APP=openstack-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -161,12 +161,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   vfc-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vfc-adapter:${TAG}
+    image: onap/so/vfc-adapter
     ports:
       - "8084:8084"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/vfc-adapter/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/vfc-adapter/onapheat:/app/config
     environment:
       - APP=vfc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -196,12 +196,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   sdc-controller:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${TAG}
+    image: onap/so/sdc-controller
     ports:
       - "8085:8085"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/sdc-controller/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/sdc-controller/onapheat:/app/config
     environment:
       - APP=sdc-controller
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -231,12 +231,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   bpmn-infra:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}
+    image: onap/so/bpmn-infra
     ports:
       - "8081:8081"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/bpmn-infra/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/bpmn-infra/onapheat:/app/config
     environment:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -266,12 +266,12 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   api-handler-infra:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
+    image: onap/so/api-handler-infra
     ports:
       - "8080:8080"
     volumes:
-      - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ./test_lab/volumes/so/config/api-handler-infra/onapheat:/app/config
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/api-handler-infra/onapheat:/app/config
     environment:
       - APP=api-handler-infra
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -282,6 +282,41 @@ services:
 #     - TRUSTSTORE_PASSWORD=password
     hostname:
       api-handler-infra.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command:
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
+################################################################################
+  so-monitoring:
+    image: onap/so/so-monitoring
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ./volumes/so/config/so-monitoring/onapheat:/app/config
+    environment:
+      - APP=so-monitoring
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+#     - KEYSTORE=msoClientKeyStore-onapheat.jks
+#     - KEYSTORE_PASSWORD=password
+#     - TRUSTSTORE=msoTrustStore.jks
+#     - TRUSTSTORE_PASSWORD=password
+    hostname:
+      so-monitoring.so.testlab.onap.org
     depends_on:
       - mariadb
       - catalog-db-adapter
