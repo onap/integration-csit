@@ -40,7 +40,7 @@ Should not sent PNF ready when DMaaP event is invalid
 Should not sent PNF ready when DMaaP event is not JSON array
     [Documentation]    Event from DMaaP is not JSON array
     [Tags]    PRH    Invalid event
-    Verify incorrect JSON event is logged    ${TEST_CASES_DIR}/ves-event-not-array
+    Verify incorrect JSON event is logged    ${TEST_CASES_DIR}/ves-event-invalid
 
 Should not sent PNF ready when AAI record doesn't exist
     [Documentation]    PRH get from DMaaP valid event but given PNF doesn't exists in AAI
