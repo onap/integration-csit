@@ -28,12 +28,11 @@ Verify event with missing required field is logged
     Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    ${error_msg}
 
 Verify incorrect JSON event is logged
-    [Timeout]    60s
+    [Timeout]    90s
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    # TODO hangs build
-    #Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Element is neither JSON Object or Array
 
 Verify missing AAI record is logged
     [Arguments]    ${test_case_directory}
