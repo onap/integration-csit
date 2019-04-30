@@ -32,10 +32,10 @@ Verify incorrect JSON event is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    # TODO hangs build
-    #Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Element is neither JSON Object or Array
 
 Verify missing AAI record is logged
+    [Timeout]    100s
     [Arguments]    ${test_case_directory}
     ${incorrect_aai_entry}=    Get Data From File    ${test_case_directory}/incorrect-aai-entry.json
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
@@ -45,6 +45,7 @@ Verify missing AAI record is logged
     Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
 
 Verify AAI not responding is logged
+    [Timeout]    100s
     [Arguments]    ${test_case_directory}
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
@@ -103,6 +104,7 @@ Create sessions
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
     Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
     Set Suite Variable    ${consul_setup_session}    consul_setup_session
+    Sleep    120s
 
 Reset Simulators
     Reset AAI simulator
