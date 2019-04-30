@@ -161,23 +161,78 @@ netstat -tnl
 
 docker logs mariadb
 ${DIR}/wait_for_port.sh ${MARIADB_IP} 3306
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${MARIADB_IP} 3306"
+        telnet ${MARIADB_IP} 3306 < /dev/null
+        nc -vz ${MARIADB_IP} 3306
+        docker logs mariadb
+        exit $rc
+fi
 
-docker logs pap
+${DIR}/wait_for_port.sh ${NEXUS_IP} 8081
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${NEXUS_IP} 8081"
+	netstat -tnl
+        telnet ${NEXUS_IP} 8081 < /dev/null
+        nc -vz ${NEXUS_IP} 8081
+        docker logs nexus
+        exit $rc
+fi
+
+docker logs drools
+${DIR}/wait_for_port.sh ${POLICY_IP} 9696
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${POLICY_IP} 9696"
+	netstat -tnl
+        telnet ${POLICY_IP} 9696 < /dev/null
+        nc -vz ${POLICY_IP} 9696
+        docker logs drools
+        exit $rc
+fi
+
 ${DIR}/wait_for_port.sh ${PAP_IP} 9091
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${PAP_IP} 9091"
+	netstat -tnl
+        telnet ${PAP_IP} 9091 < /dev/null
+        nc -vz ${PAP_IP} 9091
+        docker logs pap
+        exit $rc
+fi
 
-docker logs pdp
 ${DIR}/wait_for_port.sh ${PDP_IP} 8081
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${PDP_IP} 8081"
+	netstat -tnl
+        telnet ${PDP_IP} 8081 < /dev/null
+        nc -vz ${PDP_IP} 8081
+        docker logs pdp
+        exit $rc
+fi
 
 docker logs brmsgw
 ${DIR}/wait_for_port.sh ${BRMS_IP} 9989
-
-docker logs nexus
-${DIR}/wait_for_port.sh ${NEXUS_IP} 8081
+rc=$?
+if [[ $rc != 0 ]]; then
+        echo "cannot open ${BRMS_IP} 9989"
+	netstat -tnl
+        telnet ${BRMS_IP} 9989" < /dev/null
+        nc -vz ${BRMS_IP} 9989"
+        docker logs brmsgw
+        exit $rc
+fi
 
 docker logs drools
-${DIR}/wait_for_port.sh ${POLICY_IP} 6969
+docker logs pap
+docker logs pdp
+docker logs brmsgw
 
-TIME_OUT=600
+TIME_OUT=300
 INTERVAL=20 
 TIME=0 
 while [ "$TIME" -lt "$TIME_OUT" ]; do 
@@ -189,7 +244,7 @@ while [ "$TIME" -lt "$TIME_OUT" ]; do
 	
 done
 
-TIME_OUT=600
+TIME_OUT=300
 INTERVAL=20 
 TIME=0 
 while [ "$TIME" -lt "$TIME_OUT" ]; do 

@@ -5,14 +5,17 @@ if [[ $# -ne 2 ]]; then
 	exit 1
 fi
 
-host=$1
-port=$2
+export host=$1
+export port=$2
 
 echo "Waiting for $host port $port open"
-until telnet $host $port </dev/null 2>/dev/null | grep -q '^Connected'; do
-	sleep 1
-done
+timeout 120 bash -c 'until nc -vz "$host" "$port"; do echo -n "."; sleep 1; done'
+rc=$?
+
+if [[ $rc != 0 ]]; then
+        echo "$host port $port cannot be reached"
+        exit $rc
+fi
 
 echo "$host port $port is open"
-
 exit 0
