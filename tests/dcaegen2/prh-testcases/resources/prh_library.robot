@@ -32,8 +32,7 @@ Verify incorrect JSON event is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    # TODO hangs build
-    #Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |java.lang.IllegalStateException: Not a JSON Array:
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |WARN |Element is neither JSON Object or Array
 
 Verify missing AAI record is logged
     [Arguments]    ${test_case_directory}
