@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b444a69_8e5d7310",
+        "filename": "plans/so/integration-testing/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4327
+      },
+      "writtenOn": "2019-05-02T10:57:49Z",
+      "side": 1,
+      "message": "Should this commented out line still be here?",
+      "range": {
+        "startLine": 143,
+        "startChar": 18,
+        "endLine": 143,
+        "endChar": 19
+      },
+      "revId": "7d92b07dcce06dd2225a6fd71f8cbaf33b4b12af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
