@@ -1,3 +1,4 @@
+
 version: '3'
 services:
 ################################################################################
@@ -29,10 +30,11 @@ services:
       - APP=catalog-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       catalog-db-adapter.so.testlab.onap.org
     depends_on:
@@ -62,10 +64,11 @@ services:
       - APP=request-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       request-db-adapter.so.testlab.onap.org
     depends_on:
@@ -96,6 +99,11 @@ services:
       - APP=sdnc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
 #     - KEYSTORE=msoClientKeyStore-onapheat.jks
 #     - KEYSTORE_PASSWORD=password
 #     - TRUSTSTORE=msoTrustStore.jks
@@ -121,20 +129,24 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   openstack-adapter:
+    #image: onap/so/openstack-adapter:latest
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/openstack-adapter:${TAG}
     ports:
       - "8087:8087"
+      - "5051:5051"
     volumes:
       - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ./test_lab/volumes/so/config/openstack-adapter/onapheat:/app/config
     environment:
       - APP=openstack-adapter
-      - JVM_ARGS=-Xms64m -Xmx512m
+      - JVM_ARGS=-Xms64m -Xmx512m -agentlib:jdwp=transport=dt_socket,server=y,address=5050,suspend=y
+#      - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       openstack-adapter.so.testlab.onap.org
     depends_on:
@@ -156,20 +168,23 @@ services:
       - "/app/start-app.sh"
 ################################################################################
   vfc-adapter:
+    #image: onap/so/vfc-adapter:latest
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vfc-adapter:${TAG}
     ports:
       - "8084:8084"
+      - "5050:5050"
     volumes:
       - ./test_lab/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ./test_lab/volumes/so/config/vfc-adapter/onapheat:/app/config
     environment:
       - APP=vfc-adapter
-      - JVM_ARGS=-Xms64m -Xmx512m
+      - JVM_ARGS=-Xms64m -Xmx512m -agentlib:jdwp=transport=dt_socket,server=y,address=5050,suspend=y
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       vfc-adapter.so.testlab.onap.org
     depends_on:
@@ -201,10 +216,11 @@ services:
       - APP=sdc-controller
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       sdc-controller.so.testlab.onap.org
     depends_on:
@@ -236,10 +252,11 @@ services:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       bpmn-infra.so.testlab.onap.org
     depends_on:
@@ -271,10 +288,12 @@ services:
       - APP=api-handler-infra
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+      - EXIT_DELAY=120000
     hostname:
       api-handler-infra.so.testlab.onap.org
     depends_on:
@@ -294,3 +313,17 @@ services:
       - request-db-adapter:8083
       - --
       - "/app/start-app.sh"
+
+#############################################################################
+  so-monitoring:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-monitoring:${TAG}
+    ports:
+      - "30224:9091"
+    volumes:
+      - ./test_lab/volumes/so/config/so-monitoring/onapheat:/app/config
+    environment:
+      - APP=so-monitoring
+      - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      so-monitoring.so.testlab.onap.org
+
