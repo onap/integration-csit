@@ -57,10 +57,9 @@ QueryPdpGroups
      ${resp}=   Get Request     policy  /policy/pap/v1/pdps     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  controlloop
-     Should Be Equal As Strings    ${resp.json()['groups'][1]['name']}  create.group.request
-     Should Be Equal As Strings    ${resp.json()['groups'][1]['pdpGroupState']}  ACTIVE
-     Should Be Equal As Strings    ${resp.json()['groups'][2]['name']}  monitoring
+     Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  create.group.request
+     Should Be Equal As Strings    ${resp.json()['groups'][0]['pdpGroupState']}  ACTIVE
+     Should Be Equal As Strings    ${resp.json()['groups'][1]['name']}  defaultGroup
 
 UndeployPolicy
      [Documentation]    Runs Policy PAP Undeploy a Policy from PDP Groups
@@ -81,8 +80,8 @@ QueryPdpGroupsAfterUndeploy
      ${resp}=   Get Request     policy  /policy/pap/v1/pdps     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()['groups'][1]['name']}  create.group.request
-     Should Be Equal As Strings    ${resp.json()['groups'][1]['pdpSubgroups'][0]['policies']}  []
+     Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  create.group.request
+     Should Be Equal As Strings    ${resp.json()['groups'][0]['pdpSubgroups'][0]['policies']}  []
 
 DeactivatePdpGroup
      [Documentation]    Runs Policy PAP Change PDP Group State to PASSIVE
@@ -113,5 +112,4 @@ QueryPdpGroupsAfterDelete
      ${resp}=   Get Request     policy  /policy/pap/v1/pdps     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  controlloop
-     Should Be Equal As Strings    ${resp.json()['groups'][1]['name']}  monitoring
+     Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  defaultGroup
