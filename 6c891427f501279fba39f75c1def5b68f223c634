@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7984dcf9_e36ac02e",
+        "filename": "plans/so/integration-testing/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 44
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc5e21f8_6bb1e146",
+        "filename": "plans/so/integration-testing/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "do you need these parameters?",
+      "range": {
+        "startLine": 142,
+        "startChar": 34,
+        "endLine": 142,
+        "endChar": 100
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a26fcb8_8c4c8b76",
+        "filename": "plans/so/integration-testing/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 38
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1de48656_eecf74c0",
+        "filename": "plans/so/integration-testing/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 181,
+        "startChar": 34,
+        "endLine": 181,
+        "endChar": 100
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e73a275_2706ea03",
+        "filename": "plans/so/integration-testing/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "Use released versions",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac0e8a0_9fc7bb1f",
+        "filename": "plans/so/integration-testing/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "revert this",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8af5ef17_52b91576",
+        "filename": "plans/so/integration-testing/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "Changing this will increase test execution time, do you need it?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ff6c11a_bcd4bc3a",
+        "filename": "plans/so/integration-testing/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fbf45fe_5cb68cd8",
+        "filename": "tests/dcaegen2/bbs-testcases/resources/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "use released versions",
+      "range": {
+        "startLine": 4,
+        "startChar": 101,
+        "endLine": 4,
+        "endChar": 110
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d66fe81f_bd1d5fdf",
+        "filename": "tests/dcaegen2/prh-testcases/resources/prh_library.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-05-02T11:48:03Z",
+      "side": 1,
+      "message": "is this expected?",
+      "range": {
+        "startLine": 36,
+        "startChar": 71,
+        "endLine": 36,
+        "endChar": 120
+      },
+      "revId": "6c891427f501279fba39f75c1def5b68f223c634",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
