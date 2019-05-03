@@ -65,7 +65,7 @@ sleep 5
 # Clone DMaaP Data Router repo
 mkdir -p $WORKSPACE/archives/dmaapdr
 cd $WORKSPACE/archives/dmaapdr
-git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
+git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b dublin
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
 mkdir docker-compose
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
