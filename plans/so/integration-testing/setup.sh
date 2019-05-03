@@ -1,4 +1,4 @@
-#!/bin/bash
+##!/bin/bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 #
@@ -20,7 +20,7 @@
 git clone http://gerrit.onap.org/r/so/docker-config.git test_lab
 
 export NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
-export TAG=1.3.1
+export TAG=1.4.0-STAGING-latest
 
 # bring the so dockers
 docker-compose pull
@@ -31,4 +31,5 @@ sleep 4m
 #REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' so`
 REPO_IP='127.0.0.1'
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
+ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}" 
+

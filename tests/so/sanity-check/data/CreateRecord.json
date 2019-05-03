@@ -1,0 +1,38 @@
+
+{
+   "requestDetails": {
+     "modelInfo": {
+       "modelType": "service",
+       "modelInvariantId": "ff3514e3-5a33-55df-13ab-12abad84e7ff",
+       "modelNameVersionId": "fe6985cd-ea33-3346-ac12-ab121484a3fe",
+       "modelName": "Test",
+       "modelVersion": "1.0"
+     },
+     "subscriberInfo": {
+       "globalSubscriberId": "demo",
+       "subscriberName": "demo"
+     },
+     "requestInfo": {
+       "instanceName": "MSO_TEST",
+       "productFamilyId": "vCPEid",
+       "source": "VID",
+       "requestorId": "demo",
+       "suppressRollback": true
+     },
+     "owningEntity": {
+       "owningEntityId": "f41655d8-3c25-4425-a2ed-ed46cca9702d",
+       "owningEntityName": "demoOE"
+     },
+     "requestParameters": {
+       "subscriptionServiceType": "MOG",
+       "userParams": [
+         {
+           "name": "someUserParam",
+           "value": "someValue"
+         }
+       ]
+     }
+   }
+}
+
+
