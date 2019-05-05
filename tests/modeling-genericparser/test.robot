@@ -6,7 +6,7 @@ Library     json
 
 *** Variables ***
 @{return_ok_list}=         200  201  202
-${queryswagger_url}        /api/genericparser/v1/swagger.json
+${queryswagger_url}        /api/parser/v1/swagger.json
 ${queryVNFPackage_url}     /api/parser/v1/vnfpackages
 ${queryNSPackages_url}     /api/parser/v1/nspackages
 ${healthcheck_url}         /api/parser/v1/health_check
