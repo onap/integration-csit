@@ -1,5 +1,6 @@
 *** Settings ***
 Library           RequestsLibrary
+Library           Collections
 Library           PrhLibrary.py
 Resource          ../../../common.robot
 
@@ -54,9 +55,10 @@ Verify AAI not responding is logged
     Ensure Container Is Running   aai_simulator
 
 Check CBS ready
-    ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/service/cbs
+    ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
     Should Be Equal As Strings    ${resp.status_code}    200
-    Log    CBS ${resp.content}
+    Log    Service Catalog response: ${resp.content}
+    Dictionary Should Contain Key    ${resp.json()}    cbs    |Consul service catalog should contain CBS entry
 
 Check recorded PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
