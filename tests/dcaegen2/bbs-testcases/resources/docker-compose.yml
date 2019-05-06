@@ -1,7 +1,7 @@
 version: '3'
 services:
   bbs:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.bbs-event-processor:1.0.0-SNAPSHOT
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.bbs-event-processor:1.0.0
     command: >
         --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap_simulator
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
