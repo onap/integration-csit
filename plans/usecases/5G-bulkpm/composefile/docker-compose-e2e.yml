@@ -82,7 +82,7 @@ services:
 
   dfc:
     container_name: dfc
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:1.1.1
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:1.1.2
     ports:
       - "8433:8433"
     extra_hosts:
