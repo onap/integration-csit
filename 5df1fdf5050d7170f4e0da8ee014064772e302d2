@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0abb73f9_b96e90af",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-05-07T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecbad71d_14469f62",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "164e896f_45851504",
         "filename": "scripts/policy/policy-apex-pdp/config/db/db.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2019-05-07T12:06:39Z",
       "side": 1,
       "message": "Nordix?",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b837aee_e0912af8",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-05-07T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "164e896f_45851504",
       "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6e861e0_72b9e0a3",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-05-07T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9003589c_b3ca4c66",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "176746e0_4186e420",
         "filename": "tests/policy/apex-pdp/apex-pdp-test.robot",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2019-05-07T12:06:39Z",
       "side": 1,
       "message": "note: just because \"deploy\" returns success does not mean it has been deployed to APEX yet; it may take a second for it to go through DMaaP.",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a7731a3_7a1c4ac7",
+        "filename": "tests/policy/apex-pdp/apex-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-05-07T13:41:21Z",
+      "side": 1,
+      "message": "Yes, you are correct. Once the DeployOperationalPolicy succeeds, the test executes RunEventsOnApexEngine every 10 seconds until it succeeds(maximum time to retry is given as 4minutes here). Normally in the first or second attempt, the ApexEngine will be up with the policy running.",
+      "parentUuid": "176746e0_4186e420",
       "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
