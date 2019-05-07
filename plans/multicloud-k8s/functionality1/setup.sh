@@ -19,11 +19,13 @@ MONGO_IP=$(./get-instance-ip.sh multicloud-k8s-mongodb)
 
 # setup multicloud-k8s configuration
 CONFIG_FILE=$(pwd)/k8sconfig.json
+SERVICE_PORT=9015
 cat << EOF > $CONFIG_FILE
 {
     "database-address": "$MONGO_IP",
     "database-type": "mongo",
     "plugin-dir": "plugins",
+    "service-port": "$SERVICE_PORT",
     "kube-config-dir": "kubeconfigs"
 }
 EOF
@@ -34,7 +36,6 @@ cat $CONFIG_FILE
 docker run --name multicloud-k8s -v $CONFIG_FILE:/opt/multicloud/k8splugin/k8sconfig.json \
            -d nexus3.onap.org:10001/onap/multicloud/k8s:latest
 SERVICE_IP=$(./get-instance-ip.sh multicloud-k8s)
-SERVICE_PORT=8081
 popd
 
 if [[ $no_proxy && $no_proxy != *$SERVICE_IP* ]]; then
