@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecbad71d_14469f62",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-05-07T12:06:39Z",
+      "side": 1,
+      "message": "Nordix?",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "164e896f_45851504",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-05-07T12:06:39Z",
+      "side": 1,
+      "message": "Nordix?",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9003589c_b3ca4c66",
+        "filename": "scripts/policy/policy-apex-pdp/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-05-07T12:06:39Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "176746e0_4186e420",
+        "filename": "tests/policy/apex-pdp/apex-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-05-07T12:06:39Z",
+      "side": 1,
+      "message": "note: just because \"deploy\" returns success does not mean it has been deployed to APEX yet; it may take a second for it to go through DMaaP.",
+      "revId": "5df1fdf5050d7170f4e0da8ee014064772e302d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
