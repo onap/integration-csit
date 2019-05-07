@@ -11,7 +11,7 @@ Test Teardown     Delete All Sessions
 
 
 *** Variables ***
-${CLI_EXEC_CLI_CONFIG}                   { head -n 6 | tail -2;} < /tmp/pmmapper.log
+${CLI_EXEC_CLI_CONFIG}                   { head -n 10 | tail -5;} < /tmp/pmmapper.log
 ${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
