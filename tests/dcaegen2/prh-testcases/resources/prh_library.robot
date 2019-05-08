@@ -106,7 +106,6 @@ Create sessions
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
     Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
     Set Suite Variable    ${consul_setup_session}    consul_setup_session
-    Sleep    120s
 
 Reset Simulators
     Reset AAI simulator
