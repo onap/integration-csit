@@ -1,4 +1,4 @@
-version: "3"
+version: "2.4"
 services:
   prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
@@ -10,9 +10,12 @@ services:
       - PRH_LOG_LEVEL
     container_name: prh
     depends_on:
-      - cbs
-      - dmaap-mr
-      - aai
+      cbs:
+        condition: service_healthy
+      dmaap-mr:
+        condition: service_started
+      aai:
+        condition: service_started
 
   ssl_prh:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
@@ -29,9 +32,12 @@ services:
       - CONFIG_BINDING_SERVICE
     container_name: ssl_prh
     depends_on:
-      - cbs
-      - dmaap-mr
-      - aai
+      cbs:
+        condition: service_healthy
+      dmaap-mr:
+        condition: service_started
+      aai:
+        condition: service_started
 
   dmaap-mr:
     build:
@@ -158,6 +164,11 @@ services:
       - CONSUL_HOST
     depends_on:
       - consul-cfg
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:10000/service_component_all/dcae-prh"]
+      interval: 3s
+      timeout: 2s
+      retries: 20
     container_name: cbs
 
 
