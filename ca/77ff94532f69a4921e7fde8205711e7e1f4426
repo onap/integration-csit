@@ -1,0 +1,10 @@
+Code-Review+1: Filip Krzywka <filip.krzywka@nokia.com>
+Code-Review+1: Kornel Janiak <kornel.janiak@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jakub Dudycz <jakub.dudycz@nokia.com>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Fri, 10 May 2019 12:46:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/87413
+Project: integration/csit
+Branch: refs/heads/dublin
