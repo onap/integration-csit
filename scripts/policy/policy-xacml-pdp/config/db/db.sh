@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xv
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
@@ -17,8 +17,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-kill-instance.sh policy-xacml-pdp
-kill-instance.sh policy-pap
-kill-instance.sh policy-api
-kill-instance.sh mariadb
-kill-instance.sh dmaap-simulator
+for db in policyadmin
+do
+     mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "CREATE DATABASE IF NOT EXISTS ${db};"
+     mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "GRANT ALL PRIVILEGES ON \`${db}\`.* TO '${MYSQL_USER}'@'%' ;"
+done
+
+mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "FLUSH PRIVILEGES;"
