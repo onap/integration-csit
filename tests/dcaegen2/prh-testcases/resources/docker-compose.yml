@@ -1,27 +1,10 @@
 version: "2.2"
 services:
   prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.2.3-SNAPSHOT    # TODO switch back from Dublin version to 'latest'
     ports:
       - "8100:8100"
       - "8433:8433"
-    environment:
-      - LOG_LEVEL
-      - PRH_LOG_LEVEL
-    container_name: prh
-    depends_on:
-      cbs:
-        condition: service_healthy
-      dmaap-mr:
-        condition: service_started
-      aai:
-        condition: service_started
-
-  ssl_prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-    ports:
-      - "8200:8100"
-      - "8533:8433"
     volumes:
       - ./simulator/certs:/tmp/certs
     environment:
@@ -30,7 +13,7 @@ services:
       - HOSTNAME
       - CONSUL_HOST
       - CONFIG_BINDING_SERVICE
-    container_name: ssl_prh
+    container_name: prh
     depends_on:
       cbs:
         condition: service_healthy
@@ -72,11 +55,11 @@ services:
     image: consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
-                                              "dmaap.dmaapConsumerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT",
+                                              "dmaap.dmaapConsumerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.VES_PNFREG_OUTPUT",
                                               "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2222,
+                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapConsumerConfiguration.dmaapTopicName": "events/unauthenticated.VES_PNFREG_OUTPUT",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"http",
+                                              "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"https",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
@@ -85,20 +68,20 @@ services:
                                               "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
                                               "dmaap.dmaapConsumerConfiguration.messageLimit": -1,
 
-                                              "dmaap.dmaapProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY",
+                                              "dmaap.dmaapProducerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.PNF_READY",
                                               "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2222,
+                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
                                               "dmaap.dmaapProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_READY",
-                                              "dmaap.dmaapProducerConfiguration.dmaapProtocol":"http",
+                                              "dmaap.dmaapProducerConfiguration.dmaapProtocol":"https",
                                               "dmaap.dmaapProducerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
 
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUrl":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE",
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.PNF_UPDATE",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-mr",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2222,
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "http",
+                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "https",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
@@ -109,7 +92,7 @@ services:
                                               "aai.aaiClientConfiguration.aaiProtocol":"https",
                                               "aai.aaiClientConfiguration.aaiUserName": "DCAE",
                                               "aai.aaiClientConfiguration.aaiUserPassword": "DCAE",
-                                              "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": true,
+                                              "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": false,
                                               "aai.aaiClientConfiguration.aaiBasePath": "/aai/v12",
                                               "aai.aaiClientConfiguration.aaiPnfPath": "/network/pnfs/pnf",
                                               "aai.aaiClientConfiguration.aaiServiceInstancePath":"/business/customers/customer/${customer}/service-subscriptions/service-subscription/${serviceType}/service-instances/service-instance/${serviceInstanceId}",
@@ -121,24 +104,24 @@ services:
                                                         "Authorization": "Basic QUFJOkFBSQ=="
                                               },
 
-                                              "security.trustStorePath":"change it",
-                                              "security.trustStorePasswordPath":"change it",
-                                              "security.keyStorePath":"change it",
-                                              "security.keyStorePasswordPath":"change it",
-                                              "security.enableAaiCertAuth":false,
-                                              "security.enableDmaapCertAuth":false,
+                                              "security.trustStorePath":"/tmp/certs/org.onap.dcae.trust.jks",
+                                              "security.trustStorePasswordPath":"/tmp/certs/truststore.password",
+                                              "security.keyStorePath":"/tmp/certs/org.onap.dcae.jks",
+                                              "security.keyStorePasswordPath":"/tmp/certs/keystore.password",
+                                              "security.enableAaiCertAuth":true,
+                                              "security.enableDmaapCertAuth":true,
 
                                               "streams_publishes":{
                                                 "pnf-update":{
                                                   "type": "message_router",
                                                   "dmaap_info":{
-                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_UPDATE"
+                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.PNF_UPDATE"
                                                   }
                                                 },
                                                 "pnf-ready":{
                                                   "type": "message_router",
                                                   "dmaap_info":{
-                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.PNF_READY"
+                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.PNF_READY"
                                                   }
                                                 }
                                               },
@@ -146,7 +129,7 @@ services:
                                                 "ves-reg-output":{
                                                   "type": "message_router",
                                                   "dmaap_info":{
-                                                    "topic_url":"http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT"
+                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.VES_PNFREG_OUTPUT"
                                                   }
                                                 }
                                               }
