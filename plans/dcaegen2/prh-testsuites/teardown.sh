@@ -16,7 +16,6 @@
 #
 
 kill-instance.sh prh
-kill-instance.sh ssl_prh
 kill-instance.sh dmaap_simulator
 kill-instance.sh aai_simulator
 kill-instance.sh consul

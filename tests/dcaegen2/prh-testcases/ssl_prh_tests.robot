@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation     Integration tests for PRH.
 ...               PRH receive events from DMaaP and produce or not PNF_READY notification depends on required fields in received event. PRH comunicates with AAI and DMaaP through SSL
-Suite Setup       Run keywords   Create headers  AND  Create sessions  AND  Ensure Container Is Running  ssl_prh  AND  Ensure Container Is Exited  prh
-Suite Teardown    Ensure Container Is Running  prh
+Suite Setup       Run keywords   Create headers  AND  Create sessions
 Test Teardown     Reset Simulators
 Library           resources/PrhLibrary.py
 Resource          resources/prh_library.robot
