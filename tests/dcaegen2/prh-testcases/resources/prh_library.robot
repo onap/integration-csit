@@ -22,6 +22,7 @@ Verify PNF ready sent and logical link created
     Check recorded Logical Link    ${expected_logical_link}
 
 Verify event with missing required field is logged
+    [Timeout]    100s
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
@@ -73,6 +74,7 @@ Check recorded Logical Link
     Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
 
 Check PRH log
+    [Timeout]      10s
     [Arguments]    ${log_entry}
     ${found}=    Find log entry    ${log_entry}
     Should Be True    ${found}
