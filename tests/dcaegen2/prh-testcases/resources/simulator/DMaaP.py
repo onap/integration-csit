@@ -98,7 +98,7 @@ class DMaaPHandler(BaseHTTPRequestHandler):
 def _main_(handler_class=DMaaPHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
     httpServerLib.start_http_endpoint(2222, DMaaPHandler)
-    httpServerLib.start_https_endpoint(2223, DMaaPHandler, keyfile="certs/org.onap.dmaap-bc.key", certfile="certs/dmaap_bc_topic_mgr_dmaap_bc.onap.org.cer", ca_certs="certs/ca_local_0.cer")
+    httpServerLib.start_https_endpoint(2223, DMaaPHandler, keyfile="certs/org.onap.dmaap-mr.key", certfile="certs/dmaap_mr.onap.org.cer", ca_certs="certs/ca_local_0.cer")
     httpServerLib.start_http_endpoint(2224, DmaapSetup)
     while 1:
         time.sleep(10)
