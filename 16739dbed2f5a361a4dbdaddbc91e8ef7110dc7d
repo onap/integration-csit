@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd898d2b_8f4bf491",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-05-17T08:22:15Z",
+      "side": 1,
+      "message": "Remove snapshot",
+      "revId": "16739dbed2f5a361a4dbdaddbc91e8ef7110dc7d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
