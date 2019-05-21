@@ -1,8 +1,22 @@
 #!/bin/bash
 
+function usage {
+    echo "usage: setup_sdc_for_sanity.sh {tad|tud}"
+    echo "setup sdc and run api test suite: setup_sdc_for_sanity.sh tad"
+    echo "setup sdc and run ui test suite: setup_sdc_for_sanity.sh tud"
+}
+
+
 set -x
 
-echo "This is ${WORKSPACE}/scripts/sdc/clone_and_setup_sdc_data.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh"
+
+
+if [ "$1" != "tad" ] && [ "$1" != "tud" ]; then
+    usage
+    exit 1
+fi 
+
 
 # Clone sdc enviroment template 
 mkdir -p ${WORKSPACE}/data/environments/
@@ -22,6 +36,7 @@ chmod -R 777 ${WORKSPACE}/data/clone
 
 export ENV_NAME='CSIT'
 export MR_IP_ADDR='10.0.0.1'
+export TEST_SUITE=$1
 
 ifconfig
 IP_ADDRESS=`ip route get 8.8.8.8 | awk '/src/{ print $7 }'`
@@ -47,7 +62,7 @@ cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/sc
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
 
-${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -tud
+${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -${TEST_SUITE}
 
 sleep 120
 
@@ -77,7 +92,7 @@ done
 
 if [ "$TIME" -ge "$TIME_OUT" ]
  then
-   echo TIME OUT: Sany was NOT completed in $TIME_OUT seconds... Could cause problems for tests...
+   echo TIME OUT: SDC sanity was NOT completed in $TIME_OUT seconds... Could cause problems for tests...
 fi
 
 
