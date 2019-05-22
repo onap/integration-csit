@@ -1,11 +1,13 @@
-{
-  "event": {
-    "commonEventHeader": {
-      "sourceName":""
-    },
-    "pnfRegistrationFields": {
-      "oamV4IpAddress":"",
-      "oamV6IpAddress":""
+[
+  {
+    "event": {
+      "commonEventHeader": {
+        "sourceName": ""
+      },
+      "pnfRegistrationFields": {
+        "oamV4IpAddress": "",
+        "oamV6IpAddress": ""
+      }
     }
   }
-}
+]

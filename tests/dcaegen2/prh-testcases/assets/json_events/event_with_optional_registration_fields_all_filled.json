@@ -1,22 +1,24 @@
-{
-  "event": {
-    "commonEventHeader": {
-      "sourceName":"NOK6061ZW4",
-      "nfNamingCode": "nfNamingCode",
-      "nfcNamingCode": "nfcNamingCode"
-    },
-    "pnfRegistrationFields": {
-      "oamV4IpAddress":"ipv4",
-      "oamV6IpAddress":"",
-      "serialNumber":"sn1234",
-      "vendorName":"vendorName",
-      "modelNumber":"modelNumber",
-      "unitType":"unitType",
-      "additionalFields": {
-        "attachmentPoint": "bla-bla-30-3",
-        "svlan": "1005",
-        "cvlan": "678"
+[
+  {
+    "event": {
+      "commonEventHeader": {
+        "sourceName": "NOK6061ZW4",
+        "nfNamingCode": "nfNamingCode",
+        "nfcNamingCode": "nfcNamingCode"
+      },
+      "pnfRegistrationFields": {
+        "oamV4IpAddress": "ipv4",
+        "oamV6IpAddress": "",
+        "serialNumber": "sn1234",
+        "vendorName": "vendorName",
+        "modelNumber": "modelNumber",
+        "unitType": "unitType",
+        "additionalFields": {
+          "attachmentPoint": "bla-bla-30-3",
+          "svlan": "1005",
+          "cvlan": "678"
+        }
       }
     }
   }
-}
+]

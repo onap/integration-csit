@@ -1,19 +1,21 @@
-{
-  "event": {
-    "commonEventHeader": {
-      "sourceName":"NOK6061ZW1",
-      "nfNamingCode": "nfNamingCode"
-    },
-    "pnfRegistrationFields": {
-      "serialNumber":"serialNumber",
-      "vendorName":"vendorName",
-      "modelNumber":"modelNumber",
-      "unitType":"unitType",
-      "additionalFields": {
-        "attachmentPoint": "bla-bla-30-3",
-        "svlan": "1005",
-        "cvlan": "678"
+[
+  {
+    "event": {
+      "commonEventHeader": {
+        "sourceName": "NOK6061ZW1",
+        "nfNamingCode": "nfNamingCode"
+      },
+      "pnfRegistrationFields": {
+        "serialNumber": "serialNumber",
+        "vendorName": "vendorName",
+        "modelNumber": "modelNumber",
+        "unitType": "unitType",
+        "additionalFields": {
+          "attachmentPoint": "bla-bla-30-3",
+          "svlan": "1005",
+          "cvlan": "678"
+        }
       }
     }
   }
-}
+]

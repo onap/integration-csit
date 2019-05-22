@@ -4,6 +4,7 @@ Documentation     Integration tests for PRH.
 Suite Setup       Run keywords   Create Headers  AND  Create sessions  AND  Ensure Container Is Running  prh  AND  Ensure Container Is Exited  ssl_prh
 Suite Teardown    Ensure Container Is Running  ssl_prh
 Test Teardown     Reset Simulators
+Test Timeout      2 minutes
 
 Library           resources/PrhLibrary.py
 Resource          resources/prh_library.robot

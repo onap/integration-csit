@@ -24,16 +24,16 @@ class PrhLibrary(object):
 
     @staticmethod
     def create_invalid_notification(json_file):
-        json_to_python = json.loads(json_file)
-        correlation_id = PrhLibrary.extract_correlation_id_value(json_to_python, "correlationId")
-        ipv4 = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "oamV4IpAddress", "oamV4IpAddress")
-        ipv6 = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "oamV6IpAddress", "oamV6IpAddress")
-        serial_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "serialNumber", "serialNumber")
-        vendor_name = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "vendorName", "vendorName")
-        model_number = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "modelNumber", "modelNumber")
-        unit_type = PrhLibrary.extract_value_from_pnfRegistrationFields(json_to_python, "unitType", "unitType")
+        event = json.loads(json_file)[0]
+        correlation_id = PrhLibrary.extract_correlation_id_value(event, "correlationId")
+        ipv4 = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "oamV4IpAddress", "oamV4IpAddress")
+        ipv6 = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "oamV6IpAddress", "oamV6IpAddress")
+        serial_number = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "serialNumber", "serialNumber")
+        vendor_name = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "vendorName", "vendorName")
+        model_number = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "modelNumber", "modelNumber")
+        unit_type = PrhLibrary.extract_value_from_pnfRegistrationFields(event, "unitType", "unitType")
 
-        additional_fields = PrhLibrary.extract_additional_fields(json_to_python)
+        additional_fields = PrhLibrary.extract_additional_fields(event)
 
         str_json = '{' + correlation_id + ipv4 + ipv6 + serial_number + vendor_name + model_number + unit_type + '"nfNamingCode":""' + "," + '"softwareVersion":"",' + additional_fields
         return json.dumps(str_json).replace("\\", "")[1:-1].replace("\":", "\": ").rstrip(',') + '\\n}'

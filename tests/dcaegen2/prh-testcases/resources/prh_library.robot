@@ -33,7 +33,7 @@ Verify incorrect JSON event is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Element is neither JSON Object or Array
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray
 
 Verify missing AAI record is logged
     [Timeout]    100s

@@ -1,14 +1,16 @@
-{
-  "event": {
-    "commonEventHeader": {
-      "sourceName":"NOK6061ZW9"
-    },
-    "pnfRegistrationFields": {
-      "oamV4IpAddress":"10.17.123.24",
-      "serialNumber":"NOkkaaa123",
-      "vendorName":"equipVendor",
-      "modelNumber":"equipModel",
-      "unitType":"equipType"
+[
+  {
+    "event": {
+      "commonEventHeader": {
+        "sourceName": "NOK6061ZW9"
+      },
+      "pnfRegistrationFields": {
+        "oamV4IpAddress": "10.17.123.24",
+        "serialNumber": "NOkkaaa123",
+        "vendorName": "equipVendor",
+        "modelNumber": "equipModel",
+        "unitType": "equipType"
+      }
     }
   }
-}
+]
