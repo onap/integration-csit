@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation     Integration tests for PRH.
 ...               PRH receive events from DMaaP and produce or not PNF_READY notification depends on required fields in received event.
-Suite Setup       Run keywords   Create Headers  AND  Create sessions  AND  Ensure Container Is Running  prh  AND  Ensure Container Is Exited  ssl_prh
-Suite Teardown    Ensure Container Is Running  ssl_prh
+Suite Setup       Run keywords   Create Headers  AND  Create sessions
 Test Teardown     Reset Simulators
 Test Timeout      2 minutes
 
@@ -27,7 +26,7 @@ Simple BBS case event
 Simple registration event
     [Documentation]    PRH get from DMaaP valid event without valid attachment point
     [Tags]    PRH    Valid event
-    [Template]    Verify PNF ready sent 
+    [Template]    Verify PNF ready sent
     ${TEST_CASES_DIR}/ves-event-without-additional-fields
     ${TEST_CASES_DIR}/ves-event-with-empty-additional-fields
     ${TEST_CASES_DIR}/ves-event-with-empty-attachment-point
@@ -52,4 +51,4 @@ Should not sent PNF ready when AAI is not responding
     [Documentation]    PRH get from DMaaP valid event but AAI is not responding
     [Tags]    PRH    AAI not responding
     Verify AAI not responding is logged    ${TEST_CASES_DIR}/aai-not-responding
-    
+

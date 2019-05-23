@@ -5,32 +5,15 @@ services:
     ports:
       - "8100:8100"
       - "8433:8433"
-    environment:
-      - LOG_LEVEL
-      - PRH_LOG_LEVEL
-    container_name: prh
-    depends_on:
-      cbs:
-        condition: service_healthy
-      dmaap-mr:
-        condition: service_started
-      aai:
-        condition: service_started
-
-  ssl_prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:latest
-    ports:
-      - "8200:8100"
-      - "8533:8433"
     volumes:
-      - ./simulator/certs:/tmp/certs
+      - ./simulator/certs:/tmp/certs:Z
     environment:
       - LOG_LEVEL
       - PRH_LOG_LEVEL
-      - HOSTNAME
-      - CONSUL_HOST
-      - CONFIG_BINDING_SERVICE
-    container_name: ssl_prh
+    #      - HOSTNAME
+    #      - CONSUL_HOST
+    #      - CONFIG_BINDING_SERVICE
+    container_name: prh
     depends_on:
       cbs:
         condition: service_healthy
@@ -65,7 +48,7 @@ services:
       - "8500:8500"
     command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
     volumes:
-      - ./consul.d/:/consul/consul.d
+      - ./consul.d/:/consul/consul.d:Z
     container_name: consul
 
   consul-cfg:
@@ -121,11 +104,11 @@ services:
                                                         "Authorization": "Basic QUFJOkFBSQ=="
                                               },
 
-                                              "security.trustStorePath":"change it",
-                                              "security.trustStorePasswordPath":"change it",
-                                              "security.keyStorePath":"change it",
-                                              "security.keyStorePasswordPath":"change it",
-                                              "security.enableAaiCertAuth":false,
+                                              "security.trustStorePath":"/tmp/certs/truststore.jks",
+                                              "security.trustStorePasswordPath":"/tmp/certs/truststore.password",
+                                              "security.keyStorePath":"/tmp/certs/keystore.p12",
+                                              "security.keyStorePasswordPath":"/tmp/certs/keystore.password",
+                                              "security.enableAaiCertAuth":true,
                                               "security.enableDmaapCertAuth":false,
 
                                               "streams_publishes":{
