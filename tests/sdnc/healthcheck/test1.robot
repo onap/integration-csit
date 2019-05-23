@@ -18,7 +18,9 @@ Healthcheck API
     &{headers}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
     ${resp}=    Post Request    sdnc    ${SDN_HEALTHCHECK_OPERATION_PATH}    data=${data}    headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As Strings  ${resp.json()['output']['response-code']}   200
+    Log to console  *************************
+    Log to console  ${resp.content}
+    Log to console  *************************
 
 Check SLI-API
     Create Session   sdnc  http://localhost:8282
@@ -41,4 +43,7 @@ Test Preload
     ${resp}=    Post Request    sdnc    ${PRELOAD_VNF_TOPOLOGY_OPERATION_PATH}    data=${data}    headers=${headers}
     Log    ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}    200
+    Log to console  *************************
+    Log to console  ${resp.content}
+    Log to console  *************************
     Should Be Equal As Strings  ${resp.json()['output']['response-code']}   200
