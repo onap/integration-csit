@@ -63,8 +63,8 @@ for i in {1..20}; do
     sleep $i
 done
 
-docker cp vfc-ztevnfmdriver:/service/vfc/nfvo/driver/vnfm/svnfm/zte/vmanager/logs/runtime_ztevnfmdriver.log ./
-cat runtime_ztevnfmdriver.log
+docker cp vfc-ztevnfmdriver:/service/vfc/nfvo/driver/vnfm/svnfm/zte/vmanager/logs/runtime_driver.log ./
+cat runtime_driver.log
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IAG_IP:${MSB_IAG_IP} -v ZTEVNFMDRIVER_IP:${ZTEVNFMDRIVER_IP} -v MSB_IP:${MSB_IAG_IP} -v SERVICE_IP:${SERVICE_IP} -v SCRIPTS:${SCRIPTS}"
