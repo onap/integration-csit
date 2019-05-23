@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18594acd_7973d795",
+        "filename": "scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-05-23T13:45:37Z",
+      "side": 1,
+      "message": "is this the correct port!",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "f8424fad89ddca41ee8b4edd38afbbe3ae43fc42",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
