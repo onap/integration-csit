@@ -53,7 +53,6 @@ for i in {1..10}; do
     sleep $i
 done
 
-
 # Start svnfm-huawei
 docker run -d --name vfc-svnfm-huawei -p 8482:8482 -p 8443:8443 -e MSB_ADDR=${MSB_IAG_IP}:80 nexus3.onap.org:10001/onap/vfc/nfvo/svnfm/huawei
 SERVICE_IP=`get-instance-ip.sh vfc-svnfm-huawei`
