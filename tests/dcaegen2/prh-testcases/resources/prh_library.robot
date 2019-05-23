@@ -96,8 +96,12 @@ Set VES event in DMaaP
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Should Be Equal As JSON
-    [Arguments]    ${given}    ${expected}
-    Should Be True    ${given}==${expected}
+    [Arguments]    ${actual}    ${expected}
+    Log    EXPECTED: ${expected}
+    Log    ACTUAL: ${actual}
+    ${expected_json}=    Evaluate    json.loads("""${expected}""")    json
+    ${actual_json}=    Evaluate    json.loads("""${actual}""")    json
+    Should Be Equal    ${actual_json}    ${expected_json}
 
 Create sessions
     Create Session    dmaap_setup_session    ${DMAAP_SIMULATOR_SETUP_URL}

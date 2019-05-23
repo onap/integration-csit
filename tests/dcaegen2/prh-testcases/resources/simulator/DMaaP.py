@@ -41,7 +41,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
                 global ves_event
                 ves_event = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('DmaapSetup PUT /setup/ves_event -> 200 OK')
+                logger.debug('DmaapSetup PUT /setup/ves_event -> 200 OK, content: ' + ves_event.decode("utf-8"))
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DmaapSetup PUT ' + self.path + ' -> 404 Not found')
@@ -73,7 +73,8 @@ class DMaaPHandler(BaseHTTPRequestHandler):
                 global captured_prh_event
                 captured_prh_event = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('DMaaPHandler POST /events/unauthenticated.PNF_READY -> 200')
+                logger.debug('DMaaPHandler POST /events/unauthenticated.PNF_READY -> 200, content: '
+                             + captured_prh_event.decode("utf-8"))
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DMaaPHandler POST ' + self.path + ' -> 404 Not found')
@@ -86,6 +87,9 @@ class DMaaPHandler(BaseHTTPRequestHandler):
             if re.search('/events/unauthenticated.VES_PNFREG_OUTPUT/OpenDCAE-c12/c12', self.path):
                 global ves_event
                 httpServerLib.set_response_200_ok(self, payload = ves_event)
+                logger.debug(
+                    'DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200, content: '
+                    + ves_event.decode("utf-8"))
                 ves_event = DMAAP_EMPTY
                 logger.debug('DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200')
             else:
