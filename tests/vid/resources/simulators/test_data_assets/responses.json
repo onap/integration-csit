@@ -804,69 +804,7 @@
                   "description": "Activity to Complete the BPMN Flow"
                 }
               ],
-              "workflowInputParameters": [{
-                "label": "Cloud Owner",
-                "inputType": "text",
-                "required": true,
-                "validation": [{
-                  "maxLength": "7",
-                  "allowableChars": "[a-zA-Z0-9]*"
-                }],
-                "soFieldName": "cloudOwner",
-                "soPayloadLocation": "cloudConfiguration"
-              },
-                {
-                  "label": "Cloud Region ID",
-                  "inputType": "text",
-                  "required": true,
-                  "validation": [{
-                    "maxLength": "7",
-                    "allowableChars": "[a-zA-Z0-9]*"
-                  }],
-                  "soFieldName": "lcpCloudRegionId",
-                  "soPayloadLocation": "cloudConfiguration"
-                },
-                {
-                  "label": "Tenant/Project ID",
-                  "inputType": "text",
-                  "required": true,
-                  "validation": [{
-                    "maxLength": "36",
-                    "allowableChars": "[a-zA-Z0-9]*"
-                  }],
-                  "soFieldName": "tenantId",
-                  "soPayloadLocation": "cloudConfiguration"
-                },
-                {
-                  "label": "Operations timeout",
-                  "inputType": "text",
-                  "required": true,
-                  "description": "some description",
-                  "validation": [{
-                    "maxLength": "50",
-                    "allowableChars": "[0-9]*"
-                  }],
-                  "soFieldName": "operations_timeout",
-                  "soPayloadLocation": "userParams"
-                },
-                {
-                  "label": "Existing software version",
-                  "inputType": "text",
-                  "required": true,
-                  "validation": [{
-                    "maxLength": "50",
-                    "allowableChars": "[a-zA-Z0-9]*"
-                  }],
-                  "soFieldName": "existing_software_version",
-                  "soPayloadLocation": "userParams"
-                },
-                {
-                  "label": "New software version",
-                  "inputType": "text",
-                  "required": true,
-                  "soFieldName": "new_software_version",
-                  "soPayloadLocation": "userParams"
-                }
+              "workflowInputParameters": [
               ]
             }
           }]
