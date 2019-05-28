@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "258215eb_f347c849",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T08:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56f841a_5d8f1460",
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f079b73_d3bb8b35",
         "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
         "patchSetId": 19
@@ -56,6 +74,30 @@
       "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d052d5_38f93ac2",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T08:12:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f079b73_d3bb8b35",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
