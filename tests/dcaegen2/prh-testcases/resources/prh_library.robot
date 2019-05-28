@@ -13,7 +13,7 @@ Verify PNF ready sent
     Add PNF entry in AAI    ${pnf_entry}
     Set VES event in DMaaP    ${ves_event}
     Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
-    Wait Until Keyword Succeeds    30x    3000ms    Check recorded PNF_READY notification    ${expected_pnf_ready_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check recorded PNF_READY notification    ${expected_pnf_ready_event}
 
 Verify PNF ready sent and logical link created
     [Arguments]    ${test_case_directory}
