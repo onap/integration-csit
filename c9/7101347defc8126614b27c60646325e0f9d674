@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tomasz Golabek <tomasz.golabek@nokia.com>
+Code-Review+1: Bartosz Gardziejewski <bartosz.gardziejewski@nokia.com>
+Code-Review+2: Gary Wu <gwu@futurewei.com>
+Submitted-by: Gary Wu <gwu@futurewei.com>
+Submitted-at: Tue, 28 May 2019 17:16:56 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/88562
+Project: integration/csit
+Branch: refs/heads/dublin
