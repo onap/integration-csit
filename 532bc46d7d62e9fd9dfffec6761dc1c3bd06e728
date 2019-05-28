@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f0a370_5c9b9dbb",
+        "filename": "tests/dcaegen2/prh-testcases/resources/cert_generation/create_certs.sh",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T07:17:14Z",
+      "side": 1,
+      "message": "should this script that was used for cert generation be kept here as a kind of documentation or should I throw it away?",
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56f841a_5d8f1460",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T07:17:14Z",
+      "side": 1,
+      "message": ":Z pushed by a mistake -\u003e I use it when running this docker compose in my env where I have selinux enabled. Can this stay (it does not seem to hurt) or should I revert that?",
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f079b73_d3bb8b35",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T07:17:14Z",
+      "side": 1,
+      "message": "pushed by mistake, but it seems to be unnecessary - relying on values predefined in prh defaults seems to work - should I revert that or remove?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9458408_c202f1b1",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5337
+      },
+      "writtenOn": "2019-05-28T07:17:14Z",
+      "side": 1,
+      "message": "enabling dmaap cert auth requires fixes in prh service (ongoing)",
+      "range": {
+        "startLine": 112,
+        "startChar": 77,
+        "endLine": 112,
+        "endChar": 82
+      },
+      "revId": "532bc46d7d62e9fd9dfffec6761dc1c3bd06e728",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
