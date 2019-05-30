@@ -97,9 +97,7 @@ pip install robotframework-selenium2library==1.8.0 robotframework-extendedseleni
 # install eteutils
 mkdir -p ${ROBOT_VENV}/src/onap
 rm -rf ${ROBOT_VENV}/src/onap/testsuite
-git clone https://gerrit.onap.org/r/testsuite/python-testing-utils.git ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils
-git -C ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils checkout master
-pip install --upgrade ${ROBOT_VENV}/src/onap/testsuite/python-testing-utils/robotframework-onap
+pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.4'
 
 pip freeze
 
