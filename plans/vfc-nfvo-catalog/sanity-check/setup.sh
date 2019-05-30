@@ -72,5 +72,7 @@ cat config.py
 docker cp vfc-catalog:/service/vfc/nfvo/catalog/logs/runtime_catalog.log ./
 cat runtime_catalog.log
 
+docker logs vfc-catalog
+
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MSB_IP:${MSB_IP} -v CATALOG_IP:${CATALOG_IP} -v MSB_DISCOVERY_IP:${DISCOVERY_IP} -v SCRIPTS:${SCRIPTS}"

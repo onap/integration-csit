@@ -16,6 +16,7 @@
 #
 
 # print log file for catalog
+docker logs vfc-catalog
 docker cp vfc-catalog:/service/vfc/nfvo/catalog/logs/runtime_catalog.log ./
 cat runtime_catalog.log
 
