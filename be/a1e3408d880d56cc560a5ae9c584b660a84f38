@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Rahul Tyagi <rahul.tyagi@ericsson.com>
+Code-Review+2: Gary Wu <gwu@futurewei.com>
+Submitted-by: Gary Wu <gwu@futurewei.com>
+Submitted-at: Fri, 31 May 2019 18:07:14 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/88154
+Project: integration/csit
+Branch: refs/heads/dublin
