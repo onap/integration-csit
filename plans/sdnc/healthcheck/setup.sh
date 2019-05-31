@@ -24,7 +24,7 @@ export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.5-STAGING-latest
+export DOCKER_IMAGE_VERSION=1.5.2
 export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
