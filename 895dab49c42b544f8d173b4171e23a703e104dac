@@ -22,6 +22,30 @@
       "revId": "895dab49c42b544f8d173b4171e23a703e104dac",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd00526c_4b148436",
+        "filename": "tests/vid/resources/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3873
+      },
+      "writtenOn": "2019-06-03T12:54:23Z",
+      "side": 1,
+      "message": "Temporarily yes. But if you want I can close jira ticket and wait with this MR for v5.0",
+      "parentUuid": "4b72d600_3b31b8d7",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "895dab49c42b544f8d173b4171e23a703e104dac",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
