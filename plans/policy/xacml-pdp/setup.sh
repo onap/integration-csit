@@ -60,7 +60,13 @@ sleep 3
 
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
-docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml up -d
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+
+# now bring everything else up
+docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_all
 
 unset http_proxy https_proxy
 
@@ -76,26 +82,5 @@ echo API IP IS ${POLICY_API_IP}
 echo PAP IP IS ${POLICY_PAP_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
-
-# Wait for initialization
-for i in {1..10}; do
-   curl -sS ${MARIADB_IP}:3306 && break
-   echo sleep $i
-   sleep $i
-done
-for i in {1..10}; do
-   curl -sS ${POLICY_PDPX_IP}:6969 && break
-   echo sleep $i
-   sleep $i
-done
-for i in {1..10}; do
-   curl -sS ${DMAAP_IP}:3904 && break
-   echo sleep $i
-   sleep $i
-done
-
-#Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 ROBOT_VARIABLES="-v POLICY_PDPX_IP:${POLICY_PDPX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"

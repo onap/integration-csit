@@ -1,4 +1,5 @@
 # Copyright (C) 2019 Nordix Foundation.
+# Modifications Copyright (C) 2019 AT&T Intellectual Property.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,7 +55,6 @@ services:
        - mariadb
        - dmaap
        - pap
-       - api
       hostname: policy-apex-pdp
       command: ['/opt/app/policy/apex-pdp/bin/apexOnapPf.sh', '-c', '/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json', '-p', '/opt/app/policy/apex-pdp/etc/onappf/config/topic.properties']
       volumes:
@@ -64,11 +64,31 @@ services:
        - "23324:23324"
    start_dependencies:
       image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
       container_name: policy-wait
       depends_on:
         - mariadb
         - dmaap
       hostname: policy-wait
       command:
-        - mariadb:3306
-        - dmaap:3904
+        mariadb:3306
+        dmaap:3904
+   start_all:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
+      container_name: policy-wait-all
+      depends_on:
+        - mariadb
+        - dmaap
+        - api
+        - pap
+        - apex
+      hostname: policy-wait-all
+      command:
+        mariadb:3306
+        dmaap:3904
+        api:6969
+        pap:6969
+        apex:6969
