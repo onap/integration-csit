@@ -7,7 +7,6 @@ Library		RequestsLibrary
 Library		eteutils/UUID.py 
 Library		DateTime  
 Library		Collections
-Library		eteutils/OSUtils.py
 Library		eteutils/StringTemplater.py
 Library		String
 Library		XvfbRobot
@@ -231,8 +230,6 @@ Setup Browser
     
           
  Setup Browser Chrome
-    ${os}=   Get Normalized Os 
-    Log    Normalized OS=${os}
     ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     Call Method    ${chrome options}    add_argument    no-sandbox
     ${dc}   Evaluate    sys.modules['selenium.webdriver'].DesiredCapabilities.CHROME  sys, selenium.webdriver
