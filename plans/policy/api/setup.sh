@@ -24,29 +24,20 @@ pip install -U docker==2.7.0
 
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_dependencies
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml up -d
-sleep 3
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+
+# now bring everything else up
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_all
+
+unset http_proxy https_proxy
 
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 MARIADB_IP=`get-instance-ip.sh mariadb`
 
 echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
-
-# Wait for initialization
-for i in {1..10}; do
-   curl -sS ${MARIADB_IP}:3306 && break
-   echo sleep $i
-   sleep $i
-done
-for i in {1..10}; do
-   curl -sS ${POLICY_API_IP}:6969 && break
-   echo sleep $i
-   sleep $i
-done
-
-#Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 ROBOT_VARIABLES="-v POLICY_API_IP:${POLICY_API_IP}"
