@@ -1,11 +1,7 @@
 *** Settings ***
 Documentation	  The main interface for interacting with Policy. It handles low level stuff like managing the http request library and Policy required fields
-Library	   eteutils/RequestsClientCert.py
-#Library	   RequestsClientCert
 Library    RequestsLibrary
 Library    String
-Library    eteutils/JSONUtils.py
-#Library    JSONUtils
 Library    Collections      
 Resource   global_properties.robot
 
