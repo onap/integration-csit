@@ -25,8 +25,9 @@ Verify event with missing required field is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    ${error_msg}=    Create event parsing error    ${invalid_ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    ${error_msg}
+    ${notification}=    Create invalid notification    ${invalid_ves_event}
+    ${error_msg}=    Incorrect json, consumerDmaapModel can not be created:
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH json log    ${error_msg}    ${notification}
 
 Verify incorrect JSON event is logged
     [Timeout]    60s
@@ -75,6 +76,11 @@ Check recorded Logical Link
 Check PRH log
     [Arguments]    ${log_entry}
     ${found}=    Find log entry    ${log_entry}
+    Should Be True    ${found}
+
+Check PRH json log
+    [Arguments]    ${prefix}    ${json}
+    ${found}=    Find log json    ${prefix}    ${json}
     Should Be True    ${found}
 
 Create event parsing error
