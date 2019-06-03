@@ -37,7 +37,7 @@ services:
       ports:
        - "3904:3904"
    pap:
-      image: nexus3.onap.org:10001/onap/policy-pap:2.0.0-SNAPSHOT-latest
+      image: nexus3.onap.org:10001/onap/policy-pap
       container_name: policy-pap
       depends_on:
        - mariadb
@@ -50,23 +50,42 @@ services:
        - mariadb
       hostname: policy-api
    xacml-pdp:
-      image: nexus3.onap.org:10001/onap/policy-xacml-pdp:2.0.0-SNAPSHOT-latest 
+      image: nexus3.onap.org:10001/onap/policy-xacml-pdp
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
        - message-router
        - pap
-       - api
       hostname: policy-xacml-pdp
       ports:
        - "6969:6969"
    start_dependencies:
       image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
       container_name: policy-wait
       depends_on:
         - mariadb
         - message-router
       hostname: policy-wait
       command:
-        - mariadb:3306
-        - message-router:3904
+        mariadb:3306
+        message-router:3904
+   start_all:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
+      container_name: policy-wait-all
+      depends_on:
+        - mariadb
+        - message-router
+        - api
+        - pap
+        - xacml-pdp
+      hostname: policy-wait-all
+      command:
+        mariadb:3306
+        message-router:3904
+        api:6969
+        pap:6969
+        xacml-pdp:6969
