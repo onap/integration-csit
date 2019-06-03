@@ -3,6 +3,7 @@
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
 #  Modifications copyright (c) 2019 Nordix Foundation.
+#  Modifications Copyright (C) 2019 AT&T Intellectual Property.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -62,19 +63,9 @@ sleep 3
 
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-apex-pdp/docker-compose-apex.yml run --rm start_dependencies
-docker-compose -f ${WORKSPACE}/scripts/policy/policy-apex-pdp/docker-compose-apex.yml up -d
 
-POLICY_API_IP=`get-instance-ip.sh policy-api`
-POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 MARIADB_IP=`get-instance-ip.sh mariadb`
-APEX_IP=`get-instance-ip.sh policy-apex-pdp`
-DMAAP_IP=`get-instance-ip.sh dmaap-simulator`
-
-echo PAP IP IS ${POLICY_PAP_IP}
 echo MARIADB IP IS ${MARIADB_IP}
-echo API IP IS ${POLICY_API_IP}
-echo APEX IP IS ${APEX_IP}
-echo DMAAP_IP IS ${DMAAP_IP}
 
 # Wait for initialization
 for i in {1..10}; do
@@ -82,6 +73,27 @@ for i in {1..10}; do
    echo sleep $i
    sleep $i
 done
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+
+# now bring everything else up
+docker-compose -f ${WORKSPACE}/scripts/policy/policy-apex-pdp/docker-compose-apex.yml up -d
+
+unset http_proxy https_proxy
+
+POLICY_API_IP=`get-instance-ip.sh policy-api`
+POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
+APEX_IP=`get-instance-ip.sh policy-apex-pdp`
+DMAAP_IP=`get-instance-ip.sh dmaap-simulator`
+
+echo PAP IP IS ${POLICY_PAP_IP}
+echo API IP IS ${POLICY_API_IP}
+echo APEX IP IS ${APEX_IP}
+echo DMAAP_IP IS ${DMAAP_IP}
+
+# Wait for initialization
 for i in {1..10}; do
    curl -sS ${APEX_IP}:6969 && break
    echo sleep $i
@@ -92,8 +104,5 @@ for i in {1..10}; do
    echo sleep $i
    sleep $i
 done
-#Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 ROBOT_VARIABLES="-v APEX_IP:${APEX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"

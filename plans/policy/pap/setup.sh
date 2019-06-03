@@ -1,6 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 Nordix Foundation.
+#  Modifications Copyright (C) 2019 AT&T Intellectual Property.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,24 +25,32 @@ pip install -U docker==2.7.0
 
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_dependencies
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml up -d
-sleep 3
 
-unset http_proxy https_proxy
-
-POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
-POLICY_API_IP=`get-instance-ip.sh policy-api`
 MARIADB_IP=`get-instance-ip.sh mariadb`
-
-echo PAP IP IS ${POLICY_PAP_IP}
-echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
+
 # Wait for initialization
 for i in {1..10}; do
    curl -sS ${MARIADB_IP}:3306 && break
    echo sleep $i
    sleep $i
 done
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+
+# now bring everything else up
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml up -d
+
+unset http_proxy https_proxy
+
+POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
+POLICY_API_IP=`get-instance-ip.sh policy-api`
+
+echo PAP IP IS ${POLICY_PAP_IP}
+echo API IP IS ${POLICY_API_IP}
+# Wait for initialization
 for i in {1..10}; do
    curl -sS ${POLICY_PAP_IP}:6969 && break
    echo sleep $i
@@ -52,10 +61,6 @@ for i in {1..10}; do
    echo sleep $i
    sleep $i
 done
-
-#Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 #Add policy type and policy to the database via the Policy Api
 AUTH="healthcheck:zb!XztG34"
