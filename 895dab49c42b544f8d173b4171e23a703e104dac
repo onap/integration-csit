@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b72d600_3b31b8d7",
+        "filename": "tests/vid/resources/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4379
+      },
+      "writtenOn": "2019-06-03T07:03:22Z",
+      "side": 1,
+      "message": "Isn\u0027t it making verification of *Dublin\u0027s* artifact from master\u0027s branch?",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "895dab49c42b544f8d173b4171e23a703e104dac",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
