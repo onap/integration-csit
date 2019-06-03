@@ -19,4 +19,3 @@
 
 kill-instance.sh policy-api
 kill-instance.sh mariadb
-kill-instance.sh policy-wait

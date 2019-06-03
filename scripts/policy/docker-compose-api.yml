@@ -36,8 +36,22 @@ services:
        - "6969:6969"
    start_dependencies:
       image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
       container_name: policy-wait
       depends_on:
         - mariadb
       hostname: policy-wait
       command: mariadb:3306
+   start_all:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
+      container_name: policy-wait-all
+      depends_on:
+        - mariadb
+        - api
+      hostname: policy-wait-all
+      command:
+        mariadb:3306
+        api:6969
