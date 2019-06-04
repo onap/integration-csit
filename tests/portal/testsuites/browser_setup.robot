@@ -1,7 +1,6 @@
 *** Settings ***
 Documentation     The main interface for interacting with VID. It handles low level stuff like managing the selenium request library and VID required steps
 Library           Collections
-Library           OSUtils
 Library           OperatingSystem
 Library           ExtendedSelenium2Library
 Resource          global_properties.robot
@@ -22,8 +21,6 @@ Setup Browser Firefox
     Set Global Variable    ${GLOBAL_SELENIUM_BROWSER_CAPABILITIES}    ${dc}
            
  Setup Browser Chrome
-    ${os}=   Get Normalized Os 
-    Log    Normalized OS=${os}
     ${chrome options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     Call Method    ${chrome options}    add_argument    no-sandbox
     ${dc}   Evaluate    sys.modules['selenium.webdriver'].DesiredCapabilities.CHROME  sys, selenium.webdriver
