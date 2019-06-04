@@ -1,4 +1,0 @@
-*** Settings ***
-Documentation    Scheduler 
-
-*** Variables ***
