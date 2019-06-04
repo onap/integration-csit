@@ -1,0 +1,9 @@
+Code-Review+1: Marcin Migdal <marcin.migdal@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Michal Dziedzic <michal.1.dziedzic@nokia.com>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Tue, 04 Jun 2019 11:57:04 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/89224
+Project: integration/csit
+Branch: refs/heads/master
