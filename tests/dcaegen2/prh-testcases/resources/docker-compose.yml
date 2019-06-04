@@ -45,65 +45,40 @@ services:
   consul:
     image: consul:1.0.6
     ports:
-      - "8500:8500"
+                                                         - "8500:8500"
     command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
     volumes:
-      - ./consul.d/:/consul/consul.d
+    - ./consul.d/:/consul/consul.d
     container_name: consul
 
   consul-cfg:
     image: consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
-                                              "dmaap.dmaapConsumerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.VES_PNFREG_OUTPUT",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapPortNumber":2223,
-                                              "dmaap.dmaapConsumerConfiguration.dmaapTopicName": "events/unauthenticated.VES_PNFREG_OUTPUT",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapProtocol":"https",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
                                               "dmaap.dmaapConsumerConfiguration.consumerId": "c12",
                                               "dmaap.dmaapConsumerConfiguration.consumerGroup": "OpenDCAE-c12",
                                               "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
-                                              "dmaap.dmaapConsumerConfiguration.messageLimit": -1,
-
-                                              "dmaap.dmaapProducerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.PNF_READY",
-                                              "dmaap.dmaapProducerConfiguration.dmaapHostName":"dmaap-mr",
-                                              "dmaap.dmaapProducerConfiguration.dmaapPortNumber":2223,
-                                              "dmaap.dmaapProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_READY",
-                                              "dmaap.dmaapProducerConfiguration.dmaapProtocol":"https",
                                               "dmaap.dmaapProducerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
-
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUrl":"https://dmaap-mr:2223/events/unauthenticated.PNF_UPDATE",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapHostName": "dmaap-mr",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapPortNumber": 2223,
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapTopicName": "events/unauthenticated.PNF_UPDATE",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapProtocol": "https",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
                                               "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
-
                                               "aai.aaiClientConfiguration.pnfUrl":"https://aai:3334/aai/v12/network/pnfs/pnf",
-                                              "aai.aaiClientConfiguration.aaiHost":"aai",
-                                              "aai.aaiClientConfiguration.aaiHostPortNumber":3334,
-                                              "aai.aaiClientConfiguration.aaiProtocol":"https",
                                               "aai.aaiClientConfiguration.aaiUserName": "DCAE",
                                               "aai.aaiClientConfiguration.aaiUserPassword": "DCAE",
                                               "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": true,
-                                              "aai.aaiClientConfiguration.aaiBasePath": "/aai/v12",
-                                              "aai.aaiClientConfiguration.aaiPnfPath": "/network/pnfs/pnf",
                                               "aai.aaiClientConfiguration.aaiServiceInstancePath":"/business/customers/customer/${customer}/service-subscriptions/service-subscription/${serviceType}/service-instances/service-instance/${serviceInstanceId}",
                                               "aai.aaiClientConfiguration.aaiHeaders":{
-                                                        "X-FromAppId": "prh",
-                                                        "X-TransactionId": "9999",
-                                                        "Accept": "application/json",
-                                                        "Real-Time": "true",
-                                                        "Authorization": "Basic QUFJOkFBSQ=="
+                                                "X-FromAppId": "prh",
+                                                "X-TransactionId": "9999",
+                                                "Accept": "application/json",
+                                                "Real-Time": "true",
+                                                "Authorization": "Basic QUFJOkFBSQ=="
                                               },
-
                                               "security.trustStorePath":"/tmp/certs/truststore.jks",
                                               "security.trustStorePasswordPath":"/tmp/certs/truststore.password",
                                               "security.keyStorePath":"/tmp/certs/keystore.p12",
