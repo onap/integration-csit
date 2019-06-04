@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4300d985_3684ec97",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-06-04T11:32:41Z",
+      "side": 1,
+      "message": "2 space marking",
+      "revId": "33961c39974b132a909f5f50daf64b3a8d1d4f87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120e72e_67f6ef14",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-06-04T11:32:41Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "33961c39974b132a909f5f50daf64b3a8d1d4f87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
