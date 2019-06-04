@@ -1,43 +1,32 @@
 {
-    "configs": {
-        "dmaap": {
-            "dmaapConsumerConfiguration": {
-                "dmaapHostName": "dmaapmrhost",
-                "dmaapPortNumber": 3904,
-                "dmaapTopicName": "/events/unauthenticated.VES_NOTIFICATION_OUTPUT",
-                "dmaapProtocol": "http",
-                "dmaapUserName": "",
-                "dmaapUserPassword": "",
-                "dmaapContentType": "application/json",
-                "consumerId": "C12",
-                "consumerGroup": "OpenDcae-c12",
-                "timeoutMs": -1,
-                "messageLimit": 1
-            },
-            "dmaapProducerConfiguration": {
-                "dmaapHostName": "dmaapdrhost",
-                "dmaapPortNumber": 8443,
-                "dmaapTopicName": "publish",
-                "dmaapProtocol": "https",
-                "dmaapUserName": "dradmin",
-                "dmaapUserPassword": "dradmin",
-                "dmaapContentType": "application/octet-stream"
-            }
-        },
-        "ftp": {
-            "ftpesConfiguration": {
-                "keyCert": "/config/dfc.jks",
-                "keyPassword": "secret",
-                "trustedCa": "/config/ftp.jks",
-                "trustedCaPassword": "secret"
-            }
-        },
-        "security": {
-            "trustStorePath" : "trustStorePath",
-            "trustStorePasswordPath" : "trustStorePasswordPath",
-            "keyStorePath" : "keyStorePath",
-            "keyStorePasswordPath" : "keyStorePasswordPath",
-            "enableDmaapCertAuth" : "enableDmaapCertAuth"
-            }
+    "//description":"This file is only used for testing purposes",
+    "dmaap.ftpesConfig.keyCert":"/config/dfc.jks",
+    "dmaap.ftpesConfig.keyPassword":"secret",
+    "dmaap.ftpesConfig.trustedCa":"config/ftp.jks",
+    "dmaap.ftpesConfig.trustedCaPassword":"secret",
+    "dmaap.security.trustStorePath":"change it",
+    "dmaap.security.trustStorePasswordPath":"trustStorePasswordPath",
+    "dmaap.security.keyStorePath":"keyStorePath",
+    "dmaap.security.keyStorePasswordPath":"change it",
+    "dmaap.security.enableDmaapCertAuth":"false",
+    "dmaap.dmaapProducerConfiguration" : {
+          "changeIdentifier":"PM_MEAS_FILES",
+          "feedName":"feed00"
+     },  
+     "streams_subscribes":{
+       "dmaap_subscriber":{
+          "dmmap_info":{
+             "topic_url":"http://dradmin:dradmin@dmaapmrhost:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12"
+          },
+          "type":"message_router"
+       }
+    },
+     "feed00":{
+       "username":"dradmin",
+       "log_url":"https://dmaapdrhost:8443/feedlog/1",
+       "publish_url":"https://dmaapdrhost:8443/publish/1",
+       "location":"san-francisco",
+       "password":"dradmin",
+       "publisher_id":"972.360gm"
     }
-}
+ }

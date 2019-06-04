@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   datarouter-prov:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:2.1.0-SNAPSHOT-latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:latest
     container_name: datarouter-prov
     hostname: dmaap-dr-prov
     ports:
@@ -25,7 +25,7 @@ services:
       - "dcae-pm-mapper:3.3.3.3"
 
   datarouter-node:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:2.1.0-SNAPSHOT-latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:latest
     container_name: datarouter-node
     hostname: dmaap-dr-node
     ports:
@@ -41,7 +41,7 @@ services:
       - "dcae-pm-mapper:3.3.3.3"
 
   datarouter-subscriber:
-      image: nexus3.onap.org:10001/onap/dmaap/datarouter-subscriber:2.1.0-SNAPSHOT-latest
+      image: nexus3.onap.org:10001/onap/dmaap/datarouter-subscriber:latest
       container_name: fileconsumer-node
       hostname: subscriber.com
       ports:
@@ -76,7 +76,7 @@ services:
 
   ves:
     container_name: vescollector
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.4.4
     environment:
        DMAAPHOST:
 
