@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Ram Krishna Verma <ram.krishna.verma@est.tech>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+2: Gary Wu <gwu@futurewei.com>
+Submitted-by: Gary Wu <gwu@futurewei.com>
+Submitted-at: Wed, 05 Jun 2019 17:27:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/89173
+Project: integration/csit
+Branch: refs/heads/master
