@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5702f5d_88163319",
+        "filename": "scripts/policy/docker-compose-api.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-05T19:12:03Z",
+      "side": 1,
+      "message": "Only question I have is do we need to specify a particular version so it picks up the dublin docker images?  This question, of course, applies to other images in this yml, as well as in the other policy yml files.",
+      "revId": "e57042c32af6b290186f8f7dce25e5968056c8ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
