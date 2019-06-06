@@ -34,7 +34,7 @@
         "oamV6IpAddress": "val4",
         "softwareVersion": "val7",
         "additionalFields": {
-          "attachmentPoint": ""
+          "attachment-point": ""
         }
       }
     }

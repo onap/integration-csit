@@ -1,6 +1,6 @@
 {
   "link-name": "bbs-link",
-  "link-type": "attachmentPoint",
+  "link-type": "attachment-point",
   "relationship-list": [
     {
       "relationship": {
