@@ -33,7 +33,7 @@
       "oamV6IpAddress": "val4",
       "softwareVersion": "val7",
       "additionalFields": {
-        "attachmentPoint": "bbs-link"
+        "attachment-point": "bbs-link"
       }
     }
   }

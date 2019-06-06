@@ -13,7 +13,7 @@
       "modelNumber":"modelNumber",
       "unitType":"unitType",
       "additionalFields": {
-        "attachmentPoint": "bla-bla-30-3",
+        "attachment-point": "bla-bla-30-3",
         "svlan": "1005",
         "cvlan": "678"
       }
