@@ -53,7 +53,7 @@ ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
 cd ..
 
 git clone http://gerrit.onap.org/r/oparent
-git clone --depth 1 https://gerrit.onap.org/r/policy/models -b master
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b dublin
 cd models/models-sim/models-sim-dmaap
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
 bash ./src/main/package/docker/docker_build.sh

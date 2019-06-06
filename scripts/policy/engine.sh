@@ -62,19 +62,19 @@ echo $DOCKER_IP
 
 git clone http://gerrit.onap.org/r/oparent
 
-git clone http://gerrit.onap.org/r/policy/engine
+git clone -b dublin http://gerrit.onap.org/r/policy/engine
 cd engine/packages/docker 
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
 docker build -t onap/policy-pe target/policy-pe
 
 cd ${WORK_DIR}
-git clone http://gerrit.onap.org/r/policy/drools-pdp
+git clone -b dublin http://gerrit.onap.org/r/policy/drools-pdp
 cd drools-pdp/packages/docker 
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
 docker build -t onap/policy-drools target/policy-drools
 
 cd ${WORK_DIR}
-git clone http://gerrit.onap.org/r/policy/docker
+git clone -b dublin http://gerrit.onap.org/r/policy/docker
 cd docker
 
 chmod +x config/drools/drools-tweaks.sh
