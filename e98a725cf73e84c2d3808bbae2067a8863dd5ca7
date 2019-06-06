@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69f65bc4_d0a1320b",
+        "filename": "tests/dcaegen2/prh-testcases/resources/PrhLibrary.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3395
+      },
+      "writtenOn": "2019-06-06T08:39:59Z",
+      "side": 1,
+      "message": "find json in log -\u003e rename method",
+      "revId": "e98a725cf73e84c2d3808bbae2067a8863dd5ca7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
