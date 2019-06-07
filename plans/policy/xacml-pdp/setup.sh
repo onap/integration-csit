@@ -17,6 +17,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+GERRIT_BRANCH="dublin"
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
@@ -50,7 +52,7 @@ ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
 cd ..
 
 git clone http://gerrit.onap.org/r/oparent
-git clone --depth 1 https://gerrit.onap.org/r/policy/models -b dublin
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b $GERRIT_BRANCH
 cd models/models-sim/models-sim-dmaap
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
 bash ./src/main/package/docker/docker_build.sh
@@ -58,15 +60,37 @@ cd ${WORKSPACE}
 rm -rf ${WORK_DIR}
 sleep 3
 
+
+# Provide list of policy projects whose version numbers we need.
+# The script would populate the versions array according to this input array's order
+array=(${GERRIT_BRANCH} "api" "pap" "xacml-pdp")
+source ${WORKSPACE}/scripts/policy/get-versions.sh "${array[@]}"
+echo "${PROJECT_VERSIONS[@]}"
+#Check if input and out array lengths are equal
+if [ "${#PROJECT_VERSIONS[@]}" -ne "$(expr ${#array[@]} - 1)" ]; then 
+    echo "ERROR: Input and Output array lengths are not equal"
+    echo "ERROR: Potentially wrong versions of docker images are being pulled."
+    API_VERSION=latest
+    PAP_VERSION=latest
+    XACML_PDP_VERSION=latest
+else
+    API_VERSION=${PROJECT_VERSIONS[0]}
+    PAP_VERSION=${PROJECT_VERSIONS[1]}
+    XACML_PDP_VERSION=${PROJECT_VERSIONS[2]}
+fi
+
+echo $API_VERSION
+echo $PAP_VERSION
+echo $XACML_PDP_VERSION
 # Adding this waiting container due to race condition between pap and mariadb
-docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
+POLICY_API_VERSION=$API_VERSION POLICY_PAP_VERSION=$PAP_VERSION POLICY_XACML_PDP_VERSION=$XACML_PDP_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
 
 #Configure the database
 docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
 docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 # now bring everything else up
-docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_all
+POLICY_API_VERSION=$API_VERSION POLICY_PAP_VERSION=$PAP_VERSION POLICY_XACML_PDP_VERSION=$XACML_PDP_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_all
 
 unset http_proxy https_proxy
 

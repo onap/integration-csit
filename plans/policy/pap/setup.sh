@@ -18,20 +18,40 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+GERRIT_BRANCH="dublin"
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+# Provide list of policy projects whose version numbers we need.
+# The script would populate the versions array according to this input array's order
+array=(${GERRIT_BRANCH} "api" "pap")
+source ${WORKSPACE}/scripts/policy/get-versions.sh "${array[@]}"
+echo "${PROJECT_VERSIONS[@]}"
+#Check if input and out array lengths are equal
+if [ "${#PROJECT_VERSIONS[@]}" -ne "$(expr ${#array[@]} - 1)" ]; then 
+    echo "ERROR: Input and Output array lengths are not equal"
+    echo "ERROR: Potentially wrong versions of docker images are being pulled."
+    API_VERSION=latest
+    PAP_VERSION=latest
+else
+    API_VERSION=${PROJECT_VERSIONS[0]}
+    PAP_VERSION=${PROJECT_VERSIONS[1]}
+fi
+
+echo $API_VERSION
+echo $PAP_VERSION
 # Adding this waiting container due to race condition between pap and mariadb
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_dependencies
+POLICY_API_VERSION=$API_VERSION POLICY_PAP_VERSION=$PAP_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_dependencies
 
 #Configure the database
 docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
 docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 # now bring everything else up
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_all
+POLICY_API_VERSION=$API_VERSION POLICY_PAP_VERSION=$PAP_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_all
 
 unset http_proxy https_proxy
 

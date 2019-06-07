@@ -17,20 +17,39 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+# Select branch 
+GERRIT_BRANCH="dublin"
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+
+# Provide list of policy projects whose version numbers we need.
+array=(${GERRIT_BRANCH} "api")
+source ${WORKSPACE}/scripts/policy/get-versions.sh "${array[@]}"
+echo "${PROJECT_VERSIONS[@]}"
+#Check if input and out array lengths are equal
+if [ "${#PROJECT_VERSIONS[@]}" -ne "$(expr ${#array[@]} - 1)" ]; then 
+    echo "Input and output array lengths are not equal"
+    echo "ERROR: Potentially wrong versions of docker images are being pulled."
+    API_VERSION=latest
+else
+    API_VERSION=${PROJECT_VERSIONS[0]}
+fi
+
+echo $API_VERSION
 # Adding this waiting container to avoid race condition between api and mariadb containers.
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_dependencies
+# Passing POLICY_API_VERSION for API container.
+POLICY_API_VERSION=$API_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_dependencies
 
 #Configure the database
 docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
 docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
 
 # now bring everything else up
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_all
+POLICY_API_VERSION=$API_VERSION docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_all
 
 unset http_proxy https_proxy
 
