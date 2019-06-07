@@ -17,6 +17,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+source ${SCRIPTS}/policy/config/policy-csit.conf
+export POLICY_MARIADB_VER
+echo ${GERRIT_BRANCH}
+echo ${POLICY_MARIADB_VER}
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
@@ -50,7 +55,7 @@ ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
 cd ..
 
 git clone http://gerrit.onap.org/r/oparent
-git clone --depth 1 https://gerrit.onap.org/r/policy/models -b master
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
 cd models/models-sim/models-sim-dmaap
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
 bash ./src/main/package/docker/docker_build.sh
@@ -58,6 +63,16 @@ cd ${WORKSPACE}
 rm -rf ${WORK_DIR}
 sleep 3
 
+
+
+sudo apt-get -y install libxml2-utils
+export POLICY_API_VERSION="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_PAP_VERSION="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_XACML_PDP_VERSION="$(curl -q --silent https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+
+echo ${POLICY_API_VERSION}
+echo ${POLICY_PAP_VERSION}
+echo ${POLICY_XACML_PDP_VERSION}
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
 

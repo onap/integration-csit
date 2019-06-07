@@ -17,7 +17,7 @@ networks:
     driver: bridge
 services:
    mariadb:
-      image: mariadb:10.2.14
+      image: mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
@@ -27,15 +27,15 @@ services:
       ports:
        - "3306:3306"
    pap:
-      image: nexus3.onap.org:10001/onap/policy-pap
+      image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
-      depends_on: 
+      depends_on:
        - mariadb
       hostname: policy-pap
       ports:
        - "6969:6969"
    api:
-      image: nexus3.onap.org:10001/onap/policy-api
+      image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - mariadb
