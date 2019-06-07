@@ -6,7 +6,6 @@ function usage {
     echo "setup sdc and run ui test suite: setup_sdc_for_sanity.sh tud"
 }
 
-
 set -x
 
 echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh"
@@ -20,10 +19,6 @@ fi
 # Clone sdc enviroment template
 mkdir -p ${WORKSPACE}/data/environments/
 mkdir -p ${WORKSPACE}/data/clone/
-#mkdir -p ${WORKSPACE}/data/logs/BE/SDC/SDC-BE
-#mkdir -p ${WORKSPACE}/data/logs/FE/SDC/SDC-FE
-#chmod -R 777 ${WORKSPACE}/data/logs
-#ls -lR ${WORKSPACE}/data/logs/
 
 cd ${WORKSPACE}/data/clone
 git clone --depth 1 http://gerrit.onap.org/r/sdc -b ${GERRIT_BRANCH}
@@ -47,15 +42,7 @@ sed -i "s/xxx/"$ENV_NAME"/g" ${WORKSPACE}/data/environments/$ENV_NAME.json
 sed -i "s/\"ueb_url_list\":.*/\"ueb_url_list\": \""$MR_IP_ADDR","$MR_IP_ADDR"\",/g" ${WORKSPACE}/data/environments/$ENV_NAME.json
 sed -i "s/\"fqdn\":.*/\"fqdn\": [\""$MR_IP_ADDR"\", \""$MR_IP_ADDR"\"]/g" ${WORKSPACE}/data/environments/$ENV_NAME.json
 
-  
-source ${WORKSPACE}/data/clone/sdc/version.properties
-export RELEASE=$major.$minor-STAGING-latest
-export DEP_ENV=$ENV_NAME
-
 cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc/
-#sed -i "s~/data~${WORKSPACE}\/data~g" ${WORKSPACE}/scripts/sdc/docker_run.sh
-#sed -i "s/HOST_IP=\${IP}/HOST_IP=\${HOST_IP}/g" ${WORKSPACE}/scripts/sdc/docker_run.sh
-#sed -i "s/ENVNAME=\"\${DEP_ENV}\"/ENVNAME=\"\${ENV_NAME}\"/g" ${WORKSPACE}/scripts/sdc/docker_run.sh
 
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
