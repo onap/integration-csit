@@ -18,11 +18,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+GERRIT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+# Provide list of policy projects whose version numbers we need.
+# The script would populate the versions array according to this input array's order
+array=(${GERRIT_BRANCH} "api" "pap")
+source ${WORKSPACE}/scripts/policy/get-versions.sh "${array[@]}"
+echo "${PROJECT_VERSIONS[@]}"
+#Check if input and out array lengths are equal
+if [ "${#PROJECT_VERSIONS[@]}" -ne "$(expr ${#array[@]} - 1)" ]; then 
+    echo "ERROR: Input and Output array lengths are not equal"
+    echo "ERROR: Potentially wrong versions of docker images are being pulled."
+    export POLICY_API_VERSION=latest
+    export POLICY_PAP_VERSION=latest
+else
+    export POLICY_API_VERSION=${PROJECT_VERSIONS[0]}
+    export POLICY_PAP_VERSION=${PROJECT_VERSIONS[1]}
+fi
+
+echo $POLICY_API_VERSION
+echo $POLICY_PAP_VERSION
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_dependencies
 
