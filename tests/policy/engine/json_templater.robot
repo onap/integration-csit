@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     This resource is filling out json string templates and returning the json back
 Library 	      RequestsLibrary
-Library           eteutils/StringTemplater.py
+Library 	ONAPLibrary.TemplatingKeywords
 Library           OperatingSystem
 Resource          global_properties.robot
 
