@@ -17,11 +17,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+# Select branch
+source ${SCRIPTS}/policy/config/policy-csit.conf
+export POLICY_MARIADB_VER
+echo ${GERRIT_BRANCH}
+echo ${POLICY_MARIADB_VER}
+
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+
+sudo apt-get -y install libxml2-utils
+export POLICY_API_VERSION="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+echo ${POLICY_API_VERSION}
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_dependencies
 
