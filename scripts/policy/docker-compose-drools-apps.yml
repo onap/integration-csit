@@ -18,16 +18,16 @@ services:
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file: 
+      env_file:
          - ${WORKSPACE}/scripts/policy/config/db/db.conf
       volumes:
          - ${WORKSPACE}/scripts/policy/config/db:/docker-entrypoint-initdb.d
       expose:
        - 3306
    drools:
-      image: nexus3.onap.org:10001/onap/policy-pdpd-cl:1.4-SNAPSHOT-latest
+      image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools
-      depends_on: 
+      depends_on:
        - mariadb
       hostname: drools
       expose:
