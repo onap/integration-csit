@@ -17,7 +17,7 @@ ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 ${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
 
 *** Test Cases ***
-Simple BBS case event
+BBS case event - attachment point
     [Documentation]    PRH get from DMaaP valid event with valid attachment point
     [Tags]    PRH    Valid event    Attachment point
     [Template]    Verify PNF ready sent and logical link created
@@ -52,3 +52,8 @@ Should not sent PNF ready when AAI is not responding
     [Tags]    PRH    AAI not responding
     Verify AAI not responding is logged    ${TEST_CASES_DIR}/aai-not-responding
 
+BBS case event - Re-registration
+    [Documentation]    After regitered PNF, PRH reads another one PRH event with registration event
+    [Tags]    PRH    Valid event    Re registraiton
+    [Template]    Verify PNF re registration
+    ${TEST_CASES_DIR}/re-registration

@@ -55,6 +55,13 @@ Verify AAI not responding is logged
     Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    java.net.UnknownHostException: aai
     Ensure Container Is Running   aai_simulator
 
+Verify PNF re registration
+    [Timeout]    100s
+    [Arguments]    ${test_case_directory}
+    ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
+    Verify PNF ready sent    ${test_case_directory}
+    Check recorded Logical Link    ${expected_logical_link}
+
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
     Should Be Equal As Strings    ${resp.status_code}    200
