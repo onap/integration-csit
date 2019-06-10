@@ -34,6 +34,42 @@
       "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a44b1e99_770aa76c",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Thanks! yes this is simpler. Removed the script and incorporated this change.",
+      "parentUuid": "b469d3d5_64cc8995",
+      "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5ac46e2_16f85182",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427c2721_77ec8656",
+      "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
