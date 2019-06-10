@@ -10,15 +10,16 @@ class PrhLibrary(object):
         pass
 
     @staticmethod
-    def find_log_entry(search_for):
-        print(type(search_for))
+    def find_one_of_log_entryies(searched_entries):
+        print(type(searched_entries))
         client = docker.from_env()
         container = client.containers.get('prh')
-        print("Check for log searches for pattern: ", search_for )
+        print("Check for log searches for pattern: ", searched_entries)
         for line in container.logs(stream=True):
             print("Check for log analysis line: ", line )
-            if search_for in line.strip():
-                return True
+            for searched_entry in searched_entries:
+                if searched_entry in line.strip():
+                    return True
         else:
             return False
 

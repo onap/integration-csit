@@ -34,7 +34,7 @@ Verify incorrect JSON event is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray
+    Check PRH log    |com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray
 
 Verify missing AAI record is logged
     [Timeout]    100s
@@ -43,8 +43,7 @@ Verify missing AAI record is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Add PNF entry in AAI    ${incorrect_aai_entry}
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |AAIProducerTask exception has been registered
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
+    Check PRH log    Request failed for URL 'https://aai:3334/aai/v12/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
 
 Verify AAI not responding is logged
     [Timeout]    100s
@@ -52,7 +51,7 @@ Verify AAI not responding is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    java.net.UnknownHostException: aai
+    Check PRH log    connection timed out: aai    Host is unreachable: aai
     Ensure Container Is Running   aai_simulator
 
 Check CBS ready
@@ -74,8 +73,8 @@ Check recorded Logical Link
     Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
 
 Check PRH log
-    [Arguments]    ${log_entry}
-    ${found}=    Find log entry    ${log_entry}
+    [Arguments]    @{log_entries}
+    ${found}=    Find one of log entryies    ${log_entries}
     Should Be True    ${found}
 
 Check PRH json log
