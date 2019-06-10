@@ -43,8 +43,7 @@ Verify missing AAI record is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Add PNF entry in AAI    ${incorrect_aai_entry}
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |AAIProducerTask exception has been registered
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    |Chain of tasks have been aborted due to errors in PRH workflow
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    Request failed for URL 'https://aai:3334/aai/v12/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
 
 Verify AAI not responding is logged
     [Timeout]    100s
@@ -52,7 +51,7 @@ Verify AAI not responding is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    java.net.UnknownHostException: aai
+    Wait Until Keyword Succeeds    10x    3000ms    Check PRH log    Host is unreachable: aai
     Ensure Container Is Running   aai_simulator
 
 Check CBS ready
