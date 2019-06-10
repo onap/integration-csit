@@ -16,6 +16,24 @@
       "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "427c2721_77ec8656",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-10T19:16:19Z",
+      "side": 1,
+      "message": "even better",
+      "parentUuid": "b469d3d5_64cc8995",
+      "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
