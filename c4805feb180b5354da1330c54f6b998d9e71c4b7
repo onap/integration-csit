@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b469d3d5_64cc8995",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-10T17:58:58Z",
+      "side": 1,
+      "message": "General comment:\n\nI think get-versions.sh script is unnecessary.  This one liner would be the version for example for the API component:\n\n[~] POLICY_API_VERSION\u003d\"$(curl --silent https://git.onap.org/policy/api/plain/pom.xml?h\u003ddublin | xmllint --xpath \u0027/*[local-name()\u003d\"project\"]/*[local-name()\u003d\"version\"]/text()\u0027 -)\"\n\n[~] echo $POLICY_API_VERSION\n2.0.2-SNAPSHOT\n\nNeed to install - apt  install libxml2-utils though\n\nBut would be much simpler and faster.",
+      "revId": "c4805feb180b5354da1330c54f6b998d9e71c4b7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
