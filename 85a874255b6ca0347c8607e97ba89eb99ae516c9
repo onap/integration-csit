@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04da47fa_c93cc550",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "I thought about using something like:\nGERRIT_BRANCH\u003d$(git branch | grep \\* | cut -d \u0027 \u0027 -f2)\nTo automatically get branch name from where the command is run. But I am not sure how Jenkins jobs are run. After cloning from gerrit or just downloading the code.\n\nI can add it to central file but where should I add this info. Perhaps in csit/scripts/policy/config/VERSION file?",
+      "parentUuid": "07ec03e7_d8a79d92",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05b0a553_5f3adea1",
         "filename": "plans/policy/api/setup.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2019-06-10T13:36:20Z",
       "side": 1,
       "message": "suggestion: could just export these on lines 37 \u0026 39 and then no need to add them as prefixes to the docker-compose command\n\nsame comment applies to all setup scripts",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14dc0523_f1b87c3d",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Can make this change but was thinking of specifying it explicitly. What do you say?",
+      "parentUuid": "05b0a553_5f3adea1",
       "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43626313_ef8bc3cd",
+        "filename": "scripts/policy/get-versions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Yes should be 2019. Will fix.",
+      "parentUuid": "3eefec9b_e0af6acc",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e423a018_f889b1cd",
         "filename": "scripts/policy/get-versions.sh",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2019-06-10T13:36:20Z",
       "side": 1,
       "message": "\"atleast\" \u003d\u003e \"at least\"",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09a1f2e7_7e0ee784",
+        "filename": "scripts/policy/get-versions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e423a018_f889b1cd",
       "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6cb579d4_96b9760b",
+        "filename": "scripts/policy/get-versions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66611aa3_dfababc3",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a89592_fc9bc0d3",
         "filename": "scripts/policy/get-versions.sh",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2019-06-10T13:36:20Z",
       "side": 1,
       "message": "suggestion: instead of cloning the whole project, could just retrieve the pom.xml like this:\n\n  curl \"https://gerrit.onap.org/r/gitweb?p\u003dpolicy/${PROJ}.git;a\u003dblob_plain;f\u003dpom.xml;hb\u003drefs/heads/master\" \u003epom.xml\n\nWould also have to add \"-N -fn\" to the \"mvn\" line so it doesn\u0027t try to examine all of the modules.  Also remove the \"cd\" lines, as they would no longer be needed.",
+      "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96007fac_6517f13a",
+        "filename": "scripts/policy/get-versions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-10T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a89592_fc9bc0d3",
       "revId": "85a874255b6ca0347c8607e97ba89eb99ae516c9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
