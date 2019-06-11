@@ -15,9 +15,10 @@
 # limitations under the License.
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2019 Samsung Electronics Co., Ltd.
 #
 
-echo "This is ${WORKSPACE}/scripts/vid/kill_and_remove_dataFolder.sh"
+echo "This is ${WORKSPACE}/scripts/vid/kill_and_remove_dataFolders.sh"
 
 #kill and remove all vid dockers
 cd ${WORKSPACE}/tests/vid/resources
