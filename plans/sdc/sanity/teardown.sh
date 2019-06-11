@@ -1,3 +1,3 @@
 #!/bin/bash
 
-source ${WORKSPACE}/scripts/sdc/kill_containers_and_remove_dataFolders.sh
+source ${WORKSPACE}/scripts/sdc/kill_and_remove_sdc_containers.sh
