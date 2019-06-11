@@ -17,14 +17,12 @@ if [ "$1" != "tad" ] && [ "$1" != "tud" ]; then
     exit 1
 fi
 
-# Clone sdc enviroment template
+# Prepare runtime data folder
+rm -rf ${WORKSPACE}/data
 mkdir -p ${WORKSPACE}/data/environments/
 mkdir -p ${WORKSPACE}/data/clone/
-#mkdir -p ${WORKSPACE}/data/logs/BE/SDC/SDC-BE
-#mkdir -p ${WORKSPACE}/data/logs/FE/SDC/SDC-FE
-#chmod -R 777 ${WORKSPACE}/data/logs
-#ls -lR ${WORKSPACE}/data/logs/
 
+# Clone sdc enviroment template
 cd ${WORKSPACE}/data/clone
 git clone --depth 1 http://gerrit.onap.org/r/sdc -b ${GERRIT_BRANCH}
 
