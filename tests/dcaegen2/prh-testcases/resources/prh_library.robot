@@ -13,13 +13,13 @@ Verify PNF ready sent
     Add PNF entry in AAI    ${pnf_entry}
     Set VES event in DMaaP    ${ves_event}
     Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
-    Wait Until Keyword Succeeds    10x    3000ms    Check recorded PNF_READY notification    ${expected_pnf_ready_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
 
 Verify PNF ready sent and logical link created
     [Arguments]    ${test_case_directory}
     ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
     Verify PNF ready sent    ${test_case_directory}
-    Check recorded Logical Link    ${expected_logical_link}
+    Check created Logical Link   ${expected_logical_link}
 
 Verify event with missing required field is logged
     [Arguments]    ${test_case_directory}
@@ -59,7 +59,12 @@ Verify PNF re registration
     [Arguments]    ${test_case_directory}
     ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
     Verify PNF ready sent    ${test_case_directory}
-    Check recorded Logical Link    ${expected_logical_link}
+    Check created Logical Link    ${expected_logical_link}
+
+    ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
+    Set VES event in DMaaP    ${ves_event}
+    ${expected_pnf_update_event}=    Get Data From File    ${test_case_directory}/expected-pnf-update-event.json
+    Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
 
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
@@ -67,15 +72,21 @@ Check CBS ready
     Log    Service Catalog response: ${resp.content}
     Dictionary Should Contain Key    ${resp.json()}    cbs    |Consul service catalog should contain CBS entry
 
-Check recorded PNF_READY notification
+Check created PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
-    ${resp}=    Get Request    ${dmaap_setup_session}    /setup/pnf_ready    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_setup_session}    /verify/pnf_ready    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
     Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
 
-Check recorded Logical Link
+Check created PNF_UPDATE notification
+    [Arguments]    ${expected_event_pnf_update_in_dpaap}
+    ${resp}=    Get Request    ${dmaap_setup_session}    /verify/pnf_update    headers=${suite_headers}
+    Should Be Equal As Strings    ${resp.status_code}    200
+    #Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
+
+Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
-    ${resp}=    Get Request    ${aai_setup_session}    /setup/created_logical_link    headers=${suite_headers}
+    ${resp}=    Get Request    ${aai_setup_session}    /verify/created_logical_link    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
     Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
 
