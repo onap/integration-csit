@@ -24,7 +24,7 @@ class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/setup/pnf_ready', self.path):
+            if re.search('/verify/pnf_ready', self.path):
                 global captured_prh_event
                 httpServerLib.set_response_200_ok(self, payload = captured_prh_event)
                 logger.debug('DmaapSetup GET /setup/pnf_ready -> 200 OK')
@@ -101,7 +101,6 @@ class DMaaPHandler(BaseHTTPRequestHandler):
 
 def _main_(handler_class=DMaaPHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
-    httpServerLib.start_http_endpoint(2222, DMaaPHandler)
     httpServerLib.start_https_endpoint(2223, DMaaPHandler, keyfile="certs/dmaap-mr.key", certfile="certs/dmaap-mr.crt", ca_certs="certs/root.crt")
     httpServerLib.start_http_endpoint(2224, DmaapSetup)
     while 1:
