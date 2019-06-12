@@ -17,17 +17,24 @@ logger = logging.getLogger('DMaaP-simulator-logger')
 
 DMAAP_EMPTY = b'[]'
 
-ves_event = DMAAP_EMPTY
-captured_prh_event = DMAAP_EMPTY
+event_ves = DMAAP_EMPTY
+event_pnf_ready = DMAAP_EMPTY
+event_pnf_update = DMAAP_EMPTY
 
 class DmaapSetup(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/setup/pnf_ready', self.path):
-                global captured_prh_event
-                httpServerLib.set_response_200_ok(self, payload = captured_prh_event)
-                logger.debug('DmaapSetup GET /setup/pnf_ready -> 200 OK')
+            if re.search('/verify/pnf_ready', self.path):
+                global event_pnf_ready
+                httpServerLib.set_response_200_ok(self, payload = event_pnf_ready)
+                logger.debug('DmaapSetup GET /verify/pnf_ready -> 200 OK')
+
+            elif re.search('/verify/pnf_update', self.path):
+                global event_pnf_update
+                httpServerLib.set_response_200_ok(self, payload = event_pnf_update)
+                logger.debug('DmaapSetup GET /verify/pnf_ready -> 200 OK')
+
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DmaapSetup GET ' + self.path + ' -> 404 Not found')
@@ -38,10 +45,10 @@ class DmaapSetup(BaseHTTPRequestHandler):
     def do_PUT(self):
         try:
             if re.search('/setup/ves_event', self.path):
-                global ves_event
-                ves_event = httpServerLib.get_payload(self)
+                global event_ves
+                event_ves = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('DmaapSetup PUT /setup/ves_event -> 200 OK, content: ' + ves_event.decode("utf-8"))
+                logger.debug('DmaapSetup PUT /setup/ves_event -> 200 OK, content: ' + event_ves.decode("utf-8"))
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DmaapSetup PUT ' + self.path + ' -> 404 Not found')
@@ -52,10 +59,12 @@ class DmaapSetup(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             if re.search('/reset', self.path):
-                global ves_event
-                global captured_prh_event
-                ves_event = DMAAP_EMPTY
-                captured_prh_event = DMAAP_EMPTY
+                global event_ves
+                global event_pnf_ready
+                global event_pnf_update
+                event_ves = DMAAP_EMPTY
+                event_pnf_ready = DMAAP_EMPTY
+                event_pnf_update = DMAAP_EMPTY
                 httpServerLib.set_response_200_ok(self)
                 logger.debug('DmaapSetup POST /reset -> 200 OK')
             else:
@@ -70,11 +79,17 @@ class DMaaPHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             if re.search('/events/unauthenticated.PNF_READY', self.path):
-                global captured_prh_event
-                captured_prh_event = httpServerLib.get_payload(self)
+                global event_pnf_ready
+                event_pnf_ready = httpServerLib.get_payload(self)
                 httpServerLib.set_response_200_ok(self)
                 logger.debug('DMaaPHandler POST /events/unauthenticated.PNF_READY -> 200, content: '
-                             + captured_prh_event.decode("utf-8"))
+                             + event_pnf_ready.decode("utf-8"))
+            elif re.search('/events/unauthenticated.PNF_UPDATE', self.path):
+                global event_pnf_update
+                event_pnf_update = httpServerLib.get_payload(self)
+                httpServerLib.set_response_200_ok(self)
+                logger.debug('DMaaPHandler POST /events/unauthenticated.PNF_READY -> 200, content: '
+                             + event_pnf_update.decode("utf-8"))
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('DMaaPHandler POST ' + self.path + ' -> 404 Not found')
@@ -85,12 +100,12 @@ class DMaaPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             if re.search('/events/unauthenticated.VES_PNFREG_OUTPUT/OpenDCAE-c12/c12', self.path):
-                global ves_event
-                httpServerLib.set_response_200_ok(self, payload = ves_event)
+                global event_ves
+                httpServerLib.set_response_200_ok(self, payload = event_ves)
                 logger.debug(
                     'DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200, content: '
-                    + ves_event.decode("utf-8"))
-                ves_event = DMAAP_EMPTY
+                    + event_ves.decode("utf-8"))
+                event_ves = DMAAP_EMPTY
                 logger.debug('DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200')
             else:
                 httpServerLib.set_response_404_not_found(self)
@@ -101,7 +116,6 @@ class DMaaPHandler(BaseHTTPRequestHandler):
 
 def _main_(handler_class=DMaaPHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
-    httpServerLib.start_http_endpoint(2222, DMaaPHandler)
     httpServerLib.start_https_endpoint(2223, DMaaPHandler, keyfile="certs/dmaap-mr.key", certfile="certs/dmaap-mr.crt", ca_certs="certs/root.crt")
     httpServerLib.start_http_endpoint(2224, DmaapSetup)
     while 1:
