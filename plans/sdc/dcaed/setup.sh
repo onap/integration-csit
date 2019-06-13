@@ -15,17 +15,4 @@
 # limitations under the License.
 #
 
-#
-# Note! This is only temporary solution for killing SDC DCAE plugin's
-# docker containers that must be currently used whenever docker_run.sh is used
-# with -dcae option - See SDC-2338 for related image naming issue 
-#
-# DCAE plugin-related parts will also have to be refactored under dedicated
-# directories in the future
-#
-
-echo "This is ${WORKSPACE}/scripts/sdc/kill_dcae_containers.sh"
-
-# kill and remove all sdc dcae dockers
-docker stop $(docker ps -a -q --filter="name=dcae")
-docker rm $(docker ps -a -q --filter="name=dcae")
+source ${WORKSPACE}/scripts/sdc/setup_sdc_dcaed.sh
