@@ -26,6 +26,18 @@
 
 echo "This is ${WORKSPACE}/scripts/sdc/kill_dcae_containers.sh"
 
+cp -rf ${WORKSPACE}/data/logs/ ${WORKSPACE}/archives/
+
+ls -Rt ${WORKSPACE}/archives/
+
+#kill and remove all sdc dockers
+docker stop $(docker ps -a -q --filter="name=sdc")
+docker rm $(docker ps -a -q --filter="name=sdc")
 # kill and remove all sdc dcae dockers
 docker stop $(docker ps -a -q --filter="name=dcae")
 docker rm $(docker ps -a -q --filter="name=dcae")
+
+
+#delete data folder
+
+sudo rm -rf ${WORKSPACE}/data/*
