@@ -9,6 +9,7 @@
         "aaf": false
     },
     "pdpParameters": {
+        "heartBeatMs": 120000,
         "updateParameters": {
             "maxRetryCount": 1,
             "maxWaitMs": 30000
