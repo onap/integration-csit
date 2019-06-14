@@ -2,6 +2,7 @@ import logging
 import re
 import sys
 import time
+import json
 from http.server import BaseHTTPRequestHandler
 import httpServerLib
 
@@ -99,7 +100,7 @@ class DMaaPHandler(BaseHTTPRequestHandler):
         try:
             if re.search('/events/unauthenticated.VES_PNFREG_OUTPUT/OpenDCAE-c12/c12', self.path):
                 global event_ves
-                httpServerLib.set_response_200_ok(self, payload = event_ves)
+                httpServerLib.set_response_200_ok(self, payload=self.pack_event_json_as_quoted_string_into_array(event_ves))
                 logger.debug(
                     'DMaaPHandler GET /events/unauthenticated.VES_PNFREG_OUTPUT/OpenDcae-c12/c12 -> 200, content: '
                     + event_ves.decode("utf-8"))
@@ -111,6 +112,16 @@ class DMaaPHandler(BaseHTTPRequestHandler):
         except Exception as e:
             logger.error(e)
             httpServerLib.set_response_500_server_error(self)
+
+    def pack_event_json_as_quoted_string_into_array(self, event):
+        if event == DMAAP_EMPTY:
+            return DMAAP_EMPTY
+        else:
+            decoded = event_ves.decode("utf-8")
+            packed = '[' + json.dumps(decoded) + ']'
+            logger.info("prepared response: " + packed)
+            return packed.encode()
+        
 
 def _main_(handler_class=DMaaPHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
