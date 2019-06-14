@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d7545c6_4edf6aad",
+        "filename": "scripts/sdc/cleanup_sdc_dcaed.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-06-14T10:33:26Z",
+      "side": 1,
+      "message": "Destroying everything under /data/ doesn\u0027t sound particularly dangerous to me - it\u0027s not a system dir or anything like that. If this actually is seen as a potential real problem though, attention should be paid also to the creation of the data dir in setup scripts which apply the same WORKSPACE variable across multiple CSIT setups (which should be a separate task and commit).",
+      "parentUuid": "91f6d96b_02c83e7d",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "6e671235c6107f686a770b040edb98cef0fe6732",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3460ce72_a017a275",
         "filename": "scripts/sdc/setup_sdc_dcaed.sh",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2019-06-14T08:08:22Z",
       "side": 1,
       "message": "This and other cloning has inherent version control issues. As we dicussed before, this seems to be the \"normal\" way now anyway so probably it is too hard to change it to something better now. But I would really like to see this documented somewhere that a new user is likely to read as the results can be very unexpected and confusing.",
+      "revId": "6e671235c6107f686a770b040edb98cef0fe6732",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400f84da_d135c5f5",
+        "filename": "scripts/sdc/setup_sdc_dcaed.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-06-14T10:33:26Z",
+      "side": 1,
+      "message": "I couldn\u0027t agree more. In my opinion these checkouts should use the branch of the csit repo from which the test is executed - however, this is again something that should be done as a separate task (or even user story) and series of commits over the entire CSIT space as none of the existing suites do this quite right. For now checking the default master is fine for DCAE-DS CSIT since the test doesn\u0027t exist in any other branch.",
+      "parentUuid": "3460ce72_a017a275",
       "revId": "6e671235c6107f686a770b040edb98cef0fe6732",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -87,6 +129,24 @@
       "writtenOn": "2019-06-14T08:08:22Z",
       "side": 1,
       "message": "I guess these kinds definitions (user accounts) are destined to be used from some with the SDC core definitions? As DCAE tests use also the core, I don\u0027t think they could reasonably be different",
+      "revId": "6e671235c6107f686a770b040edb98cef0fe6732",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a57e866_fa9097fc",
+        "filename": "tests/sdc/dcaed/common.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-06-14T10:33:26Z",
+      "side": 1,
+      "message": "The users originally come from testsuite/robot/resources/asdc_interface.robot, and there\u0027s supposed to be a lot of future refactoring of these in El Alto so I\u0027m having big hopes regarding that effort.",
+      "parentUuid": "0e6c9cd2_6c876c70",
       "revId": "6e671235c6107f686a770b040edb98cef0fe6732",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
