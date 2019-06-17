@@ -25,6 +25,7 @@ Verify event with missing required field is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
+    Log    Invalid ves event: ${invalid_ves_event}
     ${notification}=    Create invalid notification    ${invalid_ves_event}
     ${error_msg}=    Set Variable    Incorrect json, consumerDmaapModel can not be created:
     Wait Until Keyword Succeeds    10x    3000ms    Check PRH json log    ${error_msg}    ${notification}
@@ -34,7 +35,7 @@ Verify incorrect JSON event is logged
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    Check PRH log    |com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray
+    Check PRH log    |WARN    |Incorrect json, consumerDmaapModel can not be created:
 
 Verify missing AAI record is logged
     [Timeout]    100s

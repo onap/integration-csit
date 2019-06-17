@@ -46,8 +46,7 @@ class PrhLibrary(object):
     @staticmethod
     def create_invalid_notification(json_file):
         output = {}
-        input = json.loads(json_file)[0]
-
+        input = json.loads(json_file)
         output["correlationId"] = PrhLibrary.__extract_correlation_id_value(input)
         output["oamV4IpAddress"] = PrhLibrary.__extract_value_from_pnfRegistrationFields(input, "oamV4IpAddress")
         output["oamV6IpAddress"] = PrhLibrary.__extract_value_from_pnfRegistrationFields(input, "oamV6IpAddress")
