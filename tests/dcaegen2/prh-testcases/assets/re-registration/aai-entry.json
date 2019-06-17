@@ -19,5 +19,48 @@
     "ipaddress-v6-oam": "example-ipaddress-v6-oam-val-92665",
     "inv-status": "example-inv-status-val-8477",
     "prov-status": "example-prov-status-val-68268",
-    "nf-role": "example-nf-role-val-68489"
+    "nf-role": "example-nf-role-val-68489",
+    "relationship-list": {
+        "relationship": [
+            {
+                "related-to": "service-instance",
+                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+                "related-link": "/aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service",
+                "relationship-data": [
+                    {
+                        "relationship-key": "customer.global-customer-id",
+                        "relationship-value": "Demonstration"
+                    },
+                    {
+                        "relationship-key": "service-subscription.service-type",
+                        "relationship-value": "vFW"
+                    },
+                    {
+                        "relationship-key": "service-instance.service-instance-id",
+                        "relationship-value": "bbs_service"
+                    }
+                ],
+                "related-to-property": [
+                    {
+                        "property-key": "service-instance.service-instance-name",
+                        "property-value": "bbs_service"
+                    }
+                ]
+            },
+            {
+                "related-to": "logical-link",
+                "relationship-label": "org.onap.relationships.inventory.BridgedTo",
+                "related-link": "/aai/v12/network/logical-links/logical-link/bbs-link",
+                "relationship-data": [
+                    {
+                        "relationship-key": "logical-link.link-name",
+                        "relationship-value": "bbs-link"
+                    }
+                ]
+            }
+        ]
+    }
+
+
+
 }
