@@ -16,6 +16,24 @@
       "revId": "d33bf0617a4f9e365b373f0fac0cd3e28266f894",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cb3d167_ec882db8",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-06-17T17:10:16Z",
+      "side": 1,
+      "message": "My understanding was that once we branch then \"-latest\" would not be appended to image names. If its wrong, will remove retry.",
+      "parentUuid": "49d54d8a_5160da6a",
+      "revId": "d33bf0617a4f9e365b373f0fac0cd3e28266f894",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
