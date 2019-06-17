@@ -4,7 +4,7 @@ Library		ExtendedSelenium2Library
 Library		OperatingSystem
 Library		eteutils/RequestsClientCert.py
 Library		RequestsLibrary
-Library		eteutils/UUID.py 
+Library		ONAPLibrary.Utilities 
 Library		DateTime  
 Library		Collections
 Library		eteutils/StringTemplater.py
@@ -259,7 +259,7 @@ Run Portal Get Request
      [Documentation]    Runs Portal Get request
      [Arguments]    ${data_path}
      ${session}=    Create Session 	portal	${PORTAL_URL}
-     ${uuid}=    Generate UUID
+     ${uuid}=    Generate UUID4
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json    X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
      ${resp}= 	Get Request 	portal 	${data_path}     headers=${headers}
      Log    Received response from portal ${resp.text}

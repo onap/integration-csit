@@ -4,7 +4,7 @@ Suite Teardown    Suite Teardown
 Library           OperatingSystem
 Library           RequestsLibrary
 Library           Process
-Library           eteutils/UUID.py
+Library           ONAPLibrary.Utilities
 
 *** Variables ***
 ${GLOBAL_APPLICATION_ID}    csit-vCPE
@@ -15,7 +15,7 @@ ${GLOBAL_MSO_PASSWORD}    password1$
 SO ServiceInstance health check
     ${auth}=    Create List    ${GLOBAL_MSO_USERNAME}    ${GLOBAL_MSO_PASSWORD}
     ${session}=    Create Session    so    http://${SO_IP}:8080
-    ${uuid}=    Generate UUID
+    ${uuid}=    Generate UUID4
     ${headers}=    Create Dictionary    Accept=text/html    Content-Type=text/html    X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
     ${resp}=    Get Request    so    /ecomp/mso/infra/globalhealthcheck    headers=${headers}
     &{headers}=    Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json

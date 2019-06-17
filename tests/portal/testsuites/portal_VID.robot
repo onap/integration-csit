@@ -3,7 +3,7 @@ Documentation     The main interface for interacting with Portal. It handles low
 Library 	    ExtendedSelenium2Library
 Library	          RequestsClientCert
 Library 	      RequestsLibrary
-Library	          UUID 
+Library	          ONAPLibrary.Utilities 
 Library         DateTime  
 Resource        ../global_properties.robot
 Resource        ../browser_setup.robot
@@ -50,7 +50,7 @@ Run Portal Get Request
      [Documentation]    Runs Portal Get request
      [Arguments]    ${data_path}
      ${session}=    Create Session 	portal	${GLOBAL_PORTAL_URL}
-     ${uuid}=    Generate UUID
+     ${uuid}=    Generate UUID4
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json    X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
      ${resp}= 	Get Request 	portal 	${data_path}     headers=${headers}
      Log    Received response from portal ${resp.text}
