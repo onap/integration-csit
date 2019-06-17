@@ -15,8 +15,16 @@ ${TEST_CASES_DIR}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets
 ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
 ${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
+${PRH_URL}  http://localhost:8100
+${TRACE_LOG_LEVEL_CONF}    {"configuredLevel":"TRACE","effectiveLevel":"TRACE"}
+${WARN_LOG_LEVEL_CONF}    {"configuredLevel":"WARN","effectiveLevel":"WARN"}
 
 *** Test Cases ***
+PRH logging level change
+    [Documentation]    PRH logging level change from WARN to TRACE
+    [Tags]    PRH    logging level
+    Verify change logging level
+
 BBS case event - attachment point
     [Documentation]    PRH get from DMaaP valid event with valid attachment point
     [Tags]    PRH    Valid event    Attachment point
@@ -57,3 +65,4 @@ BBS case event - Re-registration
     [Tags]    PRH    Valid event    Re registraiton
     [Template]    Verify PNF re registration
     ${TEST_CASES_DIR}/re-registration
+
