@@ -2,6 +2,7 @@
 Library           RequestsLibrary
 Library           Collections
 Library           PrhLibrary.py
+Library           OperatingSystem
 Resource          ../../../common.robot
 
 *** Keywords ***
@@ -134,6 +135,8 @@ Create sessions
     Set Suite Variable    ${aai_setup_session}    aai_setup_session
     Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
     Set Suite Variable    ${consul_setup_session}    consul_setup_session
+    Create Session    prh    ${PRH_URL}
+    Set Suite Variable    ${prh}    prh
 
 Reset Simulators
     Reset AAI simulator
@@ -150,3 +153,23 @@ Reset DMaaP simulator
 Create headers
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Set Suite Variable    ${suite_headers}    ${headers}
+
+Verify change logging level
+    Verify logging level  ${WARN_LOG_LEVEL_CONF}
+    Change logging level  TRACE
+    Verify logs with heartbeat
+    Change logging level  WARN
+
+Change logging level
+    [Arguments]    ${expected_log_level}
+    Run   curl -i -X POST -H 'Content-Type: application/json' -d '{"configuredLevel": "${expected_log_level}"}' http://localhost:8100/actuator/loggers/org.onap.dcaegen2.services.prh
+
+Verify logging level
+    [Arguments]    ${expected_log_level}
+    ${resp}=    Get Request    prh  /actuator/loggers/org.onap.dcaegen2.services.prh
+    Should Be Equal As JSON    ${resp.content}    ${expected_log_level}
+
+Verify logs with heartbeat
+    Verify logging level  ${TRACE_LOG_LEVEL_CONF}
+    Get Request    prh    /heartbeat
+    Check PRH log   Heartbeat request received
