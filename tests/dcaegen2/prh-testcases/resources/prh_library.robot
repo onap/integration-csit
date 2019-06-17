@@ -58,9 +58,12 @@ Verify AAI not responding is logged
 Verify PNF re registration
     [Timeout]    100s
     [Arguments]    ${test_case_directory}
-    ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
     Verify PNF ready sent    ${test_case_directory}
+    ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
     Check created Logical Link    ${expected_logical_link}
+
+    ${service_instance}=    Get Data From File    ${test_case_directory}/aai-entry-service-instance.json
+    Add service instance entry in AAI    ${service_instance}
 
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Set VES event in DMaaP    ${ves_event}
@@ -113,6 +116,13 @@ Add PNF entry in AAI
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
     ${resp}=    Put Request    ${aai_setup_session}    /setup/add_pnf_entry    headers=${suite_headers}    data=${pnf_entry}
+    Should Be Equal As Strings    ${resp.status_code}    200
+
+Add service instance entry in AAI
+    [Arguments]    ${aai_service_instance}
+    ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
+    Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
+    ${resp}=    Put Request    ${aai_setup_session}    /setup/add_service_instace    headers=${suite_headers}    data=${pnf_entry}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set VES event in DMaaP
