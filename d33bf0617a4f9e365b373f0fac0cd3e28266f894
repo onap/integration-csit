@@ -34,6 +34,24 @@
       "revId": "d33bf0617a4f9e365b373f0fac0cd3e28266f894",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7966d447_dd9f1ae9",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-17T18:20:51Z",
+      "side": 1,
+      "message": "It seems like \"-latest\" can be tacked onto whatever branch we\u0027re interested in - but that\u0027s partly speculation about how maven \u0026 maven repos work.  Nevertheless, I\u0027ll defer to Pam on this one.\n\nIf we do choose to do the retry, then we may want to reverse it and try \"-latest\" first, as that\u0027s typically what we want in the master branch.",
+      "parentUuid": "4cb3d167_ec882db8",
+      "revId": "d33bf0617a4f9e365b373f0fac0cd3e28266f894",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
