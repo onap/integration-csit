@@ -27,7 +27,7 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d
       ports:
        - "3306:3306"
-   dmaap:
+   message-router:
       image: dmaap/simulator
       container_name: dmaap-simulator
       hostname: dmaap-simulator
@@ -38,10 +38,9 @@ services:
       container_name: policy-pap
       depends_on:
        - mariadb
-       - dmaap
+       - message-router
       hostname: policy-pap
-      volumes:
-         - ./config/pap/:/opt/app/policy/pap/etc/
+
    api:
       image: nexus3.onap.org:10001/onap/policy-api
       container_name: policy-api
@@ -53,12 +52,11 @@ services:
       container_name: policy-apex-pdp
       depends_on:
        - mariadb
-       - dmaap
+       - message-router
        - pap
       hostname: policy-apex-pdp
       command: ['/opt/app/policy/apex-pdp/bin/apexOnapPf.sh', '-c', '/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json', '-p', '/opt/app/policy/apex-pdp/etc/onappf/config/topic.properties']
-      volumes:
-         - ./config/apex-pdp/:/opt/app/policy/apex-pdp/etc/onappf/config/
+
       ports:
        - "6969:6969"
        - "23324:23324"
@@ -69,11 +67,11 @@ services:
       container_name: policy-wait
       depends_on:
         - mariadb
-        - dmaap
+        - message-router
       hostname: policy-wait
       command:
         mariadb:3306
-        dmaap:3904
+        message-router:3904
    start_all:
       image: dadarek/wait-for-dependencies
       environment:
@@ -81,14 +79,14 @@ services:
       container_name: policy-wait-all
       depends_on:
         - mariadb
-        - dmaap
+        - message-router
         - api
         - pap
         - apex
       hostname: policy-wait-all
       command:
         mariadb:3306
-        dmaap:3904
+        message-router:3904
         api:6969
         pap:6969
         apex:6969
