@@ -25,6 +25,13 @@ export POLICY_DISTRIBUTION_VERSION="$(curl --silent https://git.onap.org/policy/
 echo $POLICY_DISTRIBUTION_VERSION
 docker run -d --name policy-distribution -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-distribution:$POLICY_DISTRIBUTION_VERSION
 
+if [ $? -ne 0 ]; then # Retry with latest tag 
+  export POLICY_DISTRIBUTION_VERSION=$POLICY_DISTRIBUTION_VERSION"-latest"
+  echo $POLICY_DISTRIBUTION_VERSION
+  docker run -d --name policy-distribution -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-distribution:$POLICY_DISTRIBUTION_VERSION
+fi
+
+
 POLICY_DISTRIBUTION_IP=`get-instance-ip.sh policy-distribution`
 echo DISTRIBUTION IP IS ${POLICY_DISTRIBUTION_IP}
 # Wait for initialization
