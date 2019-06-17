@@ -8,11 +8,10 @@ services:
     volumes:
       - ./simulator/certs:/tmp/certs
     environment:
-      - LOG_LEVEL
-      - PRH_LOG_LEVEL
-      - HOSTNAME
-      - CONSUL_HOST
+      - HOSTNAME=dcae-prh
+      - CONSUL_HOST                # not in use, but still required by SDK - should be removed later on
       - CONFIG_BINDING_SERVICE
+      - CONFIG_BINDING_SERVICE_SERVICE_PORT
     container_name: prh
     depends_on:
       cbs:
@@ -55,6 +54,8 @@ services:
     image: consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
+                                              "logging.level.org.onap.dcaegen2.services.prh": "debug",
+                                              "logging.level.org.onap.dcaegen2.services.sdk": "debug",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
