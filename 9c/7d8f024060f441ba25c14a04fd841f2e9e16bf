@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Marcin Migdal <marcin.migdal@nokia.com>
+Code-Review+1: Piotr Wielebski <piotr.wielebski@nokia.com>
+Code-Review+2: Gary Wu <gary.wu@futurewei.com>
+Submitted-by: Gary Wu <gary.wu@futurewei.com>
+Submitted-at: Tue, 18 Jun 2019 14:02:58 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/90003
+Project: integration/csit
+Branch: refs/heads/master
