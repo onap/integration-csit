@@ -57,9 +57,10 @@ Verify AAI not responding is logged
     Ensure Container Is Running   aai_simulator
 
 Verify PNF re registration
-    [Timeout]    100s
+    [Timeout]    500s
     [Arguments]    ${test_case_directory}
     ${aai_entry}=    Get Data From File    ${test_case_directory}/aai-entry.json
+    Log    PNF Re-registration: AAI entry for AAI Simulator ${aai_entry}
     Add PNF entry in AAI    ${aai_entry}
     ${service_instance}=    Get Data From File    ${test_case_directory}/aai-entry-service-instance.json
     Add service instance entry in AAI    ${service_instance}
@@ -67,7 +68,7 @@ Verify PNF re registration
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Set VES event in DMaaP    ${ves_event}
     ${expected_pnf_update_event}=    Get Data From File    ${test_case_directory}/expected-pnf-update-event.json
-    #Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
 
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
@@ -86,7 +87,8 @@ Check created PNF_UPDATE notification
     ${resp}=    Get Request    ${dmaap_setup_session}    /verify/pnf_update    headers=${suite_headers}
     Log    Response from DMaaP: ${resp.content}
     Should Be Equal As Strings    ${resp.status_code}    200
-    #Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
+    Check PRH log    Mandingo arrived
+    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
