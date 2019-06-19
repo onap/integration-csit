@@ -19,7 +19,7 @@ ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unaut
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .xml"
 ${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /var/log/ONAP/application.log" > /tmp/dfc_docker.log.robot
-${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Publish to DR successful!" /tmp/dfc_docker.log.robot
+${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Datafile file published" /tmp/dfc_docker.log.robot
 ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/A20181002.0000-1000-0015-1000_5G.xml.M %{WORKSPACE}
 ${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/A20181002.0000-1000-0015-1000_5G.xml.M  %{WORKSPACE}/metadata.json
 ${CLI_EXEC_CLI_PMMAPPER_LOG}             docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper_docker.log.robot
@@ -71,7 +71,7 @@ Verify Data File Collector successfully publishes the PM XML file to the Data Ro
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_DFC_LOG_GREP}    shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        Publish to DR successful!
+    Should Contain                  ${cli_cmd_output.stdout}        Datafile file published
 
 
 Verify Default Feed And File Consumer Subscription On Datarouter
