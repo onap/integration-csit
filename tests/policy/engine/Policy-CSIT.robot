@@ -272,7 +272,7 @@ Delete Ops Policy
     [Arguments]    ${policy_name}
     ${policyname3}=    Catenate   com.Config_BRMS_Param_${policyname}.1.xml
     ${dict}=     Create Dictionary     policy_name=${policyname3}
-	${output} =     Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+	${output} =     Fill JSON Template File    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
@@ -281,7 +281,7 @@ Delete Config Policy
     [Arguments]    ${policy_name}
     ${policyname3}=    Catenate   com.Config_MS_com.${policy_name}.1.xml
     ${dict}=     Create Dictionary     policy_name=${policyname3}
-	${output} =     Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+	${output} =     Fill JSON Template File    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
@@ -290,7 +290,7 @@ Delete OOF Policy
     [Arguments]    ${policy_name}
     ${policyname3}=    Catenate   com.Config_OOF_${policy_name}.1.xml
     ${dict}=    Create Dictionary     policy_name=${policyname3}
-        ${output} =    Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+        ${output} =    Fill JSON Template File    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =   Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}   ${output}
     Should Be Equal As Strings  ${put_resp.status_code}        200 
 
