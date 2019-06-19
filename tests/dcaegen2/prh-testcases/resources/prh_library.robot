@@ -70,27 +70,27 @@ Verify PNF re registration
     #Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
 
 Check CBS ready
-    ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
+    ${resp}=    Get Request    ${consul_session}    /v1/catalog/services
     Should Be Equal As Strings    ${resp.status_code}    200
     Log    Service Catalog response: ${resp.content}
     Dictionary Should Contain Key    ${resp.json()}    cbs    |Consul service catalog should contain CBS entry
 
 Check created PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dpaap}
-    ${resp}=    Get Request    ${dmaap_setup_session}    /verify/pnf_ready    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_ready    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
     Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
 
 Check created PNF_UPDATE notification
     [Arguments]    ${expected_event_pnf_update_in_dpaap}
-    ${resp}=    Get Request    ${dmaap_setup_session}    /verify/pnf_update    headers=${suite_headers}
+    ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_update    headers=${suite_headers}
     Log    Response from DMaaP: ${resp.content}
     Should Be Equal As Strings    ${resp.status_code}    200
     #Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
-    ${resp}=    Get Request    ${aai_setup_session}    /verify/created_logical_link    headers=${suite_headers}
+    ${resp}=    Get Request    ${aai_session}    /verify/created_logical_link    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
     Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
 
@@ -114,19 +114,19 @@ Add PNF entry in AAI
     [Arguments]    ${pnf_entry}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
-    ${resp}=    Put Request    ${aai_setup_session}    /setup/add_pnf_entry    headers=${suite_headers}    data=${pnf_entry}
+    ${resp}=    Put Request    ${aai_session}    /setup/add_pnf_entry    headers=${suite_headers}    data=${pnf_entry}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Add service instance entry in AAI
     [Arguments]    ${aai_service_instance}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
-    ${resp}=    Put Request    ${aai_setup_session}    /setup/add_service_instace    headers=${suite_headers}    data=${aai_service_instance}
+    ${resp}=    Put Request    ${aai_session}    /setup/add_service_instace    headers=${suite_headers}    data=${aai_service_instance}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set VES event in DMaaP
     [Arguments]    ${ves_event}
-    ${resp}=    Put Request    ${dmaap_setup_session}    /setup/ves_event    headers=${suite_headers}    data=${ves_event}
+    ${resp}=    Put Request    ${dmaap_session}    /setup/ves_event    headers=${suite_headers}    data=${ves_event}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Should Be Equal As JSON
@@ -137,31 +137,18 @@ Should Be Equal As JSON
     ${actual_json}=    Evaluate    json.loads("""${actual}""")    json
     Should Be Equal    ${actual_json}    ${expected_json}
 
-Create sessions
-    Create Session    dmaap_setup_session    ${DMAAP_SIMULATOR_SETUP_URL}
-    Set Suite Variable    ${dmaap_setup_session}    dmaap_setup_session
-    Create Session    aai_setup_session    ${AAI_SIMULATOR_SETUP_URL}
-    Set Suite Variable    ${aai_setup_session}    aai_setup_session
-    Create Session    consul_setup_session    ${CONSUL_SETUP_URL}
-    Set Suite Variable    ${consul_setup_session}    consul_setup_session
-    Create Session    prh_setup_session    ${PRH_SETUP_URL}
-    Set Suite Variable    ${prh_setup_session}    prh_setup_session
-
 Reset Simulators
     Reset AAI simulator
     Reset DMaaP simulator
 
 Reset AAI simulator
-    ${resp}=    Post Request     ${aai_setup_session}    /reset
+    ${resp}=    Post Request     ${aai_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Reset DMaaP simulator
-    ${resp}=    Post Request     ${dmaap_setup_session}    /reset
+    ${resp}=    Post Request     ${dmaap_session}    /reset
     Should Be Equal As Strings    ${resp.status_code}    200
 
-Create headers
-    ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
-    Set Suite Variable    ${suite_headers}    ${headers}
 
 Verify change logging level
     Change logging level  TRACE
@@ -174,10 +161,10 @@ Change logging level
 
 Verify logging level
     [Arguments]    ${expected_log_level}
-    ${resp}=    Get Request    prh_setup_session  /actuator/loggers/org.onap.dcaegen2.services.prh
+    ${resp}=    Get Request    prh_session  /actuator/loggers/org.onap.dcaegen2.services.prh
     Should Be Equal As JSON    ${resp.content}    ${expected_log_level}
 
 Verify logs with heartbeat
     Verify logging level  ${TRACE_LOG_LEVEL_CONF}
-    Get Request    prh_setup_session    /heartbeat
+    Get Request    prh_session    /heartbeat
     Check PRH log   Heartbeat request received

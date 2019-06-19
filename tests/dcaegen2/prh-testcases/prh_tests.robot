@@ -6,8 +6,9 @@ Test Teardown     Reset Simulators
 Test Timeout      2 minutes
 
 Library           resources/PrhLibrary.py
+Resource          resources/prh_sessions.robot
 Resource          resources/prh_library.robot
-Resource          ../../common.robot
+Resource          resources/prh_config_tests.robot
 
 *** Variables ***
 ${TEST_CASES_DIR}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets
@@ -65,3 +66,8 @@ PRH logging level change
     [Documentation]    PRH logging level change from WARN to TRACE
     [Tags]    PRH    logging level
     Verify change logging level
+
+CBS configuration forced refresh
+    [Documentation]    It should be possible to force refresh PRH configuration from CBS
+    [Tags]    PRH    coniguration
+    Verify PRH configuration forced refresh
