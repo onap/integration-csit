@@ -71,3 +71,8 @@ CBS configuration forced refresh
     [Documentation]    It should be possible to force refresh PRH configuration from CBS
     [Tags]    PRH    coniguration
     Verify PRH configuration forced refresh
+
+CBS configuration scheduled refresh
+    [Documentation]    PRH should pull for CBS configuration updates according to schedule
+    [Tags]    PRH    coniguration
+    Verify scheduled CBS config updates

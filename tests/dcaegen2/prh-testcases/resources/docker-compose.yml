@@ -54,6 +54,7 @@ services:
     image: consul:1.0.6
     restart: on-failure
     command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
+                                              "cbs.updates-interval": 0,
                                               "logging.level.org.onap.dcaegen2.services.prh": "debug",
                                               "logging.level.org.onap.dcaegen2.services.sdk": "debug",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
