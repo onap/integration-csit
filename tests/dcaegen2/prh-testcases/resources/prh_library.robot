@@ -67,7 +67,7 @@ Verify PNF re registration
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Set VES event in DMaaP    ${ves_event}
     ${expected_pnf_update_event}=    Get Data From File    ${test_case_directory}/expected-pnf-update-event.json
-    #Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
 
 Check CBS ready
     ${resp}=    Get Request    ${consul_setup_session}    /v1/catalog/services
