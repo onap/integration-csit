@@ -4,8 +4,8 @@ Library    String
 Library    HttpLibrary.HTTP
 LIbrary    Process
 Library    BuiltIn
+Library    ONAPLibrary.Templating
 Resource    policy_interface.robot
-Resource    json_templater.robot
 
 *** Variables ***
 ${RESOURCE_PATH_CREATE}        /pdp/api/createPolicy
@@ -13,21 +13,21 @@ ${RESOURCE_PATH_CREATE_PUSH}        /pdp/api/pushPolicy
 ${RESOURCE_PATH_CREATE_DELETE}        /pdp/api/deletePolicy
 ${RESOURCE_PATH_GET_CONFIG}    /pdp/api/getConfig
 ${RESOURCE_PATH_LISTPOLICY}        /pdp/api/listPolicy
-${CREATE_CONFIG_VFW_TEMPLATE}    ${CURDIR}/configpolicy_vFW_R1.template
-${CREATE_CONFIG_VDNS_TEMPLATE}    ${CURDIR}/configpolicy_vDNS_R1.template
-${CREATE_CONFIG_VCPE_TEMPLATE}    ${CURDIR}/configpolicy_vCPE_R1.template
-${CREATE_OPS_VFW_TEMPLATE}    ${CURDIR}/opspolicy_VFW_R1.template
-${CREATE_OOF_HPA_TEMPLATE}    ${CURDIR}/oofpolicy_HPA_R1.template
-${CREATE_SDNC_VFW_TEMPLATE}     ${CURDIR}/sdncnamingpolicy_vFW.template
-${CREATE_SDNC_VPG_TEMPLATE}     ${CURDIR}/sdncnamingpolicy_vPG.template
-${PUSH_POLICY_TEMPLATE}   ${CURDIR}/pushpolicy.template
-${MULTIPLE_PUSH_POLICY_TEMPLATE}   ${CURDIR}/multiple_pushpolicy.template
-${MULTIPLE_UNPUSH_POLICY_TEMPLATE}   ${CURDIR}/multiple_unpushpolicy.template
-${CREATE_OPS_VDNS_TEMPLATE}    ${CURDIR}/opspolicy_VDNS_R1.template
-${DEL_POLICY_TEMPLATE}   ${CURDIR}/deletepolicy.template
-${GETCONFIG_TEMPLATE}    ${CURDIR}/getconfigpolicy.template
-${GETOOF_TEMPLATE}       ${CURDIR}/getoofpolicy.template
-${LISTPOLICY_TEMPLATE}    ${CURDIR}/listpolicy.template
+${CREATE_CONFIG_VFW_TEMPLATE}    configpolicy_vFW_R1.template
+${CREATE_CONFIG_VDNS_TEMPLATE}    configpolicy_vDNS_R1.template
+${CREATE_CONFIG_VCPE_TEMPLATE}    configpolicy_vCPE_R1.template
+${CREATE_OPS_VFW_TEMPLATE}    opspolicy_VFW_R1.template
+${CREATE_OOF_HPA_TEMPLATE}    oofpolicy_HPA_R1.template
+${CREATE_SDNC_VFW_TEMPLATE}     sdncnamingpolicy_vFW.template
+${CREATE_SDNC_VPG_TEMPLATE}     sdncnamingpolicy_vPG.template
+${PUSH_POLICY_TEMPLATE}   pushpolicy.template
+${MULTIPLE_PUSH_POLICY_TEMPLATE}   multiple_pushpolicy.template
+${MULTIPLE_UNPUSH_POLICY_TEMPLATE}   multiple_unpushpolicy.template
+${CREATE_OPS_VDNS_TEMPLATE}    opspolicy_VDNS_R1.template
+${DEL_POLICY_TEMPLATE}   deletepolicy.template
+${GETCONFIG_TEMPLATE}    getconfigpolicy.template
+${GETOOF_TEMPLATE}       getoofpolicy.template
+${LISTPOLICY_TEMPLATE}    listpolicy.template
 ${CONFIG_POLICY_VFW_NAME}    vFirewall
 ${CONFIG_POLICY_VFW_TYPE}    MicroService
 ${CONFIG_POLICY_VDNS_NAME}    vLoadBalancer
@@ -51,8 +51,8 @@ ${MULTIPLE_PUSH_POLICY_NAME2}   com.testBase2
 ${MULTIPLE_PUSH_POLICY_NAME3}   com.testBase3
 ${file_path}        ../testsuite/robot/assets/templates/ControlLoopDemo__closedLoopControlName.drl
 ${RESOURCE_PATH_UPLOAD}  /pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%22Manyu456%22%2C%20%22serviceType%22%3A%22BRMSPARAM%22%7D
-${CREATE_OPS_VCPE_TEMPLATE}      ${CURDIR}/opspolicy_vCPE_R1.template  
-${CREATE_OPS_VOLTE_TEMPLATE}    ${CURDIR}/opspolicy_vOLTE_R1.template
+${CREATE_OPS_VCPE_TEMPLATE}      opspolicy_vCPE_R1.template  
+${CREATE_OPS_VOLTE_TEMPLATE}    opspolicy_vOLTE_R1.template
 
 
 *** Test Cases ***
@@ -173,19 +173,21 @@ HPA Policy Tests
 
 Get Configs VFW Policy
     [Documentation]    Get Config Policy for VFW
+    Create Environment    policy    ${CURDIR}
     ${getconfigpolicy}=    Catenate    .*${CONFIG_POLICY_VFW_NAME}*
     ${configpolicy_name}=    Create Dictionary    config_policy_name=${getconfigpolicy}
-    ${output} =     Fill JSON Template File     ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
+    ${output} =     Apply Template    policy    ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
     ${get_resp} =    Run Policy Get Configs Request    ${RESOURCE_PATH_GET_CONFIG}   ${output}
 	Should Be Equal As Strings 	${get_resp.status_code} 	200
 	
 Create OOF HPA Policy
     [Documentation]    Create OOF Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =     Create Policy Name
     ${policyname1}=    Catenate   com.${randompolicyname}_HPA
     ${OOF_POLICY_HPA_NAME}=    Set Test Variable    ${policyname1}
     ${hpapolicy}=   Create Dictionary   policy_name=${policyname1}
-    ${output} =   Fill JSON Template File    ${CREATE_OOF_HPA_TEMPLATE}   ${hpapolicy}
+    ${output} =   Apply Template    policy    ${CREATE_OOF_HPA_TEMPLATE}   ${hpapolicy}
     ${put_resp} =   Run Policy Put Request    ${RESOURCE_PATH_CREATE}   ${output}
     Log    ${put_resp}    
         Should Be Equal As Strings     ${put_resp.status_code}          200
@@ -193,41 +195,45 @@ Create OOF HPA Policy
 
 Get OOF HPA Policy
     [Documentation]    Get OOF Policy for HPA 
+    Create Environment    policy    ${CURDIR}
     ${gethpapolicy}=   Catenate    .*${OOF_POLICY_HPA_NAME}*
     ${hpapolicy_name}=   Create Dictionary    oof_policy_name=${gethpapolicy}
-    ${output} =    Fill JSON Template File    ${GETOOF_TEMPLATE}    ${hpapolicy_name}
+    ${output} =    Apply Template    policy    ${GETOOF_TEMPLATE}    ${hpapolicy_name}
     ${get_resp} =   Run Policy Get Configs Request   ${RESOURCE_PATH_GET_CONFIG}   ${output}
         Should Be Equal As Strings     ${get_resp.status_code}        200
  
 Create Config VFW Policy
     [Documentation]    Create Config Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =     Create Policy Name
     ${policyname1}=    Catenate   com.${randompolicyname}_vFirewall
     ${CONFIG_POLICY_VFW_NAME}=    Set Test Variable    ${policyname1}
     ${configpolicy}=    Create Dictionary    policy_name=${policyname1}
-    ${output} =     Fill JSON Template File     ${CREATE_CONFIG_VFW_TEMPLATE}    ${configpolicy}
+    ${output} =     Apply Template    policy     ${CREATE_CONFIG_VFW_TEMPLATE}    ${configpolicy}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
 	[Return]    ${policyname1}
 
 Create VPG SDNC Naming Policy
     [Documentation]    Create VPG SDNC Naming Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =    Create Policy Name
     ${policyname1}=    Catenate    com.${randompolicyname}_ONAP_vPG_Naming
     ${SDNC_POLICY_VPG_NAME}=    Set Test Variable     ${policyname1}
     ${sdncpolicy}=    Create Dictionary    policy_name=${policyname1}
-    ${output} =   Fill JSON Template File    ${CREATE_SDNC_VPG_TEMPLATE}    ${sdncpolicy}
+    ${output} =   Apply Template    policy    ${CREATE_SDNC_VPG_TEMPLATE}    ${sdncpolicy}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Should Be Equal As Strings  ${put_resp.status_code}    200
     [Return]    ${policyname1}
     
 Create VFW SDNC Naming Policy
     [Documentation]    Create VFW SDNC Naming Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =    Create Policy Name
     ${policyname1}=    Catenate    com.${randompolicyname}_ONAP_vFW_Naming
     ${SDNC_POLICY_VFW_NAME}=    Set Test Variable     ${policyname1}
     ${sdncpolicy}=    Create Dictionary    policy_name=${policyname1}
-    ${output} =   Fill JSON Template File    ${CREATE_SDNC_VFW_TEMPLATE}    ${sdncpolicy}
+    ${output} =   Apply Template    policy    ${CREATE_SDNC_VFW_TEMPLATE}    ${sdncpolicy}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Should Be Equal As Strings  ${put_resp.status_code}    200
     [Return]    ${policyname1}
@@ -241,11 +247,12 @@ Create Policy Name
 
 Create Ops VFW Policy
 	[Documentation]    Create Operational Policy
+    Create Environment    policy    ${CURDIR}
    	${randompolicyname} =     Create Policy Name
 	${policyname1}=    Catenate   com.${randompolicyname}_vFirewall
 	${OPS_POLICY_VFW_NAME}=    Set Test Variable    ${policyname1}
  	${dict}=     Create Dictionary    policy_name=${policyname1}
-	${output} =     Fill JSON Template File     ${CREATE_OPS_VFW_TEMPLATE}    ${dict}
+	${output} =     Apply Template    policy     ${CREATE_OPS_VFW_TEMPLATE}    ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Log    ${put_resp}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
@@ -254,72 +261,80 @@ Create Ops VFW Policy
 Push Ops Policy
     [Documentation]    Push Ops Policy
     [Arguments]    ${policyname}    ${policytype}
+    Create Environment    policy    ${CURDIR}
     ${dict}=     Create Dictionary     policy_name=${policyname}    policy_type=${policytype}
-	${output} =     Fill JSON Template File    ${PUSH_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${PUSH_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE_PUSH}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Push Config Policy
     [Documentation]    Push Config Policy
     [Arguments]    ${policyname}    ${policytype}
+    Create Environment    policy    ${CURDIR}
     ${dict}=     Create Dictionary     policy_name=${policyname}    policy_type=${policytype}
-	${output} =     Fill JSON Template File    ${PUSH_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${PUSH_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE_PUSH}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Delete Ops Policy
     [Documentation]    Delete Config Policy
     [Arguments]    ${policy_name}
+    Create Environment    policy    ${CURDIR}
     ${policyname3}=    Catenate   com.Config_BRMS_Param_${policyname}.1.xml
     ${dict}=     Create Dictionary     policy_name=${policyname3}
-	${output} =     Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Delete Config Policy
     [Documentation]    Delete Ops Policy
     [Arguments]    ${policy_name}
+    Create Environment    policy    ${CURDIR}
     ${policyname3}=    Catenate   com.Config_MS_com.${policy_name}.1.xml
     ${dict}=     Create Dictionary     policy_name=${policyname3}
-	${output} =     Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Delete OOF Policy
     [Documentation]    Delete OOF Policy
     [Arguments]    ${policy_name}
+    Create Environment    policy    ${CURDIR}
     ${policyname3}=    Catenate   com.Config_OOF_${policy_name}.1.xml
     ${dict}=    Create Dictionary     policy_name=${policyname3}
-        ${output} =    Fill JSON Template     ${DEL_POLICY_TEMPLATE}     ${dict}
+    ${output} =    Apply Template    policy    ${DEL_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =   Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}   ${output}
     Should Be Equal As Strings  ${put_resp.status_code}        200 
 
 Get Configs VDNS Policy
     [Documentation]    Get Config Policy for VDNS
+    Create Environment    policy    ${CURDIR}
     ${getconfigpolicy}=    Catenate    .*${CONFIG_POLICY_VDNS_NAME}*
     ${configpolicy_name}=    Create Dictionary    config_policy_name=${getconfigpolicy}
-    ${output} =     Fill JSON Template File     ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
+    ${output} =     Apply Template    policy     ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
     ${get_resp} =    Run Policy Get Configs Request    ${RESOURCE_PATH_GET_CONFIG}   ${output}
 	Should Be Equal As Strings 	${get_resp.status_code} 	200
 	
 Create Config VDNS Policy
     [Documentation]    Create Config Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =     Create Policy Name
     ${policyname1}=    Catenate   com.${randompolicyname}_vLoadBalancer
     ${CONFIG_POLICY_VDNS_NAME}=    Set Test Variable    ${policyname1}
     ${configpolicy}=    Create Dictionary    policy_name=${policyname1}
-    ${output} =     Fill JSON Template File     ${CREATE_CONFIG_VDNS_TEMPLATE}    ${configpolicy}
+    ${output} =     Apply Template    policy     ${CREATE_CONFIG_VDNS_TEMPLATE}    ${configpolicy}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
 	[Return]    ${policyname1}
 
 Create Ops VDNS Policy
 	[Documentation]    Create Operational Policy
+    Create Environment    policy    ${CURDIR}
    	${randompolicyname} =     Create Policy Name
 	${policyname1}=    Catenate   com.${randompolicyname}_vLoadBalancer
 	${OPS_POLICY_VDNS_NAME}=    Set Test Variable    ${policyname1}
  	${dict}=     Create Dictionary    policy_name=${policyname1}
-	${output} =     Fill JSON Template File     ${CREATE_OPS_VDNS_TEMPLATE}    ${dict}
+	${output} =     Apply Template    policy     ${CREATE_OPS_VDNS_TEMPLATE}    ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Log    ${put_resp}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
@@ -327,30 +342,33 @@ Create Ops VDNS Policy
     
 Create Config VCPE Policy
     [Documentation]    Create Config Policy
+    Create Environment    policy    ${CURDIR}
     ${randompolicyname} =     Create Policy Name
     ${policyname1}=    Catenate   com.${randompolicyname}_vCPE
     ${CONFIG_POLICY_VCPE_NAME}=    Set Test Variable    ${policyname1}
     ${configpolicy}=    Create Dictionary    policy_name=${policyname1}
-    ${output} =     Fill JSON Template File     ${CREATE_CONFIG_VCPE_TEMPLATE}    ${configpolicy}
+    ${output} =     Apply Template    policy     ${CREATE_CONFIG_VCPE_TEMPLATE}    ${configpolicy}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
 	[Return]    ${policyname1}
 	
 Get Configs VCPE Policy
     [Documentation]    Get Config Policy for VCPE
+    Create Environment    policy    ${CURDIR}
     ${getconfigpolicy}=    Catenate    .*${CONFIG_POLICY_VCPE_NAME}*
     ${configpolicy_name}=    Create Dictionary    config_policy_name=${getconfigpolicy}
-    ${output} =     Fill JSON Template File     ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
+    ${output} =     Apply Template    policy     ${GETCONFIG_TEMPLATE}    ${configpolicy_name}
     ${get_resp} =    Run Policy Get Configs Request    ${RESOURCE_PATH_GET_CONFIG}   ${output}
 	Should Be Equal As Strings 	${get_resp.status_code} 	200
 
 Create Ops vCPE Policy
 	[Documentation]    Create Operational Policy
+    Create Environment    policy    ${CURDIR}
    	${randompolicyname} =     Create Policy Name
 	${policyname1}=    Catenate   com.${randompolicyname}_vCPE
 	${OPS_POLICY_VCPE_NAME}=    Set Test Variable    ${policyname1}
  	${dict}=     Create Dictionary    policy_name=${policyname1}
-	${output} =     Fill JSON Template File     ${CREATE_OPS_VCPE_TEMPLATE}    ${dict}
+	${output} =     Apply Template    policy     ${CREATE_OPS_VCPE_TEMPLATE}    ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Log    ${put_resp}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
@@ -358,10 +376,11 @@ Create Ops vCPE Policy
     
 Create Ops VolTE Policy
 	[Documentation]    Create Operational Policy
+    Create Environment    policy    ${CURDIR}
    	${randompolicyname} =     Create Policy Name
 	${policyname1}=    Catenate   com.${randompolicyname}_VoLTE
  	${dict}=     Create Dictionary    policy_name=${policyname1}
-	${output} =     Fill JSON Template File     ${CREATE_OPS_VOLTE_TEMPLATE}    ${dict}
+	${output} =     Apply Template    policy     ${CREATE_OPS_VOLTE_TEMPLATE}    ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE}  ${output}
     Log    ${put_resp}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
@@ -380,24 +399,27 @@ Upload DRL file
 ListPolicy test
 	[Documentation]    Listing Config Policies
 	[Arguments]    ${policy_name}
+    Create Environment    policy    ${CURDIR}
 	${dict}=     Create Dictionary    policy_name=${policy_name}
-	${output} =     Fill JSON Template File     ${LISTPOLICY_TEMPLATE}    ${dict}
+	${output} =     Apply Template    policy     ${LISTPOLICY_TEMPLATE}    ${dict}
 	${put_resp} =        policy_interface.Run Policy Post Request    ${RESOURCE_PATH_LISTPOLICY}    ${output}
 	Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Push Multiple Policy test
     [Documentation]    Push Multiple Policy
     [Arguments]    ${policyname1}	${policyname2}		${policyname3}    ${policytype}
+    Create Environment    policy    ${CURDIR}
     ${dict}=     Create Dictionary     policy_name1=${policyname1}  policy_name2=${policyname2}  policy_name3=${policyname3}    policy_type=${policytype}
-	${output} =     Fill JSON Template File    ${MULTIPLE_PUSH_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${MULTIPLE_PUSH_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Put Request    ${RESOURCE_PATH_CREATE_PUSH}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
 Delete Multiple Policy test
     [Documentation]    Delete Multiple Policy
     [Arguments]    ${policyname1}	${policyname2}		${policyname3}    ${policytype}
+    Create Environment    policy    ${CURDIR}
     ${dict}=     Create Dictionary     policy_name1=${policyname1}  policy_name2=${policyname2}  policy_name3=${policyname3}    policy_type=${policytype}
-	${output} =     Fill JSON Template File    ${MULTIPLE_UNPUSH_POLICY_TEMPLATE}     ${dict}
+	${output} =     Apply Template    policy    ${MULTIPLE_UNPUSH_POLICY_TEMPLATE}     ${dict}
     ${put_resp} =    Run Policy Delete Request    ${RESOURCE_PATH_CREATE_DELETE}  ${output}
     Should Be Equal As Strings 	${put_resp.status_code} 	200
 
