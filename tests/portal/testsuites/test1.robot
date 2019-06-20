@@ -5,12 +5,11 @@ Library		OperatingSystem
 Library		eteutils/RequestsClientCert.py
 Library		RequestsLibrary
 Library		ONAPLibrary.Utilities 
+Library    ONAPLibrary.Templating
 Library		DateTime  
 Library		Collections
-Library		eteutils/StringTemplater.py
 Library		String
 Library		XvfbRobot
-Resource	json_templater.robot
 
 *** Variables ***
 ${PORTAL_URL}		http://portal.api.simpledemo.onap.org:8989
@@ -63,7 +62,7 @@ ${GLOBAL_BUILD_NUMBER}    0
 ${GLOBAL_VM_PRIVATE_KEY}   ${EXECDIR}/robot/assets/keys/robot_ssh_private_key.pvt
 ${jira}    jira
 ${RESOURCE_PATH}    ONAPPORTAL/auxapi/ticketevent
-${portal_Template}    ${CURDIR}/portal.template
+${portal_Template}    portal.template
 
 ${Result}    FALSE
 ${td_id}    0
@@ -1097,7 +1096,8 @@ Enhanced Notification on ONAP Portal
 Notification on ONAP Portal
     [Documentation]     Create Config portal
     ${configportal}=     Create Dictionary     jira_id=${jira}
-    ${output} =     Fill JSON Template File     ${portal_Template}     ${configportal}
+    Create Environment    portal    ${CURDIR}
+    ${output} =     Apply Template    portal     ${portal_Template}     ${configportal}
     ${post_resp} =     Enhanced Notification on ONAP Portal     ${RESOURCE_PATH}     ${output}
     Should Be Equal As Strings     ${post_resp.status_code}     200
     
