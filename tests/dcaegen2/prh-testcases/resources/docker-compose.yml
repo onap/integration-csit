@@ -57,6 +57,7 @@ services:
                                               "cbs.updates-interval": 0,
                                               "logging.level.org.onap.dcaegen2.services.prh": "debug",
                                               "logging.level.org.onap.dcaegen2.services.sdk": "debug",
+                                              "logging.level.org.onap.dcaegen2.services.prh.controllers.AppInfoController": "off",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
                                               "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
