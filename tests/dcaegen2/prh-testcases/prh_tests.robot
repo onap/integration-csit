@@ -8,17 +8,9 @@ Test Timeout      2 minutes
 Library           resources/PrhLibrary.py
 Resource          resources/prh_sessions.robot
 Resource          resources/prh_library.robot
-Resource          resources/prh_config_tests.robot
 
 *** Variables ***
 ${TEST_CASES_DIR}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets
-
-${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
-${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
-${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
-${PRH_SETUP_URL}  http://${PRH_SETUP}
-${TRACE_LOG_LEVEL_CONF}    {"configuredLevel":"TRACE","effectiveLevel":"TRACE"}
-${WARN_LOG_LEVEL_CONF}    {"configuredLevel":"WARN","effectiveLevel":"WARN"}
 
 *** Test Cases ***
 BBS case event - attachment point
@@ -63,16 +55,6 @@ BBS case event - Re-registration
     ${TEST_CASES_DIR}/re-registration
 
 PRH logging level change
-    [Documentation]    PRH logging level change from WARN to TRACE
+    [Documentation]    ad-hoc PRH logging level change using rest endpoint
     [Tags]    PRH    logging level
     Verify change logging level
-
-CBS configuration forced refresh
-    [Documentation]    It should be possible to force refresh PRH configuration from CBS
-    [Tags]    PRH    coniguration
-    Verify PRH configuration forced refresh
-
-CBS configuration scheduled refresh
-    [Documentation]    PRH should pull for CBS configuration updates according to schedule
-    [Tags]    PRH    coniguration
-    Verify scheduled CBS config updates
