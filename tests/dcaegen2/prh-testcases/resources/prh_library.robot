@@ -2,7 +2,6 @@
 Library           RequestsLibrary
 Library           Collections
 Library           PrhLibrary.py
-Library           OperatingSystem
 Resource          ../../../common.robot
 
 *** Keywords ***
@@ -151,20 +150,24 @@ Reset DMaaP simulator
 
 
 Verify change logging level
-    Change logging level  TRACE
+    Change logging level    org.onap.dcaegen2.services.prh.controllers.AppInfoController    TRACE
+    Verify logging level    org.onap.dcaegen2.services.prh.controllers.AppInfoController    TRACE
     Verify logs with heartbeat
-    Change logging level  INFO
+    [Teardown]    Change logging level    org.onap.dcaegen2.services.prh.controllers.AppInfoController    INFO
 
 Change logging level
-    [Arguments]    ${expected_log_level}
-    Run   curl -i -X POST -H 'Content-Type: application/json' -d '{"configuredLevel": "${expected_log_level}"}' http://localhost:8100/actuator/loggers/org.onap.dcaegen2.services.prh
+    [Arguments]    ${logger}    ${log_level}
+    ${request_body}=    Create Dictionary    configuredLevel=${log_level}
+    ${resp}=    Post Request    prh_session    /actuator/loggers/${logger}    json=${request_body}
+    Should Be Equal As Integers    ${resp.status_code}    204
 
 Verify logging level
-    [Arguments]    ${expected_log_level}
-    ${resp}=    Get Request    prh_session  /actuator/loggers/org.onap.dcaegen2.services.prh
-    Should Be Equal As JSON    ${resp.content}    ${expected_log_level}
+    [Arguments]    ${logger}    ${expected_log_level}
+    ${resp}=    Get Request    prh_session  /actuator/loggers/${logger}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Log    ${resp.content}
+    Should Be Equal As Strings   ${resp.json()["configuredLevel"]}    ${expected_log_level}    ignore_case=true
 
 Verify logs with heartbeat
-    Verify logging level  ${TRACE_LOG_LEVEL_CONF}
     Get Request    prh_session    /heartbeat
     Check PRH log   Heartbeat request received

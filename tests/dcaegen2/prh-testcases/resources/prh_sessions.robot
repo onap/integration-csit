@@ -2,6 +2,12 @@
 Library           RequestsLibrary
 Library           Collections
 
+*** Variables ***
+${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
+${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
+${CONSUL_SETUP_URL}    http://${CONSUL_SETUP}
+${PRH_SETUP_URL}  http://${PRH_SETUP}
+
 *** Keywords ***
 Create sessions
     Create Session    dmaap_session    ${DMAAP_SIMULATOR_SETUP_URL}
