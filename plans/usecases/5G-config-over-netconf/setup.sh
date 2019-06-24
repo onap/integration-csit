@@ -27,6 +27,7 @@ export DMAAP_TOPIC=AUTO
 export DOCKER_IMAGE_VERSION=1.5.2
 export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
 export CCSDK_DOCKER_BP_IMAGE_VERSION=0.4.5
+REQUEST_DATA_PATH=$WORKSPACE/tests/usecases/5G-config-over-netconf/data
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -104,8 +105,8 @@ while [ "$TIME" -lt "$TIME_OUT" ]; do
   TIME=$(($TIME+$INTERVAL))
 done
 
-export PNF_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
-sed -i "s/pnfaddr/$PNF_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/mount.xml
+export LOCAL_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/mount.xml
 
 if [ "$TIME" -ge "$TIME_OUT" ]; then
    echo TIME OUT: Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
@@ -164,7 +165,7 @@ SDNC_CONTAINER=$(docker ps -a -q --filter="name=sdnc_controller_container")
 SDNC_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
 echo " " >> docker-compose.yaml
 echo "    extra_hosts:"  >> docker-compose.yaml
-echo "    - 'sdnc:$SDNC_CONTAINER_IP'" >> docker-compose.yaml
+echo "    - 'sdnc:$LOCAL_IP'" >> docker-compose.yaml
 #############################################################
 
 docker-compose up &
@@ -188,9 +189,12 @@ done
 
 NETOPEER_CONTAINER=$(docker ps -a -q --filter="name=netopeer")
 NETOPEER_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
+RES_KEY=$(uuidgen -r)
+sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/config-deploy.json
+sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/config-assign.json
 
-sed -i "s/pnfaddr/$NETOPEER_CONTAINER_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/config-deploy.json
-sed -i "s/pnfaddr/$NETOPEER_CONTAINER_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/config-assign.json
+sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-deploy.json
+sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-assign.json
 
 ####################################################################
 # Sleep additional 3 minutes (180 secs) to give application time to finish

@@ -9,7 +9,11 @@ Library     String
 ${SDNC_KEYSTORE_CONFIG_PATH}    /config/netconf-keystore:keystore
 ${SDNC_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2
 ${PNFSIM_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2/yang-ext:mount/mynetconf:netconflist
-${BP_URL}    /api/v1/execution-service/process
+${BP_UPLOAD_URL}    /api/v1/execution-service/upload
+${BP_PROCESS_URL}    /api/v1/execution-service/process
+${BP_ARCHIVE_PATH}    ${CURDIR}/data/blueprint_archive.zip
+
+
  *** Test Cases ***
  Test SDNC Keystore
       [Documentation]    Checking keystore after SDNC installation
@@ -22,28 +26,13 @@ ${BP_URL}    /api/v1/execution-service/process
       Log to console  ${resp.content}
       Log to console  *************************
 
- Test SDNC PNF Mount
-     [Documentation]    Checking PNF mount after SDNC installation
-     Create Session   sdnc  http://localhost:8282/restconf
-     ${mount}=    Get File     ${CURDIR}${/}data${/}mount.xml
-     Log to console  ${mount}
-     &{headers}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/xml    Accept=application/xml
-     ${resp}=    Put Request    sdnc    ${SDNC_MOUNT_PATH}    data=${mount}    headers=${headers}
-     Should Be Equal As Strings    ${resp.status_code}    201
-     Sleep  30
-     &{headers1}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
-     ${resp1}=    Get Request    sdnc    ${PNFSIM_MOUNT_PATH}    headers=${headers1}
-     Should Be Equal As Strings    ${resp1.status_code}    200
-     Log to console  ${resp1.content}
-     Should Contain  ${resp1.content}     netconf-id
-     Should Contain  ${resp1.content}     netconf-param
-
  Test BP-PROC upload blueprint archive
      [Documentation]    Upload Blueprint archive to BP processor
-     Create Session   blueprint  http://localhost:8000/api/v1/execution-service/upload
-     ${bp-archive}=   ${CURDIR}${/}data${/}blueprint_archive.zip
-     &{headers}=  Create Dictionary    Authorization=Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==    Content-Type=application/x-www-form-urlencoded
-     ${resp}=    Post Request    blueprint    file=${bp-archive}    headers=${headers}
+     Create Session   blueprint  http://localhost:8000
+     ${bp_archive}=    Get Binary File    ${BP_ARCHIVE_PATH}
+     &{bp_file}=    create Dictionary    file    ${bp_archive} 
+     &{headers}=  Create Dictionary    Authorization=Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==
+     ${resp}=    Post Request    blueprint    ${BP_UPLOAD_URL}    files=${bp_file}    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}    200
 
  Test BP-PROC CONFIG-ASSIGN
@@ -52,7 +41,7 @@ ${BP_URL}    /api/v1/execution-service/process
      ${config-assign}=    Get File     ${CURDIR}${/}data${/}config-assign.json
      Log to console  ${config-assign}
      &{headers}=  Create Dictionary    Authorization=Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==    Content-Type=application/json    Accept=application/json
-     ${resp}=    Post Request    blueprint    ${BP_URL}    data=${config-assign}    headers=${headers}
+     ${resp}=    Post Request    blueprint    ${BP_PROCESS_URL}    data=${config-assign}    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}    200
 
  Test BP-PROC CONFIG-DEPLOY
@@ -61,8 +50,20 @@ ${BP_URL}    /api/v1/execution-service/process
      ${config-deploy}=    Get File     ${CURDIR}${/}data${/}config-deploy.json
      Log to console  ${config-deploy}
      &{headers}=  Create Dictionary    Authorization=Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==    Content-Type=application/json    Accept=application/json
-     ${resp}=    Post Request    blueprint    ${BP_URL}    data=${config-deploy}    headers=${headers}
+     ${resp}=    Post Request    blueprint    ${BP_PROCESS_URL}    data=${config-deploy}    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}    200
-
-
-
+     
+ Test PNF Configuration update
+     [Documentation]    Checking PNF configuration params
+     Create Session   sdnc  http://localhost:8282/restconf
+     ${mount}=    Get File     ${CURDIR}${/}data${/}mount.xml
+     Log to console  ${mount}
+     &{headers}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/xml    Accept=application/xml
+     ${resp}=    Put Request    sdnc    ${SDNC_MOUNT_PATH}    data=${mount}    headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}    201
+     Sleep  10
+     &{headers1}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
+     ${resp1}=    Get Request    sdnc    ${PNFSIM_MOUNT_PATH}    headers=${headers1}
+     Should Be Equal As Strings    ${resp1.status_code}    200
+     Log to console  ${resp1.content}
+     Should Contain  ${resp1.text}     {"netconf-id":30,"netconf-param":3000}
