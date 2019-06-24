@@ -26,6 +26,7 @@ export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
 export DOCKER_IMAGE_VERSION=1.5.2
 export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
+export CCSDK_DOCKER_BP_IMAGE_VERSION=0.4.5
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -49,7 +50,6 @@ git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/sdnc/oam.
 cd $WORKSPACE/archives/sdnc
 git pull
 unset http_proxy https_proxy
-cd $WORKSPACE/archives/sdnc/installation/src/main/yaml
 
 sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" docker-compose.yml
 docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
@@ -70,11 +70,16 @@ docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSIO
 docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-ueb-listener-image:latest
 
 docker pull $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION
-
 docker tag $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-dmaap-listener-image:latest
+
+docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$CCSDK_DOCKER_BP_IMAGE_VERSION
+docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$CCSDK_DOCKER_BP_IMAGE_VERSION onap/ccsdk-blueprintsprocessor:latest
+
 
 CERT_SUBPATH=plans/sdnc/sdnc_netconf_tls_post_deploy/certs
 export SDNC_CERT_PATH=${WORKSPACE}/${CERT_SUBPATH}
+
+cd $WORKSPACE/archives/sdnc/installation/src/main/yaml
 sed -i 's/sdnc_controller_container/sdnc_controller_container\n    volumes: \n      - $SDNC_CERT_PATH:\/opt\/opendaylight\/current\/certs/' docker-compose.yml
 # start SDNC containers with docker compose and configuration from docker-compose.yml
 docker-compose up -d
@@ -143,8 +148,52 @@ if [ "$num_failed_bundles" -ge 1 ]; then
   echo "  $failed_bundles"
 fi
 
-# Sleep additional 5 minutes (300 secs) to give application time to finish
-sleep 200
+########################################## blueprintsprocessor setup ##########################################################
+
+mkdir -p $WORKSPACE/archives/cds
+cd $WORKSPACE/archives
+
+git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/ccsdk/cds.git cds
+cd $WORKSPACE/archives/cds
+git pull
+unset http_proxy https_proxy
+cd $WORKSPACE/archives/cds/ms/blueprintsprocessor/distribution/src/main/dc/
+
+############# update ip of sdnc in docker-compose###########
+SDNC_CONTAINER=$(docker ps -a -q --filter="name=sdnc_controller_container")
+SDNC_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
+echo "\\n    extra_hosts:\\n    - 'sdnc:$SDNC_CONTAINER_IP'" >> docker-compose.yaml
+#############################################################
+
+docker-compose up
+
+################# Check state of BP ####################
+BP_CONTAINER=$(docker ps -a -q --filter="name=bp-rest")
+CCSDK_MARIADB=$(docker ps -a -q --filter="name=ccsdk-mariadb")
+for i in {1..10}; do
+if [ $(docker inspect --format '{{ .State.Running }}' $BP_CONTAINER) ] && \
+[ $(docker inspect --format '{{ .State.Running }}' $CCSDK_MARIADB) ]
+then
+   echo "Blueprint proc Service Running"
+   break
+else
+   echo sleep $i
+   sleep $i
+fi
+done
+
+########## update pnf simulator ip in config deploy request ########
+
+NETOPEER_CONTAINER=$(docker ps -a -q --filter="name=netopeer")
+NETOPEER_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
+
+sed -i "s/pnfaddr/$NETOPEER_CONTAINER_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/config-deploy.json
+sed -i "s/pnfaddr/$NETOPEER_CONTAINER_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/config-assign.json
+
+####################################################################
+# Sleep additional 3 minutes (180 secs) to give application time to finish
+sleep 180
+
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"
