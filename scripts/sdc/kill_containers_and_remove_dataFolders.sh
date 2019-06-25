@@ -15,9 +15,10 @@
 # limitations under the License.
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2019 Samsung Electronics Co., Ltd.
 #
 
-echo "This is ${WORKSPACE}/scripts/sdc/kill_and_remove_dataFolder.sh"
+echo "This is ${WORKSPACE}/scripts/sdc/kill_containers_and_remove_dataFolders.sh"
 
 # copy logs to archive
 
@@ -27,13 +28,9 @@ cp -rf ${WORKSPACE}/data/logs/*tests*/target/*.xml ${WORKSPACE}/archives/
 
 ls -Rt ${WORKSPACE}/archives/
 
-#kill and remove all sdc dockers
+# kill and remove all sdc dockers
 docker stop $(docker ps -a -q --filter="name=sdc")
 docker rm $(docker ps -a -q --filter="name=sdc")
 
-
-#delete data folder
-
-#rm -rf ${WORKSPACE}/data/*
-
-
+# delete data folder
+sudo rm -rf ${WORKSPACE}/data/*
