@@ -1,0 +1,13 @@
+{
+  "link-name": "some-link",
+  "link-type": "attachment-point",
+  "relationship-list":
+    {
+      "relationship": [
+            {
+            "related-link": "/network/pnfs/pnf/NOK6061ZW9",
+            "relationship-data": []
+            }
+        ]
+    }
+}

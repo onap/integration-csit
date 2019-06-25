@@ -1,0 +1,25 @@
+{
+  "service-instance-id": "bbs_service",
+  "service-instance-name": "bbs_service",
+  "environment-context": "General_Revenue-Bearing",
+  "workload-context": "Production",
+  "model-invariant-id": "c71827e7-42fc-46ab-b059-22584c58108b",
+  "model-version-id": "8efe4a8a-6646-43e2-8807-a376ff22d2e0",
+  "resource-version": "1554127221722",
+  "orchestration-status": "non-Active",
+  "relationship-list": {
+    "relationship": [
+      {
+        "related-to": "pnf",
+        "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+        "related-link": "/aai/v12/network/pnfs/pnf/NOK6061ZW8",
+        "relationship-data": [
+          {
+            "relationship-key": "pnf.pnf-name",
+            "relationship-value": "NOK6061ZW8"
+          }
+        ]
+      }
+    ]
+  }
+}

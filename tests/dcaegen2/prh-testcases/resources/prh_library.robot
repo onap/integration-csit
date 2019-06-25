@@ -15,6 +15,13 @@ Verify PNF ready sent
     Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
 
+Verify PNF ready sent and old logical link removed from AAI
+    [Arguments]    ${test_case_directory}
+    ${logical_link}=   Get Data From File  ${test_case_directory}/logical-link.json
+    Add logical link entry in AAI  ${logical_link}
+    Verify PNF ready sent  ${test_case_directory}
+    Wait Until Keyword Succeeds    10x    3000ms    Check no logical link in AAI    ${test_case_directory}
+
 Verify PNF ready sent and logical link created
     [Arguments]    ${test_case_directory}
     ${expected_logical_link}=    Get Data From File    ${test_case_directory}/expected-logical-link.json
@@ -63,11 +70,38 @@ Verify PNF re registration
     Add PNF entry in AAI    ${aai_entry}
     ${service_instance}=    Get Data From File    ${test_case_directory}/aai-entry-service-instance.json
     Add service instance entry in AAI    ${service_instance}
+    ${logical_link}=    Get Data From File    ${test_case_directory}/logical-link.json
+    Add logical link entry in AAI    ${logical_link}
 
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Set VES event in DMaaP    ${ves_event}
     ${expected_pnf_update_event}=    Get Data From File    ${test_case_directory}/expected-pnf-update-event.json
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check logical link not modified    ${test_case_directory}
+
+Verify PNF ready sent when service instance non active
+    [Arguments]    ${test_case_directory}
+    ${pnf_entry}=    Get Data From File    ${test_case_directory}/aai-entry.json
+    ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
+    ${expected_pnf_ready_event}=    Get Data From File    ${test_case_directory}/expected-pnf-ready-event.json
+    ${service_instance}=    Get Data From File    ${test_case_directory}/aai-entry-service-instance.json
+    Add PNF entry in AAI    ${pnf_entry}
+    Add service instance entry in AAI    ${service_instance}
+
+    Set VES event in DMaaP    ${ves_event}
+    Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
+    Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
+
+Check logical link not modified
+    [Arguments]    ${test_case_directory}
+    ${expected_logical_link}=    Get Data From File  ${test_case_directory}/logical-link.json
+    ${actual_logical_link}=    Get Request   ${aai_session}    /verify/logical-link/bbs-link    headers=${suite_headers}
+    Should Be Equal As JSON  ${expected_logical_link}    ${actual_logical_link.content}
+
+Check no logical link in AAI
+    [Arguments]    ${test_case_directory}
+    ${logical_links}=    Get Request    ${aai_session}    /verify/logical-links    headers=${suite_headers}
+    Should Be Equal As JSON    {}    ${logical_links.content}
 
 Check CBS ready
     ${resp}=    Get Request    ${consul_session}    /v1/catalog/services
@@ -86,7 +120,7 @@ Check created PNF_UPDATE notification
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_update    headers=${suite_headers}
     Log    Response from DMaaP: ${resp.content}
     Should Be Equal As Strings    ${resp.status_code}    200
-    #Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
+    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_update_in_dpaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
@@ -122,6 +156,13 @@ Add service instance entry in AAI
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
     ${resp}=    Put Request    ${aai_session}    /setup/add_service_instace    headers=${suite_headers}    data=${aai_service_instance}
+    Should Be Equal As Strings    ${resp.status_code}    200
+
+Add logical link entry in AAI
+    [Arguments]  ${logical_link}
+    ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
+    Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
+    ${resp}=    Put Request    ${aai_session}    /setup/add_logical_link    headers=${suite_headers}    data=${logical_link}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Set VES event in DMaaP

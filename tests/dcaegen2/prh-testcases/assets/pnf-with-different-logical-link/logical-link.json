@@ -1,0 +1,20 @@
+{
+  "link-name": "some-link",
+  "in-maint": false,
+  "link-type": "attachment-point",
+  "resource-version": "1561617000521",
+  "relationship-list": {
+    "relationship": [
+      {
+        "related-to": "pnf",
+        "related-link": "/aai/v11/network/pnfs/pnf/NOK6061ZW9",
+        "relationship-data": [
+          {
+            "relationship-key": "pnf.pnf-name",
+            "relationship-value": "NOK6061ZW9"
+          }
+        ]
+      }
+    ]
+  }
+}

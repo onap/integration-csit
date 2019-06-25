@@ -20,6 +20,7 @@ logger = logging.getLogger('AAI-simulator-logger')
 AAI_RESOURCE_NOT_FOUND = b'{}'
 
 pnf_entries = {}
+logical_links = {}
 patched_pnf = AAI_RESOURCE_NOT_FOUND
 created_logical_link = AAI_RESOURCE_NOT_FOUND
 service_instance = AAI_RESOURCE_NOT_FOUND
@@ -34,6 +35,12 @@ class AAISetup(BaseHTTPRequestHandler):
             elif re.search('/verify/created_logical_link', self.path):
                 httpServerLib.set_response_200_ok(self, payload = created_logical_link)
                 logger.debug('AAISetup GET /setup/created_logical_link -> 200 OK')
+            elif re.search('/verify/logical-links', self.path):
+                httpServerLib.set_response_200_ok(self, payload= json.dumps(logical_links).encode('utf-8'))
+            elif re.search('/verify/logical-link/bbs-link', self.path):
+                link_name = basename(self.path)
+                if link_name in logical_links:
+                    httpServerLib.set_response_200_ok(self, payload = logical_links[link_name])
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAISetup GET ' + self.path + ' -> 404 Not found')
@@ -60,6 +67,18 @@ class AAISetup(BaseHTTPRequestHandler):
                 service_instance = json.loads(service_instance_payload)
                 httpServerLib.set_response_200_ok(self)
                 logger.debug('AAISetup PUT /setup/add_service_instace -> 200 OK')
+            elif re.search('/setup/add_logical_link', self.path):
+                logical_link_payload = httpServerLib.get_payload(self)
+                logical_link_name = json.loads(logical_link_payload).get("link-name")
+                if logical_link_name == None:
+                    raise Exception("Invalid logical link entry, could not extract `link-name`")
+
+                global logical_link
+                logical_links[logical_link_name] = logical_link_payload
+
+                logical_link = json.loads(logical_link_payload)
+                httpServerLib.set_response_200_ok(self)
+                logger.debug('AAISetup PUT /setup/add_logical_link -> 200 OK')
 
             elif re.search('/set_pnf', self.path):
                 pnf_name = httpServerLib.get_payload(self).decode()
@@ -105,9 +124,17 @@ class AAIHandler(BaseHTTPRequestHandler):
                 else:
                     httpServerLib.set_response_404_not_found(self)
                     logger.info('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
-            elif re.search('aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
-                httpServerLib.set_response_200_ok(self, payload = service_instance)
-                logger.debug('AAIHandler GET aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
+            elif re.search('/aai/v12/network/logical-links/logical-link/[^/]*$', self.path):
+                logical_link_name = basename(self.path)
+                if logical_link_name in logical_links:
+                    httpServerLib.set_response_200_ok(self, payload = logical_links[logical_link_name])
+                    logger.debug('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
+                else:
+                    httpServerLib.set_response_404_not_found(self)
+                    logger.info('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 404 Not found, actual entries: ' + str(logical_links.keys()))
+            elif re.search('aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
+                httpServerLib.set_response_200_ok(self, payload = json.dumps(service_instance).encode('utf-8'))
+                logger.debug('AAIHandler GET aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')
@@ -152,6 +179,20 @@ class AAIHandler(BaseHTTPRequestHandler):
             logger.error(e)
             httpServerLib.set_response_500_server_error(self)
 
+    def do_DELETE(self):
+        try:
+            if re.search('/aai/v12/network/logical-links/logical-link/[^/]*\?resource-version=\d+$', self.path):
+                httpServerLib.set_response_200_ok(self)
+                logical_link_name = re.search('.+?(?=\?)', basename(self.path)).group(0)
+
+                del logical_links[logical_link_name]
+                logger.debug('AAIHandler DELETE /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
+            else:
+                httpServerLib.set_response_404_not_found(self)
+                logger.info('AAIHandler DELETE ' + self.path + ' -> 404 Not found')
+        except Exception as e:
+            logger.error(e)
+            httpServerLib.set_response_500_server_error(self)
 
 def _main_(handler_class=AAIHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol

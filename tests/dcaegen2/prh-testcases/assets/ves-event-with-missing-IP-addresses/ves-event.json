@@ -11,13 +11,13 @@
       "eventType": "pnfRegistration",
       "priority": "Normal",
       "version": "4.0.1",
-      "reportingEntityName": "NOK6061ZW9",
+      "reportingEntityName": "NOK6061ZW8",
       "sequence": 0,
       "domain": "pnfRegistration",
       "lastEpochMicrosec": 1540212137393,
       "eventName": "pnfRegistration_Nokia_5gDu",
       "vesEventListenerVersion": "7.0.1",
-      "sourceName": "NOK6061ZW9",
+      "sourceName": "NOK6061ZW8",
       "nfNamingCode": "gNB"
     },
     "pnfRegistrationFields": {
@@ -29,12 +29,7 @@
       "lastServiceDate": "1540212137393",
       "unitFamily": "BBU",
       "vendorName": "Nokia",
-      "oamV4IpAddress": "val3",
-      "oamV6IpAddress": "val4",
-      "softwareVersion": "val7",
-      "additionalFields": {
-        "attachment-point": "another-link"
-      }
+      "softwareVersion": "val7"
     }
   }
 }
