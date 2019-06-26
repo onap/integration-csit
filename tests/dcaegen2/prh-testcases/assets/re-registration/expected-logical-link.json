@@ -8,11 +8,11 @@
       {
         "related-to": "pnf",
         "relationship-label": "org.onap.relationships.inventory.BridgedTo",
-        "related-link": "/network/pnfs/pnf/NOK6061ZW9",
+        "related-link": "/network/pnfs/pnf/NOK3489",
         "relationship-data": [
           {
             "relationship-key": "pnf.pnf-name",
-            "relationship-value": "NOK6061ZW9"
+            "relationship-value": "NOK3489"
           }
         ]
       }

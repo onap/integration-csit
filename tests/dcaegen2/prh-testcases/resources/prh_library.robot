@@ -65,6 +65,7 @@ Verify PNF re registration
     Add service instance entry in AAI    ${service_instance}
 
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
+    Log    VES event: ${ves_event}
     Set VES event in DMaaP    ${ves_event}
     ${expected_pnf_update_event}=    Get Data From File    ${test_case_directory}/expected-pnf-update-event.json
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_UPDATE notification    ${expected_pnf_update_event}
@@ -82,11 +83,11 @@ Check created PNF_READY notification
     Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
 
 Check created PNF_UPDATE notification
-    [Arguments]    ${expected_event_pnf_update_in_dpaap}
+    [Arguments]    ${expected_event_pnf_update_in_dmaap}
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_update    headers=${suite_headers}
     Log    Response from DMaaP: ${resp.content}
     Should Be Equal As Strings    ${resp.status_code}    200
-    #Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
+    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_update_in_dmaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
