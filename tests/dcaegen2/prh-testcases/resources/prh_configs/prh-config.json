@@ -1,0 +1,58 @@
+{
+  "cbs.updates-interval": 0,
+  "logging.level.org.onap.dcaegen2.services.prh": "debug",
+  "logging.level.org.onap.dcaegen2.services.sdk": "debug",
+  "logging.level.org.onap.dcaegen2.services.prh.controllers.AppInfoController": "off",
+  "dmaap.dmaapConsumerConfiguration.dmaapUserName": "admin",
+  "dmaap.dmaapConsumerConfiguration.dmaapUserPassword": "admin",
+  "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
+  "dmaap.dmaapConsumerConfiguration.consumerId": "c12",
+  "dmaap.dmaapConsumerConfiguration.consumerGroup": "OpenDCAE-c12",
+  "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
+  "dmaap.dmaapProducerConfiguration.dmaapUserName": "admin",
+  "dmaap.dmaapProducerConfiguration.dmaapUserPassword": "admin",
+  "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
+  "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
+  "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
+  "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
+  "aai.aaiClientConfiguration.pnfUrl": "https://aai:3334/aai/v12/network/pnfs/pnf",
+  "aai.aaiClientConfiguration.aaiUserName": "DCAE",
+  "aai.aaiClientConfiguration.aaiUserPassword": "DCAE",
+  "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": true,
+  "aai.aaiClientConfiguration.aaiServiceInstancePath": "/business/customers/customer/${customer}/service-subscriptions/service-subscription/${serviceType}/service-instances/service-instance/${serviceInstanceId}",
+  "aai.aaiClientConfiguration.aaiHeaders": {
+    "X-FromAppId": "prh",
+    "X-TransactionId": "9999",
+    "Accept": "application/json",
+    "Real-Time": "true",
+    "Authorization": "Basic QUFJOkFBSQ=="
+  },
+  "security.trustStorePath": "/tmp/certs/truststore.jks",
+  "security.trustStorePasswordPath": "/tmp/certs/truststore.password",
+  "security.keyStorePath": "/tmp/certs/keystore.p12",
+  "security.keyStorePasswordPath": "/tmp/certs/keystore.password",
+  "security.enableAaiCertAuth": true,
+  "security.enableDmaapCertAuth": true,
+  "streams_publishes": {
+    "pnf-update": {
+      "type": "message_router",
+      "dmaap_info": {
+        "topic_url": "https://dmaap-mr:2223/events/unauthenticated.PNF_UPDATE"
+      }
+    },
+    "pnf-ready": {
+      "type": "message_router",
+      "dmaap_info": {
+        "topic_url": "https://dmaap-mr:2223/events/unauthenticated.PNF_READY"
+      }
+    }
+  },
+  "streams_subscribes": {
+    "ves-reg-output": {
+      "type": "message_router",
+      "dmaap_info": {
+        "topic_url": "https://dmaap-mr:2223/events/unauthenticated.VES_PNFREG_OUTPUT"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Tests related to updating PRH app config based on CBS config
-Suite Setup       Run keywords   Create sessions
+Suite Setup       Create sessions
+Suite Teardown    Set default PRH CBS config
 Resource          resources/prh_sessions.robot
 Resource          resources/prh_config_library.robot
 Resource          resources/prh_library.robot

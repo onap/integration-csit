@@ -53,139 +53,22 @@ services:
   consul-cfg:
     image: consul:1.0.6
     restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", '{
-                                              "cbs.updates-interval": 0,
-                                              "logging.level.org.onap.dcaegen2.services.prh": "debug",
-                                              "logging.level.org.onap.dcaegen2.services.sdk": "debug",
-                                              "logging.level.org.onap.dcaegen2.services.prh.controllers.AppInfoController": "off",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapUserName":"admin",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapUserPassword":"admin",
-                                              "dmaap.dmaapConsumerConfiguration.dmaapContentType": "application/json",
-                                              "dmaap.dmaapConsumerConfiguration.consumerId": "c12",
-                                              "dmaap.dmaapConsumerConfiguration.consumerGroup": "OpenDCAE-c12",
-                                              "dmaap.dmaapConsumerConfiguration.timeoutMs": -1,
-                                              "dmaap.dmaapProducerConfiguration.dmaapUserName":"admin",
-                                              "dmaap.dmaapProducerConfiguration.dmaapUserPassword":"admin",
-                                              "dmaap.dmaapProducerConfiguration.dmaapContentType": "application/json",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUserName": "admin",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
-                                              "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
-                                              "aai.aaiClientConfiguration.pnfUrl":"https://aai:3334/aai/v12/network/pnfs/pnf",
-                                              "aai.aaiClientConfiguration.aaiUserName": "DCAE",
-                                              "aai.aaiClientConfiguration.aaiUserPassword": "DCAE",
-                                              "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": true,
-                                              "aai.aaiClientConfiguration.aaiServiceInstancePath":"/business/customers/customer/${customer}/service-subscriptions/service-subscription/${serviceType}/service-instances/service-instance/${serviceInstanceId}",
-                                              "aai.aaiClientConfiguration.aaiHeaders":{
-                                                "X-FromAppId": "prh",
-                                                "X-TransactionId": "9999",
-                                                "Accept": "application/json",
-                                                "Real-Time": "true",
-                                                "Authorization": "Basic QUFJOkFBSQ=="
-                                              },
-                                              "security.trustStorePath":"/tmp/certs/truststore.jks",
-                                              "security.trustStorePasswordPath":"/tmp/certs/truststore.password",
-                                              "security.keyStorePath":"/tmp/certs/keystore.p12",
-                                              "security.keyStorePasswordPath":"/tmp/certs/keystore.password",
-                                              "security.enableAaiCertAuth":true,
-                                              "security.enableDmaapCertAuth":true,
-
-                                              "streams_publishes":{
-                                                "pnf-update":{
-                                                  "type": "message_router",
-                                                  "dmaap_info":{
-                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.PNF_UPDATE"
-                                                  }
-                                                },
-                                                "pnf-ready":{
-                                                  "type": "message_router",
-                                                  "dmaap_info":{
-                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.PNF_READY"
-                                                  }
-                                                }
-                                              },
-                                              "streams_subscribes":{
-                                                "ves-reg-output":{
-                                                  "type": "message_router",
-                                                  "dmaap_info":{
-                                                    "topic_url":"https://dmaap-mr:2223/events/unauthenticated.VES_PNFREG_OUTPUT"
-                                                  }
-                                                }
-                                              }
-                                            }'
-    ]
+    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", "@/prh_configs/prh-config.json"]
     container_name: consul-cfg
+    volumes:
+      - ./prh_configs/:/prh_configs:Z
     depends_on:
       - consul
 
   consul-cfg-dcae-ves-collector:
     image: consul:1.0.6
     restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-ves-collector",'{
-                                            "collector.dynamic.config.update.frequency": "5",
-                                            "event.transform.flag": "0",
-                                            "collector.schema.checkflag": "1",
-                                            "collector.dmaap.streamid": "fault=ves-fault|syslog=ves-syslog|heartbeat=ves-heartbeat|measurementsForVfScaling=ves-measurement|mobileFlow=ves-mobileflow|other=ves-other|stateChange=ves-statechange|thresholdCrossingAlert=ves-thresholdCrossingAlert|voiceQuality=ves-voicequality|sipSignaling=ves-sipsignaling|notification=ves-notification|pnfRegistration=ves-pnfRegistration",
-                                            "collector.service.port": "8080",
-                                            "collector.schema.file":"{
-                                              \"v1\":\"./etc/CommonEventFormat_27.2.json\",
-                                              \"v2\":\"./etc/CommonEventFormat_27.2.json\",
-                                              \"v3\":\"./etc/CommonEventFormat_27.2.json\",
-                                              \"v4\":\"./etc/CommonEventFormat_27.2.json\",
-                                              \"v5\":\"./etc/CommonEventFormat_28.4.1.json\",
-                                              \"v7\":\"./etc/CommonEventFormat_30.0.1.json\"
-                                            }",
-                                            "collector.keystore.passwordfile": "/opt/app/VESCollector/etc/passwordfile",
-                                            "collector.inputQueue.maxPending": "8096",
-                                            "streams_publishes":{
-                                              "ves-measurement": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.VES_MEASUREMENT_OUTPUT/"
-                                                }
-                                              },
-                                              "ves-fault": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.SEC_FAULT_OUTPUT/"
-                                                }
-                                              },
-                                              "ves-pnfRegistration": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.VES_PNFREG_OUTPUT/"
-                                                }
-                                              },
-                                              "ves-other": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.SEC_OTHER_OUTPUT/"
-                                                }
-                                              },
-                                              "ves-heartbeat": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.SEC_HEARTBEAT_OUTPUT/"
-                                                }
-                                              },
-                                              "ves-notification": {
-                                                "type": "message_router",
-                                                "dmaap_info": {
-                                                  "topic_url": "http://dmaap-mr:2222/events/unauthenticated.VES_NOTIFICATION_OUTPUT/"
-                                                  }
-                                              }
-                                            },
-                                            "collector.service.secure.port": "8443",
-                                            "header.authflag": "0",
-                                            "collector.keystore.file.location": "/opt/app/VESCollector/etc/keystore",
-                                            "collector.keystore.alias":
-                                            "dynamically generated",
-                                            "services_calls": [],
-                                            "header.authlist": "sample1,c2FtcGxlMQ=="
-                                            }']
+    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-ves-collector", "@/prh_configs/dcae-ves-collector-config.json"]
     container_name: consul-cfg-dcae-ves-collector
+    volumes:
+      - ./prh_configs/:/prh_configs:Z
     depends_on:
       - consul
-
 
   cbs:
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.2.4
