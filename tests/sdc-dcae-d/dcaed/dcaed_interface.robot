@@ -1,6 +1,5 @@
 *** Settings ***
 Library           json
-Library           eteutils/HTTPUtils.py
 Library           ONAPLibrary.Utilities
 
 Resource          json_templater.robot
@@ -70,7 +69,7 @@ Add Monitoring Configuration To DCAE-DS
 
 Submit Monitoring Configuration To DCAE-DS
     [Arguments]   ${mc_uuid}   ${cs_uuid}   ${vfi_name}
-    ${url_vfi_name}   HTTPUtils.url_encode_string  ${vfi_name}
+    ${url_vfi_name}   url_encode_string  ${vfi_name}
     ${resp}=    Run DCAE-DS Post Request    ${DCAE_PATH}${DCAE_CREATE_BLUEPRINT_PATH}/${mc_uuid}/${cs_uuid}/${url_vfi_name}     ${None}    ${ASDC_DESIGNER_USER_ID}
     Should Be Equal As Strings  ${resp.status_code}     200
 
