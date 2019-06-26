@@ -1,13 +1,13 @@
 *** Settings ***
 Documentation     Integration tests for PRH.
 ...               PRH receive events from DMaaP and produce or not PNF_READY notification depends on required fields in received event.
-Suite Setup       Run keywords   Create Headers  AND  Create sessions
+Suite Setup       Run keywords   Create Headers  AND  Create sessions   AND    Set default PRH CBS config
 Test Teardown     Reset Simulators
 Test Timeout      2 minutes
 
-Library           resources/PrhLibrary.py
 Resource          resources/prh_sessions.robot
 Resource          resources/prh_library.robot
+Resource          resources/prh_config_library.robot
 
 *** Variables ***
 ${TEST_CASES_DIR}    %{WORKSPACE}/tests/dcaegen2/prh-testcases/assets
