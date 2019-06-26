@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-source ${WORKSPACE}/scripts/sdc/setup_sdc_dcaed.sh
+source ${WORKSPACE}/scripts/sdc-dcae-d/cleanup_sdc_dcaed.sh

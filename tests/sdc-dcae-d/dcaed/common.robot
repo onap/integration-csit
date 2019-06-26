@@ -7,5 +7,5 @@ ${ASDC_OPS_USER_ID}    op0001
 
 ${GLOBAL_APPLICATION_ID}    robot
 
-${ASSETS_DIR}   %{WORKSPACE}/tests/sdc/dcaed/assets/
+${ASSETS_DIR}   %{WORKSPACE}/tests/sdc-dcae-d/dcaed/assets/
 
