@@ -105,9 +105,9 @@ class AAIHandler(BaseHTTPRequestHandler):
                 else:
                     httpServerLib.set_response_404_not_found(self)
                     logger.info('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
-            elif re.search('aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
+            elif re.search('aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
                 httpServerLib.set_response_200_ok(self, payload = service_instance)
-                logger.debug('AAIHandler GET aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
+                logger.debug('AAIHandler GET aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')
