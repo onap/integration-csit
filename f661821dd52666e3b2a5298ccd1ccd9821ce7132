@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "143f39b1_8e20c5cb",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-27T18:39:09Z",
+      "side": 1,
+      "message": "still have a trailing space",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
