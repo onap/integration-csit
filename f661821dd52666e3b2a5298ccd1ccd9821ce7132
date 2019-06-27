@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "93e80bdf_7c718840",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "It is easier to do this: \n\nsource ${SCRIPTS}/policy/config/policy-csit.conf\n\nno need for the cat and cut command.",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d72c9986_74099a4e",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "may want to add \"-q\" to curl.",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "830ce204_413a821d",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "Placing the db.sh and mounting a volume to the right location avoids having to explicitly call these scripts.   No need to change it here, but fyi  (similar to how the policy/docker repo docker-compose.yml does it).",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143f39b1_8e20c5cb",
         "filename": "plans/policy/distribution/setup.sh",
         "patchSetId": 2
@@ -13,6 +64,74 @@
       "writtenOn": "2019-06-27T18:39:09Z",
       "side": 1,
       "message": "still have a trailing space",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1da5a8a_625e4ced",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "use \"source\" instead",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "617060a0_a49b38ee",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "I think you can use \"-rm\" to remove container upon exit to clean it",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9837e895_e004953f",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "could use this script .. and check return status with $?\n\nhttps://git.onap.org/integration/csit/tree/scripts/policy/wait_for_port.sh",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3d9c53c_949f2205",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "same comments as in other files- global",
       "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -39,6 +158,47 @@
       "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673049f5_04173e69",
+        "filename": "scripts/policy/docker-compose-api.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "and \"nexus\" too, just added you to the review",
+      "parentUuid": "ae772d56_4c472e87",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62032463_5f462fe5",
+        "filename": "scripts/policy/docker-compose-api.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-06-27T19:29:56Z",
+      "side": 1,
+      "message": "Question:  don\u0027t we always want to pick up the one tagged as major.minor-SNAPSHOT-latest ?   Does this env. var have it?\n\nThis is a global question.",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
