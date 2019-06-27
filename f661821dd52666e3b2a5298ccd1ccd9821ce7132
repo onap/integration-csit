@@ -16,6 +16,29 @@
       "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae772d56_4c472e87",
+        "filename": "scripts/policy/docker-compose-api.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-06-27T18:44:46Z",
+      "side": 1,
+      "message": "Jorge actually just upgraded the version in the helm charts for mariadb 10.2.25",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
