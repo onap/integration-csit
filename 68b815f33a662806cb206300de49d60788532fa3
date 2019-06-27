@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ba6874_305dfd2c",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-27T16:11:11Z",
+      "side": 1,
+      "message": "remove trailing space\n\nsame comment in several files",
+      "revId": "68b815f33a662806cb206300de49d60788532fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "498a191c_e5ceb5de",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-06-27T16:11:11Z",
+      "side": 1,
+      "message": "I guess the new convention is to enclose all variables in \"${}\" when used within shell scripts.\n\nsame comment applies to other shell scripts",
+      "revId": "68b815f33a662806cb206300de49d60788532fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
