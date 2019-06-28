@@ -199,6 +199,24 @@
       "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d653d326_8fec0a44",
+        "filename": "scripts/policy/docker-compose-api.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-06-28T12:28:16Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters here, we can pick up the full major.minor.patch.SNAPSHOT since we know exactly what it is. They are the same thing.",
+      "parentUuid": "62032463_5f462fe5",
+      "revId": "f661821dd52666e3b2a5298ccd1ccd9821ce7132",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
