@@ -17,7 +17,7 @@
 
 set -x
 
-echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_dcaed.sh"
+echo "This is ${WORKSPACE}/scripts/sdc-dcae-d/setup_sdc_dcaed.sh"
 
 # Clone sdc enviroment template
 mkdir -p ${WORKSPACE}/data/environments/
@@ -48,10 +48,10 @@ source ${WORKSPACE}/data/clone/dt-be-main/version.properties
 export DCAE_RELEASE=$major.$minor-STAGING-latest
 export DEP_ENV=$ENV_NAME
 
-cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc/
-cp ${WORKSPACE}/data/clone/dt-be-main/docker/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc/dcaed_docker_run.sh
+cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc-dcae-d/
+cp ${WORKSPACE}/data/clone/dt-be-main/docker/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc-dcae-d/dcaed_docker_run.sh
 
-${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001
-${WORKSPACE}/scripts/sdc/dcaed_docker_run.sh -r ${DCAE_RELEASE} -e ${ENV_NAME} -p 10001
+${WORKSPACE}/scripts/sdc-dcae-d/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001
+${WORKSPACE}/scripts/sdc-dcae-d/dcaed_docker_run.sh -r ${DCAE_RELEASE} -e ${ENV_NAME} -p 10001
 
 
