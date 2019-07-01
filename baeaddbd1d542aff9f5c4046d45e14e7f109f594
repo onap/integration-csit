@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "def67749_9ccac0a0",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-01T15:14:03Z",
+      "side": 1,
+      "message": "add \"-rm\" per Jorge\u0027s comment?",
+      "revId": "baeaddbd1d542aff9f5c4046d45e14e7f109f594",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23ec1069_571207af",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-01T15:14:03Z",
+      "side": 1,
+      "message": "don\u0027t need lines 35 \u0026 36",
+      "revId": "baeaddbd1d542aff9f5c4046d45e14e7f109f594",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
