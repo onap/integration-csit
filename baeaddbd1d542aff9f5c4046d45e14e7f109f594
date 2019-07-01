@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32721e92_53d7cfd5",
+        "filename": "plans/policy/distribution/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-01T18:16:38Z",
+      "side": 1,
+      "message": "hmm.  Based on the failure message, it looks like \"-rm\" and teardown.sh are mutually exclusive.  Maybe we should just leave off \"-rm\" after all, since we want to run teardown.sh for the cases where the docker fails to exist.\n\nThe other failures appear to be unrelated to this change.",
+      "parentUuid": "def67749_9ccac0a0",
+      "revId": "baeaddbd1d542aff9f5c4046d45e14e7f109f594",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ec1069_571207af",
         "filename": "plans/policy/distribution/setup.sh",
         "patchSetId": 4
