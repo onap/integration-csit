@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d271cfbc_9e15516d",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-02T21:58:06Z",
+      "side": 1,
+      "message": "use \"source\" command instead of cat/cut",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd59be8_7fc0d5d2",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-02T21:58:06Z",
+      "side": 1,
+      "message": "sure we want snapshot version on dublin branch?",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240ce8cc_7af02f7f",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-07-02T21:58:06Z",
+      "side": 1,
+      "message": "add \"{}\" around variables",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
