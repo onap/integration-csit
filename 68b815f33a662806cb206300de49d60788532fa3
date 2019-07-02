@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0214ff3_bf9b668f",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-07-02T15:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ba6874_305dfd2c",
+      "revId": "68b815f33a662806cb206300de49d60788532fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "498a191c_e5ceb5de",
         "filename": "plans/policy/api/setup.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2019-06-27T16:11:11Z",
       "side": 1,
       "message": "I guess the new convention is to enclose all variables in \"${}\" when used within shell scripts.\n\nsame comment applies to other shell scripts",
+      "revId": "68b815f33a662806cb206300de49d60788532fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03d561f9_032ec276",
+        "filename": "plans/policy/api/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-07-02T15:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "498a191c_e5ceb5de",
       "revId": "68b815f33a662806cb206300de49d60788532fa3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
