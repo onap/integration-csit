@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20a4efd_15343806",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-07-02T22:46:56Z",
+      "side": 1,
+      "message": "This needs to changed to ${GERRIT_BRANCH}?",
+      "range": {
+        "startLine": 60,
+        "startChar": 63,
+        "endLine": 60,
+        "endChar": 69
+      },
+      "revId": "52b91f0b796443692cddb5e1680f8babced3716f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
