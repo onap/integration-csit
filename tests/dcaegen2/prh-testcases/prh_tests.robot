@@ -53,7 +53,7 @@ Should not send PNF ready when AAI is not responding
 Should send PNF ready when logical link exists and replace it in AAI
     [Documentation]  PRH gets event from DMaaP with an attachment point, PNF is related to a logical link in AAI
     [Tags]  PRH    Attachment point
-    [Template]  Verify PNF ready sent and old logical link removed from AAI
+    [Template]  Verify PNF ready sent and old logical link replaced in AAI
     ${TEST_CASES_DIR}/pnf-with-existing-logical-link
     ${TEST_CASES_DIR}/pnf-with-different-logical-link
 

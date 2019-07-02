@@ -34,7 +34,7 @@ class AAISetup(BaseHTTPRequestHandler):
                 logger.debug('AAISetup GET /setup/patched_pnf -> 200 OK')
             elif re.search('/verify/created_logical_link', self.path):
                 httpServerLib.set_response_200_ok(self, payload = created_logical_link)
-                logger.debug('AAISetup GET /setup/created_logical_link -> 200 OK')
+                logger.debug('AAISetup GET /verify/created_logical_link -> 200 OK')
             elif re.search('/verify/logical-links', self.path):
                 httpServerLib.set_response_200_ok(self, payload= json.dumps(logical_links).encode('utf-8'))
             elif re.search('/verify/logical-link/bbs-link', self.path):

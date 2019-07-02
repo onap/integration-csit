@@ -15,12 +15,14 @@ Verify PNF ready sent
     Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
 
-Verify PNF ready sent and old logical link removed from AAI
+Verify PNF ready sent and old logical link replaced in AAI
     [Arguments]    ${test_case_directory}
     ${logical_link}=   Get Data From File  ${test_case_directory}/logical-link.json
+    ${expected_logical_link}=    Get Data From File  ${test_case_directory}/expected-logical-link.json
     Add logical link entry in AAI  ${logical_link}
     Verify PNF ready sent  ${test_case_directory}
     Wait Until Keyword Succeeds    10x    3000ms    Check no logical link in AAI    ${test_case_directory}
+    Wait Until Keyword Succeeds    10x    3000ms    Check created Logical Link    ${expected_logical_link}
 
 Verify PNF ready sent and logical link created
     [Arguments]    ${test_case_directory}
@@ -96,7 +98,9 @@ Check logical link not modified
     [Arguments]    ${test_case_directory}
     ${expected_logical_link}=    Get Data From File  ${test_case_directory}/logical-link.json
     ${actual_logical_link}=    Get Request   ${aai_session}    /verify/logical-link/bbs-link    headers=${suite_headers}
+    ${created_logical_link}=    Get Request    ${aai_session}    /verify/created_logical_link    headers=${suite_headers}
     Should Be Equal As JSON  ${expected_logical_link}    ${actual_logical_link.content}
+    Should Be Equal As Strings  {}    ${created_logical_link.content}
 
 Check no logical link in AAI
     [Arguments]    ${test_case_directory}
@@ -110,17 +114,17 @@ Check CBS ready
     Dictionary Should Contain Key    ${resp.json()}    cbs    |Consul service catalog should contain CBS entry
 
 Check created PNF_READY notification
-    [Arguments]    ${expected_event_pnf_ready_in_dpaap}
+    [Arguments]    ${expected_event_pnf_ready_in_dmaap}
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_ready    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dpaap}
+    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dmaap}
 
 Check created PNF_UPDATE notification
-    [Arguments]    ${expected_event_pnf_update_in_dpaap}
+    [Arguments]    ${expected_event_pnf_update_in_dmaap}
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_update    headers=${suite_headers}
     Log    Response from DMaaP: ${resp.content}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_update_in_dpaap}
+    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_update_in_dmaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
