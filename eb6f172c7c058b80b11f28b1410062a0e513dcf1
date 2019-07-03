@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35c8792b_7e865459",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-07-03T09:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d271cfbc_9e15516d",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd59be8_7fc0d5d2",
         "filename": "plans/policy/apex-pdp/setup.sh",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6fc13817_ab24661d",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-07-03T09:31:46Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. Now, the patch version is stripped(this is how apex image tagging was happening in dublin) and \u0027-latest\u0027 is appended to the tag to get the latest image of that version.",
+      "parentUuid": "afd59be8_7fc0d5d2",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "240ce8cc_7af02f7f",
         "filename": "plans/policy/apex-pdp/setup.sh",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe4802e_1da1c5d8",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2019-07-03T09:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240ce8cc_7af02f7f",
+      "revId": "eb6f172c7c058b80b11f28b1410062a0e513dcf1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
