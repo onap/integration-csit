@@ -1,7 +1,7 @@
 version: "2.2"
 services:
   prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.2.4-SNAPSHOT
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.2.4
     ports:
       - "8100:8100"
       - "8433:8433"
@@ -18,7 +18,7 @@ services:
         condition: service_started
 
   ssl_prh:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.2.4-SNAPSHOT
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.prh.prh-app-server:1.2.4
     ports:
       - "8200:8100"
       - "8533:8433"
