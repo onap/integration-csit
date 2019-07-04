@@ -52,6 +52,8 @@ for i in {1..10}; do
     sleep $i
 done
 
+docker logs vfc-gvnfmdriver
+
 docker cp vfc-gvnfmdriver:/service/vfc/nfvo/driver/vnfm/gvnfm/gvnfmadapter/logs/runtime_gvnfmdriver.log ./
 cat runtime_gvnfmdriver.log
 
