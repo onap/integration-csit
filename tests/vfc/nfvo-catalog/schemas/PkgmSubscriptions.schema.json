@@ -1,0 +1,137 @@
+{
+	"type": "array",
+	"items": {
+		"description": "This type represents a subscription related to notifications about VNF package management.",
+		"type": "object",
+		"required": ["id",
+		"callbackUri",
+		"_links"],
+		"properties": {
+			"id": {
+				"description": "String formatted according to IETF RFC 3986.",
+				"type": "string"
+			},
+			"filter": {
+				"description": "This type represents a subscription filter related to notifications related to VNF package management. ",
+				"type": "object",
+				"properties": {
+					"notificationTypes": {
+						"description": "Match particular notification types. Permitted values: - VnfPackageOnboardingNotification - VnfPackageChangeNotification",
+						"type": "string",
+						"enum": ["VnfPackageOnboardingNotification",
+						"VnfPackageChangeNotification"]
+					},
+					"vnfProductsFromProviders": {
+						"description": "If present, match VNF packages that contain VNF products from certain providers.",
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["vnfProvider"],
+							"properties": {
+								"vnfProvider": {
+									"description": "Name of the VNFprovider to match.",
+									"type": "string"
+								},
+								"vnfProducts": {
+									"description": "If present, match VNF packages that contain VNF products with certain product names, from one particular provider.",
+									"type": "array",
+									"items": {
+										"type": "object",
+										"required": ["vnfProductName"],
+										"properties": {
+											"vnfProductName": {
+												"description": "Name of the VNF product to match.",
+												"type": "string"
+											},
+											"versions": {
+												"description": "If present, match VNF packages that contain VNF products with certain versions and a certain product name, from one particular provider.",
+												"type": "array",
+												"items": {
+													"type": "object",
+													"required": ["vnfSoftwareVersion"],
+													"properties": {
+														"vnfSoftwareVersion": {
+															"description": "Software version of the VNF. This is changed when there is any change to the software included in the VNF package. This information is copied from the VNFD. It shall be present after the VNF package content has been on-boarded and absent otherwise.",
+															"type": "string"
+														},
+														"vnfdVersions": {
+															"description": "If present, match VNF packages that contain VNF products with certain VNFD versions, a certain software version and a certain product name, from one particular provider.",
+															"type": "array",
+															"items": {
+																"description": "Software version of the VNF. This is changed when there is any change to the software included in the VNF package. This information is copied from the VNFD. It shall be present after the VNF package content has been on-boarded and absent otherwise.",
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"vnfdId": {
+									"description": "Match VNF packages with a VNFD identifier listed in the attribute.",
+									"type": "array",
+									"items": {
+										"description": "An identifier with the intention of being globally unique.",
+										"type": "string"
+									}
+								},
+								"vnfPkgId": {
+									"description": "Match VNF packages with a package identifier listed in the attribute.",
+									"type": "array",
+									"items": {
+										"description": "An identifier with the intention of being globally unique.",
+										"type": "string"
+									}
+								},
+								"operationalState": {
+									"description": "Match VNF packages with a package identifier listed in the attribute.",
+									"type": "array",
+									"items": {
+										"type": "string",
+										"description": "Acceptable values are: -ENABLED - The VNF package is enabled, i.e. it can be used for instantiation of new VNF instances. -DISABLED - The VNF package is disabled, i.e. it cannot be used for further VNF instantiation requests (unless and until the VNF package is re-enabled).",
+										"enum": ["ENABLED",
+										"DISABLED"]
+									}
+								},
+								"usageState": {
+									"description": "Match particular usage state of the on-boarded VNF package.",
+									"type": "array",
+									"items": {
+										"type": "string",
+										"description": "Acceptable values are: -IN_USE - VNF instances instantiated from this VNF package exist. -NOT_IN_USE - No existing VNF instance is instantiated from this VNF package.",
+										"enum": ["IN_USE",
+										"NOT_IN_USE"]
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"callbackUri": {
+				"description": "String formatted according to IETF RFC 3986.",
+				"type": "string"
+			},
+			"_links": {
+				"description": "Links to resources related to this resource.",
+				"type": "object",
+				"required": ["self"],
+				"properties": {
+					"self": {
+						"description": "This type represents a link to a resource.",
+						"type": "object",
+						"required": ["href"],
+						"properties": {
+							"href": {
+								"description": "URI of the referenced resource.",
+								"type": "string",
+								"format": "url"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
