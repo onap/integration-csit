@@ -1,7 +1,8 @@
 [
   {
     "additionalFields": {
-      "attachment-point": "another-link"
+      "attachment-point": "another-link",
+      "some-param": "param"
     },
     "correlationId": "NOK6061ZW9"
   }
