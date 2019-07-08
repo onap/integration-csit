@@ -191,6 +191,7 @@ class AAIHandler(BaseHTTPRequestHandler):
 
 def _main_(handler_class=AAIHandler, protocol="HTTP/1.0"):
     handler_class.protocol_version = protocol
+    httpServerLib.start_http_endpoint(3333, AAIHandler)
     httpServerLib.start_https_endpoint(3334, AAIHandler, keyfile="certs/aai.key", certfile="certs/aai.crt", ca_certs="certs/root.crt")
     httpServerLib.start_http_endpoint(3335, AAISetup)
     while 1:
