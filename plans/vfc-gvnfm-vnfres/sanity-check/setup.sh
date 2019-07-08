@@ -78,6 +78,8 @@ done
 docker cp vfc-vnfres:/service/vfc/gvnfm/vnfres/res/res/pub/config/config.py ./
 cat config.py
 
+docker logs vfc-vnfres
+
 docker cp vfc-vnfres:/service/vfc/gvnfm/vnfres/res/logs/runtime_res.log ./
 cat runtime_res.log
 
