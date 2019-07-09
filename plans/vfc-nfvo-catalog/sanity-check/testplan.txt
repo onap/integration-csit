@@ -2,3 +2,4 @@
 # Place the suites in run order.
 vfc/nfvo-catalog/test.robot
 vfc/nfvo-catalog/Subscriptions.robot
+vfc/nfvo-catalog/IndividualSubscription.robot
