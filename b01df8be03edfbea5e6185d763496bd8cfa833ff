@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f3c05f_2549cd76",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/package/docker/src/main/docker/docker-files/scripts/start-app.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 249
+      },
+      "writtenOn": "2019-07-09T16:59:57Z",
+      "side": 1,
+      "message": "I this needed ?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "b01df8be03edfbea5e6185d763496bd8cfa833ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
