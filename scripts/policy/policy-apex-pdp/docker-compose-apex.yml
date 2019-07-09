@@ -55,7 +55,7 @@ services:
        - message-router
        - pap
       hostname: policy-apex-pdp
-      command: ['/opt/app/policy/apex-pdp/bin/apexOnapPf.sh', '-c', '/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json', '-p', '/opt/app/policy/apex-pdp/etc/onappf/config/topic.properties']
+      command: ['/opt/app/policy/apex-pdp/bin/apexOnapPf.sh', '-c', '/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json']
 
       ports:
        - "6969:6969"
