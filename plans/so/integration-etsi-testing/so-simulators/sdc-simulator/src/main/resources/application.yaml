@@ -1,0 +1,5 @@
+server:
+  port: 9991
+  tomcat:
+    max-threads: 50
+ssl-enable: false
