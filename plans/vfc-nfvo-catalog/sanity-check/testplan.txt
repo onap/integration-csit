@@ -3,3 +3,4 @@
 vfc/nfvo-catalog/test.robot
 vfc/nfvo-catalog/Subscriptions.robot
 vfc/nfvo-catalog/IndividualSubscription.robot
+vfc/nfvo-catalog/VNFPackages.robot
