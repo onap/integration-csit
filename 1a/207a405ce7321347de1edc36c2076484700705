@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Daniel Rose <dr695h@att.com>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+2: Gary Wu <gary.wu@futurewei.com>
+Verified+1: Gary Wu <gary.wu@futurewei.com>
+Submitted-by: Gary Wu <gary.wu@futurewei.com>
+Submitted-at: Wed, 10 Jul 2019 00:01:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/90264
+Project: integration/csit
+Branch: refs/heads/master
