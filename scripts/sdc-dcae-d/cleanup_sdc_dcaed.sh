@@ -24,7 +24,7 @@
 # directories in the future
 #
 
-echo "This is ${WORKSPACE}/scripts/sdc/cleanup_sdc_dcaed.sh"
+echo "This is ${WORKSPACE}/scripts/sdc-dcae-d/cleanup_sdc_dcaed.sh"
 
 cp -rf ${WORKSPACE}/data/logs/ ${WORKSPACE}/archives/
 
