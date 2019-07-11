@@ -66,8 +66,8 @@ DELETE all PNF Descriptors - Method not implemented
     ${resp}=              Delete Request          web_session     ${pnf_descriptors_url}
     Should Be Equal As Strings    405    ${resp.status_code}
 
-DELETE PNF Package
-    Log   DELETE PNF Package
+DELETE PNF Descriptor
+    Log   DELETE PNF Descriptor
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${CATALOG_IP}:${catalog_port}    headers=${headers}
     ${resp}=    Delete Request    web_session     ${pnf_descriptors_url}/${pnfdId}
