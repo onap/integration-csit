@@ -6,3 +6,4 @@ vfc/nfvo-catalog/IndividualSubscription.robot
 vfc/nfvo-catalog/VNFPackages.robot
 vfc/nfvo-catalog/IndividualVNFPackage.robot
 vfc/nfvo-catalog/VNFPackageContent.robot
+vfc/nfvo-catalog/PNFDescriptors.robot

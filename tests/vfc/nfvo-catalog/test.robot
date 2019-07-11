@@ -7,60 +7,39 @@ Library     json
 Library     HttpLibrary.HTTP
 
 *** Variables ***
-@{return_ok_list}=         200  201  202  204
 ${catalog_port}            8806
-${queryswagger_url}        /api/catalog/v1/swagger.json
-${queryVNFPackage_url}     /api/catalog/v1/vnfpackages
-${queryNSPackages_url}     /api/catalog/v1/nspackages
-${healthcheck_url}         /api/catalog/v1/health_check
-${create_subs_url}         /api/vnfpkgm/v1/subscriptions
-${delete_subs_url}         /api/vnfpkgm/v1/subscriptions
-
-#json files
-${vnf_subscription_json}    ${SCRIPTS}/../tests/vfc/nfvo-catalog/jsons/vnf_subscription.json
-
-#global variables
-${subscriptionId}
+${cataloghealthcheck_url}         /api/catalog/v1/health_check
+${vnfpkgmhealthcheck_url}         /api/vnfpkgm/v1/health_check
+${nsdhealthcheck_url}         /api/nsd/v1/health_check
+${parserhealthcheck_url}         /api/parser/v1/health_check
 
 *** Test Cases ***
-GetVNFPackages
-    ${headers}            Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session        web_session          http://${CATALOG_IP}:${catalog_port}      headers=${headers}
-    ${resp}=              Get Request          web_session                      ${queryVNFPackage_url}
-    ${responese_code}=    Convert To String    ${resp.status_code}
-    List Should Contain Value    ${return_ok_list}   ${responese_code}
-
-CatalogHealthCheckTest
+Check Health Catalog
+    Log   Check Health Catalog
     [Documentation]    check health for catalog by MSB
-    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${CATALOG_IP}:${catalog_port}    headers=${headers}
-    ${resp}=  Get Request    web_session    ${healthcheck_url}
-    ${responese_code}=     Convert To String      ${resp.status_code}
-    List Should Contain Value    ${return_ok_list}   ${responese_code}
-    ${response_json}    json.loads    ${resp.content}
-    ${health_status}=    Convert To String      ${response_json['status']}
-    Should Be Equal    ${health_status}    active
+    Check Health    ${cataloghealthcheck_url}
 
-CreateVnfSubscriptionTest
-    [Documentation]    Create Vnf Subscription function test
-    ${json_value}=     json_from_file      ${vnf_subscription_json}
-    ${json_string}=     string_from_json   ${json_value}
-    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${CATALOG_IP}:${catalog_port}    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${create_subs_url}    ${json_string}
-    ${responese_code}=     Convert To String      ${resp.status_code}
-    List Should Contain Value    ${return_ok_list}   ${responese_code}
-    ${response_json}    json.loads    ${resp.content}
-    ${callback_uri}=    Convert To String      ${response_json['callbackUri']}
-    Should Be Equal    ${callback_uri}    http://127.0.0.1:${catalog_port}/api/catalog/v1/callback_sample
-    ${subscriptionId}=    Convert To String      ${response_json['id']}
-    Set Global Variable     ${subscriptionId}
+Check Health Vnfpkgm
+    Log   Check Health Vnfpkgm
+    [Documentation]    check health for Vnfpkgm by MSB
+    Check Health    ${vnfpkgmhealthcheck_url}
 
-DeleteVnfSubscriptionTest
-    [Documentation]    Delete Vnf Subscription function test
+Check Health Nsd
+    Log   Check Health Nsd
+    [Documentation]    check health for Nsd by MSB
+    Check Health    ${nsdhealthcheck_url}
+
+Check Health Parser
+    Log   Check Health Parser
+    [Documentation]    check health for Parser by MSB
+    Check Health    ${parserhealthcheck_url}
+
+*** Keywords ***
+Check Health
+    [Arguments]  ${url}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${CATALOG_IP}:${catalog_port}    headers=${headers}
-    ${resp}=    Delete Request    web_session     ${delete_subs_url}/${subscriptionId}
-    ${responese_code}=     Convert To String      ${resp.status_code}
-    List Should Contain Value    ${return_ok_list}   ${responese_code}
+    ${resp}=  Get Request    web_session    ${url}
+    Should Be Equal As Strings    200    ${resp.status_code}
+    ${response_json}    json.loads    ${resp.content}    
+    Should Be Equal As Strings    active    ${response_json['status']}
