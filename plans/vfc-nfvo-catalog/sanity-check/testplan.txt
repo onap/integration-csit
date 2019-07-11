@@ -8,3 +8,4 @@ vfc/nfvo-catalog/IndividualVNFPackage.robot
 vfc/nfvo-catalog/VNFPackageContent.robot
 vfc/nfvo-catalog/PNFDescriptors.robot
 vfc/nfvo-catalog/NSDescriptors.robot
+vfc/nfvo-catalog/IndividualNSDescriptor.robot
