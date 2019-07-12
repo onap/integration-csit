@@ -9,3 +9,4 @@ vfc/nfvo-catalog/VNFPackageContent.robot
 vfc/nfvo-catalog/PNFDescriptors.robot
 vfc/nfvo-catalog/NSDescriptors.robot
 vfc/nfvo-catalog/IndividualNSDescriptor.robot
+vfc/nfvo-catalog/IndividualPnfDescriptor.robot
