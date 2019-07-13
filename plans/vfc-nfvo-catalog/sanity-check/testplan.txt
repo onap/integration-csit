@@ -7,6 +7,7 @@ vfc/nfvo-catalog/VNFPackages.robot
 vfc/nfvo-catalog/IndividualVNFPackage.robot
 vfc/nfvo-catalog/VNFPackageContent.robot
 vfc/nfvo-catalog/PNFDescriptors.robot
+vfc/nfvo-catalog/IndividualPnfDescriptor.robot
 vfc/nfvo-catalog/NSDescriptors.robot
 vfc/nfvo-catalog/IndividualNSDescriptor.robot
-vfc/nfvo-catalog/IndividualPnfDescriptor.robot
+vfc/nfvo-catalog/NSDContent.robot
