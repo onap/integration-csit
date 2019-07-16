@@ -27,7 +27,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.onap"})
 public class SdcSimulatorApplication extends SpringBootServletInitializer {
     public static void main(final String[] args) {
         SpringApplication.run(SdcSimulatorApplication.class, args);

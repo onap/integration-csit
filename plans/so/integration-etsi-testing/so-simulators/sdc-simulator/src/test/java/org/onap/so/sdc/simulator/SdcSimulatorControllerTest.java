@@ -21,20 +21,27 @@
 package org.onap.so.sdc.simulator;
 
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.onap.so.sdc.simulator.providers.ResourceProvider;
+import org.onap.so.sdc.simulator.providers.ResourceProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -50,8 +57,14 @@ public class SdcSimulatorControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private ResourceProvider resourceProvider;
+
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
     @Test
-    public void testHealthCheck() {
+    public void test_healthCheck_matchContent() {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -59,8 +72,34 @@ public class SdcSimulatorControllerTest {
         final String url = "http://localhost:" + port + Constant.BASE_URL + "/healthcheck";
         final ResponseEntity<String> object = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 
-        assertEquals("healthy", object.getBody());
+        assertEquals(Constant.HEALTHY, object.getBody());
 
+    }
+
+    @Test
+    public void test_getCsar_validCsarId_matchContent() {
+        final Optional<byte[]> resource = resourceProvider.getResource(csarId);
+
+        final HttpHeaders headers = new HttpHeaders();
+        final HttpEntity<?> request = new HttpEntity<>(headers);
+        final String url = "http://localhost:" + port + Constant.BASE_URL + "/resources/" + Constant.DEFAULT_CSAR_NAME+ "/toscaModel";
+
+        final ResponseEntity<String> responce = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        assertEquals(new ResponseEntity<>(resource.get(), HttpStatus.OK) , responce);
+    }
+
+    @Test
+    public void test_getCsar_invalidCsar_internalServerError() {
+        final String csarId = "invalidCsarId";
+
+        final HttpHeaders headers = new HttpHeaders();
+        final HttpEntity<?> request = new HttpEntity<>(headers);
+        final String url = "http://localhost:" + port + Constant.BASE_URL + "/resources/" + csarId + "/toscaModel";
+
+        final ResponseEntity<String> responce = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+
+        assertEquals(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR), responce);
     }
 
 }

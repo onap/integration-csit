@@ -20,7 +20,18 @@ package org.onap.so.sdc.simulator;
  */
 public class Constant {
 
-    public static final String BASE_URL = "/sdc/simulator/v1";
+    public static final String BASE_URL = "/simulator/sdc/v1/catalog";
 
-    private Constant() {}
+    public static final String HEALTHY = "healthy";
+
+    public static final String DEFAULT_CSAR_NAME = "unalteredVNFD";
+
+    public static final String DOT = ".";
+
+    public static final String DOT_CSAR = DOT + "csar";
+
+    public static final String DEFAULT_CSAR_NAME_WITH_EXT = DEFAULT_CSAR_NAME + DOT_CSAR;
+
+    private Constant() {
+    }
 }
