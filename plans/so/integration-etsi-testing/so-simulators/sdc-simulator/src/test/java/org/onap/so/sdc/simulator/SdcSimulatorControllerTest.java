@@ -21,17 +21,23 @@
 package org.onap.so.sdc.simulator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Optional;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.onap.so.sdc.simulator.providers.ResourceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -42,7 +48,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Configuration
 public class SdcSimulatorControllerTest {
+
+    private static final String MOCKER_SDC_CONTROLLER_BEAN = "mockResourceProvider";
 
     @LocalServerPort
     private int port;
@@ -51,16 +60,41 @@ public class SdcSimulatorControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void testHealthCheck() {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    public void test_healthCheck_matchContent() {
+        final String url = getBaseUrl() + "/healthcheck";
+        final ResponseEntity<String> object = restTemplate.getForEntity(url, String.class);
 
-        final HttpEntity<?> request = new HttpEntity<>(headers);
-        final String url = "http://localhost:" + port + Constant.BASE_URL + "/healthcheck";
-        final ResponseEntity<String> object = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+        assertEquals(Constant.HEALTHY, object.getBody());
 
-        assertEquals("healthy", object.getBody());
+    }
 
+    @Test
+    public void test_getCsar_validCsarId_matchContent() {
+
+        final String url = getBaseUrl() + "/resources/" + Constant.DEFAULT_CSAR_NAME + "/toscaModel";
+
+        final ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
+
+        assertTrue(response.hasBody());
+        assertEquals(3982, response.getBody().length);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void test_getCsar_invalidCsar_internalServerError() {
+        final ResourceProvider mockedResourceProvider = Mockito.mock(ResourceProvider.class);
+        Mockito.when(mockedResourceProvider.getResource(Mockito.anyString())).thenReturn(Optional.empty());
+        final SdcSimulatorController objUnderTest = new SdcSimulatorController(mockedResourceProvider);
+
+        final ResponseEntity<byte[]> response = objUnderTest.getCsar(Constant.DEFAULT_CSAR_NAME);
+
+        assertFalse(response.hasBody());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    private String getBaseUrl() {
+        return "http://localhost:" + port + Constant.BASE_URL;
     }
 
 }

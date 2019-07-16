@@ -18,19 +18,19 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.so.sdc.simulator;
+package org.onap.so.sdc.simulator.providers;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
 
 /**
- * @author Waqas Ikram (waqas.ikram@est.tech)
+ * @author Eoin Hanan (eoin.hanan@est.tech)
  */
-@SpringBootApplication(scanBasePackages = {"org.onap"})
-public class SdcSimulatorApplication extends SpringBootServletInitializer {
+public interface ResourceProvider {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(SdcSimulatorApplication.class, args);
-    }
+    Optional<byte[]> getResource(final String csarId);
+
+    Optional<InputStream> getInputStream(final String csarId) throws IOException;
+
 }
