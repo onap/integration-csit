@@ -1,3 +1,4 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
 vfc/gvnfm-vnflcm/test.robot
+vfc/gvnfm-vnflcm/Subscriptions.robot

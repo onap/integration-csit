@@ -1,0 +1,41 @@
+{
+    "filters": {
+        "notificationTypes": [
+            "VnfPackageOnboardingNotification"
+        ],
+        "vnfProductsFromProviders": {
+            "vnfProvider": "string",
+            "vnfProducts": {
+                "vnfProductName": "string",
+                "versions": {
+                    "vnfSoftwareVersion": "string",
+                    "vnfdVersions": [
+                        "string"
+                    ]
+                }
+            }
+        },
+        "vnfdId": [
+            "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        ],
+        "vnfPkgId": [
+            "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        ],
+        "operationalState": [
+            "ENABLED"
+        ],
+        "usageState": [
+            "IN_USE"
+        ]
+    },
+    "callbackUri": "http://127.0.0.1:8801/api/vnflcm/v1/callback_sample",
+    "authentication": {
+        "authType": [
+            "BASIC"
+        ],
+        "paramsBasic": {
+            "userName": "string",
+            "password": "string"
+        }
+    }
+}
