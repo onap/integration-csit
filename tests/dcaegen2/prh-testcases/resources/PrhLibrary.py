@@ -2,29 +2,45 @@ import json
 import re
 import docker
 import time
+import datetime
 
 
 class PrhLibrary(object):
+    ROBOT_LIBRARY_SCOPE = 'TEST SUITE'
+    ROBOT_LISTENER_API_VERSION = 2
 
     def __init__(self):
-        pass
+        self.ROBOT_LIBRARY_LISTENER = self
+
+    def _start_test(self, name, attrs):
+        # http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#test-libraries-as-listeners
+        self.test_start_time = self.get_current_utc_datetime()
 
     @staticmethod
-    def find_one_of_log_entryies(searched_entries):
-        print(type(searched_entries))
-        client = docker.from_env()
-        container = client.containers.get('prh')
-        print("Check for log searches for pattern: ", searched_entries)
-        for line in container.logs(stream=True):
-            print("Check for log analysis line: ", line )
+    def get_current_utc_datetime():
+        return datetime.datetime.utcnow()
+
+    def get_docker_logs_since_test_start(self, container_id):
+        return self.get_docker_logs(container_id, self.test_start_time)
+
+    @staticmethod
+    def get_docker_logs(container_id, since=None):
+        container = PrhLibrary.__get_docker_container(container_id)
+        return container.logs(stream=False, since=since)
+
+    def wait_for_one_of_docker_log_entries(self, container_id, searched_entries):
+        print("Looking for: %s" % searched_entries)
+        container = PrhLibrary.__get_docker_container(container_id)
+        print("Log lines:")
+        for line in container.logs(stream=True, since=self.test_start_time):
+            print(line)
             for searched_entry in searched_entries:
                 if searched_entry in line.strip():
                     return True
         else:
             return False
 
-    @staticmethod
-    def find_log_json(prefix, json_message):
+    def wait_for_log_entry_with_json_message(self, prefix, json_message):
         print("Looking for:")
         print("Prefix: " + str(prefix))
         print("Json: " + str(json_message))
@@ -34,10 +50,10 @@ class PrhLibrary(object):
             print("Could not decode given message")
             return False
         pattern = re.compile(prefix + "(.*)$")
-        client = docker.from_env()
-        container = client.containers.get('prh')
-        for line in container.logs(stream=True):
-            print("Check for log analysis line: ", line )
+        container = PrhLibrary.__get_docker_container('prh')
+        print("Log lines:")
+        for line in container.logs(stream=True, since=self.test_start_time):
+            print(line)
             if PrhLibrary.__same_json_in_log(decoded_message, line, pattern):
                 return True
         else:
@@ -168,3 +184,8 @@ class PrhLibrary(object):
         if len(split) > 3:
             return split[3]
         return None
+
+    @staticmethod
+    def __get_docker_container(container_id):
+        docker_client = docker.from_env()
+        return docker_client.containers.get(container_id)
