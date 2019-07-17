@@ -1,0 +1,29 @@
+{
+    "filters": {
+        "notificationTypes": [
+            "NsdOnBoardingNotification",
+			"NsdOnboardingFailureNotification",
+			"NsdChangeNotification",
+			"NsdDeletionNotification",
+			"PnfdOnBoardingNotification",
+			"PnfdOnBoardingFailureNotification",
+			"PnfdDeletionNotification"
+        ],
+        "nsdInfoId": [
+		    "26ce2f37-0726-481a-a412-a627d0553930"
+		],
+        "nsdId": [
+            "ffdddc5d-a44b-45ae-8fc3-e6551cce350f"
+        ]
+    },
+    "callbackUri": "http://127.0.0.1:8806/api/catalog/v1/callback_sample",
+    "authentication": {
+        "authType": [
+            "BASIC"
+        ],
+        "paramsBasic": {
+            "userName": "string",
+            "password": "string"
+        }
+    }
+}
