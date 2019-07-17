@@ -29,16 +29,16 @@ Simple registration event
     ${TEST_CASES_DIR}/ves-event-with-empty-additional-fields
     ${TEST_CASES_DIR}/ves-event-with-empty-attachment-point
 
-Should not send PNF ready when DMaaP event is invalid
+Should not send PNF ready when DMaaP event has missing required field
     [Documentation]    PRH get from DMaaP event with missing required field
     [Tags]    PRH    Invalid event
     [Template]    Verify event with missing required field is logged
     ${TEST_CASES_DIR}/ves-event-missing-field
 
 Should not send PNF ready when DMaaP event is not JSON array
-    [Documentation]    Event from DMaaP is not JSON array
+    [Documentation]    Event from DMaaP is not an array of JSON objects
     [Tags]    PRH    Invalid event
-    Verify incorrect JSON event is logged    ${TEST_CASES_DIR}/ves-event-not-array
+    Verify incorrect JSON event is logged    ${TEST_CASES_DIR}/ves-event-not-a-json-object
 
 Should not send PNF ready when AAI record doesn't exist
     [Documentation]    PRH get from DMaaP valid event but given PNF doesn't exists in AAI

@@ -36,32 +36,29 @@ Verify event with missing required field is logged
     Log    Invalid ves event: ${invalid_ves_event}
     ${notification}=    Create invalid notification    ${invalid_ves_event}
     ${error_msg}=    Set Variable    Incorrect json, consumerDmaapModel can not be created:
-    Wait Until Keyword Succeeds    10x    3000ms    Check PRH json log    ${error_msg}    ${notification}
+    Wait for PRH json log entry    20s    ${error_msg}    ${notification}
 
 Verify incorrect JSON event is logged
-    [Timeout]    60s
     [Arguments]    ${test_case_directory}
     ${invalid_ves_event}=    Get Data From File    ${test_case_directory}/invalid-ves-event.json
     Set VES event in DMaaP    ${invalid_ves_event}
-    Check PRH log    |WARN    |Incorrect json, consumerDmaapModel can not be created:
+    Wait for PRH log entry    20s    java.lang.IllegalStateException: Not a JSON Object
 
 Verify missing AAI record is logged
-    [Timeout]    100s
     [Arguments]    ${test_case_directory}
     ${incorrect_aai_entry}=    Get Data From File    ${test_case_directory}/incorrect-aai-entry.json
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Add PNF entry in AAI    ${incorrect_aai_entry}
     Set VES event in DMaaP    ${ves_event}
-    Check PRH log    Request failed for URL 'https://aai:3334/aai/v12/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
+    Wait for PRH log entry    20s    Request failed for URL 'https://aai:3334/aai/v12/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
 
 Verify AAI not responding is logged
-    [Timeout]    100s
     [Arguments]    ${test_case_directory}
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
     Set VES event in DMaaP    ${ves_event}
-    Check PRH log    connection timed out: aai    Host is unreachable: aai
-    Ensure Container Is Running   aai_simulator
+    Wait for one of PRH log entries    90s    connection timed out: aai    Host is unreachable: aai
+    [Teardown]    Ensure Container Is Running   aai_simulator
 
 Verify PNF re registration
     [Timeout]    500s
@@ -124,14 +121,20 @@ Check created Logical Link
     Should Be Equal As Strings    ${resp.status_code}    200
     Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
 
-Check PRH log
-    [Arguments]    @{log_entries}
-    ${found}=    Find one of log entryies    ${log_entries}
+Wait for PRH log entry
+    [Arguments]    ${timeout}    ${log_entry}
+    Wait for one of PRH log entries    ${timeout}    ${log_entry}
+
+Wait for one of PRH log entries
+    [Arguments]    ${timeout}    @{log_entries}
+    [Timeout]     ${timeout}
+    ${found}=    Wait for one of docker log entries   prh   ${log_entries}
     Should Be True    ${found}
 
-Check PRH json log
-    [Arguments]    ${prefix}    ${json}
-    ${found}=    Find log json    ${prefix}    ${json}
+Wait for PRH json log entry
+    [Arguments]    ${timeout}    ${prefix}    ${json}
+    [Timeout]     ${timeout}
+    ${found}=    Wait for log entry with json message    ${prefix}    ${json}
     Should Be True    ${found}
 
 Create event parsing error
@@ -209,4 +212,9 @@ Verify logging level
 
 Verify logs with heartbeat
     Get Request    prh_session    /heartbeat
-    Check PRH log   Heartbeat request received
+    Verify PRH logs contains    Heartbeat request received
+
+Verify PRH logs contains
+   [Arguments]    ${expected_entry}
+   ${log}=    Get docker logs since test start    prh
+   Should Contain    ${log}    ${expected_entry}
