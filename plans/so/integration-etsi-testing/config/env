@@ -1,0 +1,2 @@
+NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
+TAG=1.4.0-STAGING-latest

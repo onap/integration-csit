@@ -27,6 +27,14 @@
 
                     <images>
                         <image>
+                            <name>jobs/workaround-job-container</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files</dockerFileDir>
+                                <dockerFile>Dockerfile.workaround-job-container</dockerFile>
+                            </build>
+                        </image>
+                        <image>
                             <name>simulators/sdc-simulator</name>
                             <build>
                                 <cleanup>try</cleanup>

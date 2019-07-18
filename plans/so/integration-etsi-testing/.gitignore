@@ -18,3 +18,5 @@ target
 /.metadata/
 temp/
 **/temp/**
+test_lab/
+**/test_lab/**
