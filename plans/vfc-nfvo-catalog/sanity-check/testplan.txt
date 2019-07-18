@@ -13,3 +13,4 @@ vfc/nfvo-catalog/NSDescriptors.robot
 vfc/nfvo-catalog/IndividualNSDescriptor.robot
 vfc/nfvo-catalog/NSDContent.robot
 vfc/nfvo-catalog/NSDMSubscriptions.robot
+vfc/nfvo-catalog/IndividualNSDMSubscription.robot
