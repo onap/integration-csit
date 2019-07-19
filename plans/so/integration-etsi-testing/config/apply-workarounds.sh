@@ -27,7 +27,8 @@ NORTH_BOUND_TABLE_NAME="northbound_request_ref_lookup"
 TABLE_EXISTS_QUERY="select count(*) from information_schema.tables WHERE table_schema='$CATALOG_DB' AND table_name='$BUIDLING_BLOCK_TABLE_NAME';"
 BUILDING_BLOCK_COUNT_QUERY="select count(*) from $BUIDLING_BLOCK_TABLE_NAME;"
 FLY_WAY_MIGRATION_QUERY="SELECT COUNT(*) FROM flyway_schema_history WHERE script LIKE '%R__MacroData%' AND installed_on IS NOT NULL;"
-
+SLEEP_TIME=5
+TIME_OUT_DEFAULT_VALUE_SEC=1200 #20 mins
 
 current_timestamp()
 {
@@ -38,8 +39,9 @@ wait_for_database_availability()
 {
  echo "$(current_timestamp): Checking for database availability"
  until echo '\q' | mysql -h $DB_HOST -P $DB_PORT -uroot -p$MYSQL_ROOT_PASSWORD $CATALOG_DB; do
-     >&2 echo "$(current_timestamp): Database is unavailable - sleeping for 5 seconds"
-     sleep 5
+     >&2 echo "$(current_timestamp): Database is unavailable - sleeping for ${SLEEP_TIME} seconds"
+     isTimeOut
+     sleep ${SLEEP_TIME}
  done
 
  echo "$(current_timestamp): Database is available now"
@@ -48,13 +50,15 @@ wait_for_database_availability()
 wait_container_to_create_table()
 {
  while [ $(mysql -h $DB_HOST -P $DB_PORT -uroot -p$MYSQL_ROOT_PASSWORD $CATALOG_DB -sse "$TABLE_EXISTS_QUERY") -eq "0" ] ; do
-     echo "$(current_timestamp): Waiting for so-catalog container to create tables - sleeping for 5 seconds"
-     sleep 5
+     echo "$(current_timestamp): Waiting for so-catalog container to create tables - sleeping for ${SLEEP_TIME} seconds"
+     isTimeOut
+     sleep ${SLEEP_TIME}
  done
 
  while [ $(mysql -h $DB_HOST -P $DB_PORT -uroot -p$MYSQL_ROOT_PASSWORD $CATALOG_DB -sse "$BUILDING_BLOCK_COUNT_QUERY") -eq "0" ] ; do
-     echo "$(current_timestamp): Waiting for so-catalog container to insert records in $BUIDLING_BLOCK_TABLE_NAME - sleeping for 5 seconds"
-     sleep 5
+     echo "$(current_timestamp): Waiting for so-catalog container to insert records in $BUIDLING_BLOCK_TABLE_NAME - sleeping for ${SLEEP_TIME} seconds"
+     isTimeOut
+     sleep ${SLEEP_TIME}
  done
 
  echo "$(current_timestamp): $CATALOG_DB tables available now . . ."
@@ -63,8 +67,9 @@ wait_container_to_create_table()
 wait_for_flyway_migration_to_finish()
 {
  while [ $(mysql -h $DB_HOST -P $DB_PORT -uroot -p$MYSQL_ROOT_PASSWORD $CATALOG_DB -sse "$FLY_WAY_MIGRATION_QUERY") -ne "1" ] ; do
-     echo "$(current_timestamp): Waiting for flyway migration sql statement to finish with success - sleeping for 5 seconds"
-     sleep 5
+     echo "$(current_timestamp): Waiting for flyway migration sql statement to finish with success - sleeping for ${SLEEP_TIME} seconds"
+     isTimeOut
+     sleep ${SLEEP_TIME}
  done
  echo "$(current_timestamp): flyway migration finished . . . "
 }
@@ -111,6 +116,29 @@ EOF
  echo "$(current_timestamp): Finished applying workaround . . ."
 }
 
+isTimeOut()
+{
+ if [ `date +%s` -gt $TIME_OUT_END_TIME_IN_MS ]; then
+    echo "$(current_timestamp): workaround script timed out . . ."
+    exit 1;
+ fi
+}
+
 # main body
+if [ -z "$TIME_OUT_IN_SECONDS"]; then
+    echo "$(current_timestamp): TIME_OUT_IN_MS attribute is empty will use default val: $TIME_OUT_DEFAULT_VALUE_SEC"
+    TIME_OUT_IN_SECONDS=$TIME_OUT_DEFAULT_VALUE_SEC
+fi
+
+DIGITS_REGEX='^[0-9]+$'
+if ! [[ $TIME_OUT_IN_SECONDS =~ $DIGIT_REGEX ]] ; then
+    echo "$(current_timestamp): TIME_OUT_IN_MS attribute Must be number: $TIME_OUT_IN_SECONDS, will use default val: $TIME_OUT_DEFAULT_VALUE_SEC"
+    TIME_OUT_IN_SECONDS=$TIME_OUT_DEFAULT_VALUE_SEC
+fi
+
+START_TIME_IN_MS=`date +%s`
+TIME_OUT_END_TIME_IN_MS=$(($START_TIME_IN_MS+$TIME_OUT_IN_SECONDS));
+echo "$(current_timestamp): Workaround script will time out at `date -d @$TIME_OUT_END_TIME_IN_MS`"
+
 apply_workaround
 
