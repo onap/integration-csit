@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfba63bf_496cc727",
+        "filename": "plans/so/integration-etsi-testing/config/apply-workarounds.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-07-19T16:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cce68ec_04ed584b",
+      "revId": "c6c16a7508156dd6a7524efe81e8b6a5bf836d3f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bafb6e5_90dd2d88",
         "filename": "plans/so/integration-etsi-testing/config/apply-workarounds.sh",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "c6c16a7508156dd6a7524efe81e8b6a5bf836d3f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cfb683_a5b0bf5e",
+        "filename": "plans/so/integration-etsi-testing/config/apply-workarounds.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-07-19T16:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bafb6e5_90dd2d88",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 46
+      },
+      "revId": "c6c16a7508156dd6a7524efe81e8b6a5bf836d3f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
