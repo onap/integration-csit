@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1eb51c0_3b82cf7c",
+        "filename": "plans/so/integration-etsi-testing/config/wait-for-workaround-job.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4327
+      },
+      "writtenOn": "2019-07-22T12:41:14Z",
+      "side": 1,
+      "message": "attribute?",
+      "range": {
+        "startLine": 39,
+        "startChar": 100,
+        "endLine": 39,
+        "endChar": 107
+      },
+      "revId": "27976efa9b79a2282a23ed138b9ced8c822035c6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
