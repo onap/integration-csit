@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Andrew Fenner <andrew.fenner@est.tech>
+Code-Review+2: Gary Wu <gary.wu@gmail.com>
+Submitted-by: Gary Wu <gary.wu@gmail.com>
+Submitted-at: Mon, 22 Jul 2019 20:31:19 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/91819
+Project: integration/csit
+Branch: refs/heads/master
