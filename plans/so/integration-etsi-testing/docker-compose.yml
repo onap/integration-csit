@@ -91,6 +91,9 @@ services:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${TAG}
     ports:
       - "9092:9092"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/vnfm-adapter/onapheat:/app/config
     environment:
     - APP=VNFM-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
@@ -144,6 +147,6 @@ services:
     depends_on:
       - mariadb
       - VNFM-adapter
-    command: 
+    command:
       - "/config/apply-workarounds.sh"
 ################################################################################
