@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9432470a_540719c5",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 249
+      },
+      "writtenOn": "2019-07-23T13:21:14Z",
+      "side": 1,
+      "message": "are these dependencies needed. a bit suprised by them",
+      "revId": "0a33a29a9335c456117cae7afed0ed92385573f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65afbb6_21d1c0f1",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/resources/application.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 249
+      },
+      "writtenOn": "2019-07-23T13:21:14Z",
+      "side": 1,
+      "message": "will we be able to test with http ?",
+      "revId": "0a33a29a9335c456117cae7afed0ed92385573f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
