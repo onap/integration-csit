@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: Apache-2.0 ============LICENSE_END=========================================================
  */
 
-package org.onap.so.sdc.simulator;
+package org.onap.so.sdc.simulator.utils;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)

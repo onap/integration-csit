@@ -87,7 +87,7 @@ services:
       - --
       - "/app/start-app.sh"
 ################################################################################
-  VNFM-adapter:
+  vnfm-adapter:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${TAG}
     ports:
       - "9092:9092"
@@ -95,7 +95,7 @@ services:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${TEST_LAB_DIR}/volumes/so/config/vnfm-adapter/onapheat:/app/config
     environment:
-    - APP=VNFM-adapter
+    - APP=vnfm-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
       vnfm-adapter-test
@@ -126,7 +126,25 @@ services:
       sdc-simulator
     depends_on:
       - mariadb
-      - VNFM-adapter
+      - vnfm-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  aai-simulator:
+    image: simulators/aai-simulator:latest
+    ports:
+      - "9993:9993"
+    environment:
+    - APP=AAI-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      aai-simulator
+    depends_on:
+      - mariadb
+      - vnfm-adapter
     logging:
       driver: "json-file"
       options:
@@ -146,7 +164,7 @@ services:
       - CATALOG_DB=catalogdb
     depends_on:
       - mariadb
-      - VNFM-adapter
+      - vnfm-adapter
     command:
       - "/config/apply-workarounds.sh"
 ################################################################################
