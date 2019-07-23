@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.onap.so.sdc.simulator.Constant;
+import org.onap.so.sdc.simulator.utils.Constant;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
