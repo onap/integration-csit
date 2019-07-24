@@ -5,35 +5,36 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator;
+package org.onap.so.aai.simulator.service.providers;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cache.annotation.EnableCaching;
+import java.util.Optional;
+import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.ServiceSubscription;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@EnableCaching
-@SpringBootApplication(scanBasePackages = {"org.onap"})
-public class AaiSimulatorApplication extends SpringBootServletInitializer {
-    
-    public static void main(final String[] args) {
-        SpringApplication.run(AaiSimulatorApplication.class, args);
-    }
+public interface CustomerServiceProvider {
+
+    Optional<Customer> getCustomer(final String globalCustomerId);
+
+    void putCustomer(final String globalCustomerId, final Customer customer);
+
+    Optional<ServiceSubscription> getServiceSubscription(final String globalCustomerId, final String serviceType);
+
+    void clearAll();
 
 }

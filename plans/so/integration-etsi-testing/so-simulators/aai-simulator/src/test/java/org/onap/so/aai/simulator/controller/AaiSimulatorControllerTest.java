@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator;
+package org.onap.so.aai.simulator.controller;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -55,13 +55,10 @@ public class AaiSimulatorControllerTest {
         final ResponseEntity<String> object = restTemplate.getForEntity(url, String.class);
 
         assertEquals(Constant.HEALTHY, object.getBody());
-
     }
 
     private String getBaseUrl() {
         return "http://localhost:" + port + Constant.BASE_URL;
     }
-
-
 
 }

@@ -5,38 +5,55 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
 package org.onap.so.aai.simulator.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public class Constant {
+public class RequestErrorBuilder {
 
-    public static final String BASE_URL = "/simulator/aai";
+    private final ServiceException serviceException = new ServiceException();
 
-    public static final String BUSINESS_URL = BASE_URL + "/business/";
+    public RequestErrorBuilder messageId(final String messageId) {
+        this.serviceException.setMessageId(messageId);
+        return this;
+    }
 
-    public static final String HEALTHY = "healthy";
+    public RequestErrorBuilder text(final String text) {
+        this.serviceException.setText(text);
+        return this;
+    }
 
-    public static final String CUSTOMER_CACHE = "customer-cache";
+    public RequestErrorBuilder variables(final List<String> variables) {
+        this.serviceException.setVariables(variables);
+        return this;
+    }
 
-    public static final String ERROR_MESSAGE_ID = "SVC3001";
+    public RequestErrorBuilder variables(final String... variables) {
+        this.serviceException.setVariables(Arrays.asList(variables));
+        return this;
+    }
 
-    public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
-
-    private Constant() {}
+    public RequestError build() {
+        final RequestError requestError = new RequestError();
+        requestError.setServiceException(serviceException);
+        return requestError;
+    }
 
 }
