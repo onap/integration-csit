@@ -56,7 +56,7 @@ echo sleep 60
 sleep 60
 
 # start vfc-catalog
-docker run -d --name vfc-catalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/catalog
+docker run -d --name vfc-catalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/catalog -e $REG_TO_MSB=True
 CATALOG_IP=`get-instance-ip.sh vfc-catalog`
 for i in {1..10}; do
     curl -sS -m 1 ${CATALOG_IP}:8806 && break
