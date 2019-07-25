@@ -167,4 +167,37 @@ services:
       - vnfm-adapter
     command:
       - "/config/apply-workarounds.sh"
+#################################################################################
+  sdc-controller:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${TAG}
+    ports:
+      - "8085:8085"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/sdc-controller/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/distribution-test-zip/distributionTestZip.zip:/distribution-test-zip/distributionTestZip.zip
+    environment:
+      - APP=sdc-controller
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      sdc-controller.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command: 
+      - /bin/sh
+      - -c
+      - 'mkdir -p /distribution-test-zip/unzipped && unzip /distribution-test-zip/distributionTestZip.zip -d /distribution-test-zip/unzipped && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
