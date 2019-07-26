@@ -26,8 +26,10 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.ServiceInstance;
+import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
-import org.onap.so.aai.simulator.service.providers.CustomerServiceProvider;
+import org.onap.so.aai.simulator.service.providers.CacheServiceProvider;
 import org.onap.so.aai.simulator.utils.RequestErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author waqas.ikram@ericsson.com
@@ -50,11 +53,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BusinessController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
-    private final CustomerServiceProvider customerServiceProvider;
+    private final CacheServiceProvider cacheServiceProvider;
 
     @Autowired
-    public BusinessController(final CustomerServiceProvider customerServiceProvider) {
-        this.customerServiceProvider = customerServiceProvider;
+    public BusinessController(final CacheServiceProvider cacheServiceProvider) {
+        this.cacheServiceProvider = cacheServiceProvider;
     }
 
     @GetMapping(value = "/customers/customer/{global-customer-id}",
@@ -63,7 +66,7 @@ public class BusinessController {
             final HttpServletRequest request) {
         LOGGER.info("Will retrieve customer for 'global customer id': {} ...", globalCustomerId);
 
-        final Optional<Customer> optional = customerServiceProvider.getCustomer(globalCustomerId);
+        final Optional<Customer> optional = cacheServiceProvider.getCustomer(globalCustomerId);
         if (optional.isPresent()) {
             final Customer customer = optional.get();
             LOGGER.info("found customer {} in cache", customer);
@@ -71,8 +74,7 @@ public class BusinessController {
         }
 
         LOGGER.error("Couldn't find {} in cache", globalCustomerId);
-        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
-                .variables(request.getMethod(), request.getRequestURI()).build(), HttpStatus.NOT_FOUND);
+        return getRequestErrorResponseEntity(request);
     }
 
     @PutMapping(value = "/customers/customer/{global-customer-id}",
@@ -83,10 +85,10 @@ public class BusinessController {
         LOGGER.info("Will put customer for 'global customer id': {} ...", globalCustomerId);
 
         if (customer.getResourceVersion() == null || customer.getResourceVersion().isEmpty()) {
-            customer.setResourceVersion(System.currentTimeMillis() + "");
+            customer.setResourceVersion(getResourceVersion());
 
         }
-        customerServiceProvider.putCustomer(globalCustomerId, customer);
+        cacheServiceProvider.putCustomer(globalCustomerId, customer);
         return ResponseEntity.accepted().build();
 
     }
@@ -100,17 +102,108 @@ public class BusinessController {
                 globalCustomerId, serviceType);
 
         final Optional<ServiceSubscription> optional =
-                customerServiceProvider.getServiceSubscription(globalCustomerId, serviceType);
+                cacheServiceProvider.getServiceSubscription(globalCustomerId, serviceType);
         if (optional.isPresent()) {
             final ServiceSubscription serviceSubscription = optional.get();
             LOGGER.info("found service subscription  {} in cache", serviceSubscription);
             return ResponseEntity.ok(serviceSubscription);
         }
 
-        LOGGER.error("Couldn't find {} in cache", globalCustomerId);
-        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
-                .variables(request.getMethod(), request.getRequestURI()).build(), HttpStatus.NOT_FOUND);
+        LOGGER.error("Couldn't find 'global customer id': {} and 'service type': {} in cache", globalCustomerId,
+                serviceType);
+        return getRequestErrorResponseEntity(request);
     }
 
+    @GetMapping(
+            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getSericeInstances(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @RequestParam(name = "service-instance-name") final String serviceInstanceName,
+            @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will retrieve service instances for 'global customer id': {}, 'service type': {} and 'service instance name: '{} with depth: {}...",
+                globalCustomerId, serviceType, serviceInstanceName, depth);
+
+        final Optional<ServiceInstances> optional =
+                cacheServiceProvider.getServiceInstances(globalCustomerId, serviceType, serviceInstanceName);
+        if (optional.isPresent()) {
+            final ServiceInstances serviceInstances = optional.get();
+            LOGGER.info("found service instance  {} in cache", serviceInstances);
+            return ResponseEntity.ok(serviceInstances);
+        }
+        LOGGER.error(
+                "Couldn't find 'global customer id': {}, 'service type': {} and 'service instance name': {} with depth: {} in cache",
+                globalCustomerId, serviceType, serviceInstanceName, depth);
+        return getRequestErrorResponseEntity(request);
+    }
+
+    @GetMapping(
+            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestParam(name = "depth", required = false) final Integer depth,
+            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will retrieve service instances for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with depth: {}, resultIndex:{}, resultSize: {} and format: {}...",
+                globalCustomerId, serviceType, serviceInstanceId, depth, resultIndex, resultSize, format);
+
+        final Optional<ServiceInstance> optional =
+                cacheServiceProvider.getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
+        if (optional.isPresent()) {
+            final ServiceInstance serviceInstance = optional.get();
+            LOGGER.info("found service instance  {} in cache", serviceInstance);
+            return ResponseEntity.ok(serviceInstance);
+        }
+        LOGGER.error(
+                "Couldn't find 'global customer id': {}, 'service type': {} and 'service instance id': {} with depth: {}, resultIndex:{}, resultSize: {} and format: {} in cache",
+                globalCustomerId, serviceType, serviceInstanceId, depth, resultIndex, resultSize, format);
+        return getRequestErrorResponseEntity(request);
+    }
+
+    @PutMapping(
+            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will add service instance for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
+                globalCustomerId, serviceType, serviceInstanceId);
+
+        if (serviceInstance.getResourceVersion() == null || serviceInstance.getResourceVersion().isEmpty()) {
+            serviceInstance.setResourceVersion(getResourceVersion());
+        }
+
+        if (cacheServiceProvider.putServiceInstance(globalCustomerId, serviceType, serviceInstanceId,
+                serviceInstance)) {
+            ResponseEntity.accepted().build();
+        }
+
+        LOGGER.error(
+                "Couldn't add 'global customer id': {}, 'service type': {} and 'service instance id': {} with depth: {}, resultIndex:{}, resultSize: {} and format: {} to cache",
+                globalCustomerId, serviceType, serviceInstanceId);
+        return getRequestErrorResponseEntity(request);
+    }
+
+    private String getResourceVersion() {
+        return System.currentTimeMillis() + "";
+    }
+
+    private ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request) {
+        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
+                .variables(request.getMethod(), request.getRequestURI(),
+                        "Node Not Found:No Node of type service-instance found at: " + request.getRequestURI(),
+                        "ERR.5.4.6114")
+                .build(), HttpStatus.NOT_FOUND);
+    }
 
 }

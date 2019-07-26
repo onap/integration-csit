@@ -25,7 +25,7 @@ package org.onap.so.aai.simulator.utils;
  */
 public class Constant {
 
-    public static final String BASE_URL = "/simulator/aai";
+    public static final String BASE_URL = "/simulator/aai/v15/";
 
     public static final String BUSINESS_URL = BASE_URL + "/business/";
 

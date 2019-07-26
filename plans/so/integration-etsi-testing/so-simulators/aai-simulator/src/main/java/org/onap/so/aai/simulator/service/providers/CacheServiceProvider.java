@@ -21,19 +21,30 @@ package org.onap.so.aai.simulator.service.providers;
 
 import java.util.Optional;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.ServiceInstance;
+import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface CustomerServiceProvider {
+public interface CacheServiceProvider {
 
     Optional<Customer> getCustomer(final String globalCustomerId);
 
     void putCustomer(final String globalCustomerId, final Customer customer);
 
     Optional<ServiceSubscription> getServiceSubscription(final String globalCustomerId, final String serviceType);
+
+    Optional<ServiceInstances> getServiceInstances(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceName);
+
+    Optional<ServiceInstance> getServiceInstance(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId);
+
+    boolean putServiceInstance(final String globalCustomerId, final String serviceType, final String serviceInstanceId,
+            final ServiceInstance serviceInstance);
 
     void clearAll();
 
