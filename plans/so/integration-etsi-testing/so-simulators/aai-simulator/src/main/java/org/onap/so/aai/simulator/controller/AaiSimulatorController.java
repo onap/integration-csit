@@ -20,6 +20,7 @@
 package org.onap.so.aai.simulator.controller;
 
 import static org.onap.so.aai.simulator.utils.Constant.HEALTHY;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import org.onap.so.aai.simulator.utils.Constant;
 import org.slf4j.Logger;

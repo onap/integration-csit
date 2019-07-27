@@ -35,5 +35,4 @@ public class AaiSimulatorApplication extends SpringBootServletInitializer {
     public static void main(final String[] args) {
         SpringApplication.run(AaiSimulatorApplication.class, args);
     }
-
 }

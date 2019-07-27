@@ -1,5 +1,13 @@
 server:
-  port: 9993
-  tomcat:
-    max-threads: 4
+   port: 9993
+   tomcat:
+      max-threads: 4
 ssl-enable: false
+
+spring:
+   security:
+      username: aai
+      #password: aai.onap.org:demo123456!
+      password: $2a$04$crRntT01fAF4kb48mxlvgu68/silcLg.czC1LxQsKTdWuDBPpO3YO
+      role: VID
+      
