@@ -87,6 +87,166 @@ services:
       - --
       - "/app/start-app.sh"
 ################################################################################
+  sdnc-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdnc-adapter:${TAG}
+    ports:
+      - "8086:8086"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/sdnc-adapter/onapheat:/app/config
+    environment:
+      - APP=sdnc-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      sdnc-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command:
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
+################################################################################
+  sdc-controller:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${TAG}
+    ports:
+      - "8085:8085"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/sdc-controller/onapheat:/app/config
+    environment:
+      - APP=sdc-controller
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      sdc-controller.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command:
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
+################################################################################
+  bpmn-infra:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}
+    ports:
+      - "8081:8081"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/bpmn-infra/onapheat:/app/config
+    environment:
+      - APP=bpmn-infra
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      bpmn-infra.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command:
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
+################################################################################
+  api-handler-infra:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/api-handler-infra/onapheat:/app/config
+    environment:
+      - APP=api-handler-infra
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      api-handler-infra.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    command:
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
+#############################################################################
+  so-monitoring:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-monitoring:${TAG}
+    ports:
+      - "30224:9091"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/config/api-handler-infra/onapheat:/app/config
+    environment:
+      - APP=so-monitoring
+      - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      so-monitoring.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+################################################################################
   vnfm-adapter:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${TAG}
     ports:
