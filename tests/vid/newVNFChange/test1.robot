@@ -58,9 +58,9 @@ add new VNF Change in VID GUI From Local worfkow
     Select From List  xpath=//select[@name='workflow']  VNF In Place Software Update
 
     Wait Until Page Contains    Operations timeout    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
-    Input Text    xpath=//input[@id='internal-workflow-parameter-text-2']    10
-    Input Text    xpath=//input[@id='internal-workflow-parameter-text-3']    test
-    Input Text    xpath=//input[@id='internal-workflow-parameter-text-4']    test
+    Input Text    xpath=//input[@id='internal-workflow-parameter-text-2-operations-timeout']    10
+    Input Text    xpath=//input[@id='internal-workflow-parameter-text-3-existing-software-version']    test
+    Input Text    xpath=//input[@id='internal-workflow-parameter-text-4-new-software-version']    test
 
     Wait Until Element Is Enabled   xpath=//button[@id='submit']  ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
     Click Button    xpath=//button[@id='submit']
