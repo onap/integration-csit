@@ -23,9 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aai.simulator.controller.TestUtils.getFile;
+import static org.onap.so.aai.simulator.controller.TestUtils.getJsonString;
+import static org.onap.so.aai.simulator.controller.TestUtils.getObjectFromFile;
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
+import java.nio.file.Files;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.After;
@@ -35,8 +38,8 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
-import org.onap.so.aai.simulator.service.providers.CacheServiceProvider;
-import org.onap.so.aai.simulator.utils.Constant;
+import org.onap.so.aai.simulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.so.aai.simulator.utils.Constants;
 import org.onap.so.aai.simulator.utils.RequestError;
 import org.onap.so.aai.simulator.utils.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -54,8 +56,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 /**
  * @author waqas.ikram@ericsson.com
@@ -83,9 +83,7 @@ public class BusinessControllerTest {
 
     private static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
 
-    private static final String CUSTOMERS_URL = Constant.BUSINESS_URL + "customers/customer/" + GLOBAL_CUSTOMER_ID;
-
-    private static final String PASSWORD = "aai.onap.org:demo123456!";
+    private static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
 
     @LocalServerPort
     private int port;
@@ -97,7 +95,7 @@ public class BusinessControllerTest {
     private String username;
 
     @Autowired
-    private CacheServiceProvider cacheServiceProvider;
+    private CustomerCacheServiceProvider cacheServiceProvider;
 
     @After
     public void after() {
@@ -106,8 +104,7 @@ public class BusinessControllerTest {
 
     @Test
     public void test_putCustomer_successfullyAddedToCache() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
-        final ResponseEntity<Void> actual = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> actual = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
         assertTrue(cacheServiceProvider.getCustomer(GLOBAL_CUSTOMER_ID).isPresent());
@@ -115,10 +112,9 @@ public class BusinessControllerTest {
 
     @Test
     public void test_getCustomer_ableToRetrieveCustomer() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
         final String url = getCustomerEndPointUrl();
 
-        invokeHttpPut(url, customer);
+        invokeHttpPut(url, getCustomer());
 
         final ResponseEntity<Customer> actual =
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Customer.class);
@@ -145,18 +141,17 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constant.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constant.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
 
     @Test
     public void test_getServiceSubscription_ableToRetrieveServiceSubscriptionFromCache() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL;
 
-        invokeHttpPut(getCustomerEndPointUrl(), customer);
+        invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         final ResponseEntity<ServiceSubscription> actual = restTemplate.exchange(url, HttpMethod.GET,
                 new HttpEntity<>(getHttpHeaders()), ServiceSubscription.class);
@@ -172,18 +167,14 @@ public class BusinessControllerTest {
 
     @Test
     public void test_putSericeInstance_ableToRetrieveServiceInstanceFromCache() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
 
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ServiceInstance serviceInstance =
-                getObjectFromFile(getFile("test-data/service-instance.json"), ServiceInstance.class);
-
-        invokeHttpPut(url, serviceInstance);
+        invokeHttpPut(url, getServiceInstance());
 
         final Optional<ServiceInstance> actual =
                 cacheServiceProvider.getServiceInstance(GLOBAL_CUSTOMER_ID, SERVICE_TYPE, SERVICE_INSTANCE_ID);
@@ -199,18 +190,14 @@ public class BusinessControllerTest {
     @Test
     public void test_getSericeInstance_usingServiceInstanceName_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
 
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ServiceInstance serviceInstance =
-                getObjectFromFile(getFile("test-data/service-instance.json"), ServiceInstance.class);
-
-        invokeHttpPut(url, serviceInstance);
+        invokeHttpPut(url, getServiceInstance());
 
         final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
                 + "?service-instance-name=" + SERVICE_NAME;
@@ -231,18 +218,14 @@ public class BusinessControllerTest {
     @Test
     public void test_getSericeInstance_usingServiceInstanceId_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
 
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ServiceInstance serviceInstance =
-                getObjectFromFile(getFile("test-data/service-instance.json"), ServiceInstance.class);
-
-        invokeHttpPut(url, serviceInstance);
+        invokeHttpPut(url, getServiceInstance());
 
         final ResponseEntity<ServiceInstance> actual =
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
@@ -259,21 +242,17 @@ public class BusinessControllerTest {
 
     @Test
     public void test_getSericeInstance_usinginvalidServiceInstanceId_shouldReturnError() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
 
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ServiceInstance serviceInstance =
-                getObjectFromFile(getFile("test-data/service-instance.json"), ServiceInstance.class);
+        invokeHttpPut(url, getServiceInstance());
 
-        invokeHttpPut(url, serviceInstance);
-
-        String invalidServiceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
-                + "/service-instance/" + UUID.randomUUID();
+        final String invalidServiceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL
+                + SERVICE_INSTANCES_URL + "/service-instance/" + UUID.randomUUID();
 
         final ResponseEntity<RequestError> actual = restTemplate.exchange(invalidServiceInstanceUrl, HttpMethod.GET,
                 new HttpEntity<>(getHttpHeaders()), RequestError.class);
@@ -284,26 +263,24 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constant.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constant.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
 
     @Test
-    public void test_getSericeInstance_usinginvalidServiceInstanceName_shouldReturnError() throws Exception {
-        final Customer customer = getCustomer(getFile("test-data/business-customer.json"));
+    public void test_getSericeInstance_usingInvalidServiceInstanceName_shouldReturnError() throws Exception {
 
         final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), customer);
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ServiceInstance serviceInstance =
-                getObjectFromFile(getFile("test-data/service-instance.json"), ServiceInstance.class);
+        final ResponseEntity<Void> putRequestReponse = invokeHttpPut(url, getServiceInstance());
+        assertEquals(HttpStatus.ACCEPTED, putRequestReponse.getStatusCode());
 
-        invokeHttpPut(url, serviceInstance);
 
         final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
                 + "?service-instance-name=Dummy&depth=2";
@@ -317,14 +294,18 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constant.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constant.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
 
+    private String getCustomer() throws Exception, IOException {
+        return getJsonString("test-data/business-customer.json");
+    }
+
     private String getCustomerEndPointUrl() {
-        return getBaseUrl() + CUSTOMERS_URL;
+        return TestUtils.getBaseUrl(port) + CUSTOMERS_URL;
     }
 
     private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
@@ -337,32 +318,11 @@ public class BusinessControllerTest {
     }
 
     private HttpHeaders getHttpHeaders() {
-        final HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization", getBasicAuth());
-        return requestHeaders;
+        return TestUtils.getHttpHeaders(username);
     }
 
-    private File getFile(final String file) throws IOException {
-        return new ClassPathResource(file).getFile();
-    }
-
-    private Customer getCustomer(final File file) throws Exception {
-        return getObjectFromFile(file, Customer.class);
-    }
-
-    private <T> T getObjectFromFile(final File file, final Class<T> clazz) throws Exception {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JaxbAnnotationModule());
-
-        return mapper.readValue(file, clazz);
-    }
-
-    private String getBasicAuth() {
-        return "Basic " + new String(Base64.getEncoder().encodeToString((username + ":" + PASSWORD).getBytes()));
-    }
-
-    private String getBaseUrl() {
-        return "http://localhost:" + port;
+    private String getServiceInstance() throws Exception, IOException {
+        return getJsonString("test-data/service-instance.json");
     }
 
 }

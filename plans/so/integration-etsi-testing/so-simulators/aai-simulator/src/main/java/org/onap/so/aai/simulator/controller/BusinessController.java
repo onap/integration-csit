@@ -19,9 +19,10 @@
  */
 package org.onap.so.aai.simulator.controller;
 
-import static org.onap.so.aai.simulator.utils.Constant.BUSINESS_URL;
-import static org.onap.so.aai.simulator.utils.Constant.ERROR_MESSAGE;
-import static org.onap.so.aai.simulator.utils.Constant.ERROR_MESSAGE_ID;
+import static org.onap.so.aai.simulator.utils.Constants.CUSTOMER_URL;
+import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE;
+import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE_ID;
+import static org.onap.so.aai.simulator.utils.Utils.getResourceVersion;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
@@ -29,7 +30,7 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
-import org.onap.so.aai.simulator.service.providers.CacheServiceProvider;
+import org.onap.so.aai.simulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aai.simulator.utils.RequestErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,19 +50,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping(path = BUSINESS_URL)
+@RequestMapping(path = CUSTOMER_URL)
 public class BusinessController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
-    private final CacheServiceProvider cacheServiceProvider;
+    private final CustomerCacheServiceProvider cacheServiceProvider;
 
     @Autowired
-    public BusinessController(final CacheServiceProvider cacheServiceProvider) {
+    public BusinessController(final CustomerCacheServiceProvider cacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
     }
 
-    @GetMapping(value = "/customers/customer/{global-customer-id}",
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @GetMapping(value = "{global-customer-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getCustomer(@PathVariable("global-customer-id") final String globalCustomerId,
             final HttpServletRequest request) {
         LOGGER.info("Will retrieve customer for 'global customer id': {} ...", globalCustomerId);
@@ -77,8 +77,7 @@ public class BusinessController {
         return getRequestErrorResponseEntity(request);
     }
 
-    @PutMapping(value = "/customers/customer/{global-customer-id}",
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+    @PutMapping(value = "/{global-customer-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putCustomer(@RequestBody final Customer customer,
             @PathVariable("global-customer-id") final String globalCustomerId, final HttpServletRequest request) {
@@ -93,8 +92,7 @@ public class BusinessController {
 
     }
 
-    @GetMapping(
-            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}",
+    @GetMapping(value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getCustomer(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType, final HttpServletRequest request) {
@@ -115,7 +113,7 @@ public class BusinessController {
     }
 
     @GetMapping(
-            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getSericeInstances(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType,
@@ -140,7 +138,7 @@ public class BusinessController {
     }
 
     @GetMapping(
-            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType,
@@ -168,7 +166,7 @@ public class BusinessController {
     }
 
     @PutMapping(
-            value = "/customers/customer/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType,
@@ -185,17 +183,12 @@ public class BusinessController {
 
         if (cacheServiceProvider.putServiceInstance(globalCustomerId, serviceType, serviceInstanceId,
                 serviceInstance)) {
-            ResponseEntity.accepted().build();
+            return ResponseEntity.accepted().build();
         }
 
-        LOGGER.error(
-                "Couldn't add 'global customer id': {}, 'service type': {} and 'service instance id': {} with depth: {}, resultIndex:{}, resultSize: {} and format: {} to cache",
+        LOGGER.error("Couldn't add 'global customer id': {}, 'service type': {} and 'service instance id': {} to cache",
                 globalCustomerId, serviceType, serviceInstanceId);
         return getRequestErrorResponseEntity(request);
-    }
-
-    private String getResourceVersion() {
-        return System.currentTimeMillis() + "";
     }
 
     private ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request) {
