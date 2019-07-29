@@ -22,6 +22,30 @@
       "revId": "b6fe9cf3629be48a9e782d636702ff1aeb9b2f81",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c165a653_ae734627",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/package/docker/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-07-29T10:03:46Z",
+      "side": 1,
+      "message": "remove tabs",
+      "parentUuid": "c1abe05d_248b49b6",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "b6fe9cf3629be48a9e782d636702ff1aeb9b2f81",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
