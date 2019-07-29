@@ -22,7 +22,7 @@ package org.onap.so.aai.simulator.controller;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.onap.so.aai.simulator.utils.Constant;
+import org.onap.so.aai.simulator.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -54,11 +54,11 @@ public class AaiSimulatorControllerTest {
         final String url = getBaseUrl() + "/healthcheck";
         final ResponseEntity<String> object = restTemplate.getForEntity(url, String.class);
 
-        assertEquals(Constant.HEALTHY, object.getBody());
+        assertEquals(Constants.HEALTHY, object.getBody());
     }
 
     private String getBaseUrl() {
-        return "http://localhost:" + port + Constant.BASE_URL;
+        return "https://localhost:" + port + Constants.BASE_URL;
     }
 
 }

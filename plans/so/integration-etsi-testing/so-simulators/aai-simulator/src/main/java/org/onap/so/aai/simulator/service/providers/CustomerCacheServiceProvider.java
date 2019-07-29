@@ -29,7 +29,7 @@ import org.onap.aai.domain.yang.ServiceSubscription;
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface CacheServiceProvider {
+public interface CustomerCacheServiceProvider {
 
     Optional<Customer> getCustomer(final String globalCustomerId);
 

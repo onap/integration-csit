@@ -27,7 +27,7 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
-import org.onap.so.aai.simulator.utils.Constant;
+import org.onap.so.aai.simulator.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,20 +40,20 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CacheServiceProviderImpl implements CacheServiceProvider {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CacheServiceProviderImpl.class);
+public class CustomerCacheServiceProviderImpl implements CustomerCacheServiceProvider {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerCacheServiceProviderImpl.class);
 
     public final CacheManager cacheManager;
 
     @Autowired
-    public CacheServiceProviderImpl(final CacheManager cacheManager) {
+    public CustomerCacheServiceProviderImpl(final CacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
 
     @Override
     public Optional<Customer> getCustomer(final String globalCustomerId) {
         LOGGER.info("getting customer from cache using key: {}", globalCustomerId);
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
         final Customer value = cache.get(globalCustomerId, Customer.class);
         if (value != null) {
             return Optional.of(value);
@@ -64,7 +64,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
     @Override
     public void putCustomer(final String globalCustomerId, final Customer customer) {
         LOGGER.info("Adding customer: {} with key: {} in cache ...", customer, globalCustomerId);
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
 
         cache.put(globalCustomerId, customer);
     }
@@ -75,7 +75,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
         LOGGER.info("getting service subscription from cache for globalCustomerId: {} and serviceType: {}",
                 globalCustomerId, serviceType);
 
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
 
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
@@ -91,7 +91,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
     public Optional<ServiceInstances> getServiceInstances(final String globalCustomerId, final String serviceType,
             final String serviceInstanceName) {
 
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -119,7 +119,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
     @Override
     public Optional<ServiceInstance> getServiceInstance(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId) {
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -145,7 +145,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
             final String serviceInstanceId, final ServiceInstance serviceInstance) {
         LOGGER.info("Adding serviceInstance: {} in cache ...", serviceInstance, globalCustomerId);
 
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -184,7 +184,7 @@ public class CacheServiceProviderImpl implements CacheServiceProvider {
 
     @Override
     public void clearAll() {
-        final Cache cache = cacheManager.getCache(Constant.CUSTOMER_CACHE);
+        final Cache cache = cacheManager.getCache(Constants.CUSTOMER_CACHE);
         final ConcurrentHashMap<?, ?> nativeCache = (ConcurrentHashMap<?, ?>) cache.getNativeCache();
         LOGGER.info("Clear all entries from cahce: {}", cache.getName());
         nativeCache.clear();

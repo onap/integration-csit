@@ -23,20 +23,26 @@ package org.onap.so.aai.simulator.utils;
  * @author waqas.ikram@ericsson.com
  *
  */
-public class Constant {
+public class Constants {
 
     public static final String BASE_URL = "/simulator/aai/v15/";
 
-    public static final String BUSINESS_URL = BASE_URL + "/business/";
+    public static final String BUSINESS_URL = BASE_URL + "/business";
+
+    public static final String CUSTOMER_URL = BUSINESS_URL + "/customers/customer/";
+
+    public static final String PROJECT_URL = BUSINESS_URL + "/projects/project/";
 
     public static final String HEALTHY = "healthy";
 
     public static final String CUSTOMER_CACHE = "customer-cache";
 
+    public static final String PROJECT_CACHE = "project-cache";
+
     public static final String ERROR_MESSAGE_ID = "SVC3001";
 
     public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
 
-    private Constant() {}
+    private Constants() {}
 
 }
