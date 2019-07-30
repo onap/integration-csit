@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator.controller;
+package org.onap.so.aai.simulator.utils;
 
 import java.io.File;
 import java.io.IOException;

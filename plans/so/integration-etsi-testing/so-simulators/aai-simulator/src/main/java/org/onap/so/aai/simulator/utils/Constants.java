@@ -25,7 +25,9 @@ package org.onap.so.aai.simulator.utils;
  */
 public class Constants {
 
-    public static final String BASE_URL = "/simulator/aai/v15/";
+    public static final String BASE_URL = "/aai/v15";
+
+    public static final String NODES_URL = BASE_URL + "/nodes";
 
     public static final String BUSINESS_URL = BASE_URL + "/business";
 
@@ -39,9 +41,17 @@ public class Constants {
 
     public static final String PROJECT_CACHE = "project-cache";
 
+    public static final String NODES_CACHE = "nodes-cache";
+
     public static final String ERROR_MESSAGE_ID = "SVC3001";
 
     public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
+
+    public static final String SERVICE_RESOURCE_TYPE = "service-instance";
+    
+    public static final String RESOURCE_LINK = "resource-link";
+
+    public static final String RESOURCE_TYPE = "resource-type";
 
     private Constants() {}
 

@@ -17,23 +17,48 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator.service.providers;
+package org.onap.so.aai.simulator.models;
 
-import java.util.Optional;
-import org.onap.aai.domain.yang.Project;
-import org.onap.aai.domain.yang.Relationship;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface ProjectCacheServiceProvider {
+@JsonRootName(value = "result")
+public class Result {
 
-    void putProject(final String projectName, final Project project);
+    private List<Map<String, Object>> values = new ArrayList<>();
 
-    Optional<Project> getProject(final String projectName);
+    public Result() {}
 
-    boolean putProjectRelationShip(final String projectName, final Relationship relationship);
+    public Result(final Map<String, Object> value) {
+        this.values.add(value);
+    }
 
-    void clearAll();
+    /**
+     * @return the values
+     */
+    public List<Map<String, Object>> getValues() {
+        return values;
+    }
+
+    /**
+     * @param values the values to set
+     */
+    public void setValues(final List<Map<String, Object>> values) {
+        this.values = values;
+    }
+
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return "Result [values=" + values + "]";
+    }
+
 }

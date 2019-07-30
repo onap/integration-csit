@@ -20,20 +20,18 @@
 package org.onap.so.aai.simulator.service.providers;
 
 import java.util.Optional;
-import org.onap.aai.domain.yang.Project;
-import org.onap.aai.domain.yang.Relationship;
+import org.onap.so.aai.simulator.models.NodeServiceInstance;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface ProjectCacheServiceProvider {
+public interface NodesCacheServiceProvider {
 
-    void putProject(final String projectName, final Project project);
+    void putNodeServiceInstance(final String serviceInstanceId, final NodeServiceInstance nodeServiceInstance);
 
-    Optional<Project> getProject(final String projectName);
-
-    boolean putProjectRelationShip(final String projectName, final Relationship relationship);
+    Optional<NodeServiceInstance> getNodeServiceInstance(final String serviceInstanceId);
 
     void clearAll();
+
 }

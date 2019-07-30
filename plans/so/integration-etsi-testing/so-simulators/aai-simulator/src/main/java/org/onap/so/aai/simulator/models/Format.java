@@ -17,23 +17,33 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator.service.providers;
-
-import java.util.Optional;
-import org.onap.aai.domain.yang.Project;
-import org.onap.aai.domain.yang.Relationship;
+package org.onap.so.aai.simulator.models;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface ProjectCacheServiceProvider {
+public enum Format {
 
-    void putProject(final String projectName, final Project project);
+    COUNT("count"), RAW("raw"), PATHED("pathed");
 
-    Optional<Project> getProject(final String projectName);
+    private final String value;
 
-    boolean putProjectRelationShip(final String projectName, final Relationship relationship);
+    private Format(final String value) {
+        this.value = value;
+    }
 
-    void clearAll();
+    public String getValue() {
+        return value;
+    }
+
+    public static Format forValue(final String value) {
+        for (final Format format : Format.values()) {
+            if (format.getValue().equals(value)) {
+                return format;
+            }
+        }
+        return RAW;
+    }
+
 }

@@ -20,6 +20,7 @@
 package org.onap.so.aai.simulator.service.providers;
 
 import static org.onap.so.aai.simulator.utils.Constants.PROJECT_CACHE;
+import static org.onap.so.aai.simulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.onap.aai.domain.yang.Project;
@@ -38,6 +39,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProjectCacheServiceProviderImpl implements ProjectCacheServiceProvider {
+
+    private static final String RELATIONSHIPS_LABEL = "org.onap.relationships.inventory.Uses";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectCacheServiceProviderImpl.class);
 
@@ -77,6 +80,14 @@ public class ProjectCacheServiceProviderImpl implements ProjectCacheServiceProvi
                 relationshipList = new RelationshipList();
                 value.setRelationshipList(relationshipList);
             }
+
+            if (relationship.getRelatedTo() == null) {
+                relationship.setRelatedTo(SERVICE_RESOURCE_TYPE);
+            }
+            if (relationship.getRelationshipLabel() == null) {
+                relationship.setRelationshipLabel(RELATIONSHIPS_LABEL);
+            }
+
             return relationshipList.getRelationship().add(relationship);
         }
         return false;

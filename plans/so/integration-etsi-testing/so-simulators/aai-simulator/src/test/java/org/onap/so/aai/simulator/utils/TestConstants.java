@@ -17,23 +17,32 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator.service.providers;
-
-import java.util.Optional;
-import org.onap.aai.domain.yang.Project;
-import org.onap.aai.domain.yang.Relationship;
+package org.onap.so.aai.simulator.utils;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface ProjectCacheServiceProvider {
+public class TestConstants {
 
-    void putProject(final String projectName, final Project project);
+    public static final String SERVICE_INSTANCES_URL = "/service-instances";
 
-    Optional<Project> getProject(final String projectName);
+    public static final String SERVICE_NAME = "ServiceTest";
 
-    boolean putProjectRelationShip(final String projectName, final Relationship relationship);
+    public static final String SERVICE_INSTANCE_ID = "ccece8fe-13da-456a-baf6-41b3a4a2bc2b";
 
-    void clearAll();
+    public static final String SERVICE_INSTANCE_URL =
+            SERVICE_INSTANCES_URL + "/service-instance/" + SERVICE_INSTANCE_ID;
+
+    public static final String SERVICE_TYPE = "vCPE";
+
+    public static final String SERVICE_SUBSCRIPTIONS_URL =
+            "/service-subscriptions/service-subscription/" + SERVICE_TYPE;
+
+    public static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
+
+    public static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
+
+    private TestConstants() {}
+
 }
