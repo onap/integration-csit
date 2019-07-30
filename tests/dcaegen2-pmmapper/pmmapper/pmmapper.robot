@@ -87,11 +87,6 @@ Verify that PM Mapper maps Type-C xml file and publish 3gpp perf VES evnets to m
     [Timeout]                       1 minute
     SendToDatarouter                ${TYPE-C_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}           X-ONAP-RequestID=5
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=5
-    Run Process                     ${CLI_MESSAGE_ROUTER_TOPIC}      shell=yes
-    CheckLog                        ${CLI_MR_LOG}                    measInfoId1
-    CheckLog                        ${CLI_MR_LOG}                    measInfoId2
-    CheckLog                        ${CLI_MR_LOG}                    measInfoId3
 
 Verify 3GPP PM Mapper maps Type-A file based on counter filtering and publish 3gpp perf VES evnets to message router
     [Tags]                          PM_MAPPER_08
@@ -102,18 +97,6 @@ Verify 3GPP PM Mapper maps Type-A file based on counter filtering and publish 3g
     Sleep                           5s
     SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}            X-ONAP-RequestID=6
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=6
-    Run Process                     ${CLI_MESSAGE_ROUTER_TOPIC}      shell=yes
-    CheckLog                        ${CLI_MR_LOG}                    attTCHSeizures
-    CheckLog                        ${CLI_MR_LOG}                    234
-    CheckLog                        ${CLI_MR_LOG}                    890
-    CheckLog                        ${CLI_MR_LOG}                    456
-    CheckLog                        ${CLI_MR_LOG}                    succTCHSeizures2
-    CheckLog                        ${CLI_MR_LOG}                    86,87,2,6,77,96,75,33,24
-    CheckLog                        ${CLI_MR_LOG}                    succImmediateAssignProcs8
-    CheckLog                        ${CLI_MR_LOG}                    787
-    CheckLog                        ${CLI_MR_LOG}                    238
-    CheckLog                        ${CLI_MR_LOG}                    785
 
 Verify that PM Mapper correctly identifies a file that should not be mapped based on metadata filtering.
     [Tags]                          PM_MAPPER_09
@@ -132,7 +115,7 @@ Verify that PM Mapper correctly identifies a non-xml file.
     [Documentation]                 Verify that PM Mapper correctly identifies a non-xml file.
     [Timeout]                       1 minute
     SendToDatarouter                ${NON_XML_FILE}                  ${VALID_METADATA_PATH}             X-ONAP-RequestID=8
-    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           PM measurement file type not supported
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           PM measurement file must have an extension of .xml
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=8
 
 
