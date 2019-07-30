@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2ad17866_d6cc474a",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/package/docker/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4453
+      },
+      "writtenOn": "2019-07-30T13:43:17Z",
+      "side": 1,
+      "message": "Just setting up eclipse preferences again. Seems to have changed somewhat.",
+      "parentUuid": "c1abe05d_248b49b6",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "b6fe9cf3629be48a9e782d636702ff1aeb9b2f81",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5599ad10_da134d6c",
         "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdnc/simulator/utils/Constant.java",
         "patchSetId": 2
