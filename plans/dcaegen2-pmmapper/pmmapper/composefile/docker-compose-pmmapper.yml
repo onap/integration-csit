@@ -2,7 +2,7 @@ version: '2.1'
 services:
   pmmapper:
     container_name: pmmapper
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest
+    image: registry.nordix.org/lego/pm-mapper:dmaap-plugin-premerge
     ports:
      - "8081:8081"
     environment:
