@@ -22,11 +22,15 @@ package org.onap.so.aai.simulator.controller;
 import static org.onap.so.aai.simulator.utils.Constants.PROJECT_URL;
 import static org.onap.so.aai.simulator.utils.Utils.getRequestErrorResponseEntity;
 import static org.onap.so.aai.simulator.utils.Utils.getResourceVersion;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Project;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.so.aai.simulator.models.Format;
+import org.onap.so.aai.simulator.models.Result;
 import org.onap.so.aai.simulator.service.providers.ProjectCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +42,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author waqas.ikram@ericsson.com
@@ -73,18 +78,34 @@ public class ProjectController {
     @GetMapping(value = "/{project-name}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getProject(@PathVariable("project-name") final String projectName,
-            final HttpServletRequest request) {
+            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
         LOGGER.info("retrieving project for 'project-name': {} ...", projectName);
 
         final Optional<Project> optional = cacheServiceProvider.getProject(projectName);
-        if (optional.isPresent()) {
-            final Project project = optional.get();
-            LOGGER.info("found project {} in cache", project);
-            return ResponseEntity.ok(project);
+        if (!optional.isPresent()) {
+            LOGGER.error("Couldn't find {} in cache", projectName);
+            return getRequestErrorResponseEntity(request);
         }
 
-        LOGGER.error("Couldn't find {} in cache", projectName);
+        final Format value = Format.forValue(format);
+        switch (value) {
+            case RAW:
+                final Project project = optional.get();
+                LOGGER.info("found project {} in cache", project);
+                return ResponseEntity.ok(project);
+            case COUNT:
+                final Map<String, Object> map = new HashMap<>();
+                map.put(projectName, 1);
+                return ResponseEntity.ok(new Result(map));
+            default:
+                break;
+        }
+        LOGGER.error("invalid format type :{}", format);
         return getRequestErrorResponseEntity(request);
+
+
     }
 
     @PutMapping(value = "/{project-name}/relationship-list/relationship",
@@ -94,14 +115,12 @@ public class ProjectController {
             @PathVariable("project-name") final String projectName, final HttpServletRequest request) {
 
         LOGGER.info("adding relationship for project-name: {} ...", projectName);
-        final boolean result = cacheServiceProvider.putProjectRelationShip(projectName, relationship);
-        if (result) {
+        if (cacheServiceProvider.putProjectRelationShip(projectName, relationship)) {
             LOGGER.info("added project relationship {} in cache", relationship);
             return ResponseEntity.accepted().build();
         }
         LOGGER.error("Couldn't find {} in cache", projectName);
         return getRequestErrorResponseEntity(request);
-
     }
 
 }

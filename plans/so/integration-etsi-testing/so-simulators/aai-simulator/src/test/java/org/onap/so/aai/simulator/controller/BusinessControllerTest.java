@@ -23,12 +23,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aai.simulator.controller.TestUtils.getFile;
-import static org.onap.so.aai.simulator.controller.TestUtils.getJsonString;
-import static org.onap.so.aai.simulator.controller.TestUtils.getObjectFromFile;
-import java.io.File;
+import static org.onap.so.aai.simulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.so.aai.simulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_INSTANCES_URL;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_INSTANCE_ID;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_INSTANCE_URL;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_NAME;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
+import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_TYPE;
+import static org.onap.so.aai.simulator.utils.TestUtils.getJsonString;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.After;
@@ -42,6 +46,7 @@ import org.onap.so.aai.simulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aai.simulator.utils.Constants;
 import org.onap.so.aai.simulator.utils.RequestError;
 import org.onap.so.aai.simulator.utils.ServiceException;
+import org.onap.so.aai.simulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,24 +71,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Configuration
 public class BusinessControllerTest {
-
-    private static final String SERVICE_INSTANCES_URL = "/service-instances";
-
-    private static final String SERVICE_NAME = "ServiceTest";
-
-    private static final String SERVICE_INSTANCE_ID = "ccece8fe-13da-456a-baf6-41b3a4a2bc2b";
-
-    private static final String SERVICE_INSTANCE_URL =
-            SERVICE_INSTANCES_URL + "/service-instance/" + SERVICE_INSTANCE_ID;
-
-    private static final String SERVICE_TYPE = "vCPE";
-
-    private static final String SERVICE_SUBSCRIPTIONS_URL =
-            "/service-subscriptions/service-subscription/" + SERVICE_TYPE;
-
-    private static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
-
-    private static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
 
     @LocalServerPort
     private int port;

@@ -23,17 +23,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aai.simulator.controller.TestUtils.getFile;
-import static org.onap.so.aai.simulator.controller.TestUtils.getHttpHeaders;
-import static org.onap.so.aai.simulator.controller.TestUtils.getJsonString;
+import static org.onap.so.aai.simulator.utils.TestUtils.getFile;
+import static org.onap.so.aai.simulator.utils.TestUtils.getHttpHeaders;
+import static org.onap.so.aai.simulator.utils.TestUtils.getJsonString;
 import java.io.IOException;
 import java.nio.file.Files;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.Project;
+import org.onap.so.aai.simulator.models.Result;
 import org.onap.so.aai.simulator.service.providers.ProjectCacheServiceProvider;
 import org.onap.so.aai.simulator.utils.Constants;
+import org.onap.so.aai.simulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -122,6 +124,27 @@ public class ProjectControllerTest {
         assertNotNull(actualProject.getRelationshipList());
         assertFalse(actualProject.getRelationshipList().getRelationship().isEmpty());
         assertNotNull(actualProject.getRelationshipList().getRelationship().get(0));
+
+    }
+
+    @Test
+    public void test_getProjectCount_correctResult() throws Exception {
+        final String url = getProjectEndPointUrl() + "/" + PROJECT_NAME_VALUE;
+        final String body = new String(Files.readAllBytes(getFile(BUSINESS_PROJECT_JSON_FILE).toPath()));
+        final ResponseEntity<Void> actual = invokeHttpPut(url, body);
+
+        assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
+
+        final ResponseEntity<Result> actualResponse =
+                invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=count", Result.class);
+
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertTrue(actualResponse.hasBody());
+        final Result result = actualResponse.getBody();
+        assertNotNull(result.getValues());
+        assertFalse(result.getValues().isEmpty());
+        assertEquals(1, result.getValues().get(0).get(PROJECT_NAME_VALUE));
+
 
     }
 

@@ -22,6 +22,7 @@ package org.onap.so.aai.simulator.controller;
 import static org.onap.so.aai.simulator.utils.Constants.CUSTOMER_URL;
 import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE;
 import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE_ID;
+import static org.onap.so.aai.simulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import static org.onap.so.aai.simulator.utils.Utils.getResourceVersion;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,9 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
+import org.onap.so.aai.simulator.models.NodeServiceInstance;
 import org.onap.so.aai.simulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.so.aai.simulator.service.providers.NodesCacheServiceProvider;
 import org.onap.so.aai.simulator.utils.RequestErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,10 +58,13 @@ public class BusinessController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
     private final CustomerCacheServiceProvider cacheServiceProvider;
+    private final NodesCacheServiceProvider nodesCacheServiceProvider;
 
     @Autowired
-    public BusinessController(final CustomerCacheServiceProvider cacheServiceProvider) {
+    public BusinessController(final CustomerCacheServiceProvider cacheServiceProvider,
+            final NodesCacheServiceProvider nodesCacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
+        this.nodesCacheServiceProvider = nodesCacheServiceProvider;
     }
 
     @GetMapping(value = "{global-customer-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -183,6 +189,8 @@ public class BusinessController {
 
         if (cacheServiceProvider.putServiceInstance(globalCustomerId, serviceType, serviceInstanceId,
                 serviceInstance)) {
+            nodesCacheServiceProvider.putNodeServiceInstance(serviceInstanceId, new NodeServiceInstance(
+                    globalCustomerId, serviceType, serviceInstanceId, SERVICE_RESOURCE_TYPE, request.getRequestURI()));
             return ResponseEntity.accepted().build();
         }
 
