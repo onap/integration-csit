@@ -22,6 +22,19 @@
 
 touch /app/app.jar
 
+if [ "$(ls -1 /app/ca-certificates)" ]; then
+ needUpdate=FALSE
+ for certificate in `ls -1 /app/ca-certificates`; do
+    echo "Installing $certificate in /usr/local/share/ca-certificates"
+    cp /app/ca-certificates/$certificate /usr/local/share/ca-certificates/$certificate
+    needUpdate=TRUE
+ done
+ if [ $needUpdate = TRUE ]; then
+    echo "Updating ca-certificates . . ."
+    update-ca-certificates --fresh
+ fi
+fi 
+
 if [ -z "$APP" ]; then
     echo "CONFIG ERROR: APP environment variable not set"
     exit 1

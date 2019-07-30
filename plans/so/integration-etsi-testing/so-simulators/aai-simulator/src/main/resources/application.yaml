@@ -2,7 +2,11 @@ server:
    port: 9993
    tomcat:
       max-threads: 4
-ssl-enable: false
+   ssl:
+     key-store: classpath:keystore/org.onap.so.p12
+     key-store-password: 'u!@JQoYD])@ykq.NKM,O7iA.'
+     keyStoreType: PKCS12
+ssl-enable: true
 
 spring:
    security:

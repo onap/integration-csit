@@ -19,8 +19,9 @@
  */
 package org.onap.so.aai.simulator.configration;
 
+import static org.onap.so.aai.simulator.utils.Constants.CUSTOMER_CACHE;
+import static org.onap.so.aai.simulator.utils.Constants.PROJECT_CACHE;
 import java.util.Arrays;
-import org.onap.so.aai.simulator.utils.Constant;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -44,9 +45,12 @@ public class ApplicationConfigration {
 
     @Bean
     public CacheManager cacheManager() {
-        final Cache inlineResponse201 = new ConcurrentMapCache(Constant.CUSTOMER_CACHE);
         final SimpleCacheManager manager = new SimpleCacheManager();
-        manager.setCaches(Arrays.asList(inlineResponse201));
+        manager.setCaches(Arrays.asList(getCache(CUSTOMER_CACHE), getCache(PROJECT_CACHE)));
         return manager;
+    }
+
+    private Cache getCache(final String name) {
+        return new ConcurrentMapCache(name);
     }
 }

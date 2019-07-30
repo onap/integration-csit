@@ -19,7 +19,7 @@
  */
 package org.onap.so.aai.simulator.configration;
 
-import org.onap.so.aai.simulator.utils.Constant;
+import org.onap.so.aai.simulator.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +53,7 @@ public class WebSecurityConfigImpl extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers(Constant.BUSINESS_URL + "/**/**").authenticated().and()
+        http.csrf().disable().authorizeRequests().antMatchers(Constants.BUSINESS_URL + "/**/**").authenticated().and()
                 .httpBasic();
     }
 
