@@ -7,9 +7,6 @@ sleep 3
 echo "===== PM MAPPER LOG ========"
 cat /tmp/pmmapper_docker.log.robot
 sleep 2
-echo "===== MR LOG ========"
-cat /tmp/mr.log
-sleep 2
 kill-instance.sh $DMAAP
 kill-instance.sh $KAFKA
 kill-instance.sh $ZOOKEEPER
