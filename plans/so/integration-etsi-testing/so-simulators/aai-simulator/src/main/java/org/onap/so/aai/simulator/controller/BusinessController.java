@@ -20,9 +20,9 @@
 package org.onap.so.aai.simulator.controller;
 
 import static org.onap.so.aai.simulator.utils.Constants.CUSTOMER_URL;
-import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE;
-import static org.onap.so.aai.simulator.utils.Constants.ERROR_MESSAGE_ID;
 import static org.onap.so.aai.simulator.utils.Constants.SERVICE_RESOURCE_TYPE;
+import static org.onap.so.aai.simulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
+import static org.onap.so.aai.simulator.utils.Utils.getRequestErrorResponseEntity;
 import static org.onap.so.aai.simulator.utils.Utils.getResourceVersion;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -34,17 +34,18 @@ import org.onap.aai.domain.yang.ServiceSubscription;
 import org.onap.so.aai.simulator.models.NodeServiceInstance;
 import org.onap.so.aai.simulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aai.simulator.service.providers.NodesCacheServiceProvider;
-import org.onap.so.aai.simulator.utils.RequestErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -56,6 +57,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = CUSTOMER_URL)
 public class BusinessController {
 
+    private static final String SERVICE_SUBSCRIPTION = "service-subscription";
+    private static final String CUSTOMER_TYPE = "Customer";
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
     private final CustomerCacheServiceProvider cacheServiceProvider;
     private final NodesCacheServiceProvider nodesCacheServiceProvider;
@@ -80,7 +83,7 @@ public class BusinessController {
         }
 
         LOGGER.error("Couldn't find {} in cache", globalCustomerId);
-        return getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request, CUSTOMER_TYPE);
     }
 
     @PutMapping(value = "/{global-customer-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
@@ -115,9 +118,27 @@ public class BusinessController {
 
         LOGGER.error("Couldn't find 'global customer id': {} and 'service type': {} in cache", globalCustomerId,
                 serviceType);
-        return getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request, SERVICE_SUBSCRIPTION);
     }
 
+    @PutMapping(value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putServiceSubscription(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @RequestBody final ServiceSubscription serviceSubscription, final HttpServletRequest request) {
+        LOGGER.info("Will add service subscription for 'global customer id': {} and 'service type': {} ...",
+                globalCustomerId, serviceType);
+
+        if (cacheServiceProvider.putServiceSubscription(globalCustomerId, serviceType, serviceSubscription)) {
+            LOGGER.info("Successfully add service subscription in cache ...");
+            return ResponseEntity.accepted().build();
+        }
+
+        LOGGER.error("Couldn't add service subscription using 'global customer id': {} and 'service type': {}",
+                globalCustomerId, serviceType);
+        return getRequestErrorResponseEntity(request, SERVICE_SUBSCRIPTION);
+    }
+    
     @GetMapping(
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -177,6 +198,7 @@ public class BusinessController {
     public ResponseEntity<?> putSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType,
             @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String invocationId,
             @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
 
         LOGGER.info(
@@ -199,12 +221,28 @@ public class BusinessController {
         return getRequestErrorResponseEntity(request);
     }
 
-    private ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request) {
-        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
-                .variables(request.getMethod(), request.getRequestURI(),
-                        "Node Not Found:No Node of type service-instance found at: " + request.getRequestURI(),
-                        "ERR.5.4.6114")
-                .build(), HttpStatus.NOT_FOUND);
+    @PostMapping(
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> patchSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
+            @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will post service instance for 'global customer id': {}, 'service type': {}, 'service instance id: '{} and '{}': {}...",
+                globalCustomerId, serviceType, serviceInstanceId, X_HTTP_METHOD_OVERRIDE, xHttpHeaderOverride);
+
+        if (HttpMethod.PATCH.toString().equalsIgnoreCase(xHttpHeaderOverride)) {
+            cacheServiceProvider.patchServiceInstance(globalCustomerId, serviceType, serviceInstanceId,
+                    serviceInstance);
+            return ResponseEntity.accepted().build();
+        }
+        LOGGER.error("{} not supported ... ", xHttpHeaderOverride);
+
+        return getRequestErrorResponseEntity(request);
     }
+
 
 }

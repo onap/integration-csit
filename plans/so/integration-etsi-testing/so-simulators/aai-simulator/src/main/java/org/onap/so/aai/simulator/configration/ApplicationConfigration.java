@@ -21,8 +21,10 @@ package org.onap.so.aai.simulator.configration;
 
 import static org.onap.so.aai.simulator.utils.Constants.CUSTOMER_CACHE;
 import static org.onap.so.aai.simulator.utils.Constants.NODES_CACHE;
+import static org.onap.so.aai.simulator.utils.Constants.OWNING_ENTITY_CACHE;
 import static org.onap.so.aai.simulator.utils.Constants.PROJECT_CACHE;
 import java.util.Arrays;
+import java.util.List;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -47,7 +49,9 @@ public class ApplicationConfigration {
     @Bean
     public CacheManager cacheManager() {
         final SimpleCacheManager manager = new SimpleCacheManager();
-        manager.setCaches(Arrays.asList(getCache(CUSTOMER_CACHE), getCache(PROJECT_CACHE), getCache(NODES_CACHE)));
+        final List<Cache> caches = Arrays.asList(getCache(CUSTOMER_CACHE), getCache(PROJECT_CACHE),
+                getCache(NODES_CACHE), getCache(OWNING_ENTITY_CACHE));
+        manager.setCaches(caches);
         return manager;
     }
 

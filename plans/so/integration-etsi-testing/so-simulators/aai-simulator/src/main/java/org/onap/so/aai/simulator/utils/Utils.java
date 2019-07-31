@@ -37,12 +37,19 @@ public class Utils {
         return System.currentTimeMillis() + EMPTY_STRING;
     }
 
+    public static ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request,
+            final String nodeType) {
+        return new ResponseEntity<>(
+                new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
+                        .variables(request.getMethod(), request.getRequestURI(), "Node Not Found:No Node of " + nodeType
+                                + " service-instance found at: " + request.getRequestURI(), "ERR.5.4.6114")
+                        .build(),
+                HttpStatus.NOT_FOUND);
+    }
+
+
     public static ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request) {
-        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
-                .variables(request.getMethod(), request.getRequestURI(),
-                        "Node Not Found:No Node of type service-instance found at: " + request.getRequestURI(),
-                        "ERR.5.4.6114")
-                .build(), HttpStatus.NOT_FOUND);
+        return getRequestErrorResponseEntity(request, Constants.SERVICE_RESOURCE_TYPE);
     }
 
 

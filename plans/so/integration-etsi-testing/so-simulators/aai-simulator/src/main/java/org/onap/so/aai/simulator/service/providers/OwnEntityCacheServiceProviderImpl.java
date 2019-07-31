@@ -19,10 +19,10 @@
  */
 package org.onap.so.aai.simulator.service.providers;
 
-import static org.onap.so.aai.simulator.utils.Constants.PROJECT_CACHE;
+import static org.onap.so.aai.simulator.utils.Constants.OWNING_ENTITY_CACHE;
 import static org.onap.so.aai.simulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import java.util.Optional;
-import org.onap.aai.domain.yang.Project;
+import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipList;
 import org.slf4j.Logger;
@@ -37,32 +37,29 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvider
-        implements ProjectCacheServiceProvider {
+public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvider
+        implements OwnEntityCacheServiceProvider {
 
-    private static final String RELATIONSHIPS_LABEL = "org.onap.relationships.inventory.Uses";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectCacheServiceProviderImpl.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnEntityCacheServiceProviderImpl.class);
+    private static final String RELATIONSHIPS_LABEL = "org.onap.relationships.inventory.BelongsTo";
 
     @Autowired
-    public ProjectCacheServiceProviderImpl(final CacheManager cacheManager) {
+    public OwnEntityCacheServiceProviderImpl(final CacheManager cacheManager) {
         super(cacheManager);
     }
 
     @Override
-    public void putProject(final String projectName, final Project project) {
-        LOGGER.info("Adding project: {} with name to cache", project, projectName);
-        final Cache cache = getCache(PROJECT_CACHE);
-        cache.put(projectName, project);
+    public void putOwningEntity(final String owningEntityId, final OwningEntity owningEntity) {
+        LOGGER.info("Adding OwningEntity: {} with name to cache", owningEntityId, owningEntity);
+        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        cache.put(owningEntityId, owningEntity);
     }
 
-
     @Override
-    public Optional<Project> getProject(final String projectName) {
-        LOGGER.info("getting project from cache using key: {}", projectName);
-        final Cache cache = getCache(PROJECT_CACHE);
-        final Project value = cache.get(projectName, Project.class);
+    public Optional<OwningEntity> getOwningEntity(final String owningEntityId) {
+        LOGGER.info("getting OwningEntity from cache using key: {}", owningEntityId);
+        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        final OwningEntity value = cache.get(owningEntityId, OwningEntity.class);
         if (value != null) {
             return Optional.of(value);
         }
@@ -70,9 +67,9 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
     }
 
     @Override
-    public boolean putProjectRelationShip(final String projectName, final Relationship relationship) {
-        final Cache cache = getCache(PROJECT_CACHE);
-        final Project value = cache.get(projectName, Project.class);
+    public boolean putOwningEntityRelationShip(final String owningEntityId, final Relationship relationship) {
+        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        final OwningEntity value = cache.get(owningEntityId, OwningEntity.class);
         if (value != null) {
             RelationshipList relationshipList = value.getRelationshipList();
             if (relationshipList == null) {
@@ -89,13 +86,13 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
 
             return relationshipList.getRelationship().add(relationship);
         }
-        LOGGER.error("Project not found in cache for {}", projectName);
+        LOGGER.error("OwningEntity not found in cache for {}", owningEntityId);
         return false;
-
     }
 
     @Override
     public void clearAll() {
-        clearCahce(PROJECT_CACHE);
+        clearCahce(OWNING_ENTITY_CACHE);
     }
+
 }

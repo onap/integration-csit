@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aai.simulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aai.simulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aai.simulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
 import static org.onap.so.aai.simulator.utils.TestConstants.SERVICE_INSTANCES_URL;
@@ -71,6 +72,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Configuration
 public class BusinessControllerTest {
+
+    private static final String FIREWALL_SERVICE_TTYPE = "Firewall";
+
+    private static final String ORCHESTRATION_STATUS = "Active";
 
     @LocalServerPort
     private int port;
@@ -287,9 +292,75 @@ public class BusinessControllerTest {
 
     }
 
+    @Test
+    public void test_PathSericeInstance_usingServiceInstanceId_OrchStatusChangedInCache() throws Exception {
+
+        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+
+        final ResponseEntity<Void> serviceInstancePutResponse = invokeHttpPut(url, getServiceInstance());
+        assertEquals(HttpStatus.ACCEPTED, serviceInstancePutResponse.getStatusCode());
+
+        final HttpHeaders httpHeaders = getHttpHeaders();
+        httpHeaders.add(X_HTTP_METHOD_OVERRIDE, HttpMethod.PATCH.toString());
+
+        final HttpEntity<?> orchStatuUpdateServiceInstance =
+                getHttpEntity(getOrchStatuUpdateServiceInstance(), httpHeaders);
+
+        final ResponseEntity<Void> orchStatuUpdateServiceInstanceResponse =
+                invokeHttpPost(orchStatuUpdateServiceInstance, url, getOrchStatuUpdateServiceInstance());
+
+        assertEquals(HttpStatus.ACCEPTED, orchStatuUpdateServiceInstanceResponse.getStatusCode());
+
+
+        final ResponseEntity<ServiceInstance> actual =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertTrue(actual.hasBody());
+
+        final ServiceInstance actualServiceInstance = actual.getBody();
+
+        assertEquals(SERVICE_NAME, actualServiceInstance.getServiceInstanceName());
+        assertEquals(SERVICE_INSTANCE_ID, actualServiceInstance.getServiceInstanceId());
+        assertEquals(ORCHESTRATION_STATUS, actualServiceInstance.getOrchestrationStatus());
+
+    }
+
+    @Test
+    public void test_putServiceSubscription_successfullyAddedToCache() throws Exception {
+        final String serviceSubscriptionurl =
+                getCustomerEndPointUrl() + "/service-subscriptions/service-subscription/" + FIREWALL_SERVICE_TTYPE;
+
+        final ResponseEntity<Void> customerPutResponse = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        assertEquals(HttpStatus.ACCEPTED, customerPutResponse.getStatusCode());
+
+        final ResponseEntity<Void> serviceSubscriptionPutResponse =
+                invokeHttpPut(serviceSubscriptionurl, getServiceSubscription());
+        assertEquals(HttpStatus.ACCEPTED, serviceSubscriptionPutResponse.getStatusCode());
+
+        final ResponseEntity<ServiceSubscription> actual = restTemplate.exchange(serviceSubscriptionurl, HttpMethod.GET,
+                new HttpEntity<>(getHttpHeaders()), ServiceSubscription.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertTrue(actual.hasBody());
+
+        final ServiceSubscription actualServiceSubscription = actual.getBody();
+        assertEquals(FIREWALL_SERVICE_TTYPE, actualServiceSubscription.getServiceType());
+
+    }
+
     private String getCustomer() throws Exception, IOException {
         return getJsonString("test-data/business-customer.json");
     }
+
+    private String getServiceSubscription() throws Exception, IOException {
+        return getJsonString("test-data/service-subscription.json");
+    }
+
 
     private String getCustomerEndPointUrl() {
         return TestUtils.getBaseUrl(port) + CUSTOMERS_URL;
@@ -300,8 +371,16 @@ public class BusinessControllerTest {
         return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
     }
 
+    private ResponseEntity<Void> invokeHttpPost(final HttpEntity<?> httpEntity, final String url, final Object obj) {
+        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, Void.class);
+    }
+
     private HttpEntity<?> getHttpEntity(final Object obj) {
         return new HttpEntity<>(obj, getHttpHeaders());
+    }
+
+    private HttpEntity<?> getHttpEntity(final Object obj, final HttpHeaders headers) {
+        return new HttpEntity<>(obj, headers);
     }
 
     private HttpHeaders getHttpHeaders() {
@@ -310,6 +389,10 @@ public class BusinessControllerTest {
 
     private String getServiceInstance() throws Exception, IOException {
         return getJsonString("test-data/service-instance.json");
+    }
+
+    private String getOrchStatuUpdateServiceInstance() throws Exception, IOException {
+        return getJsonString("test-data/service-instance-orch-status-update.json");
     }
 
 }

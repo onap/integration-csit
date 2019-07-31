@@ -37,6 +37,9 @@ public interface CustomerCacheServiceProvider {
 
     Optional<ServiceSubscription> getServiceSubscription(final String globalCustomerId, final String serviceType);
 
+    boolean putServiceSubscription(final String globalCustomerId, final String serviceType,
+            final ServiceSubscription serviceSubscription);
+
     Optional<ServiceInstances> getServiceInstances(final String globalCustomerId, final String serviceType,
             final String serviceInstanceName);
 
@@ -45,6 +48,9 @@ public interface CustomerCacheServiceProvider {
 
     boolean putServiceInstance(final String globalCustomerId, final String serviceType, final String serviceInstanceId,
             final ServiceInstance serviceInstance);
+
+    boolean patchServiceInstance(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final ServiceInstance serviceInstance);
 
     void clearAll();
 

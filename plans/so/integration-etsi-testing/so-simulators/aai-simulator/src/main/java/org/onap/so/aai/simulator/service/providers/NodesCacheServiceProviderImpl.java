@@ -35,26 +35,25 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class NodesCacheServiceProviderImpl implements NodesCacheServiceProvider {
+public class NodesCacheServiceProviderImpl extends AbstractCacheServiceProvider implements NodesCacheServiceProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(NodesCacheServiceProviderImpl.class);
 
-    public final CacheManager cacheManager;
 
     @Autowired
     public NodesCacheServiceProviderImpl(final CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
+        super(cacheManager);
     }
 
     @Override
     public void putNodeServiceInstance(final String serviceInstanceId, final NodeServiceInstance nodeServiceInstance) {
-        final Cache cache = cacheManager.getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE);
         LOGGER.info("Adding {} to cache with key: {}...", nodeServiceInstance, serviceInstanceId);
         cache.put(serviceInstanceId, nodeServiceInstance);
     }
 
     @Override
     public Optional<NodeServiceInstance> getNodeServiceInstance(final String serviceInstanceId) {
-        final Cache cache = cacheManager.getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE);
         final NodeServiceInstance value = cache.get(serviceInstanceId, NodeServiceInstance.class);
         if (value != null) {
             return Optional.of(value);
@@ -65,7 +64,7 @@ public class NodesCacheServiceProviderImpl implements NodesCacheServiceProvider 
 
     @Override
     public void clearAll() {
-        final Cache cache = cacheManager.getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE);
         final ConcurrentHashMap<?, ?> nativeCache = (ConcurrentHashMap<?, ?>) cache.getNativeCache();
         LOGGER.info("Clear all entries from cahce: {}", cache.getName());
         nativeCache.clear();
