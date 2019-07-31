@@ -17,34 +17,23 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aai.simulator.utils;
+package org.onap.so.aai.simulator.service.providers;
+
+import java.util.Optional;
+import org.onap.aai.domain.yang.OwningEntity;
+import org.onap.aai.domain.yang.Relationship;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-public class TestConstants {
+public interface OwnEntityCacheServiceProvider {
 
-    public static final String SERVICE_INSTANCES_URL = "/service-instances";
+    void putOwningEntity(final String owningEntityId, final OwningEntity owningEntity);
 
-    public static final String SERVICE_NAME = "ServiceTest";
+    Optional<OwningEntity> getOwningEntity(final String owningEntityId);
 
-    public static final String SERVICE_INSTANCE_ID = "ccece8fe-13da-456a-baf6-41b3a4a2bc2b";
-
-    public static final String SERVICE_INSTANCE_URL =
-            SERVICE_INSTANCES_URL + "/service-instance/" + SERVICE_INSTANCE_ID;
-
-    public static final String SERVICE_TYPE = "vCPE";
-
-    public static final String SERVICE_SUBSCRIPTIONS_URL =
-            "/service-subscriptions/service-subscription/" + SERVICE_TYPE;
-
-    public static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
-
-    public static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
-
-    public static final String RELATIONSHIP_URL = "/relationship-list/relationship";
-
-    private TestConstants() {}
-
+    boolean putOwningEntityRelationShip(String owningEntityId, Relationship relationship);
+    
+    void clearAll();
 }

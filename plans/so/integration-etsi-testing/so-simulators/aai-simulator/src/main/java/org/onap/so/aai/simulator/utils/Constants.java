@@ -35,6 +35,8 @@ public class Constants {
 
     public static final String PROJECT_URL = BUSINESS_URL + "/projects/project/";
 
+    public static final String OWNING_ENTITY_URL = BUSINESS_URL + "/owning-entities/owning-entity";
+
     public static final String HEALTHY = "healthy";
 
     public static final String CUSTOMER_CACHE = "customer-cache";
@@ -43,12 +45,20 @@ public class Constants {
 
     public static final String NODES_CACHE = "nodes-cache";
 
+    public static final String OWNING_ENTITY_CACHE = "owning-entity-cache";
+    
+    public static final String PROJECT = "project";
+    
+    public static final String OWNING_ENTITY = "owning-entity";
+    
+    public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
+
     public static final String ERROR_MESSAGE_ID = "SVC3001";
 
     public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
 
     public static final String SERVICE_RESOURCE_TYPE = "service-instance";
-    
+
     public static final String RESOURCE_LINK = "resource-link";
 
     public static final String RESOURCE_TYPE = "resource-type";
