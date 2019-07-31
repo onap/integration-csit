@@ -24,6 +24,7 @@ ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/su
 ${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/A20181002.0000-1000-0015-1000_5G.xml.M  %{WORKSPACE}/metadata.json
 ${CLI_EXEC_CLI_PMMAPPER_LOG}             docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper_docker.log.robot
 ${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}        grep "XML validation successful Event" /tmp/pmmapper_docker.log.robot
+${CLI_EXEC_CLI_PMMAPPER_LOG_GREP_VES}    grep "Successfully published VES events to messagerouter" /tmp/pmmapper_docker.log.robot
 ${CLI_EXEC_MR_PMMAPPER_TOPIC}            curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_EXEC_CLI_PMMAPPER_TOPIC_LOG_GREP}  grep "perf3gpp_RnNode-Ericsson_pmMeasResult" /tmp/mr.log
 
@@ -115,13 +116,11 @@ Verify PM-Mapper successfully receives uncompressed the PM XML file
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
     Should Contain                  ${cli_cmd_output.stdout}        XML validation successful Event
 
-Verify PM-Mapper successfully publishes PMMeasResult VES onto the Message Router Topic PM_MAPPER
+Verify PM-Mapper successfully publishes VES event the Message Router
     [Tags]                          Bulk_PM_E2E_08
     [Documentation]                 Check that PM-Mapper publishes VES onto the Message Router
-    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_MR_PMMAPPER_TOPIC}     shell=yes
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_PMMAPPER_LOG}    shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_PMMAPPER_TOPIC_LOG_GREP}    shell=yes
-    Log                             ${cli_cmd_output.stdout}
-    Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        perf3gpp_RnNode-Ericsson_pmMeasResult
+    ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_PMMAPPER_LOG_GREP_VES}    shell=yes
+    Should Contain                  ${cli_cmd_output.stdout}        Successfully published VES events to messagerouter

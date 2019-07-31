@@ -157,7 +157,7 @@ sleep 2
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
 for i in {1..10}; do
     if  [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] 
+        [ $(docker inspect --format '{{ .State.Running }}' cbs) ]
     then
         echo "Data Router, Consul, Config Binding Service Services Running"
         break
@@ -201,7 +201,7 @@ cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-pmmapp
 CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cbs)
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
-sed -i 's/4.4.4.4/'$DMAAP_MR_IP'/g' docker-compose.yml
+sed -i 's/4.4.4.4/'$MARIADB'/g' docker-compose.yml
 docker-compose up -d
 
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
@@ -221,19 +221,25 @@ docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper
 docker restart pmmapper
 sleep 5
 
+# Simulation setup for Message Router
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/mrserver.js mariadb:/
+docker exec mariadb /bin/bash -c "apt update"
+sleep 2
+docker exec mariadb /bin/bash -c "apt install nodejs -y"
+sleep 10
+docker exec mariadb /bin/bash -c "nodejs mrserver.js &" &
+
 # Create PM Mapper feed and create PM Mapper subscriber on data router
 #curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
 curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 
 # Create PM Mapper tocic in Message Router
-curl -v -X POST http://${DMAAP_MR_IP}:3904/topics/create -d @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createTopic.json -H "Content-Type: application/json"
 PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
 docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper.log
 cat /tmp/pmmapper.log
 docker exec -it datarouter-prov sh -c "curl http://dmaap-dr-node:8080/internal/fetchProv"
 sleep 10
 curl -k https://$DR_PROV_IP:8443/internal/prov
-curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v SFTP_IP:${SFTP_IP}"
