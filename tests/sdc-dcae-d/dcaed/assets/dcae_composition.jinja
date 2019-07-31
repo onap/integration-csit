@@ -1,5 +1,5 @@
 {
-    "cid": "${cid}",
+    "cid": "{{cid}}",
     "flowType": "TCA Hi Lo",
     "inputs": [],
     "nodes": [
@@ -13,8 +13,8 @@
                     }
                 }
             ],
-            "description": "/sdc/v1/catalog/resources/${vf_id}/toscaModel/",
-            "id": "${vf_id}",
+            "description": "/sdc/v1/catalog/resources/{{vf_id}}/toscaModel/",
+            "id": "{{vf_id}}",
             "name": "tca-docker",
             "ndata": {
                 "label": "tca-docker",
@@ -160,39 +160,39 @@
                     {
                         "name": "feature",
                         "type": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         }
                     }
                 ],
                 "hierarchy": [
                     {
-                        "id": "${vf_id}/tosca.dcae.nodes.dockerApp",
+                        "id": "{{vf_id}}/tosca.dcae.nodes.dockerApp",
                         "name": "tosca.dcae.nodes.dockerApp"
                     },
                     {
-                        "id": "${vf_id}/tosca.dcae.nodes.Root",
+                        "id": "{{vf_id}}/tosca.dcae.nodes.Root",
                         "name": "tosca.dcae.nodes.Root"
                     },
                     {
                         "description": "The TOSCA Node Type all other TOSCA base Node Types derive from",
-                        "id": "${vf_id}/tosca.nodes.Root",
+                        "id": "{{vf_id}}/tosca.nodes.Root",
                         "name": "tosca.nodes.Root"
                     }
                 ],
-                "id": "${vf_id}/tosca.dcae.nodes.dockerApp.tca-docker",
-                "itemId": "${vf_id}/tosca.dcae.nodes.dockerApp.tca-docker",
+                "id": "{{vf_id}}/tosca.dcae.nodes.dockerApp.tca-docker",
+                "itemId": "{{vf_id}}/tosca.dcae.nodes.dockerApp.tca-docker",
                 "name": "tosca.dcae.nodes.dockerApp.tca-docker",
                 "requirements": [
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         },
-                        "id": "${vf_id}/stream_subscribe_0",
+                        "id": "{{vf_id}}/stream_subscribe_0",
                         "name": "stream_subscribe_0",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         },
                         "relationship": {
@@ -201,13 +201,13 @@
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         },
-                        "id": "${vf_id}/stream_publish_0",
+                        "id": "{{vf_id}}/stream_publish_0",
                         "name": "stream_publish_0",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         },
                         "relationship": {
@@ -216,13 +216,13 @@
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.dockerHost",
+                            "id": "{{vf_id}}/dcae.capabilities.dockerHost",
                             "name": "dcae.capabilities.dockerHost"
                         },
-                        "id": "${vf_id}/host",
+                        "id": "{{vf_id}}/host",
                         "name": "host",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.dockerHost",
+                            "id": "{{vf_id}}/dcae.capabilities.dockerHost",
                             "name": "dcae.capabilities.dockerHost"
                         },
                         "relationship": {
@@ -231,25 +231,25 @@
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         },
-                        "id": "${vf_id}/composition",
+                        "id": "{{vf_id}}/composition",
                         "name": "composition",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         }
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
-                        "id": "${vf_id}/dependency",
+                        "id": "{{vf_id}}/dependency",
                         "name": "dependency",
                         "node": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
                         "occurrences": [
@@ -354,8 +354,8 @@
                     }
                 }
             ],
-            "description": "/sdc/v1/catalog/resources/${vf_id}/toscaModel/",
-            "id": "${vf_id}",
+            "description": "/sdc/v1/catalog/resources/{{vf_id}}/toscaModel/",
+            "id": "{{vf_id}}",
             "name": "topic0",
             "ndata": {
                 "label": "topic0",
@@ -473,54 +473,54 @@
                     {
                         "name": "topic",
                         "type": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         }
                     },
                     {
                         "name": "feature",
                         "type": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         }
                     }
                 ],
                 "hierarchy": [
                     {
-                        "id": "${vf_id}/tosca.dcae.nodes.Root",
+                        "id": "{{vf_id}}/tosca.dcae.nodes.Root",
                         "name": "tosca.dcae.nodes.Root"
                     },
                     {
                         "description": "The TOSCA Node Type all other TOSCA base Node Types derive from",
-                        "id": "${vf_id}/tosca.nodes.Root",
+                        "id": "{{vf_id}}/tosca.nodes.Root",
                         "name": "tosca.nodes.Root"
                     }
                 ],
-                "id": "${vf_id}/tosca.dcae.nodes.dmaap.topic",
-                "itemId": "${vf_id}/tosca.dcae.nodes.dmaap.topic",
+                "id": "{{vf_id}}/tosca.dcae.nodes.dmaap.topic",
+                "itemId": "{{vf_id}}/tosca.dcae.nodes.dmaap.topic",
                 "name": "tosca.dcae.nodes.dmaap.topic",
                 "requirements": [
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         },
-                        "id": "${vf_id}/composition",
+                        "id": "{{vf_id}}/composition",
                         "name": "composition",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         }
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
-                        "id": "${vf_id}/dependency",
+                        "id": "{{vf_id}}/dependency",
                         "name": "dependency",
                         "node": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
                         "occurrences": [
@@ -625,8 +625,8 @@
                     }
                 }
             ],
-            "description": "/sdc/v1/catalog/resources/${vf_id}/toscaModel/",
-            "id": "${vf_id}",
+            "description": "/sdc/v1/catalog/resources/{{vf_id}}/toscaModel/",
+            "id": "{{vf_id}}",
             "name": "topic1",
             "ndata": {
                 "label": "topic1",
@@ -744,54 +744,54 @@
                     {
                         "name": "topic",
                         "type": {
-                            "id": "${vf_id}/dcae.capabilities.dmmap.topic",
+                            "id": "{{vf_id}}/dcae.capabilities.dmmap.topic",
                             "name": "dcae.capabilities.dmmap.topic"
                         }
                     },
                     {
                         "name": "feature",
                         "type": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         }
                     }
                 ],
                 "hierarchy": [
                     {
-                        "id": "${vf_id}/tosca.dcae.nodes.Root",
+                        "id": "{{vf_id}}/tosca.dcae.nodes.Root",
                         "name": "tosca.dcae.nodes.Root"
                     },
                     {
                         "description": "The TOSCA Node Type all other TOSCA base Node Types derive from",
-                        "id": "${vf_id}/tosca.nodes.Root",
+                        "id": "{{vf_id}}/tosca.nodes.Root",
                         "name": "tosca.nodes.Root"
                     }
                 ],
-                "id": "${vf_id}/tosca.dcae.nodes.dmaap.topic",
-                "itemId": "${vf_id}/tosca.dcae.nodes.dmaap.topic",
+                "id": "{{vf_id}}/tosca.dcae.nodes.dmaap.topic",
+                "itemId": "{{vf_id}}/tosca.dcae.nodes.dmaap.topic",
                 "name": "tosca.dcae.nodes.dmaap.topic",
                 "requirements": [
                     {
                         "capability": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         },
-                        "id": "${vf_id}/composition",
+                        "id": "{{vf_id}}/composition",
                         "name": "composition",
                         "node": {
-                            "id": "${vf_id}/dcae.capabilities.composition.host",
+                            "id": "{{vf_id}}/dcae.capabilities.composition.host",
                             "name": "dcae.capabilities.composition.host"
                         }
                     },
                     {
                         "capability": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
-                        "id": "${vf_id}/dependency",
+                        "id": "{{vf_id}}/dependency",
                         "name": "dependency",
                         "node": {
-                            "id": "${vf_id}/tosca.capabilities.Node",
+                            "id": "{{vf_id}}/tosca.capabilities.Node",
                             "name": "tosca.capabilities.Node"
                         },
                         "occurrences": [
