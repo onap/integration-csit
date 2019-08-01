@@ -308,6 +308,24 @@ services:
         max-size: "30m"
         max-file: "5"
 ################################################################################
+  vnfm-simulator:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-simulator:${TAG}
+    ports:
+      - "9093:9093"
+    environment:
+      - APP=VNFM-SIMULATOR
+      - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      vnfm-simulator
+    depends_on:
+      - mariadb
+      - vnfm-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
   workaround-config:
     image: jobs/workaround-job-container:latest
     ports:
