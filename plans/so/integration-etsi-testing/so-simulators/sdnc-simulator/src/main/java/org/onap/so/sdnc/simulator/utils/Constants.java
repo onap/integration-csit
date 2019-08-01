@@ -17,29 +17,16 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-
-package org.onap.so.sdc.simulator.utils;
+package org.onap.so.sdnc.simulator.utils;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
+ *
  */
 public class Constants {
-
-    public static final String BASE_URL = "/sdc/v1";
-
-    public static final String CATALOG_URL = BASE_URL + "/catalog";
+    public static final String BASE_URL = "/restconf/";
 
     public static final String HEALTHY = "healthy";
-
-    public static final String DEFAULT_CSAR_NAME = "default_csar_file";
-
-    public static final String DOT = ".";
-
-    public static final String DOT_CSAR = DOT + "csar";
-
-    public static final String DEFAULT_CSAR_NAME_WITH_EXT = DEFAULT_CSAR_NAME + DOT_CSAR;
-
-    public static final String DEFAULT_CSAR_PATH = "/csar/" + DEFAULT_CSAR_NAME_WITH_EXT;
 
     private Constants() {}
 }
