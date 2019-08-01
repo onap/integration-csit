@@ -17,29 +17,31 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+package org.onap.so.sdnc.simulator.controller;
 
-package org.onap.so.sdc.simulator.utils;
+import javax.ws.rs.core.MediaType;
+import org.onap.so.sdnc.simulator.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
+ *
  */
-public class Constants {
+@RestController
+@RequestMapping(path = Constants.BASE_URL)
+public class SdncSimulatorController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SdncSimulatorController.class);
 
-    public static final String BASE_URL = "/sdc/v1";
-
-    public static final String CATALOG_URL = BASE_URL + "/catalog";
-
-    public static final String HEALTHY = "healthy";
-
-    public static final String DEFAULT_CSAR_NAME = "default_csar_file";
-
-    public static final String DOT = ".";
-
-    public static final String DOT_CSAR = DOT + "csar";
-
-    public static final String DEFAULT_CSAR_NAME_WITH_EXT = DEFAULT_CSAR_NAME + DOT_CSAR;
-
-    public static final String DEFAULT_CSAR_PATH = "/csar/" + DEFAULT_CSAR_NAME_WITH_EXT;
-
-    private Constants() {}
+    @GetMapping(value = "/healthcheck", produces = MediaType.APPLICATION_JSON)
+    @ResponseStatus(code = HttpStatus.OK)
+    public String healthCheck() {
+        LOGGER.info("Running health check ...");
+        return Constants.HEALTHY;
+    }
 }

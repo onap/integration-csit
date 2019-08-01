@@ -343,3 +343,22 @@ services:
     command:
       - "/config/apply-workarounds.sh"
 #################################################################################
+  sdnc-simulator:
+    image: simulators/sdnc-simulator:latest
+    ports:
+      - "9994:9994"
+    environment:
+    - APP=SDNC-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      sdnc-simulator
+    depends_on:
+      - mariadb
+      - vnfm-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+
