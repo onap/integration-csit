@@ -30,7 +30,7 @@ import java.nio.file.Path;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.onap.so.sdc.simulator.utils.Constant;
+import org.onap.so.sdc.simulator.utils.Constants;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 
@@ -59,13 +59,13 @@ public class ResourceProviderImplTest {
 
     @Test
     public void test_getResource_withoutValidPath_matchContent() throws IOException {
-        final ClassPathResource classPathResource = new ClassPathResource(Constant.DEFAULT_CSAR_PATH, this.getClass());
+        final ClassPathResource classPathResource = new ClassPathResource(Constants.DEFAULT_CSAR_PATH, this.getClass());
 
         final byte[] expectedResult = StreamUtils.copyToByteArray(classPathResource.getInputStream());
 
         final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("");
 
-        assertArrayEquals(expectedResult, objUnderTest.getResource(Constant.DEFAULT_CSAR_NAME).get());
+        assertArrayEquals(expectedResult, objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).get());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ResourceProviderImplTest {
                 return "/some/dummy/path";
             }
         };
-        assertFalse(objUnderTest.getResource(Constant.DEFAULT_CSAR_NAME).isPresent());
+        assertFalse(objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).isPresent());
 
     }
 

@@ -26,7 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
-import org.onap.so.sdc.simulator.utils.Constant;
+import org.onap.so.sdc.simulator.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -83,6 +83,6 @@ public class ResourceProviderImpl implements ResourceProvider {
      * Used in test
      */
     String getDefaultCsarPath() {
-        return Constant.DEFAULT_CSAR_PATH;
+        return Constants.DEFAULT_CSAR_PATH;
     }
 }

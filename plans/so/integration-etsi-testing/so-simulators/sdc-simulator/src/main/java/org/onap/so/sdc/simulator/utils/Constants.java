@@ -18,9 +18,11 @@ package org.onap.so.sdc.simulator.utils;
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  */
-public class Constant {
+public class Constants {
 
-    public static final String BASE_URL = "/simulator/sdc/v1/catalog";
+    public static final String BASE_URL = "/sdc/v1";
+
+    public static final String CATALOG_URL = BASE_URL + "/catalog";
 
     public static final String HEALTHY = "healthy";
 
@@ -35,6 +37,5 @@ public class Constant {
     public static final String DEFAULT_CSAR_PATH = "/csar/" + DEFAULT_CSAR_NAME_WITH_EXT;
 
 
-    private Constant() {
-    }
+    private Constants() {}
 }
