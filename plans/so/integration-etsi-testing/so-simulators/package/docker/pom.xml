@@ -76,6 +76,29 @@
                                 </assembly>
                             </build>
                         </image>
+                        <image>
+                            <name>simulators/sdnc-simulator</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files</dockerFileDir>
+                                <dockerFile>Dockerfile.so-simulator-base-image</dockerFile>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <assembly>
+                                    <inline>
+                                        <dependencySets>
+                                            <dependencySet>
+                                                <includes>
+                                                    <include>org.onap.so.simulators:sdnc-simulator</include>
+                                                </includes>
+                                                <outputFileNameMapping>app.jar</outputFileNameMapping>
+                                            </dependencySet>
+                                        </dependencySets>
+                                    </inline>
+                                </assembly>
+                            </build>
+                        </image>
                     </images>
                 </configuration>
                 <executions>
@@ -110,13 +133,18 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.onap.so.simulators</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>sdc-simulator</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.onap.so.simulators</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>aai-simulator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>sdnc-simulator</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

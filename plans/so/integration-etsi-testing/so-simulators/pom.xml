@@ -19,6 +19,7 @@
     <modules>
         <module>sdc-simulator</module>
         <module>aai-simulator</module>
+        <module>sdnc-simulator</module>
         <module>package</module>
     </modules>
 
