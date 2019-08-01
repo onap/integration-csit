@@ -86,7 +86,7 @@ services:
     ports:
       - "8433:8433"
     extra_hosts:
-      - "dmaap-dr-node:DR_NODE_IP"
+      - "dmaap-dr-node:5.5.5.5"
 
   consul:
     container_name: consul
