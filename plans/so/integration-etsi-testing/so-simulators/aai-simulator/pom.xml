@@ -45,7 +45,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.onap.so.aai.simulator.AaiSimulatorApplication</mainClass>
+                    <mainClass>org.onap.so.aaisimulator.AaiSimulatorApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
