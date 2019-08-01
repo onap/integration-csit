@@ -17,13 +17,12 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+package org.onap.so.sdc.simulator.controller;
 
-package org.onap.so.sdc.simulator;
-
+import static org.onap.so.sdc.simulator.utils.Constants.CATALOG_URL;
 import java.util.Optional;
 import javax.ws.rs.core.MediaType;
 import org.onap.so.sdc.simulator.providers.ResourceProvider;
-import org.onap.so.sdc.simulator.utils.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,28 +31,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
+ *
  */
 @RestController
-@RequestMapping(path = Constant.BASE_URL)
-public class SdcSimulatorController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SdcSimulatorController.class);
+@RequestMapping(path = CATALOG_URL)
+public class CatalogController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CatalogController.class);
 
     private ResourceProvider resourceProvider;
 
-    public SdcSimulatorController(@Autowired final ResourceProvider resourceProvider) {
+    @Autowired
+    public CatalogController(final ResourceProvider resourceProvider) {
         this.resourceProvider = resourceProvider;
-    }
-
-    @GetMapping(value = "/healthcheck", produces = MediaType.APPLICATION_JSON)
-    @ResponseStatus(code = HttpStatus.OK)
-    public String healthCheck() {
-        LOGGER.info("Running health check ...");
-        return Constant.HEALTHY;
     }
 
     @GetMapping(value = "/resources/{csarId}/toscaModel", produces = MediaType.APPLICATION_OCTET_STREAM)

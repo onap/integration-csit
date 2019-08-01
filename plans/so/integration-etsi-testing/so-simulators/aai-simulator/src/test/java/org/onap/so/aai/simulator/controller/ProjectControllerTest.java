@@ -144,8 +144,6 @@ public class ProjectControllerTest {
         assertNotNull(result.getValues());
         assertFalse(result.getValues().isEmpty());
         assertEquals(1, result.getValues().get(0).get(Constants.PROJECT));
-
-
     }
 
     private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
