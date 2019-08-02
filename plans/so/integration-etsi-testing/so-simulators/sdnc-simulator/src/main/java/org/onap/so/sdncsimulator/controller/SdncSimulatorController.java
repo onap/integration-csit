@@ -24,21 +24,23 @@ import org.onap.so.sdncsimulator.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-@RestController
+@Controller
 @RequestMapping(path = Constants.BASE_URL)
 public class SdncSimulatorController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SdncSimulatorController.class);
 
-    @GetMapping(value = "/healthcheck", produces = MediaType.APPLICATION_JSON)
+    @ResponseBody
+    @GetMapping(value = "/healthcheck", produces = MediaType.TEXT_PLAIN)
     @ResponseStatus(code = HttpStatus.OK)
     public String healthCheck() {
         LOGGER.info("Running health check ...");

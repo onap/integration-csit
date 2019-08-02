@@ -17,25 +17,32 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.sdncsimulator.utils;
+package org.onap.so.sdncsimulator.configration;
+
+import static org.onap.so.sdncsimulator.utils.Constants.SERVICE_TOPOLOGY_OPERATION_CACHE;
+import java.util.Arrays;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class Constants {
+@Configuration
+public class ApplicationConfigration {
 
-    public static final String BASE_URL = "/restconf";
+    @Bean
+    public CacheManager cacheManager() {
+        final SimpleCacheManager manager = new SimpleCacheManager();
+        manager.setCaches(Arrays.asList(getCache(SERVICE_TOPOLOGY_OPERATION_CACHE)));
+        return manager;
+    }
 
-    public static final String OPERATIONS_URL = BASE_URL + "/operations";
-
-    public static final String SERVICE_TOPOLOGY_OPERATION_CACHE = "service-topology-operation-cache";
-
-    public static final String HEALTHY = "healthy";
-
-    public static final String YES = "Y";
-
-    public static final String SERVICE_TOPOLOGY_OPERATION = "service-topology-operation";
-
-    private Constants() {}
+    private Cache getCache(final String name) {
+        return new ConcurrentMapCache(name);
+    }
 }
