@@ -17,27 +17,26 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.sdncsimulator.utils;
+package org.onap.so.sdncsimulator.providers;
+
+import java.util.Optional;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceModelInfrastructure;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
+import org.onap.so.sdncsimulator.models.OutputRequest;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class Constants {
+public interface ServiceOperationsCacheServiceProvider {
 
-    public static final String BASE_URL = "/restconf";
+    OutputRequest putServiceOperationInformation(
+            final GenericResourceApiServiceOperationInformation apiServiceOperationInformation);
 
-    public static final String OPERATIONS_URL = BASE_URL + "/operations";
+    Optional<GenericResourceApiServiceModelInfrastructure> getGenericResourceApiServiceModelInfrastructure(
+            final String serviceInstanceId);
 
-    public static final String SERVICE_TOPOLOGY_OPERATION_CACHE = "service-topology-operation-cache";
+    void clearAll();
 
-    public static final String HEALTHY = "healthy";
 
-    public static final String YES = "Y";
-
-    public static final String SERVICE_TOPOLOGY_OPERATION = "service-topology-operation";
-
-    public static final String RESTCONF_CONFIG_END_POINT = "restconf/config/GENERIC-RESOURCE-API:services/service/";
-
-    private Constants() {}
 }
