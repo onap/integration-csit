@@ -8,6 +8,30 @@
     </parent>
     <artifactId>sdnc-simulator</artifactId>
     <name>${project.artifactId}</name>
+    <properties>
+        <version.generic-resource-api-client>1.5.2</version.generic-resource-api-client>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.onap.sdnc.northbound</groupId>
+            <artifactId>generic-resource-api-client</artifactId>
+            <version>${version.generic-resource-api-client}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.json</groupId>
+                    <artifactId>json</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
