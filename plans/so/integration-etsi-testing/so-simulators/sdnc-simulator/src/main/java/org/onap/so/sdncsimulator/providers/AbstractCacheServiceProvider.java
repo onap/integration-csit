@@ -17,34 +17,38 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+package org.onap.so.sdncsimulator.providers;
 
-package org.onap.so.sdcsimulator.controller;
-
-import javax.ws.rs.core.MediaType;
-import org.onap.so.sdcsimulator.utils.Constants;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  */
-@Controller
-@RequestMapping(path = Constants.BASE_URL)
-public class SdcSimulatorController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SdcSimulatorController.class);
+public abstract class AbstractCacheServiceProvider {
 
-    @ResponseBody
-    @GetMapping(value = "/healthcheck", produces = MediaType.TEXT_PLAIN)
-    @ResponseStatus(code = HttpStatus.OK)
-    public String healthCheck() {
-        LOGGER.info("Running health check ...");
-        return Constants.HEALTHY;
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+    private final CacheManager cacheManager;
+
+    public AbstractCacheServiceProvider(final CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
+
+    protected void clearCahce(final String name) {
+        final Cache cache = cacheManager.getCache(name);
+        if (cache != null) {
+            final ConcurrentHashMap<?, ?> nativeCache = (ConcurrentHashMap<?, ?>) cache.getNativeCache();
+            LOGGER.info("Clear all entries from cahce: {}", cache.getName());
+            nativeCache.clear();
+        }
+    }
+
+    protected Cache getCache(final String name) {
+        return cacheManager.getCache(name);
     }
 
 }
