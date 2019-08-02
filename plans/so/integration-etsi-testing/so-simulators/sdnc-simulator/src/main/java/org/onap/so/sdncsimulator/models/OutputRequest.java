@@ -17,25 +17,38 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.sdncsimulator.utils;
+package org.onap.so.sdncsimulator.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class Constants {
+public class OutputRequest<T> {
 
-    public static final String BASE_URL = "/restconf";
+    private T output;
 
-    public static final String OPERATIONS_URL = BASE_URL + "/operations";
+    /**
+     * @return the output
+     */
+    public T getOutput() {
+        return output;
+    }
 
-    public static final String SERVICE_TOPOLOGY_OPERATION_CACHE = "service-topology-operation-cache";
+    /**
+     * @param output the output to set
+     */
+    public void setOutput(T output) {
+        this.output = output;
+    }
 
-    public static final String HEALTHY = "healthy";
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return "OutputRequest [output=" + output + "]";
+    }
 
-    public static final String YES = "Y";
 
-    public static final String SERVICE_TOPOLOGY_OPERATION = "service-topology-operation";
 
-    private Constants() {}
 }

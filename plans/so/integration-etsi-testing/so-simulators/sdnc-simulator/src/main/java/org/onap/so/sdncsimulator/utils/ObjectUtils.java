@@ -23,19 +23,20 @@ package org.onap.so.sdncsimulator.utils;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class Constants {
+public class ObjectUtils {
 
-    public static final String BASE_URL = "/restconf";
+    public static boolean isValid(final String value) {
+        return value != null && !value.isEmpty();
+    }
 
-    public static final String OPERATIONS_URL = BASE_URL + "/operations";
+    public static String getStringOrNull(final Object obj) {
+        return getString(obj, null);
+    }
 
-    public static final String SERVICE_TOPOLOGY_OPERATION_CACHE = "service-topology-operation-cache";
+    public static String getString(final Object obj, String defaultValue) {
+        return obj != null ? obj.toString() : defaultValue;
+    }
 
-    public static final String HEALTHY = "healthy";
+    private ObjectUtils() {}
 
-    public static final String YES = "Y";
-
-    public static final String SERVICE_TOPOLOGY_OPERATION = "service-topology-operation";
-
-    private Constants() {}
 }
