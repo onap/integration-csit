@@ -47,6 +47,7 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiServicestatusServ
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyServiceTopology;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyidentifierServiceTopologyIdentifier;
 import org.onap.so.sdncsimulator.models.OutputRequest;
+import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -28,6 +28,7 @@ import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
 import org.onap.aai.domain.yang.ServiceSubscriptions;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
