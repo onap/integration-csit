@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.service.providers;
+package org.onap.so.simulator.cache.provider;
 
 import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
@@ -26,8 +26,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
 /**
- * @author waqas.ikram@ericsson.com
- *
+ * @author Waqas Ikram (waqas.ikram@ericsson.com)
  */
 public abstract class AbstractCacheServiceProvider {
 

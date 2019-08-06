@@ -48,8 +48,8 @@ import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.RequestError;
 import org.onap.so.aaisimulator.utils.ServiceException;
 import org.onap.so.aaisimulator.utils.TestUtils;
+import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -83,8 +83,8 @@ public class BusinessControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Value("${spring.security.username}")
-    private String username;
+    @Autowired
+    private UserCredentials userCredentials;
 
     @Autowired
     private CustomerCacheServiceProvider cacheServiceProvider;
@@ -384,7 +384,7 @@ public class BusinessControllerTest {
     }
 
     private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(username);
+        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 
     private String getServiceInstance() throws Exception, IOException {

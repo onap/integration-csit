@@ -36,8 +36,8 @@ import org.onap.so.aaisimulator.models.Result;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestUtils;
+import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -74,8 +74,8 @@ public class ProjectControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Value("${spring.security.username}")
-    private String username;
+    @Autowired
+    private UserCredentials userCredentials;
 
     @Autowired
     private ProjectCacheServiceProvider cacheServiceProvider;
@@ -147,7 +147,7 @@ public class ProjectControllerTest {
     }
 
     private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
-        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders(username)), clazz);
+        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders(getUsername())), clazz);
     }
 
     private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
@@ -156,7 +156,11 @@ public class ProjectControllerTest {
     }
 
     private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders(username));
+        return new HttpEntity<>(obj, getHttpHeaders(getUsername()));
+    }
+
+    private String getUsername() {
+        return userCredentials.getUsers().iterator().next().getUsername();
     }
 
     private String getProjectEndPointUrl() {

@@ -17,6 +17,7 @@
     </properties>
 
     <modules>
+        <module>common</module>
         <module>sdc-simulator</module>
         <module>aai-simulator</module>
         <module>sdnc-simulator</module>

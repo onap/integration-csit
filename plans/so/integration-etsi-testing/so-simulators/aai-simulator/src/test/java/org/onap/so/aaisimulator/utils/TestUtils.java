@@ -33,7 +33,6 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
  * @author waqas.ikram@ericsson.com
  *
  */
-
 public class TestUtils {
 
     private static final String PASSWORD = "aai.onap.org:demo123456!";

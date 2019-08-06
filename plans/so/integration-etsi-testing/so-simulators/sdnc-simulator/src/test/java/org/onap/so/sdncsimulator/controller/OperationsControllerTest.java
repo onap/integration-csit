@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,7 @@ import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.OutputRequest;
 import org.onap.so.sdncsimulator.providers.ServiceOperationsCacheServiceProvider;
 import org.onap.so.sdncsimulator.utils.Constants;
+import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -66,6 +68,8 @@ public class OperationsControllerTest {
 
     private static final String SERVICE_TOPOLOGY_OPERATION_URL = "/GENERIC-RESOURCE-API:service-topology-operation/";
 
+    private static final String PASSWORD = "Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U";
+
     @LocalServerPort
     private int port;
 
@@ -74,6 +78,10 @@ public class OperationsControllerTest {
 
     @Autowired
     private ServiceOperationsCacheServiceProvider cacheServiceProvider;
+
+    @Autowired
+    private UserCredentials userCredentials;
+
 
     @Test
     public void test_postServiceOperationInformation_successfullyAddedToCache() throws Exception {
@@ -127,9 +135,7 @@ public class OperationsControllerTest {
     }
 
     private HttpHeaders getHttpHeaders() {
-        final HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
+        return getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 
 
@@ -149,8 +155,19 @@ public class OperationsControllerTest {
         return new String(Files.readAllBytes(path));
     }
 
-    private static File getFile(final String file) throws IOException {
+    private File getFile(final String file) throws IOException {
         return new ClassPathResource(file).getFile();
+    }
+
+    private HttpHeaders getHttpHeaders(final String username) {
+        final HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.add("Authorization", getBasicAuth(username));
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        return requestHeaders;
+    }
+
+    private String getBasicAuth(final String username) {
+        return "Basic " + new String(Base64.getEncoder().encodeToString((username + ":" + PASSWORD).getBytes()));
     }
 
     @After
