@@ -17,9 +17,9 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.configration;
+package org.onap.so.sdncsimulator.configration;
 
-import org.onap.so.aaisimulator.utils.Constants;
+import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
 import org.onap.so.simulator.configuration.SimulatorSecurityConfigurer;
 import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class WebSecurityConfigImpl extends SimulatorSecurityConfigurer {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers(Constants.BUSINESS_URL + "/**/**").authenticated().and()
+        http.csrf().disable().authorizeRequests().antMatchers(OPERATIONS_URL + "/**/**").authenticated().and()
                 .httpBasic();
     }
 

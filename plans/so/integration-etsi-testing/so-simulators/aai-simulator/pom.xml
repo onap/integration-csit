@@ -7,12 +7,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>aai-simulator</artifactId>
-
     <properties>
         <version.aai.schema>1.0.0</version.aai.schema>
     </properties>
-
     <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.onap.aai.schema-service</groupId>
             <artifactId>aai-schema</artifactId>
@@ -38,7 +41,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -61,5 +63,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

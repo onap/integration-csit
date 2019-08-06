@@ -23,6 +23,7 @@ import static org.onap.so.aaisimulator.utils.Constants.NODES_CACHE;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
+import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

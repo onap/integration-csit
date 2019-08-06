@@ -44,8 +44,8 @@ import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestUtils;
+import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -75,8 +75,8 @@ public class NodesControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Value("${spring.security.username}")
-    private String username;
+    @Autowired
+    private UserCredentials userCredentials;
 
     @Autowired
     private NodesCacheServiceProvider nodesCacheServiceProvider;
@@ -175,6 +175,6 @@ public class NodesControllerTest {
     }
 
     private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(username);
+        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 }
