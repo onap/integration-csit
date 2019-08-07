@@ -361,4 +361,20 @@ services:
         max-size: "30m"
         max-file: "5"
 ################################################################################
-
+  populate-aai-config:
+    image: jobs/workaround-job-container:latest
+    ports:
+       - "9995:9995"
+    volumes:
+      - ${CONFIG_DIR_PATH}/populate-aai-simulator.sh:/config/populate-aai-simulator.sh
+      - ${CONFIG_DIR_PATH}/wait-for.sh:/config/wait-for.sh
+      - ${CONFIG_DIR_PATH}/aai-simulator-populate-data:/config/aai-simulator-populate-data/
+    environment:
+      - AAI_SIMULATOR_HOST=aai-simulator
+      - AAI_SIMULATOR_PORT=9993
+      - TIMEOUT_IN_SECONDS=300 #5 mins
+    depends_on:
+      - aai-simulator
+    command: 
+        - "/config/populate-aai-simulator.sh"
+################################################################################
