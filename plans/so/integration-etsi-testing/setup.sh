@@ -40,6 +40,7 @@ MVN_SETTINGS_XML="$SCRIPT_HOME/settings.xml"
 MVN_CLEAN_INSTALL="$MVN clean install"
 SIMULATOR_MAVEN_PROJECT_POM="$SCRIPT_HOME/so-simulators/pom.xml"
 WAIT_FOR_WORKAROUND_SCRIPT=$CONFIG_DIR/"wait-for-workaround-job.sh"
+WAIT_FOR_POPULATE_AAI_SCRIPT=$CONFIG_DIR/"wait-for-aai-config-job.sh"
 
 echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
@@ -132,6 +133,9 @@ sleep 3m
 
 echo "Will execute $WAIT_FOR_WORKAROUND_SCRIPT script"
 $WAIT_FOR_WORKAROUND_SCRIPT
+
+echo "Will execute $WAIT_FOR_POPULATE_AAI_SCRIPT script"
+$WAIT_FOR_POPULATE_AAI_SCRIPT
 
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_WORKAROUND_SCRIPT failed"
