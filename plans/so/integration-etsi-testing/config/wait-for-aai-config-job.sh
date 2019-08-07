@@ -22,10 +22,10 @@
 # @author Waqas Ikram (waqas.ikram@est.tech)
 
 SLEEP_TIME=5
-WORKAROUND_SUCCESSFUL_TEXT="Finished applying workaround"
-WORKAROUND_FAILURE_TEXT="Failed to execute workaround"
-WORKAROUND_TIME_OUT_TEXT="workaround script timed out"
-WORKAROUND_CONTAINER_NAME=$(docker ps -aqf "name=workaround-config" --format "{{.Names}}")
+SUCCESSFUL_TEXT="AAI Simulator Populated Successfully"
+FAILURE_TEXT="ERROR:"
+TIME_OUT_TEXT="Time out"
+CONTAINER_NAME=$(docker ps -aqf "name=populate-aai-config" --format "{{.Names}}")
 SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_NAME=$(basename $0)
 
@@ -40,7 +40,7 @@ if [ -z $TIME_OUT_DEFAULT_VALUE_SEC ]; then
     exit 1
 fi
 
-if [ -z $WORKAROUND_CONTAINER_NAME ]; then
+if [ -z $CONTAINER_NAME ]; then
    echo "$SCRIPT_NAME $(current_timestamp): Unable to find docker container id "
    exit 1
 fi
@@ -53,9 +53,9 @@ echo echo "$SCRIPT_NAME $(current_timestamp): $SCRIPT_NAME script Start Time `da
 echo echo "$SCRIPT_NAME $(current_timestamp): $SCRIPT_NAME will time out at `date -d @$TIME_OUT_END_TIME_IN_SECONDS`"
 
 while [ `date +%s` -lt "$TIME_OUT_END_TIME_IN_SECONDS" ]; do
-    echo "$(current_timestamp): Waiting for $WORKAROUND_CONTAINER_NAME to finish ..."
+    echo "$(current_timestamp): Waiting for $CONTAINER_NAME to finish ..."
 
-    result=$(docker logs $WORKAROUND_CONTAINER_NAME 2>&1 | grep -E "$WORKAROUND_SUCCESSFUL_TEXT|$WORKAROUND_FAILURE_TEXT|$WORKAROUND_TIME_OUT_TEXT")
+    result=$(docker logs $CONTAINER_NAME 2>&1 | grep -E "$SUCCESSFUL_TEXT|$FAILURE_TEXT|$TIME_OUT_TEXT")
     if [ ! -z "$result" ]; then
         echo "$SCRIPT_NAME $(current_timestamp): Found result: $result"
         break;
@@ -65,20 +65,20 @@ while [ `date +%s` -lt "$TIME_OUT_END_TIME_IN_SECONDS" ]; do
 done
 
 if [ -z "$result" ]; then
-   echo "$SCRIPT_NAME $(current_timestamp): ERROR: failed to apply workaround . . . "
-   echo "-------------- $WORKAROUND_CONTAINER_NAME logs -------------"
-   docker logs $WORKAROUND_CONTAINER_NAME
+   echo "$SCRIPT_NAME $(current_timestamp): ERROR: failed to populate AAI Simulator . . . "
+   echo "-------------- $CONTAINER_NAME logs -------------"
+   docker logs $CONTAINER_NAME
    echo "------------------------------------------------------------"
    exit 1
 fi
 
-if echo "$result" | grep -E "$WORKAROUND_FAILURE_TEXT|$WORKAROUND_TIME_OUT_TEXT"; then
-    echo "$SCRIPT_NAME $(current_timestamp): Work around script failed"
-    echo "-------------- $WORKAROUND_CONTAINER_NAME logs -------------"
-    docker logs $WORKAROUND_CONTAINER_NAME
+if echo "$result" | grep -E "$FAILURE_TEXT|$TIME_OUT_TEXT"; then
+    echo "$SCRIPT_NAME $(current_timestamp): populate-aai-simulator.sh failed"
+    echo "-------------- $CONTAINER_NAME logs -------------"
+    docker logs $CONTAINER_NAME
     echo "------------------------------------------------------------"
     exit 1
 fi
 
-echo "$SCRIPT_NAME $(current_timestamp): Successfully applied workaround configuration . . ."
+echo "$SCRIPT_NAME $(current_timestamp): Successfully populated AAI Simulator . . ."
 exit 0
