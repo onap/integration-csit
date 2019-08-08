@@ -101,16 +101,20 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
 
             if (serviceSubscription.isPresent()) {
                 LOGGER.info("Found service subscription ...");
-                final List<ServiceInstance> serviceInstancesList = serviceSubscription.get().getServiceInstances()
-                        .getServiceInstance().stream()
-                        .filter(serviceInstance -> serviceInstanceName.equals(serviceInstance.getServiceInstanceName()))
-                        .collect(Collectors.toList());
-                if (serviceInstancesList != null && !serviceInstancesList.isEmpty()) {
-                    LOGGER.info("Found {} service instances ", serviceInstancesList.size());
-                    final ServiceInstances serviceInstances = new ServiceInstances();
-                    serviceInstances.getServiceInstance().addAll(serviceInstancesList);
-                    return Optional.of(serviceInstances);
+                final ServiceInstances serviceInstances = serviceSubscription.get().getServiceInstances();
+                if (serviceInstances != null) {
+                    final List<ServiceInstance> serviceInstancesList =
+                            serviceInstances.getServiceInstance().stream()
+                                    .filter(serviceInstance -> serviceInstanceName
+                                            .equals(serviceInstance.getServiceInstanceName()))
+                                    .collect(Collectors.toList());
+                    if (serviceInstancesList != null && !serviceInstancesList.isEmpty()) {
+                        LOGGER.info("Found {} service instances ", serviceInstancesList.size());
+                        final ServiceInstances result = new ServiceInstances();
+                        result.getServiceInstance().addAll(serviceInstancesList);
+                        return Optional.of(result);
 
+                    }
                 }
             }
         }

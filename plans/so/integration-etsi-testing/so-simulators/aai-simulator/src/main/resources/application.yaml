@@ -14,3 +14,7 @@ spring:
          #password: aai.onap.org:demo123456!
          password: $2a$04$crRntT01fAF4kb48mxlvgu68/silcLg.czC1LxQsKTdWuDBPpO3YO
          role: VID
+      -  username: aai@aai.onap.org
+         #password: demo123456!
+         password: $2a$04$06VCpDvW5ztE7WOvhhvAtOx7JHLghECyZIzOShIbXLWpnshMva8T6
+         role: VID
