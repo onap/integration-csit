@@ -192,7 +192,7 @@ public class BusinessControllerTest {
         invokeHttpPut(url, getServiceInstance());
 
         final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
-                + "?service-instance-name=" + SERVICE_NAME;
+                + "?depth=2&service-instance-name=" + SERVICE_NAME;
 
         final ResponseEntity<ServiceInstances> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
                 new HttpEntity<>(getHttpHeaders()), ServiceInstances.class);
@@ -204,6 +204,28 @@ public class BusinessControllerTest {
         assertFalse(actualServiceInstances.getServiceInstance().isEmpty());
 
         assertEquals(SERVICE_NAME, actualServiceInstances.getServiceInstance().get(0).getServiceInstanceName());
+
+    }
+
+    @Test
+    public void test_getSericeInstance_usingServiceInstanceName_returnRequestErrorIfnoServiceInstanceFound()
+            throws Exception {
+
+
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+
+        final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
+                + "?depth=2&service-instance-name=" + SERVICE_NAME;
+
+        final ResponseEntity<RequestError> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
+                new HttpEntity<>(getHttpHeaders()), RequestError.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+        assertTrue(actual.hasBody());
+
+        assertNotNull(actual.getBody().getServiceException());
 
     }
 
