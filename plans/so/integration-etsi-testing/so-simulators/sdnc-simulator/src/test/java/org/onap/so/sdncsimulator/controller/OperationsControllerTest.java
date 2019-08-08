@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiInstanceReference;
 import org.onap.so.sdncsimulator.models.InputRequest;
+import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
 import org.onap.so.sdncsimulator.providers.ServiceOperationsCacheServiceProvider;
 import org.onap.so.sdncsimulator.utils.Constants;
@@ -92,9 +93,13 @@ public class OperationsControllerTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertTrue(responseEntity.hasBody());
-        final OutputRequest actualObject = responseEntity.getBody();
-        assertNotNull(actualObject);
 
+        final OutputRequest actualOutputRequest = responseEntity.getBody();
+        assertNotNull(actualOutputRequest);
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertNotNull(actualObject);
         assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
@@ -126,8 +131,12 @@ public class OperationsControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertTrue(responseEntity.hasBody());
-        final OutputRequest actualObject = responseEntity.getBody();
 
+        final OutputRequest actualOutputRequest = responseEntity.getBody();
+        assertNotNull(actualOutputRequest);
+
+        final Output actualObject = actualOutputRequest.getOutput();
+        assertNotNull(actualObject);
         assertEquals(HttpStatus.BAD_REQUEST.toString(), actualObject.getResponseCode());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
@@ -137,7 +146,6 @@ public class OperationsControllerTest {
     private HttpHeaders getHttpHeaders() {
         return getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
-
 
     private String getUrl() {
         return "http://localhost:" + port + Constants.OPERATIONS_URL + SERVICE_TOPOLOGY_OPERATION_URL;

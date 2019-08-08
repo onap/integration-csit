@@ -46,7 +46,7 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfra
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicestatusServiceStatus;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyServiceTopology;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyidentifierServiceTopologyIdentifier;
-import org.onap.so.sdncsimulator.models.OutputRequest;
+import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +73,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     }
 
     @Override
-    public OutputRequest putServiceOperationInformation(final GenericResourceApiServiceOperationInformation input) {
+    public Output putServiceOperationInformation(final GenericResourceApiServiceOperationInformation input) {
 
         final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
         final String svcRequestId = requestHeader != null ? requestHeader.getSvcRequestId() : null;
@@ -94,13 +94,13 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
             final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
 
-            return new OutputRequest().ackFinalIndicator(serviceStatus.getFinalIndicator())
+            return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
                     .responseCode(serviceStatus.getResponseCode()).responseMessage(serviceStatus.getResponseMessage())
                     .svcRequestId(svcRequestId).serviceResponseInformation(new GenericResourceApiInstanceReference()
                             .instanceId(serviceInstanceId).objectPath(RESTCONF_CONFIG_END_POINT + serviceInstanceId));
 
         }
-        return new OutputRequest().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
                 .responseMessage("Service instance not found").svcRequestId(svcRequestId);
     }
 

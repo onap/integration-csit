@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
+import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
 import org.onap.so.sdncsimulator.providers.ServiceOperationsCacheServiceProvider;
 import org.slf4j.Logger;
@@ -66,10 +67,10 @@ public class OperationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        final OutputRequest outputRequest =
-                cacheServiceProvider.putServiceOperationInformation(apiServiceOperationInformation);
+        final Output output = cacheServiceProvider.putServiceOperationInformation(apiServiceOperationInformation);
+        final OutputRequest outputRequest = new OutputRequest(output);
 
-        if (outputRequest.getResponseCode().equals(HttpStatus.OK.toString())) {
+        if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
             return ResponseEntity.ok(outputRequest);
         }
 
