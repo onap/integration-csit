@@ -21,6 +21,8 @@ package org.onap.so.simulator.configuration;
 
 import java.util.List;
 import org.onap.so.simulator.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,6 +35,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  */
 public abstract class SimulatorSecurityConfigurer extends WebSecurityConfigurerAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimulatorSecurityConfigurer.class);
+
 
     private final List<User> users;
 
@@ -51,6 +55,7 @@ public abstract class SimulatorSecurityConfigurer extends WebSecurityConfigurerA
                 auth.inMemoryAuthentication().passwordEncoder(passwordEncoder());
         for (int index = 0; index < users.size(); index++) {
             final User user = users.get(index);
+            LOGGER.info("Adding {} to InMemoryUserDetailsManager ...", user);
             inMemoryAuthentication.withUser(user.getUsername()).password(user.getPassword()).roles(user.getRole());
             if (index < users.size()) {
                 inMemoryAuthentication.and();

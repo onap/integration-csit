@@ -192,7 +192,7 @@ public class BusinessControllerTest {
         invokeHttpPut(url, getServiceInstance());
 
         final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
-                + "?service-instance-name=" + SERVICE_NAME;
+                + "?depth=2&service-instance-name=" + SERVICE_NAME;
 
         final ResponseEntity<ServiceInstances> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
                 new HttpEntity<>(getHttpHeaders()), ServiceInstances.class);
