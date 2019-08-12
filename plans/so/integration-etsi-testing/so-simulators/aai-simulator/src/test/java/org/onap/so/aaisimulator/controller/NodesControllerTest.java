@@ -39,7 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.models.Format;
-import org.onap.so.aaisimulator.models.Result;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
@@ -130,14 +130,14 @@ public class NodesControllerTest {
         final ResponseEntity<Void> response2 = invokeHttpPut(url, getServiceInstance());
         assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
 
-        final ResponseEntity<Result> actual = restTemplate.exchange(
+        final ResponseEntity<Results> actual = restTemplate.exchange(
                 getNodesEndPointUrl() + SERVICE_INSTANCE_URL + "?format=" + Format.PATHED.getValue(), HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), Result.class);
+                new HttpEntity<>(getHttpHeaders()), Results.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
 
-        final Result result = actual.getBody();
+        final Results result = actual.getBody();
 
         assertNotNull(result.getValues());
         assertFalse(result.getValues().isEmpty());

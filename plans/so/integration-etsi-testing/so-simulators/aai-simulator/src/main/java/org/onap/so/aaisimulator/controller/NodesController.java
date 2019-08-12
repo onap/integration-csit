@@ -23,7 +23,7 @@ import static org.onap.so.aaisimulator.utils.Constants.NODES_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Utils.getRequestErrorResponseEntity;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
-import org.onap.so.aaisimulator.models.Result;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.slf4j.Logger;
@@ -67,7 +67,6 @@ public class NodesController {
     }
 
     @GetMapping(value = "/service-instances/service-instance/{service-instance-id}",
-            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getProject(@PathVariable(name = "service-instance-id") final String serviceInstanceId,
             @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
@@ -85,10 +84,10 @@ public class NodesController {
         switch (value) {
             case PATHED:
                 LOGGER.info("found project {} in cache", nodeServiceInstance);
-                final Map<String, Object> map = new HashMap<>();
+                final Map<String, Object> map = new LinkedHashMap<>();
                 map.put(RESOURCE_TYPE, nodeServiceInstance.getResourceType());
                 map.put(RESOURCE_LINK, nodeServiceInstance.getResourceLink());
-                return ResponseEntity.ok(new Result(map));
+                return ResponseEntity.ok(new Results(map));
             case RAW:
                 final Optional<ServiceInstance> serviceInstance =
                         customerCacheServiceProvider.getServiceInstance(nodeServiceInstance.getGlobalCustomerId(),
@@ -103,8 +102,5 @@ public class NodesController {
         }
         LOGGER.error("invalid format type :{}", format);
         return getRequestErrorResponseEntity(request);
-
-
     }
-
 }

@@ -19,24 +19,27 @@
  */
 package org.onap.so.aaisimulator.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@JsonRootName(value = "result")
-public class Result {
+public class Results implements Serializable {
 
+    private static final long serialVersionUID = 3967660859271162759L;
+
+    @JsonProperty("results")
     private List<Map<String, Object>> values = new ArrayList<>();
 
-    public Result() {}
+    public Results() {}
 
-    public Result(final Map<String, Object> value) {
+    public Results(final Map<String, Object> value) {
         this.values.add(value);
     }
 

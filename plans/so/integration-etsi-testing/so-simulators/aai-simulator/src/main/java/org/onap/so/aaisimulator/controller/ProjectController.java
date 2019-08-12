@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Project;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.models.Format;
-import org.onap.so.aaisimulator.models.Result;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,8 +76,7 @@ public class ProjectController {
 
     }
 
-    @GetMapping(value = "/{project-name}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @GetMapping(value = "/{project-name}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getProject(@PathVariable("project-name") final String projectName,
             @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
             @RequestParam(name = "resultSize", required = false) final Integer resultSize,
@@ -99,7 +98,7 @@ public class ProjectController {
             case COUNT:
                 final Map<String, Object> map = new HashMap<>();
                 map.put(PROJECT, 1);
-                return ResponseEntity.ok(new Result(map));
+                return ResponseEntity.ok(new Results(map));
             default:
                 break;
         }
