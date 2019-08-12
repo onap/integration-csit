@@ -32,7 +32,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.Project;
-import org.onap.so.aaisimulator.models.Result;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestUtils;
@@ -135,12 +135,12 @@ public class ProjectControllerTest {
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final ResponseEntity<Result> actualResponse =
-                invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=count", Result.class);
+        final ResponseEntity<Results> actualResponse =
+                invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=count", Results.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
-        final Result result = actualResponse.getBody();
+        final Results result = actualResponse.getBody();
         assertNotNull(result.getValues());
         assertFalse(result.getValues().isEmpty());
         assertEquals(1, result.getValues().get(0).get(Constants.PROJECT));

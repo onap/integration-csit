@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.models.Format;
-import org.onap.so.aaisimulator.models.Result;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,8 +78,7 @@ public class OwningEntityController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping(value = "{owning-entity-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
-            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @GetMapping(value = "{owning-entity-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getOwningEntity(@PathVariable("owning-entity-id") final String owningEntityId,
             @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
             @RequestParam(name = "resultSize", required = false) final Integer resultSize,
@@ -101,7 +100,7 @@ public class OwningEntityController {
             case COUNT:
                 final Map<String, Object> map = new HashMap<>();
                 map.put(OWNING_ENTITY, 1);
-                return ResponseEntity.ok(new Result(map));
+                return ResponseEntity.ok(new Results(map));
             default:
                 break;
         }
