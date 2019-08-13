@@ -19,15 +19,12 @@
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${WORKSPACE}/scripts/sdnc/script1.sh
-export DOCKER_SDNC_REPO=darby321
-export DOCKER_SDNC_TAG=testimage1
-export DOCKER_USERNAME=darby321
-export DOCKER_PASSWORD=Darragh1993
+export DOCKER_SDNC_TAG=1.5.2
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.5-STAGING-latest
+export DOCKER_IMAGE_VERSION=1.5.2
 export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
@@ -39,7 +36,7 @@ fi
 # Clone SDNC repo to get docker-compose for SDNC
 mkdir -p $WORKSPACE/archives/integration
 cd $WORKSPACE/archives
-git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
+git clone -b dublin --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
 cd $WORKSPACE/archives/integration
 git pull
 HOST_IP_ADDR=localhost
@@ -52,16 +49,11 @@ git pull
 unset http_proxy https_proxy
 cd $WORKSPACE/archives/sdnc/installation/src/main/yaml
 
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SDNC_REPO
-docker pull $DOCKER_SDNC_REPO/sdnc-image:$DOCKER_SDNC_TAG
-docker tag $DOCKER_SDNC_REPO/sdnc-image:$DOCKER_SDNC_TAG onap/sdnc-image:latest
-docker logout $DOCKER_SDNC_REPO
-
 sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" docker-compose.yml
 docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
 
-#Docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_IMAGE_VERSION
-#docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_IMAGE_VERSION onap/sdnc-image:latest
+docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG
+docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG onap/sdnc-image:latest
 
 docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION onap/sdnc-ansible-server-image:latest
