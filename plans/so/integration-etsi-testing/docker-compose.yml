@@ -231,7 +231,7 @@ services:
   so-monitoring:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-monitoring:${TAG}
     ports:
-      - "30224:9091"
+      - "30224:30224"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/config/api-handler-infra/onapheat:/app/config
     environment:

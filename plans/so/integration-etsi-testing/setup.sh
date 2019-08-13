@@ -41,6 +41,7 @@ MVN_CLEAN_INSTALL="$MVN clean install"
 SIMULATOR_MAVEN_PROJECT_POM="$SCRIPT_HOME/so-simulators/pom.xml"
 WAIT_FOR_WORKAROUND_SCRIPT=$CONFIG_DIR/"wait-for-workaround-job.sh"
 WAIT_FOR_POPULATE_AAI_SCRIPT=$CONFIG_DIR/"wait-for-aai-config-job.sh"
+WAIT_FOR_CONTAINER_SCRIPT=$CONFIG_DIR/"wait-for-container.sh"
 
 echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
@@ -137,7 +138,7 @@ $WAIT_FOR_WORKAROUND_SCRIPT
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_WORKAROUND_SCRIPT failed"
    echo "Will stop running docker containers . . ."
-   docker-compose -f $DOCKER_COMPOSE_FILE_PATH down
+   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
    exit 1
 fi
 
@@ -147,7 +148,18 @@ $WAIT_FOR_POPULATE_AAI_SCRIPT
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_POPULATE_AAI_SCRIPT failed"
    echo "Will stop running docker containers . . ."
-   docker-compose -f $DOCKER_COMPOSE_FILE_PATH down
+   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+   exit 1
+fi
+
+API_INFRA_CONTAINER_NAME="api-handler-infra"
+echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $API_INFRA_CONTAINER_NAME container to start up"
+$WAIT_FOR_CONTAINER_SCRIPT -n "$API_INFRA_CONTAINER_NAME" -t "300" -p "${PROJECT_NAME}_default"
+
+if [ $? -ne 0 ]; then
+   echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
+   echo "Will stop running docker containers . . ."
+   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
    exit 1
 fi
 
