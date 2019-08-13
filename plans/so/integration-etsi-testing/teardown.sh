@@ -34,7 +34,6 @@ export $(egrep -v '^#' $ENV_FILE | xargs)
 export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$CONFIG_DIR
 
-
-docker-compose -f $DOCKER_COMPOSE_FILE_PATH down
+docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
 
 echo "Finished executing $SCRIPT_HOME/$SCRIPT_NAME"

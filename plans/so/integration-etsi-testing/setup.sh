@@ -126,7 +126,7 @@ git clone http://gerrit.onap.org/r/so/docker-config.git $TEST_LAB_DIR_PATH
 export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$CONFIG_DIR
 
-docker-compose -f $DOCKER_COMPOSE_FILE_PATH up -d 
+docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME up -d 
 
 echo "Sleeping for 3m"
 sleep 3m
