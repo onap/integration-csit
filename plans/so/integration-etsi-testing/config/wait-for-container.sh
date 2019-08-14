@@ -32,11 +32,11 @@ usage()
  cat<<-EOF
  Command Arguments:
 
- -n, --name
+ -c, --container-name
  Mandatory argument. container name
 
- -p, --project-name
- Mandatory argument. project name
+ -n, --network-name
+ Mandatory argument. network name
 
  -t, --timeout
  Mandatory argument. time out value in seconds (must be number)
@@ -64,8 +64,8 @@ invalid_arguments()
 
 process_arguments()
 {
- SHORT_ARGS="n:p:t:"
- LONG_ARGS="help,name:,project-name:,timeout:"
+ SHORT_ARGS="c:n:t:"
+ LONG_ARGS="help,container-name:,network-name:,timeout:"
 
  args=$(getopt -o $SHORT_ARGS -l $LONG_ARGS -n "$0"  -- "$@"  2>&1 )
  [[ $? -ne 0 ]] && invalid_arguments $( echo " $args"| head -1 )
@@ -76,11 +76,11 @@ process_arguments()
 
  while true; do
     case "$1" in
-         -n|--name)
+         -c|--container-name)
           NAME=$2
           shift 2 ;;
-         -p|project-name)
-          PROJECT_NAME=$2
+         -n|--network-name)
+          NETWORK_NAME=$2
           shift 2 ;;
           -t|--timeout)
           TIME_OUT=$2
@@ -102,8 +102,8 @@ process_arguments()
    echo "$SCRIPT_NAME $(current_timestamp): error: Container name  must not be empty! $NAME" >&2; exit 1
  fi
 
- if [ -z "$PROJECT_NAME" ]; then
-   echo "$SCRIPT_NAME $(current_timestamp): error: project name  must not be empty! $PROJECT_NAME" >&2; exit 1
+ if [ -z "$NETWORK_NAME" ]; then
+   echo "$SCRIPT_NAME $(current_timestamp): error: network name  must not be empty! $NETWORK_NAME" >&2; exit 1
  fi
 
  regex='^[0-9]+$'
@@ -118,10 +118,10 @@ process_arguments()
    exit 1
  fi
 
- HOST_IP=$(docker inspect --format '{{ index .NetworkSettings.Networks "'$PROJECT_NAME'" "IPAddress"}}' $CONTAINER_NAME)
+ HOST_IP=$(docker inspect --format '{{ index .NetworkSettings.Networks "'$NETWORK_NAME'" "IPAddress"}}' $CONTAINER_NAME)
 
  if [ $? -ne 0 ]; then
-   echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to find HOST IP using project name: $PROJECT_NAME and container name: $CONTAINER_NAME"
+   echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to find HOST IP using network name: $NETWORK_NAME and container name: $CONTAINER_NAME"
    exit 1
  fi
 

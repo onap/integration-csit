@@ -47,6 +47,16 @@ echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
 export $(egrep -v '^#' $ENV_FILE | xargs)
 
+MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME")
+
+for var in "${MANDATORY_VARIABLES_NAMES[@]}"
+ do
+   if [ -z "${!var}" ]; then
+     echo "Missing mandatory attribute $var in $ENV_FILE"
+     exit 1
+  fi
+done
+
 if [[ ! "$TEMP_DIR_PATH" || ! -d "$TEMP_DIR_PATH" ]]; then
         echo "Creating temporary directory $TEMP_DIR_PATH"
         mkdir $TEMP_DIR_PATH
@@ -154,7 +164,7 @@ fi
 
 API_INFRA_CONTAINER_NAME="api-handler-infra"
 echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $API_INFRA_CONTAINER_NAME container to start up"
-$WAIT_FOR_CONTAINER_SCRIPT -n "$API_INFRA_CONTAINER_NAME" -t "300" -p "${PROJECT_NAME}_default"
+$WAIT_FOR_CONTAINER_SCRIPT -c "$API_INFRA_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
 
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
