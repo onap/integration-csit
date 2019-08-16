@@ -47,6 +47,14 @@ public class TestConstants {
 
     public static final String RELATIONSHIP_URL = "/relationship-list/relationship";
 
+    public static final String VNF_ID = "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701";
+
+    public static final String GENERIC_VNF_NAME = "EsyVnfInstantiationTest2";
+
+    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "/generic-vnf/";
+
+    public static final String RELATED_TO_URL = "/related-to/generic-vnfs";
+
     private TestConstants() {}
 
 }

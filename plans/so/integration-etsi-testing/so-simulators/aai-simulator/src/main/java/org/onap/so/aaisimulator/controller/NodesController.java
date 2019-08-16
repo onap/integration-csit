@@ -22,7 +22,7 @@ package org.onap.so.aaisimulator.controller;
 import static org.onap.so.aaisimulator.utils.Constants.NODES_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
-import static org.onap.so.aaisimulator.utils.Utils.getRequestErrorResponseEntity;
+import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;

@@ -19,21 +19,38 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
+import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_URL;
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_ID;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION_SERVICE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
-import static org.onap.so.aaisimulator.utils.Utils.getRequestErrorResponseEntity;
-import static org.onap.so.aaisimulator.utils.Utils.getResourceVersion;
+import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
+import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
+import org.onap.aai.domain.yang.RelatedToProperty;
+import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
+import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,17 +74,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = CUSTOMER_URL)
 public class BusinessController {
 
-    private static final String SERVICE_SUBSCRIPTION = "service-subscription";
-    private static final String CUSTOMER_TYPE = "Customer";
     private static final Logger LOGGER = LoggerFactory.getLogger(BusinessController.class);
     private final CustomerCacheServiceProvider cacheServiceProvider;
     private final NodesCacheServiceProvider nodesCacheServiceProvider;
+    private final GenericVnfCacheServiceProvider genericVnfCacheServiceProvider;
 
     @Autowired
     public BusinessController(final CustomerCacheServiceProvider cacheServiceProvider,
-            final NodesCacheServiceProvider nodesCacheServiceProvider) {
+            final NodesCacheServiceProvider nodesCacheServiceProvider,
+            final GenericVnfCacheServiceProvider genericVnfCacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
         this.nodesCacheServiceProvider = nodesCacheServiceProvider;
+        this.genericVnfCacheServiceProvider = genericVnfCacheServiceProvider;
     }
 
     @GetMapping(value = "{global-customer-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -138,7 +156,7 @@ public class BusinessController {
                 globalCustomerId, serviceType);
         return getRequestErrorResponseEntity(request, SERVICE_SUBSCRIPTION);
     }
-    
+
     @GetMapping(
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -242,6 +260,103 @@ public class BusinessController {
         LOGGER.error("{} not supported ... ", xHttpHeaderOverride);
 
         return getRequestErrorResponseEntity(request);
+    }
+
+
+    @GetMapping(
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}/related-to/generic-vnfs",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getRelatedToGenericVnf(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestParam(name = "vnf-name", required = true) final String vnfName, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will retrieve generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
+                globalCustomerId, serviceType, serviceInstanceId, vnfName);
+
+        final Optional<Relationship> optional =
+                cacheServiceProvider.getRelationship(globalCustomerId, serviceType, serviceInstanceId, vnfName);
+
+        if (optional.isPresent()) {
+
+            final Relationship relationship = optional.get();
+            final Optional<RelationshipData> relationshipDataOptional = relationship.getRelationshipData().stream()
+                    .filter(existing -> GENERIC_VNF_VNF_ID.equals(existing.getRelationshipKey())).findFirst();
+
+            if (relationshipDataOptional.isPresent()) {
+                final RelationshipData relationshipData = relationshipDataOptional.get();
+                final String vnfId = relationshipData.getRelationshipValue();
+                final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(vnfId);
+                if (genericVnfOptional.isPresent()) {
+                    final GenericVnfs genericVnfs = new GenericVnfs();
+                    genericVnfs.getGenericVnf().add(genericVnfOptional.get());
+                    LOGGER.info("found service instance  {} in cache", relationship);
+                    return ResponseEntity.ok(genericVnfs);
+                }
+            }
+        }
+        LOGGER.error(
+                "Couldn't find  generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
+                globalCustomerId, serviceType, serviceInstanceId, vnfName);
+        return getRequestErrorResponseEntity(request, GENERIC_VNF);
+    }
+
+
+    @PutMapping(
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}/relationship-list/relationship",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putSericeInstanceRelationShip(
+            @PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestBody final Relationship relationship, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will add {} relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
+                relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
+        final Optional<ServiceInstance> optional =
+                cacheServiceProvider.addRelationShip(globalCustomerId, serviceType, serviceInstanceId, relationship);
+
+        if (optional.isPresent()) {
+            final ServiceInstance serviceInstance = optional.get();
+            final Relationship resultantRelationship = new Relationship();
+            resultantRelationship.setRelatedTo(GENERIC_VNF);
+            resultantRelationship.setRelatedLink(COMPOSED_OF);
+            resultantRelationship.setRelatedLink(request.getRequestURI());
+
+            final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
+            relationshipDataList.add(getRelationshipData(CUSTOMER_GLOBAL_CUSTOMER_ID, globalCustomerId));
+            relationshipDataList.add(getRelationshipData(SERVICE_SUBSCRIPTION_SERVICE_TYPE, serviceType));
+            relationshipDataList.add(getRelationshipData(SERVICE_INSTANCE_SERVICE_INSTANCE_ID, serviceInstanceId));
+
+            final List<RelatedToProperty> relatedToProperty = resultantRelationship.getRelatedToProperty();
+            relatedToProperty.add(getRelatedToProperty(SERVICE_INSTANCE_SERVICE_INSTANCE_NAME,
+                    serviceInstance.getServiceInstanceName()));
+
+            return ResponseEntity.accepted().body(resultantRelationship);
+        }
+
+        LOGGER.error(
+                "Couldn't add {} relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
+                relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
+
+        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request);
+    }
+
+    private RelatedToProperty getRelatedToProperty(final String key, final String value) {
+        final RelatedToProperty relatedToProperty = new RelatedToProperty();
+        relatedToProperty.setPropertyKey(key);
+        relatedToProperty.setPropertyValue(value);
+        return relatedToProperty;
+    }
+
+    private RelationshipData getRelationshipData(final String key, final String value) {
+        final RelationshipData relationshipData = new RelationshipData();
+        relationshipData.setRelationshipKey(key);
+        relationshipData.setRelationshipValue(value);
+        return relationshipData;
     }
 
 

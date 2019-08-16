@@ -19,12 +19,17 @@
  */
 package org.onap.so.aaisimulator.configration;
 
-import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.NODES_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.PROJECT_CACHE;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import javax.net.ssl.SSLContext;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.onap.so.aaisimulator.utils.CacheName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -32,6 +37,10 @@ import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.Resource;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 /**
@@ -40,6 +49,8 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
  */
 @Configuration
 public class ApplicationConfigration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfigration.class);
+
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
@@ -49,13 +60,50 @@ public class ApplicationConfigration {
     @Bean
     public CacheManager cacheManager() {
         final SimpleCacheManager manager = new SimpleCacheManager();
-        final List<Cache> caches = Arrays.asList(getCache(CUSTOMER_CACHE), getCache(PROJECT_CACHE),
-                getCache(NODES_CACHE), getCache(OWNING_ENTITY_CACHE));
+
+        final List<Cache> caches = new ArrayList<>();
+        for (final CacheName cacheName : CacheName.values()) {
+            caches.add(getCache(cacheName.getName()));
+        }
         manager.setCaches(caches);
         return manager;
     }
 
     private Cache getCache(final String name) {
+        LOGGER.info("Creating cache with name: {}", name);
         return new ConcurrentMapCache(name);
     }
+
+    @Profile("!test")
+    @Bean
+    public RestTemplate restTemplate(@Value("${http.client.ssl.trust-store:#{null}}") final Resource trustStore,
+            @Value("${http.client.ssl.trust-store-password:#{null}}") final String trustStorePassword)
+            throws Exception {
+        LOGGER.info("Setting up RestTemplate .... ");
+        final RestTemplate restTemplate = new RestTemplate();
+
+        final HttpComponentsClientHttpRequestFactory factory =
+                new HttpComponentsClientHttpRequestFactory(httpClient(trustStore, trustStorePassword));
+
+        restTemplate.setRequestFactory(factory);
+        return restTemplate;
+    }
+
+    private CloseableHttpClient httpClient(final Resource trustStore, final String trustStorePassword)
+            throws Exception {
+        LOGGER.info("Creating SSLConnectionSocketFactory with custom SSLContext and HostnameVerifier ... ");
+        return HttpClients.custom().setSSLSocketFactory(getSSLConnectionSocketFactory(trustStore, trustStorePassword))
+                .build();
+    }
+
+    private SSLConnectionSocketFactory getSSLConnectionSocketFactory(final Resource trustStore,
+            final String trustStorePassword) throws Exception {
+        return new SSLConnectionSocketFactory(getSslContext(trustStore, trustStorePassword));
+    }
+
+    private SSLContext getSslContext(final Resource trustStore, final String trustStorePassword)
+            throws Exception, Exception {
+        return new SSLContextBuilder().loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray()).build();
+    }
+
 }

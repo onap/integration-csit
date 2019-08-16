@@ -19,7 +19,7 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
-import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY_CACHE;
+import static org.onap.so.aaisimulator.utils.CacheName.OWNING_ENTITY_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import java.util.Optional;
 import org.onap.aai.domain.yang.OwningEntity;
@@ -52,14 +52,14 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
     @Override
     public void putOwningEntity(final String owningEntityId, final OwningEntity owningEntity) {
         LOGGER.info("Adding OwningEntity: {} with name to cache", owningEntityId, owningEntity);
-        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        final Cache cache = getCache(OWNING_ENTITY_CACHE.getName());
         cache.put(owningEntityId, owningEntity);
     }
 
     @Override
     public Optional<OwningEntity> getOwningEntity(final String owningEntityId) {
         LOGGER.info("getting OwningEntity from cache using key: {}", owningEntityId);
-        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        final Cache cache = getCache(OWNING_ENTITY_CACHE.getName());
         final OwningEntity value = cache.get(owningEntityId, OwningEntity.class);
         if (value != null) {
             return Optional.of(value);
@@ -69,7 +69,7 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
 
     @Override
     public boolean putOwningEntityRelationShip(final String owningEntityId, final Relationship relationship) {
-        final Cache cache = getCache(OWNING_ENTITY_CACHE);
+        final Cache cache = getCache(OWNING_ENTITY_CACHE.getName());
         final OwningEntity value = cache.get(owningEntityId, OwningEntity.class);
         if (value != null) {
             RelationshipList relationshipList = value.getRelationshipList();
@@ -93,7 +93,7 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
 
     @Override
     public void clearAll() {
-        clearCahce(OWNING_ENTITY_CACHE);
+        clearCahce(OWNING_ENTITY_CACHE.getName());
     }
 
 }

@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.service.providers;
 
 import java.util.Optional;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
@@ -52,6 +53,14 @@ public interface CustomerCacheServiceProvider {
     boolean patchServiceInstance(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final ServiceInstance serviceInstance);
 
+    Optional<Relationship> getRelationship(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String vnfName);
+
+    Optional<ServiceInstance> addRelationShip(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final Relationship relationship);
+
     void clearAll();
+
+
 
 }

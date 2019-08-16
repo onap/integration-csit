@@ -19,7 +19,7 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
-import static org.onap.so.aaisimulator.utils.Constants.PROJECT_CACHE;
+import static org.onap.so.aaisimulator.utils.CacheName.PROJECT_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import java.util.Optional;
 import org.onap.aai.domain.yang.Project;
@@ -54,7 +54,7 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
     @Override
     public void putProject(final String projectName, final Project project) {
         LOGGER.info("Adding project: {} with name to cache", project, projectName);
-        final Cache cache = getCache(PROJECT_CACHE);
+        final Cache cache = getCache(PROJECT_CACHE.getName());
         cache.put(projectName, project);
     }
 
@@ -62,7 +62,7 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
     @Override
     public Optional<Project> getProject(final String projectName) {
         LOGGER.info("getting project from cache using key: {}", projectName);
-        final Cache cache = getCache(PROJECT_CACHE);
+        final Cache cache = getCache(PROJECT_CACHE.getName());
         final Project value = cache.get(projectName, Project.class);
         if (value != null) {
             return Optional.of(value);
@@ -72,7 +72,7 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
 
     @Override
     public boolean putProjectRelationShip(final String projectName, final Relationship relationship) {
-        final Cache cache = getCache(PROJECT_CACHE);
+        final Cache cache = getCache(PROJECT_CACHE.getName());
         final Project value = cache.get(projectName, Project.class);
         if (value != null) {
             RelationshipList relationshipList = value.getRelationshipList();
@@ -97,6 +97,6 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
 
     @Override
     public void clearAll() {
-        clearCahce(PROJECT_CACHE);
+        clearCahce(PROJECT_CACHE.getName());
     }
 }

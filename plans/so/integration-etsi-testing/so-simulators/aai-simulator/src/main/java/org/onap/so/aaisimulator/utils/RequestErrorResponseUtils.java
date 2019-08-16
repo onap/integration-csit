@@ -19,8 +19,6 @@
  */
 package org.onap.so.aaisimulator.utils;
 
-import static org.onap.so.aaisimulator.utils.Constants.ERROR_MESSAGE;
-import static org.onap.so.aaisimulator.utils.Constants.ERROR_MESSAGE_ID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,11 @@ import org.springframework.http.ResponseEntity;
  * @author waqas.ikram@ericsson.com
  *
  */
-public class Utils {
+public class RequestErrorResponseUtils {
+
+    public static final String ERROR_MESSAGE_ID = "SVC3001";
+
+    public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
 
     private static final String EMPTY_STRING = "";
 
@@ -39,20 +41,17 @@ public class Utils {
 
     public static ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request,
             final String nodeType) {
-        return new ResponseEntity<>(
-                new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
-                        .variables(request.getMethod(), request.getRequestURI(), "Node Not Found:No Node of " + nodeType
-                                + " service-instance found at: " + request.getRequestURI(), "ERR.5.4.6114")
-                        .build(),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestErrorBuilder().messageId(ERROR_MESSAGE_ID).text(ERROR_MESSAGE)
+                .variables(request.getMethod(), request.getRequestURI(),
+                        "Node Not Found:No Node of " + nodeType + " found at: " + request.getRequestURI(),
+                        "ERR.5.4.6114")
+                .build(), HttpStatus.NOT_FOUND);
     }
-
 
     public static ResponseEntity<?> getRequestErrorResponseEntity(final HttpServletRequest request) {
         return getRequestErrorResponseEntity(request, Constants.SERVICE_RESOURCE_TYPE);
     }
 
-
-    private Utils() {}
+    private RequestErrorResponseUtils() {}
 
 }

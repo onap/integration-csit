@@ -37,31 +37,45 @@ public class Constants {
 
     public static final String OWNING_ENTITY_URL = BUSINESS_URL + "/owning-entities/owning-entity";
 
+    public static final String NETWORK_URL = BASE_URL + "/network";
+
+    public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs/";
+
+    public static final String RELATIONSHIP_LIST_RELATIONSHIP_URL = "/relationship-list/relationship";
+
     public static final String HEALTHY = "healthy";
 
-    public static final String CUSTOMER_CACHE = "customer-cache";
-
-    public static final String PROJECT_CACHE = "project-cache";
-
-    public static final String NODES_CACHE = "nodes-cache";
-
-    public static final String OWNING_ENTITY_CACHE = "owning-entity-cache";
-    
     public static final String PROJECT = "project";
-    
+
     public static final String OWNING_ENTITY = "owning-entity";
-    
+
     public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
-
-    public static final String ERROR_MESSAGE_ID = "SVC3001";
-
-    public static final String ERROR_MESSAGE = "Resource not found for %1 using id %2 (msg=%3) (ec=%4)";
 
     public static final String SERVICE_RESOURCE_TYPE = "service-instance";
 
     public static final String RESOURCE_LINK = "resource-link";
 
     public static final String RESOURCE_TYPE = "resource-type";
+
+    public static final String GENERIC_VNF_VNF_NAME = "generic-vnf.vnf-name";
+
+    public static final String GENERIC_VNF_VNF_ID = "generic-vnf.vnf-id";
+
+    public static final String SERVICE_INSTANCE_SERVICE_INSTANCE_ID = "service-instance.service-instance-id";
+
+    public static final String SERVICE_SUBSCRIPTION_SERVICE_TYPE = "service-subscription.service-type";
+
+    public static final String CUSTOMER_GLOBAL_CUSTOMER_ID = "customer.global-customer-id";
+
+    public static final String COMPOSED_OF = "org.onap.relationships.inventory.ComposedOf";
+
+    public static final String GENERIC_VNF = "generic-vnf";
+
+    public static final String SERVICE_SUBSCRIPTION = "service-subscription";
+
+    public static final String CUSTOMER_TYPE = "Customer";
+
+    public static final String SERVICE_INSTANCE_SERVICE_INSTANCE_NAME = "service-instance.service-instance-name";
 
     private Constants() {}
 

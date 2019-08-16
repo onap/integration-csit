@@ -21,8 +21,8 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY;
 import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY_URL;
-import static org.onap.so.aaisimulator.utils.Utils.getRequestErrorResponseEntity;
-import static org.onap.so.aaisimulator.utils.Utils.getResourceVersion;
+import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
+import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

@@ -19,7 +19,7 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
-import static org.onap.so.aaisimulator.utils.Constants.NODES_CACHE;
+import static org.onap.so.aaisimulator.utils.CacheName.NODES_CACHE;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
@@ -47,14 +47,14 @@ public class NodesCacheServiceProviderImpl extends AbstractCacheServiceProvider 
 
     @Override
     public void putNodeServiceInstance(final String serviceInstanceId, final NodeServiceInstance nodeServiceInstance) {
-        final Cache cache = getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE.getName());
         LOGGER.info("Adding {} to cache with key: {}...", nodeServiceInstance, serviceInstanceId);
         cache.put(serviceInstanceId, nodeServiceInstance);
     }
 
     @Override
     public Optional<NodeServiceInstance> getNodeServiceInstance(final String serviceInstanceId) {
-        final Cache cache = getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE.getName());
         final NodeServiceInstance value = cache.get(serviceInstanceId, NodeServiceInstance.class);
         if (value != null) {
             return Optional.of(value);
@@ -65,7 +65,7 @@ public class NodesCacheServiceProviderImpl extends AbstractCacheServiceProvider 
 
     @Override
     public void clearAll() {
-        final Cache cache = getCache(NODES_CACHE);
+        final Cache cache = getCache(NODES_CACHE.getName());
         final ConcurrentHashMap<?, ?> nativeCache = (ConcurrentHashMap<?, ?>) cache.getNativeCache();
         LOGGER.info("Clear all entries from cahce: {}", cache.getName());
         nativeCache.clear();

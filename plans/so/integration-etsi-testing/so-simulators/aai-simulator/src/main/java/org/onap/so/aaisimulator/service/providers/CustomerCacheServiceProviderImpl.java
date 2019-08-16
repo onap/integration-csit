@@ -19,15 +19,18 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
+import static org.onap.so.aaisimulator.utils.CacheName.CUSTOMER_CACHE;
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
 import org.onap.aai.domain.yang.ServiceSubscriptions;
-import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +48,6 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
         implements CustomerCacheServiceProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerCacheServiceProviderImpl.class);
 
-
     @Autowired
     public CustomerCacheServiceProviderImpl(final CacheManager cacheManager) {
         super(cacheManager);
@@ -54,7 +56,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     @Override
     public Optional<Customer> getCustomer(final String globalCustomerId) {
         LOGGER.info("getting customer from cache using key: {}", globalCustomerId);
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
         final Customer value = cache.get(globalCustomerId, Customer.class);
         if (value != null) {
             return Optional.of(value);
@@ -65,7 +67,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     @Override
     public void putCustomer(final String globalCustomerId, final Customer customer) {
         LOGGER.info("Adding customer: {} with key: {} in cache ...", customer, globalCustomerId);
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
 
         cache.put(globalCustomerId, customer);
     }
@@ -76,7 +78,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
         LOGGER.info("getting service subscription from cache for globalCustomerId: {} and serviceType: {}",
                 globalCustomerId, serviceType);
 
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
 
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
@@ -92,7 +94,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     public Optional<ServiceInstances> getServiceInstances(final String globalCustomerId, final String serviceType,
             final String serviceInstanceName) {
 
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -124,7 +126,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     @Override
     public Optional<ServiceInstance> getServiceInstance(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId) {
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -150,7 +152,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
             final String serviceInstanceId, final ServiceInstance serviceInstance) {
         LOGGER.info("Adding serviceInstance: {} in cache ...", serviceInstance, globalCustomerId);
 
-        final Cache cache = getCache(Constants.CUSTOMER_CACHE);
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
         final Customer value = cache.get(globalCustomerId, Customer.class);
 
         if (value != null) {
@@ -230,8 +232,55 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     }
 
     @Override
+    public Optional<Relationship> getRelationship(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String vnfName) {
+        final Optional<ServiceInstance> optional = getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
+
+        if (optional.isPresent()) {
+            LOGGER.info("Found service instance ...");
+            final ServiceInstance serviceInstance = optional.get();
+            final RelationshipList relationshipList = serviceInstance.getRelationshipList();
+
+            if (relationshipList != null) {
+                final List<Relationship> relationship = relationshipList.getRelationship();
+                return relationship.stream().filter(
+                        relationShip -> relationShip.getRelatedToProperty().stream().filter(relatedToProperty -> {
+                            final String propertyKey = relatedToProperty.getPropertyKey();
+                            final String propertyValue = relatedToProperty.getPropertyValue();
+                            return GENERIC_VNF_VNF_NAME.equals(propertyKey) && propertyValue != null
+                                    && propertyValue.equals(vnfName);
+                        }).findFirst().isPresent()).findFirst();
+            }
+            LOGGER.warn("Relationship list is nulll ...");
+        }
+        LOGGER.error("Unable to RelationShip with property value: {}... ", vnfName);
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<ServiceInstance> addRelationShip(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final Relationship relationship) {
+        final Optional<ServiceInstance> optional = getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
+        if (optional.isPresent()) {
+            final ServiceInstance serviceInstance = optional.get();
+            RelationshipList relationshipList = serviceInstance.getRelationshipList();
+            if (relationshipList == null) {
+                relationshipList = new RelationshipList();
+                serviceInstance.setRelationshipList(relationshipList);
+            }
+            relationshipList.getRelationship().add(relationship);
+            return Optional.of(serviceInstance);
+
+        }
+        LOGGER.error("Unable to find ServiceInstance ...");
+        return Optional.empty();
+
+    }
+
+    @Override
     public void clearAll() {
-        clearCahce(Constants.CUSTOMER_CACHE);
+        clearCahce(CUSTOMER_CACHE.getName());
     }
 
 }

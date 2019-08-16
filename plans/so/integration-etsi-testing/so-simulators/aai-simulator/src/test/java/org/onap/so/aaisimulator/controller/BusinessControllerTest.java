@@ -25,13 +25,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.RELATED_TO_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCES_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_TYPE;
+import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
 import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
 import java.io.IOException;
 import java.util.Optional;
@@ -40,12 +45,15 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
+import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.RequestError;
+import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.onap.so.aaisimulator.utils.ServiceException;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.onap.so.simulator.model.UserCredentials;
@@ -133,8 +141,8 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
@@ -211,7 +219,6 @@ public class BusinessControllerTest {
     public void test_getSericeInstance_usingServiceInstanceName_returnRequestErrorIfnoServiceInstanceFound()
             throws Exception {
 
-
         final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
@@ -277,8 +284,8 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
@@ -308,8 +315,8 @@ public class BusinessControllerTest {
         final ServiceException serviceException = actualError.getServiceException();
 
         assertNotNull(serviceException);
-        assertEquals(Constants.ERROR_MESSAGE_ID, serviceException.getMessageId());
-        assertEquals(Constants.ERROR_MESSAGE, serviceException.getText());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE_ID, serviceException.getMessageId());
+        assertEquals(RequestErrorResponseUtils.ERROR_MESSAGE, serviceException.getText());
         assertTrue(serviceException.getVariables().contains(HttpMethod.GET.toString()));
 
     }
@@ -375,6 +382,47 @@ public class BusinessControllerTest {
 
     }
 
+    @Test
+    public void test_putSericeInstanceRelatedTo_ableToRetrieveServiceInstanceFromCache() throws Exception {
+
+        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+
+        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+
+        final ResponseEntity<Void> responseEntity = invokeHttpPut(url, getServiceInstance());
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+
+        final String relationShipUrl =
+                getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL + RELATIONSHIP_URL;
+
+
+        final HttpEntity<?> httpEntity = getHttpEntity(getRelationShipJsonObject());
+        final ResponseEntity<Relationship> responseEntity2 =
+                restTemplate.exchange(relationShipUrl, HttpMethod.PUT, httpEntity, Relationship.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity2.getStatusCode());
+
+        final String genericVnfUrl = TestUtils.getBaseUrl(port) + GENERIC_VNF_URL + VNF_ID;
+        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, getGenericVnf());
+        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+
+
+        final ResponseEntity<GenericVnfs> actual =
+                restTemplate.exchange(url + RELATED_TO_URL + "?vnf-name=" + GENERIC_VNF_NAME, HttpMethod.GET,
+                        new HttpEntity<>(getHttpHeaders()), GenericVnfs.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        
+        assertTrue(actual.hasBody());
+        final GenericVnfs genericVnfs = actual.getBody();
+        assertFalse(genericVnfs.getGenericVnf().isEmpty());
+        final GenericVnf genericVnf = genericVnfs.getGenericVnf().get(0);
+        assertEquals(GENERIC_VNF_NAME, genericVnf.getVnfName());
+
+
+    }
+
     private String getCustomer() throws Exception, IOException {
         return getJsonString("test-data/business-customer.json");
     }
@@ -415,6 +463,14 @@ public class BusinessControllerTest {
 
     private String getOrchStatuUpdateServiceInstance() throws Exception, IOException {
         return getJsonString("test-data/service-instance-orch-status-update.json");
+    }
+
+    private String getRelationShipJsonObject() throws IOException {
+        return getJsonString("test-data/service-Instance-relationShip.json");
+    }
+    
+    private String getGenericVnf() throws IOException {
+        return getJsonString("test-data/generic-vnf.json");
     }
 
 }

@@ -31,12 +31,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
+@Profile("test")
 @Configuration
 public class TestRestTemplateConfigration {
 
@@ -44,12 +47,18 @@ public class TestRestTemplateConfigration {
 
     @Bean
     public TestRestTemplate testRestTemplate() throws Exception {
-
         final TestRestTemplate testRestTemplate = new TestRestTemplate();
         ((HttpComponentsClientHttpRequestFactory) testRestTemplate.getRestTemplate().getRequestFactory())
                 .setHttpClient(httpClient());
         return testRestTemplate;
 
+    }
+
+    @Bean
+    public RestTemplate restTemplate() throws Exception {
+        final RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient()));
+        return restTemplate;
     }
 
     private CloseableHttpClient httpClient() throws Exception {

@@ -18,3 +18,8 @@ spring:
          #password: demo123456!
          password: $2a$04$06VCpDvW5ztE7WOvhhvAtOx7JHLghECyZIzOShIbXLWpnshMva8T6
          role: VID
+http:
+   client:
+      ssl:
+         trust-store: classpath:truststore/org.onap.so.trust.jks
+         trust-store-password: '[)3KV.k*!IlkFhWEq0Nv2dDa'
