@@ -1,6 +1,7 @@
 #!/bin/bash -x
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
+# Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +17,6 @@
 #
 # $1 project/functionality
 # $2 robot options
-# $3 ci-management repo location
-
 
 function docker_stats(){
     #General memory details
@@ -42,14 +41,10 @@ function docker_stats(){
 if [ $# -eq 0 ]
 then
     echo 
-    echo "Usage: $0 plans/<project>/<functionality> [<robot-options>] [<ci-management-dir>]"
+    echo "Usage: $0 plans/<project>/<functionality> [<robot-options>]"
     echo
     echo "    <project>, <functionality>, <robot-options>:  "
     echo "        The same values as for the '{project}-csit-{functionality}' JJB job template."
-    echo
-    echo "    <ci-management-dir>: "
-    echo "        Path to the ci-management repo checked out locally.  It not specified, "
-    echo "        assumed to be adjacent to the integration repo directory."
     echo
     exit 1
 fi
@@ -57,6 +52,7 @@ fi
 if [ -z "$WORKSPACE" ]; then
     export WORKSPACE=`git rev-parse --show-toplevel`
 fi
+
 rm -rf $WORKSPACE/archives
 mkdir -p $WORKSPACE/archives
 
@@ -67,58 +63,26 @@ else
     exit 2
 fi
 
-
 export TESTOPTIONS="${2}"
-
-if [ -z "$3" ]; then
-    CI=${WORKSPACE}/../../ci-management
-else
-    CI=${3}
-fi
-
-
-
 
 TESTPLANDIR=${WORKSPACE}/${TESTPLAN}
 
-# Assume that if ROBOT_VENV is set, we don't need to reinstall robot
+# Assume that if env.properties is set, installation prerequirements are fulfilled
+# env.properties needs to be sourced for ROBOT_VENV
 if [ -f ${WORKSPACE}/env.properties ]; then
     source ${WORKSPACE}/env.properties
-fi
-if [ -f ${ROBOT_VENV}/bin/activate ]; then
-    source ${ROBOT_VENV}/bin/activate
 else
-    source $CI/jjb/integration/include-raw-integration-install-robotframework.sh
+    source ${WORKSPACE}/prepare-csit.sh
 fi
 
-# install required Robot libraries
-pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1
-
-# install eteutils
-mkdir -p ${ROBOT_VENV}/src/onap
-rm -rf ${ROBOT_VENV}/src/onap/testsuite
-pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5'
-
-pip freeze
-
-# install chrome driver
-google-chrome --version
-if [ ! -x ${ROBOT_VENV}/bin/chromedriver ]; then
-    pushd ${ROBOT_VENV}/bin
-    wget -N http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-    unzip chromedriver_linux64.zip
-    chmod +x chromedriver
-    popd
-fi
-
+# Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
+source "${ROBOT_VENV}/bin/activate"
 
 WORKDIR=`mktemp -d --suffix=-robot-workdir`
 cd ${WORKDIR}
 
-
 set +u
 set -x
-
 
 # Add csit scripts to PATH
 export PATH=${PATH}:${WORKSPACE}/docker/scripts:${WORKSPACE}/scripts:${ROBOT_VENV}/bin
