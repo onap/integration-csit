@@ -20,22 +20,20 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import java.util.Optional;
-import org.onap.aai.domain.yang.GenericVnfs;
-import org.onap.aai.domain.yang.ServiceInstance;
-import org.onap.so.aaisimulator.models.NodeServiceInstance;
+import org.onap.aai.domain.yang.Platform;
+import org.onap.aai.domain.yang.Relationship;
 
 /**
- * @author waqas.ikram@ericsson.com
+ * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public interface NodesCacheServiceProvider extends Clearable {
+public interface PlatformCacheServiceProvider extends Clearable {
 
-    void putNodeServiceInstance(final String serviceInstanceId, final NodeServiceInstance nodeServiceInstance);
+    void putPlatform(final String platformName, final Platform platform);
 
-    Optional<NodeServiceInstance> getNodeServiceInstance(final String serviceInstanceId);
+    Optional<Platform> getPlatform(final String platformName);
 
-    Optional<GenericVnfs> getGenericVnfs(final String vnfName);
-
-    Optional<ServiceInstance> getServiceInstance(final NodeServiceInstance nodeServiceInstance);
+    Optional<Relationship> addRelationShip(final String platformName, final Relationship relationship,
+            final String requestUri);
 
 }

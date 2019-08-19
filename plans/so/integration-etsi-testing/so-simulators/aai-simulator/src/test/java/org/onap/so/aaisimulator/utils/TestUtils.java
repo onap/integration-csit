@@ -26,6 +26,7 @@ import java.util.Base64;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
@@ -65,6 +66,43 @@ public class TestUtils {
 
     public static String getBaseUrl(final int port) {
         return "https://localhost:" + port;
+    }
+
+    public static String getCustomer() throws Exception, IOException {
+        return getJsonString("test-data/business-customer.json");
+    }
+
+    public static String getServiceInstance() throws IOException {
+        return getJsonString("test-data/service-instance.json");
+    }
+
+    public static String getGenericVnf() throws IOException {
+        return getJsonString("test-data/generic-vnf.json");
+    }
+
+    public static String getRelationShip() throws IOException {
+        return getJsonString("test-data/relation-ship.json");
+    }
+
+    public static String getPlatformRelatedLink() throws IOException {
+        return getJsonString("test-data/platform-related-link.json");
+    }
+
+    public static String getPlatform() throws IOException {
+        return getJsonString("test-data/platform.json");
+    }
+
+    public static String getPlatformRelationShip() throws IOException {
+        return getJsonString("test-data/platform-relationship.json");
+    }
+
+    public static String getUrl(final int port, final String... urls) {
+        final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);
+        for (final String url : urls) {
+            baseUri.path(url);
+
+        }
+        return baseUri.toUriString();
     }
 
     private TestUtils() {}

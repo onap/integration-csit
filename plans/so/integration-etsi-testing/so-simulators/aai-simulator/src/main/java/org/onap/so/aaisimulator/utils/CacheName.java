@@ -29,7 +29,8 @@ public enum CacheName {
     PROJECT_CACHE("project-cache"),
     NODES_CACHE("nodes-cache"),
     GENERIC_VNF_CACHE("generic-vnf-cache"),
-    OWNING_ENTITY_CACHE("owning-entity-cache");
+    OWNING_ENTITY_CACHE("owning-entity-cache"),
+    PLATFORM_CACHE("platform-cache");
 
     private String name;
 

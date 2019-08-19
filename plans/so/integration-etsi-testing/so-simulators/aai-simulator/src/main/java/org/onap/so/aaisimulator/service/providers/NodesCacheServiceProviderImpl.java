@@ -22,6 +22,9 @@ package org.onap.so.aaisimulator.service.providers;
 import static org.onap.so.aaisimulator.utils.CacheName.NODES_CACHE;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
+import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -38,11 +41,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class NodesCacheServiceProviderImpl extends AbstractCacheServiceProvider implements NodesCacheServiceProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(NodesCacheServiceProviderImpl.class);
+    private final GenericVnfCacheServiceProvider cacheServiceProvider;
+    private final CustomerCacheServiceProvider customerCacheServiceProvider;
 
 
     @Autowired
-    public NodesCacheServiceProviderImpl(final CacheManager cacheManager) {
+    public NodesCacheServiceProviderImpl(final CacheManager cacheManager,
+            final GenericVnfCacheServiceProvider cacheServiceProvider,
+            final CustomerCacheServiceProvider customerCacheServiceProvider) {
         super(cacheManager);
+        this.cacheServiceProvider = cacheServiceProvider;
+        this.customerCacheServiceProvider = customerCacheServiceProvider;
     }
 
     @Override
@@ -61,6 +70,27 @@ public class NodesCacheServiceProviderImpl extends AbstractCacheServiceProvider 
         }
         LOGGER.error("Unable to find node service instance in cache using key:{} ", serviceInstanceId);
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<GenericVnfs> getGenericVnfs(final String vnfName) {
+        final Optional<String> genericVnfId = cacheServiceProvider.getGenericVnfId(vnfName);
+        if (genericVnfId.isPresent()) {
+            final Optional<GenericVnf> genericVnf = cacheServiceProvider.getGenericVnf(genericVnfId.get());
+            if (genericVnf.isPresent()) {
+                final GenericVnfs genericVnfs = new GenericVnfs();
+                genericVnfs.getGenericVnf().add(genericVnf.get());
+                return Optional.of(genericVnfs);
+            }
+        }
+        LOGGER.error("Unable to find GenericVnf for name: {}", vnfName);
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<ServiceInstance> getServiceInstance(final NodeServiceInstance nodeServiceInstance) {
+        return customerCacheServiceProvider.getServiceInstance(nodeServiceInstance.getGlobalCustomerId(),
+                nodeServiceInstance.getServiceType(), nodeServiceInstance.getServiceInstanceId());
     }
 
     @Override

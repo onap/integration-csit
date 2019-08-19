@@ -27,7 +27,7 @@ import org.onap.aai.domain.yang.Relationship;
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface ProjectCacheServiceProvider {
+public interface ProjectCacheServiceProvider extends Clearable {
 
     void putProject(final String projectName, final Project project);
 
@@ -35,5 +35,4 @@ public interface ProjectCacheServiceProvider {
 
     boolean putProjectRelationShip(final String projectName, final Relationship relationship);
 
-    void clearAll();
 }

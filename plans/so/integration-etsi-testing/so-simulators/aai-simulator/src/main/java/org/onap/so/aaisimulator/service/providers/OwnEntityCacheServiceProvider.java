@@ -27,13 +27,12 @@ import org.onap.aai.domain.yang.Relationship;
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface OwnEntityCacheServiceProvider {
+public interface OwnEntityCacheServiceProvider extends Clearable {
 
     void putOwningEntity(final String owningEntityId, final OwningEntity owningEntity);
 
     Optional<OwningEntity> getOwningEntity(final String owningEntityId);
 
     boolean putOwningEntityRelationShip(String owningEntityId, Relationship relationship);
-    
-    void clearAll();
+
 }

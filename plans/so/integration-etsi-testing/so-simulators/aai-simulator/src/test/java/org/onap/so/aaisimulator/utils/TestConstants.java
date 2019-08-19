@@ -53,7 +53,11 @@ public class TestConstants {
 
     public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "/generic-vnf/";
 
-    public static final String RELATED_TO_URL = "/related-to/generic-vnfs";
+    public static final String GENERIC_VNFS_URL = "/generic-vnfs";
+
+    public static final String RELATED_TO_URL = "/related-to" + GENERIC_VNFS_URL;
+
+    public static final String PLATFORM_NAME = "PLATFORM_APP_ID_1";
 
     private TestConstants() {}
 
