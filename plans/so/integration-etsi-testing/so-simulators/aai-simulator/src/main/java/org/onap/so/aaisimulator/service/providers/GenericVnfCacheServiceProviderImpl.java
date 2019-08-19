@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.GENERIC_VNF_CACHE;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipList;
@@ -70,7 +71,7 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     public boolean addRelationShip(final String vnfId, final Relationship relationship) {
         final Optional<GenericVnf> optional = getGenericVnf(vnfId);
         if (optional.isPresent()) {
-            GenericVnf genericVnf = optional.get();
+            final GenericVnf genericVnf = optional.get();
             RelationshipList relationshipList = genericVnf.getRelationshipList();
             if (relationshipList == null) {
                 relationshipList = new RelationshipList();
@@ -83,7 +84,32 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     }
 
     @Override
+    public Optional<String> getGenericVnfId(final String vnfName) {
+        final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
+        if (cache != null) {
+            final Object nativeCache = cache.getNativeCache();
+            if (nativeCache instanceof ConcurrentHashMap) {
+                @SuppressWarnings("unchecked")
+                final ConcurrentHashMap<Object, Object> concurrentHashMap =
+                        (ConcurrentHashMap<Object, Object>) nativeCache;
+                for (final Object key : concurrentHashMap.keySet()) {
+                    final GenericVnf value = cache.get(key, GenericVnf.class);
+                    final String genericVnfName = value.getVnfName();
+                    if (value != null && genericVnfName.equals(vnfName)) {
+                        final String genericVnfId = value.getVnfId();
+                        LOGGER.info("Found matching vnf for name: {}, vnf-id: {}", genericVnfName, genericVnfId);
+                        return Optional.of(genericVnfId);
+                    }
+                }
+            }
+        }
+        LOGGER.info("No match found for vnf name: {}", vnfName);
+        return Optional.empty();
+    }
+
+    @Override
     public void clearAll() {
         clearCahce(GENERIC_VNF_CACHE.getName());
     }
+
 }

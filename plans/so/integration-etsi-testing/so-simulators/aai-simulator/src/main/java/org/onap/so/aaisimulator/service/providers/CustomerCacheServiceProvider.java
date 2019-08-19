@@ -30,7 +30,7 @@ import org.onap.aai.domain.yang.ServiceSubscription;
  * @author waqas.ikram@ericsson.com
  *
  */
-public interface CustomerCacheServiceProvider {
+public interface CustomerCacheServiceProvider extends Clearable {
 
     Optional<Customer> getCustomer(final String globalCustomerId);
 
@@ -58,9 +58,5 @@ public interface CustomerCacheServiceProvider {
 
     Optional<ServiceInstance> addRelationShip(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final Relationship relationship);
-
-    void clearAll();
-
-
 
 }

@@ -49,6 +49,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -89,8 +90,8 @@ public class GenericVnfsController {
 
     @GetMapping(value = "/generic-vnf/{vnf-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getGenericVnf(@PathVariable("vnf-id") final String vnfId,
-            final HttpServletRequest request) {
-        LOGGER.info("Will get GenericVnf for 'vnf-id': {} ...", vnfId);
+            @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
+        LOGGER.info("Will get GenericVnf for 'vnf-id': {} with depth: {}...", vnfId, depth);
 
         final Optional<GenericVnf> optional = cacheServiceProvider.getGenericVnf(vnfId);
 
@@ -100,7 +101,7 @@ public class GenericVnfsController {
             return ResponseEntity.ok(genericVnf);
         }
 
-        LOGGER.error("Unable to find GenericVnf in cache for 'vnf-id': {} ...", vnfId);
+        LOGGER.error("Unable to find GenericVnf in cache for 'vnf-id': {} with depth: {} ...", vnfId, depth);
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
 
     }
@@ -110,7 +111,7 @@ public class GenericVnfsController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putGenericVnfRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("vnf-id") final String vnfId, final HttpServletRequest request) {
-        LOGGER.info("Will put customer for 'global customer id': {} ...", vnfId);
+        LOGGER.info("Will put RelationShip for 'vnf-id': {} ...", vnfId);
 
         try {
             if (relationship.getRelatedLink() != null) {

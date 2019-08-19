@@ -23,20 +23,26 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.NODES_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNFS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
-import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
+import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
 import java.io.IOException;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
@@ -94,17 +100,10 @@ public class NodesControllerTest {
     public void test_getNodesSericeInstance_usingServiceInstanceId_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
-
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final ResponseEntity<Void> response2 = invokeHttpPut(url, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
+        invokeCustomerandServiceInstanceUrls();
 
         final ResponseEntity<ServiceInstance> actual =
-                restTemplate.exchange(getNodesEndPointUrl() + SERVICE_INSTANCE_URL, HttpMethod.GET,
+                restTemplate.exchange(getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL), HttpMethod.GET,
                         new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -121,18 +120,11 @@ public class NodesControllerTest {
     public void test_getNodesSericeInstance_usingServiceInstanceIdAndFormatPathed_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
-
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final ResponseEntity<Void> response2 = invokeHttpPut(url, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
+        invokeCustomerandServiceInstanceUrls();
 
         final ResponseEntity<Results> actual = restTemplate.exchange(
-                getNodesEndPointUrl() + SERVICE_INSTANCE_URL + "?format=" + Format.PATHED.getValue(), HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), Results.class);
+                getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL) + "?format=" + Format.PATHED.getValue(),
+                HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Results.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -148,21 +140,43 @@ public class NodesControllerTest {
 
     }
 
-    private String getNodesEndPointUrl() {
-        return TestUtils.getBaseUrl(port) + Constants.NODES_URL;
+    @Test
+    public void test_getNodesGenericVnfs_usingVnfName_ableToRetrieveItFromCache() throws Exception {
+        invokeCustomerandServiceInstanceUrls();
+
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
+        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
+        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+
+        final String nodeGenericVnfsUrl = getUrl(NODES_URL, GENERIC_VNFS_URL) + "?vnf-name=" + GENERIC_VNF_NAME;
+        final ResponseEntity<GenericVnfs> actual = restTemplate.exchange(nodeGenericVnfsUrl, HttpMethod.GET,
+                new HttpEntity<>(getHttpHeaders()), GenericVnfs.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertTrue(actual.hasBody());
+
+        final GenericVnfs genericVnfs = actual.getBody();
+        assertEquals(1, genericVnfs.getGenericVnf().size());
+
+        final GenericVnf genericVnf = genericVnfs.getGenericVnf().get(0);
+        assertEquals(GENERIC_VNF_NAME, genericVnf.getVnfName());
+        assertEquals(VNF_ID, genericVnf.getVnfId());
+
     }
 
+    private void invokeCustomerandServiceInstanceUrls() throws Exception, IOException {
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
 
-    private String getCustomerEndPointUrl() {
-        return TestUtils.getBaseUrl(port) + CUSTOMERS_URL;
+        final ResponseEntity<Void> response = invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer());
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+
+        final ResponseEntity<Void> response2 = invokeHttpPut(url, TestUtils.getServiceInstance());
+        assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
     }
 
-    private String getCustomer() throws Exception, IOException {
-        return getJsonString("test-data/business-customer.json");
-    }
-
-    private String getServiceInstance() throws Exception, IOException {
-        return getJsonString("test-data/service-instance.json");
+    private String getUrl(final String... urls) {
+        return TestUtils.getUrl(port, urls);
     }
 
     private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {

@@ -27,14 +27,14 @@ import org.onap.aai.domain.yang.Relationship;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public interface GenericVnfCacheServiceProvider {
+public interface GenericVnfCacheServiceProvider extends Clearable {
 
     void putGenericVnf(final String vnfId, final GenericVnf genericVnf);
 
     Optional<GenericVnf> getGenericVnf(final String vnfId);
-    
+
     boolean addRelationShip(final String vnfId, final Relationship relationship);
 
-    void clearAll();
+    Optional<String> getGenericVnfId(final String vnfName);
 
 }

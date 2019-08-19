@@ -27,6 +27,7 @@ import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
@@ -34,7 +35,6 @@ import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_TYPE;
 import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
-import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +49,7 @@ import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
+import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.onap.so.simulator.model.UserCredentials;
@@ -65,7 +66,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -92,17 +92,21 @@ public class GenericVnfsControllerTest {
     @Autowired
     private GenericVnfCacheServiceProvider genericVnfCacheServiceProvider;
 
+    @Autowired
+    private PlatformCacheServiceProvider platformVnfCacheServiceProvider;
+
     @After
     public void after() {
         customerCacheServiceProvider.clearAll();
         genericVnfCacheServiceProvider.clearAll();
+        platformVnfCacheServiceProvider.clearAll();
     }
 
     @Test
     public void test_putGenericVnf_successfullyAddedToCache() throws Exception {
 
         final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, getGenericVnf());
+        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
         final ResponseEntity<GenericVnf> response = invokeHttpGet(genericVnfUrl, GenericVnf.class);
@@ -119,20 +123,11 @@ public class GenericVnfsControllerTest {
     @Test
     public void test_putGenericVnfRelation_successfullyAddedToCache() throws Exception {
 
-        final ResponseEntity<Void> customerResponse = invokeHttpPut(getUrl(CUSTOMERS_URL), getCustomer());
-        assertEquals(HttpStatus.ACCEPTED, customerResponse.getStatusCode());
-
-        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
-        final ResponseEntity<Void> serviceInstanceResponse = invokeHttpPut(serviceInstanceUrl, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, serviceInstanceResponse.getStatusCode());
-
-        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, getGenericVnf());
-        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+        addCustomerServiceAndGenericVnf();
 
         final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
         final ResponseEntity<Void> genericVnfRelationShipResponse =
-                invokeHttpPut(genericVnfRelationShipUrl, getRelationShip());
+                invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getRelationShip());
 
         assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
 
@@ -147,6 +142,8 @@ public class GenericVnfsControllerTest {
         assertNotNull(actualRelationshipList);
         assertFalse(actualRelationshipList.getRelationship().isEmpty());
         final Relationship actualRelationShip = actualRelationshipList.getRelationship().get(0);
+
+        assertEquals(Constants.COMPOSED_OF, actualRelationShip.getRelationshipLabel());
 
         assertFalse(actualRelationShip.getRelatedToProperty().isEmpty());
         assertFalse(actualRelationShip.getRelationshipData().isEmpty());
@@ -193,6 +190,57 @@ public class GenericVnfsControllerTest {
 
     }
 
+    @Test
+    public void test_putGenericVnfRelationToPlatform_successfullyAddedToCache() throws Exception {
+        addCustomerServiceAndGenericVnf();
+
+        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+        final ResponseEntity<Void> platformResponse = invokeHttpPut(platformUrl, TestUtils.getPlatform());
+        assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
+
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final ResponseEntity<Void> genericVnfRelationShipResponse =
+                invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getPlatformRelatedLink());
+
+        assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
+
+        final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(genericVnfOptional.isPresent());
+        final GenericVnf actualGenericVnf = genericVnfOptional.get();
+        final RelationshipList relationshipList = actualGenericVnf.getRelationshipList();
+        assertNotNull(relationshipList);
+        assertFalse(relationshipList.getRelationship().isEmpty());
+
+        final Relationship relationship = relationshipList.getRelationship().get(0);
+
+        assertEquals(Constants.USES, relationship.getRelationshipLabel());
+        assertFalse(relationship.getRelationshipData().isEmpty());
+        assertEquals(1, relationship.getRelationshipData().size());
+
+        final List<RelationshipData> relationshipData = relationship.getRelationshipData();
+
+        final RelationshipData platformRelationshipData =
+                getRelationshipData(relationshipData, Constants.PLATFORM_PLATFORM_NAME);
+        assertNotNull(platformRelationshipData);
+        assertEquals(PLATFORM_NAME, platformRelationshipData.getRelationshipValue());
+
+    }
+
+    private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
+        final ResponseEntity<Void> customerResponse = invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer());
+        assertEquals(HttpStatus.ACCEPTED, customerResponse.getStatusCode());
+
+        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
+        final ResponseEntity<Void> serviceInstanceResponse =
+                invokeHttpPut(serviceInstanceUrl, TestUtils.getServiceInstance());
+        assertEquals(HttpStatus.ACCEPTED, serviceInstanceResponse.getStatusCode());
+
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
+        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
+        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+
+    }
+
     private RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
         return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
     }
@@ -215,28 +263,7 @@ public class GenericVnfsControllerTest {
     }
 
     private String getUrl(final String... urls) {
-        final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);
-        for (final String url : urls) {
-            baseUri.path(url);
-
-        }
-        return baseUri.toUriString();
-    }
-
-    private String getCustomer() throws IOException {
-        return getJsonString("test-data/business-customer.json");
-    }
-
-    private String getServiceInstance() throws IOException {
-        return getJsonString("test-data/service-instance.json");
-    }
-
-    private String getGenericVnf() throws IOException {
-        return getJsonString("test-data/generic-vnf.json");
-    }
-
-    private String getRelationShip() throws IOException {
-        return getJsonString("test-data/relation-ship.json");
+        return TestUtils.getUrl(port, urls);
     }
 
 }

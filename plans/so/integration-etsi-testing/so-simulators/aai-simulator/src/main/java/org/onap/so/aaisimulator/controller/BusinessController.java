@@ -323,7 +323,7 @@ public class BusinessController {
             final ServiceInstance serviceInstance = optional.get();
             final Relationship resultantRelationship = new Relationship();
             resultantRelationship.setRelatedTo(GENERIC_VNF);
-            resultantRelationship.setRelatedLink(COMPOSED_OF);
+            resultantRelationship.setRelationshipLabel(COMPOSED_OF);
             resultantRelationship.setRelatedLink(request.getRequestURI());
 
             final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();

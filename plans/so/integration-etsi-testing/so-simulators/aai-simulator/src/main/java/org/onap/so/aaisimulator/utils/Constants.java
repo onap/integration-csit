@@ -37,6 +37,8 @@ public class Constants {
 
     public static final String OWNING_ENTITY_URL = BUSINESS_URL + "/owning-entities/owning-entity";
 
+    public static final String PLATFORMS_URL = BUSINESS_URL + "/platforms/platform/";
+
     public static final String NETWORK_URL = BASE_URL + "/network";
 
     public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs/";
@@ -70,6 +72,12 @@ public class Constants {
     public static final String COMPOSED_OF = "org.onap.relationships.inventory.ComposedOf";
 
     public static final String GENERIC_VNF = "generic-vnf";
+
+    public static final String PLATFORM = "platform";
+
+    public static final String USES = "org.onap.relationships.inventory.Uses";
+    
+    public static final String PLATFORM_PLATFORM_NAME = "platform.platform-name";
 
     public static final String SERVICE_SUBSCRIPTION = "service-subscription";
 

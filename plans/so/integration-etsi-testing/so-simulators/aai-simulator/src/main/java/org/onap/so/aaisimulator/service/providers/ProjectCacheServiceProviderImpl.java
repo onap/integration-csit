@@ -45,7 +45,6 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectCacheServiceProviderImpl.class);
 
-
     @Autowired
     public ProjectCacheServiceProviderImpl(final CacheManager cacheManager) {
         super(cacheManager);

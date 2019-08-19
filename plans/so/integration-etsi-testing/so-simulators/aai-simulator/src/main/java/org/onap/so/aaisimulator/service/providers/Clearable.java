@@ -19,23 +19,10 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
-import java.util.Optional;
-import org.onap.aai.domain.yang.GenericVnfs;
-import org.onap.aai.domain.yang.ServiceInstance;
-import org.onap.so.aaisimulator.models.NodeServiceInstance;
-
 /**
- * @author waqas.ikram@ericsson.com
+ * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public interface NodesCacheServiceProvider extends Clearable {
-
-    void putNodeServiceInstance(final String serviceInstanceId, final NodeServiceInstance nodeServiceInstance);
-
-    Optional<NodeServiceInstance> getNodeServiceInstance(final String serviceInstanceId);
-
-    Optional<GenericVnfs> getGenericVnfs(final String vnfName);
-
-    Optional<ServiceInstance> getServiceInstance(final NodeServiceInstance nodeServiceInstance);
-
+public interface Clearable {
+    void clearAll();
 }

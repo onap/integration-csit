@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.NODES_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
@@ -28,11 +29,11 @@ import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
+import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.NodeServiceInstance;
 import org.onap.so.aaisimulator.models.Results;
-import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,12 +58,8 @@ public class NodesController {
 
     private final NodesCacheServiceProvider cacheServiceProvider;
 
-    private final CustomerCacheServiceProvider customerCacheServiceProvider;
-
     @Autowired
-    public NodesController(final CustomerCacheServiceProvider customerCacheServiceProvider,
-            final NodesCacheServiceProvider cacheServiceProvider) {
-        this.customerCacheServiceProvider = customerCacheServiceProvider;
+    public NodesController(final NodesCacheServiceProvider cacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
     }
 
@@ -90,17 +87,29 @@ public class NodesController {
                 return ResponseEntity.ok(new Results(map));
             case RAW:
                 final Optional<ServiceInstance> serviceInstance =
-                        customerCacheServiceProvider.getServiceInstance(nodeServiceInstance.getGlobalCustomerId(),
-                                nodeServiceInstance.getServiceType(), nodeServiceInstance.getServiceInstanceId());
+                        cacheServiceProvider.getServiceInstance(nodeServiceInstance);
                 if (serviceInstance.isPresent()) {
                     return ResponseEntity.ok(serviceInstance.get());
                 }
-                LOGGER.info("Unable to find Service instance in cahce using {}", nodeServiceInstance);
+                LOGGER.error("Unable to find Service instance in cahce using {}", nodeServiceInstance);
                 return getRequestErrorResponseEntity(request);
             default:
                 break;
         }
         LOGGER.error("invalid format type :{}", format);
         return getRequestErrorResponseEntity(request);
+    }
+
+    @GetMapping(value = "/generic-vnfs", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getGenericVnfs(@RequestParam(name = "vnf-name") final String vnfName,
+            final HttpServletRequest request) {
+        LOGGER.info("will find GenericVnfs for name: {}", vnfName);
+        final Optional<GenericVnfs> optional = cacheServiceProvider.getGenericVnfs(vnfName);
+        if (optional.isPresent()) {
+            LOGGER.info("found matching GenericVnfs for name: {}", vnfName);
+            return ResponseEntity.ok(optional.get());
+        }
+        LOGGER.error("Unable to find GenericVnfs in cahce using {}", vnfName);
+        return getRequestErrorResponseEntity(request, GENERIC_VNF);
     }
 }
