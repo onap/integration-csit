@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c7ff50_df43580f",
+        "filename": "prepare-csit.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-08-19T12:33:34Z",
+      "side": 1,
+      "message": "Should we really install chrome driver in common setup? Majority of test plans do not have any use for it",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "203e43a357feca6fb93419e049b84656c946c9bc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
