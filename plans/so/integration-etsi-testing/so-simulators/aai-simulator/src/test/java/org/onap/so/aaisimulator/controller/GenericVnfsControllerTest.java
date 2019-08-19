@@ -51,17 +51,13 @@ import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -81,10 +77,7 @@ public class GenericVnfsControllerTest {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private CustomerCacheServiceProvider customerCacheServiceProvider;
@@ -106,10 +99,12 @@ public class GenericVnfsControllerTest {
     public void test_putGenericVnf_successfullyAddedToCache() throws Exception {
 
         final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
-        final ResponseEntity<GenericVnf> response = invokeHttpGet(genericVnfUrl, GenericVnf.class);
+        final ResponseEntity<GenericVnf> response =
+                testRestTemplateService.invokeHttpGet(genericVnfUrl, GenericVnf.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         assertTrue(response.hasBody());
@@ -126,8 +121,8 @@ public class GenericVnfsControllerTest {
         addCustomerServiceAndGenericVnf();
 
         final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
-        final ResponseEntity<Void> genericVnfRelationShipResponse =
-                invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getRelationShip());
+        final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
+                .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getRelationShip(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
 
@@ -195,12 +190,13 @@ public class GenericVnfsControllerTest {
         addCustomerServiceAndGenericVnf();
 
         final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
-        final ResponseEntity<Void> platformResponse = invokeHttpPut(platformUrl, TestUtils.getPlatform());
+        final ResponseEntity<Void> platformResponse =
+                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
         final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
-        final ResponseEntity<Void> genericVnfRelationShipResponse =
-                invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getPlatformRelatedLink());
+        final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
+                .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getPlatformRelatedLink(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
 
@@ -227,16 +223,18 @@ public class GenericVnfsControllerTest {
     }
 
     private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
-        final ResponseEntity<Void> customerResponse = invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer());
+        final ResponseEntity<Void> customerResponse =
+                testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, customerResponse.getStatusCode());
 
         final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
         final ResponseEntity<Void> serviceInstanceResponse =
-                invokeHttpPut(serviceInstanceUrl, TestUtils.getServiceInstance());
+                testRestTemplateService.invokeHttpPut(serviceInstanceUrl, TestUtils.getServiceInstance(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, serviceInstanceResponse.getStatusCode());
 
         final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
     }
@@ -245,22 +243,6 @@ public class GenericVnfsControllerTest {
         return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
     }
 
-    private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
-    }
-
-    private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
-        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), clazz);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders());
-    }
-
-    private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
-    }
 
     private String getUrl(final String... urls) {
         return TestUtils.getUrl(port, urls);

@@ -96,6 +96,27 @@ public class TestUtils {
         return getJsonString("test-data/platform-relationship.json");
     }
 
+    public static String getLineOfBusiness() throws IOException {
+        return getJsonString("test-data/line-of-business.json");
+    }
+
+    public static String getBusinessProject() throws IOException {
+        return getJsonString("test-data/business-project.json");
+    }
+
+    public static String getBusinessProjectRelationship() throws IOException {
+        return getJsonString("test-data/business-project-relation-ship.json");
+    }
+
+    public static String getOwningEntityRelationship() throws IOException {
+        return getJsonString("test-data/owning-entity-relation-ship.json");
+    }
+
+    public static String getOwningEntity() throws IOException {
+        return getJsonString("test-data/owning-entity.json");
+
+    }
+
     public static String getUrl(final int port, final String... urls) {
         final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);
         for (final String url : urls) {

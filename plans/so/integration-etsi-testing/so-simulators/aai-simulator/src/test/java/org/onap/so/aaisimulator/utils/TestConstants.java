@@ -58,6 +58,8 @@ public class TestConstants {
     public static final String RELATED_TO_URL = "/related-to" + GENERIC_VNFS_URL;
 
     public static final String PLATFORM_NAME = "PLATFORM_APP_ID_1";
+    
+    public static final String LINE_OF_BUSINESS_NAME = "LINE_OF_BUSINESS_1";
 
     private TestConstants() {}
 

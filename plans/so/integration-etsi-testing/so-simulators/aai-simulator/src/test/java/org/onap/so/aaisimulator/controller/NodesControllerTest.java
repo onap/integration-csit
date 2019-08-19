@@ -49,17 +49,13 @@ import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -79,10 +75,7 @@ public class NodesControllerTest {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private NodesCacheServiceProvider nodesCacheServiceProvider;
@@ -102,9 +95,8 @@ public class NodesControllerTest {
 
         invokeCustomerandServiceInstanceUrls();
 
-        final ResponseEntity<ServiceInstance> actual =
-                restTemplate.exchange(getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL), HttpMethod.GET,
-                        new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
+        final ResponseEntity<ServiceInstance> actual = testRestTemplateService
+                .invokeHttpGet(getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL), ServiceInstance.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -122,9 +114,9 @@ public class NodesControllerTest {
 
         invokeCustomerandServiceInstanceUrls();
 
-        final ResponseEntity<Results> actual = restTemplate.exchange(
+        final ResponseEntity<Results> actual = testRestTemplateService.invokeHttpGet(
                 getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL) + "?format=" + Format.PATHED.getValue(),
-                HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Results.class);
+                Results.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -145,12 +137,14 @@ public class NodesControllerTest {
         invokeCustomerandServiceInstanceUrls();
 
         final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf());
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
         final String nodeGenericVnfsUrl = getUrl(NODES_URL, GENERIC_VNFS_URL) + "?vnf-name=" + GENERIC_VNF_NAME;
-        final ResponseEntity<GenericVnfs> actual = restTemplate.exchange(nodeGenericVnfsUrl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), GenericVnfs.class);
+
+        final ResponseEntity<GenericVnfs> actual =
+                testRestTemplateService.invokeHttpGet(nodeGenericVnfsUrl, GenericVnfs.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -167,11 +161,13 @@ public class NodesControllerTest {
     private void invokeCustomerandServiceInstanceUrls() throws Exception, IOException {
         final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
 
-        final ResponseEntity<Void> response = invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer());
+        final ResponseEntity<Void> response =
+                testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ResponseEntity<Void> response2 = invokeHttpPut(url, TestUtils.getServiceInstance());
+        final ResponseEntity<Void> response2 =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getServiceInstance(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
     }
 
@@ -179,16 +175,4 @@ public class NodesControllerTest {
         return TestUtils.getUrl(port, urls);
     }
 
-    private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders());
-    }
-
-    private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
-    }
 }

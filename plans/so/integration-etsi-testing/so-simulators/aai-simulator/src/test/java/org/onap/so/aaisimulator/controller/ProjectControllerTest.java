@@ -23,11 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.TestUtils.getFile;
-import static org.onap.so.aaisimulator.utils.TestUtils.getHttpHeaders;
-import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
-import java.io.IOException;
-import java.nio.file.Files;
+import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,16 +31,13 @@ import org.onap.aai.domain.yang.Project;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -60,22 +53,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Configuration
 public class ProjectControllerTest {
 
-    private static final String RELATIONSHIP_URL = "/relationship-list/relationship";
-
-    private static final String BUSINESS_PROJECT_JSON_FILE = "test-data/business-project.json";
-
-    private static final String PROJECT_RELATION_SHIP_JSON_FILE = "test-data/business-project-relation-ship.json";
-
     private static final String PROJECT_NAME_VALUE = "PROJECT_NAME_VALUE";
 
     @LocalServerPort
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private ProjectCacheServiceProvider cacheServiceProvider;
@@ -87,13 +71,13 @@ public class ProjectControllerTest {
 
     @Test
     public void test_putProject_successfullyAddedToCache() throws Exception {
-        final String url = getProjectEndPointUrl() + "/" + PROJECT_NAME_VALUE;
-        final String body = new String(Files.readAllBytes(getFile(BUSINESS_PROJECT_JSON_FILE).toPath()));
-        final ResponseEntity<Void> actual = invokeHttpPut(url, body);
+        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final ResponseEntity<Project> actualResponse = invokeHttpGet(url, Project.class);
+        final ResponseEntity<Project> actualResponse = testRestTemplateService.invokeHttpGet(url, Project.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -105,17 +89,19 @@ public class ProjectControllerTest {
 
     @Test
     public void test_putProjectRelationShip_successfullyAddedToCache() throws Exception {
-        final String url = getProjectEndPointUrl() + "/" + PROJECT_NAME_VALUE;
-        final ResponseEntity<Void> actual = invokeHttpPut(url, getJsonString(BUSINESS_PROJECT_JSON_FILE));
+        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final String projectRelationshipUrl = url + RELATIONSHIP_URL;
+        final String projectRelationshipUrl = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE, RELATIONSHIP_URL);
 
-        final ResponseEntity<Void> putResponse = invokeHttpPut(projectRelationshipUrl, getRelationship());
+        final ResponseEntity<Void> putResponse = testRestTemplateService.invokeHttpPut(projectRelationshipUrl,
+                TestUtils.getBusinessProjectRelationship(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, putResponse.getStatusCode());
 
-        final ResponseEntity<Project> actualResponse = invokeHttpGet(url, Project.class);
+        final ResponseEntity<Project> actualResponse = testRestTemplateService.invokeHttpGet(url, Project.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -129,14 +115,14 @@ public class ProjectControllerTest {
 
     @Test
     public void test_getProjectCount_correctResult() throws Exception {
-        final String url = getProjectEndPointUrl() + "/" + PROJECT_NAME_VALUE;
-        final String body = new String(Files.readAllBytes(getFile(BUSINESS_PROJECT_JSON_FILE).toPath()));
-        final ResponseEntity<Void> actual = invokeHttpPut(url, body);
+        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
         final ResponseEntity<Results> actualResponse =
-                invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=count", Results.class);
+                testRestTemplateService.invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=count", Results.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -146,28 +132,9 @@ public class ProjectControllerTest {
         assertEquals(1, result.getValues().get(0).get(Constants.PROJECT));
     }
 
-    private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
-        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders(getUsername())), clazz);
+
+    private String getUrl(final String... urls) {
+        return TestUtils.getUrl(port, urls);
     }
 
-    private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders(getUsername()));
-    }
-
-    private String getUsername() {
-        return userCredentials.getUsers().iterator().next().getUsername();
-    }
-
-    private String getProjectEndPointUrl() {
-        return TestUtils.getBaseUrl(port) + Constants.PROJECT_URL;
-    }
-
-    private String getRelationship() throws IOException, Exception {
-        return TestUtils.getJsonString(PROJECT_RELATION_SHIP_JSON_FILE);
-    }
 }

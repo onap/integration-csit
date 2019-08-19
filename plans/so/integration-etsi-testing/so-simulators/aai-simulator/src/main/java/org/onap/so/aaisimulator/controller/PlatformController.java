@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.PLATFORM;
 import static org.onap.so.aaisimulator.utils.Constants.PLATFORMS_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
@@ -28,7 +29,6 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Platform;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +81,7 @@ public class PlatformController {
             return ResponseEntity.ok(platform);
         }
         LOGGER.error("Unable to find Platform in cahce using {}", platformName);
-        return getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request, PLATFORM);
     }
 
     @PutMapping(value = "/{platform-name}/relationship-list/relationship",
@@ -103,7 +103,7 @@ public class PlatformController {
         LOGGER.error("Couldn't add {} relationship for 'platform-name': {} ...", relationship.getRelatedTo(),
                 platformName);
 
-        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request, PLATFORM);
 
     }
 }
