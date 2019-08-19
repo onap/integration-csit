@@ -37,17 +37,13 @@ import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -67,14 +63,10 @@ public class PlatformControllerTest {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private PlatformCacheServiceProvider platformCacheServiceProvider;
-
 
     @After
     public void after() {
@@ -85,10 +77,11 @@ public class PlatformControllerTest {
     public void test_putPlatform_successfullyAddedToCache() throws Exception {
 
         final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
-        final ResponseEntity<Void> platformResponse = invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
+        final ResponseEntity<Void> platformResponse =
+                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
-        final ResponseEntity<Platform> response = invokeHttpGet(platformUrl, Platform.class);
+        final ResponseEntity<Platform> response = testRestTemplateService.invokeHttpGet(platformUrl, Platform.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         assertTrue(response.hasBody());
@@ -103,13 +96,14 @@ public class PlatformControllerTest {
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
         final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
-        final ResponseEntity<Void> platformResponse = invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
+        final ResponseEntity<Void> platformResponse =
+                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
         final String platformRelationShipUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, RELATIONSHIP_URL);
 
-        final ResponseEntity<Relationship> responseEntity =
-                invokeHttpPut(platformRelationShipUrl, TestUtils.getPlatformRelationShip(), Relationship.class);
+        final ResponseEntity<Relationship> responseEntity = testRestTemplateService
+                .invokeHttpPut(platformRelationShipUrl, TestUtils.getPlatformRelationShip(), Relationship.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
         final Optional<Platform> optional = platformCacheServiceProvider.getPlatform(PLATFORM_NAME);
@@ -133,23 +127,6 @@ public class PlatformControllerTest {
         assertEquals(Constants.GENERIC_VNF_VNF_NAME, relatedToProperty.getPropertyKey());
         assertEquals(TestConstants.GENERIC_VNF_NAME, relatedToProperty.getPropertyValue());
 
-    }
-
-    private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
-        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), clazz);
-    }
-
-    private <T> ResponseEntity<T> invokeHttpPut(final String url, final Object obj, final Class<T> clazz) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, clazz);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders());
-    }
-
-    private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 
     private String getUrl(final String... urls) {

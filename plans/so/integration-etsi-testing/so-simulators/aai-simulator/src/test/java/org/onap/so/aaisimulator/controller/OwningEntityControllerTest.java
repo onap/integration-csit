@@ -24,11 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
-import static org.onap.so.aaisimulator.utils.TestUtils.getFile;
-import static org.onap.so.aaisimulator.utils.TestUtils.getHttpHeaders;
-import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
-import java.io.IOException;
-import java.nio.file.Files;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,16 +32,13 @@ import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -61,21 +53,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Configuration
 public class OwningEntityControllerTest {
-    private static final String OWNING_ENTITY_JSON_FILE = "test-data/owning-entity.json";
 
     private static final String OWN_ENTITY_ID_VALUE = "oe_1";
     private static final String OWN_ENTITY_NAME_VALUE = "oe_2";
-
-    private static final String OWNING_ENTITY_RELATION_SHIP_JSON_FILE = "test-data/owning-entity-relation-ship.json";
 
     @LocalServerPort
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private OwnEntityCacheServiceProvider cacheServiceProvider;
@@ -87,13 +73,14 @@ public class OwningEntityControllerTest {
 
     @Test
     public void test_putOwningEntity_successfullyAddedToCache() throws Exception {
-        final String url = getOwningEntityEndPointUrl() + "/" + OWN_ENTITY_ID_VALUE;
-        final String body = new String(Files.readAllBytes(getFile(OWNING_ENTITY_JSON_FILE).toPath()));
-        final ResponseEntity<Void> actual = invokeHttpPut(url, body);
+        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final ResponseEntity<OwningEntity> actualResponse = invokeHttpGet(url, OwningEntity.class);
+        final ResponseEntity<OwningEntity> actualResponse =
+                testRestTemplateService.invokeHttpGet(url, OwningEntity.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -106,14 +93,14 @@ public class OwningEntityControllerTest {
 
     @Test
     public void test_getOwningEntityCount_correctResult() throws Exception {
-        final String url = getOwningEntityEndPointUrl() + "/" + OWN_ENTITY_ID_VALUE;
-        final String body = new String(Files.readAllBytes(getFile(OWNING_ENTITY_JSON_FILE).toPath()));
-        final ResponseEntity<Void> actual = invokeHttpPut(url, body);
+        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final ResponseEntity<Results> actualResponse =
-                invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=" + Format.COUNT.getValue(), Results.class);
+        final ResponseEntity<Results> actualResponse = testRestTemplateService
+                .invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=" + Format.COUNT.getValue(), Results.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -125,17 +112,20 @@ public class OwningEntityControllerTest {
 
     @Test
     public void test_putOwningEntityRelationShip_successfullyAddedToCache() throws Exception {
-        final String url = getOwningEntityEndPointUrl() + "/" + OWN_ENTITY_ID_VALUE;
-        final ResponseEntity<Void> actual = invokeHttpPut(url, getJsonString(OWNING_ENTITY_JSON_FILE));
+        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final ResponseEntity<Void> actual =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
         final String owningEntityRelationshipUrl = url + RELATIONSHIP_URL;
 
-        final ResponseEntity<Void> putResponse = invokeHttpPut(owningEntityRelationshipUrl, getRelationship());
+        final ResponseEntity<Void> putResponse = testRestTemplateService.invokeHttpPut(owningEntityRelationshipUrl,
+                TestUtils.getOwningEntityRelationship(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, putResponse.getStatusCode());
 
-        final ResponseEntity<OwningEntity> actualResponse = invokeHttpGet(url, OwningEntity.class);
+        final ResponseEntity<OwningEntity> actualResponse =
+                testRestTemplateService.invokeHttpGet(url, OwningEntity.class);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertTrue(actualResponse.hasBody());
@@ -148,29 +138,9 @@ public class OwningEntityControllerTest {
 
     }
 
-    private String getRelationship() throws IOException {
-        return TestUtils.getJsonString(OWNING_ENTITY_RELATION_SHIP_JSON_FILE);
+    private String getUrl(final String... urls) {
+        return TestUtils.getUrl(port, urls);
     }
 
-    private <T> ResponseEntity<T> invokeHttpGet(final String url, final Class<T> clazz) {
-        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders(getUsername())), clazz);
-    }
-
-    private String getUsername() {
-        return userCredentials.getUsers().iterator().next().getUsername();
-    }
-
-    private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders(getUsername()));
-    }
-
-    private String getOwningEntityEndPointUrl() {
-        return TestUtils.getBaseUrl(port) + Constants.OWNING_ENTITY_URL;
-    }
 
 }

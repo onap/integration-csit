@@ -35,7 +35,7 @@ public class Constants {
 
     public static final String PROJECT_URL = BUSINESS_URL + "/projects/project/";
 
-    public static final String OWNING_ENTITY_URL = BUSINESS_URL + "/owning-entities/owning-entity";
+    public static final String OWNING_ENTITY_URL = BUSINESS_URL + "/owning-entities/owning-entity/";
 
     public static final String PLATFORMS_URL = BUSINESS_URL + "/platforms/platform/";
 
@@ -44,6 +44,8 @@ public class Constants {
     public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs/";
 
     public static final String RELATIONSHIP_LIST_RELATIONSHIP_URL = "/relationship-list/relationship";
+
+    public static final String LINES_OF_BUSINESS_URL = BUSINESS_URL + "/lines-of-business/line-of-business/";
 
     public static final String HEALTHY = "healthy";
 
@@ -76,7 +78,7 @@ public class Constants {
     public static final String PLATFORM = "platform";
 
     public static final String USES = "org.onap.relationships.inventory.Uses";
-    
+
     public static final String PLATFORM_PLATFORM_NAME = "platform.platform-name";
 
     public static final String SERVICE_SUBSCRIPTION = "service-subscription";
