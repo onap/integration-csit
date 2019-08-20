@@ -51,12 +51,23 @@ public class TestRestTemplateService {
         final HttpEntity<?> httpEntity = getHttpEntity(obj);
         return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, clazz);
     }
-    
+
+    public <T> ResponseEntity<T> invokeHttpPost(final String url, final Object obj, final Class<T> clazz) {
+        final HttpEntity<?> httpEntity = getHttpEntity(obj);
+        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, clazz);
+    }
+
+    public <T> ResponseEntity<T> invokeHttpPost(final HttpHeaders headers, final String url, final Object obj,
+            final Class<T> clazz) {
+        final HttpEntity<Object> entity = new HttpEntity<>(obj, headers);
+        return restTemplate.exchange(url, HttpMethod.POST, entity, clazz);
+    }
+
     private HttpEntity<?> getHttpEntity(final Object obj) {
         return new HttpEntity<>(obj, getHttpHeaders());
     }
 
-    private HttpHeaders getHttpHeaders() {
+    public HttpHeaders getHttpHeaders() {
         return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 

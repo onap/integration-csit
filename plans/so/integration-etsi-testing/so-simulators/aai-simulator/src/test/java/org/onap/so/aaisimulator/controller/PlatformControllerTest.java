@@ -103,7 +103,7 @@ public class PlatformControllerTest {
         final String platformRelationShipUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, RELATIONSHIP_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService
-                .invokeHttpPut(platformRelationShipUrl, TestUtils.getPlatformRelationShip(), Relationship.class);
+                .invokeHttpPut(platformRelationShipUrl, TestUtils.getGenericVnfRelationShip(), Relationship.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
         final Optional<Platform> optional = platformCacheServiceProvider.getPlatform(PLATFORM_NAME);

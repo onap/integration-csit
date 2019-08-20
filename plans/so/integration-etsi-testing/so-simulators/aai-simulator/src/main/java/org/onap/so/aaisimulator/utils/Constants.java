@@ -81,6 +81,10 @@ public class Constants {
 
     public static final String PLATFORM_PLATFORM_NAME = "platform.platform-name";
 
+    public static final String LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME = "line-of-business.line-of-business-name";
+
+    public static final String LINE_OF_BUSINESS = "line-of-business";
+
     public static final String SERVICE_SUBSCRIPTION = "service-subscription";
 
     public static final String CUSTOMER_TYPE = "Customer";

@@ -87,7 +87,7 @@ public class PlatformController {
     @PutMapping(value = "/{platform-name}/relationship-list/relationship",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<?> putSericeInstanceRelationShip(@PathVariable("platform-name") final String platformName,
+    public ResponseEntity<?> putRelationShip(@PathVariable("platform-name") final String platformName,
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
         LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
 

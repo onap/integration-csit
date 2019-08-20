@@ -27,6 +27,7 @@ import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.LINE_OF_BUSINESS_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
@@ -49,6 +50,7 @@ import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
+import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestRestTemplateService;
@@ -86,6 +88,9 @@ public class GenericVnfsControllerTest {
     private GenericVnfCacheServiceProvider genericVnfCacheServiceProvider;
 
     @Autowired
+    private LinesOfBusinessCacheServiceProvider linesOfBusinessCacheServiceProvider;
+
+    @Autowired
     private PlatformCacheServiceProvider platformVnfCacheServiceProvider;
 
     @After
@@ -93,6 +98,7 @@ public class GenericVnfsControllerTest {
         customerCacheServiceProvider.clearAll();
         genericVnfCacheServiceProvider.clearAll();
         platformVnfCacheServiceProvider.clearAll();
+        linesOfBusinessCacheServiceProvider.clearAll();
     }
 
     @Test
@@ -222,6 +228,43 @@ public class GenericVnfsControllerTest {
 
     }
 
+    @Test
+    public void test_putGenericVnfRelationToLineOfBusiness_successfullyAddedToCache() throws Exception {
+        addCustomerServiceAndGenericVnf();
+
+        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
+                .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getLineOfBusinessRelatedLink(), Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
+
+        final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(genericVnfOptional.isPresent());
+        final GenericVnf actualGenericVnf = genericVnfOptional.get();
+        final RelationshipList relationshipList = actualGenericVnf.getRelationshipList();
+        assertNotNull(relationshipList);
+        assertFalse(relationshipList.getRelationship().isEmpty());
+
+        final Relationship relationship = relationshipList.getRelationship().get(0);
+
+        assertEquals(Constants.USES, relationship.getRelationshipLabel());
+        assertFalse(relationship.getRelationshipData().isEmpty());
+        assertEquals(1, relationship.getRelationshipData().size());
+
+        final List<RelationshipData> relationshipData = relationship.getRelationshipData();
+
+        final RelationshipData lineOfBusinessRelationshipData =
+                getRelationshipData(relationshipData, Constants.LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME);
+        assertNotNull(lineOfBusinessRelationshipData);
+        assertEquals(LINE_OF_BUSINESS_NAME, lineOfBusinessRelationshipData.getRelationshipValue());
+
+    }
+
     private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
         final ResponseEntity<Void> customerResponse =
                 testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
@@ -242,7 +285,6 @@ public class GenericVnfsControllerTest {
     private RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
         return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
     }
-
 
     private String getUrl(final String... urls) {
         return TestUtils.getUrl(port, urls);
