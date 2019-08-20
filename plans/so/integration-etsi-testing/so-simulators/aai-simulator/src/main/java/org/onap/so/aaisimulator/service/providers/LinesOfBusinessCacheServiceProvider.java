@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.service.providers;
 
 import java.util.Optional;
 import org.onap.aai.domain.yang.LineOfBusiness;
+import org.onap.aai.domain.yang.Relationship;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -31,6 +32,9 @@ public interface LinesOfBusinessCacheServiceProvider extends Clearable {
     void putLineOfBusiness(final String lineOfBusinessName, final LineOfBusiness lineOfBusiness);
 
     Optional<LineOfBusiness> getLineOfBusiness(final String lineOfBusinessName);
+
+    Optional<Relationship> addRelationShip(final String lineOfBusinessName, final Relationship relationship,
+            final String requestURI);
 
 
 }

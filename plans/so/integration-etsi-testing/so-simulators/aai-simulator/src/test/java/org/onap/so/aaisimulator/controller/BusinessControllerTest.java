@@ -37,7 +37,8 @@ import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_TYPE;
 import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
-import static org.onap.so.aaisimulator.utils.TestUtils.getJsonString;
+import static org.onap.so.aaisimulator.utils.TestUtils.getCustomer;
+import static org.onap.so.aaisimulator.utils.TestUtils.getServiceInstance;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,15 +56,13 @@ import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.RequestError;
 import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.onap.so.aaisimulator.utils.ServiceException;
+import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
-import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -81,7 +80,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Configuration
 public class BusinessControllerTest {
 
-    private static final String FIREWALL_SERVICE_TTYPE = "Firewall";
+    private static final String FIREWALL_SERVICE_TYPE = "Firewall";
 
     private static final String ORCHESTRATION_STATUS = "Active";
 
@@ -89,10 +88,7 @@ public class BusinessControllerTest {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private UserCredentials userCredentials;
+    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private CustomerCacheServiceProvider cacheServiceProvider;
@@ -104,20 +100,18 @@ public class BusinessControllerTest {
 
     @Test
     public void test_putCustomer_successfullyAddedToCache() throws Exception {
-        final ResponseEntity<Void> actual = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
+        invokeCustomerEndPointAndAssertResponse();
         assertTrue(cacheServiceProvider.getCustomer(GLOBAL_CUSTOMER_ID).isPresent());
     }
 
     @Test
     public void test_getCustomer_ableToRetrieveCustomer() throws Exception {
-        final String url = getCustomerEndPointUrl();
+        final String url = getUrl(CUSTOMERS_URL);
 
-        invokeHttpPut(url, getCustomer());
+        final ResponseEntity<Void> response = testRestTemplateService.invokeHttpPut(url, getCustomer(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final ResponseEntity<Customer> actual =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Customer.class);
+        final ResponseEntity<Customer> actual = testRestTemplateService.invokeHttpGet(url, Customer.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -130,10 +124,9 @@ public class BusinessControllerTest {
 
     @Test
     public void test_getCustomer_returnRequestError_ifCustomerNotInCache() throws Exception {
-        final String url = getCustomerEndPointUrl();
+        final String url = getUrl(CUSTOMERS_URL);
 
-        final ResponseEntity<RequestError> actual =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), RequestError.class);
+        final ResponseEntity<RequestError> actual = testRestTemplateService.invokeHttpGet(url, RequestError.class);
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
@@ -149,12 +142,12 @@ public class BusinessControllerTest {
 
     @Test
     public void test_getServiceSubscription_ableToRetrieveServiceSubscriptionFromCache() throws Exception {
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL;
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL);
 
-        invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        invokeCustomerEndPointAndAssertResponse();
 
-        final ResponseEntity<ServiceSubscription> actual = restTemplate.exchange(url, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), ServiceSubscription.class);
+        final ResponseEntity<ServiceSubscription> actual =
+                testRestTemplateService.invokeHttpGet(url, ServiceSubscription.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -168,13 +161,9 @@ public class BusinessControllerTest {
     @Test
     public void test_putSericeInstance_ableToRetrieveServiceInstanceFromCache() throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        invokeCustomerEndPointAndAssertResponse();
+        invokeServiceInstanceEndPointAndAssertResponse();
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        invokeHttpPut(url, getServiceInstance());
 
         final Optional<ServiceInstance> actual =
                 cacheServiceProvider.getServiceInstance(GLOBAL_CUSTOMER_ID, SERVICE_TYPE, SERVICE_INSTANCE_ID);
@@ -191,19 +180,15 @@ public class BusinessControllerTest {
     public void test_getSericeInstance_usingServiceInstanceName_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        invokeCustomerEndPointAndAssertResponse();
+        invokeServiceInstanceEndPointAndAssertResponse();
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
 
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        invokeHttpPut(url, getServiceInstance());
-
-        final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
+        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCES_URL)
                 + "?depth=2&service-instance-name=" + SERVICE_NAME;
 
-        final ResponseEntity<ServiceInstances> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), ServiceInstances.class);
+        final ResponseEntity<ServiceInstances> actual =
+                testRestTemplateService.invokeHttpGet(serviceInstanceUrl, ServiceInstances.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -219,15 +204,13 @@ public class BusinessControllerTest {
     public void test_getSericeInstance_usingServiceInstanceName_returnRequestErrorIfnoServiceInstanceFound()
             throws Exception {
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        invokeCustomerEndPointAndAssertResponse();
 
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
+        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCES_URL)
                 + "?depth=2&service-instance-name=" + SERVICE_NAME;
 
-        final ResponseEntity<RequestError> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), RequestError.class);
+        final ResponseEntity<RequestError> actual =
+                testRestTemplateService.invokeHttpGet(serviceInstanceUrl, RequestError.class);
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -240,16 +223,13 @@ public class BusinessControllerTest {
     public void test_getSericeInstance_usingServiceInstanceId_ableToRetrieveServiceInstanceFromCache()
             throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        invokeHttpPut(url, getServiceInstance());
+        invokeCustomerEndPointAndAssertResponse();
+        invokeServiceInstanceEndPointAndAssertResponse();
 
         final ResponseEntity<ServiceInstance> actual =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
+                testRestTemplateService.invokeHttpGet(url, ServiceInstance.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -264,19 +244,16 @@ public class BusinessControllerTest {
     @Test
     public void test_getSericeInstance_usinginvalidServiceInstanceId_shouldReturnError() throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        invokeCustomerEndPointAndAssertResponse();
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        invokeServiceInstanceEndPointAndAssertResponse();
 
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        invokeHttpPut(url, getServiceInstance());
+        final String invalidServiceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL,
+                SERVICE_INSTANCES_URL + "/service-instance/" + UUID.randomUUID());
 
-        final String invalidServiceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL
-                + SERVICE_INSTANCES_URL + "/service-instance/" + UUID.randomUUID();
-
-        final ResponseEntity<RequestError> actual = restTemplate.exchange(invalidServiceInstanceUrl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), RequestError.class);
+        final ResponseEntity<RequestError> actual =
+                testRestTemplateService.invokeHttpGet(invalidServiceInstanceUrl, RequestError.class);
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
@@ -293,21 +270,15 @@ public class BusinessControllerTest {
     @Test
     public void test_getSericeInstance_usingInvalidServiceInstanceName_shouldReturnError() throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
-
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final ResponseEntity<Void> putRequestReponse = invokeHttpPut(url, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, putRequestReponse.getStatusCode());
+        invokeCustomerEndPointAndAssertResponse();
+        invokeServiceInstanceEndPointAndAssertResponse();
 
 
-        final String serviceInstanceUrl = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCES_URL
+        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCES_URL)
                 + "?service-instance-name=Dummy&depth=2";
 
-        final ResponseEntity<RequestError> actual = restTemplate.exchange(serviceInstanceUrl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), RequestError.class);
+        final ResponseEntity<RequestError> actual =
+                testRestTemplateService.invokeHttpGet(serviceInstanceUrl, RequestError.class);
 
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
 
@@ -324,29 +295,21 @@ public class BusinessControllerTest {
     @Test
     public void test_PathSericeInstance_usingServiceInstanceId_OrchStatusChangedInCache() throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        invokeCustomerEndPointAndAssertResponse();
+        invokeServiceInstanceEndPointAndAssertResponse();
 
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final ResponseEntity<Void> serviceInstancePutResponse = invokeHttpPut(url, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, serviceInstancePutResponse.getStatusCode());
-
-        final HttpHeaders httpHeaders = getHttpHeaders();
+        final HttpHeaders httpHeaders = testRestTemplateService.getHttpHeaders();
         httpHeaders.add(X_HTTP_METHOD_OVERRIDE, HttpMethod.PATCH.toString());
 
-        final HttpEntity<?> orchStatuUpdateServiceInstance =
-                getHttpEntity(getOrchStatuUpdateServiceInstance(), httpHeaders);
-
-        final ResponseEntity<Void> orchStatuUpdateServiceInstanceResponse =
-                invokeHttpPost(orchStatuUpdateServiceInstance, url, getOrchStatuUpdateServiceInstance());
+        final ResponseEntity<Void> orchStatuUpdateServiceInstanceResponse = testRestTemplateService
+                .invokeHttpPost(httpHeaders, url, TestUtils.getOrchStatuUpdateServiceInstance(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, orchStatuUpdateServiceInstanceResponse.getStatusCode());
 
-
         final ResponseEntity<ServiceInstance> actual =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ServiceInstance.class);
+                testRestTemplateService.invokeHttpGet(url, ServiceInstance.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -362,115 +325,76 @@ public class BusinessControllerTest {
     @Test
     public void test_putServiceSubscription_successfullyAddedToCache() throws Exception {
         final String serviceSubscriptionurl =
-                getCustomerEndPointUrl() + "/service-subscriptions/service-subscription/" + FIREWALL_SERVICE_TTYPE;
+                getUrl(CUSTOMERS_URL, "/service-subscriptions/service-subscription/", FIREWALL_SERVICE_TYPE);
 
-        final ResponseEntity<Void> customerPutResponse = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
-        assertEquals(HttpStatus.ACCEPTED, customerPutResponse.getStatusCode());
+        invokeCustomerEndPointAndAssertResponse();
 
-        final ResponseEntity<Void> serviceSubscriptionPutResponse =
-                invokeHttpPut(serviceSubscriptionurl, getServiceSubscription());
-        assertEquals(HttpStatus.ACCEPTED, serviceSubscriptionPutResponse.getStatusCode());
+        final ResponseEntity<Void> responseEntity = testRestTemplateService.invokeHttpPut(serviceSubscriptionurl,
+                TestUtils.getServiceSubscription(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
-        final ResponseEntity<ServiceSubscription> actual = restTemplate.exchange(serviceSubscriptionurl, HttpMethod.GET,
-                new HttpEntity<>(getHttpHeaders()), ServiceSubscription.class);
+        final ResponseEntity<ServiceSubscription> actual =
+                testRestTemplateService.invokeHttpGet(serviceSubscriptionurl, ServiceSubscription.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
 
         final ServiceSubscription actualServiceSubscription = actual.getBody();
-        assertEquals(FIREWALL_SERVICE_TTYPE, actualServiceSubscription.getServiceType());
+        assertEquals(FIREWALL_SERVICE_TYPE, actualServiceSubscription.getServiceType());
 
     }
 
     @Test
     public void test_putSericeInstanceRelatedTo_ableToRetrieveServiceInstanceFromCache() throws Exception {
 
-        final String url = getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL;
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
 
-        final ResponseEntity<Void> response = invokeHttpPut(getCustomerEndPointUrl(), getCustomer());
+        invokeCustomerEndPointAndAssertResponse();
 
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-
-        final ResponseEntity<Void> responseEntity = invokeHttpPut(url, getServiceInstance());
-        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        invokeServiceInstanceEndPointAndAssertResponse();
 
         final String relationShipUrl =
-                getCustomerEndPointUrl() + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL + RELATIONSHIP_URL;
+                getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL, RELATIONSHIP_URL);
 
+        final ResponseEntity<Relationship> responseEntity2 = testRestTemplateService.invokeHttpPut(relationShipUrl,
+                TestUtils.getRelationShipJsonObject(), Relationship.class);
 
-        final HttpEntity<?> httpEntity = getHttpEntity(getRelationShipJsonObject());
-        final ResponseEntity<Relationship> responseEntity2 =
-                restTemplate.exchange(relationShipUrl, HttpMethod.PUT, httpEntity, Relationship.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity2.getStatusCode());
 
         final String genericVnfUrl = TestUtils.getBaseUrl(port) + GENERIC_VNF_URL + VNF_ID;
-        final ResponseEntity<Void> genericVnfResponse = invokeHttpPut(genericVnfUrl, getGenericVnf());
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
-
-        final ResponseEntity<GenericVnfs> actual =
-                restTemplate.exchange(url + RELATED_TO_URL + "?vnf-name=" + GENERIC_VNF_NAME, HttpMethod.GET,
-                        new HttpEntity<>(getHttpHeaders()), GenericVnfs.class);
+        final ResponseEntity<GenericVnfs> actual = testRestTemplateService
+                .invokeHttpGet(url + RELATED_TO_URL + "?vnf-name=" + GENERIC_VNF_NAME, GenericVnfs.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        
+
         assertTrue(actual.hasBody());
         final GenericVnfs genericVnfs = actual.getBody();
         assertFalse(genericVnfs.getGenericVnf().isEmpty());
         final GenericVnf genericVnf = genericVnfs.getGenericVnf().get(0);
         assertEquals(GENERIC_VNF_NAME, genericVnf.getVnfName());
-
-
     }
 
-    private String getCustomer() throws Exception, IOException {
-        return getJsonString("test-data/business-customer.json");
+    private void invokeServiceInstanceEndPointAndAssertResponse() throws IOException {
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(url, getServiceInstance(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
     }
 
-    private String getServiceSubscription() throws Exception, IOException {
-        return getJsonString("test-data/service-subscription.json");
+    private void invokeCustomerEndPointAndAssertResponse() throws Exception, IOException {
+        final ResponseEntity<Void> response =
+                testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), getCustomer(), Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
 
-    private String getCustomerEndPointUrl() {
-        return TestUtils.getBaseUrl(port) + CUSTOMERS_URL;
-    }
-
-    private ResponseEntity<Void> invokeHttpPut(final String url, final Object obj) {
-        final HttpEntity<?> httpEntity = getHttpEntity(obj);
-        return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
-    }
-
-    private ResponseEntity<Void> invokeHttpPost(final HttpEntity<?> httpEntity, final String url, final Object obj) {
-        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, Void.class);
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj) {
-        return new HttpEntity<>(obj, getHttpHeaders());
-    }
-
-    private HttpEntity<?> getHttpEntity(final Object obj, final HttpHeaders headers) {
-        return new HttpEntity<>(obj, headers);
-    }
-
-    private HttpHeaders getHttpHeaders() {
-        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
-    }
-
-    private String getServiceInstance() throws Exception, IOException {
-        return getJsonString("test-data/service-instance.json");
-    }
-
-    private String getOrchStatuUpdateServiceInstance() throws Exception, IOException {
-        return getJsonString("test-data/service-instance-orch-status-update.json");
-    }
-
-    private String getRelationShipJsonObject() throws IOException {
-        return getJsonString("test-data/service-Instance-relationShip.json");
-    }
-    
-    private String getGenericVnf() throws IOException {
-        return getJsonString("test-data/generic-vnf.json");
+    private String getUrl(final String... urls) {
+        return TestUtils.getUrl(port, urls);
     }
 
 }

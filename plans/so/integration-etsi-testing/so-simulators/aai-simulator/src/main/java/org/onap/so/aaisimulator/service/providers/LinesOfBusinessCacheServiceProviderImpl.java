@@ -20,8 +20,14 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.LINES_OF_BUSINESS_CACHE;
+import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS;
+import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.USES;
 import java.util.Optional;
 import org.onap.aai.domain.yang.LineOfBusiness;
+import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +68,37 @@ public class LinesOfBusinessCacheServiceProviderImpl extends AbstractCacheServic
             return Optional.of(value);
         }
         LOGGER.error("Unable to find LineOfBusiness in cache using key:{} ", lineOfBusinessName);
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Relationship> addRelationShip(final String lineOfBusinessName, final Relationship relationship,
+            final String requestUri) {
+        final Optional<LineOfBusiness> optional = getLineOfBusiness(lineOfBusinessName);
+        if (optional.isPresent()) {
+            final LineOfBusiness lineOfBusiness = optional.get();
+            RelationshipList relationshipList = lineOfBusiness.getRelationshipList();
+            if (relationshipList == null) {
+                relationshipList = new RelationshipList();
+                lineOfBusiness.setRelationshipList(relationshipList);
+            }
+            relationshipList.getRelationship().add(relationship);
+
+            LOGGER.info("Successfully added relation to LineOfBusiness with name: {}", lineOfBusinessName);
+            final Relationship resultantRelationship = new Relationship();
+            resultantRelationship.setRelatedTo(LINE_OF_BUSINESS);
+            resultantRelationship.setRelationshipLabel(USES);
+            resultantRelationship.setRelatedLink(requestUri);
+
+            final RelationshipData relationshipData = new RelationshipData();
+            relationshipData.setRelationshipKey(LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME);
+            relationshipData.setRelationshipValue(lineOfBusiness.getLineOfBusinessName());
+            resultantRelationship.getRelationshipData().add(relationshipData);
+
+            return Optional.of(resultantRelationship);
+
+        }
+        LOGGER.error("Unable to find LineOfBusiness using name: {} ...", lineOfBusinessName);
         return Optional.empty();
     }
 

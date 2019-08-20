@@ -72,6 +72,10 @@ public class TestUtils {
         return getJsonString("test-data/business-customer.json");
     }
 
+    public static String getServiceSubscription() throws IOException {
+        return getJsonString("test-data/service-subscription.json");
+    }
+
     public static String getServiceInstance() throws IOException {
         return getJsonString("test-data/service-instance.json");
     }
@@ -87,13 +91,17 @@ public class TestUtils {
     public static String getPlatformRelatedLink() throws IOException {
         return getJsonString("test-data/platform-related-link.json");
     }
+    
+    public static String getLineOfBusinessRelatedLink() throws IOException {
+        return getJsonString("test-data/line-of-business-related-link.json");
+    }
 
     public static String getPlatform() throws IOException {
         return getJsonString("test-data/platform.json");
     }
 
-    public static String getPlatformRelationShip() throws IOException {
-        return getJsonString("test-data/platform-relationship.json");
+    public static String getGenericVnfRelationShip() throws IOException {
+        return getJsonString("test-data/generic-vnf-relationship.json");
     }
 
     public static String getLineOfBusiness() throws IOException {
@@ -114,8 +122,16 @@ public class TestUtils {
 
     public static String getOwningEntity() throws IOException {
         return getJsonString("test-data/owning-entity.json");
-
     }
+
+    public static String getOrchStatuUpdateServiceInstance() throws IOException {
+        return getJsonString("test-data/service-instance-orch-status-update.json");
+    }
+
+    public static String getRelationShipJsonObject() throws IOException {
+        return getJsonString("test-data/service-Instance-relationShip.json");
+    }
+
 
     public static String getUrl(final int port, final String... urls) {
         final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);

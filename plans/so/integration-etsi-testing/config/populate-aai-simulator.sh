@@ -54,6 +54,8 @@ populate_aai_simulator()
  CUSTOMER_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/customer.json
  PROJECT_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/project.json
  OWNING_ENTITY_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/owning-entity.json
+ LINE_OF_BUSINESS_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/line-of-business.json
+ PLATFORM_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/platform.json
  STATUS_CODE_ACCEPTED="202"
 
  echo "$SCRIPT_NAME $(current_timestamp): checking health of AAI Simulator"
@@ -89,6 +91,22 @@ populate_aai_simulator()
 
   if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
      echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put owning entity data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
+ echo "$SCRIPT_NAME $(current_timestamp): Adding Line Of Business"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/lines-of-business/line-of-business/EtsiCsitLineOfBusiness -X PUT -d @$"$LINE_OF_BUSINESS_JSON_FILE")
+
+ if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put line of business data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
+ echo "$SCRIPT_NAME $(current_timestamp): Adding Platform"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/platforms/platform/EtsiCsitPlatform -X PUT -d @$"$PLATFORM_JSON_FILE")
+
+ if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put platform data in AAI Simulator. Status code received: $status_code"
      exit 1
  fi
 

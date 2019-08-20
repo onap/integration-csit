@@ -20,12 +20,14 @@
 package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.LINES_OF_BUSINESS_URL;
+import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.LineOfBusiness;
+import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +84,30 @@ public class LinesOfBusinessController {
             return ResponseEntity.ok(platform);
         }
         LOGGER.error("Unable to find LineOfBusiness in cahce using {}", lineOfBusinessName);
-        return getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request, LINE_OF_BUSINESS);
+    }
+
+    @PutMapping(value = "/{line-of-business-name}/relationship-list/relationship",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putRelationShip(@PathVariable("line-of-business-name") final String lineOfBusinessName,
+            @RequestBody final Relationship relationship, final HttpServletRequest request) {
+        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+
+        final Optional<Relationship> optional =
+                cacheServiceProvider.addRelationShip(lineOfBusinessName, relationship, request.getRequestURI());
+
+        if (optional.isPresent()) {
+            final Relationship resultantRelationship = optional.get();
+            LOGGER.info("Relationship add, sending resultant relationship: {} in response ...", resultantRelationship);
+            return ResponseEntity.accepted().body(resultantRelationship);
+        }
+
+        LOGGER.error("Couldn't add {} relationship for 'line-of-business-name': {} ...", relationship.getRelatedTo(),
+                lineOfBusinessName);
+
+        return getRequestErrorResponseEntity(request, LINE_OF_BUSINESS);
+
     }
 
 }
