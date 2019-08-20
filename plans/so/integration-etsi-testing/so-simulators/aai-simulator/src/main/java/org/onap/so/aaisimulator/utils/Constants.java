@@ -31,6 +31,10 @@ public class Constants {
 
     public static final String BUSINESS_URL = BASE_URL + "/business";
 
+    public static final String CLOUD_INFRASTRUCTURE_URL = BASE_URL + "/cloud-infrastructure";
+
+    public static final String CLOUD_REGIONS = CLOUD_INFRASTRUCTURE_URL + "/cloud-regions/cloud-region/";
+
     public static final String CUSTOMER_URL = BUSINESS_URL + "/customers/customer/";
 
     public static final String PROJECT_URL = BUSINESS_URL + "/projects/project/";
@@ -90,6 +94,17 @@ public class Constants {
     public static final String CUSTOMER_TYPE = "Customer";
 
     public static final String SERVICE_INSTANCE_SERVICE_INSTANCE_NAME = "service-instance.service-instance-name";
+
+    public static final String CLOUD_REGION_OWNER_DEFINED_TYPE = "cloud-region.owner-defined-type";
+
+    public static final String CLOUD_REGION_CLOUD_REGION_ID = "cloud-region.cloud-region-id";
+
+    public static final String CLOUD_REGION_CLOUD_OWNER = "cloud-region.cloud-owner";
+
+    public static final String LOCATED_IN = "org.onap.relationships.inventory.LocatedIn";
+
+    public static final String CLOUD_REGION = "cloud-region";
+
 
     private Constants() {}
 

@@ -17,30 +17,23 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.utils;
+package org.onap.so.aaisimulator.service.providers;
+
+import java.util.Optional;
+import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.Relationship;
+import org.onap.so.aaisimulator.models.CloudRegionKey;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public enum CacheName {
+public interface CloudRegionCacheServiceProvider extends Clearable {
 
-    CUSTOMER_CACHE("customer-cache"),
-    PROJECT_CACHE("project-cache"),
-    NODES_CACHE("nodes-cache"),
-    GENERIC_VNF_CACHE("generic-vnf-cache"),
-    OWNING_ENTITY_CACHE("owning-entity-cache"),
-    PLATFORM_CACHE("platform-cache"),
-    LINES_OF_BUSINESS_CACHE("lines-of-business-cache"),
-    CLOUD_REGION_CACHE("cloud-region-cache");
+    void putCloudRegion(final CloudRegionKey cloudRegionKey, final CloudRegion cloudRegion);
 
-    private String name;
+    Optional<CloudRegion> getCloudRegion(final CloudRegionKey cloudRegionKey);
 
-    private CacheName(final String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    Optional<Relationship> addRelationShip(final CloudRegionKey key, final Relationship relationship,
+            final String requestUri);
 }

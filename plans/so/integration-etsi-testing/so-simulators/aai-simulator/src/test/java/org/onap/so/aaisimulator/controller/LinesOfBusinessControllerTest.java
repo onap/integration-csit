@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.LineOfBusiness;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
@@ -37,32 +36,16 @@ import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
-import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class LinesOfBusinessControllerTest {
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplateService testRestTemplateService;
+public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
 
     @Autowired
     private LinesOfBusinessCacheServiceProvider linesOfBusinessCacheServiceProvider;
@@ -130,7 +113,4 @@ public class LinesOfBusinessControllerTest {
 
     }
 
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
-    }
 }

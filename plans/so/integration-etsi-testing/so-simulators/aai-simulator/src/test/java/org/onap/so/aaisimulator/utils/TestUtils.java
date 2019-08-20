@@ -91,7 +91,7 @@ public class TestUtils {
     public static String getPlatformRelatedLink() throws IOException {
         return getJsonString("test-data/platform-related-link.json");
     }
-    
+
     public static String getLineOfBusinessRelatedLink() throws IOException {
         return getJsonString("test-data/line-of-business-related-link.json");
     }
@@ -132,12 +132,18 @@ public class TestUtils {
         return getJsonString("test-data/service-Instance-relationShip.json");
     }
 
+    public static String getCloudRegion() throws IOException {
+        return getJsonString("test-data/cloud-region.json");
+    }
+
+    public static Object getCloudRegionRelatedLink() throws IOException {
+        return getJsonString("test-data/cloud-region-related-link.json");
+    }
 
     public static String getUrl(final int port, final String... urls) {
         final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);
         for (final String url : urls) {
             baseUri.path(url);
-
         }
         return baseUri.toUriString();
     }
