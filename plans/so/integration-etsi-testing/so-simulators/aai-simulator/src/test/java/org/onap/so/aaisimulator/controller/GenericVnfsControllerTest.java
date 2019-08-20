@@ -23,6 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
@@ -41,7 +43,6 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
@@ -53,33 +54,16 @@ import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
-import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class GenericVnfsControllerTest {
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplateService testRestTemplateService;
+public class GenericVnfsControllerTest extends AbstractSpringBootTest {
 
     @Autowired
     private CustomerCacheServiceProvider customerCacheServiceProvider;
@@ -265,6 +249,56 @@ public class GenericVnfsControllerTest {
 
     }
 
+    @Test
+    public void test_putGenericVnfRelationToCloudRegion_successfullyAddedToCache() throws Exception {
+        addCustomerServiceAndGenericVnf();
+
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getCloudRegion(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
+                .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getCloudRegionRelatedLink(), Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, genericVnfRelationShipResponse.getStatusCode());
+
+        final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(genericVnfOptional.isPresent());
+        final GenericVnf actualGenericVnf = genericVnfOptional.get();
+        final RelationshipList relationshipList = actualGenericVnf.getRelationshipList();
+        assertNotNull(relationshipList);
+        assertFalse(relationshipList.getRelationship().isEmpty());
+
+        final Relationship relationship = relationshipList.getRelationship().get(0);
+
+        assertEquals(Constants.LOCATED_IN, relationship.getRelationshipLabel());
+        assertFalse(relationship.getRelationshipData().isEmpty());
+        assertEquals(2, relationship.getRelationshipData().size());
+
+        final List<RelationshipData> relationshipDataList = relationship.getRelationshipData();
+
+        final RelationshipData cloudOwnerRelationshipData =
+                getRelationshipData(relationshipDataList, Constants.CLOUD_REGION_CLOUD_OWNER);
+        assertNotNull(cloudOwnerRelationshipData);
+        assertEquals(CLOUD_OWNER_NAME, cloudOwnerRelationshipData.getRelationshipValue());
+
+        final RelationshipData cloudRegionIdRelationshipData =
+                getRelationshipData(relationshipDataList, Constants.CLOUD_REGION_CLOUD_REGION_ID);
+        assertNotNull(cloudRegionIdRelationshipData);
+        assertEquals(CLOUD_REGION_NAME, cloudRegionIdRelationshipData.getRelationshipValue());
+
+        final List<RelatedToProperty> relatedToPropertyList = relationship.getRelatedToProperty();
+
+        final RelatedToProperty cloudRegionOwnerDefinedTypeProperty =
+                getRelatedToProperty(relatedToPropertyList, Constants.CLOUD_REGION_OWNER_DEFINED_TYPE);
+        assertNotNull(cloudRegionOwnerDefinedTypeProperty);
+        assertEquals("OwnerType", cloudRegionOwnerDefinedTypeProperty.getPropertyValue());
+
+    }
+
     private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
         final ResponseEntity<Void> customerResponse =
                 testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
@@ -286,8 +320,10 @@ public class GenericVnfsControllerTest {
         return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
     }
 
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
+    private RelatedToProperty getRelatedToProperty(final List<RelatedToProperty> relatedToPropertyList,
+            final String key) {
+        return relatedToPropertyList.stream().filter(data -> data.getPropertyKey().equals(key)).findFirst()
+                .orElse(null);
     }
 
 }

@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.ServiceInstance;
@@ -49,33 +48,16 @@ import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
-import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class NodesControllerTest {
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplateService testRestTemplateService;
+public class NodesControllerTest extends AbstractSpringBootTest {
 
     @Autowired
     private NodesCacheServiceProvider nodesCacheServiceProvider;
@@ -169,10 +151,6 @@ public class NodesControllerTest {
         final ResponseEntity<Void> response2 =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getServiceInstance(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, response2.getStatusCode());
-    }
-
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
     }
 
 }

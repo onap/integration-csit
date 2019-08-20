@@ -26,42 +26,24 @@ import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
-import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class OwningEntityControllerTest {
+public class OwningEntityControllerTest extends AbstractSpringBootTest {
 
     private static final String OWN_ENTITY_ID_VALUE = "oe_1";
     private static final String OWN_ENTITY_NAME_VALUE = "oe_2";
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private OwnEntityCacheServiceProvider cacheServiceProvider;
@@ -137,10 +119,5 @@ public class OwningEntityControllerTest {
         assertNotNull(actualOwningEntity.getRelationshipList().getRelationship().get(0));
 
     }
-
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
-    }
-
 
 }

@@ -73,7 +73,7 @@ public class LinesOfBusinessController {
     }
 
 
-    @GetMapping(value = "/{line-of-business-name}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @GetMapping(value = "{line-of-business-name}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getLineOfBusiness(@PathVariable("line-of-business-name") final String lineOfBusinessName,
             final HttpServletRequest request) {
         LOGGER.info("retrieving Platform for 'platform-name': {} ...", lineOfBusinessName);
@@ -83,7 +83,7 @@ public class LinesOfBusinessController {
             LOGGER.info("found LineOfBusiness {} in cache", platform);
             return ResponseEntity.ok(platform);
         }
-        LOGGER.error("Unable to find LineOfBusiness in cahce using {}", lineOfBusinessName);
+        LOGGER.error("Unable to find LineOfBusiness in cache using {}", lineOfBusinessName);
         return getRequestErrorResponseEntity(request, LINE_OF_BUSINESS);
     }
 

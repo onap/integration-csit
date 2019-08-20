@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.Project;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
@@ -34,24 +33,15 @@ import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class ProjectControllerTest {
+public class ProjectControllerTest extends AbstractSpringBootTest {
 
     private static final String PROJECT_NAME_VALUE = "PROJECT_NAME_VALUE";
 
@@ -130,11 +120,6 @@ public class ProjectControllerTest {
         assertNotNull(result.getValues());
         assertFalse(result.getValues().isEmpty());
         assertEquals(1, result.getValues().get(0).get(Constants.PROJECT));
-    }
-
-
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
     }
 
 }

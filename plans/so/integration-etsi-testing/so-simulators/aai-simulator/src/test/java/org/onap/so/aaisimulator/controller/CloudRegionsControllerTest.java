@@ -23,17 +23,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
-import org.onap.aai.domain.yang.Platform;
+import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
-import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
+import org.onap.so.aaisimulator.models.CloudRegionKey;
+import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
@@ -45,53 +48,75 @@ import org.springframework.http.ResponseEntity;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class PlatformControllerTest extends AbstractSpringBootTest {
+public class CloudRegionsControllerTest extends AbstractSpringBootTest {
+
+    private static final CloudRegionKey CLOUD_REGION_KEY = new CloudRegionKey(CLOUD_OWNER_NAME, CLOUD_REGION_NAME);
 
     @Autowired
-    private PlatformCacheServiceProvider platformCacheServiceProvider;
+    private CloudRegionCacheServiceProvider cloudRegionCacheServiceProvider;
 
     @After
     public void after() {
-        platformCacheServiceProvider.clearAll();
+        cloudRegionCacheServiceProvider.clearAll();
     }
 
     @Test
-    public void test_putPlatform_successfullyAddedToCache() throws Exception {
+    public void test_putCloudRegion_successfullyAddedToCache() throws Exception {
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
-        final ResponseEntity<Void> platformResponse =
-                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
-        assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
-        final ResponseEntity<Platform> response = testRestTemplateService.invokeHttpGet(platformUrl, Platform.class);
+        final ResponseEntity<CloudRegion> response = testRestTemplateService.invokeHttpGet(url, CloudRegion.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         assertTrue(response.hasBody());
 
-        final Platform actualPlatform = response.getBody();
-        assertEquals(PLATFORM_NAME, actualPlatform.getPlatformName());
-        assertNotNull("resource version should not be null", actualPlatform.getResourceVersion());
+        final CloudRegion cloudRegion = response.getBody();
+        assertEquals(CLOUD_OWNER_NAME, cloudRegion.getCloudOwner());
+        assertEquals(CLOUD_REGION_NAME, cloudRegion.getCloudRegionId());
+
+        assertNotNull("ResourceVersion should not be null", cloudRegion.getResourceVersion());
+
+    }
+
+    @Test
+    public void test_getCloudRegionWithDepthValue_shouldReturnMatchedCloudRegion() throws Exception {
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+
+        final ResponseEntity<CloudRegion> response =
+                testRestTemplateService.invokeHttpGet(url + "?depth=2", CloudRegion.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final CloudRegion cloudRegion = response.getBody();
+        assertEquals(CLOUD_OWNER_NAME, cloudRegion.getCloudOwner());
+        assertEquals(CLOUD_REGION_NAME, cloudRegion.getCloudRegionId());
+
+        assertNotNull("ResourceVersion should not be null", cloudRegion.getResourceVersion());
 
     }
 
     @Test
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
-        final ResponseEntity<Void> platformResponse =
-                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
-        assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
-        final String platformRelationShipUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, RELATIONSHIP_URL);
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
-        final ResponseEntity<Relationship> responseEntity = testRestTemplateService
-                .invokeHttpPut(platformRelationShipUrl, TestUtils.getGenericVnfRelationShip(), Relationship.class);
+        final String relationShipUrl =
+                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, RELATIONSHIP_URL);
+
+        final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
+                TestUtils.getGenericVnfRelationShip(), Relationship.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
-        final Optional<Platform> optional = platformCacheServiceProvider.getPlatform(PLATFORM_NAME);
+        final Optional<CloudRegion> optional = cloudRegionCacheServiceProvider.getCloudRegion(CLOUD_REGION_KEY);
         assertTrue(optional.isPresent());
 
-        final Platform actual = optional.get();
+        final CloudRegion actual = optional.get();
 
         assertNotNull(actual.getRelationshipList());
         final List<Relationship> relationshipList = actual.getRelationshipList().getRelationship();
@@ -109,6 +134,13 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
         assertEquals(Constants.GENERIC_VNF_VNF_NAME, relatedToProperty.getPropertyKey());
         assertEquals(TestConstants.GENERIC_VNF_NAME, relatedToProperty.getPropertyValue());
 
+    }
+
+
+    private void invokeCloudRegionHttpPutEndPointAndAssertResponse(final String url) throws IOException {
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getCloudRegion(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
     }
 
 }

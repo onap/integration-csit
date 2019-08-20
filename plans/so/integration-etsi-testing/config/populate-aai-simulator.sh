@@ -56,6 +56,7 @@ populate_aai_simulator()
  OWNING_ENTITY_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/owning-entity.json
  LINE_OF_BUSINESS_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/line-of-business.json
  PLATFORM_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/platform.json
+ CLOUD_REGION_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/cloud-region.json
  STATUS_CODE_ACCEPTED="202"
 
  echo "$SCRIPT_NAME $(current_timestamp): checking health of AAI Simulator"
@@ -107,6 +108,14 @@ populate_aai_simulator()
 
  if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
      echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put platform data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
+ echo "$SCRIPT_NAME $(current_timestamp): Adding Cloud Region"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/EtsiCloudRegion -X PUT -d @$"$CLOUD_REGION_JSON_FILE")
+
+  if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put Cloud Region data in AAI Simulator. Status code received: $status_code"
      exit 1
  fi
 

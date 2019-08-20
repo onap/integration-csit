@@ -44,7 +44,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
@@ -56,39 +55,22 @@ import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.RequestError;
 import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.onap.so.aaisimulator.utils.ServiceException;
-import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Configuration
-public class BusinessControllerTest {
+public class BusinessControllerTest extends AbstractSpringBootTest {
 
     private static final String FIREWALL_SERVICE_TYPE = "Firewall";
 
     private static final String ORCHESTRATION_STATUS = "Active";
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplateService testRestTemplateService;
 
     @Autowired
     private CustomerCacheServiceProvider cacheServiceProvider;
@@ -361,7 +343,7 @@ public class BusinessControllerTest {
 
         assertEquals(HttpStatus.ACCEPTED, responseEntity2.getStatusCode());
 
-        final String genericVnfUrl = TestUtils.getBaseUrl(port) + GENERIC_VNF_URL + VNF_ID;
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
         final ResponseEntity<Void> genericVnfResponse =
                 testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
@@ -390,11 +372,6 @@ public class BusinessControllerTest {
                 testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), getCustomer(), Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-    }
-
-
-    private String getUrl(final String... urls) {
-        return TestUtils.getUrl(port, urls);
     }
 
 }
