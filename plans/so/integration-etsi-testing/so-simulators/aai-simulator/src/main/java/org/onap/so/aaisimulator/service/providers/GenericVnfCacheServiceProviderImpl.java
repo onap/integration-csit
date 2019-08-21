@@ -81,22 +81,6 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     }
 
     @Override
-    public boolean addRelationShip(final String vnfId, final Relationship relationship) {
-        final Optional<GenericVnf> optional = getGenericVnf(vnfId);
-        if (optional.isPresent()) {
-            final GenericVnf genericVnf = optional.get();
-            RelationshipList relationshipList = genericVnf.getRelationshipList();
-            if (relationshipList == null) {
-                relationshipList = new RelationshipList();
-                genericVnf.setRelationshipList(relationshipList);
-            }
-            return relationshipList.getRelationship().add(relationship);
-        }
-        LOGGER.error("Unable to find GenericVnf ...");
-        return false;
-    }
-
-    @Override
     public Optional<String> getGenericVnfId(final String vnfName) {
         final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
         if (cache != null) {
@@ -133,7 +117,13 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
                         outGoingRelationShip, targetUrl, Relationship.class);
                 if (optionalRelationship.isPresent()) {
                     final Relationship resultantRelationship = optionalRelationship.get();
-                    if (addRelationShip(vnfId, resultantRelationship)) {
+
+                    RelationshipList relationshipList = genericVnf.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        genericVnf.setRelationshipList(relationshipList);
+                    }
+                    if (relationshipList.getRelationship().add(resultantRelationship)) {
                         LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
                         return true;
                     }
@@ -143,6 +133,40 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
             LOGGER.error("Unable to add two-way relationship for vnfId: {}", vnfId, exception);
         }
         LOGGER.error("Unable to add relationship in cache for vnfId: {}", vnfId);
+        return false;
+    }
+
+    @Override
+    public Optional<Relationship> addRelationShip(final String vnfId, final Relationship relationship,
+            final String requestURI) {
+        final Optional<GenericVnf> optional = getGenericVnf(vnfId);
+        if (optional.isPresent()) {
+            final GenericVnf genericVnf = optional.get();
+            RelationshipList relationshipList = genericVnf.getRelationshipList();
+            if (relationshipList == null) {
+                relationshipList = new RelationshipList();
+                genericVnf.setRelationshipList(relationshipList);
+            }
+            relationshipList.getRelationship().add(relationship);
+            LOGGER.info("Successfully added relation to GenericVnf for vnfId: {}", vnfId);
+
+            final Relationship resultantRelationship = getRelationship(requestURI, genericVnf);
+            return Optional.of(resultantRelationship);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean patchGenericVnf(final String vnfId, final GenericVnf genericVnf) {
+        final Optional<GenericVnf> optional = getGenericVnf(vnfId);
+        if (optional.isPresent()) {
+            final GenericVnf cachedGenericVnf = optional.get();
+            LOGGER.info("Changing OrchestrationStatus from {} to {} ", cachedGenericVnf.getOrchestrationStatus(),
+                    genericVnf.getOrchestrationStatus());
+            cachedGenericVnf.setOrchestrationStatus(genericVnf.getOrchestrationStatus());
+            return true;
+        }
+        LOGGER.error("Unable to find GenericVnf ...");
         return false;
     }
 

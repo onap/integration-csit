@@ -23,7 +23,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
@@ -56,6 +58,8 @@ import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -296,6 +300,56 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
                 getRelatedToProperty(relatedToPropertyList, Constants.CLOUD_REGION_OWNER_DEFINED_TYPE);
         assertNotNull(cloudRegionOwnerDefinedTypeProperty);
         assertEquals("OwnerType", cloudRegionOwnerDefinedTypeProperty.getPropertyValue());
+
+    }
+
+    @Test
+    public void test_putBiDirectionalRelationShip_successfullyAddedToCache() throws Exception {
+        addCustomerServiceAndGenericVnf();
+
+        final String relationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+
+        final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
+                TestUtils.getTenantRelationShip(), Relationship.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+
+        final Optional<GenericVnf> optional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(optional.isPresent());
+
+        final GenericVnf actual = optional.get();
+
+        assertNotNull(actual.getRelationshipList());
+        final List<Relationship> relationshipList = actual.getRelationshipList().getRelationship();
+        assertFalse("Relationship list should not be empty", relationshipList.isEmpty());
+        final Relationship relationship = relationshipList.get(0);
+
+        assertFalse("RelationshipData list should not be empty", relationship.getRelationshipData().isEmpty());
+        assertFalse("RelatedToProperty list should not be empty", relationship.getRelatedToProperty().isEmpty());
+    }
+
+    @Test
+    public void test_patchGenericVnf_usingVnfId_OrchStatusChangedInCache() throws Exception {
+        addCustomerServiceAndGenericVnf();
+
+        final HttpHeaders httpHeaders = testRestTemplateService.getHttpHeaders();
+        httpHeaders.add(X_HTTP_METHOD_OVERRIDE, HttpMethod.PATCH.toString());
+
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
+        final ResponseEntity<Void> orchStatuUpdateServiceInstanceResponse = testRestTemplateService
+                .invokeHttpPost(httpHeaders, genericVnfUrl, TestUtils.getGenericVnfOrchStatuUpdate(), Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, orchStatuUpdateServiceInstanceResponse.getStatusCode());
+
+        final ResponseEntity<GenericVnf> response =
+                testRestTemplateService.invokeHttpGet(genericVnfUrl, GenericVnf.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final GenericVnf actualGenericVnf = response.getBody();
+        assertEquals(GENERIC_VNF_NAME, actualGenericVnf.getVnfName());
+        assertEquals(VNF_ID, actualGenericVnf.getVnfId());
+        assertEquals("Assigned", actualGenericVnf.getOrchestrationStatus());
 
     }
 

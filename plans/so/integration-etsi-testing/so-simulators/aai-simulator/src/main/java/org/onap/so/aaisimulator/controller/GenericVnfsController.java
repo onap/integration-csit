@@ -19,8 +19,10 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
+import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
@@ -36,12 +38,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -85,7 +90,7 @@ public class GenericVnfsController {
             @RequestParam(name = "resultSize", required = false) final Integer resultSize,
             @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
         LOGGER.info(
-                "Will get GenericVnf for 'vnf-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format:{} ...",
+                "Will get GenericVnf for 'vnf-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format: {} ...",
                 vnfId, depth, resultIndex, resultSize, format);
 
         final Optional<GenericVnf> optional = cacheServiceProvider.getGenericVnf(vnfId);
@@ -113,7 +118,7 @@ public class GenericVnfsController {
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
             final HttpHeaders incomingHeader = getHeaders(request);
-            boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+            final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
                     request.getRequestURI(), vnfId, relationship);
             if (result) {
                 LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
@@ -122,6 +127,48 @@ public class GenericVnfsController {
         }
         LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
         return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, GENERIC_VNF);
+    }
+
+    @PutMapping(value = "/generic-vnf/{vnf-id}" + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putBiDirectionalRelationShip(@RequestBody final Relationship relationship,
+            @PathVariable("vnf-id") final String vnfId, final HttpServletRequest request) {
+        LOGGER.info("Will put RelationShip for 'vnf-id': {} ...", vnfId);
+
+        final Optional<Relationship> optional =
+                cacheServiceProvider.addRelationShip(vnfId, relationship, request.getRequestURI());
+
+        if (optional.isPresent()) {
+            final Relationship resultantRelationship = optional.get();
+            LOGGER.info("Relationship add, sending resultant relationship: {} in response ...", resultantRelationship);
+            return ResponseEntity.accepted().body(resultantRelationship);
+        }
+
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
+        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, GENERIC_VNF);
+    }
+
+    @PostMapping(value = "/generic-vnf/{vnf-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> patchGenericVnf(@RequestBody final GenericVnf genericVnf,
+            @PathVariable("vnf-id") final String vnfId,
+            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
+            final HttpServletRequest request) {
+
+        LOGGER.info("Will post GenericVnf to cache with 'vnf-id': {} and '{}': {} ...", vnfId, X_HTTP_METHOD_OVERRIDE,
+                xHttpHeaderOverride);
+
+        if (HttpMethod.PATCH.toString().equalsIgnoreCase(xHttpHeaderOverride)) {
+            if (cacheServiceProvider.patchGenericVnf(vnfId, genericVnf)) {
+                return ResponseEntity.accepted().build();
+            }
+            LOGGER.error("Unable to apply patch to GenericVnf using 'vnf-id': {} ... ", vnfId);
+            return getRequestErrorResponseEntity(request, GENERIC_VNF);
+        }
+        LOGGER.error("{} not supported ... ", xHttpHeaderOverride);
+
+        return getRequestErrorResponseEntity(request, GENERIC_VNF);
     }
 
 }

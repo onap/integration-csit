@@ -33,6 +33,8 @@ import org.onap.aai.domain.yang.Platform;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.so.aaisimulator.models.Format;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
@@ -71,6 +73,28 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
         final Platform actualPlatform = response.getBody();
         assertEquals(PLATFORM_NAME, actualPlatform.getPlatformName());
         assertNotNull("resource version should not be null", actualPlatform.getResourceVersion());
+
+    }
+
+    @Test
+    public void test_getPlatformWithFormatCount() throws Exception {
+
+        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+
+        final ResponseEntity<Void> platformResponse =
+                testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
+
+        final ResponseEntity<Results> response = testRestTemplateService.invokeHttpGet(
+                platformUrl + "?resultIndex=0&resultSize=1&format=" + Format.COUNT.getValue(), Results.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final Results result = response.getBody();
+        assertNotNull(result.getValues());
+        assertFalse(result.getValues().isEmpty());
+        assertEquals(1, result.getValues().get(0).get(Constants.PLATFORM));
 
     }
 

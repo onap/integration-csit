@@ -34,11 +34,15 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
 
     Optional<GenericVnf> getGenericVnf(final String vnfId);
 
-    boolean addRelationShip(final String vnfId, final Relationship relationship);
+    Optional<Relationship> addRelationShip(final String vnfId, final Relationship relationship,
+            final String requestURI);
 
     boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestUriString,
             final String vnfId, final Relationship relationship);
 
     Optional<String> getGenericVnfId(final String vnfName);
+
+    boolean patchGenericVnf(final String vnfId, final GenericVnf genericVnf);
+
 
 }

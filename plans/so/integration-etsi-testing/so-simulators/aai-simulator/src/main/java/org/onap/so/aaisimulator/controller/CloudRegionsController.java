@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGIONS;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
@@ -32,9 +33,11 @@ import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
+import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -121,7 +124,6 @@ public class CloudRegionsController {
         }
 
         LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedTo(), key);
-
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
 
     }
@@ -166,6 +168,32 @@ public class CloudRegionsController {
             }
         }
         LOGGER.error("Unable to find Tenant in cache key : {} and tenant-id:{} ...", key, tenantId);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/relationship-list/relationship",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putRelationShip(@RequestBody final Relationship relationship,
+            @PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Will put RelationShip for key : {} and tenant-id:{} ...", key, tenantId);
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+            boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), key, tenantId, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
+
+        }
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
     }
 }

@@ -24,22 +24,33 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.TENANTS_TENANT;
 import static org.onap.so.aaisimulator.utils.TestConstants.TENANT_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
+import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
@@ -58,9 +69,17 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
     @Autowired
     private CloudRegionCacheServiceProvider cloudRegionCacheServiceProvider;
 
+    @Autowired
+    private CustomerCacheServiceProvider customerCacheServiceProvider;
+
+    @Autowired
+    private GenericVnfCacheServiceProvider genericVnfCacheServiceProvider;
+
     @After
     public void after() {
         cloudRegionCacheServiceProvider.clearAll();
+        customerCacheServiceProvider.clearAll();
+        genericVnfCacheServiceProvider.clearAll();
     }
 
     @Test
@@ -147,9 +166,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
         final String tenantUrl =
                 getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME + TENANTS_TENANT + TENANT_ID);
-        final ResponseEntity<Void> responseEntity =
-                testRestTemplateService.invokeHttpPut(tenantUrl, TestUtils.getTenant(), Void.class);
-        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        addTenantAndAssertResponse(tenantUrl);
 
         final ResponseEntity<Tenant> response = testRestTemplateService.invokeHttpGet(tenantUrl, Tenant.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -164,6 +181,99 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     }
 
+    @Test
+    public void test_putTenantRelationToGenericVnf_successfullyAddedToCache() throws Exception {
+
+        addCustomerServiceAndGenericVnf();
+
+        final String cloudRegionUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(cloudRegionUrl);
+
+        final String tenantUrl =
+                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, TENANTS_TENANT + TENANT_ID);
+        addTenantAndAssertResponse(tenantUrl);
+
+        final String tenantRelationShipUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
+                TENANTS_TENANT + TENANT_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
+
+        final ResponseEntity<Void> tenantRelationShipResponse = testRestTemplateService
+                .invokeHttpPut(tenantRelationShipUrl, TestUtils.getGenericVnfRelatedLink(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, tenantRelationShipResponse.getStatusCode());
+
+        final Optional<Tenant> optional = cloudRegionCacheServiceProvider.getTenant(CLOUD_REGION_KEY, TENANT_ID);
+
+        assertTrue(optional.isPresent());
+        final Tenant actualTenant = optional.get();
+        final RelationshipList relationshipList = actualTenant.getRelationshipList();
+        assertNotNull(relationshipList);
+        assertFalse(relationshipList.getRelationship().isEmpty());
+
+        final Relationship relationship = relationshipList.getRelationship().get(0);
+
+        assertEquals(Constants.COMPOSED_OF, relationship.getRelationshipLabel());
+        assertFalse(relationship.getRelationshipData().isEmpty());
+        assertEquals(1, relationship.getRelationshipData().size());
+
+        final List<RelationshipData> relationshipDataList = relationship.getRelationshipData();
+
+        final RelationshipData relationshipData =
+                getRelationshipData(relationshipDataList, Constants.GENERIC_VNF_VNF_ID);
+        assertNotNull(relationshipData);
+        assertEquals(VNF_ID, relationshipData.getRelationshipValue());
+
+        final List<RelatedToProperty> relatedToPropertyList = relationship.getRelatedToProperty();
+
+        final RelatedToProperty property = getRelatedToProperty(relatedToPropertyList, Constants.GENERIC_VNF_VNF_NAME);
+        assertNotNull(property);
+        assertEquals(GENERIC_VNF_NAME, property.getPropertyValue());
+
+        final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(genericVnfOptional.isPresent());
+        final GenericVnf actualGenericVnf = genericVnfOptional.get();
+        final RelationshipList relationshipListGenericVnf = actualGenericVnf.getRelationshipList();
+        assertNotNull(relationshipListGenericVnf);
+        assertFalse(relationshipListGenericVnf.getRelationship().isEmpty());
+
+        final Relationship relationshipGenericVnf = relationshipListGenericVnf.getRelationship().get(0);
+
+        assertEquals(Constants.BELONGS_TO, relationshipGenericVnf.getRelationshipLabel());
+        assertFalse(relationshipGenericVnf.getRelationshipData().isEmpty());
+        assertEquals(3, relationshipGenericVnf.getRelationshipData().size());
+
+    }
+
+    private void addTenantAndAssertResponse(final String tenantUrl) throws IOException {
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(tenantUrl, TestUtils.getTenant(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+    }
+
+    private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
+        final ResponseEntity<Void> customerResponse =
+                testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, customerResponse.getStatusCode());
+
+        final String serviceInstanceUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
+        final ResponseEntity<Void> serviceInstanceResponse =
+                testRestTemplateService.invokeHttpPut(serviceInstanceUrl, TestUtils.getServiceInstance(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, serviceInstanceResponse.getStatusCode());
+
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+
+    }
+
+    private RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
+        return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
+    }
+
+    private RelatedToProperty getRelatedToProperty(final List<RelatedToProperty> relatedToPropertyList,
+            final String key) {
+        return relatedToPropertyList.stream().filter(data -> data.getPropertyKey().equals(key)).findFirst()
+                .orElse(null);
+    }
 
     private void invokeCloudRegionHttpPutEndPointAndAssertResponse(final String url) throws IOException {
         final ResponseEntity<Void> responseEntity =
