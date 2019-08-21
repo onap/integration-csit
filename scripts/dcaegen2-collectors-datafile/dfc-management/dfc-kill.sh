@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-docker kill dfc_app
+docker kill dfc_app0
