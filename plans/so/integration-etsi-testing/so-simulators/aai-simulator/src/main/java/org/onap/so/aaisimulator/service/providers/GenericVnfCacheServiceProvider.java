@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.service.providers;
 import java.util.Optional;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.Relationship;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -34,6 +35,9 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
     Optional<GenericVnf> getGenericVnf(final String vnfId);
 
     boolean addRelationShip(final String vnfId, final Relationship relationship);
+
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestUriString,
+            final String vnfId, final Relationship relationship);
 
     Optional<String> getGenericVnfId(final String vnfName);
 

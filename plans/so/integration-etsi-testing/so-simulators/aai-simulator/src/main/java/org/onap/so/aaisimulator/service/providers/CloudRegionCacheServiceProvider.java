@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.service.providers;
 import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 
 /**
@@ -36,4 +37,8 @@ public interface CloudRegionCacheServiceProvider extends Clearable {
 
     Optional<Relationship> addRelationShip(final CloudRegionKey key, final Relationship relationship,
             final String requestUri);
+
+    boolean putTenant(final CloudRegionKey key, Tenant tenant);
+
+    Optional<Tenant> getTenant(final CloudRegionKey key, final String tenantId);
 }

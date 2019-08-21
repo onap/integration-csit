@@ -23,13 +23,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.RELATED_TO_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCES_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
@@ -336,7 +336,7 @@ public class BusinessControllerTest extends AbstractSpringBootTest {
         invokeServiceInstanceEndPointAndAssertResponse();
 
         final String relationShipUrl =
-                getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL, RELATIONSHIP_URL);
+                getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity2 = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getRelationShipJsonObject(), Relationship.class);

@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import org.junit.After;
 import org.junit.Test;
 import org.onap.aai.domain.yang.Project;
@@ -84,7 +84,8 @@ public class ProjectControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final String projectRelationshipUrl = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE, RELATIONSHIP_URL);
+        final String projectRelationshipUrl =
+                getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE, RELATIONSHIP_LIST_RELATIONSHIP_URL);
 
         final ResponseEntity<Void> putResponse = testRestTemplateService.invokeHttpPut(projectRelationshipUrl,
                 TestUtils.getBusinessProjectRelationship(), Void.class);

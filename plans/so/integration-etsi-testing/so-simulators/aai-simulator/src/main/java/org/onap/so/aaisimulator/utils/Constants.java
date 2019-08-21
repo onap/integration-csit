@@ -49,6 +49,9 @@ public class Constants {
 
     public static final String RELATIONSHIP_LIST_RELATIONSHIP_URL = "/relationship-list/relationship";
 
+    public static final String BI_DIRECTIONAL_RELATIONSHIP_LIST_URL =
+            RELATIONSHIP_LIST_RELATIONSHIP_URL + "/bi-directional";
+
     public static final String LINES_OF_BUSINESS_URL = BUSINESS_URL + "/lines-of-business/line-of-business/";
 
     public static final String HEALTHY = "healthy";

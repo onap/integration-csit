@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGIONS;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.Optional;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
 import org.slf4j.Logger;
@@ -99,7 +101,7 @@ public class CloudRegionsController {
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
     }
 
-    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/relationship-list/relationship",
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}" + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putRelationShip(@PathVariable("cloud-owner") final String cloudOwner,
@@ -124,5 +126,46 @@ public class CloudRegionsController {
 
     }
 
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putTenant(@RequestBody final Tenant tenant,
+            @PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, final HttpServletRequest request) {
 
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+
+        if (key.isValid()) {
+            LOGGER.info("Will add Tenant to cache with key 'key': {} ....", key);
+            if (tenant.getResourceVersion() == null || tenant.getResourceVersion().isEmpty()) {
+                tenant.setResourceVersion(getResourceVersion());
+            }
+            if (cacheServiceProvider.putTenant(key, tenant)) {
+                return ResponseEntity.accepted().build();
+            }
+        }
+
+        LOGGER.error("Unable to add Tenant in cache using key {}", key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @GetMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getTenant(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Retrieving Tenant using key : {} and tenant-id:{} ...", key, tenantId);
+        if (key.isValid()) {
+            final Optional<Tenant> optional = cacheServiceProvider.getTenant(key, tenantId);
+            if (optional.isPresent()) {
+                final Tenant tenant = optional.get();
+                LOGGER.info("found Tenant {} in cache", tenant);
+                return ResponseEntity.ok(tenant);
+            }
+        }
+        LOGGER.error("Unable to find Tenant in cache key : {} and tenant-id:{} ...", key, tenantId);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
 }

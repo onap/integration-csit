@@ -51,13 +51,13 @@ public class HttpRestServiceProviderImpl implements HttpRestServiceProvider {
     }
 
     @Override
-    public <T> ResponseEntity<T> invokeHttpPut(final HttpHeaders headers, final Object object, final String url,
+    public <T> ResponseEntity<T> invokeHttpPut(final HttpEntity<Object> httpEntity, final String url,
             final Class<T> clazz) {
 
         final HttpMethod httpMethod = HttpMethod.PUT;
         LOGGER.trace("Will invoke HTTP {} using URL: {}", httpMethod, url);
         try {
-            return restTemplate.exchange(url, httpMethod, new HttpEntity<>(object, headers), clazz);
+            return restTemplate.exchange(url, httpMethod, httpEntity, clazz);
 
         } catch (final HttpClientErrorException httpClientErrorException) {
             final String message = "Unable to invoke HTTP " + httpMethod + " using url: " + url + ", Response: "
@@ -78,7 +78,8 @@ public class HttpRestServiceProviderImpl implements HttpRestServiceProvider {
 
     @Override
     public <T> Optional<T> put(final HttpHeaders headers, final Object object, final String url, final Class<T> clazz) {
-        final ResponseEntity<T> response = invokeHttpPut(headers, object, url, clazz);
+        final HttpEntity<Object> httpEntity = new HttpEntity<Object>(object, headers);
+        final ResponseEntity<T> response = invokeHttpPut(httpEntity, url, clazz);
 
         if (!response.getStatusCode().equals(HttpStatus.OK) && !response.getStatusCode().equals(HttpStatus.CREATED)
                 && !response.getStatusCode().equals(HttpStatus.ACCEPTED)) {

@@ -20,6 +20,7 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import java.util.Optional;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -29,8 +30,7 @@ import org.springframework.http.ResponseEntity;
  */
 public interface HttpRestServiceProvider {
 
-    <T> ResponseEntity<T> invokeHttpPut(final HttpHeaders headers, final Object object, final String url,
-            final Class<T> clazz);
+    <T> ResponseEntity<T> invokeHttpPut(final HttpEntity<Object> httpEntity, final String url, final Class<T> clazz);
 
     <T> Optional<T> put(final HttpHeaders headers, final Object object, final String url, final Class<T> clazz);
 }
