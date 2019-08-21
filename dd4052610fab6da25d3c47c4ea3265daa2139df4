@@ -22,6 +22,30 @@
       "revId": "dd4052610fab6da25d3c47c4ea3265daa2139df4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6882a503_68a31903",
+        "filename": "run-csit.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2019-08-21T13:20:45Z",
+      "side": 0,
+      "message": "It should be fine. We needed ci-management for this script: include-raw-integration-install-robotframework.sh\nIn prepare-csit.sh this script is being called. So policy CSIT should be fine.",
+      "parentUuid": "fe37d143_616e1332",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "dd4052610fab6da25d3c47c4ea3265daa2139df4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
