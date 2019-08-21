@@ -20,11 +20,16 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.CLOUD_REGION_CACHE;
+import static org.onap.so.aaisimulator.utils.Constants.BELONGS_TO;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_OWNER;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_REGION_ID;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_OWNER_DEFINED_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.LOCATED_IN;
+import static org.onap.so.aaisimulator.utils.Constants.TENANT;
+import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_ID;
+import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_NAME;
 import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
@@ -41,7 +46,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -53,10 +60,13 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudRegionCacheServiceProviderImpl.class);
 
+    private final HttpRestServiceProvider httpRestServiceProvider;
 
     @Autowired
-    public CloudRegionCacheServiceProviderImpl(final CacheManager cacheManager) {
+    public CloudRegionCacheServiceProviderImpl(final CacheManager cacheManager,
+            final HttpRestServiceProvider httpRestServiceProvider) {
         super(cacheManager);
+        this.httpRestServiceProvider = httpRestServiceProvider;
     }
 
     @Override
@@ -156,6 +166,69 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
 
         LOGGER.error("Unable to find Tenant using key: {} and tenantId: {} ...", key, tenantId);
         return Optional.empty();
+    }
+
+    @Override
+    public boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestUriString, final CloudRegionKey key, final String tenantId,
+            final Relationship relationship) {
+        try {
+            final Optional<Tenant> optional = getTenant(key, tenantId);
+            if (optional.isPresent()) {
+                final Tenant tenant = optional.get();
+                final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
+
+                final Relationship outGoingRelationShip = getRelationship(requestUriString, key, tenant);
+                final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
+                        outGoingRelationShip, targetUrl, Relationship.class);
+
+                if (optionalRelationship.isPresent()) {
+                    final Relationship resultantRelationship = optionalRelationship.get();
+                    RelationshipList relationshipList = tenant.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        tenant.setRelationshipList(relationshipList);
+                    }
+
+                    if (relationshipList.getRelationship().add(resultantRelationship)) {
+                        LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
+                        return true;
+                    }
+                }
+
+
+            }
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to add two-way relationship for CloudRegion: {} and tenant: {}", key, tenantId,
+                    exception);
+        }
+        LOGGER.error("Unable to add relationship in cache for CloudRegion: {} and tenant: {}", key, tenantId);
+        return false;
+    }
+
+    private Relationship getRelationship(final String relatedLink, final CloudRegionKey cloudRegionKey, final Tenant tenant) {
+        final Relationship relationShip = new Relationship();
+        relationShip.setRelatedTo(TENANT);
+        relationShip.setRelationshipLabel(BELONGS_TO);
+        relationShip.setRelatedLink(relatedLink);
+
+
+        final List<RelationshipData> relationshipDataList = relationShip.getRelationshipData();
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_OWNER, cloudRegionKey.getCloudOwner()));
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_REGION_ID, cloudRegionKey.getCloudRegionId()));
+        relationshipDataList.add(getRelationshipData(TENANT_TENANT_ID, tenant.getTenantId()));
+
+
+        final RelatedToProperty relatedToProperty = new RelatedToProperty();
+        relatedToProperty.setPropertyKey(TENANT_TENANT_NAME);
+        relatedToProperty.setPropertyValue(tenant.getTenantName());
+        relationShip.getRelatedToProperty().add(relatedToProperty);
+        return relationShip;
+    }
+
+    private String getTargetUrl(final String targetBaseUrl, final String relatedLink) {
+        return UriComponentsBuilder.fromUriString(targetBaseUrl).path(relatedLink)
+                .path(BI_DIRECTIONAL_RELATIONSHIP_LIST_URL).toUriString();
     }
 
     private RelationshipData getRelationshipData(final String key, final String value) {

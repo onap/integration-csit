@@ -108,6 +108,13 @@ public class Constants {
 
     public static final String CLOUD_REGION = "cloud-region";
 
+    public static final String TENANT_TENANT_NAME = "tenant.tenant-name";
+
+    public static final String TENANT_TENANT_ID = "tenant.tenant-id";
+
+    public static final String BELONGS_TO = "org.onap.relationships.inventory.BelongsTo";
+
+    public static final String TENANT = "tenant";
 
     private Constants() {}
 

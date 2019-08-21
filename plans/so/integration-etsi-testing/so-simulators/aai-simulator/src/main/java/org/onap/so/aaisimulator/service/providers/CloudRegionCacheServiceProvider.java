@@ -24,6 +24,7 @@ import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -41,4 +42,7 @@ public interface CloudRegionCacheServiceProvider extends Clearable {
     boolean putTenant(final CloudRegionKey key, Tenant tenant);
 
     Optional<Tenant> getTenant(final CloudRegionKey key, final String tenantId);
+
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestURI, final CloudRegionKey key,
+            final String tenantId, final Relationship relationship);
 }

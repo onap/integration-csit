@@ -140,8 +140,20 @@ public class TestUtils {
         return getJsonString("test-data/tenant.json");
     }
 
-    public static Object getCloudRegionRelatedLink() throws IOException {
+    public static String getCloudRegionRelatedLink() throws IOException {
         return getJsonString("test-data/cloud-region-related-link.json");
+    }
+
+    public static String getGenericVnfRelatedLink() throws IOException {
+        return getJsonString("test-data/generic-vnf-related-link.json");
+    }
+
+    public static String getTenantRelationShip() throws IOException {
+        return getJsonString("test-data/tenant-relationship.json");
+    }
+
+    public static String getGenericVnfOrchStatuUpdate() throws IOException {
+        return getJsonString("test-data/generic-vnf-orch-status-update.json");
     }
 
     public static String getUrl(final int port, final String... urls) {

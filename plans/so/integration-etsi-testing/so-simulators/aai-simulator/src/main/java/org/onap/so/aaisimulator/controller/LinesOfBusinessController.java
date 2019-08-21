@@ -19,16 +19,20 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.LINES_OF_BUSINESS_URL;
 import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS;
-import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.LineOfBusiness;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.so.aaisimulator.models.Format;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +44,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -76,13 +81,32 @@ public class LinesOfBusinessController {
 
     @GetMapping(value = "{line-of-business-name}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getLineOfBusiness(@PathVariable("line-of-business-name") final String lineOfBusinessName,
-            final HttpServletRequest request) {
-        LOGGER.info("retrieving Platform for 'platform-name': {} ...", lineOfBusinessName);
+            @RequestParam(name = "depth", required = false) final Integer depth,
+            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "retrieving Platform for 'platform-name': {} with depth: {}, resultIndex: {}, resultSize:{}, format: {} ...",
+                lineOfBusinessName, depth, resultIndex, resultSize, format);
+
         final Optional<LineOfBusiness> optional = cacheServiceProvider.getLineOfBusiness(lineOfBusinessName);
         if (optional.isPresent()) {
-            final LineOfBusiness platform = optional.get();
-            LOGGER.info("found LineOfBusiness {} in cache", platform);
-            return ResponseEntity.ok(platform);
+
+            final Format value = Format.forValue(format);
+            switch (value) {
+                case RAW:
+                    final LineOfBusiness platform = optional.get();
+                    LOGGER.info("found LineOfBusiness {} in cache", platform);
+                    return ResponseEntity.ok(platform);
+                case COUNT:
+                    final Map<String, Object> map = new HashMap<>();
+                    map.put(LINE_OF_BUSINESS, 1);
+                    return ResponseEntity.ok(new Results(map));
+                default:
+                    break;
+            }
+            LOGGER.error("invalid format type :{}", format);
         }
         LOGGER.error("Unable to find LineOfBusiness in cache using {}", lineOfBusinessName);
         return getRequestErrorResponseEntity(request, LINE_OF_BUSINESS);

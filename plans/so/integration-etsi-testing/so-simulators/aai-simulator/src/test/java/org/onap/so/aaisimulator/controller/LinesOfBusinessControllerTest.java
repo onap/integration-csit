@@ -33,6 +33,8 @@ import org.onap.aai.domain.yang.LineOfBusiness;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.so.aaisimulator.models.Format;
+import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
 import org.onap.so.aaisimulator.utils.TestConstants;
@@ -76,6 +78,27 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
     }
 
     @Test
+    public void test_getLineOfBusinessWithFormatCount() throws Exception {
+
+        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final ResponseEntity<Void> lineOfBusinessResponse =
+                testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, lineOfBusinessResponse.getStatusCode());
+
+        final ResponseEntity<Results> response = testRestTemplateService
+                .invokeHttpGet(url + "?resultIndex=0&resultSize=1&format=" + Format.COUNT.getValue(), Results.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final Results result = response.getBody();
+        assertNotNull(result.getValues());
+        assertFalse(result.getValues().isEmpty());
+        assertEquals(1, result.getValues().get(0).get(Constants.LINE_OF_BUSINESS));
+    }
+
+
+    @Test
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
         final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
@@ -83,7 +106,8 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final String relationShipUrl = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+        final String relationShipUrl =
+                getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getGenericVnfRelationShip(), Relationship.class);
