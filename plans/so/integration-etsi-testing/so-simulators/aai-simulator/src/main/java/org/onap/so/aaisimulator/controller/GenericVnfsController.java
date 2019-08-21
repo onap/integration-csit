@@ -19,13 +19,8 @@
  */
 package org.onap.so.aaisimulator.controller;
 
-import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
-import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
-import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
-import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
-import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBaseUrl;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
@@ -33,15 +28,14 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.GenericVnf;
-import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
-import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
-import org.onap.so.aaisimulator.service.providers.HttpRestServiceProvider;
+import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +44,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -64,13 +57,10 @@ public class GenericVnfsController {
 
     private final GenericVnfCacheServiceProvider cacheServiceProvider;
 
-    private final HttpRestServiceProvider httpRestServiceProvider;
 
     @Autowired
-    public GenericVnfsController(final GenericVnfCacheServiceProvider cacheServiceProvider,
-            final HttpRestServiceProvider httpRestServiceProvider) {
+    public GenericVnfsController(final GenericVnfCacheServiceProvider cacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
-        this.httpRestServiceProvider = httpRestServiceProvider;
     }
 
     @PutMapping(value = "/generic-vnf/{vnf-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
@@ -90,8 +80,13 @@ public class GenericVnfsController {
 
     @GetMapping(value = "/generic-vnf/{vnf-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getGenericVnf(@PathVariable("vnf-id") final String vnfId,
-            @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
-        LOGGER.info("Will get GenericVnf for 'vnf-id': {} with depth: {}...", vnfId, depth);
+            @RequestParam(name = "depth", required = false) final Integer depth,
+            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
+        LOGGER.info(
+                "Will get GenericVnf for 'vnf-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format:{} ...",
+                vnfId, depth, resultIndex, resultSize, format);
 
         final Optional<GenericVnf> optional = cacheServiceProvider.getGenericVnf(vnfId);
 
@@ -101,7 +96,9 @@ public class GenericVnfsController {
             return ResponseEntity.ok(genericVnf);
         }
 
-        LOGGER.error("Unable to find GenericVnf in cache for 'vnf-id': {} with depth: {} ...", vnfId, depth);
+        LOGGER.error(
+                "Unable to find GenericVnf in cache for 'vnf-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format:{} ...",
+                vnfId, depth, resultIndex, resultSize, format);
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
 
     }
@@ -113,59 +110,18 @@ public class GenericVnfsController {
             @PathVariable("vnf-id") final String vnfId, final HttpServletRequest request) {
         LOGGER.info("Will put RelationShip for 'vnf-id': {} ...", vnfId);
 
-        try {
-            if (relationship.getRelatedLink() != null) {
-                final Optional<GenericVnf> optional = cacheServiceProvider.getGenericVnf(vnfId);
-
-                if (optional.isPresent()) {
-                    final GenericVnf genericVnf = optional.get();
-                    final String url = getRelationShipUrl(request, relationship.getRelatedLink());
-
-                    final Relationship serviceRelationship = getRelationship(request.getRequestURI(), genericVnf);
-                    final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(getHeaders(request),
-                            serviceRelationship, url, Relationship.class);
-
-                    if (optionalRelationship.isPresent()) {
-                        final Relationship resultantRelationship = optionalRelationship.get();
-                        final boolean result = cacheServiceProvider.addRelationShip(vnfId, resultantRelationship);
-                        if (result) {
-                            LOGGER.info("added relationship {} in cache successfully", relationship);
-                            return ResponseEntity.accepted().build();
-                        }
-                        LOGGER.error("Unable to add relationship {} in cache", relationship);
-                    }
-                }
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+            boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), vnfId, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
             }
-        } catch (final Exception exception) {
-            LOGGER.error("Unable to add two-way relationship ", exception);
         }
-
         LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
         return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, GENERIC_VNF);
-
-    }
-
-    private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf) {
-        final Relationship relationShip = new Relationship();
-        relationShip.setRelatedTo(GENERIC_VNF);
-        relationShip.setRelationshipLabel(COMPOSED_OF);
-        relationShip.setRelatedLink(relatedLink);
-
-        final RelationshipData relationshipData = new RelationshipData();
-        relationshipData.setRelationshipKey(GENERIC_VNF_VNF_ID);
-        relationshipData.setRelationshipValue(genericVnf.getVnfId());
-        relationShip.getRelationshipData().add(relationshipData);
-
-        final RelatedToProperty relatedToProperty = new RelatedToProperty();
-        relatedToProperty.setPropertyKey(GENERIC_VNF_VNF_NAME);
-        relatedToProperty.setPropertyValue(genericVnf.getVnfName());
-        relationShip.getRelatedToProperty().add(relatedToProperty);
-        return relationShip;
-    }
-
-    private String getRelationShipUrl(final HttpServletRequest request, final String relatedLink) {
-        return UriComponentsBuilder.fromUri(getBaseUrl(request)).path(relatedLink)
-                .path(RELATIONSHIP_LIST_RELATIONSHIP_URL).toUriString();
     }
 
 }

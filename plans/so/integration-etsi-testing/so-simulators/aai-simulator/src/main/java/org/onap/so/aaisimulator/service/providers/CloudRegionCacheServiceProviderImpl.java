@@ -32,6 +32,8 @@ import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
+import org.onap.aai.domain.yang.Tenant;
+import org.onap.aai.domain.yang.Tenants;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -113,6 +115,46 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
 
         }
         LOGGER.error("Unable to find CloudRegion using key: {} ...", key);
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean putTenant(final CloudRegionKey key, final Tenant tenant) {
+        final Optional<CloudRegion> optional = getCloudRegion(key);
+        if (optional.isPresent()) {
+            final CloudRegion cloudRegion = optional.get();
+            Tenants tenants = cloudRegion.getTenants();
+            if (tenants == null) {
+                tenants = new Tenants();
+                cloudRegion.setTenants(tenants);
+            }
+
+            final Optional<Tenant> existingTenantOptional = tenants.getTenant().stream()
+                    .filter(existing -> existing.getTenantId().equals(tenant.getTenantId())).findFirst();
+
+            if (!existingTenantOptional.isPresent()) {
+                return tenants.getTenant().add(tenant);
+            }
+            LOGGER.warn("Tenant already exists ...");
+            return false;
+        }
+        LOGGER.error("Unable to add Tenant using key: {} ...", key);
+        return false;
+    }
+
+    @Override
+    public Optional<Tenant> getTenant(final CloudRegionKey key, final String tenantId) {
+        final Optional<CloudRegion> optional = getCloudRegion(key);
+        if (optional.isPresent()) {
+            final CloudRegion cloudRegion = optional.get();
+            final Tenants tenants = cloudRegion.getTenants();
+            if (tenants != null) {
+                return tenants.getTenant().stream().filter(existing -> existing.getTenantId().equals(tenantId))
+                        .findFirst();
+            }
+        }
+
+        LOGGER.error("Unable to find Tenant using key: {} and tenantId: {} ...", key, tenantId);
         return Optional.empty();
     }
 

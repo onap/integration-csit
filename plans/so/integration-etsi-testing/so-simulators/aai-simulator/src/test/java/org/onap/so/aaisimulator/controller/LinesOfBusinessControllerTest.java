@@ -23,8 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.LINE_OF_BUSINESS_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -83,7 +83,7 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final String relationShipUrl = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME, RELATIONSHIP_URL);
+        final String relationShipUrl = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getGenericVnfRelationShip(), Relationship.class);

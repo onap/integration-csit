@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.PLATFORM;
 import static org.onap.so.aaisimulator.utils.Constants.PLATFORMS_URL;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.Optional;
@@ -84,7 +85,7 @@ public class PlatformController {
         return getRequestErrorResponseEntity(request, PLATFORM);
     }
 
-    @PutMapping(value = "/{platform-name}/relationship-list/relationship",
+    @PutMapping(value = "/{platform-name}" + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putRelationShip(@PathVariable("platform-name") final String platformName,

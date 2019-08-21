@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
@@ -31,7 +32,6 @@ import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.LINE_OF_BUSINESS_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
@@ -110,7 +110,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
 
         addCustomerServiceAndGenericVnf();
 
-        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
         final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
                 .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getRelationShip(), Void.class);
 
@@ -184,7 +184,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
-        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
         final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
                 .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getPlatformRelatedLink(), Void.class);
 
@@ -221,7 +221,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
-        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
         final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
                 .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getLineOfBusinessRelatedLink(), Void.class);
 
@@ -259,7 +259,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getCloudRegion(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
 
-        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_URL);
+        final String genericVnfRelationShipUrl = getUrl(GENERIC_VNF_URL, VNF_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
         final ResponseEntity<Void> genericVnfRelationShipResponse = testRestTemplateService
                 .invokeHttpPut(genericVnfRelationShipUrl, TestUtils.getCloudRegionRelatedLink(), Void.class);
 

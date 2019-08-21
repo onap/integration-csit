@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import org.junit.After;
 import org.junit.Test;
 import org.onap.aai.domain.yang.OwningEntity;
@@ -99,7 +99,7 @@ public class OwningEntityControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
-        final String owningEntityRelationshipUrl = url + RELATIONSHIP_URL;
+        final String owningEntityRelationshipUrl = url + RELATIONSHIP_LIST_RELATIONSHIP_URL;
 
         final ResponseEntity<Void> putResponse = testRestTemplateService.invokeHttpPut(owningEntityRelationshipUrl,
                 TestUtils.getOwningEntityRelationship(), Void.class);

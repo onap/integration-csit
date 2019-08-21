@@ -20,12 +20,20 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.CUSTOMER_CACHE;
+import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
+import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_ID;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION_SERVICE_TYPE;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.onap.aai.domain.yang.Customer;
+import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
@@ -259,8 +267,8 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     }
 
     @Override
-    public Optional<ServiceInstance> addRelationShip(final String globalCustomerId, final String serviceType,
-            final String serviceInstanceId, final Relationship relationship) {
+    public Optional<Relationship> addRelationShip(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final Relationship relationship, final String requestUri) {
         final Optional<ServiceInstance> optional = getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
         if (optional.isPresent()) {
             final ServiceInstance serviceInstance = optional.get();
@@ -270,17 +278,49 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
                 serviceInstance.setRelationshipList(relationshipList);
             }
             relationshipList.getRelationship().add(relationship);
-            return Optional.of(serviceInstance);
+
+            LOGGER.info("Successfully added relation to ServiceInstance");
+
+            final Relationship resultantRelationship = new Relationship();
+            resultantRelationship.setRelatedTo(GENERIC_VNF);
+            resultantRelationship.setRelationshipLabel(COMPOSED_OF);
+            resultantRelationship.setRelatedLink(requestUri);
+
+            final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
+            relationshipDataList.add(getRelationshipData(CUSTOMER_GLOBAL_CUSTOMER_ID, globalCustomerId));
+            relationshipDataList.add(getRelationshipData(SERVICE_SUBSCRIPTION_SERVICE_TYPE, serviceType));
+            relationshipDataList.add(getRelationshipData(SERVICE_INSTANCE_SERVICE_INSTANCE_ID, serviceInstanceId));
+
+            final List<RelatedToProperty> relatedToProperty = resultantRelationship.getRelatedToProperty();
+            relatedToProperty.add(getRelatedToProperty(SERVICE_INSTANCE_SERVICE_INSTANCE_NAME,
+                    serviceInstance.getServiceInstanceName()));
+
+            return Optional.of(resultantRelationship);
 
         }
         LOGGER.error("Unable to find ServiceInstance ...");
         return Optional.empty();
-
     }
 
     @Override
     public void clearAll() {
         clearCahce(CUSTOMER_CACHE.getName());
     }
+
+    private RelatedToProperty getRelatedToProperty(final String key, final String value) {
+        final RelatedToProperty relatedToProperty = new RelatedToProperty();
+        relatedToProperty.setPropertyKey(key);
+        relatedToProperty.setPropertyValue(value);
+        return relatedToProperty;
+    }
+
+    private RelationshipData getRelationshipData(final String key, final String value) {
+        final RelationshipData relationshipData = new RelationshipData();
+        relationshipData.setRelationshipKey(key);
+        relationshipData.setRelationshipValue(value);
+        return relationshipData;
+    }
+
+
 
 }

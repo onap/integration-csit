@@ -136,6 +136,10 @@ public class TestUtils {
         return getJsonString("test-data/cloud-region.json");
     }
 
+    public static String getTenant() throws IOException {
+        return getJsonString("test-data/tenant.json");
+    }
+
     public static Object getCloudRegionRelatedLink() throws IOException {
         return getJsonString("test-data/cloud-region-related-link.json");
     }

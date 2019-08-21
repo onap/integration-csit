@@ -23,9 +23,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.TENANTS_TENANT;
+import static org.onap.so.aaisimulator.utils.TestConstants.TENANT_ID;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +37,7 @@ import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.aai.domain.yang.Tenant;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
@@ -106,8 +109,8 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
-        final String relationShipUrl =
-                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, RELATIONSHIP_URL);
+        final String relationShipUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
+                BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getGenericVnfRelationShip(), Relationship.class);
@@ -133,6 +136,31 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         final RelatedToProperty relatedToProperty = relationship.getRelatedToProperty().get(0);
         assertEquals(Constants.GENERIC_VNF_VNF_NAME, relatedToProperty.getPropertyKey());
         assertEquals(TestConstants.GENERIC_VNF_NAME, relatedToProperty.getPropertyValue());
+
+    }
+
+    @Test
+    public void test_putTenant_successfullyAddedToCache() throws Exception {
+        final String cloudRegionUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(cloudRegionUrl);
+
+        final String tenantUrl =
+                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME + TENANTS_TENANT + TENANT_ID);
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpPut(tenantUrl, TestUtils.getTenant(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+
+        final ResponseEntity<Tenant> response = testRestTemplateService.invokeHttpGet(tenantUrl, Tenant.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final Tenant tenant = response.getBody();
+        assertEquals(TENANT_ID, tenant.getTenantId());
+        assertEquals("admin", tenant.getTenantName());
+
+        assertNotNull("ResourceVersion should not be null", tenant.getResourceVersion());
 
     }
 

@@ -19,28 +19,22 @@
  */
 package org.onap.so.aaisimulator.controller;
 
-import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
-import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_GLOBAL_CUSTOMER_ID;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
-import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_ID;
-import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION;
-import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION_SERVICE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
-import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
-import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.ServiceInstance;
@@ -50,7 +44,6 @@ import org.onap.so.aaisimulator.models.NodeServiceInstance;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -302,9 +295,9 @@ public class BusinessController {
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
     }
 
-
     @PutMapping(
-            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}/relationship-list/relationship",
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}"
+                    + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putSericeInstanceRelationShip(
@@ -316,25 +309,12 @@ public class BusinessController {
         LOGGER.info(
                 "Will add {} relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
                 relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
-        final Optional<ServiceInstance> optional =
-                cacheServiceProvider.addRelationShip(globalCustomerId, serviceType, serviceInstanceId, relationship);
+        final Optional<Relationship> optional = cacheServiceProvider.addRelationShip(globalCustomerId, serviceType,
+                serviceInstanceId, relationship, request.getRequestURI());
 
         if (optional.isPresent()) {
-            final ServiceInstance serviceInstance = optional.get();
-            final Relationship resultantRelationship = new Relationship();
-            resultantRelationship.setRelatedTo(GENERIC_VNF);
-            resultantRelationship.setRelationshipLabel(COMPOSED_OF);
-            resultantRelationship.setRelatedLink(request.getRequestURI());
-
-            final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
-            relationshipDataList.add(getRelationshipData(CUSTOMER_GLOBAL_CUSTOMER_ID, globalCustomerId));
-            relationshipDataList.add(getRelationshipData(SERVICE_SUBSCRIPTION_SERVICE_TYPE, serviceType));
-            relationshipDataList.add(getRelationshipData(SERVICE_INSTANCE_SERVICE_INSTANCE_ID, serviceInstanceId));
-
-            final List<RelatedToProperty> relatedToProperty = resultantRelationship.getRelatedToProperty();
-            relatedToProperty.add(getRelatedToProperty(SERVICE_INSTANCE_SERVICE_INSTANCE_NAME,
-                    serviceInstance.getServiceInstanceName()));
-
+            final Relationship resultantRelationship = optional.get();
+            LOGGER.info("Relationship add, sending resultant relationship: {} in response ...", resultantRelationship);
             return ResponseEntity.accepted().body(resultantRelationship);
         }
 
@@ -342,22 +322,6 @@ public class BusinessController {
                 "Couldn't add {} relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
                 relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
 
-        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request);
+        return getRequestErrorResponseEntity(request);
     }
-
-    private RelatedToProperty getRelatedToProperty(final String key, final String value) {
-        final RelatedToProperty relatedToProperty = new RelatedToProperty();
-        relatedToProperty.setPropertyKey(key);
-        relatedToProperty.setPropertyValue(value);
-        return relatedToProperty;
-    }
-
-    private RelationshipData getRelationshipData(final String key, final String value) {
-        final RelationshipData relationshipData = new RelationshipData();
-        relationshipData.setRelationshipKey(key);
-        relationshipData.setRelationshipValue(value);
-        return relationshipData;
-    }
-
-
 }

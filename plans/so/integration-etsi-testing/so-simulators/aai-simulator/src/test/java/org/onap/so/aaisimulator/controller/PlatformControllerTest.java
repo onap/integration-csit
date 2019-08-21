@@ -23,8 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.RELATIONSHIP_URL;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -82,7 +82,8 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
-        final String platformRelationShipUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, RELATIONSHIP_URL);
+        final String platformRelationShipUrl =
+                getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService
                 .invokeHttpPut(platformRelationShipUrl, TestUtils.getGenericVnfRelationShip(), Relationship.class);

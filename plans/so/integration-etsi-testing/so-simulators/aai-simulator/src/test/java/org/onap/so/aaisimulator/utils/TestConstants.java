@@ -45,8 +45,6 @@ public class TestConstants {
 
     public static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
 
-    public static final String RELATIONSHIP_URL = "/relationship-list/relationship";
-
     public static final String VNF_ID = "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701";
 
     public static final String GENERIC_VNF_NAME = "EsyVnfInstantiationTest2";
@@ -64,6 +62,10 @@ public class TestConstants {
     public static final String CLOUD_OWNER_NAME = "CloudOwner";
 
     public static final String CLOUD_REGION_NAME = "EtsiCloudRegion";
+
+    public static final String TENANT_ID = "693c7729b2364a26a3ca602e6f66187d";
+
+    public static final String TENANTS_TENANT = "/tenants/tenant/";
 
     private TestConstants() {}
 

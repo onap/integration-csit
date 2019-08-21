@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.LINES_OF_BUSINESS_URL;
 import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.Optional;
@@ -87,7 +88,7 @@ public class LinesOfBusinessController {
         return getRequestErrorResponseEntity(request, LINE_OF_BUSINESS);
     }
 
-    @PutMapping(value = "/{line-of-business-name}/relationship-list/relationship",
+    @PutMapping(value = "/{line-of-business-name}" + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putRelationShip(@PathVariable("line-of-business-name") final String lineOfBusinessName,
