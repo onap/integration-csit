@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "983350d0_442b423c",
+        "filename": "tests/sdc-dcae-d/dcaed/assets/catalog_service_monitoring.jinja",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4886
+      },
+      "writtenOn": "2019-08-22T09:17:44Z",
+      "side": 1,
+      "message": "ok, I see some templating",
+      "parentUuid": "beecd95b_2180c74d",
+      "revId": "f7f3bf3b67f8c32291ea57f7a083dfd1436d0ee7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e09c0f4_bd0471d5",
         "filename": "tests/sdc-dcae-d/dcaed/assets/dcae_component_microservice.jinja",
         "patchSetId": 1
