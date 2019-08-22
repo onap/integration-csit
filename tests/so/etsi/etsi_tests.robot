@@ -14,6 +14,7 @@ Distribute Service Template
     &{headers}=  Create Dictionary    Authorization=Basic bXNvX2FkbWluOnBhc3N3b3JkMSQ=    resource-location=/distribution-test-zip/unzipped     Content-Type=application/json    Accept=application/json
     ${resp}=    Post Request    sdc_controller_session    /test/treatNotification/v1    data=${data}    headers=${headers}
     Run Keyword If  '${resp.status_code}' == '200'  log to console  \nexecuted with expected result
+    Should Be Equal As Strings    '${resp.status_code}'    '200'
 
 Invoke Service Instantiation
     Create Session   api_handler_session  http://${REPO_IP}:8080
@@ -32,9 +33,10 @@ Invoke Service Instantiation
     \   log to console      ${orchestration_status_request.content}
     \   ${orchestration_json_responce}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_responce}[request][requestStatus][requestState]
+    \   Log To Console    Received actual repsonse status:${actual_request_state}
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   log to console  Received actual repsonse status:${actual_request_state}
     \   log to console  Will try again after 5 seconds
     \   SLEEP   5s
-
+    Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
