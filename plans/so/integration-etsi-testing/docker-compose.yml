@@ -162,7 +162,8 @@ services:
       - "8081:8081"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/bpmn-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/override-files/bpmn-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/aai-certificate/aai.crt:/app/ca-certificates/aai.crt
     environment:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
