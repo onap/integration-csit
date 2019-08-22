@@ -19,7 +19,10 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import java.util.List;
 import org.junit.runner.RunWith;
+import org.onap.aai.domain.yang.RelatedToProperty;
+import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +53,13 @@ public abstract class AbstractSpringBootTest {
         return TestUtils.getUrl(port, urls);
     }
 
+    public RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
+        return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
+    }
+
+    public RelatedToProperty getRelatedToProperty(final List<RelatedToProperty> relatedToPropertyList,
+            final String key) {
+        return relatedToPropertyList.stream().filter(data -> data.getPropertyKey().equals(key)).findFirst()
+                .orElse(null);
+    }
 }

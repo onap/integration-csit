@@ -20,10 +20,16 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.OWNING_ENTITY_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
+import static org.onap.so.aaisimulator.utils.Constants.BELONGS_TO;
+import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY;
+import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY_OWNING_ENTITY_ID;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
+import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -31,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,11 +49,15 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
         implements OwnEntityCacheServiceProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OwnEntityCacheServiceProviderImpl.class);
-    private static final String RELATIONSHIPS_LABEL = "org.onap.relationships.inventory.BelongsTo";
+
+    private final HttpRestServiceProvider httpRestServiceProvider;
+
 
     @Autowired
-    public OwnEntityCacheServiceProviderImpl(final CacheManager cacheManager) {
+    public OwnEntityCacheServiceProviderImpl(final CacheManager cacheManager,
+            final HttpRestServiceProvider httpRestServiceProvider) {
         super(cacheManager);
+        this.httpRestServiceProvider = httpRestServiceProvider;
     }
 
     @Override
@@ -68,26 +79,37 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
     }
 
     @Override
-    public boolean putOwningEntityRelationShip(final String owningEntityId, final Relationship relationship) {
-        final Cache cache = getCache(OWNING_ENTITY_CACHE.getName());
-        final OwningEntity value = cache.get(owningEntityId, OwningEntity.class);
-        if (value != null) {
-            RelationshipList relationshipList = value.getRelationshipList();
-            if (relationshipList == null) {
-                relationshipList = new RelationshipList();
-                value.setRelationshipList(relationshipList);
+    public boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestUriString, final String owningEntityId, final Relationship relationship) {
+        try {
+            final Optional<OwningEntity> optional = getOwningEntity(owningEntityId);
+            if (optional.isPresent()) {
+                final OwningEntity owningEntity = optional.get();
+                final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
+                final Relationship outGoingRelationShip = getRelationship(requestUriString, owningEntity);
+
+                final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
+                        outGoingRelationShip, targetUrl, Relationship.class);
+
+                if (optionalRelationship.isPresent()) {
+                    final Relationship resultantRelationship = optionalRelationship.get();
+
+                    RelationshipList relationshipList = owningEntity.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        owningEntity.setRelationshipList(relationshipList);
+                    }
+                    if (relationshipList.getRelationship().add(resultantRelationship)) {
+                        LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
+                        return true;
+                    }
+                }
             }
 
-            if (relationship.getRelatedTo() == null) {
-                relationship.setRelatedTo(SERVICE_RESOURCE_TYPE);
-            }
-            if (relationship.getRelationshipLabel() == null) {
-                relationship.setRelationshipLabel(RELATIONSHIPS_LABEL);
-            }
-
-            return relationshipList.getRelationship().add(relationship);
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to add two-way relationship for owning entity id: {}", owningEntityId, exception);
         }
-        LOGGER.error("OwningEntity not found in cache for {}", owningEntityId);
+        LOGGER.error("Unable to add relationship in cache for owning entity id: {}", owningEntityId);
         return false;
     }
 
@@ -96,4 +118,21 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
         clearCahce(OWNING_ENTITY_CACHE.getName());
     }
 
+    private Relationship getRelationship(final String requestUriString, final OwningEntity owningEntity) {
+        final Relationship relationShip = new Relationship();
+        relationShip.setRelatedTo(OWNING_ENTITY);
+        relationShip.setRelationshipLabel(BELONGS_TO);
+        relationShip.setRelatedLink(getRelationShipListRelatedLink(requestUriString));
+
+        final List<RelationshipData> relationshipDataList = relationShip.getRelationshipData();
+
+        final RelationshipData relationshipData = new RelationshipData();
+        relationshipData.setRelationshipKey(OWNING_ENTITY_OWNING_ENTITY_ID);
+        relationshipData.setRelationshipValue(owningEntity.getOwningEntityId());
+
+        relationshipDataList.add(relationshipData);
+
+
+        return relationShip;
+    }
 }

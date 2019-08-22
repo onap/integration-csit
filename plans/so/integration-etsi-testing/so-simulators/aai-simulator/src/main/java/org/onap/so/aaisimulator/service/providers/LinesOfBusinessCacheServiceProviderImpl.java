@@ -23,6 +23,7 @@ import static org.onap.so.aaisimulator.utils.CacheName.LINES_OF_BUSINESS_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS;
 import static org.onap.so.aaisimulator.utils.Constants.LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.USES;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import java.util.Optional;
 import org.onap.aai.domain.yang.LineOfBusiness;
 import org.onap.aai.domain.yang.Relationship;
@@ -88,7 +89,7 @@ public class LinesOfBusinessCacheServiceProviderImpl extends AbstractCacheServic
             final Relationship resultantRelationship = new Relationship();
             resultantRelationship.setRelatedTo(LINE_OF_BUSINESS);
             resultantRelationship.setRelationshipLabel(USES);
-            resultantRelationship.setRelatedLink(requestUri);
+            resultantRelationship.setRelatedLink(getBiDirectionalRelationShipListRelatedLink(requestUri));
 
             final RelationshipData relationshipData = new RelationshipData();
             relationshipData.setRelationshipKey(LINE_OF_BUSINESS_LINE_OF_BUSINESS_NAME);

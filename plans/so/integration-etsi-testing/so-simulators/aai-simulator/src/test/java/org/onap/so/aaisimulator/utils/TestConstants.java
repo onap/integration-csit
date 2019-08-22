@@ -49,7 +49,7 @@ public class TestConstants {
 
     public static final String GENERIC_VNF_NAME = "EsyVnfInstantiationTest2";
 
-    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "/generic-vnf/";
+    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "generic-vnf/";
 
     public static final String GENERIC_VNFS_URL = "/generic-vnfs";
 

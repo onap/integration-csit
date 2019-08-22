@@ -133,6 +133,8 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship actualRelationShip = actualRelationshipList.getRelationship().get(0);
 
         assertEquals(Constants.COMPOSED_OF, actualRelationShip.getRelationshipLabel());
+        assertEquals(GENERIC_VNF_URL + VNF_ID, actualRelationShip.getRelatedLink());
+
 
         assertFalse(actualRelationShip.getRelatedToProperty().isEmpty());
         assertFalse(actualRelationShip.getRelationshipData().isEmpty());
@@ -154,6 +156,8 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship relationship = relationshipList.getRelationship().get(0);
         assertFalse(relationship.getRelatedToProperty().isEmpty());
         assertEquals(3, relationship.getRelationshipData().size());
+        assertEquals(CUSTOMERS_URL + SERVICE_SUBSCRIPTIONS_URL + SERVICE_INSTANCE_URL, relationship.getRelatedLink());
+
 
         final List<RelatedToProperty> relatedToProperty = relationship.getRelatedToProperty();
         final RelatedToProperty firstRelatedToProperty = relatedToProperty.get(0);
@@ -206,6 +210,8 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         assertEquals(Constants.USES, relationship.getRelationshipLabel());
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(1, relationship.getRelationshipData().size());
+        assertEquals(Constants.PLATFORMS_URL + PLATFORM_NAME, relationship.getRelatedLink());
+
 
         final List<RelationshipData> relationshipData = relationship.getRelationshipData();
 
@@ -241,6 +247,8 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship relationship = relationshipList.getRelationship().get(0);
 
         assertEquals(Constants.USES, relationship.getRelationshipLabel());
+        assertEquals(Constants.LINES_OF_BUSINESS_URL + LINE_OF_BUSINESS_NAME, relationship.getRelatedLink());
+
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(1, relationship.getRelationshipData().size());
 
@@ -279,6 +287,9 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship relationship = relationshipList.getRelationship().get(0);
 
         assertEquals(Constants.LOCATED_IN, relationship.getRelationshipLabel());
+        assertEquals(Constants.CLOUD_REGIONS + CLOUD_OWNER_NAME + "/" + CLOUD_REGION_NAME,
+                relationship.getRelatedLink());
+
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(2, relationship.getRelationshipData().size());
 
@@ -370,14 +381,5 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
 
     }
 
-    private RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
-        return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
-    }
-
-    private RelatedToProperty getRelatedToProperty(final List<RelatedToProperty> relatedToPropertyList,
-            final String key) {
-        return relatedToPropertyList.stream().filter(data -> data.getPropertyKey().equals(key)).findFirst()
-                .orElse(null);
-    }
 
 }

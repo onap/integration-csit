@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.service.providers;
 import java.util.Optional;
 import org.onap.aai.domain.yang.Project;
 import org.onap.aai.domain.yang.Relationship;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author waqas.ikram@ericsson.com
@@ -33,6 +34,7 @@ public interface ProjectCacheServiceProvider extends Clearable {
 
     Optional<Project> getProject(final String projectName);
 
-    boolean putProjectRelationShip(final String projectName, final Relationship relationship);
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestUri,
+            final String projectName, final Relationship relationship);
 
 }

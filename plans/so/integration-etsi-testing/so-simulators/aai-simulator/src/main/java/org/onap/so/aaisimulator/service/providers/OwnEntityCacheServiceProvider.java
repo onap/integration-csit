@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.service.providers;
 import java.util.Optional;
 import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.aai.domain.yang.Relationship;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author waqas.ikram@ericsson.com
@@ -33,6 +34,7 @@ public interface OwnEntityCacheServiceProvider extends Clearable {
 
     Optional<OwningEntity> getOwningEntity(final String owningEntityId);
 
-    boolean putOwningEntityRelationShip(String owningEntityId, Relationship relationship);
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestUriString,
+            final String owningEntityId, final Relationship relationship);
 
 }
