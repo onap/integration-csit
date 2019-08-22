@@ -21,7 +21,6 @@ package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.CLOUD_REGION_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.BELONGS_TO;
-import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_OWNER;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_REGION_ID;
@@ -30,6 +29,9 @@ import static org.onap.so.aaisimulator.utils.Constants.LOCATED_IN;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_ID;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_NAME;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
 import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
@@ -48,7 +50,6 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -108,7 +109,7 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
             final Relationship resultantRelationship = new Relationship();
             resultantRelationship.setRelatedTo(CLOUD_REGION);
             resultantRelationship.setRelationshipLabel(LOCATED_IN);
-            resultantRelationship.setRelatedLink(requestUri);
+            resultantRelationship.setRelatedLink(getBiDirectionalRelationShipListRelatedLink(requestUri));
 
             final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
             relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_OWNER, cloudRegion.getCloudOwner()));
@@ -206,11 +207,12 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
         return false;
     }
 
-    private Relationship getRelationship(final String relatedLink, final CloudRegionKey cloudRegionKey, final Tenant tenant) {
+    private Relationship getRelationship(final String requestUriString, final CloudRegionKey cloudRegionKey,
+            final Tenant tenant) {
         final Relationship relationShip = new Relationship();
         relationShip.setRelatedTo(TENANT);
         relationShip.setRelationshipLabel(BELONGS_TO);
-        relationShip.setRelatedLink(relatedLink);
+        relationShip.setRelatedLink(getRelationShipListRelatedLink(requestUriString));
 
 
         final List<RelationshipData> relationshipDataList = relationShip.getRelationshipData();
@@ -224,11 +226,6 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
         relatedToProperty.setPropertyValue(tenant.getTenantName());
         relationShip.getRelatedToProperty().add(relatedToProperty);
         return relationShip;
-    }
-
-    private String getTargetUrl(final String targetBaseUrl, final String relatedLink) {
-        return UriComponentsBuilder.fromUriString(targetBaseUrl).path(relatedLink)
-                .path(BI_DIRECTIONAL_RELATIONSHIP_LIST_URL).toUriString();
     }
 
     private RelationshipData getRelationshipData(final String key, final String value) {

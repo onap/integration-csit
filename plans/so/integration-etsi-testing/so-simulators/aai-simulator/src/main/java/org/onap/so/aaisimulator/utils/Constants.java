@@ -58,7 +58,11 @@ public class Constants {
 
     public static final String PROJECT = "project";
 
+    public static final String PROJECT_PROJECT_NAME = "project.project-name";
+
     public static final String OWNING_ENTITY = "owning-entity";
+
+    public static final String OWNING_ENTITY_OWNING_ENTITY_ID = "owning-entity.owning-entity-id";
 
     public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
 

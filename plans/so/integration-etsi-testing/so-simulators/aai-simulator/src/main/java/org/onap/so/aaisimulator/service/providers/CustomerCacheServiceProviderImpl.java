@@ -20,13 +20,13 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.CUSTOMER_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_GLOBAL_CUSTOMER_ID;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION_SERVICE_TYPE;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -283,8 +283,8 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
 
             final Relationship resultantRelationship = new Relationship();
             resultantRelationship.setRelatedTo(GENERIC_VNF);
-            resultantRelationship.setRelationshipLabel(COMPOSED_OF);
-            resultantRelationship.setRelatedLink(requestUri);
+            resultantRelationship.setRelationshipLabel(relationship.getRelationshipLabel());
+            resultantRelationship.setRelatedLink(getBiDirectionalRelationShipListRelatedLink(requestUri));
 
             final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
             relationshipDataList.add(getRelationshipData(CUSTOMER_GLOBAL_CUSTOMER_ID, globalCustomerId));

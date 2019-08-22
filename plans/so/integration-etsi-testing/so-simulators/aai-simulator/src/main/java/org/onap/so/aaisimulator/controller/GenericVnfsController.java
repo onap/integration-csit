@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.controller;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
@@ -108,7 +109,7 @@ public class GenericVnfsController {
 
     }
 
-    @PutMapping(value = "/generic-vnf/{vnf-id}/relationship-list/relationship",
+    @PutMapping(value = "/generic-vnf/{vnf-id}" + RELATIONSHIP_LIST_RELATIONSHIP_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putGenericVnfRelationShip(@RequestBody final Relationship relationship,

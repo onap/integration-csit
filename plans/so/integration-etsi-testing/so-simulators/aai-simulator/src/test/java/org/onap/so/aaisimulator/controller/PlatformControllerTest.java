@@ -24,7 +24,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.PLATFORM_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
@@ -123,6 +125,7 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
         assertFalse("Relationship list should not be empty", relationshipList.isEmpty());
         final Relationship relationship = relationshipList.get(0);
 
+        assertEquals(GENERIC_VNF_URL + VNF_ID, relationship.getRelatedLink());
         assertFalse("RelationshipData list should not be empty", relationship.getRelationshipData().isEmpty());
         assertFalse("RelatedToProperty list should not be empty", relationship.getRelatedToProperty().isEmpty());
 

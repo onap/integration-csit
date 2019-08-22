@@ -21,6 +21,8 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.PROJECT;
 import static org.onap.so.aaisimulator.utils.Constants.PROJECT_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.HashMap;
@@ -33,9 +35,11 @@ import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
+import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,18 +110,27 @@ public class ProjectController {
         return getRequestErrorResponseEntity(request);
     }
 
-    @PutMapping(value = "/{project-name}/relationship-list/relationship",
+    @PutMapping(value = "/{project-name}" + RELATIONSHIP_LIST_RELATIONSHIP_URL,
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putProjectRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("project-name") final String projectName, final HttpServletRequest request) {
 
         LOGGER.info("adding relationship for project-name: {} ...", projectName);
-        if (cacheServiceProvider.putProjectRelationShip(projectName, relationship)) {
-            LOGGER.info("added project relationship {} in cache", relationship);
-            return ResponseEntity.accepted().build();
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+
+            final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), projectName, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
         }
-        LOGGER.error("Couldn't find {} in cache", projectName);
+
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
         return getRequestErrorResponseEntity(request);
     }
 

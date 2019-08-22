@@ -89,7 +89,7 @@ populate_aai_simulator()
  fi
 
   echo "$SCRIPT_NAME $(current_timestamp): Adding Owning-Entity"
-  status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/owning-entities/owning-entity/oe_1 -X PUT -d @$"$OWNING_ENTITY_JSON_FILE")
+  status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/owning-entities/owning-entity/f2e1071e-3d47-4a65-94d4-e473ec03326a -X PUT -d @$"$OWNING_ENTITY_JSON_FILE")
 
   if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
      echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put owning entity data in AAI Simulator. Status code received: $status_code"

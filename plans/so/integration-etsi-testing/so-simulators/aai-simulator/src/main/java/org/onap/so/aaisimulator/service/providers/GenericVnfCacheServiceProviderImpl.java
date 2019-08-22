@@ -20,11 +20,13 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.GENERIC_VNF_CACHE;
-import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.onap.aai.domain.yang.GenericVnf;
@@ -40,7 +42,6 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -112,7 +113,8 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
             if (optional.isPresent()) {
                 final GenericVnf genericVnf = optional.get();
                 final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
-                final Relationship outGoingRelationShip = getRelationship(requestUriString, genericVnf);
+                final Relationship outGoingRelationShip =
+                        getRelationship(getRelationShipListRelatedLink(requestUriString), genericVnf);
                 final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
                         outGoingRelationShip, targetUrl, Relationship.class);
                 if (optionalRelationship.isPresent()) {
@@ -150,7 +152,8 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
             relationshipList.getRelationship().add(relationship);
             LOGGER.info("Successfully added relation to GenericVnf for vnfId: {}", vnfId);
 
-            final Relationship resultantRelationship = getRelationship(requestURI, genericVnf);
+            final String relatedLink = getBiDirectionalRelationShipListRelatedLink(requestURI);
+            final Relationship resultantRelationship = getRelationship(relatedLink, genericVnf);
             return Optional.of(resultantRelationship);
         }
         return Optional.empty();
@@ -168,11 +171,6 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         }
         LOGGER.error("Unable to find GenericVnf ...");
         return false;
-    }
-
-    private String getTargetUrl(final String targetBaseUrl, final String relatedLink) {
-        return UriComponentsBuilder.fromUriString(targetBaseUrl).path(relatedLink)
-                .path(BI_DIRECTIONAL_RELATIONSHIP_LIST_URL).toUriString();
     }
 
     private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf) {

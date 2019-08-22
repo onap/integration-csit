@@ -145,6 +145,8 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         assertFalse("Relationship list should not be empty", relationshipList.isEmpty());
         final Relationship relationship = relationshipList.get(0);
 
+        assertEquals(GENERIC_VNF_URL + VNF_ID, relationship.getRelatedLink());
+
         assertFalse("RelationshipData list should not be empty", relationship.getRelationshipData().isEmpty());
         assertFalse("RelatedToProperty list should not be empty", relationship.getRelatedToProperty().isEmpty());
 
@@ -263,16 +265,6 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
-    }
-
-    private RelationshipData getRelationshipData(final List<RelationshipData> relationshipData, final String key) {
-        return relationshipData.stream().filter(data -> data.getRelationshipKey().equals(key)).findFirst().orElse(null);
-    }
-
-    private RelatedToProperty getRelatedToProperty(final List<RelatedToProperty> relatedToPropertyList,
-            final String key) {
-        return relatedToPropertyList.stream().filter(data -> data.getPropertyKey().equals(key)).findFirst()
-                .orElse(null);
     }
 
     private void invokeCloudRegionHttpPutEndPointAndAssertResponse(final String url) throws IOException {

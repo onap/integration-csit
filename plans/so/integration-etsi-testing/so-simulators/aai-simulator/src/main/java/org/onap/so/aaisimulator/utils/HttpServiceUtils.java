@@ -20,6 +20,8 @@
 package org.onap.so.aaisimulator.utils;
 
 import static org.onap.so.aaisimulator.utils.Constants.BASE_URL;
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import java.net.URI;
 import java.util.Arrays;
@@ -61,5 +63,21 @@ public class HttpServiceUtils {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
         return headers;
     }
+
+    public static String getTargetUrl(final String targetBaseUrl, final String relatedLink) {
+        return UriComponentsBuilder.fromUriString(targetBaseUrl).path(relatedLink)
+                .path(BI_DIRECTIONAL_RELATIONSHIP_LIST_URL).toUriString();
+    }
+
+    public static String getRelationShipListRelatedLink(final String requestUriString) {
+        return requestUriString != null ? requestUriString.replaceFirst(RELATIONSHIP_LIST_RELATIONSHIP_URL, "")
+                : requestUriString;
+    }
+
+    public static String getBiDirectionalRelationShipListRelatedLink(final String requestUriString) {
+        return requestUriString != null ? requestUriString.replaceFirst(BI_DIRECTIONAL_RELATIONSHIP_LIST_URL, "")
+                : requestUriString;
+    }
+
 
 }

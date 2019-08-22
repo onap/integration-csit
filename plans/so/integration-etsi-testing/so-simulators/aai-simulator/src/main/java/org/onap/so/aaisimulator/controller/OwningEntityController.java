@@ -21,6 +21,7 @@ package org.onap.so.aaisimulator.controller;
 
 import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY;
 import static org.onap.so.aaisimulator.utils.Constants.OWNING_ENTITY_URL;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.HashMap;
@@ -33,9 +34,11 @@ import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
+import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +64,6 @@ public class OwningEntityController {
     public OwningEntityController(final OwnEntityCacheServiceProvider cacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
     }
-
 
     @PutMapping(value = "{owning-entity-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -115,11 +117,20 @@ public class OwningEntityController {
             @PathVariable("owning-entity-id") final String owningEntityId, final HttpServletRequest request) {
 
         LOGGER.info("adding relationship for owning-entity-id: {} ...", owningEntityId);
-        if (cacheServiceProvider.putOwningEntityRelationShip(owningEntityId, relationship)) {
-            LOGGER.info("added OwningEntity relationship {} in cache", relationship);
-            return ResponseEntity.accepted().build();
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+
+            final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), owningEntityId, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
         }
-        LOGGER.error("Couldn't add relationship for {} in cache", owningEntityId);
+
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
         return getRequestErrorResponseEntity(request);
     }
 

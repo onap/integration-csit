@@ -23,6 +23,7 @@ import static org.onap.so.aaisimulator.utils.CacheName.PLATFORM_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.PLATFORM;
 import static org.onap.so.aaisimulator.utils.Constants.PLATFORM_PLATFORM_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.USES;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import java.util.Optional;
 import org.onap.aai.domain.yang.Platform;
 import org.onap.aai.domain.yang.Relationship;
@@ -82,13 +83,13 @@ public class PlatformCacheServiceProviderImpl extends AbstractCacheServiceProvid
                 platform.setRelationshipList(relationshipList);
             }
             relationshipList.getRelationship().add(relationship);
-            
+
             LOGGER.info("Successfully add relation to Platform with name: {}", platformName);
 
             final Relationship resultantRelationship = new Relationship();
             resultantRelationship.setRelatedTo(PLATFORM);
             resultantRelationship.setRelationshipLabel(USES);
-            resultantRelationship.setRelatedLink(requestUri);
+            resultantRelationship.setRelatedLink(getBiDirectionalRelationShipListRelatedLink(requestUri));
 
             final RelationshipData relationshipData = new RelationshipData();
             relationshipData.setRelationshipKey(PLATFORM_PLATFORM_NAME);
