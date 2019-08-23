@@ -304,7 +304,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
 
     @Override
     public void clearAll() {
-        clearCahce(CUSTOMER_CACHE.getName());
+        clearCache(CUSTOMER_CACHE.getName());
     }
 
     private RelatedToProperty getRelatedToProperty(final String key, final String value) {

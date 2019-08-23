@@ -19,13 +19,16 @@
  */
 package org.onap.so.sdncsimulator.models;
 
+import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class InputRequest<T> {
+public class InputRequest<T> implements Serializable {
+
+    private static final long serialVersionUID = -3408332422970506740L;
 
     private T input;
 
@@ -46,7 +49,11 @@ public class InputRequest<T> {
     @JsonIgnore
     @Override
     public String toString() {
-        return "Input [input=" + input + "]";
+        final StringBuilder sb = new StringBuilder();
+        sb.append("class InputRequest {\n");
+        sb.append("    input: ").append(input).append("\n");
+        sb.append("}");
+        return sb.toString();
     }
 
 }

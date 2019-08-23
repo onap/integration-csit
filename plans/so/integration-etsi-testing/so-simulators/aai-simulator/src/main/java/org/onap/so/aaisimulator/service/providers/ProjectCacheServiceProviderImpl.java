@@ -115,7 +115,7 @@ public class ProjectCacheServiceProviderImpl extends AbstractCacheServiceProvide
 
     @Override
     public void clearAll() {
-        clearCahce(PROJECT_CACHE.getName());
+        clearCache(PROJECT_CACHE.getName());
     }
 
     private Relationship getRelationship(final String requestUriString, final Project project) {
