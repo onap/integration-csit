@@ -237,7 +237,7 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
 
     @Override
     public void clearAll() {
-        clearCahce(CLOUD_REGION_CACHE.getName());
+        clearCache(CLOUD_REGION_CACHE.getName());
 
     }
 

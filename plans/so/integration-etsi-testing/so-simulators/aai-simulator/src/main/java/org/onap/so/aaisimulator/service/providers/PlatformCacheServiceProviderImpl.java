@@ -104,7 +104,7 @@ public class PlatformCacheServiceProviderImpl extends AbstractCacheServiceProvid
 
     @Override
     public void clearAll() {
-        clearCahce(PLATFORM_CACHE.getName());
+        clearCache(PLATFORM_CACHE.getName());
     }
 
 }

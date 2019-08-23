@@ -19,33 +19,47 @@
  */
 package org.onap.so.sdncsimulator.providers;
 
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiOrderStatusEnumeration.CREATED;
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiOrderStatusEnumeration.PENDINGCREATE;
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestStatusEnumeration.SYNCCOMPLETE;
 import static org.onap.so.sdncsimulator.utils.Constants.RESTCONF_CONFIG_END_POINT;
+import static org.onap.so.sdncsimulator.utils.Constants.SERVICE_DATA_VNFS_VNF;
 import static org.onap.so.sdncsimulator.utils.Constants.SERVICE_TOPOLOGY_OPERATION;
 import static org.onap.so.sdncsimulator.utils.Constants.SERVICE_TOPOLOGY_OPERATION_CACHE;
+import static org.onap.so.sdncsimulator.utils.Constants.VNF_DATA_VNF_TOPOLOGY;
 import static org.onap.so.sdncsimulator.utils.Constants.YES;
 import static org.onap.so.sdncsimulator.utils.ObjectUtils.getString;
 import static org.onap.so.sdncsimulator.utils.ObjectUtils.getStringOrNull;
 import static org.onap.so.sdncsimulator.utils.ObjectUtils.isValid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiInstanceReference;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiLastActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiLastRpcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiOnapmodelinformationOnapModelInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiOperStatusData;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiOrderStatusEnumeration;
-import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestStatusEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestinformationRequestInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRpcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiSdncrequestheaderSdncRequestHeader;
-import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceModelInfrastructure;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServiceData;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfs;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfsVnf;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfsVnfVnfData;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceinformationServiceInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfrastructureService;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicestatusServiceStatus;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyServiceTopology;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicetopologyidentifierServiceTopologyIdentifier;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfinformationVnfInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfrequestinputVnfRequestInput;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyVnfTopology;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyidentifierstructureVnfTopologyIdentifierStructure;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -63,7 +77,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServiceProvider
         implements ServiceOperationsCacheServiceProvider {
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceOperationsCacheServiceProviderimpl.class);
 
@@ -85,45 +98,181 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
             LOGGER.info("Adding GenericResourceApiServiceOperationInformation to cache with key: {}",
                     serviceInstanceId);
 
-            final GenericResourceApiServiceModelInfrastructure serviceModelInfrastructure =
-                    new GenericResourceApiServiceModelInfrastructure();
-
-            final GenericResourceApiServicemodelinfrastructureService service = getServiceItem(input);
-            serviceModelInfrastructure.addServiceItem(service);
-            cache.put(serviceInstanceId, serviceModelInfrastructure);
+            final GenericResourceApiServicemodelinfrastructureService service =
+                    getServiceItem(input, serviceInstanceId);
+            cache.put(serviceInstanceId, service);
 
             final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
 
             return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
                     .responseCode(serviceStatus.getResponseCode()).responseMessage(serviceStatus.getResponseMessage())
                     .svcRequestId(svcRequestId).serviceResponseInformation(new GenericResourceApiInstanceReference()
-                            .instanceId(serviceInstanceId).objectPath(RESTCONF_CONFIG_END_POINT + serviceInstanceId));
+                            .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)));
 
         }
+        LOGGER.error(
+                "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
+                input);
         return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
                 .responseMessage("Service instance not found").svcRequestId(svcRequestId);
     }
 
     @Override
-    public Optional<GenericResourceApiServiceModelInfrastructure> getGenericResourceApiServiceModelInfrastructure(
+    public Optional<GenericResourceApiServicemodelinfrastructureService> getGenericResourceApiServicemodelinfrastructureService(
             final String serviceInstanceId) {
         final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
 
-        final GenericResourceApiServiceModelInfrastructure value =
-                cache.get(serviceInstanceId, GenericResourceApiServiceModelInfrastructure.class);
+        final GenericResourceApiServicemodelinfrastructureService value =
+                cache.get(serviceInstanceId, GenericResourceApiServicemodelinfrastructureService.class);
         if (value != null) {
+            LOGGER.info("Found {} in cahce for service instance id: {}", value, serviceInstanceId);
             return Optional.of(value);
         }
+        LOGGER.error("Unable to find GenericResourceApiServiceModelInfrastructure in cache for service instance id: {}",
+                serviceInstanceId);
         return Optional.empty();
     }
 
     @Override
+    public Output putVnfOperationInformation(final GenericResourceApiVnfOperationInformation input) {
+
+        final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
+        final GenericResourceApiVnfinformationVnfInformation vnfInformation = input.getVnfInformation();
+
+        final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
+        final String svcRequestId = requestHeader != null ? requestHeader.getSvcRequestId() : null;
+
+        if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId()) && vnfInformation != null
+                && isValid(vnfInformation.getVnfId())) {
+            final String serviceInstanceId = serviceInformation.getServiceInstanceId();
+            final String vnfId = vnfInformation.getVnfId();
+            final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                    getGenericResourceApiServicemodelinfrastructureService(serviceInstanceId);
+            if (optional.isPresent()) {
+                final GenericResourceApiServicemodelinfrastructureService service = optional.get();
+                final GenericResourceApiServicedataServiceData serviceData = service.getServiceData();
+                if (serviceData != null) {
+                    final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList = getVnfs(serviceData);
+                    if (ifVnfNotExists(vnfId, vnfsList)) {
+
+                        vnfsList.add(getGenericResourceApiServicedataVnf(serviceInstanceId, vnfId, input));
+
+                        final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
+
+                        return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
+                                .responseCode(serviceStatus.getResponseCode())
+                                .responseMessage(serviceStatus.getResponseMessage()).svcRequestId(svcRequestId)
+                                .serviceResponseInformation(new GenericResourceApiInstanceReference()
+                                        .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)))
+                                .vnfResponseInformation(new GenericResourceApiInstanceReference().instanceId(vnfId)
+                                        .objectPath(getObjectPath(serviceInstanceId, vnfId)));
+                    }
+                    LOGGER.error("vnfId: {} already exists", vnfId);
+                    return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                            .responseMessage("vnfId: " + vnfId + " already exists").svcRequestId(svcRequestId);
+                }
+            }
+            LOGGER.error(
+                    "Unable to find existing GenericResourceApiServiceModelInfrastructure in cache using service instance id: {}",
+                    serviceInstanceId);
+
+        }
+        LOGGER.error(
+                "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
+                input);
+        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                .responseMessage("Unable to add vnf").svcRequestId(svcRequestId);
+    }
+
+    @Override
     public void clearAll() {
-        clearCahce(SERVICE_TOPOLOGY_OPERATION_CACHE);
+        clearCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
+    }
+
+    private String getObjectPath(final String serviceInstanceId, final String vnfId) {
+        return getObjectPath(serviceInstanceId) + SERVICE_DATA_VNFS_VNF + vnfId + VNF_DATA_VNF_TOPOLOGY;
+    }
+
+    private String getObjectPath(final String serviceInstanceId) {
+        return RESTCONF_CONFIG_END_POINT + serviceInstanceId;
+    }
+
+
+    private boolean ifVnfNotExists(final String vnfId,
+            final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList) {
+        final Optional<GenericResourceApiServicedataServicedataVnfsVnf> optional =
+                vnfsList.stream().filter(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId)).findFirst();
+        return !optional.isPresent();
+    }
+
+    private List<GenericResourceApiServicedataServicedataVnfsVnf> getVnfs(
+            final GenericResourceApiServicedataServiceData serviceData) {
+        GenericResourceApiServicedataServicedataVnfs vnfs = serviceData.getVnfs();
+        if (vnfs == null) {
+            vnfs = new GenericResourceApiServicedataServicedataVnfs();
+            serviceData.setVnfs(vnfs);
+        }
+
+        List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList = vnfs.getVnf();
+        if (vnfsList == null) {
+            vnfsList = new ArrayList<>();
+            vnfs.setVnf(vnfsList);
+        }
+        return vnfsList;
+    }
+
+    private GenericResourceApiServicedataServicedataVnfsVnf getGenericResourceApiServicedataVnf(
+            final String serviceInstanceId, final String vnfId, final GenericResourceApiVnfOperationInformation input) {
+        return new GenericResourceApiServicedataServicedataVnfsVnf().vnfId(vnfId).vnfData(getVnfData(input));
+    }
+
+    private GenericResourceApiServicedataServicedataVnfsVnfVnfData getVnfData(
+            final GenericResourceApiVnfOperationInformation input) {
+
+        final GenericResourceApiServicedataServicedataVnfsVnfVnfData vnfData =
+                new GenericResourceApiServicedataServicedataVnfsVnfVnfData();
+
+        vnfData.vnfLevelOperStatus(
+                getServiceLevelOperStatus(PENDINGCREATE, input.getRequestInformation(), input.getSdncRequestHeader()));
+        vnfData.serviceInformation(input.getServiceInformation());
+        vnfData.sdncRequestHeader(input.getSdncRequestHeader());
+        vnfData.vnfInformation(input.getVnfInformation());
+        vnfData.requestInformation(input.getRequestInformation());
+        vnfData.vnfRequestInput(input.getVnfRequestInput());
+
+        vnfData.vnfTopology(getVnfTopology(input.getVnfInformation(), input.getVnfRequestInput()));
+
+        return vnfData;
+    }
+
+    private GenericResourceApiVnftopologyVnfTopology getVnfTopology(
+            final GenericResourceApiVnfinformationVnfInformation vnfInformation,
+            final GenericResourceApiVnfrequestinputVnfRequestInput vnfRequestInput) {
+
+        final GenericResourceApiVnftopologyVnfTopology apiVnftopologyVnfTopology =
+                new GenericResourceApiVnftopologyVnfTopology();
+
+        if (vnfInformation != null) {
+            apiVnftopologyVnfTopology.onapModelInformation(vnfInformation.getOnapModelInformation());
+            apiVnftopologyVnfTopology.vnfTopologyIdentifierStructure(getTopologyIdentifierStructure(vnfInformation));
+        }
+        if (vnfRequestInput != null) {
+            apiVnftopologyVnfTopology.tenant(vnfRequestInput.getTenant());
+            apiVnftopologyVnfTopology.aicClli(vnfRequestInput.getAicClli());
+            apiVnftopologyVnfTopology.aicCloudRegion(vnfRequestInput.getAicCloudRegion());
+        }
+        return apiVnftopologyVnfTopology;
+    }
+
+    private GenericResourceApiVnftopologyidentifierstructureVnfTopologyIdentifierStructure getTopologyIdentifierStructure(
+            @Valid final GenericResourceApiVnfinformationVnfInformation vnfInformation) {
+        return new GenericResourceApiVnftopologyidentifierstructureVnfTopologyIdentifierStructure()
+                .vnfId(vnfInformation.getVnfId()).vnfName(vnfInformation.getVnfName())
+                .vnfType(vnfInformation.getVnfType());
     }
 
     private GenericResourceApiServicemodelinfrastructureService getServiceItem(
-            final GenericResourceApiServiceOperationInformation input) {
+            final GenericResourceApiServiceOperationInformation input, final String serviceInstanceId) {
 
         final GenericResourceApiServicedataServiceData apiServicedataServiceData =
                 new GenericResourceApiServicedataServiceData();
@@ -140,7 +289,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                         HttpStatus.OK.toString());
 
         return new GenericResourceApiServicemodelinfrastructureService().serviceData(apiServicedataServiceData)
-                .serviceStatus(serviceStatus);
+                .serviceStatus(serviceStatus).serviceInstanceId(serviceInstanceId);
     }
 
     private String getAction(final GenericResourceApiRequestinformationRequestInformation input) {
@@ -156,17 +305,21 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         return new GenericResourceApiServicestatusServiceStatus().finalIndicator(YES)
                 .rpcAction(GenericResourceApiRpcActionEnumeration.fromValue(rpcAction))
                 .rpcName(SERVICE_TOPOLOGY_OPERATION).responseTimestamp(LocalDateTime.now().toString())
-                .responseCode(responseCode).requestStatus(GenericResourceApiRequestStatusEnumeration.SYNCCOMPLETE)
-                .responseMessage("").action(action);
+                .responseCode(responseCode).requestStatus(SYNCCOMPLETE).responseMessage("").action(action);
     }
 
     private GenericResourceApiOperStatusData getServiceLevelOperStatus(
             final GenericResourceApiServiceOperationInformation input) {
-        return new GenericResourceApiOperStatusData().orderStatus(GenericResourceApiOrderStatusEnumeration.CREATED)
-                .lastAction(GenericResourceApiLastActionEnumeration
-                        .fromValue(getRequestAction(input.getRequestInformation())))
-                .lastRpcAction(GenericResourceApiLastRpcActionEnumeration
-                        .fromValue(getSvcAction(input.getSdncRequestHeader())));
+        return getServiceLevelOperStatus(CREATED, input.getRequestInformation(), input.getSdncRequestHeader());
+    }
+
+    private GenericResourceApiOperStatusData getServiceLevelOperStatus(
+            final GenericResourceApiOrderStatusEnumeration statusEnumeration,
+            final GenericResourceApiRequestinformationRequestInformation requestInformation,
+            final GenericResourceApiSdncrequestheaderSdncRequestHeader sdncRequestHeader) {
+        return new GenericResourceApiOperStatusData().orderStatus(statusEnumeration)
+                .lastAction(GenericResourceApiLastActionEnumeration.fromValue(getRequestAction(requestInformation)))
+                .lastRpcAction(GenericResourceApiLastRpcActionEnumeration.fromValue(getSvcAction(sdncRequestHeader)));
     }
 
     private String getRequestAction(final GenericResourceApiRequestinformationRequestInformation input) {
