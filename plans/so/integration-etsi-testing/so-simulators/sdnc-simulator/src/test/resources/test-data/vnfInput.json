@@ -1,0 +1,46 @@
+{
+    "input": {
+        "request-information": {
+            "request-action": "CreateVnfInstance",
+            "source": "MSO",
+            "request-id": "1a545ea9-2a5e-4df9-9c73-529b1d0b2012"
+        },
+        "sdnc-request-header": {
+            "svc-request-id": "8fd2622b-01fc-424d-bfc8-f48bcd64e546",
+            "svc-notification-url": "http://so-bpmn-infra.onap:8081/mso/WorkflowMessage/SDNCCallback/fd40ea09-3245-476a-b6ff-58cb042edb9d",
+            "svc-action": "assign"
+        },
+        "service-information": {
+            "onap-model-information": {
+                "model-name": "Sol004Zip4Service",
+                "model-version": "1.0",
+                "model-uuid": "99d59273-4450-4034-9141-027f0c1a807a",
+                "model-invariant-uuid": "51672777-9b8d-4e5e-b488-5f9092e03a82"
+            },
+            "subscription-service-type": "vCPE",
+            "service-id": "ccece8fe-13da-456a-baf6-41b3a4a2bc2b",
+            "global-customer-id": "NordixDemoCustomer",
+            "service-instance-id": "ccece8fe-13da-456a-baf6-41b3a4a2bc2b"
+        },
+        "vnf-information": {
+            "onap-model-information": {
+                "model-name": "Sol004Zip3VSP",
+                "model-version": "1.0",
+                "model-customization-uuid": "50a90cd7-a84e-4ee1-b5ba-bfa5a26f5e15",
+                "model-uuid": "84b9649a-4eb9-4967-9abe-e8702f55518b",
+                "model-invariant-uuid": "b0f14066-2b65-40d2-b5a4-c8f2116fb5fc"
+            },
+            "vnf-id": "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701",
+            "vnf-name": "EsyVnfInstantiationTest2",
+            "vnf-type": "Sol004Zip4Service/Sol004Zip3VSP 0"
+        },
+        "vnf-request-input": {
+            "aic-cloud-region": "nordixcloud",
+            "cloud-owner": "CloudOwner",
+            "tenant": "693c7729b2364a26a3ca602e6f66187d",
+            "vnf-network-instance-group-ids": [],
+            "vnf-input-parameters": {},
+            "vnf-name": "EsyVnfInstantiationTest2"
+        }
+    }
+}
