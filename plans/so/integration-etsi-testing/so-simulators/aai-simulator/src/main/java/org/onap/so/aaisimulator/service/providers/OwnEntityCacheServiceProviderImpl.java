@@ -115,7 +115,7 @@ public class OwnEntityCacheServiceProviderImpl extends AbstractCacheServiceProvi
 
     @Override
     public void clearAll() {
-        clearCahce(OWNING_ENTITY_CACHE.getName());
+        clearCache(OWNING_ENTITY_CACHE.getName());
     }
 
     private Relationship getRelationship(final String requestUriString, final OwningEntity owningEntity) {

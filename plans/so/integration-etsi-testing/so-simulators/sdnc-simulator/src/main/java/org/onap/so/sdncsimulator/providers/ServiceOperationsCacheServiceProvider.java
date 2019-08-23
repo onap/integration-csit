@@ -20,8 +20,9 @@
 package org.onap.so.sdncsimulator.providers;
 
 import java.util.Optional;
-import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceModelInfrastructure;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfrastructureService;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
 import org.onap.so.sdncsimulator.models.Output;
 
 /**
@@ -33,10 +34,11 @@ public interface ServiceOperationsCacheServiceProvider {
     Output putServiceOperationInformation(
             final GenericResourceApiServiceOperationInformation apiServiceOperationInformation);
 
-    Optional<GenericResourceApiServiceModelInfrastructure> getGenericResourceApiServiceModelInfrastructure(
+    Optional<GenericResourceApiServicemodelinfrastructureService> getGenericResourceApiServicemodelinfrastructureService(
             final String serviceInstanceId);
 
-    void clearAll();
+    Output putVnfOperationInformation(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation);
 
+    void clearAll();
 
 }
