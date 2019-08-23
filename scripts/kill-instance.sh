@@ -18,7 +18,14 @@
 
 mkdir -p $WORKSPACE/archives
 
-docker logs $1 >> $WORKSPACE/archives/$1.log
-docker kill $1
-docker rm $1
+running_containers=$(docker ps --filter name=$1 -q)
+if [ -z "$running_containers" ]
+then
+    echo "$1 already terminated"
+else
+    echo "Stopping and removing containers"
+    docker logs $running_containers >> $WORKSPACE/archives/$1.log
+    docker stop $running_containers
+    docker rm $running_containers
+fi
 

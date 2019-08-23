@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-#Stop dfc
+running_containers=$(docker ps --filter name=dfc_ -q)
 
-kill-instance.sh dfc_app
 
-#Stop all simulators 
+if [ -z "$running_containers" ]
+then
+    echo "No container requires termination"
+else
+    echo "Stopping and removing containers"
+    docker stop $running_containers
+    docker rm $running_containers
+fi
 
-kill-instance.sh dfc_dr-sim
-kill-instance.sh dfc_dr-redir-sim
-kill-instance.sh dfc_mr-sim
-kill-instance.sh dfc_sftp-server
-kill-instance.sh dfc_ftpes-server-vsftpd

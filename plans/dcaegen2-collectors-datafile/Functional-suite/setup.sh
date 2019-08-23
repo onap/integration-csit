@@ -3,14 +3,26 @@
 #Stop all running containers
 docker kill "$(docker ps -q -a)"
 docker rm "$(docker ps -q -a)"
+docker system prune -f
 
 # Clone Simulators for DFC from integration repo.
 mkdir -p $WORKSPACE/archives/dfc
 cd $WORKSPACE/archives/dfc
-git clone --depth 1 https://gerrit.onap.org/r/integration -b master
 
-#Location of all individual simulators for DFC
-SIM_ROOT=$WORKSPACE/archives/dfc/integration/test/mocks/datafilecollector-testharness
+
+if [ -z "$SIM_ROOT" ]
+then
+	#git clone --depth 1 https://gerrit.onap.org/r/integration -b master
+	git clone https://github.com/yanhuanwang/integration.git
+	#Location of all individual simulators for DFC
+	echo "Determine SIM_ROOT based on the WORKSPACE"
+	SIM_ROOT=$WORKSPACE/archives/dfc/integration/test/mocks/datafilecollector-testharness
+
+	rm $SIM_ROOT/simulator-group/consul/consul/cbs_localhost_config.hcl || true
+else
+	echo "Using SIM_ROOT from environmental variable: " $SIM_ROOT
+fi
+
 #Location of the above simulators when run as a group. For start+config and stop.
 SIMGROUP_ROOT=$SIM_ROOT/simulator-group
 
@@ -20,7 +32,11 @@ SIM_IP="127.0.0.1"
 DFC_ROOT=$WORKSPACE/scripts/dcaegen2-collectors-datafile/dfc-management
 
 #Make the env vars availble to the robot scripts
-ROBOT_VARIABLES="-v SIMGROUP_ROOT:${SIMGROUP_ROOT} -v SIM_IP:${SIM_IP} -v DFC_ROOT:${DFC_ROOT}"
+ROBOT_VARIABLES="-b debug.log -v SIMGROUP_ROOT:${SIMGROUP_ROOT} -v SIM_IP:${SIM_IP} -v DFC_ROOT:${DFC_ROOT}"
+
+
+
+
 
 #Build needed simulator images. DR and MR simulators
 
@@ -39,6 +55,10 @@ cd $SIMGROUP_ROOT
 #Copy ftp config for the ftp servers
 cp -r ../ftps-sftp-server/configuration .
 cp -r ../ftps-sftp-server/tls .
+
+cd ../ftps-sftp-server
+docker build -t ftps_vsftpd:latest -f Dockerfile-ftps .
+
 
 #All containers will be started and stopped via the robot tests.
 
