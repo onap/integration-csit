@@ -193,7 +193,7 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
 
     @Override
     public void clearAll() {
-        clearCahce(GENERIC_VNF_CACHE.getName());
+        clearCache(GENERIC_VNF_CACHE.getName());
     }
 
 }
