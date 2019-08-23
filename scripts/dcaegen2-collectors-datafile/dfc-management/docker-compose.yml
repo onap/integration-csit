@@ -1,9 +1,23 @@
 version: '2'
+networks:
+  dfcnet:
+    external:
+      name: dfcnet
 services:
   dfc:
-    network_mode: "host"
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
-    container_name: dfc_app
+    #image fron Nexus
+    #image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
+    image: yanhuanwang/dfc:latest
+    #local image for test purposes
+    #image: org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
+    container_name: dfc_app0
     ports:
       - "8100:8100"
       - "8433:8433"
+    networks:
+      dfcnet: null
+    environment:
+      CONSUL_HOST: "consul-server"
+      CONSUL_PORT: 8500
+      CONFIG_BINDING_SERVICE: "config-binding-service"
+      HOSTNAME: "dfc_app0"

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#Restart DFC app 
+#Restart DFC app
 
-docker restart dfc_app
+docker restart dfc_app0
 
-DFC_APP="$(docker ps -q --filter='name=dfc_app')"
+DFC_APP="$(docker ps -q --filter='name=dfc_app0')"
 
 
 #Wait for initialization of docker container for dfc app
