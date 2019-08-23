@@ -22,15 +22,16 @@ package org.onap.so.sdncsimulator.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getInvalidRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestInput;
+import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiInstanceReference;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfsVnf;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfrastructureService;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
@@ -43,12 +44,10 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -65,11 +64,15 @@ public class OperationsControllerTest {
 
     private static final String SVC_REQUEST_ID = "04fc9f50-87b8-430d-a232-ef24bd6c4150";
 
+    private static final String VNF_SVC_REQUEST_ID = "8fd2622b-01fc-424d-bfc8-f48bcd64e546";
+
     private static final String SERVICE_INSTANCE_ID = "ccece8fe-13da-456a-baf6-41b3a4a2bc2b";
 
     private static final String SERVICE_TOPOLOGY_OPERATION_URL = "/GENERIC-RESOURCE-API:service-topology-operation/";
 
-    private static final String PASSWORD = "Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U";
+    private static final String VNF_TOPOLOGY_OPERATION_URL = "/GENERIC-RESOURCE-API:vnf-topology-operation/";
+
+    private static final String VNF_INSTANCE_ID = "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701";
 
     @LocalServerPort
     private int port;
@@ -108,8 +111,16 @@ public class OperationsControllerTest {
         final GenericResourceApiInstanceReference acutalReference = actualObject.getServiceResponseInformation();
         assertEquals(Constants.RESTCONF_CONFIG_END_POINT + SERVICE_INSTANCE_ID, acutalReference.getObjectPath());
         assertEquals(SERVICE_INSTANCE_ID, acutalReference.getInstanceId());
-        assertTrue(
-                cacheServiceProvider.getGenericResourceApiServiceModelInfrastructure(SERVICE_INSTANCE_ID).isPresent());
+        final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(optional.isPresent());
+
+        final GenericResourceApiServicemodelinfrastructureService service = optional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertEquals(SERVICE_INSTANCE_ID, service.getServiceInstanceId());
+        assertNotNull(service.getServiceData());
+        assertNotNull(service.getServiceStatus());
+
     }
 
     @Test
@@ -143,39 +154,101 @@ public class OperationsControllerTest {
 
     }
 
+    @Test
+    public void test_postVnfOperationInformation_successfullyAddToExistingServiceInCache() throws Exception {
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        final HttpEntity<?> httpVnfEntity = new HttpEntity<>(getVnfRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseVnfEntity =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpVnfEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseVnfEntity.getStatusCode());
+        assertTrue(responseVnfEntity.hasBody());
+
+        final OutputRequest actualOutputRequest = responseVnfEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+        assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
+        assertNotNull(actualObject.getServiceResponseInformation());
+
+        final GenericResourceApiInstanceReference acutalReference = actualObject.getServiceResponseInformation();
+        assertEquals(Constants.RESTCONF_CONFIG_END_POINT + SERVICE_INSTANCE_ID, acutalReference.getObjectPath());
+        assertEquals(SERVICE_INSTANCE_ID, acutalReference.getInstanceId());
+        final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(optional.isPresent());
+
+        final GenericResourceApiInstanceReference actualvnfInformation = actualObject.getVnfResponseInformation();
+        assertEquals(VNF_INSTANCE_ID, actualvnfInformation.getInstanceId());
+
+        final Optional<GenericResourceApiServicemodelinfrastructureService> serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        final GenericResourceApiServicemodelinfrastructureService service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertNotNull(service.getServiceData());
+        assertNotNull(service.getServiceData().getVnfs());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertEquals(1, service.getServiceData().getVnfs().getVnf().size());
+        final GenericResourceApiServicedataServicedataVnfsVnf vnf = service.getServiceData().getVnfs().getVnf().get(0);
+        assertNotNull(vnf.getVnfId());
+        assertEquals(VNF_INSTANCE_ID, vnf.getVnfId());
+        assertNotNull(vnf.getVnfData());
+    }
+
+    @Test
+    public void test_postSameVnfOperationInformationTwice_ShouldReturnbadRequest() throws Exception {
+
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        final HttpEntity<?> httpVnfEntity = new HttpEntity<>(getVnfRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseVnfEntity =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpVnfEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseVnfEntity.getStatusCode());
+        assertTrue(responseVnfEntity.hasBody());
+
+        final OutputRequest actualOutputRequest = responseVnfEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final ResponseEntity<OutputRequest> badResponse =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpVnfEntity, OutputRequest.class);
+
+        final OutputRequest badOutputRequest = badResponse.getBody();
+        assertNotNull(badOutputRequest);
+
+        final Output actualObject = badOutputRequest.getOutput();
+        assertNotNull(actualObject);
+        assertEquals(HttpStatus.BAD_REQUEST.toString(), actualObject.getResponseCode());
+        assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+
+    }
+
     private HttpHeaders getHttpHeaders() {
-        return getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
+        return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());
     }
 
     private String getUrl() {
         return "http://localhost:" + port + Constants.OPERATIONS_URL + SERVICE_TOPOLOGY_OPERATION_URL;
     }
 
-    private String getRequestInput() throws IOException {
-        return getFileAsString(getFile("test-data/input.json").toPath());
-    }
-
-    private String getInvalidRequestInput() throws IOException {
-        return getFileAsString(getFile("test-data/InvalidInput.json").toPath());
-    }
-
-    private String getFileAsString(final Path path) throws IOException {
-        return new String(Files.readAllBytes(path));
-    }
-
-    private File getFile(final String file) throws IOException {
-        return new ClassPathResource(file).getFile();
-    }
-
-    private HttpHeaders getHttpHeaders(final String username) {
-        final HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization", getBasicAuth(username));
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
-
-    private String getBasicAuth(final String username) {
-        return "Basic " + new String(Base64.getEncoder().encodeToString((username + ":" + PASSWORD).getBytes()));
+    private String getVnfUrl() {
+        return "http://localhost:" + port + Constants.OPERATIONS_URL + VNF_TOPOLOGY_OPERATION_URL;
     }
 
     @After
