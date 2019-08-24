@@ -38,7 +38,7 @@ public abstract class AbstractCacheServiceProvider {
         this.cacheManager = cacheManager;
     }
 
-    protected void clearCahce(final String name) {
+    protected void clearCache(final String name) {
         final Cache cache = cacheManager.getCache(name);
         if (cache != null) {
             final ConcurrentHashMap<?, ?> nativeCache = (ConcurrentHashMap<?, ?>) cache.getNativeCache();

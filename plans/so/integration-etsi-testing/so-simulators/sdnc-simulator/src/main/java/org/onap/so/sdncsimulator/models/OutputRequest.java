@@ -19,14 +19,17 @@
  */
 package org.onap.so.sdncsimulator.models;
 
+import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
+public class OutputRequest implements Serializable {
 
-public class OutputRequest {
+    private static final long serialVersionUID = -6702076913290110397L;
+
     @JsonProperty("output")
     private Output output;
 
@@ -47,7 +50,11 @@ public class OutputRequest {
 
     @Override
     public String toString() {
-        return "OutputRequest [output=" + output + "]";
+        final StringBuilder sb = new StringBuilder();
+        sb.append("class OutputRequest {\n");
+        sb.append("    output: ").append(output).append("\n");
+        sb.append("}");
+        return sb.toString();
     }
 
 }

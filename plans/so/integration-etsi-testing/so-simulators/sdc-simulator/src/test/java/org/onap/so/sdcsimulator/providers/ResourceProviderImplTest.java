@@ -22,7 +22,6 @@ package org.onap.so.sdcsimulator.providers;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +29,6 @@ import java.nio.file.Path;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.onap.so.sdcsimulator.providers.ResourceProviderImpl;
 import org.onap.so.sdcsimulator.utils.Constants;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
@@ -81,19 +79,4 @@ public class ResourceProviderImplTest {
         assertFalse(objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).isPresent());
 
     }
-
-    @Test
-    public void test_getResource_withValidPathAndUnabletoRead_emptyOptional() throws IOException {
-        final File folder = temporaryFolder.newFolder();
-        final Path file = Files.createFile(folder.toPath().resolve("empty.csar"));
-
-        Files.write(file, DUMMY_CONTENT.getBytes());
-        file.toFile().setReadable(false);
-
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl(folder.getPath());
-
-        assertFalse(objUnderTest.getResource("empty").isPresent());
-
-    }
-
 }

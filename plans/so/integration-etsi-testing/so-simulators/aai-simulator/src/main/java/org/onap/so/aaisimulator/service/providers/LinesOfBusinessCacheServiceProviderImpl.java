@@ -105,7 +105,7 @@ public class LinesOfBusinessCacheServiceProviderImpl extends AbstractCacheServic
 
     @Override
     public void clearAll() {
-        clearCahce(LINES_OF_BUSINESS_CACHE.getName());
+        clearCache(LINES_OF_BUSINESS_CACHE.getName());
     }
 
 }

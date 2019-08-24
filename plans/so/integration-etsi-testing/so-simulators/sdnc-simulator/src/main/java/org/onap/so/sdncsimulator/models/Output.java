@@ -19,6 +19,7 @@
  */
 package org.onap.so.sdncsimulator.models;
 
+import java.io.Serializable;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiInstanceReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,7 +28,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class Output {
+public class Output implements Serializable {
+
+    private static final long serialVersionUID = 3838047042980836468L;
 
     @JsonProperty("response-message")
     private String responseMessage;
@@ -43,6 +46,9 @@ public class Output {
 
     @JsonProperty("service-response-information")
     private GenericResourceApiInstanceReference serviceResponseInformation = null;
+
+    @JsonProperty("vnf-response-information")
+    private GenericResourceApiInstanceReference vnfResponseInformation = null;
 
     /**
      * @return the responseMessage
@@ -114,6 +120,21 @@ public class Output {
         this.serviceResponseInformation = serviceResponseInformation;
     }
 
+    /**
+     * @return the vnfResponseInformation
+     */
+    public GenericResourceApiInstanceReference getVnfResponseInformation() {
+        return vnfResponseInformation;
+    }
+
+    /**
+     * @param vnfResponseInformation the vnfResponseInformation to set
+     */
+    public void setVnfResponseInformation(final GenericResourceApiInstanceReference vnfResponseInformation) {
+        this.vnfResponseInformation = vnfResponseInformation;
+    }
+
+
     public Output responseMessage(final String responseMessage) {
         this.responseMessage = responseMessage;
         return this;
@@ -139,13 +160,25 @@ public class Output {
         return this;
     }
 
+    public Output vnfResponseInformation(final GenericResourceApiInstanceReference vnfResponseInformation) {
+        this.vnfResponseInformation = vnfResponseInformation;
+        return this;
+
+    }
 
     @JsonIgnore
     @Override
     public String toString() {
-        return "OutputRequest [responseMessage=" + responseMessage + ", ackFinalIndicator=" + ackFinalIndicator
-                + ", svcRequestId=" + svcRequestId + ", responseCode=" + responseCode + ", serviceResponseInformation="
-                + serviceResponseInformation + "]";
+        final StringBuilder sb = new StringBuilder();
+        sb.append("class OutputRequest {\n");
+        sb.append("    responseMessage: ").append(responseMessage).append("\n");
+        sb.append("    ackFinalIndicator: ").append(ackFinalIndicator).append("\n");
+        sb.append("    svcRequestId: ").append(svcRequestId).append("\n");
+        sb.append("    responseCode: ").append(responseCode).append("\n");
+        sb.append("    serviceResponseInformation: ").append(serviceResponseInformation).append("\n");
+        sb.append("    vnfResponseInformation: ").append(vnfResponseInformation).append("\n");
+        sb.append("}");
+        return sb.toString();
     }
 
 
