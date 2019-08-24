@@ -39,5 +39,9 @@ public class Constants {
 
     public static final String RESTCONF_CONFIG_END_POINT = "restconf/config/GENERIC-RESOURCE-API:services/service/";
 
+    public static final String VNF_DATA_VNF_TOPOLOGY = "/vnf-data/vnf-topology/";
+
+    public static final String SERVICE_DATA_VNFS_VNF = "/service-data/vnfs/vnf/";
+
     private Constants() {}
 }

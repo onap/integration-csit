@@ -23,6 +23,7 @@ import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
@@ -55,15 +56,17 @@ public class OperationsController {
     }
 
     @PostMapping(value = "/GENERIC-RESOURCE-API:service-topology-operation/",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postServiceOperationInformation(
             @RequestBody final InputRequest<GenericResourceApiServiceOperationInformation> inputRequest,
             final HttpServletRequest request) {
-        LOGGER.info("Request Received {}  ...", inputRequest);
+        LOGGER.info("Request Received: {}  ...", inputRequest);
 
         final GenericResourceApiServiceOperationInformation apiServiceOperationInformation = inputRequest.getInput();
 
         if (apiServiceOperationInformation == null) {
+            LOGGER.error("Invalid input request: {}", inputRequest);
             return ResponseEntity.badRequest().build();
         }
 
@@ -71,9 +74,37 @@ public class OperationsController {
         final OutputRequest outputRequest = new OutputRequest(output);
 
         if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
+            LOGGER.info("Sucessfully added service in cache sending response: {}", outputRequest);
+            return ResponseEntity.ok(outputRequest);
+        }
+        LOGGER.error("Unable to add input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
+        return ResponseEntity.badRequest().body(outputRequest);
+
+    }
+
+    @PostMapping(value = "/GENERIC-RESOURCE-API:vnf-topology-operation/",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> postVnfOperationInformation(
+            @RequestBody final InputRequest<GenericResourceApiVnfOperationInformation> inputRequest,
+            final HttpServletRequest request) {
+        LOGGER.info("Request Received: {}  ...", inputRequest);
+
+        final GenericResourceApiVnfOperationInformation apiVnfOperationInformation = inputRequest.getInput();
+        if (apiVnfOperationInformation == null) {
+            LOGGER.error("Invalid input request: {}", inputRequest);
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Output output = cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
+        final OutputRequest outputRequest = new OutputRequest(output);
+
+        if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
+            LOGGER.info("Sucessfully added vnf in cache sending response: {}", outputRequest);
             return ResponseEntity.ok(outputRequest);
         }
 
+        LOGGER.error("Unable to add input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
         return ResponseEntity.badRequest().body(outputRequest);
 
     }
