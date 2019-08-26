@@ -10,7 +10,7 @@ ${queryswagger_pike_url}    /api/multicloud-pike/v0/swagger.json
 
 
 *** Test Cases ***
-OcataSwaggerTest
+PikeSwaggerTest
     [Documentation]    query swagger info rest test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${SERVICE_IP}:${SERVICE_PORT}    headers=${headers}

@@ -8,7 +8,7 @@ ${queryregistration_url}	/api/multicloud-pike/v0/CloudOwner_RegionOne/registry
 
 
 *** Test Cases ***
-OcataRegistryTest
+PikeRegistryTest
     [Documentation]		Register openstack cloud resources
     ${headers}    		Create Dictionary	Content-Type=application/json		Accept=application/json
     Create Session		web_session		http://${SERVICE_IP}:${SERVICE_PORT}	headers=${headers}
