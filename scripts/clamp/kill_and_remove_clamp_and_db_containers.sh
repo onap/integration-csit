@@ -19,8 +19,8 @@
 
 echo "This is ${WORKSPACE}/scripts/clamp/kill_and_remove_clamp_and_db_containers.sh"
 
-kill-instance.sh clamp_clamp_1
+kill-instance.sh clamp_clamp-backend_1
 kill-instance.sh clamp_db_1
-kill-instance.sh clamp_third_party_proxy_1
+kill-instance.sh clamp_third-party-proxy_1
 
 # $WORKSPACE/archives/clamp-clone deleted with archives folder when tests starts so we keep it at the end for debugging
