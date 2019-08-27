@@ -9,8 +9,8 @@ Library     XvfbRobot
 *** Variables ***
 ${login}                     admin
 ${passw}                     password
-${SELENIUM_SPEED_FAST}       .2 seconds
-${SELENIUM_SPEED_SLOW}       .5 seconds
+${SELENIUM_SPEED_FAST}       1 seconds
+${SELENIUM_SPEED_SLOW}       2 seconds
 ${BASE_URL}                  https://localhost:8443
 
 *** Keywords ***
@@ -47,21 +47,8 @@ Open TCA1 from Menu
     Click Element    xpath=//*[@id="navbar"]/ul/li[1]/a
     Wait Until Element Is Visible       locator=Open CL       timeout=60
     Click Element    locator=Open CL
-    Select From List By Label       id=modelName      LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
+    Select From List By Label       id=modelName      LOOP_ejh5S_v1_0_ResourceInstanceName1_tca
     Click Button    locator=OK
-
-Set Properties for HolmesModel1
-    Wait Until Element Is Visible      xpath=//*[@data-element-id="TCA_iYTIP_v1_0_ResourceInstanceName1_tca"]       timeout=60
-    Click Element    xpath=//*[@data-element-id="TCA_iYTIP_v1_0_ResourceInstanceName1_tca"]
-    Wait Until Element Is Visible       xpath=//*[@id="editor"]/div/h3/div[2]/button[1]       timeout=60
-    Click Element    xpath=//*[@id="editor"]/div/h3/div[2]/button[1]
-    Wait Until Element Is Visible       xpath=//*[@id="root.0"]/div[2]/div/div/div[2]/div/h3/div[2]/button[1]/span      timeout=60
-    Click Element    xpath=//*[@id="root.0"]/div[2]/div/div/div[2]/div/h3/div[2]/button[1]/span
-    Input Text      xpath=//*[@name="root[0][metricsPerEventName][0][eventName]"]     text=Event1
-    Input Text      xpath=//*[@name="root[0][metricsPerEventName][0][policyName]"]     text=PolicyScope1
-    Input Text      xpath=//*[@name="root[0][metricsPerEventName][0][policyScope]"]     text=TCAPolicyScope1
-    Input Text      xpath=//*[@name="root[0][metricsPerEventName][0][policyVersion]"]     text=1.2.3
-    Click Button    locator=Done
 
 Close Browser
     Close Browser
