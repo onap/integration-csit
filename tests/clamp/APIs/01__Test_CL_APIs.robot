@@ -57,13 +57,4 @@ Verify Modification MicroService TCA1
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
     Should Contain Match    ${resp}   *version1.11*
 
-Modify Operational Policy TCA1
-    ${data}=    Get Binary File     ${CURDIR}${/}data${/}operationalPolicyTca1.json
-    &{headers}=  Create Dictionary      Content-Type=application/json
-    ${resp}=    POST Request    ${clamp_session}   /restservices/clds/v2/loop/updateOperationalPolicies/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca     data=${data}   headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}     200
-
-Verify Modification Operational TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *Test_Field*
 
