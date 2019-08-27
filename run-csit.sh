@@ -67,13 +67,8 @@ export TESTOPTIONS="${2}"
 
 TESTPLANDIR=${WORKSPACE}/${TESTPLAN}
 
-# Assume that if env.properties is set, installation prerequirements are fulfilled
-# env.properties needs to be sourced for ROBOT_VENV
-if [ -f ${WORKSPACE}/env.properties ]; then
-    source ${WORKSPACE}/env.properties
-else
-    source ${WORKSPACE}/prepare-csit.sh
-fi
+# Run installation of prerequired libraries
+source ${WORKSPACE}/prepare-csit.sh
 
 # Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
 source "${ROBOT_VENV}/bin/activate"
