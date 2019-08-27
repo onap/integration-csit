@@ -22,48 +22,27 @@ Get Requests health check ok
 
 List TCAs
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/getAllNames
-    Should Contain Match    ${resp}   *LOOP_iYTIP_v1_0_ResourceInstanceName1_tca*
+    Should Contain Match    ${resp}   *Name1_tca*
     Should Contain Match    ${resp}   *tca_2*
-    Should Contain Match    ${resp}   *LOOP_iYTIP_v1_0_ResourceInstanceName1_tca_3*
+    Should Contain Match    ${resp}   *Name1_tca_3*
 
 Open TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *LOOP_iYTIP_v1_0_ResourceInstanceName1_tca*
-    Should Contain Match    ${resp}   *GENERATED_POLICY_ID_AT_SUBMIT*
-    Should Contain Match    ${resp}   *onap.policy.monitoring.cdap.tca.hi.lo.app*
-    Should Contain Match    ${resp}   *TCA Policy Scope*
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName1_tca
+    Should Contain Match    ${resp}   *Name1_tca*
+    Should Contain Match    ${resp}   *Operational Policy Item*
+    Should Contain Match    ${resp}   *Operational policies*
+    Should Contain Match    ${resp}   *Micro Service policies UPDATED*
 
 Open TCA2
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName2_tca_2
-    Should Contain Match    ${resp}   *LOOP_iYTIP_v1_0_ResourceInstanceName2_tca_2*
-    Should Contain Match    ${resp}   *GENERATED_POLICY_ID_AT_SUBMIT*
-    Should Contain Match    ${resp}   *dmaap.onap-message-router*
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName2_tca_2
+    Should Contain Match    ${resp}   *Name2_tca_2*
+    Should Contain Match    ${resp}   *Operational Policy Item*
+    Should Contain Match    ${resp}   *1004*
     Should Contain Match    ${resp}   *TCA Policy Scope*
 
 Open TCA3
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca_3
-    Should Contain Match    ${resp}   *LOOP_iYTIP_v1_0_ResourceInstanceName1_tca*
-    Should Contain Match    ${resp}   *GENERATED_POLICY_ID_AT_SUBMIT*
-    Should Contain Match    ${resp}   *onap.policy.monitoring.cdap.tca.hi.lo.app*
-    Should Contain Match    ${resp}   *TCA Policy Scope Version*
-
-Modify MicroService Policy TCA1
-    ${data}=    Get Binary File     ${CURDIR}${/}data${/}microservicePolicyTca1.json
-    &{headers}=  Create Dictionary      Content-Type=application/json
-    ${resp}=    POST Request    ${clamp_session}   /restservices/clds/v2/loop/updateMicroservicePolicy/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca     data=${data}   headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}     200
-
-Verify Modification MicroService TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *version1.11*
-
-Modify Operational Policy TCA1
-    ${data}=    Get Binary File     ${CURDIR}${/}data${/}operationalPolicyTca1.json
-    &{headers}=  Create Dictionary      Content-Type=application/json
-    ${resp}=    POST Request    ${clamp_session}   /restservices/clds/v2/loop/updateOperationalPolicies/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca     data=${data}   headers=${headers}
-    Should Be Equal As Strings      ${resp.status_code}     200
-
-Verify Modification Operational TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_iYTIP_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *Test_Field*
-
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName1_tca_3
+    Should Contain Match    ${resp}   *Name1_tca_3*
+    Should Contain Match    ${resp}   *Operational Policy Item*
+    Should Contain Match    ${resp}   *1004*
+    Should Contain Match    ${resp}   *TCA Policy Scope*
