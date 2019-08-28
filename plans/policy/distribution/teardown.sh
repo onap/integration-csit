@@ -1,6 +1,8 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
+#
+#  Modifications copyright (c) 2019 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,4 +19,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
+#temporarily added for debugging
+docker exec -it policy-pap cat /var/log/onap/policy/pap/network.log
+
+kill-instance.sh policy-apex-pdp
+kill-instance.sh policy-pap
+kill-instance.sh policy-api
+kill-instance.sh mariadb
+kill-instance.sh dmaap-simulator
 kill-instance.sh policy-distribution
