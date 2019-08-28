@@ -156,6 +156,19 @@ public class TestUtils {
         return getJsonString("test-data/generic-vnf-orch-status-update.json");
     }
 
+    public static String getEsrVnfm() throws IOException {
+        return getJsonString("test-data/esr-vnfm.json");
+    }
+
+    public static String getEsrSystemInfo() throws IOException {
+        return getJsonString("test-data/esr-system-info.json");
+    }
+
+    public static String getVserver() throws IOException {
+        return getJsonString("test-data/vServer.json");
+    }
+
+
     public static String getUrl(final int port, final String... urls) {
         final UriComponentsBuilder baseUri = UriComponentsBuilder.fromUriString("https://localhost:" + port);
         for (final String url : urls) {

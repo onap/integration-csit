@@ -46,6 +46,7 @@ import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
@@ -362,6 +363,28 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         assertEquals(VNF_ID, actualGenericVnf.getVnfId());
         assertEquals("Assigned", actualGenericVnf.getOrchestrationStatus());
 
+    }
+
+    @Test
+    public void test_getGenericVnfs_usingSelfLink_getAllGenericVnfsInCache() throws Exception {
+
+        addCustomerServiceAndGenericVnf();
+
+        final String selfLink = "http://localhost:9921/generic-vnf/" + VNF_ID;
+        final String url = getUrl(Constants.GENERIC_VNFS_URL) + "?selflink=" + selfLink;
+        final ResponseEntity<GenericVnfs> response = testRestTemplateService.invokeHttpGet(url, GenericVnfs.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+
+        final GenericVnfs actualGenericVnfs = response.getBody();
+        final List<GenericVnf> genericVnfList = actualGenericVnfs.getGenericVnf();
+        assertNotNull(genericVnfList);
+        assertEquals(1, genericVnfList.size());
+        final GenericVnf actualGenericVnf = genericVnfList.get(0);
+        assertEquals(selfLink, actualGenericVnf.getSelflink());
+        assertEquals(GENERIC_VNF_NAME, actualGenericVnf.getVnfName());
+        assertEquals(VNF_ID, actualGenericVnf.getVnfId());
     }
 
     private void addCustomerServiceAndGenericVnf() throws Exception, IOException {

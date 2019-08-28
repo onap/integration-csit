@@ -27,10 +27,12 @@ import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.GenericVnf;
+import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.HttpServiceUtils;
@@ -170,6 +172,24 @@ public class GenericVnfsController {
         LOGGER.error("{} not supported ... ", xHttpHeaderOverride);
 
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
+    }
+
+    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getGenericVnfs(@RequestParam(name = "selflink") final String selflink,
+            final HttpServletRequest request) {
+        LOGGER.info("will retrieve GenericVnfs using selflink: {}", selflink);
+
+        final List<GenericVnf> genericVnfList = cacheServiceProvider.getGenericVnfs(selflink);
+
+        if (genericVnfList.isEmpty()) {
+            LOGGER.error("No matching generic vnfs found using selflink: {}", selflink);
+            return getRequestErrorResponseEntity(request, GENERIC_VNF);
+        }
+
+        LOGGER.info("found {} GenericVnfs in cache", genericVnfList.size());
+        final GenericVnfs genericVnfs = new GenericVnfs();
+        genericVnfs.getGenericVnf().addAll(genericVnfList);
+        return ResponseEntity.ok(genericVnfs);
     }
 
 }

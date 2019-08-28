@@ -17,31 +17,27 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.utils;
+package org.onap.so.aaisimulator.service.providers;
+
+import java.util.List;
+import java.util.Optional;
+import org.onap.aai.domain.yang.EsrSystemInfo;
+import org.onap.aai.domain.yang.EsrSystemInfoList;
+import org.onap.aai.domain.yang.EsrVnfm;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public enum CacheName {
+public interface ExternalSystemCacheServiceProvider extends Clearable {
 
-    CUSTOMER_CACHE("customer-cache"),
-    PROJECT_CACHE("project-cache"),
-    NODES_CACHE("nodes-cache"),
-    GENERIC_VNF_CACHE("generic-vnf-cache"),
-    OWNING_ENTITY_CACHE("owning-entity-cache"),
-    PLATFORM_CACHE("platform-cache"),
-    LINES_OF_BUSINESS_CACHE("lines-of-business-cache"),
-    CLOUD_REGION_CACHE("cloud-region-cache"),
-    ESR_VNFM_CACHE("esr-vnfm-cache");
+    void putEsrVnfm(final String vnfmId, final EsrVnfm esrVnfm);
 
-    private String name;
+    Optional<EsrVnfm> getEsrVnfm(final String vnfmId);
 
-    private CacheName(final String name) {
-        this.name = name;
-    }
+    List<EsrVnfm> getAllEsrVnfm();
 
-    public String getName() {
-        return name;
-    }
+    Optional<EsrSystemInfoList> getEsrSystemInfoList(final String vnfmId);
+
+    boolean putEsrSystemInfo(final String vnfmId, final String esrSystemInfoId, final EsrSystemInfo esrSystemInfo);
 }
