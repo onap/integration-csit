@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116c1726_fd2dce09",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/controller/ExternalSystemEsrController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4327
+      },
+      "writtenOn": "2019-08-28T12:44:43Z",
+      "side": 1,
+      "message": "Where is the value?",
+      "range": {
+        "startLine": 94,
+        "startChar": 16,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "f91b40f34c567ce9dfec1f1106afeca8d4015508",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
