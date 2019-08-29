@@ -1,0 +1,56 @@
+{
+	"requestDetails": {
+		"modelInfo": {
+			"modelType": "${volumeGroupModelType}",
+			"modelVersion": "${volumeGroupModelVersion}",
+			"modelName": "${volumeGroupModelName}",
+			"modelInvariantId": "${volumeGroupModelInvariantId}",
+			"modelVersionId": "${volumeGroupModelVersionId}",
+			"modelCustomizationId": "${volumeGroupModelCustomizationId}"
+		},
+		"requestInfo": {
+			"instanceName": "${volumeGroupName}",
+			"source": "VID",
+			"suppressRollback": true,
+			"requestorId": "sk720x"
+		},
+		"requestParameters": {
+			"testApi": "${testApi}",
+			"aLaCarte": "${alaCarte}",
+			"userParams": []
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "${volumeGroupLcpCloudRegionId}",
+			"cloudOwner": "${cloudOwner}",
+			"tenantId": "${volumeGroupTenantId}"
+		},
+		"relatedInstanceList": [
+			{
+				"relatedInstance": {
+					"instanceId": "${serviceInstanceId}",
+					"modelInfo": {
+						"modelType": "${serviceInstModelType}",
+						"modelInvariantId": "${serviceInstModelInvariantId}",
+						"modelVersionId": "${serviceInstModelNameVersionId}",
+						"modelName": "${serviceInstModelName}",
+						"modelVersion": "${serviceInstModelVersion}"
+					}
+				}
+			},
+			{
+				"relatedInstance": {
+					"instanceId": "${vnfId}",
+					"modelInfo": {
+						"modelType": "${vnfModelType}",
+						"modelName": "${vnfModelName}",
+						"modelInvariantId": "${vnfModelInvariantId}",
+						"modelVersion": "${vnfModelVersion}",
+						"modelVersionId": "${vnfModelversionId}",
+						"modelCustomizationName": "${vnfModelCustomizationName}",
+						"modelCustomizationId": "${vnfModelcustomizationId}"
+					}
+				}
+			}
+		]
+	}
+}
