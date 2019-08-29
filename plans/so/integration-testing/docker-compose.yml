@@ -29,10 +29,11 @@ services:
       - APP=catalog-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       catalog-db-adapter.so.testlab.onap.org
     depends_on:
@@ -62,10 +63,11 @@ services:
       - APP=request-db-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       request-db-adapter.so.testlab.onap.org
     depends_on:
@@ -96,10 +98,6 @@ services:
       - APP=sdnc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
     hostname:
       sdnc-adapter.so.testlab.onap.org
     depends_on:
@@ -131,10 +129,11 @@ services:
       - APP=openstack-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       openstack-adapter.so.testlab.onap.org
     depends_on:
@@ -166,10 +165,11 @@ services:
       - APP=vfc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       vfc-adapter.so.testlab.onap.org
     depends_on:
@@ -201,10 +201,11 @@ services:
       - APP=sdc-controller
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       sdc-controller.so.testlab.onap.org
     depends_on:
@@ -236,10 +237,11 @@ services:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       bpmn-infra.so.testlab.onap.org
     depends_on:
@@ -271,10 +273,11 @@ services:
       - APP=api-handler-infra
       - JVM_ARGS=-Xms64m -Xmx512m
       - DB_HOST=mariadb
-#     - KEYSTORE=msoClientKeyStore-onapheat.jks
-#     - KEYSTORE_PASSWORD=password
-#     - TRUSTSTORE=msoTrustStore.jks
-#     - TRUSTSTORE_PASSWORD=password
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       api-handler-infra.so.testlab.onap.org
     depends_on:
