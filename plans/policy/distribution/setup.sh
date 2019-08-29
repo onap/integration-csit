@@ -1,6 +1,9 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
+#
+#  Modifications copyright (c) 2019 Nordix Foundation.
+#  Modifications Copyright (C) 2019 AT&T Intellectual Property.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,24 +19,91 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-# Select branch
+
 source ${SCRIPTS}/policy/config/policy-csit.conf
+export POLICY_MARIADB_VER
 echo ${GERRIT_BRANCH}
+echo ${POLICY_MARIADB_VER}
 
-sudo apt-get -y install libxml2-utils
-export POLICY_DISTRIBUTION_VERSION="$(curl -q --silent https://git.onap.org/policy/distribution/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-echo ${POLICY_DISTRIBUTION_VERSION}
-docker run -d --name policy-distribution -p 6969:6969 -it nexus3.onap.org:10001/onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
 
-POLICY_DISTRIBUTION_IP=`get-instance-ip.sh policy-distribution`
-echo DISTRIBUTION IP IS ${POLICY_DISTRIBUTION_IP}
+# the directory of the script
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo ${DIR}
 
-${SCRIPTS}/policy/wait_for_port.sh ${POLICY_DISTRIBUTION_IP} 6969
-rc=$?
-if [[ $rc != 0 ]]; then
-        echo "cannot open ${POLICY_DISTRIBUTION_IP} 6969"
-        docker logs policy-distribution
-        exit $rc
+# the temp directory used, within $DIR
+# omit the -p parameter to create a temporal directory in the default location
+WORK_DIR=`mktemp -d -p "$DIR"`
+echo ${WORK_DIR}
+
+cd ${WORK_DIR}
+
+# check if tmp dir was created
+if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
+  echo "Could not create temp dir"
+  exit 1
 fi
 
-ROBOT_VARIABLES="-v POLICY_DISTRIBUTION_IP:${POLICY_DISTRIBUTION_IP}"
+# bring down maven
+mkdir maven
+cd maven
+curl -O http://apache.claz.org/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+tar -xzvf apache-maven-3.3.9-bin.tar.gz
+ls -l
+export PATH=${PATH}:${WORK_DIR}/maven/apache-maven-3.3.9/bin
+${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
+cd ..
+
+git clone http://gerrit.onap.org/r/oparent
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
+cd models/models-sim/models-sim-dmaap
+${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
+bash ./src/main/package/docker/docker_build.sh
+cd ${WORKSPACE}
+rm -rf ${WORK_DIR}
+sleep 3
+
+sudo apt-get -y install libxml2-utils
+export POLICY_API_VERSION="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_PAP_VERSION="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_APEX_PDP_VERSION="$(curl -q --silent https://git.onap.org/policy/apex-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_DISTRIBUTION_VERSION="$(curl -q --silent https://git.onap.org/policy/distribution/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+
+echo ${POLICY_API_VERSION}
+echo ${POLICY_PAP_VERSION}
+echo ${POLICY_APEX_PDP_VERSION}
+echo ${POLICY_DISTRIBUTION_VERSION}
+
+SCRIPT_DIR=${WORKSPACE}/scripts/policy/policy-distribution
+zip -F ${SCRIPT_DIR}/config/distribution/csar/sample_csar_with_apex_policy.csar --out ${SCRIPT_DIR}/config/distribution/csar/sample_csar_with_apex_policy2.csar
+unzip -t ${SCRIPT_DIR}/config/distribution/csar/sample_csar_with_apex_policy2.csar
+# Adding this waiting container due to race condition between pap and mariadb
+docker-compose -f ${SCRIPT_DIR}/docker-compose-distribution.yml run --rm start_dependencies
+
+#Configure the database
+docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+
+# now bring everything else up
+docker-compose -f ${SCRIPT_DIR}/docker-compose-distribution.yml run --rm start_all
+
+unset http_proxy https_proxy
+
+POLICY_API_IP=`get-instance-ip.sh policy-api`
+POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
+MARIADB_IP=`get-instance-ip.sh mariadb`
+APEX_IP=`get-instance-ip.sh policy-apex-pdp`
+DMAAP_IP=`get-instance-ip.sh dmaap-simulator`
+POLICY_DISTRIBUTION_IP=`get-instance-ip.sh policy-distribution`
+
+echo PAP IP IS ${POLICY_PAP_IP}
+echo MARIADB IP IS ${MARIADB_IP}
+echo API IP IS ${POLICY_API_IP}
+echo APEX IP IS ${APEX_IP}
+echo DMAAP_IP IS ${DMAAP_IP}
+echo POLICY_DISTRIBUTION_IP IS ${POLICY_DISTRIBUTION_IP}
+
+ROBOT_VARIABLES="-v APEX_IP:${APEX_IP} -v SCRIPT_DIR:${SCRIPT_DIR} -v POLICY_DISTRIBUTION_IP:${POLICY_DISTRIBUTION_IP}"
