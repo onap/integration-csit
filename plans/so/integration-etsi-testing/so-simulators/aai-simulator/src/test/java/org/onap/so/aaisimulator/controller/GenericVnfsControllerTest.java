@@ -345,6 +345,8 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
 
         final HttpHeaders httpHeaders = testRestTemplateService.getHttpHeaders();
         httpHeaders.add(X_HTTP_METHOD_OVERRIDE, HttpMethod.PATCH.toString());
+        httpHeaders.remove(HttpHeaders.CONTENT_TYPE);
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, Constants.APPLICATION_MERGE_PATCH_JSON);
 
         final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
         final ResponseEntity<Void> orchStatuUpdateServiceInstanceResponse = testRestTemplateService
