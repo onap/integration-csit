@@ -9,5 +9,6 @@
     "model-version-id": "84b9649a-4eb9-4967-9abe-e8702f55518b",
     "model-customization-id": "50a90cd7-a84e-4ee1-b5ba-bfa5a26f5e15",
     "nf-type": "vnflcm",
-    "nf-role": "vnflcm"
+    "nf-role": "vnflcm",
+    "selflink": "http://localhost:9921/generic-vnf/dfd02fb5-d7fb-4aac-b3c4-cd6b60058701"
 }

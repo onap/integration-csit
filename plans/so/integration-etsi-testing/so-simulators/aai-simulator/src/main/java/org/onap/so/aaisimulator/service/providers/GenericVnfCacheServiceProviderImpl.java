@@ -27,6 +27,9 @@ import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.onap.aai.domain.yang.GenericVnf;
@@ -34,6 +37,7 @@ import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
+import org.onap.so.aaisimulator.utils.ShallowBeanCopy;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,17 +95,20 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
                 final ConcurrentHashMap<Object, Object> concurrentHashMap =
                         (ConcurrentHashMap<Object, Object>) nativeCache;
                 for (final Object key : concurrentHashMap.keySet()) {
-                    final GenericVnf value = cache.get(key, GenericVnf.class);
-                    final String genericVnfName = value.getVnfName();
-                    if (value != null && genericVnfName.equals(vnfName)) {
-                        final String genericVnfId = value.getVnfId();
-                        LOGGER.info("Found matching vnf for name: {}, vnf-id: {}", genericVnfName, genericVnfId);
-                        return Optional.of(genericVnfId);
+                    final Optional<GenericVnf> optional = getGenericVnf(key.toString());
+                    if (optional.isPresent()) {
+                        final GenericVnf value = optional.get();
+                        final String genericVnfName = value.getVnfName();
+                        if (genericVnfName != null && genericVnfName.equals(vnfName)) {
+                            final String genericVnfId = value.getVnfId();
+                            LOGGER.info("Found matching vnf for name: {}, vnf-id: {}", genericVnfName, genericVnfId);
+                            return Optional.of(genericVnfId);
+                        }
                     }
                 }
             }
         }
-        LOGGER.info("No match found for vnf name: {}", vnfName);
+        LOGGER.error("No match found for vnf name: {}", vnfName);
         return Optional.empty();
     }
 
@@ -164,13 +171,47 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         final Optional<GenericVnf> optional = getGenericVnf(vnfId);
         if (optional.isPresent()) {
             final GenericVnf cachedGenericVnf = optional.get();
-            LOGGER.info("Changing OrchestrationStatus from {} to {} ", cachedGenericVnf.getOrchestrationStatus(),
-                    genericVnf.getOrchestrationStatus());
-            cachedGenericVnf.setOrchestrationStatus(genericVnf.getOrchestrationStatus());
-            return true;
+            try {
+                ShallowBeanCopy.copy(genericVnf, cachedGenericVnf);
+                return true;
+            } catch (final Exception exception) {
+                LOGGER.error("Unable to update GenericVnf for vnfId: {}", vnfId, exception);
+            }
         }
         LOGGER.error("Unable to find GenericVnf ...");
         return false;
+    }
+
+    @Override
+    public List<GenericVnf> getGenericVnfs(final String selflink) {
+        final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
+        if (cache != null) {
+            final Object nativeCache = cache.getNativeCache();
+            if (nativeCache instanceof ConcurrentHashMap) {
+                @SuppressWarnings("unchecked")
+                final ConcurrentHashMap<Object, Object> concurrentHashMap =
+                        (ConcurrentHashMap<Object, Object>) nativeCache;
+                final List<GenericVnf> result = new ArrayList<>();
+
+                concurrentHashMap.keySet().stream().forEach(key -> {
+                    final Optional<GenericVnf> optional = getGenericVnf(key.toString());
+                    if (optional.isPresent()) {
+                        final GenericVnf genericVnf = optional.get();
+                        final String genericVnfSelfLink = genericVnf.getSelflink();
+                        final String genericVnfId = genericVnf.getSelflink();
+
+                        if (genericVnfSelfLink != null && genericVnfSelfLink.equals(selflink)) {
+                            LOGGER.info("Found matching vnf for selflink: {}, vnf-id: {}", genericVnfSelfLink,
+                                    genericVnfId);
+                            result.add(genericVnf);
+                        }
+                    }
+                });
+                return result;
+            }
+        }
+        LOGGER.error("No match found for selflink: {}", selflink);
+        return Collections.emptyList();
     }
 
     private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf) {

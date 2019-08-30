@@ -21,8 +21,11 @@ package org.onap.so.aaisimulator.service.providers;
 
 import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.EsrSystemInfo;
+import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
+import org.onap.aai.domain.yang.Vserver;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.springframework.http.HttpHeaders;
 
@@ -39,10 +42,18 @@ public interface CloudRegionCacheServiceProvider extends Clearable {
     Optional<Relationship> addRelationShip(final CloudRegionKey key, final Relationship relationship,
             final String requestUri);
 
-    boolean putTenant(final CloudRegionKey key, Tenant tenant);
+    boolean putTenant(final CloudRegionKey key, final String tenantId, Tenant tenant);
 
     Optional<Tenant> getTenant(final CloudRegionKey key, final String tenantId);
 
-    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestURI, final CloudRegionKey key,
-            final String tenantId, final Relationship relationship);
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestURI,
+            final CloudRegionKey key, final String tenantId, final Relationship relationship);
+
+    Optional<EsrSystemInfoList> getEsrSystemInfoList(final CloudRegionKey key);
+
+    boolean putEsrSystemInfo(final CloudRegionKey key, final String esrSystemInfoId, final EsrSystemInfo esrSystemInfo);
+
+    boolean putVserver(final CloudRegionKey key, final String tenantId, final String vServerId, Vserver vServer);
+
+    Optional<Vserver> getVserver(final CloudRegionKey key, final String tenantId, final String vServerId);
 }

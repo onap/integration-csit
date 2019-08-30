@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
+import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.Relationship;
@@ -43,6 +44,8 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
     Optional<String> getGenericVnfId(final String vnfName);
 
     boolean patchGenericVnf(final String vnfId, final GenericVnf genericVnf);
+
+    List<GenericVnf> getGenericVnfs(final String selflink);
 
 
 }

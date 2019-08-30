@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.utils;
 
+import static org.onap.so.aaisimulator.utils.Constants.EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL;
 import org.onap.so.aaisimulator.utils.Constants;
 
 /**
@@ -66,6 +67,36 @@ public class TestConstants {
     public static final String TENANT_ID = "693c7729b2364a26a3ca602e6f66187d";
 
     public static final String TENANTS_TENANT = "/tenants/tenant/";
+
+    public static final String ESR_VNFM_URL = EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL + "esr-vnfm/";
+
+    public static final String ESR_VNFM_ID = "c5e99cee-1996-4606-b697-838d51d4e1a3";
+
+    public static final String ESR_VIM_ID = "EtsiVimId";
+
+    public static final String ESR_SYSTEM_INFO_LIST_URL = "/esr-system-info-list";
+
+    public static final String ESR_SYSTEM_INFO_ID = "5c067098-f2e3-40f7-a7ba-155e7c61e916";
+
+    public static final String ESR_SYSTEM_TYPE = "VNFM";
+
+    public static final String ESR_PASSWORD = "123456";
+
+    public static final String ESR_USERNAME = "vnfmadapter";
+
+    public static final String ESR_SERVICE_URL = "https://so-vnfm-simulator.onap:9095/vnflcm/v1";
+
+    public static final String ESR_VENDOR = "EST";
+
+    public static final String ESR_TYEP = "simulator";
+
+    public static final String SYSTEM_NAME = "vnfmSimulator";
+
+    public static final String VSERVER_URL = "/vservers/vserver/";
+
+    public static final String VSERVER_NAME = "CsitVServer";
+
+    public static final String VSERVER_ID = "f84fdb9b-ad7c-49db-a08f-e443b4cbd033";
 
     private TestConstants() {}
 
