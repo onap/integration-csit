@@ -27,7 +27,7 @@ services:
       ports:
        - "3306:3306"
    api:
-      image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
+      image: onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - mariadb

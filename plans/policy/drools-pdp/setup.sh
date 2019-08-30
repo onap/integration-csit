@@ -17,9 +17,7 @@
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
-docker login -u docker -p docker nexus3.onap.org:10001
-docker pull nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0
-docker tag nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0 onap/policy-common-alpine:1.4.0
+docker pull onap/policy-common-alpine:1.4.0
 
 source ${WORKSPACE}/scripts/policy/drools-pdp-script.sh
 

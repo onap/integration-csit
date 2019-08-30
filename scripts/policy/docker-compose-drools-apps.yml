@@ -25,7 +25,7 @@ services:
       expose:
        - 3306
    drools:
-      image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
+      image: onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools
       depends_on:
        - mariadb
