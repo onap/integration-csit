@@ -67,6 +67,8 @@ public class Constants {
     public static final String OWNING_ENTITY_OWNING_ENTITY_ID = "owning-entity.owning-entity-id";
 
     public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
+    
+    public static final String APPLICATION_MERGE_PATCH_JSON = "application/merge-patch+json";
 
     public static final String SERVICE_RESOURCE_TYPE = "service-instance";
 

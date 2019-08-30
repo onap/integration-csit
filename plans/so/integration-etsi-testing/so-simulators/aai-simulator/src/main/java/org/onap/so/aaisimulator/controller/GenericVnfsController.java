@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.APPLICATION_MERGE_PATCH_JSON;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
@@ -152,7 +153,8 @@ public class GenericVnfsController {
         return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, GENERIC_VNF);
     }
 
-    @PostMapping(value = "/generic-vnf/{vnf-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+    @PostMapping(value = "/generic-vnf/{vnf-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, APPLICATION_MERGE_PATCH_JSON},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> patchGenericVnf(@RequestBody final GenericVnf genericVnf,
             @PathVariable("vnf-id") final String vnfId,
