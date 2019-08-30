@@ -19,19 +19,23 @@
  */
 package org.onap.so.aaisimulator.controller;
 
+import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGIONS;
+import static org.onap.so.aaisimulator.utils.Constants.ESR_SYSTEM_INFO_LIST;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
-import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.EsrSystemInfo;
+import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
+import org.onap.aai.domain.yang.Vserver;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.HttpServiceUtils;
@@ -144,7 +148,7 @@ public class CloudRegionsController {
             if (tenant.getResourceVersion() == null || tenant.getResourceVersion().isEmpty()) {
                 tenant.setResourceVersion(getResourceVersion());
             }
-            if (cacheServiceProvider.putTenant(key, tenant)) {
+            if (cacheServiceProvider.putTenant(key, tenantId, tenant)) {
                 return ResponseEntity.accepted().build();
             }
         }
@@ -187,7 +191,7 @@ public class CloudRegionsController {
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
             final HttpHeaders incomingHeader = getHeaders(request);
-            boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+            final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
                     request.getRequestURI(), key, tenantId, relationship);
             if (result) {
                 LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
@@ -196,6 +200,96 @@ public class CloudRegionsController {
 
         }
         LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/esr-system-info-list/esr-system-info/{esr-system-info-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putEsrSystemInfo(@RequestBody final EsrSystemInfo esrSystemInfo,
+            @PathVariable("esr-system-info-id") final String esrSystemInfoId,
+            @PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId, final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+
+        LOGGER.info("Will put esrSystemInfo for 'key': {} ...", key);
+
+        if (esrSystemInfo.getResourceVersion() == null || esrSystemInfo.getResourceVersion().isEmpty()) {
+            esrSystemInfo.setResourceVersion(getResourceVersion());
+
+        }
+
+        if (cacheServiceProvider.putEsrSystemInfo(key, esrSystemInfoId, esrSystemInfo)) {
+            LOGGER.info("Successfully added EsrSystemInfo key : {}  ...", key, esrSystemInfo);
+            return ResponseEntity.accepted().build();
+        }
+        LOGGER.error("Unable to add EsrSystemInfo in cache for key : {} ...", key);
+
+        return getRequestErrorResponseEntity(request, ESR_SYSTEM_INFO_LIST);
+    }
+
+    @GetMapping(value = "{cloud-owner}/{cloud-region-id}/esr-system-info-list",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getEsrSystemInfoList(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId, final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Retrieving EsrSystemInfoList using key : {} ...", key);
+        if (key.isValid()) {
+            final Optional<EsrSystemInfoList> optional = cacheServiceProvider.getEsrSystemInfoList(key);
+            if (optional.isPresent()) {
+                final EsrSystemInfoList esrSystemInfoList = optional.get();
+                LOGGER.info("found EsrSystemInfoList {} in cache", esrSystemInfoList);
+                return ResponseEntity.ok(esrSystemInfoList);
+            }
+        }
+        LOGGER.error("Unable to find EsrSystemInfoList in cache using key : {} ...", key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/vservers/vserver/{vserver-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putVserver(@RequestBody final Vserver vServer,
+            @PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
+            final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        if (vServer.getResourceVersion() == null || vServer.getResourceVersion().isEmpty()) {
+            vServer.setResourceVersion(getResourceVersion());
+        }
+        LOGGER.info("Will put Vserver in cache using using key: {}, tenantId: {}, vServerId: {} ...", key, tenantId,
+                vServerId);
+
+        if (cacheServiceProvider.putVserver(key, tenantId, vServerId, vServer)) {
+            LOGGER.info("Successfully added Vserver for key: {}, tenantId: {}, vServerId: {} ...", key, tenantId,
+                    vServerId);
+            return ResponseEntity.accepted().build();
+        }
+        LOGGER.error("Unable to add Vserver in cache using key: {}, tenantId: {}, vServerId: {}", key, tenantId,
+                vServerId);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @GetMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/vservers/vserver/{vserver-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getVserver(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
+            final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Retrieving Vserver using key: {}, tenant-id: {}  and vserver-id: {}...", key, tenantId, vServerId);
+        final Optional<Vserver> optional = cacheServiceProvider.getVserver(key, tenantId, vServerId);
+        if (optional.isPresent()) {
+            final Vserver vServer = optional.get();
+            LOGGER.info("found Vserver {} in cache", vServer);
+            return ResponseEntity.ok(vServer);
+        }
+        LOGGER.error("Unable to find Vserver in cache using key: {}, tenant-id: {}  and vserver-id: {}...", key,
+                tenantId, vServerId);
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
     }
 }

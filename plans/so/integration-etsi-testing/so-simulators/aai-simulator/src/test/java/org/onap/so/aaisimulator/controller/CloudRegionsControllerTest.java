@@ -28,25 +28,40 @@ import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIO
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_PASSWORD;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_SERVICE_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_SYSTEM_INFO_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_SYSTEM_INFO_LIST_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_SYSTEM_TYPE;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_TYEP;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_USERNAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.ESR_VENDOR;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
+import static org.onap.so.aaisimulator.utils.TestConstants.SYSTEM_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.TENANTS_TENANT;
 import static org.onap.so.aaisimulator.utils.TestConstants.TENANT_ID;
 import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.VSERVER_ID;
+import static org.onap.so.aaisimulator.utils.TestConstants.VSERVER_NAME;
+import static org.onap.so.aaisimulator.utils.TestConstants.VSERVER_URL;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.EsrSystemInfo;
+import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.Tenant;
+import org.onap.aai.domain.yang.Vserver;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.aaisimulator.service.providers.CloudRegionCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
@@ -243,6 +258,68 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         assertEquals(3, relationshipGenericVnf.getRelationshipData().size());
 
     }
+
+    @Test
+    public void test_putEsrSystemInfo_successfullyAddedToCache() throws Exception {
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+
+        final String esrSystemInfoListUrl =
+                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, ESR_SYSTEM_INFO_LIST_URL);
+
+        final String esrSystemInfoUrl = esrSystemInfoListUrl + "/esr-system-info/" + ESR_SYSTEM_INFO_ID;
+        final ResponseEntity<Void> esrSystemInfoResponse =
+                testRestTemplateService.invokeHttpPut(esrSystemInfoUrl, TestUtils.getEsrSystemInfo(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, esrSystemInfoResponse.getStatusCode());
+
+        final ResponseEntity<EsrSystemInfoList> response =
+                testRestTemplateService.invokeHttpGet(esrSystemInfoListUrl, EsrSystemInfoList.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+        final EsrSystemInfoList actualEsrSystemInfoList = response.getBody();
+
+        final List<EsrSystemInfo> esrSystemInfoList = actualEsrSystemInfoList.getEsrSystemInfo();
+        assertNotNull(esrSystemInfoList);
+        assertEquals(1, esrSystemInfoList.size());
+
+        final EsrSystemInfo esrSystemInfo = esrSystemInfoList.get(0);
+        assertEquals(ESR_SYSTEM_INFO_ID, esrSystemInfo.getEsrSystemInfoId());
+        assertEquals(SYSTEM_NAME, esrSystemInfo.getSystemName());
+        assertEquals(ESR_TYEP, esrSystemInfo.getType());
+        assertEquals(ESR_VENDOR, esrSystemInfo.getVendor());
+        assertEquals(ESR_SERVICE_URL, esrSystemInfo.getServiceUrl());
+        assertEquals(ESR_USERNAME, esrSystemInfo.getUserName());
+        assertEquals(ESR_PASSWORD, esrSystemInfo.getPassword());
+        assertEquals(ESR_SYSTEM_TYPE, esrSystemInfo.getSystemType());
+    }
+
+    @Test
+    public void test_putVServer_successfullyAddedToCache() throws Exception {
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+
+        final String tenantUrl = url + TENANTS_TENANT + TENANT_ID;
+        addTenantAndAssertResponse(tenantUrl);
+
+        final String vServerUrl = tenantUrl + VSERVER_URL + VSERVER_ID;
+
+        final ResponseEntity<Void> vServerResponse =
+                testRestTemplateService.invokeHttpPut(vServerUrl, TestUtils.getVserver(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, vServerResponse.getStatusCode());
+
+        final ResponseEntity<Vserver> response = testRestTemplateService.invokeHttpGet(vServerUrl, Vserver.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        assertTrue(response.hasBody());
+        final Vserver actualVserver = response.getBody();
+        assertEquals(VSERVER_NAME, actualVserver.getVserverName());
+        assertEquals(VSERVER_ID, actualVserver.getVserverId());
+        assertEquals("active", actualVserver.getProvStatus());
+    }
+
 
     private void addTenantAndAssertResponse(final String tenantUrl) throws IOException {
         final ResponseEntity<Void> responseEntity =

@@ -35,12 +35,16 @@ import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
 import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
+import org.onap.aai.domain.yang.EsrSystemInfo;
+import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.aai.domain.yang.Tenants;
+import org.onap.aai.domain.yang.Vserver;
+import org.onap.aai.domain.yang.Vservers;
 import org.onap.so.aaisimulator.models.CloudRegionKey;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -130,7 +134,7 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
     }
 
     @Override
-    public boolean putTenant(final CloudRegionKey key, final Tenant tenant) {
+    public boolean putTenant(final CloudRegionKey key, final String tenantId, final Tenant tenant) {
         final Optional<CloudRegion> optional = getCloudRegion(key);
         if (optional.isPresent()) {
             final CloudRegion cloudRegion = optional.get();
@@ -141,11 +145,13 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
             }
 
             final Optional<Tenant> existingTenantOptional = tenants.getTenant().stream()
-                    .filter(existing -> existing.getTenantId().equals(tenant.getTenantId())).findFirst();
+                    .filter(existing -> existing.getTenantId() != null && existing.getTenantId().equals(tenantId))
+                    .findFirst();
 
             if (!existingTenantOptional.isPresent()) {
                 return tenants.getTenant().add(tenant);
             }
+
             LOGGER.warn("Tenant already exists ...");
             return false;
         }
@@ -205,6 +211,95 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
         }
         LOGGER.error("Unable to add relationship in cache for CloudRegion: {} and tenant: {}", key, tenantId);
         return false;
+    }
+
+    @Override
+    public Optional<EsrSystemInfoList> getEsrSystemInfoList(final CloudRegionKey key) {
+        final Optional<CloudRegion> optional = getCloudRegion(key);
+        if (optional.isPresent()) {
+            final CloudRegion cloudRegion = optional.get();
+            final EsrSystemInfoList esrSystemInfoList = cloudRegion.getEsrSystemInfoList();
+            if (esrSystemInfoList != null) {
+                return Optional.of(esrSystemInfoList);
+            }
+        }
+        LOGGER.error("Unable to find EsrSystemInfoList in cache for CloudRegion: {} ", key);
+
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean putEsrSystemInfo(final CloudRegionKey key, final String esrSystemInfoId,
+            final EsrSystemInfo esrSystemInfo) {
+        final Optional<CloudRegion> optional = getCloudRegion(key);
+        if (optional.isPresent()) {
+            final CloudRegion cloudRegion = optional.get();
+            final List<EsrSystemInfo> esrSystemInfoList = getEsrSystemInfoList(cloudRegion);
+
+            final Optional<EsrSystemInfo> existingEsrSystemInfo =
+                    esrSystemInfoList.stream().filter(existing -> existing.getEsrSystemInfoId() != null
+                            && existing.getEsrSystemInfoId().equals(esrSystemInfoId)).findFirst();
+            if (existingEsrSystemInfo.isPresent()) {
+                LOGGER.error("EsrSystemInfo already exists {}", existingEsrSystemInfo.get());
+                return false;
+            }
+
+            return esrSystemInfoList.add(esrSystemInfo);
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean putVserver(final CloudRegionKey key, final String tenantId, final String vServerId,
+            final Vserver vServer) {
+        final Optional<Tenant> optional = getTenant(key, tenantId);
+        if (optional.isPresent()) {
+            final Tenant tenant = optional.get();
+            Vservers vServers = tenant.getVservers();
+            if (vServers == null) {
+                vServers = new Vservers();
+                tenant.setVservers(vServers);
+            }
+            final List<Vserver> vServerList = vServers.getVserver();
+
+            final Optional<Vserver> existingVserver = vServerList.stream()
+                    .filter(existing -> existing.getVserverId() != null && existing.getVserverId().equals(vServerId))
+                    .findFirst();
+
+            if (existingVserver.isPresent()) {
+                LOGGER.error("Vserver already exists {}", existingVserver.get());
+                return false;
+            }
+            return vServerList.add(vServer);
+
+        }
+        return false;
+    }
+
+    @Override
+    public Optional<Vserver> getVserver(final CloudRegionKey key, final String tenantId, final String vServerId) {
+        final Optional<Tenant> optional = getTenant(key, tenantId);
+        if (optional.isPresent()) {
+            final Tenant tenant = optional.get();
+            Vservers vServers = tenant.getVservers();
+            if (vServers != null) {
+                return vServers.getVserver().stream()
+                        .filter(vServer -> vServer.getVserverId() != null && vServer.getVserverId().equals(vServerId))
+                        .findFirst();
+            }
+        }
+        LOGGER.error("Unable to find vServer in cache ... ");
+        return Optional.empty();
+    }
+
+    private List<EsrSystemInfo> getEsrSystemInfoList(final CloudRegion cloudRegion) {
+        EsrSystemInfoList esrSystemInfoList = cloudRegion.getEsrSystemInfoList();
+        if (esrSystemInfoList == null) {
+            esrSystemInfoList = new EsrSystemInfoList();
+            cloudRegion.setEsrSystemInfoList(esrSystemInfoList);
+        }
+        return esrSystemInfoList.getEsrSystemInfo();
     }
 
     private Relationship getRelationship(final String requestUriString, final CloudRegionKey cloudRegionKey,

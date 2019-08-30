@@ -43,6 +43,8 @@ public class Constants {
 
     public static final String PLATFORMS_URL = BUSINESS_URL + "/platforms/platform/";
 
+    public static final String EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL = "/external-system/esr-vnfm-list/";
+
     public static final String NETWORK_URL = BASE_URL + "/network";
 
     public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs/";
@@ -119,6 +121,12 @@ public class Constants {
     public static final String BELONGS_TO = "org.onap.relationships.inventory.BelongsTo";
 
     public static final String TENANT = "tenant";
+
+    public static final String ESR_VNFM = "esr-vnfm";
+
+    public static final String ESR_SYSTEM_INFO = "esr-system-info";
+
+    public static final String ESR_SYSTEM_INFO_LIST = "esr-system-info-list";
 
     private Constants() {}
 
