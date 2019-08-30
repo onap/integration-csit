@@ -31,6 +31,7 @@ ENV_FILE=$CONFIG_DIR/env
 TEMP_DIR_PATH=$SCRIPT_HOME/temp
 TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
+TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
 
 MAVEN_DIR=$TEMP_DIR_PATH/maven
 INSTALLED_MAVEN_DIR=$MAVEN_DIR/$MAVEN_VERSION_DIR
@@ -148,7 +149,7 @@ $WAIT_FOR_WORKAROUND_SCRIPT
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_WORKAROUND_SCRIPT failed"
    echo "Will stop running docker containers . . ."
-   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+   $TEAR_DOWN_SCRIPT
    exit 1
 fi
 
@@ -158,7 +159,7 @@ $WAIT_FOR_POPULATE_AAI_SCRIPT
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_POPULATE_AAI_SCRIPT failed"
    echo "Will stop running docker containers . . ."
-   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+   $TEAR_DOWN_SCRIPT
    exit 1
 fi
 
@@ -169,7 +170,7 @@ $WAIT_FOR_CONTAINER_SCRIPT -c "$API_INFRA_CONTAINER_NAME" -t "300" -n "$DEFAULT_
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
    echo "Will stop running docker containers . . ."
-   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+   $TEAR_DOWN_SCRIPT
    exit 1
 fi
 
