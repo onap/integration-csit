@@ -30,8 +30,6 @@ sudo apt-get -y install libxml2-utils
 export POLICY_DROOLS_APPS_VERSION="$(curl -q --silent https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 echo ${POLICY_DRROLS_APPS_VERSION}
 
-docker login -u docker -p docker nexus3.onap.org:10001
-
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_dependencies
 docker logs mariadb
