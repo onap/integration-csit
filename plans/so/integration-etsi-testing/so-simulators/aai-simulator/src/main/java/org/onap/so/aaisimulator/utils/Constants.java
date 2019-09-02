@@ -43,11 +43,11 @@ public class Constants {
 
     public static final String PLATFORMS_URL = BUSINESS_URL + "/platforms/platform/";
 
-    public static final String EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL = "/external-system/esr-vnfm-list/";
+    public static final String EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL = BASE_URL + "/external-system/esr-vnfm-list";
 
     public static final String NETWORK_URL = BASE_URL + "/network";
 
-    public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs/";
+    public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs";
 
     public static final String RELATIONSHIP_LIST_RELATIONSHIP_URL = "/relationship-list/relationship";
 
