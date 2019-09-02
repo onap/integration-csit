@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Anaël Closson <ac2550@intl.att.com>
+Submitted-by: Anaël Closson <ac2550@intl.att.com>
+Submitted-at: Mon, 02 Sep 2019 15:12:04 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/94765
+Project: integration/csit
+Branch: refs/heads/master
