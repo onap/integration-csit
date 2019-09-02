@@ -58,6 +58,8 @@ populate_aai_simulator()
  PLATFORM_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/platform.json
  CLOUD_REGION_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/cloud-region.json
  TENANT_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/tenant.json
+ ESR_VNFM_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/esr-vnfm.json
+ ESR_SYSTEM_INFO_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/esr-system-info.json
  STATUS_CODE_ACCEPTED="202"
 
  echo "$SCRIPT_NAME $(current_timestamp): checking health of AAI Simulator"
@@ -127,6 +129,24 @@ populate_aai_simulator()
      echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put Tenant data in AAI Simulator. Status code received: $status_code"
      exit 1
  fi
+
+ echo "$SCRIPT_NAME $(current_timestamp): Adding esr-vnfm"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/external-system/esr-vnfm-list/esr-vnfm/c5e99cee-1996-4606-b697-838d51d4e1a3 -X PUT -d @$"$ESR_VNFM_JSON_FILE")
+
+  if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put esr-vnfm data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
+  echo "$SCRIPT_NAME $(current_timestamp): Adding esr-system-info"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/external-system/esr-vnfm-list/esr-vnfm/c5e99cee-1996-4606-b697-838d51d4e1a3/esr-system-info-list/esr-system-info/5c067098-f2e3-40f7-a7ba-155e7c61e916 -X PUT -d @$"$ESR_SYSTEM_INFO_JSON_FILE")
+
+  if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put esr-system-info data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
+
 
  echo "$SCRIPT_NAME $(current_timestamp): AAI Simulator Populated Successfully"
 }

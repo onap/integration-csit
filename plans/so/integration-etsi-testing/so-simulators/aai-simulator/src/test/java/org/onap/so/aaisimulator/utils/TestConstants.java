@@ -50,7 +50,7 @@ public class TestConstants {
 
     public static final String GENERIC_VNF_NAME = "EsyVnfInstantiationTest2";
 
-    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "generic-vnf/";
+    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "/generic-vnf/";
 
     public static final String GENERIC_VNFS_URL = "/generic-vnfs";
 
@@ -68,7 +68,7 @@ public class TestConstants {
 
     public static final String TENANTS_TENANT = "/tenants/tenant/";
 
-    public static final String ESR_VNFM_URL = EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL + "esr-vnfm/";
+    public static final String ESR_VNFM_URL = EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL + "/esr-vnfm/";
 
     public static final String ESR_VNFM_ID = "c5e99cee-1996-4606-b697-838d51d4e1a3";
 

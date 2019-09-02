@@ -61,7 +61,7 @@ public class ExternalSystemEsrController {
         this.cacheServiceProvider = cacheServiceProvider;
     }
 
-    @PutMapping(value = "esr-vnfm/{vnfm-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+    @PutMapping(value = "/esr-vnfm/{vnfm-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putEsrVnfm(@RequestBody final EsrVnfm esrVnfm,
             @PathVariable("vnfm-id") final String vnfmId, final HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class ExternalSystemEsrController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping(value = "esr-vnfm/{vnfm-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @GetMapping(value = "/esr-vnfm/{vnfm-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getEsrVnfm(@PathVariable("vnfm-id") final String vnfmId,
             final HttpServletRequest request) {
         LOGGER.info("Will retrieve ESR VNFM for 'vnfm id': {} ...", vnfmId);
@@ -104,7 +104,7 @@ public class ExternalSystemEsrController {
         return ResponseEntity.ok(esrVnfmList);
     }
 
-    @PutMapping(value = "esr-vnfm/{vnfm-id}/esr-system-info-list/esr-system-info/{esr-system-info-id}",
+    @PutMapping(value = "/esr-vnfm/{vnfm-id}/esr-system-info-list/esr-system-info/{esr-system-info-id}",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putEsrSystemInfo(@RequestBody final EsrSystemInfo esrSystemInfo,
@@ -127,7 +127,7 @@ public class ExternalSystemEsrController {
         return getRequestErrorResponseEntity(request, ESR_SYSTEM_INFO_LIST);
     }
 
-    @GetMapping(value = "esr-vnfm/{vnfm-id}/esr-system-info-list",
+    @GetMapping(value = "/esr-vnfm/{vnfm-id}/esr-system-info-list",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getEsrSystemInfoList(@PathVariable("vnfm-id") final String vnfmId,
             final HttpServletRequest request) {
