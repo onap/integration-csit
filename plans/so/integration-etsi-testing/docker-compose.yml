@@ -234,7 +234,7 @@ services:
     ports:
       - "30224:30224"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/config/api-handler-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/override-files/so-monitoring/onapheat:/app/config
     environment:
       - APP=so-monitoring
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -251,7 +251,7 @@ services:
       - "9092:9092"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/vnfm-adapter/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/override-files/vnfm-adapter/onapheat:/app/config
     environment:
     - APP=vnfm-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
