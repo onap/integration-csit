@@ -258,6 +258,12 @@ sdnc:
     svc:
       types: PORT-MIRROR,PPROBE
 
+so:
+  vnfm:
+    adapter:
+      url: http://vnfm-adapter:9092/so/vnfm-adapter/v1/
+      auth: Basic dm5mbTpwYXNzd29yZDEk
+
 appc:
   client:
     topic:
