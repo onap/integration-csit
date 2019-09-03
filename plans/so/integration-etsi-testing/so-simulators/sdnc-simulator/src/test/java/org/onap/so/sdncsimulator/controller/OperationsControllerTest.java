@@ -25,11 +25,14 @@ import static org.junit.Assert.assertTrue;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getInvalidRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithSvcActionActivateInput;
 import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiInstanceReference;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiLastRpcActionEnumeration;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiOperStatusData;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfsVnf;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfrastructureService;
 import org.onap.so.sdncsimulator.models.InputRequest;
@@ -238,6 +241,71 @@ public class OperationsControllerTest {
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
 
     }
+
+    @Test
+    public void test_postVnfOperationInformationWithSvcActionChanged_successfullyAddToExistingServiceInCache()
+            throws Exception {
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        final HttpEntity<?> httpVnfWithSvcActionAssignEntity = new HttpEntity<>(getVnfRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> response = restTemplate.exchange(getVnfUrl(), HttpMethod.POST,
+                httpVnfWithSvcActionAssignEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+
+        final HttpEntity<?> httpVnfEntity =
+                new HttpEntity<>(getVnfRequestWithSvcActionActivateInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseVnfEntity =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpVnfEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseVnfEntity.getStatusCode());
+        assertTrue(responseVnfEntity.hasBody());
+
+        final OutputRequest actualOutputRequest = responseVnfEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+        assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
+        assertNotNull(actualObject.getServiceResponseInformation());
+
+        final GenericResourceApiInstanceReference acutalReference = actualObject.getServiceResponseInformation();
+        assertEquals(Constants.RESTCONF_CONFIG_END_POINT + SERVICE_INSTANCE_ID, acutalReference.getObjectPath());
+        assertEquals(SERVICE_INSTANCE_ID, acutalReference.getInstanceId());
+        final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(optional.isPresent());
+
+        final GenericResourceApiInstanceReference actualvnfInformation = actualObject.getVnfResponseInformation();
+        assertEquals(VNF_INSTANCE_ID, actualvnfInformation.getInstanceId());
+
+        final Optional<GenericResourceApiServicemodelinfrastructureService> serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        final GenericResourceApiServicemodelinfrastructureService service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertNotNull(service.getServiceData());
+        assertNotNull(service.getServiceData().getVnfs());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertEquals(1, service.getServiceData().getVnfs().getVnf().size());
+        final GenericResourceApiServicedataServicedataVnfsVnf vnf = service.getServiceData().getVnfs().getVnf().get(0);
+        assertNotNull(vnf.getVnfId());
+        assertEquals(VNF_INSTANCE_ID, vnf.getVnfId());
+        assertNotNull(vnf.getVnfData());
+        GenericResourceApiOperStatusData vnfLevelOperStatus = vnf.getVnfData().getVnfLevelOperStatus();
+        assertNotNull(vnfLevelOperStatus);
+        assertEquals(GenericResourceApiLastRpcActionEnumeration.ACTIVATE, vnfLevelOperStatus.getLastRpcAction());
+
+    }
+
 
     private HttpHeaders getHttpHeaders() {
         return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());

@@ -153,8 +153,10 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                 final GenericResourceApiServicedataServiceData serviceData = service.getServiceData();
                 if (serviceData != null) {
                     final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList = getVnfs(serviceData);
-                    if (ifVnfNotExists(vnfId, vnfsList)) {
+                    final GenericResourceApiLastRpcActionEnumeration svcAction =
+                            GenericResourceApiLastRpcActionEnumeration.fromValue(getSvcAction(requestHeader));
 
+                    if (ifVnfNotExists(vnfId, svcAction, vnfsList)) {
                         vnfsList.add(getGenericResourceApiServicedataVnf(serviceInstanceId, vnfId, input));
 
                         final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
@@ -167,7 +169,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                                 .vnfResponseInformation(new GenericResourceApiInstanceReference().instanceId(vnfId)
                                         .objectPath(getObjectPath(serviceInstanceId, vnfId)));
                     }
-                    LOGGER.error("vnfId: {} already exists", vnfId);
+                    LOGGER.error("vnfId: {} already exists with SVC Action: {}", vnfId, svcAction);
                     return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
                             .responseMessage("vnfId: " + vnfId + " already exists").svcRequestId(svcRequestId);
                 }
@@ -198,11 +200,37 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     }
 
 
-    private boolean ifVnfNotExists(final String vnfId,
+    private boolean ifVnfNotExists(final String vnfId, final GenericResourceApiLastRpcActionEnumeration svcAction,
+            final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList) {
+        final Optional<GenericResourceApiServicedataServicedataVnfsVnf> optional = getExistingVnf(vnfId, vnfsList);
+        if (optional.isPresent()) {
+            final GenericResourceApiServicedataServicedataVnfsVnf existingVnf = optional.get();
+            final GenericResourceApiServicedataServicedataVnfsVnfVnfData vnfData = existingVnf.getVnfData();
+
+            if (vnfData != null && vnfData.getVnfLevelOperStatus() != null
+                    && vnfData.getVnfLevelOperStatus().getLastRpcAction() != null) {
+                final GenericResourceApiLastRpcActionEnumeration existingVnflastRpcAction =
+                        vnfData.getVnfLevelOperStatus().getLastRpcAction();
+                if (existingVnflastRpcAction.equals(svcAction)) {
+                    LOGGER.error("Found vnf with id: {} and LastRpcAction: {} same as SvcAction:  {}", vnfId,
+                            existingVnflastRpcAction, svcAction);
+                    return false;
+                }
+                LOGGER.warn("Will remove and replace existing vnf with id: {} as SvcAction is changed from {} to {}",
+                        vnfId, existingVnflastRpcAction, svcAction);
+                vnfsList.removeIf(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId));
+
+            }
+        }
+
+        return true;
+    }
+
+    private Optional<GenericResourceApiServicedataServicedataVnfsVnf> getExistingVnf(final String vnfId,
             final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList) {
         final Optional<GenericResourceApiServicedataServicedataVnfsVnf> optional =
                 vnfsList.stream().filter(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId)).findFirst();
-        return !optional.isPresent();
+        return optional;
     }
 
     private List<GenericResourceApiServicedataServicedataVnfsVnf> getVnfs(
