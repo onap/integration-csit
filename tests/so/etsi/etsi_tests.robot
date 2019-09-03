@@ -5,7 +5,8 @@ Library     OperatingSystem
 Library     json
 
 *** Variables ***
-
+${SLEEP_INTERVAL_SEC}=   5
+${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}=     48     # Represents the maximum number of attempts that will be made before a timeout. It sleeps for SLEEP_INTERVAL_SEC seconds before retry.
 
 *** Test Cases ***
 Distribute Service Template
@@ -24,19 +25,54 @@ Invoke Service Instantiation
     Run Keyword If  '${service_instantiation_request.status_code}' == '200'  log to console   \nexecuted with expected result
     log to console      ${service_instantiation_request.content}
     ${service_instantiation_json_responce}=    Evaluate     json.loads("""${service_instantiation_request.content}""")    json
+    ${request_ID}=          Set Variable         ${service_instantiation_json_responce}[requestReferences][requestId]
+    ${service_instance_Id}=     Set Variable       ${service_instantiation_json_responce}[requestReferences][instanceId]
+    SET GLOBAL VARIABLE       ${service_instance_Id}
+    ${actual_request_state}=    Set Variable    ""
 
-    ${actual_request_state}=    SET VARIABLE    ""
-
-    : FOR    ${INDEX}    IN RANGE    48
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${service_instantiation_json_responce}[requestReferences][requestId]
+    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
     \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
     \   log to console      ${orchestration_status_request.content}
     \   ${orchestration_json_responce}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_responce}[request][requestStatus][requestState]
     \   Log To Console    Received actual repsonse status:${actual_request_state}
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   log to console  Will try again after 5 seconds
-    \   SLEEP   5s
+    \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+
+    Log To Console     final repsonse status received: ${actual_request_state}
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
+
+Invoke VNF Instantiation
+    Run Keyword If      "${service_instance_Id}"!="${EMPTY}"      Log to Console    Service Instance ID :${service_instance_Id} received
+    ...                ELSE      Fail           Log to Console  Invalid Service Instance ID :${service_instance_Id} recieved
+
+    Create Session   api_handler_session  http://${REPO_IP}:8080
+    ${data}=    Get Binary File     ${CURDIR}${/}data${/}vnfInstantiationRequest.json
+    ${vnf_instantiate_request_json}=    evaluate    json.loads('''${data}''')    json
+    set to dictionary    ${vnf_instantiate_request_json}[requestDetails][relatedInstanceList][0][relatedInstance]        instanceId=${service_instance_Id}
+    ${vnf_instantiate_request_string}=    evaluate    json.dumps(${vnf_instantiate_request_json})    json
+
+    &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
+    ${vnf_instantiate_request}=    Post Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}/vnfs   data=${vnf_instantiate_request_string}    headers=${headers}
+    Run Keyword If  '${vnf_instantiate_request.status_code}' == '200'  log to console   \nexecuted with expected result
+    ${vnf_instantiate_json_responce}=    Evaluate     json.loads("""${vnf_instantiate_request.content}""")    json
+    ${request_ID}=          Set Variable         ${vnf_instantiate_json_responce}[requestReferences][requestId]
+    ${actual_request_state}=    SET VARIABLE    ""
+
+    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+    \   Log To Console      ${orchestration_status_request.content}
+    \   ${orchestration_json_responce}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
+    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_responce}[request][requestStatus][requestState]
+    \   ${service_instance_Id}=     SET VARIABLE       ${orchestration_json_responce}[request][instanceReferences][serviceInstanceId]
+    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+    \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+
     Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
