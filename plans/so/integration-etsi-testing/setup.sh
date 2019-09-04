@@ -22,7 +22,7 @@
 
 MAVEN_VERSION_DIR="apache-maven-3.3.9"
 MAVEN_TAR_FILE="$MAVEN_VERSION_DIR-bin.tar.gz"
-MAVEN_TAR_LOCATION="http://apache.claz.org/maven/maven-3/3.3.9/binaries/$MAVEN_TAR_FILE"
+MAVEN_TAR_LOCATION="https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/$MAVEN_TAR_FILE"
 
 SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_NAME=$(basename $0)
@@ -100,7 +100,7 @@ if [[ ! "$INSTALLED_MAVEN_DIR" || ! -d "$INSTALLED_MAVEN_DIR" ]]; then
                 exit 1
         fi
 
-        tar -xzvf apache-maven-3.3.9-bin.tar.gz
+        tar -xzvf $MAVEN_TAR_FILE
 
         echo "Finished installing maven ..."
 fi
