@@ -50,7 +50,7 @@ fi
 # bring down maven
 mkdir maven
 cd maven
-curl -O http://apache.claz.org/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+curl -O http://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.3.9/apache-maven-3.3.9-bin.tar.gz
 tar -xzvf apache-maven-3.3.9-bin.tar.gz
 ls -l
 export PATH=${PATH}:${WORK_DIR}/maven/apache-maven-3.3.9/bin
