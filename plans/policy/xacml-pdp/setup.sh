@@ -47,8 +47,12 @@ fi
 # bring down maven
 mkdir maven
 cd maven
-curl -O http://apache.claz.org/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-tar -xzvf apache-maven-3.3.9-bin.tar.gz
+# download maven from automatically selected mirror server
+curl -vLO  "https://www.apache.org/dyn/mirrors/mirrors.cgi?cca2=us&preferred=http://apache.claz.org/&action=download&filename=maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
+if ! tar -xzvf apache-maven-3.3.9-bin.tar.gz ; then
+    echo "Installation of maven has failed!"
+    exit 1
+fi
 ls -l
 export PATH=${PATH}:${WORK_DIR}/maven/apache-maven-3.3.9/bin
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
