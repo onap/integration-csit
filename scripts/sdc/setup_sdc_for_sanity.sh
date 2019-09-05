@@ -47,7 +47,24 @@ cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/sc
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
 
-${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -${TEST_SUITE}
+SDC_LOCAL_IMAGES=$(echo "${SDC_LOCAL_IMAGES}" | tr '[:upper:]' '[:lower:]')
+case "$SDC_LOCAL_IMAGES" in
+    1|yes|true|Y)
+        echo "[INFO]: we will use the locally built images"
+        ${WORKSPACE}/scripts/sdc/docker_run.sh \
+            --local \
+            -r ${RELEASE} \
+            -e ${ENV_NAME} \
+            -p 10001 -${TEST_SUITE}
+        ;;
+    *)
+        echo "[INFO]: we will download images from the default registry"
+        ${WORKSPACE}/scripts/sdc/docker_run.sh \
+            -r ${RELEASE} \
+            -e ${ENV_NAME} \
+            -p 10001 -${TEST_SUITE}
+        ;;
+esac
 
 sleep 120
 

@@ -13,5 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
+export SDC_LOCAL_IMAGES="${SDC_LOCAL_IMAGES:-false}"
 source ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh tud
