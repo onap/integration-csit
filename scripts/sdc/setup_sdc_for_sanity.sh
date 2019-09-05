@@ -6,7 +6,22 @@ function usage {
     echo "setup sdc and run ui test suite: setup_sdc_for_sanity.sh tud"
 }
 
-set -x
+# returns 0: if SDC_LOCAL_IMAGES is set to true value
+# returns 1: otherwise
+function using_local_images {
+    SDC_LOCAL_IMAGES=$(echo "${SDC_LOCAL_IMAGES}" | tr '[:upper:]' '[:lower:]')
+
+    case "$SDC_LOCAL_IMAGES" in
+        1|yes|true|Y)
+            return 0
+            ;;
+    esac
+
+    return 1
+}
+
+# fail quick if error
+set -exo pipefail
 
 echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh"
 
@@ -21,7 +36,17 @@ mkdir -p ${WORKSPACE}/data/environments/
 mkdir -p ${WORKSPACE}/data/clone/
 
 cd ${WORKSPACE}/data/clone
-git clone --depth 1 http://gerrit.onap.org/r/sdc -b ${GERRIT_BRANCH}
+if using_local_images && [ -n "$SDC_LOCAL_GITREPO" ] ; then
+    if [ -d "$SDC_LOCAL_GITREPO" ] ; then
+        rm -rf ./sdc
+        cp -a "$SDC_LOCAL_GITREPO" ./sdc
+    else
+        echo "[ERROR]: Local git repo for sdc does not exist: ${SDC_LOCAL_GITREPO}"
+        exit 1
+    fi
+else
+    git clone --depth 1 http://gerrit.onap.org/r/sdc -b ${GERRIT_BRANCH}
+fi
 
 chmod -R 777 ${WORKSPACE}/data/clone
 
@@ -47,11 +72,39 @@ cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/sc
 source ${WORKSPACE}/data/clone/sdc/version.properties
 export RELEASE=$major.$minor-STAGING-latest
 
-${WORKSPACE}/scripts/sdc/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001 -${TEST_SUITE}
+if using_local_images ; then
+    if [ -n "$SDC_LOCAL_TAG" ] ; then
+        RELEASE="$SDC_LOCAL_TAG"
+    elif [ -z "$SDC_LOCAL_GITREPO" ] ; then
+        echo "[WARNING]: Local images used but no tag and no source (git repo) provided for them - we will use tag 'latest'"
+        RELEASE=latest
+    fi
+
+    echo "[INFO]: We will use the locally built images (tag: ${RELEASE})"
+    ${WORKSPACE}/scripts/sdc/docker_run.sh \
+        --local \
+        -r ${RELEASE} \
+        -e ${ENV_NAME} \
+        -p 10001 -${TEST_SUITE}
+else
+    echo "[INFO]: We will download images from the default registry (tag: ${RELEASE})"
+    ${WORKSPACE}/scripts/sdc/docker_run.sh \
+        -r ${RELEASE} \
+        -e ${ENV_NAME} \
+        -p 10001 -${TEST_SUITE}
+fi
 
 sleep 120
 
+# This file is sourced in another script which is out of our control...
+set +e
+set +o pipefail
+
+# The code below for example does nothing and breaks immediately (running locally at least)
+# Also it is very fragile: empty CID variable and broken docker command...
+
 #monitor test processes
+
 
 TIME_OUT=1200
 INTERVAL=20
