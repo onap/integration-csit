@@ -15,4 +15,5 @@
 # limitations under the License.
 #
 
+export SDC_LOCAL_IMAGES="${SDC_LOCAL_IMAGES:-false}"
 source ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh tad
