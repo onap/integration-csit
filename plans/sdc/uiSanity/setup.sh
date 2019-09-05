@@ -13,5 +13,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+
+# By default all images are from remote upstream registry, this option
+# provides the chance to test locally built images
+export SDC_LOCAL_IMAGES="${SDC_LOCAL_IMAGES:-false}"
+
+# For this to take effect SDC_LOCAL_IMAGES must be enabled...
+#
+# The path to the local sdc git repo from which the local images have
+# been built - it also affects the tag used - if left empty *AND*
+# local images are used *AND* SDC_LOCAL_TAG is unset then the tag
+# will be set to: 'latest'
+#
+# BEWARE: Using local images with an incorrect git repo could lead to
+# problems...set SDC_LOCAL_GITREPO or GERRIT_BRANCH properly...
+export SDC_LOCAL_GITREPO="${SDC_LOCAL_GITREPO}"
+
+# For this to take effect SDC_LOCAL_IMAGES must be enabled...
+#
+# This will set the tag for local images - leaving this empty *AND*
+# with unset SDC_LOCAL_GITREPO the local images will fallback to the
+# tag: 'latest'
+export SDC_LOCAL_TAG="${SDC_LOCAL_TAG}"
 
 source ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh tud
