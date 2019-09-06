@@ -16,18 +16,5 @@
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
-
-kill-instance.sh sdnc_controller_container
-kill-instance.sh sdnc_dgbuilder_container
-kill-instance.sh sdnc_portal_container
-kill-instance.sh sdnc_db_container
-kill-instance.sh sdnc_ueblistener_container
-kill-instance.sh sdnc_dmaaplistener_container
-kill-instance.sh sdnc_ansible_container
-kill-instance.sh netopeer
-kill-instance.sh sftp-server
-kill-instance.sh ftpes-server-vsftpd
-kill-instance.sh ftpes-server-pure-ftpd
-kill-instance.sh bp-rest
-kill-instance.sh ccsdk-mariadb
+docker-compose down
 # $WORKSPACE/archives/appc deleted with archives folder when tests starts so we keep it at the end for debugging
