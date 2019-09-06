@@ -1,0 +1,35 @@
+{
+  "requestDetails": {
+    "requestInfo": {
+      "productFamilyId": "${productFamilyId}",
+      "instanceName": "${instanceName}",
+      "source": "VID",
+      "suppressRollback": false,
+      "requestorId": "ROBOT"
+    },
+    "modelInfo": {
+      "modelType": "${serviceInstModelType}",
+      "modelInvariantId": "${serviceInstModelInvariantId}",
+      "modelVersionId": "${serviceInstModelNameVersionId}",
+      "modelName": "${serviceInstModelName}",
+      "modelVersion": "${serviceInstModelVersion}"
+    },
+    "project": {
+	"projectName": "${projectName}"
+	},
+    "owningEntity": {
+	"owningEntityId": "${owningEntityId}",
+	"owningEntityName": "${owningEntityName}"
+	},
+    "requestParameters": {
+     "testApi": "${testApi}",
+      "userParams": [],
+      "subscriptionServiceType": "${serviceType}",
+      "aLaCarte": ${aLaCarteFlag}
+    },
+    "subscriberInfo": {
+      "globalSubscriberId": "${subscriberId}",
+      "subscriberName": "${subscriberId}"
+    }
+  }
+}

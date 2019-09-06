@@ -1,0 +1,111 @@
+{
+	"hostname": "rdm52r19c001",
+	"equip-type": "rack server",
+	"equip-vendor": "DELL",
+	"equip-model": "SVR - R740XD - AIC 25GB AC -  44 CORE - 384GB RAM - 4 X 480GB SSD - 6 X 2.4TB HDD - 2 X 1GB - 4 X 10GB X710 - 4 X 25GB (INTEL XXV710) - NBD",
+	"fqdn": "test.com",
+	"inv-status": "Configuration",
+	"in-maint": false,
+	"prov-status": "PREPROV",
+	"host-profile": "ns-hp1",
+	"role": "Application",
+	"function": "Node",
+	"p-interfaces": 
+	{
+		"p-interface": 
+		[
+			{
+				"interface-name": "p7/1",
+				"speed-value": "25",
+				"speed-units": "GE",
+				"port-description": "25GE_rdm521928el1_et-0/0/1:1_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "OAM",
+				"interface-type": "BUNDLE-MEMBER",
+				"prov-status": "PREPROV",
+				"in-maint": false
+			},
+
+			{
+				"interface-name": "p2/2",
+				"speed-value": "25",
+				"speed-units": "GE",
+				"port-description": "25GE_rdm521929el1_et-0/0/1:1_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "OAM",
+				"interface-type": "BUNDLE-MEMBER",
+				"prov-status": "PREPROV",
+				"in-maint": false
+			},
+
+			{
+				"interface-name": "p7/2",
+				"speed-value": "25",
+				"speed-units": "GE",
+				"port-description": "25GE_rdm521929el1_et-0/0/0:1_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "APPLICATION",
+				"interface-type": "PHYSICAL",
+				"prov-status": "PREPROV",
+				"in-maint": false,
+				"sriov-pfs":
+				{
+					"sriov-pf": 
+					[
+						{
+							"pf-pci-id": "0000:5e:00.0"
+						}
+					]
+				}
+			},
+			{
+				"interface-name": "p2/1",
+				"speed-value": "25",
+				"speed-units": "GE",
+				"port-description": "25GE_rdm521928el1_et-0/0/0:1_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "APPLICATION",
+				"interface-type": "PHYSICAL",
+				"prov-status": "PREPROV",
+				"in-maint": false,
+				"sriov-pfs": 
+				{
+					"sriov-pf": 
+					[
+						{
+							"pf-pci-id": "0000:5e:01.0"
+						}
+					]
+				}
+			},
+			{
+				"interface-name": "P1",
+				"speed-value": "1",
+				"speed-units": "GE",
+				"port-description": "1GE_rdm520019sx2_GigabitEthernet1/0/3_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "PXE",
+				"interface-type": "PHYSICAL",
+				"prov-status": "PREPROV",
+				"in-maint": false
+			},
+
+			{
+				"interface-name": "R",
+				"speed-value": "1",
+				"speed-units": "GE",
+				"port-description": "1GE_rdm520019sx2_GigabitEthernet1/0/4_[ckt-id]_[fac-id]_[CBB][NCOPS]",
+				"interface-role": "IPMI",
+				"interface-type": "PHYSICAL",
+				"prov-status": "PREPROV",
+				"in-maint": false
+			}
+		]
+	},
+	"lag-interfaces": 
+	{
+		"lag-interface": 
+		[
+			{
+				"interface-name": "bond1",
+				"prov-status": "PREPROV",
+				"in-maint": false
+			}
+		]
+	}
+}

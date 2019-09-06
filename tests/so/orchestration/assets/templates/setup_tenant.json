@@ -1,0 +1,4 @@
+{
+    "tenant-id": "${tenantId}",
+    "tenant-name": "${tenantName}"
+}

@@ -1,0 +1,56 @@
+{
+	"requestDetails": {
+		"requestInfo": {
+			"instanceName": "${vfModuleName}",
+			"source": "VID",
+			"suppressRollback": false,
+			"requestorId": "az2016"
+		},
+		"modelInfo": {
+			"modelType": "${vfModelType}",
+			"modelInvariantId": "${vfModelInvariantId}",
+			"modelVersionId": "${vfModelversionId}",
+			"modelName": "${vfModelName}",
+			"modelVersion": "${vfModelVersion}",
+			"modelCustomizationId": "${vfModelCustomizationId}"
+		},
+		"requestParameters": {
+			"testApi": "${testApi}",
+			"aLaCarte": "${alaCarte}",
+			"userParams": []
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "${vfLcpCloudRegionId}",
+			"tenantId": "${vfTenantId}",
+			"cloudOwner": "${cloudOwner}"
+		},
+		"relatedInstanceList": [
+			{
+				"relatedInstance": {
+					"instanceId": "${serviceInstanceId}",
+					"modelInfo": {
+						"modelType": "${serviceInstModelType}",
+						"modelInvariantId": "${serviceInstModelInvariantId}",
+						"modelVersionId": "${serviceInstModelNameVersionId}",
+						"modelName": "${serviceInstModelName}",
+						"modelVersion": "${serviceInstModelVersion}"
+					}
+				}
+			},
+			{
+				"relatedInstance": {
+					"instanceId": "${vnfId}",
+					"modelInfo": {
+						"modelType": "${vnfModelType}",
+						"modelName": "${vnfModelName}",
+						"modelInvariantId": "${vnfModelInvariantId}",
+						"modelVersion": "${vnfModelVersion}",
+						"modelVersionId": "${vnfModelversionId}",
+						"modelCustomizationName": "${vnfModelCustomizationName}",
+						"modelCustomizationId": "${vnfModelcustomizationId}"
+					}
+				}
+			}
+		]
+	}
+}
