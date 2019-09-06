@@ -94,45 +94,7 @@ else
         -p 10001 -${TEST_SUITE}
 fi
 
-sleep 120
-
 # This file is sourced in another script which is out of our control...
 set +e
 set +o pipefail
-
-# The code below for example does nothing and breaks immediately (running locally at least)
-# Also it is very fragile: empty CID variable and broken docker command...
-
-#monitor test processes
-
-
-TIME_OUT=1200
-INTERVAL=20
-TIME=0
-CID=`docker ps | grep tests |  awk '{print $1}'`
-
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  
-PID=`docker exec -i $CID ps -ef | grep java | awk '{print $1}'`
-
-echo sanity PID is -- $PID
-  
-if [ -z "$PID" ]
- then
-    echo SDC sanity finished in $TIME seconds
-    break
-  fi
-
-  echo Sleep: $INTERVAL seconds before testing if SDC sanity completed. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
-done
-
-if [ "$TIME" -ge "$TIME_OUT" ]
- then
-   echo TIME OUT: SDC sanity was NOT completed in $TIME_OUT seconds... Could cause problems for tests...
-fi
-
-
-
 
