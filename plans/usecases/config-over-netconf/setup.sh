@@ -18,16 +18,9 @@
 #
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/scripts/sdnc/script1.sh
-export DOCKER_SDNC_TAG=1.5.2
-export NEXUS_USERNAME=docker
-export NEXUS_PASSWD=docker
-export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.5.2
-export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
-export CCSDK_DOCKER_BP_IMAGE_VERSION=0.4.5
-REQUEST_DATA_PATH=$WORKSPACE/tests/usecases/5G-config-over-netconf/data
+export PARENT=usecases
+export SUB_PARENT=config-over-netconf
+source ${WORKSPACE}/plans/$PARENT/$SUB_PARENT/test.properties
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -35,57 +28,42 @@ if [ "$MTU" == "" ]; then
 	  export MTU="1450"
 fi
 
-# Clone SDNC repo to get docker-compose for SDNC
+# clone integration branch for pnf-simulator
 mkdir -p $WORKSPACE/archives/integration
 cd $WORKSPACE/archives
-git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
+git clone -b dublin --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
 cd $WORKSPACE/archives/integration
 git pull
-#cd $WORKSPACE/archives/integration/test/mocks/pnfsimulator
-#sed -i 's/nexus3.onap.org:10003\/onap\/pnf-simulator:4.0.0-SNAPSHOT/nexus3.onap.org:10001\/onap\/pnf-simulator:latest/' docker-compose.yml
+
+
 HOST_IP_ADDR=localhost
-# Clone SDNC repo to get docker-compose for SDNC
-mkdir -p $WORKSPACE/archives/sdnc
-cd $WORKSPACE/archives
-git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/sdnc/oam.git sdnc
-cd $WORKSPACE/archives/sdnc
-git pull
+
+# setup sdnc
+
+cd $WORKSPACE/plans/$PARENT/$SUB_PARENT/sdn
 unset http_proxy https_proxy
 
-sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" docker-compose.yml
+#sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" diocker-compose.yml
 docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG onap/sdnc-image:latest
+docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$SDNC_IMAGE_TAG
+docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$SDNC_IMAGE_TAG onap/sdnc-image:latest
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION onap/sdnc-ansible-server-image:latest
+docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$ANSIBLE_IMAGE_TAG
+docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$ANSIBLE_IMAGE_TAG onap/sdnc-ansible-server-image:latest
 
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-dgbuilder-image:latest
+docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG
+docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG onap/ccsdk-blueprintsprocessor:latest
 
-docker pull $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION onap/admportal-sdnc-image:latest
-
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-ueb-listener-image:latest
-
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-dmaap-listener-image:latest
-
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$CCSDK_DOCKER_BP_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$CCSDK_DOCKER_BP_IMAGE_VERSION onap/ccsdk-blueprintsprocessor:latest
-
-
-CERT_SUBPATH=plans/sdnc/sdnc_netconf_tls_post_deploy/certs
-export SDNC_CERT_PATH=${WORKSPACE}/${CERT_SUBPATH}
-
-cd $WORKSPACE/archives/sdnc/installation/src/main/yaml
+export SDNC_CERT_PATH=${CERT_SUBPATH}
 sed -i 's/sdnc_controller_container/sdnc_controller_container\n    volumes: \n      - $SDNC_CERT_PATH:\/opt\/opendaylight\/current\/certs/' docker-compose.yml
 # start SDNC containers with docker compose and configuration from docker-compose.yml
 docker-compose up -d
 
+# start pnf simulator
+
 cd $WORKSPACE/archives/integration/test/mocks/pnfsimulator
+
 ./simulator.sh start&
 
 # WAIT 10 minutes maximum and test every 5 seconds if SDNC is up using HealthCheck API
@@ -151,39 +129,7 @@ fi
 
 ########################################## blueprintsprocessor setup ##########################################################
 
-mkdir -p $WORKSPACE/archives/cds
-cd $WORKSPACE/archives
-
-git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/ccsdk/cds.git cds
-cd $WORKSPACE/archives/cds
-git pull
-unset http_proxy https_proxy
-cd $WORKSPACE/archives/cds/ms/blueprintsprocessor/distribution/src/main/dc/
-
-############# update ip of sdnc in docker-compose###########
-SDNC_CONTAINER=$(docker ps -a -q --filter="name=sdnc_controller_container")
-SDNC_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
-echo " " >> docker-compose.yaml
-echo "    extra_hosts:"  >> docker-compose.yaml
-echo "    - 'sdnc:$LOCAL_IP'" >> docker-compose.yaml
-#############################################################
-
-docker-compose up &
-sleep 10
-################# Check state of BP ####################
-BP_CONTAINER=$(docker ps -a -q --filter="name=bp-rest")
-CCSDK_MARIADB=$(docker ps -a -q --filter="name=ccsdk-mariadb")
-for i in {1..10}; do
-if [ $(docker inspect --format '{{ .State.Running }}' $BP_CONTAINER) ] && \
-[ $(docker inspect --format '{{ .State.Running }}' $CCSDK_MARIADB) ]
-then
-   echo "Blueprint proc Service Running"
-   break
-else
-   echo sleep $i
-   sleep $i
-fi
-done
+source $CDS_DOCKER_PATH/cds_setup.sh
 
 ########## update pnf simulator ip in config deploy request ########
 
@@ -196,10 +142,11 @@ sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/config-assign.json
 sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-deploy.json
 sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-assign.json
 
-####################################################################
 # Sleep additional 3 minutes (180 secs) to give application time to finish
+
 sleep 150
 
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
+
 ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"

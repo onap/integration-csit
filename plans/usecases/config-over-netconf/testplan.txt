@@ -1,4 +1,4 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
-usecases/5G-config-over-netconf
+pnfusecase/config-over-netconf
 
