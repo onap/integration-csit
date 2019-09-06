@@ -22,6 +22,30 @@
       "revId": "e81736c80a95e8766f4305f5bb63e56f14dd798e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f87c3140_2c721828",
+        "filename": "plans/dcaegen2-collectors-datafile/Functional-suite/setup.sh",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2019-09-06T10:51:01Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "4e064681_9d18d64b",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 57
+      },
+      "revId": "e81736c80a95e8766f4305f5bb63e56f14dd798e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
