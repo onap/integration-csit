@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a669ae_2432a85c",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-09-06T18:54:27Z",
+      "side": 1,
+      "message": "name, scope, and version still needed?  I thought Liam removed it from some other policy types, but may still be appropriate here",
+      "revId": "f4aa569925d36651447b2148f96fcd09e6c0de82",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df1385cb_a05a10d8",
+        "filename": "tests/policy/api/data/onap.policy.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-09-06T18:54:27Z",
+      "side": 1,
+      "message": "maybe in the future can pull this and the next yaml file from the models jar",
+      "revId": "f4aa569925d36651447b2148f96fcd09e6c0de82",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
