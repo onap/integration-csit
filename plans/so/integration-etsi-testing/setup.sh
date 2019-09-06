@@ -31,6 +31,7 @@ ENV_FILE=$CONFIG_DIR/env
 TEMP_DIR_PATH=$SCRIPT_HOME/temp
 TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
+DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
 TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
 
 MAVEN_DIR=$TEMP_DIR_PATH/maven
@@ -48,7 +49,7 @@ echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
 export $(egrep -v '^#' $ENV_FILE | xargs)
 
-MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME")
+MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME")
 
 for var in "${MANDATORY_VARIABLES_NAMES[@]}"
  do
@@ -138,7 +139,16 @@ git clone http://gerrit.onap.org/r/so/docker-config.git $TEST_LAB_DIR_PATH
 export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$CONFIG_DIR
 
-docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME up -d 
+if [ "$DOCKER_ENVIRONMENT" == "remote" ]; then
+  echo "Starting docker containers with remote images ..."
+  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME up -d
+elif [ "$DOCKER_ENVIRONMENT" == "local" ]; then
+  echo "Starting docker containers with local images ..."
+  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -f $DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE -p $PROJECT_NAME up -d
+else
+  echo "DOCKER_ENVIRONMENT not set correctly in $ENV_FILE.  Allowed values: local | remote"
+  exit 1
+fi
 
 echo "Sleeping for 3m"
 sleep 3m
