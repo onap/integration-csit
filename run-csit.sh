@@ -18,6 +18,10 @@
 # $1 project/functionality
 # $2 robot options
 
+#
+# functions
+#
+
 function docker_stats(){
     #General memory details
     echo "> top -bn1 | head -3"
@@ -38,6 +42,59 @@ function docker_stats(){
     echo
 }
 
+# save current set options
+function save_set() {
+    RUN_CSIT_SAVE_SET="$-"
+    RUN_CSIT_SHELLOPTS="$SHELLOPTS"
+}
+
+# load the saved set options
+function load_set() {
+    _setopts="$-"
+
+    # bash shellopts
+    for i in $(echo "$SHELLOPTS" | tr ':' ' ') ; do
+        set +o ${i}
+    done
+    for i in $(echo "$RUN_CSIT_SHELLOPTS" | tr ':' ' ') ; do
+        set -o ${i}
+    done
+
+    # other options
+    for i in $(echo "$_setopts" | sed 's/./& /g') ; do
+        set +${i}
+    done
+    set -${RUN_CSIT_SAVE_SET}
+}
+
+# set options for quick bailout when error
+function harden_set() {
+    set -xeo pipefail
+    set +u # enabled it would probably fail too many often
+}
+
+# relax set options so the sourced file will not fail
+# the responsibility is shifted to the sourced file...
+function relax_set() {
+    set +e
+    set +o pipefail
+}
+
+# wrapper for sourcing a file
+function source_safely() {
+    [ -z "$1" ] && return 1
+    relax_set
+    . "$1"
+    load_set
+}
+
+#
+# main
+#
+
+# set and save options for quick failure
+harden_set && save_set
+
 if [ $# -eq 0 ]
 then
     echo
@@ -50,13 +107,13 @@ then
 fi
 
 if [ -z "$WORKSPACE" ]; then
-    export WORKSPACE=`git rev-parse --show-toplevel`
+    export WORKSPACE=$(git rev-parse --show-toplevel)
 fi
 
-rm -rf $WORKSPACE/archives
-mkdir -p $WORKSPACE/archives
+rm -rf "$WORKSPACE/archives"
+mkdir -p "$WORKSPACE/archives"
 
-if [ -f ${WORKSPACE}/${1}/testplan.txt ]; then
+if [ -f "${WORKSPACE}/${1}/testplan.txt" ]; then
     export TESTPLAN="${1}"
 else
     echo "testplan not found: ${WORKSPACE}/${TESTPLAN}/testplan.txt"
@@ -65,67 +122,64 @@ fi
 
 export TESTOPTIONS="${2}"
 
-TESTPLANDIR=${WORKSPACE}/${TESTPLAN}
+TESTPLANDIR="${WORKSPACE}/${TESTPLAN}"
 
 # Run installation of prerequired libraries
-source ${WORKSPACE}/prepare-csit.sh
+source_safely "${WORKSPACE}/prepare-csit.sh"
 
 # Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
-source "${ROBOT_VENV}/bin/activate"
+source_safely "${ROBOT_VENV}/bin/activate"
 
-WORKDIR=`mktemp -d --suffix=-robot-workdir`
-cd ${WORKDIR}
-
-set +u
-set -x
+WORKDIR=$(mktemp -d --suffix=-robot-workdir)
+cd "${WORKDIR}"
 
 # Add csit scripts to PATH
-export PATH=${PATH}:${WORKSPACE}/docker/scripts:${WORKSPACE}/scripts:${ROBOT_VENV}/bin
-export SCRIPTS=${WORKSPACE}/scripts
+export PATH="${PATH}:${WORKSPACE}/docker/scripts:${WORKSPACE}/scripts:${ROBOT_VENV}/bin"
+export SCRIPTS="${WORKSPACE}/scripts"
 export ROBOT_VARIABLES=
 
 # Sign in to nexus3 docker repo
 docker login -u anonymous -p anonymous nexus3.onap.org:10001
 
 # Run setup script plan if it exists
-cd ${TESTPLANDIR}
-SETUP=${TESTPLANDIR}/setup.sh
-if [ -f ${SETUP} ]; then
+cd "${TESTPLANDIR}"
+SETUP="${TESTPLANDIR}/setup.sh"
+if [ -f "${SETUP}" ]; then
     echo "Running setup script ${SETUP}"
-    source ${SETUP}
+    source_safely "${SETUP}"
 fi
 
 # show memory consumption after all docker instances initialized
-docker_stats | tee $WORKSPACE/archives/_sysinfo-1-after-setup.txt
+docker_stats | tee "$WORKSPACE/archives/_sysinfo-1-after-setup.txt"
 
 # Run test plan
-cd $WORKDIR
+cd "$WORKDIR"
 echo "Reading the testplan:"
-cat ${TESTPLANDIR}/testplan.txt | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${WORKSPACE}/tests/|" > testplan.txt
+cat "${TESTPLANDIR}/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${WORKSPACE}/tests/|" > testplan.txt
 cat testplan.txt
 SUITES=$( xargs -a testplan.txt )
 
-echo ROBOT_VARIABLES=${ROBOT_VARIABLES}
+echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
-set +e
+relax_set
 python -m robot.run -N ${TESTPLAN} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${TESTOPTIONS} ${SUITES}
 RESULT=$?
-set -e
-echo "RESULT: " $RESULT
-rsync -av $WORKDIR/ $WORKSPACE/archives
+load_set
+echo "RESULT: $RESULT"
+rsync -av "$WORKDIR/" "$WORKSPACE/archives"
 
 # Record list of active docker containers
-docker ps --format "{{.Image}}" > $WORKSPACE/archives/_docker-images.log
+docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
 
 # show memory consumption after all docker instances initialized
-docker_stats | tee $WORKSPACE/archives/_sysinfo-2-after-robot.txt
+docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
 
 # Run teardown script plan if it exists
-cd ${TESTPLANDIR}
-TEARDOWN=${TESTPLANDIR}/teardown.sh
-if [ -f ${TEARDOWN} ]; then
+cd "${TESTPLANDIR}"
+TEARDOWN="${TESTPLANDIR}/teardown.sh"
+if [ -f "${TEARDOWN}" ]; then
     echo "Running teardown script ${TEARDOWN}"
-    source ${TEARDOWN}
+    source_safely "${TEARDOWN}"
 fi
 
 # TODO: do something with the output
