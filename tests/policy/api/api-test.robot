@@ -61,7 +61,7 @@ RetrieveMonitoringPolicyTypes
      ${resp}=   Get Request   policy  /policy/api/v1/policytypes/onap.policies.Monitoring     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['policy_types'][0]}  onap.policies.Monitoring
+     List Should Contain Value    ${resp.json()['policy_types']}  onap.policies.Monitoring
 
 
 CreateNewMonitoringPolicy
@@ -89,8 +89,8 @@ RetrievePoliciesOfType
      Log    Received response from policy ${resp.text}
      ${expjsonobject}   To Json    ${expjson}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
-     Dictionary Should Contain Key	${expjsonobject['topology_template']['policies'][0]}  onap.restart.tca
+     List Should Contain Value    ${resp.json()['topology_template']['policies']}  onap.restart.tca
+     List Should Contain Value	${expjsonobject['topology_template']['policies']}  onap.restart.tca
 
 DeleteSpecificPolicy
      [Documentation]    Delete Policy of a Type
