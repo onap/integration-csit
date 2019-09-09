@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ed308e5_8d659b82",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2019-09-09T09:24:34Z",
+      "side": 1,
+      "message": "Only changed the policy types \u0026 data types from List of Map to Map. Didn\u0027t changed other stuff. Let\u0027s see how it goes.",
+      "parentUuid": "f0a669ae_2432a85c",
+      "revId": "f4aa569925d36651447b2148f96fcd09e6c0de82",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1385cb_a05a10d8",
         "filename": "tests/policy/api/data/onap.policy.monitoring.cdap.tca.hi.lo.app.json",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2019-09-06T18:54:27Z",
       "side": 1,
       "message": "maybe in the future can pull this and the next yaml file from the models jar",
+      "revId": "f4aa569925d36651447b2148f96fcd09e6c0de82",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abfeafb9_31dbb444",
+        "filename": "tests/policy/api/data/onap.policy.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2019-09-09T09:24:34Z",
+      "side": 1,
+      "message": "Agree, may be an item for Frankfurt.",
+      "parentUuid": "df1385cb_a05a10d8",
       "revId": "f4aa569925d36651447b2148f96fcd09e6c0de82",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
