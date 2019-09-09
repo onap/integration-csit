@@ -61,7 +61,7 @@ RetrieveMonitoringPolicyTypes
      ${resp}=   Get Request   policy  /policy/api/v1/policytypes/onap.policies.Monitoring     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['policy_types'][0]}  onap.policies.Monitoring
+     List Should Contain Value    ${resp.json()['policy_types']}  onap.policies.Monitoring
 
 
 CreateNewMonitoringPolicy
