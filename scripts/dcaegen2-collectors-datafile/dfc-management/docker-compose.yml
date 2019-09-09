@@ -6,8 +6,7 @@ networks:
 services:
   dfc:
     #image fron Nexus
-    #image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
-    image: yanhuanwang/dfc:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
     #local image for test purposes
     #image: org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
     container_name: dfc_app0
