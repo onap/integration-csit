@@ -12,8 +12,7 @@ cd $WORKSPACE/archives/dfc
 
 if [ -z "$SIM_ROOT" ]
 then
-	#git clone --depth 1 https://gerrit.onap.org/r/integration -b master
-	git clone https://github.com/yanhuanwang/integration.git
+	git clone --depth 1 https://gerrit.onap.org/r/integration -b master
 	#Location of all individual simulators for DFC
 	echo "Determine SIM_ROOT based on the WORKSPACE"
 	SIM_ROOT=$WORKSPACE/archives/dfc/integration/test/mocks/datafilecollector-testharness
