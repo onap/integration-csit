@@ -1,0 +1,131 @@
+tosca_definitions_version: tosca_simple_yaml_1_1
+metadata:
+  invariantUUID: 67a4bb59-d438-4c83-9c94-ed99b30a9b66
+  UUID: 0c13eeca-9d3b-456a-9d78-73ffd155d940
+  name: Manualdistributiontestvsp.compute.nodes.heat.simple
+  description: Not reusable inner VFC
+  type: VFC
+  category: Generic
+  subcategory: Abstract
+  resourceVendor: Test
+  resourceVendorRelease: '1.0'
+  resourceVendorModelNumber: ''
+imports:
+- nodes:
+    file: nodes.yml
+- datatypes:
+    file: data.yml
+- capabilities:
+    file: capabilities.yml
+- relationships:
+    file: relationships.yml
+- groups:
+    file: groups.yml
+- policies:
+    file: policies.yml
+- annotations:
+    file: annotations.yml
+node_types:
+  org.openecomp.resource.vfc.Manualdistributiontestvsp.abstract.compute.nodes.heat.simple:
+    derived_from: org.openecomp.resource.vfc.nodes.heat.nova.Server
+    description: Not reusable inner VFC
+    properties:
+      admin_pass:
+        type: string
+        description: The administrator password for the server
+        required: false
+      image:
+        type: string
+        description: The ID or name of the image to boot with
+        required: false
+      availability_zone:
+        type: string
+        description: Availability zone to create servers in
+        required: false
+      metadata:
+        type: json
+        description: Arbitrary JSON metadata to store for this server
+        required: false
+      image_update_policy:
+        default: REBUILD
+        type: string
+        description: Policy on how to apply an image-id update
+        required: false
+      contrail_service_instance_ind:
+        default: false
+        type: boolean
+        description: Nova server related to service instance indicator
+        required: false
+      user_data_update_policy:
+        default: REPLACE
+        type: string
+        description: Policy on how to apply a user_data update
+        required: false
+      user_data:
+        type: string
+        description: User data script to be executed by cloud-init
+        required: false
+      flavor_update_policy:
+        default: RESIZE
+        type: string
+        description: Policy on how to apply a flavor update
+        required: false
+      reservation_id:
+        type: string
+        description: A UUID for the set of servers being requested
+        required: false
+      key_name:
+        type: string
+        description: Name of keypair to inject into the server
+        required: false
+      flavor:
+        type: string
+        description: The ID or name of the flavor to boot onto
+        required: true
+      security_groups:
+        default: [
+          ]
+        type: list
+        description: List of security group names or IDs
+        required: false
+        entry_schema:
+          type: string
+      config_drive:
+        type: boolean
+        description: enable config drive on the server
+        required: false
+      software_config_transport:
+        default: POLL_SERVER_CFN
+        type: string
+        description: How the server should receive the metadata required for software configuration
+        required: false
+      personality:
+        default: {
+          }
+        type: map
+        description: A map of files to create/overwrite on the server upon boot
+        required: false
+        entry_schema:
+          type: string
+      user_data_format:
+        default: HEAT_CFNTOOLS
+        type: string
+        description: How the user_data should be formatted for the server
+        required: false
+      diskConfig:
+        type: string
+        description: Control how the disk is partitioned when the server is created
+        required: false
+      scheduler_hints:
+        type: map
+        description: Arbitrary key-value pairs specified by the client to help boot a server
+        required: false
+        entry_schema:
+          type: string
+      name:
+        type: string
+        description: Server name
+        required: false
+    interfaces:
+      Standard:
+        type: tosca.interfaces.node.lifecycle.Standard

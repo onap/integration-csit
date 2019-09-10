@@ -1,0 +1,4980 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+tosca_definitions_version: tosca_simple_yaml_1_1
+imports:
+- data.yml
+- artifacts.yml
+- capabilities.yml
+- interfaces.yml
+- relationships.yml
+node_types:
+  tosca.nodes.LoadBalancer:
+    derived_from: tosca.nodes.Root
+    properties:
+      algorithm:
+        type: string
+        required: false
+        status: experimental
+    capabilities:
+      client:
+        type: tosca.capabilities.Endpoint.Public
+        occurrences:
+        - 0
+        - UNBOUNDED
+        description: the Floating (IP) client's on the public network can connect to
+    requirements:
+    - application:
+        capability: tosca.capabilities.Endpoint
+        relationship: tosca.relationships.RoutesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  tosca.nodes.Container.Application:
+    derived_from: tosca.nodes.Root
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        node: tosca.nodes.Container
+        relationship: tosca.relationships.HostedOn
+  tosca.nodes.ObjectStorage:
+    derived_from: tosca.nodes.Root
+    properties:
+      name:
+        type: string
+      size:
+        type: scalar-unit.size
+        constraints:
+        - greater_or_equal: 0 GB
+      maxsize:
+        type: scalar-unit.size
+        constraints:
+        - greater_or_equal: 0 GB
+    capabilities:
+      storage_endpoint:
+        type: tosca.capabilities.Endpoint
+  tosca.nodes.network.Network:
+    derived_from: tosca.nodes.Root
+    properties:
+      ip_version:
+        type: integer
+        required: false
+        default: 4
+        constraints:
+        - valid_values:
+          - 4
+          - 6
+      cidr:
+        type: string
+        required: false
+      start_ip:
+        type: string
+        required: false
+      end_ip:
+        type: string
+        required: false
+      gateway_ip:
+        type: string
+        required: false
+      network_name:
+        type: string
+        required: false
+      network_id:
+        type: string
+        required: false
+      segmentation_id:
+        type: string
+        required: false
+      network_type:
+        type: string
+        required: false
+      physical_network:
+        type: string
+        required: false
+      dhcp_enabled:
+        type: boolean
+        required: false
+        default: true
+    capabilities:
+      link:
+        type: tosca.capabilities.network.Linkable
+  tosca.nodes.BlockStorage:
+    derived_from: tosca.nodes.Root
+    properties:
+      size:
+        type: scalar-unit.size
+        constraints:
+        - greater_or_equal: 1 MB
+      volume_id:
+        type: string
+        required: false
+      snapshot_id:
+        type: string
+        required: false
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+  tosca.nodes.SoftwareComponent:
+    derived_from: tosca.nodes.Root
+    properties:
+      component_version:
+        type: version
+        required: false
+      admin_credential:
+        type: tosca.datatypes.Credential
+        required: false
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        node: tosca.nodes.Compute
+        relationship: tosca.relationships.HostedOn
+  tosca.nodes.DBMS:
+    derived_from: tosca.nodes.SoftwareComponent
+    properties:
+      root_password:
+        type: string
+        required: false
+        description: the optional root password for the DBMS service
+      port:
+        type: integer
+        required: false
+        description: the port the DBMS service will listen to for data and requests
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types:
+        - tosca.nodes.Database
+  tosca.nodes.network.Port:
+    derived_from: tosca.nodes.Root
+    properties:
+      ip_address:
+        type: string
+        required: false
+      order:
+        type: integer
+        required: true
+        default: 0
+        constraints:
+        - greater_or_equal: 0
+      is_default:
+        type: boolean
+        required: false
+        default: false
+      ip_range_start:
+        type: string
+        required: false
+      ip_range_end:
+        type: string
+        required: false
+    requirements:
+    - link:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    - binding:
+        capability: tosca.capabilities.network.Bindable
+        relationship: tosca.relationships.network.BindsTo
+  tosca.nodes.WebApplication:
+    derived_from: tosca.nodes.Root
+    properties:
+      context_root:
+        type: string
+    capabilities:
+      app_endpoint:
+        type: tosca.capabilities.Endpoint
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        node: tosca.nodes.WebServer
+        relationship: tosca.relationships.HostedOn
+  tosca.nodes.WebServer:
+    derived_from: tosca.nodes.SoftwareComponent
+    capabilities:
+      data_endpoint: tosca.capabilities.Endpoint
+      admin_endpoint: tosca.capabilities.Endpoint.Admin
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types:
+        - tosca.nodes.WebApplication
+  tosca.nodes.Root:
+    description: The TOSCA Node Type all other TOSCA base Node Types derive from
+    attributes:
+      tosca_id:
+        type: string
+      tosca_name:
+        type: string
+      state:
+        type: string
+    capabilities:
+      feature:
+        type: tosca.capabilities.Node
+    requirements:
+    - dependency:
+        capability: tosca.capabilities.Node
+        node: tosca.nodes.Root
+        relationship: tosca.relationships.DependsOn
+        occurrences:
+        - 0
+        - UNBOUNDED
+    interfaces:
+      Standard:
+        type: tosca.interfaces.node.lifecycle.Standard
+  tosca.nodes.Database:
+    derived_from: tosca.nodes.Root
+    properties:
+      name:
+        type: string
+        description: the logical name of the database
+      port:
+        type: integer
+        description: the port the underlying database service will listen to for data
+      user:
+        type: string
+        description: the optional user account name for DB administration
+        required: false
+      password:
+        type: string
+        description: the optional password for the DB user account
+        required: false
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        node: tosca.nodes.DBMS
+        relationship: tosca.relationships.HostedOn
+    capabilities:
+      database_endpoint:
+        type: tosca.capabilities.Endpoint.Database
+  tosca.nodes.Compute:
+    derived_from: tosca.nodes.Root
+    attributes:
+      private_address:
+        type: string
+      public_address:
+        type: string
+      networks:
+        type: map
+        entry_schema:
+          type: tosca.datatypes.network.NetworkInfo
+      ports:
+        type: map
+        entry_schema:
+          type: tosca.datatypes.network.PortInfo
+    requirements:
+    - local_storage:
+        capability: tosca.capabilities.Attachment
+        node: tosca.nodes.BlockStorage
+        relationship: tosca.relationships.AttachesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types:
+        - tosca.nodes.SoftwareComponent
+      endpoint:
+        type: tosca.capabilities.Endpoint.Admin
+      os:
+        type: tosca.capabilities.OperatingSystem
+      scalable:
+        type: tosca.capabilities.Scalable
+      binding:
+        type: tosca.capabilities.network.Bindable
+  tosca.nodes.Container.Runtime:
+    derived_from: tosca.nodes.SoftwareComponent
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+      scalable:
+        type: tosca.capabilities.Scalable
+  org.openecomp.resource.vfc.nodes.heat.contrail.Compute:
+    derived_from: org.openecomp.resource.vfc.nodes.Compute
+    properties:
+      flavor:
+        type: string
+        description: flavor
+        required: false
+        status: SUPPORTED
+      image_name:
+        type: string
+        description: Image name
+        required: true
+        status: SUPPORTED
+      availability_zone:
+        type: string
+        description: Availability zone to create servers in
+        required: false
+        status: SUPPORTED
+      service_type:
+        type: string
+        description: Service type
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - firewall
+          - analyzer
+          - source-nat
+          - loadbalancer
+      availability_zone_enable:
+        type: boolean
+        description: Indicates availability zone is enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      service_template_name:
+        type: string
+        description: Service template name
+        required: false
+        status: SUPPORTED
+      service_instance_name:
+        type: string
+        description: Service instance name
+        required: true
+        status: SUPPORTED
+      service_mode:
+        type: string
+        description: Service mode
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - transparent
+          - in-network
+          - in-network-nat
+    attributes:
+      tenant_id:
+        type: string
+        description: Tenant id of the VM
+        status: SUPPORTED
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+      show:
+        type: string
+        description: All attributes
+        status: SUPPORTED
+      active_vms:
+        type: string
+        description: Number of active VMs
+        status: SUPPORTED
+      virtual_machines:
+        type: string
+        description: VMs of this compute
+        status: SUPPORTED
+      status:
+        type: string
+        description: status of the compute
+        status: SUPPORTED
+  org.openecomp.resource.vfc.nodes.heat.cinder.Volume:
+    derived_from: org.openecomp.resource.vfc.nodes.volume
+    properties:
+      availability_zone:
+        description: The availability zone in which the volume will be created
+        type: string
+        status: SUPPORTED
+        required: false
+      image:
+        description: If specified, the name or ID of the image to create the volume from
+        type: string
+        status: SUPPORTED
+        required: false
+      metadata:
+        description: Key/value pairs to associate with the volume
+        type: map
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      volume_type:
+        description: If specified, the type of volume to use, mapping to a specific backend
+        type: string
+        status: SUPPORTED
+        required: false
+      description:
+        description: A description of the volume
+        type: string
+        status: SUPPORTED
+        required: false
+      device_type:
+        description: Device type
+        type: string
+        status: SUPPORTED
+        required: false
+        constraints:
+        - valid_values:
+          - cdrom
+          - disk
+      disk_bus:
+        description: 'Bus of the device: hypervisor driver chooses a suitable default
+          if omitted'
+        type: string
+        status: SUPPORTED
+        required: false
+        constraints:
+        - valid_values:
+          - ide
+          - lame_bus
+          - scsi
+          - usb
+          - virtio
+      backup_id:
+        description: If specified, the backup to create the volume from
+        type: string
+        status: SUPPORTED
+        required: false
+      source_volid:
+        description: If specified, the volume to use as source
+        type: string
+        status: SUPPORTED
+        required: false
+      boot_index:
+        description: Integer used for ordering the boot disks
+        type: integer
+        status: SUPPORTED
+        required: false
+      size:
+        description: The requested storage size (default unit is MB)
+        type: scalar-unit.size
+        status: SUPPORTED
+        required: false
+        constraints:
+        - greater_or_equal: 1 GB
+      read_only:
+        description: Enables or disables read-only access mode of volume
+        type: boolean
+        status: SUPPORTED
+        required: false
+      name:
+        description: A name used to distinguish the volume
+        type: string
+        status: SUPPORTED
+        required: false
+      scheduler_hints:
+        description: Arbitrary key-value pairs specified by the client to help the Cinder scheduler creating a volume
+        type: map
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      swap_size:
+        description: The size of the swap, in MB
+        type: scalar-unit.size
+        status: SUPPORTED
+        required: false
+      delete_on_termination:
+        description: Indicate whether the volume should be deleted when the server is terminated
+        type: boolean
+        status: SUPPORTED
+        required: false
+      multiattach:
+        description: Whether allow the volume to be attached more than once
+        type: boolean
+        status: SUPPORTED
+        required: false
+    attributes:
+      display_description:
+        description: Description of the volume
+        type: string
+        status: SUPPORTED
+      attachments:
+        description: The list of attachments of the volume
+        type: string
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      encrypted:
+        description: Boolean indicating if the volume is encrypted or not
+        type: boolean
+        status: SUPPORTED
+      show:
+        description: Detailed information about resource
+        type: string
+        status: SUPPORTED
+      created_at:
+        description: The timestamp indicating volume creation
+        type: timestamp
+        status: SUPPORTED
+      display_name:
+        description: Name of the volume
+        type: string
+        status: SUPPORTED
+      metadata_values:
+        description: Key/value pairs associated with the volume in raw dict form
+        type: map
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      bootable:
+        description: Boolean indicating if the volume can be booted or not
+        type: boolean
+        status: SUPPORTED
+      status:
+        description: The current status of the volume
+        type: string
+        status: SUPPORTED
+  org.openecomp.nodes.PortMirroringConfiguration:
+    derived_from: tosca.nodes.Root
+    requirements:
+    - source:
+        capability: org.openecomp.capabilities.PortMirroring
+        occurrences:
+        - 1
+        - UNBOUNDED
+    - collector:
+        capability: org.openecomp.capabilities.PortMirroring
+        occurrences:
+        - 1
+        - 1
+  org.openecomp.resource.vfc.rules.nodes.heat.network.contrail.NetworkRules:
+    derived_from: tosca.nodes.Root
+    properties:
+      entries:
+        type: org.openecomp.datatypes.heat.contrail.network.rule.RuleList
+        description: A symbolic name for this contrail network rule
+        required: false
+        status: SUPPORTED
+      name:
+        type: string
+        description: A symbolic name for this contrail network rule
+        required: false
+        status: SUPPORTED
+    attributes:
+      tenant_id:
+        type: string
+        description: tenant_id
+        status: SUPPORTED
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+      show:
+        type: string
+        description: All attributes.
+        status: SUPPORTED
+      rules:
+        type: list
+        description: List of rules
+        status: SUPPORTED
+        entry_schema:
+          type: string
+    requirements:
+    - network:
+        capability: tosca.capabilities.Attachment
+        node: tosca.nodes.network.Network
+        relationship: org.openecomp.relationships.AttachesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.resource.vl.extVL:
+    derived_from: tosca.nodes.Root
+    description: VF Tenant oam protected network
+    properties:
+      network_type:
+        type: string
+        required: true
+        description: ECOMP supported network types.
+      network_role:
+        type: string
+        required: true
+        description: |
+          Unique label that defines the role that this network performs.   example: vce oam network, vnat sr-iov1 network
+      network_scope:
+        type: string
+        constraints:
+          valid_values:
+          - VF
+          - SERVICE
+          - GLOBAL
+        description: |
+          Uniquely identifies the network scope. Valid values for the network scope   includes: VF - VF-level network. Intra-VF network which connects the VFCs (VMs) inside the VF. SERVICE - Service-level network. Intra-Service network which connects  the VFs within the service GLOBAL - Global network which can be shared by multiple services
+      network_technology:
+        type: string
+        required: true
+        description: ECOMP supported network technology
+      exVL_naming:
+        type: org.openecomp.datatypes.Naming
+        required: true
+      network_homing:
+        type: org.openecomp.datatypes.EcompHoming
+        required: true
+      network_assignments:
+        type: org.openecomp.datatypes.network.NetworkAssignments
+        required: true
+      provider_network:
+        type: org.openecomp.datatypes.network.ProviderNetwork
+        required: true
+      network_flows:
+        type: org.openecomp.datatypes.network.NetworkFlows
+        required: false
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+  org.openecomp.resource.cp.extCP:
+    derived_from: tosca.nodes.Root
+    description: The SDC Connection Point base type all other CP derive from
+    properties:
+      network_role:
+        type: string
+        required: true
+        description: identical to VL network_role
+      order:
+        type: integer
+        required: true
+        description: The order of the CP on the compute instance (e.g. eth2).
+      network_role_tag:
+        type: string
+        required: true
+        description: Must correlate to the set of defined network-role tag identifiers from the associated HEAT template
+      mac_requirements:
+        type: org.openecomp.datatypes.network.MacRequirements
+        required: false
+        description: identifies MAC address assignments to the CP
+      vlan_requirements:
+        type: list
+        entry_schema:
+          type: org.openecomp.datatypes.network.VlanRequirements
+        required: false
+        description: identifies vlan address assignments to the CP
+      ip_requirements:
+        type: list
+        entry_schema:
+          type: org.openecomp.datatypes.network.IpRequirements
+        required: true
+        description: identifies IP requirements to the CP
+      exCP_naming:
+        type: org.openecomp.datatypes.Naming
+      subnetpoolid:
+        type: string
+    requirements:
+    - virtualLink:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    - virtualBinding:
+        capability: tosca.capabilities.network.Bindable
+        relationship: tosca.relationships.network.BindsTo
+    - external_virtualLink:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+        node: org.openecomp.resource.vl.VL
+    capabilities:
+      internal_connectionPoint:
+        type: tosca.capabilities.Node
+        valid_source_type:
+        - tosca.nodes.network.Port
+  org.openecomp.resource.cp.nodes.heat.network.contrail.Port:
+    derived_from: org.openecomp.resource.cp.nodes.network.Port
+    properties:
+      static_routes:
+        type: list
+        description: An ordered list of static routes to be added to this interface
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.contrail.port.StaticRoute
+      virtual_network:
+        type: string
+        description: Virtual Network for this interface
+        required: true
+        status: SUPPORTED
+      static_route:
+        type: boolean
+        description: Static route enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      allowed_address_pairs:
+        type: list
+        description: List of allowed address pair for this interface
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.contrail.AddressPair
+      shared_ip:
+        type: boolean
+        description: Shared ip enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      ip_address:
+        type: string
+        description: IP for this interface
+        required: false
+        status: SUPPORTED
+      interface_type:
+        type: string
+        description: Interface type
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - management
+          - left
+          - right
+          - other
+    attributes:
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+  org.openecomp.nodes.Configuration:
+    derived_from: tosca.nodes.Root
+    properties:
+      type:
+        type: string
+        description: The type of the node, the configuration will be defined for it. Ex. SBC
+        required: false
+      role:
+        type: string
+        description: The role of the node, the configuration will be defined for it. Ex. Active, Standby
+        required: false
+      function:
+        type: string
+        description: The function of the node, the configuration will be defined for it. Ex. NAT Traversal
+        required: false
+  org.openecomp.resource.vl.nodes.network.Network:
+    derived_from: tosca.nodes.network.Network
+    properties:
+      vendor:
+        type: string
+        required: false
+      vl_name:
+        type: string
+        required: false
+    capabilities:
+      end_point:
+        type: tosca.capabilities.Endpoint
+  org.openecomp.resource.vfc.rules.nodes.heat.network.neutron.SecurityRules:
+    derived_from: tosca.nodes.Root
+    properties:
+      description:
+        type: string
+        description: Description of the security group
+        required: false
+        status: SUPPORTED
+      name:
+        type: string
+        description: A symbolic name for this security group, which is not required to be unique.
+        required: false
+        status: SUPPORTED
+      rules:
+        type: list
+        description: List of security group rules
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.SecurityRules.Rule
+    attributes:
+      show:
+        type: string
+        description: Detailed information about resource
+        status: SUPPORTED
+    requirements:
+    - port:
+        capability: tosca.capabilities.Attachment
+        node: org.openecomp.resource.cp.nodes.heat.network.neutron.Port
+        relationship: org.openecomp.relationships.AttachesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.resource.vfc.nodes.heat.nova.Server:
+    derived_from: org.openecomp.resource.vfc.nodes.Compute
+    properties:
+      admin_pass:
+        type: string
+        description: The administrator password for the server
+        required: false
+        status: SUPPORTED
+      availability_zone:
+        type: string
+        description: Availability zone to create servers in
+        required: false
+        status: SUPPORTED
+      image:
+        type: string
+        description: The ID or name of the image to boot with
+        required: false
+        status: SUPPORTED
+      image_update_policy:
+        type: string
+        description: Policy on how to apply an image-id update
+        required: false
+        default: REBUILD
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - REBUILD_PRESERVE_EPHEMERAL
+          - REPLACE
+          - REBUILD
+      metadata:
+        type: json
+        description: Arbitrary JSON metadata to store for this server
+        required: false
+        status: SUPPORTED
+      contrail_service_instance_ind:
+        type: boolean
+        description: Nova server related to service instance indicator
+        required: false
+        default: false
+        status: SUPPORTED
+      user_data_update_policy:
+        type: string
+        description: Policy on how to apply a user_data update
+        required: false
+        default: REPLACE
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - REPLACE
+          - IGNORE
+      flavor_update_policy:
+        type: string
+        description: Policy on how to apply a flavor update
+        required: false
+        default: RESIZE
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - RESIZE
+          - REPLACE
+      user_data:
+        type: string
+        description: User data script to be executed by cloud-init
+        required: false
+        default: ''
+        status: SUPPORTED
+      flavor:
+        type: string
+        description: The ID or name of the flavor to boot onto
+        required: true
+        status: SUPPORTED
+      key_name:
+        type: string
+        description: Name of keypair to inject into the server
+        required: false
+        status: SUPPORTED
+      reservation_id:
+        type: string
+        description: A UUID for the set of servers being requested
+        required: false
+        status: SUPPORTED
+      security_groups:
+        type: list
+        description: List of security group names or IDs
+        required: false
+        default: []
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      config_drive:
+        type: boolean
+        description: enable config drive on the server
+        required: false
+        status: SUPPORTED
+      personality:
+        type: map
+        description: A map of files to create/overwrite on the server upon boot
+        required: false
+        default: {}
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      software_config_transport:
+        type: string
+        description: How the server should receive the metadata required for software configuration
+        required: false
+        default: POLL_SERVER_CFN
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - POLL_SERVER_CFN
+          - POLL_SERVER_HEAT
+          - POLL_TEMP_URL
+          - ZAQAR_MESSAGE
+      user_data_format:
+        type: string
+        description: How the user_data should be formatted for the server
+        required: false
+        default: HEAT_CFNTOOLS
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - SOFTWARE_CONFIG
+          - RAW
+          - HEAT_CFNTOOLS
+      diskConfig:
+        type: string
+        description: Control how the disk is partitioned when the server is created
+        required: false
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - AUTO
+          - MANUAL
+      name:
+        type: string
+        description: Server name
+        required: false
+        status: SUPPORTED
+      scheduler_hints:
+        type: map
+        description: Arbitrary key-value pairs specified by the client to help boot a server
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+    attributes:
+      accessIPv4:
+        type: string
+        description: The manually assigned alternative public IPv4 address of the server
+        status: SUPPORTED
+      addresses:
+        type: map
+        description: A dict of all network addresses with corresponding port_id
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.novaServer.network.AddressInfo
+      accessIPv6:
+        type: string
+        description: The manually assigned alternative public IPv6 address of the server
+        status: SUPPORTED
+      instance_name:
+        type: string
+        description: AWS compatible instance name
+        status: SUPPORTED
+      name:
+        type: string
+        description: Name of the server
+        status: SUPPORTED
+      show:
+        type: string
+        description: Detailed information about resource
+        status: SUPPORTED
+      console_urls:
+        type: string
+        description: URLs of servers consoles
+        status: SUPPORTED
+  org.openecomp.resource.cp.v2.extNeutronCP:
+    derived_from: org.openecomp.resource.cp.v2.extCP
+    properties:
+      port_security_enabled:
+        type: boolean
+        description: Flag to enable/disable port security on the network
+        required: false
+        status: SUPPORTED
+      device_id:
+        type: string
+        description: Device ID of this port
+        required: false
+        status: SUPPORTED
+      qos_policy:
+        type: string
+        description: The name or ID of QoS policy to attach to this network
+        required: false
+        status: SUPPORTED
+      allowed_address_pairs:
+        type: list
+        description: Additional MAC/IP address pairs allowed to pass through the port
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.AddressPair
+      binding:vnic_type:
+        type: string
+        description: The vnic type to be bound on the neutron port
+        required: false
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - macvtap
+          - direct
+          - normal
+      value_specs:
+        type: map
+        description: Extra parameters to include in the request
+        required: false
+        default: {}
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      device_owner:
+        type: string
+        description: Name of the network owning the port
+        required: false
+        status: SUPPORTED
+      network:
+        type: string
+        description: Network this port belongs to
+        required: false
+        status: SUPPORTED
+      replacement_policy:
+        type: string
+        description: Policy on how to respond to a stack-update for this resource
+        required: false
+        default: AUTO
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - REPLACE_ALWAYS
+          - AUTO
+      security_groups:
+        type: list
+        description: List of security group names or IDs
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      fixed_ips:
+        type: list
+        description: Desired IPs for this port
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.neutron.port.FixedIps
+      mac_address:
+        type: string
+        description: MAC address to give to this port
+        required: false
+        status: SUPPORTED
+      admin_state_up:
+        type: boolean
+        description: A boolean value specifying the administrative status of the network
+        required: false
+        default: true
+        status: SUPPORTED
+      name:
+        type: string
+        description: A symbolic name for this port
+        required: false
+        status: SUPPORTED
+    attributes:
+      tenant_id:
+        type: string
+        description: Tenant owning the port
+        status: SUPPORTED
+      network_id:
+        type: string
+        description: Unique identifier for the network owning the port
+        status: SUPPORTED
+      qos_policy_id:
+        type: string
+        description: The QoS policy ID attached to this network
+        status: SUPPORTED
+      show:
+        type: string
+        description: Detailed information about resource
+        status: SUPPORTED
+      subnets:
+        type: list
+        description: Subnets of this network
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      status:
+        type: string
+        description: The status of the network
+        status: SUPPORTED
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        occurrences:
+        - 1
+        - UNBOUNDED
+      binding:
+        type: tosca.capabilities.network.Bindable
+        valid_source_types:
+        - org.openecomp.resource.cp.nodes.heat.network.contrailV2.VLANSubInterface
+        - org.openecomp.resource.cp.nodes.heat.network.v2.contrailV2.VLANSubInterface
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.resource.vfc.nodes.Compute:
+    derived_from: tosca.nodes.Compute
+    capabilities:
+      disk.ephemeral.size:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: GB
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.ephemeral.size
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Size of ephemeral disk
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      instance:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: instance
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: instance
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Existence of instance
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      memory:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: MB
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: memory
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of RAM allocated to the instance
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.iops:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: count/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.iops
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average disk iops
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.read.requests:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.read.requests
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of read requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      cpu.delta:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: ns
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: cpu.delta
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: CPU time used since previous datapoint
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Delta
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.capacity:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.capacity
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The amount of disk that the instance can see
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.read.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.read.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of reads
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.write.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.write.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of writes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.latency:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: ms
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.latency
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average disk latency
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.read.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.read.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of reads
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.usage:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.usage
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The physical size in bytes of the image container on the host
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      cpu_util:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: '%'
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: cpu_util
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average CPU utilization
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.allocation:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.allocation
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The amount of disk per device occupied by the instance on the host machine
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.write.requests.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.write.requests.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of write requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.write.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.write.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of writes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.latency:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: ms
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.latency
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average disk latency per device
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      cpu:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: ns
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: cpu
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: CPU time used
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.write.requests:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.write.requests
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of write requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.write.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.write.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of writes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.read.requests:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.read.requests
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of read requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.root.size:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: GB
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.root.size
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Size of root disk
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.write.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.write.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of writes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      vcpus:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: vcpu
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: vcpus
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of virtual CPUs allocated to the instance
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.iops:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: count/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.iops
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average disk iops per device
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.usage:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.usage
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The physical size in bytes of the image container on the host per device
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.read.requests.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.read.requests.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of read requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.write.requests.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.write.requests.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of write requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.allocation:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.allocation
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The amount of disk occupied by the instance on the host machine
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.read.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.read.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of reads
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.read.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.read.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of reads
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      memory.usage:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: MB
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: memory.usage
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of RAM used by the instance from the amount of its allocated memory
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.device.capacity:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.device.capacity
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: The amount of disk per device that the instance can see
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: disk
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      memory.resident:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: MB
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: memory.resident
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Volume of RAM used by the instance on the physical machine
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      disk.write.requests:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: request
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: disk.write.requests
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of write requests
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: compute
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.cp.v2.extContrailCP:
+    derived_from: org.openecomp.resource.cp.v2.extCP
+    properties:
+      static_routes:
+        type: list
+        description: An ordered list of static routes to be added to this interface
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.contrail.port.StaticRoute
+      virtual_network:
+        type: string
+        description: Virtual Network for this interface
+        required: true
+        status: SUPPORTED
+      static_route:
+        type: boolean
+        description: Static route enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      allowed_address_pairs:
+        type: list
+        description: List of allowed address pair for this interface
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.contrail.AddressPair
+      shared_ip:
+        type: boolean
+        description: Shared ip enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      ip_address:
+        type: string
+        description: IP for this interface
+        required: false
+        status: SUPPORTED
+      interface_type:
+        type: string
+        description: Interface type
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - management
+          - left
+          - right
+          - other
+    attributes:
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+  org.openecomp.resource.abstract.nodes.CR:
+    derived_from: tosca.nodes.Root
+    properties:
+      cr_function:
+        type: string
+      cr_role:
+        type: string
+      cr_type:
+        type: string
+  org.openecomp.resource.vfc.rules.nodes.heat.network.contrailV2.NetworkRules:
+    derived_from: tosca.nodes.Root
+    properties:
+      name:
+        type: string
+        description: A symbolic name for this contrail v2 network rule
+        required: false
+        status: SUPPORTED
+      network_policy_entries:
+        type: org.openecomp.datatypes.heat.contrailV2.network.rule.RuleList
+        description: A symbolic name for this contrail v2 network rule
+        required: false
+        status: SUPPORTED
+    attributes:
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+    requirements:
+    - network:
+        capability: tosca.capabilities.Attachment
+        node: tosca.nodes.network.Network
+        relationship: org.openecomp.relationships.AttachesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.nodes.ForwardingPath:
+    derived_from: tosca.nodes.Root
+    properties:
+      target_range:
+        type: list
+        required: true
+        status: SUPPORTED
+        entry_schema:
+          description: Identifier of the reciever port of the VNF or the service
+          type: integer
+      protocol:
+        type: string
+        description: protocol type that runs on the link
+        required: true
+        status: SUPPORTED
+    requirements:
+    - forwarder:
+        capability: org.openecomp.capabilities.Forwarder
+        relationship: org.openecomp.relationships.ForwardsTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.resource.cp.nodes.heat.contrailV2.VirtualMachineInterface:
+    derived_from: org.openecomp.resource.cp.nodes.network.Port
+    properties:
+      name:
+        description: Virtual Machine Interface name
+        type: string
+        status: SUPPORTED
+        required: false
+      security_group_refs:
+        description: List of security groups.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_network_refs:
+        description: List of virtual networks.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_machine_interface_properties:
+        description: virtual machine interface properties.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.interface.Properties
+        status: SUPPORTED
+        required: false
+      port_tuple_refs:
+        description: List of port tuples.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_machine_interface_mac_addresses:
+        description: List of mac addresses.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_machine_interface_allowed_address_pairs:
+        description: Virtual Machine Interface allowed address pairs.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.AddressPairs
+        status: SUPPORTED
+        required: false
+    attributes:
+      fq_name:
+        description: The FQ name of the Virtual Network.
+        type: string
+        status: SUPPORTED
+      show:
+        description: All attributes.
+        type: string
+        status: SUPPORTED
+    capabilities:
+      binding:
+        type: tosca.capabilities.network.Bindable
+        occurrences:
+        - 0
+        - UNBOUNDED
+        valid_source_types:
+        - org.openecomp.resource.cp.nodes.heat.network.contrailV2.VLANSubInterface
+        - org.openecomp.resource.cp.nodes.heat.network.v2.contrailV2.VLANSubInterface
+  org.openecomp.resource.cp.v2.extVirtualMachineInterfaceCP:
+    derived_from: org.openecomp.resource.cp.v2.extCP
+    properties:
+      name:
+        description: Virtual Machine Interface name
+        type: string
+        status: SUPPORTED
+        required: false
+      security_group_refs:
+        description: List of security groups.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+          required: false
+      virtual_network_refs:
+        description: List of virtual networks.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+          required: false
+      virtual_machine_interface_properties:
+        description: virtual machine interface properties.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.interface.Properties
+        status: SUPPORTED
+        required: false
+      port_tuple_refs:
+        description: List of port tuples.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+          required: false
+      virtual_machine_interface_mac_addresses:
+        description: List of mac addresses.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+          required: false
+      virtual_machine_interface_allowed_address_pairs:
+        description: Virtual Machine Interface allowed address pairs.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.AddressPairs
+        status: SUPPORTED
+        required: false
+    attributes:
+      fq_name:
+        description: The FQ name of the Virtual Network.
+        type: string
+        status: SUPPORTED
+      show:
+        description: All attributes.
+        type: string
+        status: SUPPORTED
+    capabilities:
+      binding:
+        type: tosca.capabilities.network.Bindable
+        occurrences:
+        - 0
+        - UNBOUNDED
+        valid_source_types:
+        - org.openecomp.resource.cp.nodes.heat.network.contrailV2.VLANSubInterface
+        - org.openecomp.resource.cp.nodes.heat.network.v2.contrailV2.VLANSubInterface
+  org.openecomp.nodes.VRFObject:
+    derived_from: tosca.nodes.Root
+    description: provides capability to connect WAN Transport Service Proxy to VRF Entry
+    capabilities:
+      routing_configuration_external:
+        type: org.openecomp.capabilities.RoutingConfiguration
+  org.openecomp.resource.abstract.nodes.AbstractSubstitute:
+    derived_from: tosca.nodes.Root
+    properties:
+      service_template_filter:
+        type: org.openecomp.datatypes.heat.substitution.SubstitutionFiltering
+        description: Substitution Filter
+        required: true
+        status: SUPPORTED
+  org.openecomp.nodes.PortMirroringConfigurationByPolicy:
+    derived_from: tosca.nodes.Root
+    properties:
+      collector_node:
+        type: string
+        description: The name of the Collector Proxy
+        required: true
+      policy_name:
+        type: string
+        description: The name of the policy for selection of the collector interfaces
+        required: true
+      equip_model:
+        type: string
+        description: The name of the equipment type of the collector, i.e. Cisco 4500x
+        required: true
+      equip_vendor:
+        type: string
+        description: The name of the equipment vendor of the collector, i.e. Cisco
+        required: true
+    requirements:
+    - source:
+        capability: org.openecomp.capabilities.PortMirroring
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.cp.nodes.heat.network.neutron.Port:
+    derived_from: org.openecomp.resource.cp.nodes.network.Port
+    properties:
+      port_security_enabled:
+        type: boolean
+        description: Flag to enable/disable port security on the network
+        required: false
+        status: SUPPORTED
+      device_id:
+        type: string
+        description: Device ID of this port
+        required: false
+        status: SUPPORTED
+      qos_policy:
+        type: string
+        description: The name or ID of QoS policy to attach to this network
+        required: false
+        status: SUPPORTED
+      allowed_address_pairs:
+        type: list
+        description: Additional MAC/IP address pairs allowed to pass through the port
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.AddressPair
+      binding:vnic_type:
+        type: string
+        description: The vnic type to be bound on the neutron port
+        required: false
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - macvtap
+          - direct
+          - normal
+      value_specs:
+        type: map
+        description: Extra parameters to include in the request
+        required: false
+        default: {}
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      device_owner:
+        type: string
+        description: Name of the network owning the port
+        required: false
+        status: SUPPORTED
+      network:
+        type: string
+        description: Network this port belongs to
+        required: false
+        status: SUPPORTED
+      replacement_policy:
+        type: string
+        description: Policy on how to respond to a stack-update for this resource
+        required: false
+        default: AUTO
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - REPLACE_ALWAYS
+          - AUTO
+      security_groups:
+        type: list
+        description: List of security group names or IDs
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      fixed_ips:
+        type: list
+        description: Desired IPs for this port
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.neutron.port.FixedIps
+      mac_address:
+        type: string
+        description: MAC address to give to this port
+        required: false
+        status: SUPPORTED
+      admin_state_up:
+        type: boolean
+        description: A boolean value specifying the administrative status of the network
+        required: false
+        default: true
+        status: SUPPORTED
+      name:
+        type: string
+        description: A symbolic name for this port
+        required: false
+        status: SUPPORTED
+    attributes:
+      tenant_id:
+        type: string
+        description: Tenant owning the port
+        status: SUPPORTED
+      network_id:
+        type: string
+        description: Unique identifier for the network owning the port
+        status: SUPPORTED
+      qos_policy_id:
+        type: string
+        description: The QoS policy ID attached to this network
+        status: SUPPORTED
+      show:
+        type: string
+        description: Detailed information about resource
+        status: SUPPORTED
+      subnets:
+        type: list
+        description: Subnets of this network
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      status:
+        type: string
+        description: The status of the network
+        status: SUPPORTED
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        occurrences:
+        - 1
+        - UNBOUNDED
+      binding:
+        type: tosca.capabilities.network.Bindable
+        valid_source_types:
+        - org.openecomp.resource.cp.nodes.heat.network.contrailV2.VLANSubInterface
+        - org.openecomp.resource.cp.nodes.heat.network.v2.contrailV2.VLANSubInterface
+        occurrences:
+        - 0
+        - UNBOUNDED
+  org.openecomp.resource.abstract.nodes.VF:
+    derived_from: tosca.nodes.Root
+    properties:
+      nf_function:
+        type: string
+      nf_role:
+        type: string
+      nf_naming_code:
+        type: string
+      nf_type:
+        type: string
+      nf_naming:
+        type: org.openecomp.datatypes.Naming
+        Default: true
+      availability_zone_max_count:
+        type: integer
+        default: 1
+        constraints:
+        - valid_values:
+          - 0
+          - 1
+          - 2
+      min_instances:
+        type: integer
+      max_instances:
+        type: integer
+      multi_stage_design:
+        type: string
+        default: false
+      sdnc_model_name:
+        type: string
+      sdnc_model_version:
+        type: string
+      sdnc_artifact_name:
+        type: string
+      skip_post_instantiation_configuration:
+        type: boolean
+        default: true
+        constraints:
+        - valid_values:
+          - true
+          - false
+  org.openecomp.resource.vfc.nodes.volume:
+    derived_from: tosca.nodes.BlockStorage
+  org.openecomp.nodes.ServiceProxy:
+    derived_from: tosca.nodes.Root
+  org.openecomp.resource.cp.v2.extCP:
+    derived_from: org.openecomp.resource.cp.nodes.network.Port
+    description: The SDC External Connection Point base type
+    capabilities:
+      port_mirroring:
+        type: org.openecomp.capabilities.PortMirroring
+  org.openecomp.resource.cp.nodes.network.SubInterface:
+    derived_from: tosca.nodes.network.Port
+  org.openecomp.resource.vl.nodes.heat.network.neutron.Net:
+    derived_from: org.openecomp.resource.vl.nodes.network.Network
+    properties:
+      dhcp_agent_ids:
+        type: list
+        description: The IDs of the DHCP agent to schedule the network
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      tenant_id:
+        type: string
+        description: The ID of the tenant which will own the network
+        required: false
+        status: SUPPORTED
+      port_security_enabled:
+        type: boolean
+        description: Flag to enable/disable port security on the network
+        required: false
+        status: SUPPORTED
+      shared:
+        type: boolean
+        description: Whether this network should be shared across all tenants
+        required: false
+        default: false
+        status: SUPPORTED
+      admin_state_up:
+        type: boolean
+        description: A boolean value specifying the administrative status of the network
+        required: false
+        default: true
+        status: SUPPORTED
+      qos_policy:
+        type: string
+        description: The name or ID of QoS policy to attach to this network
+        required: false
+        status: SUPPORTED
+      subnets:
+        type: map
+        description: Network related subnets
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+      value_specs:
+        type: map
+        description: Extra parameters to include in the request
+        required: false
+        default: {}
+        status: SUPPORTED
+        entry_schema:
+          type: string
+    attributes:
+      qos_policy_id:
+        type: string
+        description: The QoS policy ID attached to this network
+        status: SUPPORTED
+      show:
+        type: string
+        description: Detailed information about resource
+        status: SUPPORTED
+      subnets_name:
+        type: list
+        description: Subnets name of this network
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets:
+        type: map
+        description: Network related subnets
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+      mtu:
+        type: scalar-unit.size
+        description: The maximum transmission unit size(in bytes) for the network
+        status: SUPPORTED
+      status:
+        type: string
+        description: The status of the network
+        status: SUPPORTED
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.abstract.nodes.contrail.AbstractSubstitute:
+    derived_from: org.openecomp.resource.abstract.nodes.AbstractSubstitute
+    properties:
+      availability_zone:
+        type: string
+        description: Availability zone to create servers in
+        required: false
+        status: SUPPORTED
+      static_routes_list:
+        type: list
+        description: Static routes enabled
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: boolean
+      availability_zone_enable:
+        type: boolean
+        description: Indicates availability zone is enabled
+        required: false
+        default: false
+        status: SUPPORTED
+      service_template_name:
+        type: string
+        description: Service template name
+        required: false
+        status: SUPPORTED
+      ordered_interfaces:
+        type: boolean
+        description: Indicates if service interface are ordered
+        required: false
+        default: false
+        status: SUPPORTED
+      flavor:
+        type: string
+        description: flavor
+        required: false
+        status: SUPPORTED
+      image_name:
+        type: string
+        description: Image name
+        required: true
+        status: SUPPORTED
+      service_type:
+        type: string
+        description: Service type
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - firewall
+          - analyzer
+          - source-nat
+          - loadbalancer
+      service_interface_type_list:
+        type: list
+        description: List of interface types
+        required: true
+        status: SUPPORTED
+        entry_schema:
+          type: string
+          constraints:
+          - valid_values:
+            - management
+            - left
+            - right
+            - other
+      service_instance_name:
+        type: string
+        description: Service instance name
+        required: true
+        status: SUPPORTED
+      interface_list:
+        type: list
+        description: List of interfaces
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.contrail.InterfaceData
+      service_mode:
+        type: string
+        description: Service mode
+        required: true
+        status: SUPPORTED
+        constraints:
+        - valid_values:
+          - transparent
+          - in-network
+          - in-network-nat
+      shared_ip_list:
+        type: list
+        description: Shared ips enabled
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: boolean
+    attributes:
+      tenant_id:
+        type: string
+        description: Tenant id of the Service Instance
+        status: SUPPORTED
+      fq_name:
+        type: string
+        description: The FQ name of the service instance
+        status: SUPPORTED
+      service_template_name:
+        type: string
+        description: Service Template of the Service Instance
+        status: SUPPORTED
+      show:
+        type: string
+        description: All attributes
+        status: SUPPORTED
+      active_vms:
+        type: string
+        description: Number of service VMs active for this Service Instance
+        status: SUPPORTED
+      service_instance_name:
+        type: string
+        description: The name of the service instance
+        status: SUPPORTED
+      virtual_machines:
+        type: string
+        description: Service VMs for the Service Instance
+        status: SUPPORTED
+      status:
+        type: string
+        description: Status of the service instance
+        status: SUPPORTED
+  org.openecomp.resource.vl.nodes.heat.network.contrailV2.VirtualNetwork:
+    derived_from: org.openecomp.resource.vl.nodes.network.Network
+    properties:
+      network_ipam_refs_data:
+        type: list
+        description: IPAM references Data
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.contrailV2.virtual.network.rule.IpamRefData
+      network_policy_refs_data:
+        type: list
+        description: Policy references data
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.contrailV2.virtual.network.rule.RefData
+      network_ipam_refs:
+        type: list
+        description: IPAM references
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      network_policy_refs:
+        type: list
+        description: Policy references
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets:
+        type: map
+        description: Network related subnets
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+    attributes:
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+      subnets_name:
+        type: list
+        description: Subnets name of this network
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets_show:
+        type: map
+        description: Detailed information about each subnet
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets:
+        type: map
+        description: Network related subnets
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.abstract.nodes.PNF:
+    derived_from: tosca.nodes.Root
+    properties:
+      nf_function:
+        type: string
+      nf_role:
+        type: string
+      nf_type:
+        type: string
+      software_versions:
+        type: list
+        entry_schema:
+          type: string
+      sdnc_model_name:
+        type: string
+      sdnc_model_version:
+        type: string
+      sdnc_artifact_name:
+        type: string
+      skip_post_instantiation_configuration:
+        type: boolean
+        default: true
+        constraints:
+        - valid_values:
+          - true
+          - false
+  org.openecomp.resource.abstract.nodes.service:
+    derived_from: tosca.nodes.Root
+  org.openecomp.resource.cp.nodes.network.v2.SubInterface:
+    derived_from: tosca.nodes.Root
+    properties:
+      ip_address:
+        description: Allow the user to set a fixed IP address. Note that this address is a request to the provider which they will attempt to fulfill but may not be able to dependent on the network the port is associated with.
+        type: string
+        required: false
+      order:
+        description: 'The order of the NIC on the compute instance (e.g. eth2). Note:
+          when binding more than one port to a single compute (aka multi vNICs) and
+          ordering is desired, it is *mandatory* that all ports will be set with an
+          order value and. The order values must represent a positive, arithmetic
+          progression that starts with 0 (e.g. 0, 1, 2, ..., n).'
+        type: integer
+        default: 0
+        required: false
+        constraints:
+        - greater_or_equal: 0
+      is_default:
+        description: Set is_default=true to apply a default gateway route on the running compute instance to the associated network gateway. Only one port that is associated to single compute node can set as default=true.
+        type: boolean
+        default: false
+        required: false
+      ip_range_start:
+        description: Defines the starting IP of a range to be allocated for the compute instances that are associated by this Port. Without setting this property the IP allocation is done from the entire CIDR block of the network.
+        type: string
+        required: false
+      ip_range_end:
+        description: Defines the ending IP of a range to be allocated for the compute instances that are associated by this Port. Without setting this property the IP allocation is done from the entire CIDR block of the network.
+        type: string
+        required: false
+    attributes:
+      ip_address:
+        description: The IP address would be assigned to the associated compute instance.
+        type: string
+    requirements:
+    - subinterface_link:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    - binding:
+        capability: tosca.capabilities.network.Bindable
+        relationship: tosca.relationships.network.BindsTo
+  org.openecomp.resource.cp.nodes.heat.network.contrailV2.VLANSubInterface:
+    derived_from: org.openecomp.resource.cp.nodes.network.SubInterface
+    properties:
+      virtual_machine_interface_refs:
+        description: List of virtual machine interface.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      name:
+        description: Virtual Machine Sub Interface VLAN name
+        type: string
+        status: SUPPORTED
+        required: false
+      virtual_network_refs:
+        description: List of virtual networks.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_machine_interface_properties:
+        description: virtual machine interface properties.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.Properties
+        status: SUPPORTED
+        required: false
+      virtual_machine_interface_allowed_address_pairs:
+        description: Virtual Machine Sub Interface allowed address pairs.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.AddressPairs
+        status: SUPPORTED
+        required: false
+      virtual_machine_interface_mac_addresses:
+        description: List of mac addresses.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.MacAddress
+        status: SUPPORTED
+        required: false
+      security_group_refs:
+        description: List of security groups.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      port_tuple_refs:
+        description: List of port tuples.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+    attributes:
+      fq_name:
+        description: The FQ name of the Virtual Network.
+        type: string
+        status: SUPPORTED
+      show:
+        description: All attributes.
+        type: string
+        status: SUPPORTED
+    requirements:
+    - binding:
+        capability: tosca.capabilities.network.Bindable
+        node: org.openecomp.resource.cp.nodes.network.Port
+        relationship: tosca.relationships.network.BindsTo
+        occurrences:
+        - 1
+        - 1
+  org.openecomp.nodes.FabricConfiguration:
+    derived_from: org.openecomp.nodes.Configuration
+    requirements:
+    - fabric_configuration_monitoring:
+        capability: org.openecomp.capabilities.FabricConfiguration
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.vl.nodes.heat.network.contrail.VirtualNetwork:
+    derived_from: org.openecomp.resource.vl.nodes.network.Network
+    properties:
+      shared:
+        type: string
+        description: Is virtual network shared
+        required: false
+        status: SUPPORTED
+      forwarding_mode:
+        type: string
+        description: forwarding mode of the virtual network
+        required: false
+        status: SUPPORTED
+      external:
+        type: string
+        description: Is virtual network external
+        required: false
+        status: SUPPORTED
+      allow_transit:
+        type: string
+        description: Whether this network should be transitive.
+        required: false
+        status: SUPPORTED
+      flood_unknown_unicast:
+        type: string
+        description: flood L2 packets on network
+        required: false
+        status: SUPPORTED
+      route_targets:
+        type: list
+        description: route targets associated with the virtual network
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets:
+        type: map
+        description: Network related subnets
+        required: false
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+    attributes:
+      fq_name:
+        type: string
+        description: fq_name
+        status: SUPPORTED
+      show:
+        type: string
+        description: All attributes.
+        status: SUPPORTED
+      subnets_name:
+        type: list
+        description: Subnets name of this network
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets_show:
+        type: map
+        description: Detailed information about each subnet
+        status: SUPPORTED
+        entry_schema:
+          type: string
+      subnets:
+        type: map
+        description: Network related subnets
+        status: SUPPORTED
+        entry_schema:
+          type: org.openecomp.datatypes.heat.network.neutron.Subnet
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.nodes.VLANNetworkReceptor:
+    derived_from: tosca.nodes.Root
+    capabilities:
+      routing_configuration_internal:
+        type: org.openecomp.capabilities.RoutingConfiguration
+    requirements:
+    - vlan_assignment:
+        occurrences:
+        - 1
+        - UNBOUNDED
+        capability: org.openecomp.capabilities.VLANAssignment
+        relationship: org.openecomp.relationships.AssignsTo
+  org.openecomp.resource.vl.ELine:
+    derived_from: org.openecomp.resource.vl.VL
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+        occurrences:
+        - 0
+        - 2
+  org.openecomp.resource.cp.nodes.heat.network.v2.contrailV2.VLANSubInterface:
+    derived_from: org.openecomp.resource.cp.nodes.network.v2.SubInterface
+    properties:
+      virtual_machine_interface_refs:
+        description: List of virtual machine interface.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      name:
+        description: Virtual Machine Sub Interface VLAN name
+        type: string
+        status: SUPPORTED
+        required: false
+      virtual_network_refs:
+        description: List of virtual networks.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      virtual_machine_interface_properties:
+        description: virtual machine interface properties.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.Properties
+        status: SUPPORTED
+        required: false
+      virtual_machine_interface_allowed_address_pairs:
+        description: Virtual Machine Sub Interface allowed address pairs.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.AddressPairs
+        status: SUPPORTED
+        required: false
+      virtual_machine_interface_mac_addresses:
+        description: List of mac addresses.
+        type: org.openecomp.datatypes.heat.contrailV2.virtual.machine.subInterface.MacAddress
+        status: SUPPORTED
+        required: false
+      security_group_refs:
+        description: List of security groups.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+      port_tuple_refs:
+        description: List of port tuples.
+        type: list
+        status: SUPPORTED
+        entry_schema:
+          type: string
+        required: false
+    attributes:
+      fq_name:
+        description: The FQ name of the Virtual Network.
+        type: string
+        status: SUPPORTED
+      show:
+        description: All attributes.
+        type: string
+        status: SUPPORTED
+    requirements:
+    - binding:
+        capability: tosca.capabilities.network.Bindable
+        node: org.openecomp.resource.cp.nodes.network.Port
+        relationship: tosca.relationships.network.BindsTo
+        occurrences:
+        - 1
+        - 1
+  org.openecomp.resource.vl.VL:
+    derived_from: tosca.nodes.network.Network
+    properties:
+      vendor:
+        type: string
+        required: false
+      vl_name:
+        type: string
+        required: false
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+      end_point:
+        type: tosca.capabilities.Endpoint
+  org.openecomp.resource.abstract.nodes.MultiFlavorVFC:
+    derived_from: org.openecomp.resource.abstract.nodes.VFC
+    properties:
+      images:
+        type: map
+        entry_schema:
+          type: org.openecomp.datatypes.ImageInfo
+        required: false
+  org.openecomp.resource.abstract.nodes.VnfConfiguration:
+    derived_from: tosca.nodes.Root
+    properties:
+      allowed_flavors:
+        description: a collection of all flavor valuesets available for a given VFC
+        type: map
+        entry_schema:
+          type: org.openecomp.datatypes.flavors.DeploymentFlavor
+  org.openecomp.nodes.VRFEntry:
+    derived_from: tosca.nodes.Root
+    requirements:
+    - routing_configuration_internal:
+        occurrences:
+        - 1
+        - UNBOUNDED
+        capability: org.openecomp.capabilities.RoutingConfiguration
+        relationship: org.openecomp.relationships.RoutesTo
+    - routing_configuration_external:
+        occurrences:
+        - 1
+        - UNBOUNDED
+        capability: org.openecomp.capabilities.RoutingConfiguration
+        relationship: org.openecomp.relationships.RoutesTo
+  org.openecomp.resource.abstract.nodes.VFC:
+    derived_from: org.openecomp.resource.abstract.nodes.AbstractSubstitute
+    properties:
+      nfc_function:
+        type: string
+      high_availablity:
+        type: string
+        description: high_availablity
+        required: false
+        status: SUPPORTED
+      vm_image_name:
+        type: string
+        description: Master image_name volume id
+        required: true
+        status: SUPPORTED
+      vm_flavor_name:
+        type: string
+        description: Master image_name volume id
+        required: true
+        status: SUPPORTED
+      nfc_naming_code:
+        type: string
+        description: nfc code for instance naming
+        required: false
+        status: SUPPORTED
+      vm_type_tag:
+        type: string
+        description: vm type based on naming Convention
+        required: false
+        status: SUPPORTED
+      nfc_naming:
+        type: org.openecomp.datatypes.Naming
+        description: vfc naming
+      min_instances:
+        type: integer
+        description: Minimum number of VFC Instances
+        required: false
+        default: 0
+        status: SUPPORTED
+        constraints:
+        - greater_or_equal: 0
+      max_instances:
+        type: integer
+        description: Maximum number of VFC Instances
+        required: false
+        status: SUPPORTED
+        constraints:
+        - greater_or_equal: 1
+  org.openecomp.resource.vl.internalVL:
+    derived_from: tosca.nodes.network.Network
+    description: The AT&T internal (VF-level) Virtual Link
+  org.openecomp.resource.cp.nodes.network.Port:
+    derived_from: tosca.nodes.network.Port
+    properties:
+      network_role:
+        type: string
+        required: true
+        description: identical to VL network_role
+      order:
+        type: integer
+        required: true
+        description: The order of the CP on the compute instance (e.g. eth2).
+      network_role_tag:
+        description: Must correlate to the set of defined network-role tag identifiers from the associated HEAT template
+        type: string
+        required: true
+      mac_requirements:
+        description: identifies MAC address assignments to the CP
+        type: org.openecomp.datatypes.network.MacRequirements
+        required: false
+      vlan_requirements:
+        description: identifies vlan address assignments to the CP
+        type: list
+        entry_schema:
+          type: org.openecomp.datatypes.network.VlanRequirements
+        required: false
+      ip_requirements:
+        description: identifies IP requirements to the CP
+        type: list
+        entry_schema:
+          type: org.openecomp.datatypes.network.IpRequirements
+        required: true
+      exCP_naming:
+        type: org.openecomp.datatypes.Naming
+      subnetpoolid:
+        type: string
+      subinterface_indicator:
+        description: identifies if Port is having Sub Interface
+        type: boolean
+        required: false
+        default: false
+      related_networks:
+        type: list
+        description: Related Networks List.
+        required: false
+        entry_schema:
+          type: org.openecomp.datatypes.network.RelatedNetworksAssignments
+    capabilities:
+      network.incoming.packets.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: packet/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.incoming.packets.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of incoming packets
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      forwarder:
+        type: org.openecomp.capabilities.Forwarder
+      network.outgoing.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.outgoing.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of outgoing bytes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.outgoing.packets.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: packet/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.outgoing.packets.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of outgoing packets
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.outpoing.packets:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: packet
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.outpoing.packets
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of outgoing packets
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.incoming.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.incoming.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of incoming bytes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.incoming.bytes:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.incoming.bytes
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of incoming bytes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.outgoing.bytes.rate:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: B/s
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.outgoing.bytes.rate
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Average rate of outgoing bytes
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Gauge
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+      network.incoming.packets:
+        type: org.openecomp.capabilities.metric.Ceilometer
+        description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+        properties:
+          unit:
+            type: string
+            description: Unit of the metric value
+            required: true
+            default: packet
+            status: SUPPORTED
+          name:
+            type: string
+            description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+            required: true
+            default: network.incoming.packets
+            status: SUPPORTED
+          description:
+            type: string
+            description: Description of the metric
+            required: false
+            default: Number of incoming packets
+            status: SUPPORTED
+          type:
+            type: string
+            description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+            required: true
+            default: Cumulative
+            status: SUPPORTED
+          category:
+            type: string
+            description: Category of the metric, for an example, compute, disk, network, storage and etc.
+            required: false
+            default: network
+            status: SUPPORTED
+        occurrences:
+        - 1
+        - UNBOUNDED
+  tosca.nodes.nfv.Vdu.VirtualBlockStorage:
+    derived_from: tosca.nodes.Root
+    description: This node type describes the specifications of requirements related to virtual block storage resources
+    properties:
+      virtual_block_storage_data:
+        type: tosca.datatypes.nfv.VirtualBlockStorageData
+        description: Describes the block storage characteristics.
+        required: true
+      sw_image_data:
+        type: tosca.datatypes.nfv.SwImageData
+        description: Defines information related to a SwImage artifact used by this Vdu.Compute node.
+        required: false
+    capabilities:
+      virtual_storage:
+        type: tosca.capabilities.nfv.VirtualStorage
+        description: Defines the capabilities of virtual_storage.
+  tosca.nodes.nfv.Vdu.Compute:
+    derived_from: tosca.nodes.Root
+    description: Describes the virtual compute part of a VDU which is a construct   supporting the description of the deployment and operational behavior of a VNFC
+    properties:
+      name:
+        type: string
+        description: Human readable name of the VDU
+        required: true
+      description:
+        type: string
+        description: Human readable description of the VDU
+        required: true
+      boot_order:
+        type: list
+        description: References a node template name from which a valid boot device is created
+        required: false
+        entry_schema:
+          type: string
+      nfvi_constraints:
+        type: list
+        description: Describes constraints on the NFVI for the VNFC instance(s) created from this VDU
+        required: false
+        entry_schema:
+          type: string
+      monitoring_parameters:
+        type: list
+        description: Describes monitoring parameters applicable to a VNFC instantiated from this VDU
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.VnfcMonitoringParameter
+      vdu_profile:
+        type: tosca.datatypes.nfv.VduProfile
+        description: Defines additional instantiation data for the VDU.Compute node
+        required: true
+      sw_image_data:
+        type: tosca.datatypes.nfv.SwImageData
+        description: Defines information related to a SwImage artifact used by this Vdu.Compute node
+        required: false
+      boot_data:
+        type: string
+        description: Contains a string or a URL to a file contained in the VNF package used to customize a virtualised compute resource at boot time. The bootData may contain variable parts that are replaced by deployment specific values before being sent to the VIM.
+        required: false
+      inject_files:
+        type: tosca.datatypes.nfv.injectFile
+        required: false
+      meta_data:
+        type: map
+        entry_schema:
+          type: string
+        required: false
+    capabilities:
+      virtual_compute:
+        type: tosca.capabilities.nfv.VirtualCompute
+        occurrences:
+        - 1
+        - 1
+      virtual_binding:
+        type: tosca.capabilities.nfv.VirtualBindable
+        occurrences:
+        - 1
+        - UNBOUNDED
+    requirements:
+    - virtual_storage:
+        capability: tosca.capabilities.nfv.VirtualStorage
+        relationship: tosca.relationships.nfv.AttachesTo
+        occurrences:
+        - 0
+        - UNBOUNDED
+  tosca.nodes.nfv.VDU:
+    derived_from: tosca.nodes.SoftwareComponent
+    capabilities:
+      Virtualbinding:
+        type: tosca.capabilities.nfv.VirtualBindable
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        node: tosca.nodes.Compute
+        relationship: tosca.relationships.HostedOn
+  tosca.nodes.nfv.Vdu.VirtualFileStorage:
+    derived_from: tosca.nodes.Root
+    description: This node type describes the specifications of requirements related to virtual file storage resources
+    properties:
+      virtual_file_storage_data:
+        type: tosca.datatypes.nfv.VirtualFileStorageData
+        description: Describes the file  storage characteristics.
+        required: true
+    capabilities:
+      virtual_storage:
+        type: tosca.capabilities.nfv.VirtualStorage
+        description: Defines the capabilities of virtual_storage.
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+  tosca.nodes.nfv.VduCp:
+    derived_from: tosca.nodes.nfv.Cp
+    description: describes network connectivity between a VNFC instance based on this VDU and an internal VL
+    properties:
+      bitrate_requirement:
+        type: integer
+        description: Bitrate requirement in bit per second on this connection point
+        required: false
+        constraints:
+        - greater_or_equal: 0
+      virtual_network_interface_requirements:
+        type: list
+        description: Specifies requirements on a virtual network interface realising the CPs instantiated from this CPD
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.VirtualNetworkInterfaceRequirements
+      order:
+        type: integer
+        description: The order of the NIC on the compute instance (e.g.eth2)
+        required: false
+        constraints:
+        - greater_or_equal: 0
+      vnic_type:
+        type: string
+        description: Describes the type of the virtual network interface realizing the CPs instantiated from this CPD
+        required: false
+        constraints:
+        - valid_values:
+          - direct
+          - normal
+          - virtio
+          - direct-physical
+      vnic_name:
+        type: string
+        required: false
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+    - virtual_binding:
+        capability: tosca.capabilities.nfv.VirtualBindable
+        relationship: tosca.relationships.nfv.VirtualBindsTo
+        node: tosca.nodes.nfv.Vdu.Compute
+  tosca.nodes.nfv.ext.zte.VDU:
+    derived_from: tosca.nodes.Root
+    properties:
+      manual_scale_select_vim:
+        type: boolean
+        required: false
+      vdu_type:
+        type: string
+        required: false
+      watchdog:
+        type: tosca.datatypes.nfv.ext.zte.WatchDog
+        required: false
+      name:
+        type: string
+        required: false
+      local_affinity_antiaffinity_rule:
+        type: tosca.datatypes.nfv.ext.LocalAffinityOrAntiAffinityRule
+        required: false
+      support_scaling:
+        type: boolean
+        required: false
+      storage_policy:
+        type: string
+        required: false
+      key_vdu:
+        type: boolean
+        required: false
+      location_info:
+        type: tosca.datatypes.nfv.ext.LocationInfo
+        required: false
+      inject_data_list:
+        type: list
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.ext.InjectData
+    requirements:
+    - guest_os:
+        capability: tosca.capabilities.nfv.ext.GuestOs
+        occurrences:
+        - 0
+        - UNBOUNDED
+    - local_storage:
+        capability: tosca.capabilities.nfv.ext.LocalAttachment
+        occurrences:
+        - 0
+        - UNBOUNDED
+    - volume_storage:
+        capability: tosca.capabilities.Attachment
+        occurrences:
+        - 0
+        - UNBOUNDED
+    - dependency:
+        capability: tosca.capabilities.Node
+        occurrences:
+        - 0
+        - UNBOUNDED
+    capabilities:
+      scalable:
+        type: tosca.capabilities.Scalable
+      monitoring_parameter:
+        type: tosca.capabilities.nfv.Metric
+      nfv_compute:
+        type: tosca.capabilities.nfv.ext.Compute.Container.Architecture
+      virtualbinding:
+        type: tosca.capabilities.nfv.VirtualBindable
+  tosca.nodes.nfv.ext.zte.VL:
+    derived_from: tosca.nodes.Root
+    properties:
+      segmentation_id:
+        type: string
+        required: false
+      network_name:
+        type: string
+        required: false
+      is_predefined:
+        type: boolean
+        required: false
+      mtu:
+        type: integer
+        required: false
+      dns_nameservers:
+        type: list
+        required: false
+        entry_schema:
+          type: string
+      physical_network:
+        type: string
+        required: false
+      dhcp_enabled:
+        type: boolean
+        required: false
+      network_id:
+        type: string
+        required: false
+      host_routes:
+        type: list
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.ext.HostRouteInfo
+      ip_version:
+        type: integer
+        required: false
+      vendor:
+        type: string
+        required: false
+      name:
+        type: string
+        required: false
+      start_ip:
+        type: string
+        required: false
+      vlan_transparent:
+        type: boolean
+        required: false
+      cidr:
+        type: string
+        required: false
+      gateway_ip:
+        type: string
+        required: false
+      network_type:
+        type: string
+        required: false
+      end_ip:
+        type: string
+        required: false
+      location_info:
+        type: tosca.datatypes.nfv.ext.LocationInfo
+        required: false
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.nfv.VirtualLinkable
+  tosca.nodes.nfv.VnfExtCp:
+    derived_from: tosca.nodes.nfv.Cp
+    description: Describes a logical external connection point, exposed by the VNF enabling connection with an external Virtual Link
+    properties:
+      virtual_network_interface_requirements:
+        type: list
+        description: The actual virtual NIC requirements that is been assigned when instantiating the connection point
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.VirtualNetworkInterfaceRequirements
+    requirements:
+    - external_virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+    - internal_virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+  tosca.nodes.nfv.Vdu.VirtualStorage:
+    derived_from: tosca.nodes.Root
+    properties:
+      type_of_storage:
+        type: string
+        constraints:
+        - valid_values:
+          - volume
+          - object
+          - root
+          - block
+        required: true
+      size_of_storage:
+        type: scalar-unit.size
+        required: true
+      vdu_storage_requirements:
+        type: map
+        entry_schema:
+          type: string
+        required: false
+      rdma_enabled:
+        type: boolean
+        required: false
+    capabilities:
+      virtual_storage:
+        type: tosca.capabilities.nfv.VirtualStorage
+  tosca.nodes.nfv.ext.LocalStorage:
+    derived_from: tosca.nodes.Root
+    properties:
+      size:
+        type: string
+        required: false
+      disk_type:
+        type: string
+        required: false
+    capabilities:
+      local_attachment:
+        type: tosca.capabilities.nfv.ext.LocalAttachment
+  org.openecomp.resource.cp.PonUni:
+    derived_from: tosca.nodes.nfv.VduCp
+    properties:
+      expected_ont_id:
+        type: string
+        required: true
+      cvlan_id:
+        type: string
+        required: true
+      olt_name:
+        type: string
+        required: true
+      olt_pon_port:
+        type: string
+        required: true
+      olt_pon_slot:
+        type: string
+        required: true
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+        node: tosca.nodes.nfv.VnfVirtualLink
+    - virtual_binding:
+        capability: tosca.capabilities.nfv.VirtualBindable
+        relationship: tosca.relationships.nfv.VirtualBindsTo
+        node: org.openecomp.resource.vfc.accessConnectivity
+  tosca.nodes.nfv.Vdu.VirtualObjectStorage:
+    derived_from: tosca.nodes.Root
+    description: This node type describes the specifications of requirements related to virtual object storage resources
+    properties:
+      virtual_object_storage_data:
+        type: tosca.datatypes.nfv.VirtualObjectStorageData
+        description: Describes the object  storage characteristics.
+        required: true
+    capabilities:
+      virtual_storage:
+        type: tosca.capabilities.nfv.VirtualStorage
+        description: Defines the capabilities of virtual_storage.
+  tosca.nodes.nfv.ext.ImageFile:
+    derived_from: tosca.nodes.Root
+    properties:
+      file_url:
+        type: string
+        required: false
+      container_type:
+        type: string
+        required: false
+      name:
+        type: string
+        required: false
+      disk_format:
+        type: string
+        required: false
+      version:
+        type: string
+        required: false
+    capabilities:
+      guest_os:
+        type: tosca.capabilities.nfv.ext.GuestOs
+      image_fle:
+        type: tosca.capabilities.nfv.ext.ImageFile
+  tosca.nodes.nfv.VnfVirtualLinkDesc:
+    derived_from: tosca.nodes.Root
+    properties:
+      connectivity_type:
+        type: tosca.datatypes.nfv.ConnectivityType
+        required: true
+      description:
+        type: string
+        required: false
+      test_access:
+        type: list
+        entry_schema:
+          type: string
+        required: false
+      vl_flavours:
+        type: map
+        entry_schema:
+          type: tosca.datatypes.nfv.VlFlavour
+        required: true
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.nfv.VirtualLinkable
+  org.openecomp.resource.vl.overlaytunnel:
+    derived_from: tosca.nodes.Root
+    description: This entity represents abstract overlay tunnel end point.
+    properties:
+      id:
+        type: string
+        description: Identifier of the Tunnel Endpoint node.
+        required: false
+      template_name:
+        type: string
+        required: false
+      version:
+        type: string
+        required: false
+      name:
+        type: string
+        description: Overlay tunnel name used by for reference by the administrator.
+        required: false
+      description:
+        type: string
+        description: Additional comments/information about overlay tunnel.
+        required: false
+      tunnelType:
+        type: string
+        constraints:
+        - valid_values:
+          - L3-DCI
+          - L2-DCI
+        description: type defines if the overlay tunnel is L3-DCI tunnel or L2-DCI tunnel.
+        required: true
+      site1_id:
+        type: string
+        description: Identifier of first DCI overlay tunnel endpoint. This could be IP address of domain controller.
+        required: true
+      site1_description:
+        type: string
+        description: Additional comments/information about overlay tunnel. Description can also be used to identify domain controller.
+        required: false
+      site1_networkName:
+        type: string
+        description: Name of the network that is being associated with overlay tunnel.
+        required: true
+      site1_routerId:
+        type: string
+        description: Identifier of router connected to L3 tunnel end point, while configuring L3-DCI tunnel.
+        required: false
+      site1_importRT1:
+        type: string
+        description: List of Route targets imported by the local router.
+        required: false
+      site1_exportRT1:
+        type: string
+        description: List of Route targets exported by the local router.
+        required: false
+      site1_vni:
+        type: integer
+        description: VXLAN ID
+        required: false
+      site1_fireWallEnable:
+        type: boolean
+        required: false
+        description: Identifies if a firewall exists in the path of overlay tunnel.
+        default: false
+      site1_fireWallId:
+        type: string
+        description: Identifier of Firewall that is in overlay tunnel path
+        required: false
+      site1_localNetworkAll:
+        type: boolean
+        description: Identifies whether all the local networks associate with the tunnel or not.
+        required: false
+        default: 'false'
+      site2_id:
+        type: string
+        description: Identifier of second DCI overlay tunnel endpoint. This could be IP address of domain controller.
+        required: true
+      site2_description:
+        type: string
+        description: Additional comments/information about overlay tunnel. Description can also be used to identify domain controller.
+        required: false
+      site2_networkName:
+        type: string
+        description: Name of the network that is being associated with overlay tunnel.
+        required: true
+      site2_routerId:
+        type: string
+        description: Identifier of router connected to L3 tunnel end point, while configuring L3-DCI tunnel.
+        required: false
+      site2_importRT1:
+        type: string
+        description: List of Route targets imported by the local router.
+        required: false
+      site2_exportRT1:
+        type: string
+        description: List of Route targets exported by the local router.
+        required: false
+      site2_vni:
+        type: integer
+        description: VXLAN ID
+        required: false
+      site2_fireWallEnable:
+        type: boolean
+        required: false
+        description: Identifies if a firewall exists in the path of overlay tunnel.
+        default: false
+      site2_fireWallId:
+        type: string
+        description: Identifier of Firewall that is in overlay tunnel path
+        required: false
+      site2_localNetworkAll:
+        type: boolean
+        description: Identifies whether all the local networks associate with the tunnel or not.
+        required: false
+        default: 'false'
+    requirements:
+    - virtualLink:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+  tosca.nodes.nfv.VnfVirtualLink:
+    derived_from: tosca.nodes.Root
+    description: Describes the information about an internal VNF VL
+    properties:
+      connectivity_type:
+        type: tosca.datatypes.nfv.ConnectivityType
+        description: Specifies the protocol exposed by the VL and the flow pattern supported by the VL
+        required: true
+      description:
+        type: string
+        description: Provides human-readable information on the purpose of the VL
+        required: false
+      test_access:
+        type: list
+        description: Test access facilities available on the VL
+        required: false
+        entry_schema:
+          type: string
+          constraints:
+          - valid_values:
+            - passive_monitoring
+            - active_loopback
+      vl_profile:
+        type: tosca.datatypes.nfv.VlProfile
+        description: Defines additional data for the VL
+        required: true
+      monitoring_parameters:
+        type: list
+        description: Describes monitoring parameters applicable to the VL
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.VirtualLinkMonitoringParameter
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.nfv.VirtualLinkable
+  org.openecomp.resource.cp.OltNni:
+    derived_from: tosca.nodes.nfv.VduCp
+    properties:
+      olt_name:
+        type: string
+        required: true
+      olt_nni_port:
+        type: string
+        required: true
+      olt_nni_slot:
+        type: string
+        required: true
+      svlan:
+        type: string
+        required: true
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+        node: tosca.nodes.nfv.VnfVirtualLink
+    - virtual_binding:
+        capability: tosca.capabilities.nfv.VirtualBindable
+        relationship: tosca.relationships.nfv.VirtualBindsTo
+        node: org.openecomp.resource.vfc.accessConnectivity
+  org.openecomp.resource.vfc.AllottedResource:
+    derived_from: tosca.nodes.Root
+    description: ECOMP Allotted Resource base type all other allotted resources node types derive from
+    properties:
+      providing_service_uuid:
+        type: string
+        required: true
+        description: The depending service uuid in order to map the allotted resource to the specific service version
+      providing_service_invariant_uuid:
+        type: string
+        required: true
+        description: The depending service invariant uuid in order to map the allotted resource to the specific service version
+      providing_service_name:
+        type: string
+        required: true
+        description: The depending service name in order to map the allotted resource to the specific service version
+      role:
+        type: string
+        required: true
+        description: Unique label that defines the role that this allotted resource performs
+      min_instances:
+        type: integer
+        default: 1
+      max_instances:
+        type: integer
+        default: 1
+      target_network_role:
+        type: string
+        required: true
+        description: Target network role
+    requirements:
+    - service_dependency:
+        capability: org.openecomp.capabilities.AllottedResource
+        relationship: tosca.relationships.DependsOn
+  org.openecomp.resource.vl.GenericNeutronNet:
+    derived_from: org.openecomp.resource.vl.extVL
+    description: Generic Neutron Network
+    properties:
+      network_role:
+        type: string
+        description: |
+          Unique label that defines the role that this network performs. example: vce oam network, vnat sr-iov1 network
+      network_assignments:
+        type: org.openecomp.datatypes.network.NetworkAssignments
+      network_flows:
+        type: org.openecomp.datatypes.network.NetworkFlows
+      network_scope:
+        type: string
+      network_ecomp_naming:
+        type: org.openecomp.datatypes.EcompNaming
+      network_type:
+        type: string
+        description: ECOMP supported network types.
+        default: NEUTRON
+      provider_network:
+        type: org.openecomp.datatypes.network.ProviderNetwork
+      network_technology:
+        type: string
+        description: ECOMP supported network technology
+        default: NEUTRON
+      network_homing:
+        type: org.openecomp.datatypes.EcompHoming
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+        occurrences:
+        - 1
+        - UNBOUNDED
+  org.openecomp.resource.cp.OntNni:
+    derived_from: tosca.nodes.nfv.VduCp
+    properties:
+      ont_port:
+        type: string
+        required: true
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+        node: tosca.nodes.nfv.VnfVirtualLink
+    - virtual_binding:
+        capability: tosca.capabilities.nfv.VirtualBindable
+        relationship: tosca.relationships.nfv.VirtualBindsTo
+        node: org.openecomp.resource.vfc.OntPnf
+  tosca.nodes.nfv.Cp:
+    derived_from: tosca.nodes.Root
+    description: Provides information regarding the purpose of the connection point
+    properties:
+      layer_protocols:
+        type: list
+        description: Identifies which protocol the connection point uses for connectivity purposes
+        required: true
+        entry_schema:
+          type: string
+          constraints:
+          - valid_values:
+            - ethernet
+            - mpls
+            - odu2
+            - ipv4
+            - ipv6
+            - pseudo-wire
+      role:
+        type: string
+        description: Identifies the role of the port in the context of the traffic flow patterns in the VNF or parent NS
+        required: false
+        constraints:
+        - valid_values:
+          - root
+          - leaf
+      description:
+        type: string
+        description: Provides human-readable information on the purpose of the connection point
+        required: false
+      protocol:
+        type: list
+        description: Provides information on the addresses to be assigned to the connection point(s) instantiated from this Connection Point Descriptor
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.CpProtocolData
+      trunk_mode:
+        type: boolean
+        description: Provides information about whether the CP instantiated from this Cp is in Trunk mode (802.1Q or other), When operating in "trunk mode", the Cp is capable of carrying traffic for several VLANs. Absence of this property implies that trunkMode is not configured for the Cp i.e. It is equivalent to boolean value "false".
+        required: false
+      allowed_address_data:
+        type: tosca.datatypes.nfv.AddressData
+        required: false
+  tosca.nodes.nfv.VNF:
+    derived_from: tosca.nodes.Root
+    description: The generic abstract type from which all VNF specific abstract node types shall be derived to form, together with other node types, the TOSCA service template(s) representing the VNFD
+    properties:
+      descriptor_id:
+        type: string
+        description: Globally unique identifier of the VNFD
+        required: true
+      descriptor_version:
+        type: string
+        description: Identifies the version of the VNFD
+        required: true
+      provider:
+        type: string
+        description: Provider of the VNF and of the VNFD
+        required: true
+      product_name:
+        type: string
+        description: Human readable name for the VNF Product
+        required: true
+      software_version:
+        type: string
+        description: Software version of the VNF
+        required: true
+      product_info_name:
+        type: string
+        description: Human readable name for the VNF Product
+        required: false
+      product_info_description:
+        type: string
+        description: Human readable description of the VNF Product
+        required: false
+      vnfm_info:
+        type: list
+        required: true
+        description: Identifies VNFM(s) compatible with the VNF
+        entry_schema:
+          type: string
+      localization_languages:
+        type: list
+        description: Information about localization languages of the VNF
+        required: false
+        entry_schema:
+          type: string
+      default_localization_language:
+        type: string
+        description: Default localization language that is instantiated if no information about selected localization language is available
+        required: false
+      lcm_operations_configuration:
+        type: tosca.datatypes.nfv.VnfLcmOperationsConfiguration
+        description: Describes the configuration parameters for the VNF LCM operations
+        required: false
+      monitoring_parameters:
+        type: list
+        entry_schema:
+          type: tosca.datatypes.nfv.VnfMonitoringParameter
+        description: Describes monitoring parameters applicable to the VNF.
+        required: false
+      flavour_id:
+        type: string
+        description: Identifier of the Deployment Flavour within the VNFD
+        required: true
+      flavour_description:
+        type: string
+        description: Human readable description of the DF
+        required: true
+    requirements:
+    - virtual_link:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        relationship: tosca.relationships.nfv.VirtualLinksTo
+        occurrences:
+        - 0
+        - 1
+    interfaces:
+      Vnflcm:
+        type: tosca.interfaces.nfv.Vnflcm
+  org.openecomp.resource.vl.underlayvpn:
+    derived_from: tosca.nodes.Root
+    description: undelay vpn type definitions
+    properties:
+      id:
+        type: string
+        required: false
+      template_name:
+        type: string
+        required: false
+      version:
+        type: string
+        required: false
+      vendor:
+        type: string
+        required: false
+      template_author:
+        type: string
+        required: false
+      name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      serviceType:
+        type: string
+        description: type of VPN service
+        required: false
+        default: l3vpn_sptn
+      topology:
+        type: string
+        description: type of VPN topology
+        constraints:
+        - valid_values:
+          - full-mesh
+          - point_to_multipoint
+          - point_to_point
+          - singlePoint
+          - hubspoke
+          - hubspoke_via_hubce
+          - hubspoke_disjoint
+          - ADD_DROP_Z
+        required: false
+        default: full-mesh
+      technology:
+        type: string
+        description: type of VPN technology
+        constraints:
+        - valid_values:
+          - mpls
+          - rosen multivpn
+          - vxlan overlay l3vpn
+          - eth over sdh
+          - vlan
+        required: false
+        default: mpls
+      site1_name:
+        type: string
+        description: name of first site
+        required: false
+      site2_name:
+        type: string
+        description: name of second site
+        required: false
+      sna1_name:
+        type: string
+        description: name of site network accesses associated with the site1
+        required: false
+      sna2_name:
+        type: string
+        description: name of site network accesses associated with the site2
+        required: false
+      pe1_id:
+        type: string
+        description: id of provider edge1, it can be name or ip or uuid
+        required: false
+      pe2_id:
+        type: string
+        description: id of provider edge2, it can be name or ip or uuid
+        required: false
+      ac1_id:
+        type: string
+        description: id of attachment circuit1, it can be port name or uuid
+        required: false
+      ac1_svlan:
+        type: integer
+        description: ac1 svlan
+        required: false
+      ac1_ip:
+        type: string
+        description: ip of ac1, only for layer3 vpn, it should contain mask
+        required: false
+      ac1_peer_ip:
+        type: string
+        description: ip of ac1 peer CE tp, only for layer3 vpn, it should contain mask
+        required: false
+      ac1_route:
+        type: string
+        description: route configure of ac1, only for layer3 vpn
+        required: false
+      ac1_protocol:
+        type: string
+        description: routing protocol type of ac1, only for layer3 vpn
+        constraints:
+        - valid_values:
+          - STATIC
+          - OSPF
+          - ISIS
+          - BGP
+          - other
+        required: false
+      ac1_protocol_bgp_as:
+        type: string
+        description: autonomous-system number of ac1, , only required for ebgp protocol
+        required: false
+      ac2_id:
+        type: string
+        description: id of attachment circuit2, it can be port name or uuid
+        required: false
+      ac2_svlan:
+        type: integer
+        description: ac2 svlan
+        required: false
+      ac2_ip:
+        type: string
+        description: ip of ac2, only for layer3 vpn, it should contain mask
+        required: false
+      ac2_peer_ip:
+        type: string
+        description: ip of ac2 peer CE tp, only for layer3 vpn, it should contain mask
+        required: false
+      ac2_route:
+        type: string
+        description: route configure of ac2, only for layer3 vpn
+        required: false
+      ac2_protocol:
+        type: string
+        description: routing protocol type of ac2, only for layer3 vpn
+        constraints:
+        - valid_values:
+          - STATIC
+          - OSPF
+          - ISIS
+          - BGP
+          - other
+        default: STATIC
+        required: false
+      ac2_protocol_bgp_as:
+        type: string
+        description: autonomous-system number of ac2, , only required for ebgp protocol
+        required: false
+      af_type:
+        type: string
+        description: address family type
+        default: ipv4
+        required: false
+    requirements:
+    - virtualLink:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable
+  tosca.nodes.nfv.ext.zte.CP:
+    derived_from: tosca.nodes.Root
+    properties:
+      guest_os_mtu:
+        type: integer
+        required: false
+      bandwidth:
+        type: integer
+        required: false
+      interface_name:
+        type: string
+        required: false
+      allowed_address_pairs:
+        type: list
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.ext.AddressPairs
+      ip_address:
+        type: string
+        required: false
+      bond:
+        type: string
+        required: false
+      proxiedVNFs:
+        type: list
+        required: false
+        entry_schema:
+          type: string
+      sfc_encapsulation:
+        type: string
+        required: false
+      floating_ip_address:
+        type: tosca.datatypes.nfv.ext.FloatingIP
+        required: false
+      service_ip_address:
+        required: false
+        type: string
+      mac_address:
+        type: string
+        required: false
+      proxiedVNFtype:
+        type: string
+        required: false
+      macbond:
+        type: string
+        required: false
+      vnic_type:
+        type: string
+        required: false
+      direction:
+        type: string
+        required: false
+      order:
+        type: integer
+        required: false
+    requirements:
+    - forwarder:
+        capability: tosca.capabilities.nfv.Forwarder
+        occurrences:
+        - 0
+        - UNBOUNDED
+    - virtualbinding:
+        capability: tosca.capabilities.nfv.VirtualBindable
+        occurrences:
+        - 0
+        - UNBOUNDED
+    - virtualLink:
+        capability: tosca.capabilities.nfv.VirtualLinkable
+        occurrences:
+        - 0
+        - UNBOUNDED
+    capabilities:
+      forwarder:
+        type: tosca.capabilities.nfv.Forwarder
+  org.openecomp.resource.vfc.NSD:
+    derived_from: tosca.nodes.Root
+    description: ECOMP Allotted Resource base type all other allotted resources node types derive from
+    properties:
+      nsd_id:
+        type: string
+        required: true
+        description: ID of the NSD
+      nsd_designer:
+        type: string
+        required: true
+        description: Designer of the NSD
+      nsd_version:
+        type: string
+        required: true
+        description: Version of the NSD
+      nsd_name:
+        type: string
+        required: true
+        description: Name of the NSD
+      providing_service_uuid:
+        type: string
+        required: true
+        description: The depending service uuid in order to map the allotted resource to the specific service version
+      providing_service_invariant_uuid:
+        type: string
+        required: true
+        description: The depending service invariant uuid in order to map the allotted resource to the specific service version
+      providing_service_name:
+        type: string
+        required: true
+        description: The depending service name in order to map the allotted resource to the specific service version
+    requirements:
+    - virtualLink:
+        capability: tosca.capabilities.network.Linkable
+        relationship: tosca.relationships.network.LinksTo
+    capabilities:
+      virtual_linkable:
+        type: tosca.capabilities.network.Linkable

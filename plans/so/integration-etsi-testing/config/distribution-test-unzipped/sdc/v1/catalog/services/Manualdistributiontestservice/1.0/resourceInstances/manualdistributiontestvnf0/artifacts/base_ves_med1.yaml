@@ -1,0 +1,86 @@
+heat_template_version: 2013-05-23
+
+description: Simple template to deploy a single compute instance
+
+parameters:
+  simple_name_0:
+    type: string
+    label: Key Name
+    description: Name of key-pair to be used for compute instance
+  simple_key:
+    type: string
+    label: Key Name
+    description: Name of key-pair to be used for compute instance
+  simple_image_name:
+    type: string
+    label: Image ID
+    description: Image to be used for compute instance
+  simple_flavor_name:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+  vnf_id:
+    type: string
+    label: VNF ID
+    description: The VNF ID is provided by ONAP
+  vf_module_id:
+    type: string
+    label: vFirewall module ID
+    description: The vFirewall Module ID is provided by ONAP
+  simple_netid:
+    type: string
+    label: Netid
+    description: netid
+  public_net_id:
+    type: string
+    label: Netid
+    description: public NetId
+  ves_ip:
+    type: string
+    label: Netid
+    description: public ves_ip
+  node_ip:
+    type: string
+    label: Netid
+    description: public ves_ip
+
+
+
+resources:
+
+  simple_0_private_port:
+    type: OS::Neutron::Port
+    properties:
+      network: { get_param: simple_netid }
+      fixed_ips:
+      - ip_address: { get_param: node_ip }
+
+
+  simple_0:
+    type: OS::Nova::Server
+    properties:
+      availability_zone: nova 
+      key_name: { get_param: simple_key }
+      image: { get_param: simple_image_name }
+      flavor: { get_param: simple_flavor_name }
+      name: { get_param: simple_name_0 }
+      metadata: {vnf_id: { get_param: vnf_id }, vf_module_id: { get_param: vf_module_id }}
+      networks:
+      - port: { get_resource: simple_0_private_port }
+      user_data_format: RAW
+      user_data:
+        str_replace:
+          params:
+            __ves_ip__: { get_param: ves_ip }
+            __vnfId__: { get_param: vnf_id }
+
+          template: |
+            #!/bin/bash
+
+            echo "the value we got for vndID was : __vnfId__" >> /tmp/vnfid.log
+
+outputs:
+  oam_management_v4_address:
+    description: The IP address of the oam_management_v4_address
+    value: { get_param: node_ip  }
+

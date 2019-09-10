@@ -1,0 +1,7 @@
+TOSCA-Meta-File-Version: 1.0
+CSAR-Version: 1.1
+Created-by: EST
+Entry-Definitions: Artifacts/Deployment/OTHER/descriptor.yaml
+Entry-Manifest: sgsn-mme.mf
+Entry-Change-Log: ChangeLog.txt
+Entry-Licenses: Licenses/LICENSE

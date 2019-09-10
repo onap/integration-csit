@@ -130,7 +130,7 @@ services:
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${TEST_LAB_DIR}/volumes/so/config/sdc-controller/onapheat:/app/config
-      - ${CONFIG_DIR_PATH}/distribution-test-zip/distributionTestZip.zip:/distribution-test-zip/distributionTestZip.zip
+      - ${CONFIG_DIR_PATH}/distribution-test-unzipped:/distribution-test/unzipped
     environment:
       - APP=sdc-controller
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -152,9 +152,13 @@ services:
         max-size: "30m"
         max-file: "5"
     command:
-      - /bin/sh
-      - -c
-      - 'mkdir -p /distribution-test-zip/unzipped && unzip /distribution-test-zip/distributionTestZip.zip -d /distribution-test-zip/unzipped && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+      - /app/wait-for.sh
+      - -q
+      - -t
+      - "300"
+      - request-db-adapter:8083
+      - --
+      - "/app/start-app.sh"
 ################################################################################
   bpmn-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}

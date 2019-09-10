@@ -1,0 +1,66 @@
+tosca_definitions_version: tosca_simple_yaml_1_1
+
+description: VNF Descriptor for dummy VNFD
+
+# ============LICENSE_START=======================================================
+#  Copyright (C) 2019 Nordix Foundation.
+# ================================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+# SPDX-License-Identifier: Apache-2.0
+# ============LICENSE_END=========================================================
+#
+
+imports:
+  - etsi_nfv_sol001_vnfd_0_10_0_type.yaml
+
+data_types:
+  node_types:
+    Vendor.vnf.name:
+    derived_from: tosca.nodes.nfv.VNF
+    properties:
+      # TODO: descriptor_id should be a UUID 
+      descriptor_id:
+        type: string
+        constraints: [ valid_values: [ sgsn-mme_12df452s04131 ] ]
+        default: sgsn-mme_12df452s04131
+      flavour_id: 
+        type: string
+        constraints: [ valid_values: [ default ] ]
+        default: default
+      flavour_description: 
+        type: string
+        default: ''
+    interfaces:
+      Vnflcm:
+        type: tosca.interfaces.nfv.Vnflcm
+        instantiate:
+        heal:
+
+topology_template:
+  node_templates:
+    dummy_Vnf:
+      type: Vendor.vnf.name
+      properties:
+        flavour_id: default
+        flavour_description: >
+          A customized VNF Deployment Flavour
+        lcm_operations_configuration:
+          scale:
+            scaling_by_more_than_one_step_supported: true
+      interfaces:
+        Vnflcm:
+          instantiate:
+          terminate:
+          heal:
+          scale:

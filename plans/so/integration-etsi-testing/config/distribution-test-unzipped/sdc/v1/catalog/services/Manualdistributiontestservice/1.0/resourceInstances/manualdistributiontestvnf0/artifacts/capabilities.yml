@@ -1,0 +1,310 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+tosca_definitions_version: tosca_simple_yaml_1_1
+imports:
+- data.yml
+capability_types:
+  tosca.capabilities.Root:
+    description: The TOSCA root Capability Type all other TOSCA base Capability Types derive from
+  tosca.capabilities.Attachment:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.Node:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.Container:
+    derived_from: tosca.capabilities.Root
+    properties:
+      num_cpus:
+        type: integer
+        required: false
+        constraints:
+        - greater_or_equal: 1
+      cpu_frequency:
+        type: scalar-unit.frequency
+        required: false
+        constraints:
+        - greater_or_equal: 0.1 GHz
+      disk_size:
+        type: scalar-unit.size
+        required: false
+        constraints:
+        - greater_or_equal: 0 MB
+      mem_size:
+        type: scalar-unit.size
+        required: false
+        constraints:
+        - greater_or_equal: 0 MB
+  org.openecomp.capabilities.PortMirroring:
+    derived_from: tosca.capabilities.Root
+    properties:
+      connection_point:
+        type: org.openecomp.datatypes.PortMirroringConnectionPointDescription
+  tosca.capabilities.Endpoint:
+    derived_from: tosca.capabilities.Root
+    properties:
+      protocol:
+        type: string
+        default: tcp
+      port:
+        type: PortDef
+        required: false
+      secure:
+        type: boolean
+        default: false
+      url_path:
+        type: string
+        required: false
+      port_name:
+        type: string
+        required: false
+      network_name:
+        type: string
+        required: false
+        default: PRIVATE
+      initiator:
+        type: string
+        default: source
+        constraints:
+        - valid_values:
+          - source
+          - target
+          - peer
+      ports:
+        type: map
+        required: false
+        constraints:
+        - min_length: 1
+        entry_schema:
+          type: PortSpec
+    attributes:
+      ip_address:
+        type: string
+  tosca.capabilities.DatabaseEndpoint:
+    derived_from: tosca.capabilities.Endpoint
+  tosca.capabilities.Endpoint.Public:
+    derived_from: tosca.capabilities.Endpoint
+    properties:
+      network_name: PUBLIC
+      floating:
+        description: |
+          indicates that the public address should be allocated from a pool of floating IPs that are associated with the network.
+        type: boolean
+        default: false
+        status: experimental
+      dns_name:
+        description: The optional name to register with DNS
+        type: string
+        required: false
+        status: experimental
+  tosca.capabilities.Endpoint.Admin:
+    derived_from: tosca.capabilities.Endpoint
+    properties:
+      secure: true
+  tosca.capabilities.Endpoint.Database:
+    derived_from: tosca.capabilities.Endpoint
+  tosca.capabilities.OperatingSystem:
+    derived_from: tosca.capabilities.Root
+    properties:
+      architecture:
+        type: string
+        required: false
+      type:
+        type: string
+        required: false
+      distribution:
+        type: string
+        required: false
+      version:
+        type: version
+        required: false
+  tosca.capabilities.Scalable:
+    derived_from: tosca.capabilities.Root
+    properties:
+      min_instances:
+        type: integer
+        default: 1
+      max_instances:
+        type: integer
+        default: 1
+      default_instances:
+        type: integer
+  tosca.capabilities.network.Bindable:
+    derived_from: tosca.capabilities.Node
+  tosca.capabilities.Container.Docker:
+    derived_from: tosca.capabilities.Container
+    properties:
+      version:
+        type: list
+        required: false
+        entry_schema: version
+      publish_all:
+        type: boolean
+        default: false
+        required: false
+      publish_ports:
+        type: list
+        entry_schema: PortSpec
+        required: false
+      expose_ports:
+        type: list
+        entry_schema: PortSpec
+        required: false
+      volumes:
+        type: list
+        entry_schema: string
+        required: false
+  tosca.capabilities.network.Linkable:
+    derived_from: tosca.capabilities.Root
+  org.openecomp.capabilities.AllottedResource:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.Metric:
+    derived_from: tosca.capabilities.Endpoint
+  org.openecomp.capabilities.Metric:
+    derived_from: tosca.capabilities.nfv.Metric
+    description: A node type that includes the Metric capability indicates that it can be monitored.
+    properties:
+      unit:
+        type: string
+        description: Unit of the metric value
+        required: true
+        status: SUPPORTED
+      description:
+        type: string
+        description: Description of the metric
+        required: false
+        status: SUPPORTED
+      type:
+        type: string
+        description: Type of the metric value, for an example, Cumulative, Delta, Gauge and etc.
+        required: true
+        status: SUPPORTED
+      category:
+        type: string
+        description: Category of the metric, for an example, compute, disk, network, storage and etc.
+        required: false
+        status: SUPPORTED
+    attributes:
+      value:
+        type: string
+        description: Runtime monitored value
+        status: SUPPORTED
+  org.openecomp.capabilities.metric.Ceilometer:
+    derived_from: org.openecomp.capabilities.Metric
+    description: A node type that includes the Metric capability indicates that it can be monitored using ceilometer.
+    properties:
+      name:
+        type: string
+        description: Ceilometer metric type name to monitor. (The name ceilometer is using)
+        required: true
+        status: SUPPORTED
+  org.openecomp.capabilities.metric.SnmpPolling:
+    derived_from: org.openecomp.capabilities.Metric
+    description: A node type that includes the Metric capability indicates that it can be monitored using snmp polling.
+    properties:
+      oid:
+        type: string
+        description: Object Id of the metric
+        required: true
+        status: SUPPORTED
+  org.openecomp.capabilities.metric.SnmpTrap:
+    derived_from: org.openecomp.capabilities.Metric
+    description: A node type that includes the Metric capability indicates that it can be monitored using snmp trap.
+    properties:
+      oid:
+        type: string
+        description: Object Id of the metric
+        required: true
+        status: SUPPORTED
+  org.openecomp.capabilities.Forwarder:
+    derived_from: tosca.capabilities.Root
+  org.openecomp.capabilities.VLANAssignment:
+    derived_from: tosca.capabilities.Root
+    description: ability to expose routing information of the internal network
+    properties:
+      vfc_instance_group_reference:
+        type: string
+        description: Ability to recognize capability per vfc instance group on vnf instance
+        required: true
+  org.openecomp.capabilities.RoutingConfiguration:
+    derived_from: tosca.capabilities.Root
+  org.openecomp.capabilities.FabricConfiguration:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.VirtualStorage:
+    derived_from: tosca.capabilities.Root
+    description: Describes the attachment capabilities related to Vdu.Storage
+  tosca.capabilities.nfv.VirtualCompute:
+    derived_from: tosca.capabilities.Node
+    description: Describes the capabilities related to virtual compute resources
+    properties:
+      logical_node:
+        type: map
+        description: Describes the Logical Node requirements
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.LogicalNodeData
+      requested_additional_capabilities:
+        type: map
+        description: Describes additional capability for a particular VDU
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.RequestedAdditionalCapability
+      compute_requirements:
+        type: map
+        required: false
+        entry_schema:
+          type: string
+      virtual_memory:
+        type: tosca.datatypes.nfv.VirtualMemory
+        description: Describes virtual memory of the virtualized compute
+        required: true
+      virtual_cpu:
+        type: tosca.datatypes.nfv.VirtualCpu
+        description: Describes virtual CPU(s) of the virtualized compute
+        required: true
+      virtual_local_storage:
+        type: list
+        description: A list of virtual system disks created and destroyed as part of the VM lifecycle
+        required: false
+        entry_schema:
+          type: tosca.datatypes.nfv.VirtualBlockStorageData
+          description: virtual system disk definition
+  tosca.capabilities.nfv.VirtualBindable:
+    derived_from: tosca.capabilities.Node
+    description: Indicates that the node that includes it can be pointed by a tosca.relationships.nfv.VirtualBindsTo relationship type which is used to model the VduHasCpd association
+  tosca.capabilities.nfv.VirtualLinkable:
+    derived_from: tosca.capabilities.Root
+    description: A node type that includes the VirtualLinkable capability indicates that it can be pointed by tosca.relationships.nfv.VirtualLinksTo relationship type
+  tosca.capabilities.nfv.ExtVirtualLinkable:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.Forwarder:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.ext.GuestOs:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.ext.ImageFile:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.ext.LocalAttachment:
+    derived_from: tosca.capabilities.Root
+  tosca.capabilities.nfv.ext.Compute.Container.Architecture:
+    derived_from: tosca.capabilities.Root
+    properties:
+      num_cpus:
+        type: string
+        required: false
+      flavor_extra_specs:
+        type: map
+        required: false
+        entry_schema:
+          type: string
+      mem_size:
+        type: string
+        required: false
