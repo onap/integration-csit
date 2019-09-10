@@ -55,14 +55,14 @@ done
 echo sleep 60
 sleep 60
 
-# start modeling-genericparser
-docker run -d --name modeling-genericparser -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/modeling/genericparser
-GenericParser_IP=`get-instance-ip.sh modeling-genericparser`
+# start modeling-etsicatalog
+docker run -d --name modeling-etsicatalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/modeling/etsicatalog
+EtsiCatalog_IP=`get-instance-ip.sh modeling-etsicatalog`
 for i in {1..10}; do
-    curl -sS -m 1 ${GenericParser_IP}:8806 && break
+    curl -sS -m 1 ${EtsiCatalog_IP}:8806 && break
     echo sleep $i
     sleep $i
 done
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v MSB_IP:${MSB_IP} -v GenericParser_IP:${GenericParser_IP} -v MSB_DISCOVERY_IP:${DISCOVERY_IP}"
+ROBOT_VARIABLES="-v MSB_IP:${MSB_IP} -v EtsiCatalog_IP:${EtsiCatalog_IP} -v MSB_DISCOVERY_IP:${DISCOVERY_IP}"
