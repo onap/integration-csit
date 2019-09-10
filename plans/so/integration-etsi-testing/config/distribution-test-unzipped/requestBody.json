@@ -20,7 +20,7 @@
         {
           "artifactName": "manualdistributiontestvnf0_modules.json",
           "artifactType": "VF_MODULES_METADATA",
-          "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/manualdistributiontestvnf0_modules.json",
+          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/manualdistributiontestvnf0_modules.json",
           "artifactChecksum": "NTc0NDlkNzdmYzVmMDM3ZjMxMTE2NDBmYWJiMDM1NzY\u003d",
           "artifactDescription": "Auto-generated VF Modules information artifact",
           "artifactTimeout": 120,
@@ -31,7 +31,7 @@
         {
           "artifactName": "base_ves_med1.yaml",
           "artifactType": "HEAT",
-          "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.yaml",
+          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.yaml",
           "artifactChecksum": "YTAwNTQ3NjczY2Y5MmUwZjUzZTY1ZjNhNTA0NGQyMDY\u003d",
           "artifactDescription": "created from csar",
           "artifactTimeout": 120,
@@ -40,7 +40,7 @@
           "generatedArtifact": {
             "artifactName": "base_ves_med1.env",
             "artifactType": "HEAT_ENV",
-            "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
+            "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
             "artifactChecksum": "Mjg5YTVhNTlmYTdjYTFlYjYxMDlhODYzNmJhZGJiZGE\u003d",
             "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
             "artifactTimeout": 120,
@@ -53,7 +53,7 @@
         {
           "artifactName": "base_ves_med1.env",
           "artifactType": "HEAT_ENV",
-          "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
+          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
           "artifactChecksum": "Mjg5YTVhNTlmYTdjYTFlYjYxMDlhODYzNmJhZGJiZGE\u003d",
           "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
           "artifactTimeout": 120,
@@ -64,7 +64,7 @@
         {
           "artifactName": "TOSCA.meta",
           "artifactType": "OTHER",
-          "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/TOSCA.meta",
+          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/TOSCA.meta",
           "artifactChecksum": "NWE2ODcyOWY0NGI2MzEyOGViYjUxNTEwMjU5OWRhZmI\u003d",
           "artifactDescription": "created from csar",
           "artifactTimeout": 120,
@@ -75,7 +75,7 @@
         {
           "artifactName": "descriptor.yaml",
           "artifactType": "OTHER",
-          "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/descriptor.yaml",
+          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/descriptor.yaml",
           "artifactChecksum": "YWZkNTg2ZGMzZjRhZjgxNzNkODJiNjgwZmRlZjlmNDE\u003d",
           "artifactDescription": "created from csar",
           "artifactTimeout": 120,
@@ -90,7 +90,7 @@
     {
       "artifactName": "service-Manualdistributiontestservice-csar.csar",
       "artifactType": "TOSCA_CSAR",
-      "artifactURL": "/sdc/v1/catalog/services/Manualdistributiontestservice/1.0/artifacts/service-Manualdistributiontestservice-csar.csar",
+      "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/artifacts/service-Manualdistributiontestservice-csar.csar",
       "artifactChecksum": "YWYxNmUxNTlhMmE3MjA1NGVhNTBhYTdkMmU0OTZjNzM\u003d",
       "artifactDescription": "TOSCA definition package of the asset",
       "artifactTimeout": 0,
