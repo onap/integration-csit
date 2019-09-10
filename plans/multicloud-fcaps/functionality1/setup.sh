@@ -16,9 +16,9 @@
 # Start all process required for executing test case
 
 source ${SCRIPTS}/common_functions.sh
-
+MULTICLOUD_DOCKER_VERSION=1.4.1
 # start multicloud-fcaps
-docker run -d --name multicloud-fcaps nexus3.onap.org:10001/onap/multicloud/openstack-fcaps
+docker run -d --name multicloud-fcaps nexus3.onap.org:10001/onap/multicloud/openstack-fcaps:$MULTICLOUD_DOCKER_VERSION
 SERVICE_IP=`get-instance-ip.sh multicloud-fcaps`
 SERVICE_PORT=9011
 
