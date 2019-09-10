@@ -118,16 +118,23 @@ process_arguments()
    exit 1
  fi
 
+ result=$(docker inspect --format '{{.State.Running}}' $CONTAINER_NAME)
+
+ if [ $result != "true" ] ; then
+  echo "$SCRIPT_NAME $(current_timestamp) ERROR: $CONTAINER_NAME container is not running"
+  exit 1
+ fi
+
  HOST_IP=$(docker inspect --format '{{ index .NetworkSettings.Networks "'$NETWORK_NAME'" "IPAddress"}}' $CONTAINER_NAME)
 
- if [ $? -ne 0 ]; then
+ if [ $? -ne 0 ] || [ -z $HOST_IP ] ; then
    echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to find HOST IP using network name: $NETWORK_NAME and container name: $CONTAINER_NAME"
    exit 1
  fi
 
  PORT=$(docker port $CONTAINER_NAME | cut -c1-$(docker port $CONTAINER_NAME | grep -aob '/' | grep -oE '[0-9]+'))
 
- if [ $? -ne 0 ]; then
+ if [ $? -ne 0 ] || [ -z $PORT ] ; then
    echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to find PORT using project name: $PROJECT_NAME and container name: $CONTAINER_NAME"
    exit 1
  fi
