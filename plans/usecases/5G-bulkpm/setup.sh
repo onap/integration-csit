@@ -149,6 +149,11 @@ docker cp dfc:/opt/app/datafile/config/datafile_endpoints.json /tmp/datafile_end
 echo data_endpoints.json from DFC containter
 cat /tmp/datafile_endpoints.json.fromcontainer
 docker cp /tmp/datafile_endpoints.json dfc:/opt/app/datafile/config/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 dfc:/opt/app/datafile/etc/cert/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass dfc:/opt/app/datafile/etc/cert/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 dfc:/opt/app/datafile/etc/cert/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass dfc:/opt/app/datafile/etc/cert/
+
 #Increase Logging
 docker exec dfc /bin/sh -c " sed -i 's/org.onap.dcaegen2.collectors.datafile: WARN/org.onap.dcaegen2.collectors.datafile: TRACE/g' /opt/app/datafile/config/application.yaml"
 docker restart dfc
