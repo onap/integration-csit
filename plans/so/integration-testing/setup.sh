@@ -20,7 +20,7 @@
 git clone http://gerrit.onap.org/r/so/docker-config.git test_lab
 
 export NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
-export TAG=1.3.1
+export TAG=1.5.1
 
 # bring the so dockers
 docker-compose pull

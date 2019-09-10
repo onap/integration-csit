@@ -17,7 +17,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-
 kill-instance.sh policy-pap
 kill-instance.sh policy-api
 kill-instance.sh mariadb

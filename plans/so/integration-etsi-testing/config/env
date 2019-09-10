@@ -1,6 +1,10 @@
 NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
 DOCKER_ENVIRONMENT=remote
+<<<<<<< HEAD
 TAG=1.5.2
+=======
+TAG=1.5.1-STAGING-latest
+>>>>>>> Update versions of CSIT tests
 TIME_OUT_DEFAULT_VALUE_SEC=1200
 PROJECT_NAME=etsiintegrationtesting
 DEFAULT_NETWORK_NAME=etsiintegrationtesting_default

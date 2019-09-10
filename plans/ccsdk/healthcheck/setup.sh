@@ -25,7 +25,7 @@ export NEXUS_DOCKER_REPO="nexus3.onap.org:10001"
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export DMAAP_TOPIC=AUTO
-export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
+export CCSDK_DOCKER_IMAGE_VERSION=0.6-STAGING-latest
 
 if [ "$MTU" == "" ]; then
 	  export MTU="1450"
@@ -119,4 +119,3 @@ fi
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"
-
