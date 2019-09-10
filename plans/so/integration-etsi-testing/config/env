@@ -1,5 +1,5 @@
 NEXUS_DOCKER_REPO_MSO=nexus3.onap.org:10001
-TAG=1.4.3-STAGING-latest
+TAG=1.5.1-STAGING-latest
 TIME_OUT_DEFAULT_VALUE_SEC=1200
 PROJECT_NAME=etsiintegrationtesting
 DEFAULT_NETWORK_NAME=etsiintegrationtesting_default

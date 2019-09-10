@@ -2,8 +2,8 @@
 
 #get current host IP addres
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-
-RCC_IMAGE=nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.restconfcollector:latest
+RCC_DOCKER_IMAGE_VERSION=1.2.1
+RCC_IMAGE=nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.restconfcollector:$RCC_DOCKER_IMAGE_VERSION
 echo RCC_IMAGE=${RCC_IMAGE}
 
 # Start DCAE Restconf Collector
@@ -18,4 +18,3 @@ export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-rest
 pip install jsonschema uuid
 # Wait container ready
 sleep 5
-
