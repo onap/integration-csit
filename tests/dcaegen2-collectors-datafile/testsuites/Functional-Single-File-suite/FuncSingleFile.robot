@@ -32,12 +32,16 @@ Verify single event with single 1MB SFTP file. From event poll to published file
     Set Environment Variable        FTP_TYPE                SFTP
     Set Environment Variable        NUM_FTP_SERVERS         1
     Set Environment Variable        DR_FEEDS                2:A
-    Set Environment Variable        DRR_SIM_IP              drsim_redir
+    Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPS_SIMS               ftpes-server-vsftpd0:21
 
+    ${cli_cmd_output}=              Run Process                    ${DFC_ROOT}/dfc-start.sh   cwd=${DFC_ROOT}
+    Log To Console                  Dfc-start:
+    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+
     ${cli_cmd_output}=              Run Process     ./simulators-start.sh    cwd=${SIMGROUP_ROOT}
-    Log To Console                  Simulator-start: 
+    Log To Console                  Simulator-start:
     Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
     MR Sim Emitted Files Equal      0                                                                                   #Verify 0 file emitted from MR sim
     DR Sim Published Files Equal    0                                                                                   #Verify 0 file published to DR sim
@@ -55,10 +59,6 @@ Verify single event with single 1MB SFTP file. From event poll to published file
     Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
     Sleep                           10
-
-    ${cli_cmd_output}=              Run Process                    ${DFC_ROOT}/dfc-start.sh   cwd=${DFC_ROOT}
-    Log To Console                  Dfc-start:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
     Wait Until Keyword Succeeds     1 minute      10 sec    MR Sim Emitted Files Equal          1                       #Verify 1 file emitted from MR sim
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
