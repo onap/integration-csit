@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "84439e5f_ab25807f",
+        "filename": "plans/dcaegen2-collectors-restconf/testsuites/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-09-11T15:26:53Z",
+      "side": 1,
+      "message": "will be better to use \"latest\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 25,
+        "endLine": 5,
+        "endChar": 30
+      },
+      "revId": "cb5fa7bd6161f7c43345fcd68638b8b6fc220354",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e9739b8_1a646b08",
+        "filename": "plans/dcaegen2/testsuites/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-09-11T15:26:53Z",
+      "side": 1,
+      "message": "\"latest\" tag would be better for VES also",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "cb5fa7bd6161f7c43345fcd68638b8b6fc220354",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec1616f3_e14a857b",
         "filename": "plans/sdnc/healthcheck/setup.sh",
         "patchSetId": 1
