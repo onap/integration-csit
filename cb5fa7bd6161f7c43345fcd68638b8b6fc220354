@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52950c5a_76ef5a06",
+        "filename": "plans/ccsdk/healthcheck/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-09-11T14:13:57Z",
+      "side": 1,
+      "message": "Would be better to use 0.6-STAGING-latest (CCSDK creates both a.b.c-STAGING-latest and a.b-STAGING-latest tags)",
+      "revId": "cb5fa7bd6161f7c43345fcd68638b8b6fc220354",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1616f3_e14a857b",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-09-11T14:13:57Z",
+      "side": 1,
+      "message": "Better to use 0.6-STAGING-latest",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 54
+      },
+      "revId": "cb5fa7bd6161f7c43345fcd68638b8b6fc220354",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
