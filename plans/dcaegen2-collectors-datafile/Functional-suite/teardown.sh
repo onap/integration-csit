@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-running_containers=$(docker ps --filter name=dfc_ -q)
+running_containers=$(docker ps --filter name=dfc_ -qa)
 
 
 if [ -z "$running_containers" ]

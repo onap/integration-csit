@@ -88,7 +88,7 @@ Verify single event with single 5MB SFTP file. From event poll to published file
     Set Environment Variable        FTP_TYPE                SFTP
     Set Environment Variable        NUM_FTP_SERVERS         1
     Set Environment Variable        DR_FEEDS                2:A
-    Set Environment Variable        DRR_SIM_IP              drsim_redir
+    Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPS_SIMS               ftpes-server-vsftpd0:21
 
@@ -150,7 +150,7 @@ Verify single event with single 50MB SFTP file. From event poll to published fil
     Set Environment Variable        FTP_TYPE                SFTP
     Set Environment Variable        NUM_FTP_SERVERS         1
     Set Environment Variable        DR_FEEDS                2:A
-    Set Environment Variable        DRR_SIM_IP              drsim_redir
+    Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPS_SIMS               ftpes-server-vsftpd0:21
 
