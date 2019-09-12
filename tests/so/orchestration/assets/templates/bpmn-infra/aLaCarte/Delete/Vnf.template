@@ -1,0 +1,25 @@
+{
+   "requestDetails":{
+      "modelInfo":{
+         "modelType":"${vnfModelType}",
+         "modelInvariantId":"${vnfModelInvariantId}",
+         "modelNameVersionId":"${vnfModelversionId}",
+         "modelName":"${vnfModelName}",
+         "modelCustomizationName":"${vnfModelCustomizationName}",
+         "modelVersion":"${vnfModelVersion}"
+      },
+      "requestInfo":{
+         "source":"VID",
+         "requestorId":"ROBOT"
+      },
+      "cloudConfiguration":{
+         "lcpCloudRegionId":"${vnfLcpCloudRegionid}",
+         "tenantId":"${vnfTenantId}",
+		 "cloudOwner": "${cloudOwner}"
+      },
+      "requestParameters": {
+         "testApi": "${testApi}",
+         "userParams": []
+      }
+   }
+}

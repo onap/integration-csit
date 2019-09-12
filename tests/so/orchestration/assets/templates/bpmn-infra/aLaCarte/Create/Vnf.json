@@ -1,0 +1,49 @@
+{
+	"requestDetails": {
+		"requestInfo": {
+			"instanceName": "${vnfInstanceName}",
+			"source": "VID",
+			"suppressRollback": false,
+			"productFamilyId": "${productfamilyid}",
+			"requestorId": "ROBOT"
+		},
+		"modelInfo": {
+			"modelType": "${vnfModelType}",
+			"modelInvariantId": "${vnfModelInvariantId}",
+			"modelName": "${vnfModelName}",
+			"modelVersionId": "${vnfModelversionId}",
+			"modelVersion": "${vnfModelVersion}",
+			"modelCustomizationName": "${vnfModelCustomizationName}",
+			"modelCustomizationId": "${vnfModelcustomizationId}"
+		},
+		"requestParameters": {
+			"testApi": "${testApi}",
+			"userParams": []
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "${vnfLcpCloudRegionid}",
+			"cloudOwner": "${cloudOwner}",
+			"tenantId": "${vnfTenantId}"
+		},
+		"platform": {
+			"platformName": "${platformName}"
+		},
+		"lineOfBusiness": {
+			"lineOfBusinessName": "${lineOfBusinessName}"
+		},
+		"relatedInstanceList": [
+			{
+				"relatedInstance": {
+					"instanceId": "${serviceInstanceId}",
+					"modelInfo": {
+						"modelType": "${serviceInstModelType}",
+						"modelInvariantId": "${serviceInstModelInvariantId}",
+						"modelVersionId": "${serviceInstModelNameVersionId}",
+						"modelName": "${serviceInstModelName}",
+						"modelVersion": "${serviceInstModelVersion}"
+					}
+				}
+			}
+		]
+	}
+}

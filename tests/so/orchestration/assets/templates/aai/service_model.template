@@ -1,0 +1,14 @@
+{
+    "model-invariant-id": "${modelInvariantId}",
+    "model-type": "${modelType}",
+    "model-vers": {
+        "model-ver": [
+            {
+                "model-version-id": "${modelVersionId}",
+                "model-name": "${modelName}",
+                "model-version": "${modelVersion}",
+                "model-description": "${modelDescription}"
+            }
+        ]
+    }
+}

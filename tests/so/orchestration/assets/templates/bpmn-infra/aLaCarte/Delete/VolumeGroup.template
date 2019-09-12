@@ -1,0 +1,26 @@
+{
+	"requestDetails": {
+		"modelInfo": {
+			"modelType": "${volumeGroupModelType}",
+			"modelInvariantId": "${volumeGroupModelInvariantId}",
+			"modelVersionId": "${volumeGroupModelVersionId}",
+			"modelName": "${volumeGroupModelName}",
+			"modelVersion": "${volumeGroupModelVersion}",
+			"modelCustomizationId": "${volumeGroupModelCustomizationId}"
+		},
+		"requestParameters": {
+			"testApi": "${testApi}",
+			"aLaCarte": "${alaCarte}",
+			"userParams": []
+		},
+		"requestInfo": {
+			"source": "VID",
+			"requestorId": "sk720x"
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "${volumeGroupLcpCloudRegionId}",
+			"tenantId": "${volumeGroupTenantId}",
+			"cloudOwner": "${cloudOwner}"
+		}
+	}
+}

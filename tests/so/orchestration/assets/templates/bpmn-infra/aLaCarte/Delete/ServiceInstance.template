@@ -1,0 +1,20 @@
+{
+	"requestDetails": {
+		"modelInfo": {
+			"modelType": "service",
+			"modelInvariantId": "${serviceInstModelInvariantId}",
+			"modelVersionId": "${serviceInstModelNameVersionId}",
+			"modelName": "${serviceInstModelName}",
+			"modelVersion":"1.0"
+		},
+		"requestInfo": {
+			"source": "VID",
+			"requestorId": "ROBOT"
+		},
+		"requestParameters": {
+			"testApi": "${testApi}",
+			"userParams": [],
+			"aLaCarte": "${aLaCarteFlag}"
+		}
+	}
+}

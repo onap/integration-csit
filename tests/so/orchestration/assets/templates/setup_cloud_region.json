@@ -1,0 +1,10 @@
+{
+    "cloud-owner": "${cloudOwner}",
+    "cloud-region-id": "${cloudRegionId}",
+    "cloud-type": "${cloudType}",
+    "owner-defined-type": "${ownerDefinedType}",
+    "cloud-region-version": "${cloudRegionVersion}",
+    "cloud-zone": "${cloudZone}",
+    "complex-name": "${complexName}",
+    "sriov-automation": "${sriovAutomation}"
+}
