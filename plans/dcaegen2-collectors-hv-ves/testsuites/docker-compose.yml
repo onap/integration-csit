@@ -84,7 +84,7 @@ services:
       - hv-ves-default
 
   config-binding-service:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.2.4
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding:2.5.2
     ports:
       - "10000:10000"
     environment:
