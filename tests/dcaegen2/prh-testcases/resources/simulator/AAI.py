@@ -54,12 +54,12 @@ class AAISetup(BaseHTTPRequestHandler):
 
                 httpServerLib.set_response_200_ok(self)
                 logger.debug('AAISetup PUT /setup/add_pnf_entry [' + pnf_name + '] -> 200 OK')
-            elif re.search('/setup/add_service_instace', self.path):
+            elif re.search('/setup/add_service_instance', self.path):
                 service_instance_payload = httpServerLib.get_payload(self)
                 global service_instance
                 service_instance = json.loads(service_instance_payload)
                 httpServerLib.set_response_200_ok(self)
-                logger.debug('AAISetup PUT /setup/add_service_instace -> 200 OK')
+                logger.debug('AAISetup PUT /setup/add_service_instance -> 200 OK')
             elif re.search('/setup/add_logical_link', self.path):
                 logical_link_payload = httpServerLib.get_payload(self)
                 logical_link_name = json.loads(logical_link_payload).get("link-name")
@@ -124,9 +124,9 @@ class AAIHandler(BaseHTTPRequestHandler):
                 else:
                     httpServerLib.set_response_404_not_found(self)
                     logger.info('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 404 Not found, actual link: ' + created_logical_link)
-            elif re.search('aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
+            elif re.search('aai/v12/network/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
                 httpServerLib.set_response_200_ok(self, payload = json.dumps(service_instance).encode('utf-8'))
-                logger.debug('AAIHandler GET aai/v12/network/pnfs/pnf/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
+                logger.debug('AAIHandler GET aai/v12/network/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')

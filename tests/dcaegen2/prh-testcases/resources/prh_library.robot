@@ -154,7 +154,7 @@ Add service instance entry in AAI
     [Arguments]    ${aai_service_instance}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json
     Log    AAI url ${AAI_SIMULATOR_SETUP_URL}
-    ${resp}=    Put Request    ${aai_session}    /setup/add_service_instace    headers=${suite_headers}    data=${aai_service_instance}
+    ${resp}=    Put Request    ${aai_session}    /setup/add_service_instance    headers=${suite_headers}    data=${aai_service_instance}
     Should Be Equal As Strings    ${resp.status_code}    200
 
 Add logical link entry in AAI
