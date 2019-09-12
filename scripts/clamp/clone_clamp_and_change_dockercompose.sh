@@ -32,12 +32,10 @@ which firefox
 mkdir -p $WORKSPACE/archives/clamp-clone
 cd $WORKSPACE/archives/clamp-clone
 git clone --depth 1 http://gerrit.onap.org/r/clamp -b $GERRIT_BRANCH
-cd clamp/extra/docker/clamp/
 
 # Pull the Clamp docker image from nexus instead of local image by default in the docker-compose.yml
-sed -i '/image: onap\/clamp-backend/c\    image: nexus3.onap.org:10001\/onap\/clamp-backend:4.1-STAGING-latest' docker-compose.yml
-sed -i '/image: onap\/clamp-frontend/c\    image: nexus3.onap.org:10001\/onap\/clamp-frontend:4.1-STAGING-latest' docker-compose.yml
+sed -i '/image: onap\/clamp-backend/c\    image: nexus3.onap.org:10001\/onap\/clamp-backend:4.1-STAGING-latest' $WORKSPACE/archives/clamp-clone/clamp/extra/docker/clamp/docker-compose.yml
+sed -i '/image: onap\/clamp-frontend/c\    image: nexus3.onap.org:10001\/onap\/clamp-frontend:4.1-STAGING-latest' $WORKSPACE/archives/clamp-clone/clamp/extra/docker/clamp/docker-compose.yml
 
 # Add the sql to create template so it is played by docker-compose later
-cp ../../../src/test/resources/sql/loop-examples.sql ../../sql/bulkload/
-echo 'mysql -uroot -p$MYSQL_ROOT_PASSWORD -f < loop-examples.sql' >> ../../sql/load-sql-files-tests-automation.sh
+echo '/docker-entrypoint-initdb.d/dump/load-fake-data.sh' >> $WORKSPACE/archives/clamp-clone/clamp/extra/sql/bootstrap-database.sh
