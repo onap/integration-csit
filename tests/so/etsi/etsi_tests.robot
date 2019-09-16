@@ -12,7 +12,7 @@ ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}=     48     # Represents the maximum number o
 Distribute Service Template
     Create Session   sdc_controller_session  http://${REPO_IP}:8085
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}distributeServiceTemplate.json
-    &{headers}=  Create Dictionary    Authorization=Basic bXNvX2FkbWluOnBhc3N3b3JkMSQ=    resource-location=/distribution-test/unzipped     Content-Type=application/json    Accept=application/json
+    &{headers}=  Create Dictionary    Authorization=Basic bXNvX2FkbWluOnBhc3N3b3JkMSQ=    resource-location=/distribution-test-zip/unzipped/unzipped_sdc_csar    Content-Type=application/json    Accept=application/json
     ${resp}=    Post Request    sdc_controller_session    /test/treatNotification/v1    data=${data}    headers=${headers}
     Run Keyword If  '${resp.status_code}' == '200'  log to console  \nexecuted with expected result
     Should Be Equal As Strings    '${resp.status_code}'    '200'
