@@ -65,10 +65,10 @@ Verify single event with single 1MB SFTP file. From event poll to published file
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Published Files Equal        1                       #Verify 1 file published to DR sim
     DR Redir Sim Downloaded Volume Equal          1 000 000                                                             #Verify 1 000 000 bytes published file data in DR redir sim
 
-    #${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-    #${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
 Verify single event with single 5MB SFTP file. From event poll to published file
     [TAGS]                          DFC_FUNCTIONAL_2
@@ -120,16 +120,16 @@ Verify single event with single 5MB SFTP file. From event poll to published file
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Published Files Equal        1                       #Verify 1 file published to DR sim
     DR Redir Sim Downloaded Volume Equal          5 000 000                                                             #Verify 5 000 000 bytes published file data in DR redir sim
 
-    #${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-    #${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-#
-    #${cli_cmd_output}=              Run Process             docker  stop  $(docker ps -aq)      shell=yes
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-#
-    #${cli_cmd_output}=              Run Process             docker  rm $(docker ps -aq)          shell=yes
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+
+    ${cli_cmd_output}=              Run Process             docker  stop  $(docker ps -aq)      shell=yes
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+
+    ${cli_cmd_output}=              Run Process             docker  rm $(docker ps -aq)          shell=yes
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
     Sleep                           10
 
@@ -182,10 +182,10 @@ Verify single event with single 50MB SFTP file. From event poll to published fil
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Published Files Equal        1                       #Verify 1 file published to DR sim
     DR Redir Sim Downloaded Volume Equal          50 000 000                                                            #Verify 50 000 000 bytes published file data in DR redir sim
 
-    #${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-    #${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
-    #Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
+    Log                             ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
 ######### Single file, FTPS
 # Temporarily removed due to issues with the certificates for the ftsp server simulator cert.
