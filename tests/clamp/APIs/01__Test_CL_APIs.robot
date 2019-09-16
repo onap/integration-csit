@@ -27,21 +27,20 @@ List TCAs
     Should Contain Match    ${resp}   *Name1_tca_3*
 
 Open TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName1_tca
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName1_tca
     Should Contain Match    ${resp}   *Name1_tca*
     Should Contain Match    ${resp}   *Operational Policy Item*
     Should Contain Match    ${resp}   *Operational policies*
-    Should Contain Match    ${resp}   *Micro Service policies UPDATED*
 
 Open TCA2
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName2_tca_2
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName2_tca_2
     Should Contain Match    ${resp}   *Name2_tca_2*
     Should Contain Match    ${resp}   *Operational Policy Item*
     Should Contain Match    ${resp}   *1004*
     Should Contain Match    ${resp}   *TCA Policy Scope*
 
 Open TCA3
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_ejh5S_v1_0_ResourceInstanceName1_tca_3
+    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName1_tca_3
     Should Contain Match    ${resp}   *Name1_tca_3*
     Should Contain Match    ${resp}   *Operational Policy Item*
     Should Contain Match    ${resp}   *1004*

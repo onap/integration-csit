@@ -10,7 +10,7 @@ ${login}                     admin
 ${passw}                     password
 ${SELENIUM_SPEED_FAST}       1 seconds
 ${SELENIUM_SPEED_SLOW}       2 seconds
-${BASE_URL}                  https://localhost:8443
+${BASE_URL}                  https://localhost:443
 *** Keywords ***
 Create the sessions
     ${auth}=    Create List     ${login}    ${passw}
@@ -26,7 +26,7 @@ Open Browser
 # Next line is to be enabled for Headless tests only (jenkins?). To see the tests disable the line.
     Start Virtual Display    1920    1080
     Set Selenium Speed      ${SELENIUM_SPEED_SLOW}
-    Open Browser    ${BASE_URL}/designer/index.html    browser=firefox
+    Open Browser    ${BASE_URL}/index.html    browser=firefox
 
 Reply to authentication popup
     Run Keyword And Ignore Error    Insert into prompt    ${login} ${passw}
