@@ -54,7 +54,6 @@ Invoke VNF Instantiation
     ${vnf_instantiate_request_json}=    evaluate    json.loads('''${data}''')    json
     set to dictionary    ${vnf_instantiate_request_json}[requestDetails][relatedInstanceList][0][relatedInstance]        instanceId=${service_instance_Id}
     ${vnf_instantiate_request_string}=    evaluate    json.dumps(${vnf_instantiate_request_json})    json
-
     &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
     ${vnf_instantiate_request}=    Post Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}/vnfs   data=${vnf_instantiate_request_string}    headers=${headers}
     Run Keyword If  '${vnf_instantiate_request.status_code}' == '200'  log to console   \nexecuted with expected result
