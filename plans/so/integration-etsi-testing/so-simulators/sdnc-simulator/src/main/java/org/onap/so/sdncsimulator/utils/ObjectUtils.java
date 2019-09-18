@@ -33,7 +33,7 @@ public class ObjectUtils {
         return getString(obj, null);
     }
 
-    public static String getString(final Object obj, String defaultValue) {
+    public static String getString(final Object obj, final String defaultValue) {
         return obj != null ? obj.toString() : defaultValue;
     }
 

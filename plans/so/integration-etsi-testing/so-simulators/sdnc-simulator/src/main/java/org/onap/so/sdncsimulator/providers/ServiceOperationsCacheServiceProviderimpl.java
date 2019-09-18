@@ -78,6 +78,7 @@ import org.springframework.stereotype.Service;
 public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServiceProvider
         implements ServiceOperationsCacheServiceProvider {
 
+    private static final String EMPTY_STRING = "";
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceOperationsCacheServiceProviderimpl.class);
 
     @Autowired
@@ -89,7 +90,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     public Output putServiceOperationInformation(final GenericResourceApiServiceOperationInformation input) {
 
         final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
-        final String svcRequestId = requestHeader != null ? requestHeader.getSvcRequestId() : null;
+        final String svcRequestId = getSvcRequestId(requestHeader);
 
         final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
         if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId())) {
@@ -140,7 +141,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         final GenericResourceApiVnfinformationVnfInformation vnfInformation = input.getVnfInformation();
 
         final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
-        final String svcRequestId = requestHeader != null ? requestHeader.getSvcRequestId() : null;
+        final String svcRequestId = getSvcRequestId(requestHeader);
 
         if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId()) && vnfInformation != null
                 && isValid(vnfInformation.getVnfId())) {
@@ -187,6 +188,55 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     }
 
     @Override
+    public Output deleteVnfOperationInformation(final GenericResourceApiVnfOperationInformation input) {
+        final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
+        final GenericResourceApiVnfinformationVnfInformation vnfInformation = input.getVnfInformation();
+
+        final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
+        final String svcRequestId = getSvcRequestId(requestHeader);
+
+        if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId()) && vnfInformation != null
+                && isValid(vnfInformation.getVnfId())) {
+            final String serviceInstanceId = serviceInformation.getServiceInstanceId();
+            final String vnfId = vnfInformation.getVnfId();
+            final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                    getGenericResourceApiServicemodelinfrastructureService(serviceInstanceId);
+            if (optional.isPresent()) {
+                final GenericResourceApiServicemodelinfrastructureService service = optional.get();
+                final GenericResourceApiServicedataServiceData serviceData = service.getServiceData();
+                if (serviceData != null) {
+                    final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList = getVnfs(serviceData);
+                    final Optional<GenericResourceApiServicedataServicedataVnfsVnf> vnfInstanceOptional =
+                            getExistingVnf(vnfId, vnfsList);
+
+                    if (vnfInstanceOptional.isPresent()) {
+                        vnfsList.removeIf(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId));
+
+                        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.OK.toString())
+                                .responseMessage(EMPTY_STRING).svcRequestId(svcRequestId)
+                                .serviceResponseInformation(
+                                        new GenericResourceApiInstanceReference().instanceId(serviceInstanceId))
+                                .vnfResponseInformation(new GenericResourceApiInstanceReference().instanceId(vnfId));
+                    }
+
+                }
+            }
+            LOGGER.error(
+                    "Unable to find existing GenericResourceApiServiceModelInfrastructure in cache using service instance id: {}",
+                    serviceInstanceId);
+
+        }
+        LOGGER.error("Unable to remove vnf instance from cache due to invalid input: {}... ", input);
+        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                .responseMessage("Unable to remove vnf").svcRequestId(svcRequestId);
+
+    }
+
+    private String getSvcRequestId(final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader) {
+        return requestHeader != null ? requestHeader.getSvcRequestId() : null;
+    }
+
+    @Override
     public void clearAll() {
         clearCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
     }
@@ -228,9 +278,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
     private Optional<GenericResourceApiServicedataServicedataVnfsVnf> getExistingVnf(final String vnfId,
             final List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList) {
-        final Optional<GenericResourceApiServicedataServicedataVnfsVnf> optional =
-                vnfsList.stream().filter(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId)).findFirst();
-        return optional;
+        return vnfsList.stream().filter(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId)).findFirst();
     }
 
     private List<GenericResourceApiServicedataServicedataVnfsVnf> getVnfs(
@@ -313,15 +361,11 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         apiServicedataServiceData.serviceLevelOperStatus(getServiceLevelOperStatus(input));
 
         final GenericResourceApiServicestatusServiceStatus serviceStatus =
-                getServiceStatus(getSvcAction(input.getSdncRequestHeader()), getAction(input.getRequestInformation()),
-                        HttpStatus.OK.toString());
+                getServiceStatus(getSvcAction(input.getSdncRequestHeader()),
+                        getRequestAction(input.getRequestInformation()), HttpStatus.OK.toString());
 
         return new GenericResourceApiServicemodelinfrastructureService().serviceData(apiServicedataServiceData)
                 .serviceStatus(serviceStatus).serviceInstanceId(serviceInstanceId);
-    }
-
-    private String getAction(final GenericResourceApiRequestinformationRequestInformation input) {
-        return getString(input.getRequestAction(), "");
     }
 
     private String getSvcAction(final GenericResourceApiSdncrequestheaderSdncRequestHeader input) {
@@ -333,7 +377,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         return new GenericResourceApiServicestatusServiceStatus().finalIndicator(YES)
                 .rpcAction(GenericResourceApiRpcActionEnumeration.fromValue(rpcAction))
                 .rpcName(SERVICE_TOPOLOGY_OPERATION).responseTimestamp(LocalDateTime.now().toString())
-                .responseCode(responseCode).requestStatus(SYNCCOMPLETE).responseMessage("").action(action);
+                .responseCode(responseCode).requestStatus(SYNCCOMPLETE).responseMessage(EMPTY_STRING).action(action);
     }
 
     private GenericResourceApiOperStatusData getServiceLevelOperStatus(
@@ -351,7 +395,12 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     }
 
     private String getRequestAction(final GenericResourceApiRequestinformationRequestInformation input) {
-        return input != null ? getStringOrNull(input.getRequestAction()) : null;
+        return getRequestAction(input, EMPTY_STRING);
+    }
+
+    private String getRequestAction(final GenericResourceApiRequestinformationRequestInformation input,
+            final String defaultValue) {
+        return input != null ? getString(input.getRequestAction(), defaultValue) : defaultValue;
     }
 
     private GenericResourceApiServicetopologyServiceTopology getServiceTopology(

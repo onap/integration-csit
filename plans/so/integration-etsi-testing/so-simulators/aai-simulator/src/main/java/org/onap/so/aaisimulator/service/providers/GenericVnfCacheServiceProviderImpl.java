@@ -214,6 +214,22 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         return Collections.emptyList();
     }
 
+    @Override
+    public boolean deleteGenericVnf(final String vnfId, final String resourceVersion) {
+        final Optional<GenericVnf> optional = getGenericVnf(vnfId);
+        if (optional.isPresent()) {
+            final GenericVnf genericVnf = optional.get();
+            if (genericVnf.getResourceVersion() != null && genericVnf.getResourceVersion().equals(resourceVersion)) {
+                final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
+                LOGGER.info("Will evict GenericVnf from cache with vnfId: {}", genericVnf.getVnfId());
+                cache.evict(vnfId);
+                return true;
+            }
+        }
+        LOGGER.error("Unable to find GenericVnf for vnfId: {} and resourceVersion: {} ...", vnfId, resourceVersion);
+        return false;
+    }
+
     private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf) {
         final Relationship relationShip = new Relationship();
         relationShip.setRelatedTo(GENERIC_VNF);

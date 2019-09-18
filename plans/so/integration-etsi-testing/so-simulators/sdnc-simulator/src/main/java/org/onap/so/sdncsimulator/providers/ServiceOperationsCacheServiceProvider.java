@@ -39,6 +39,8 @@ public interface ServiceOperationsCacheServiceProvider {
 
     Output putVnfOperationInformation(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation);
 
+    Output deleteVnfOperationInformation(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation);
+
     void clearAll();
 
 }

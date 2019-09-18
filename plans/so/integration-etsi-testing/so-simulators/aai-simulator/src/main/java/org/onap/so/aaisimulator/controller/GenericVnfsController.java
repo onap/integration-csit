@@ -45,6 +45,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -192,6 +193,23 @@ public class GenericVnfsController {
         final GenericVnfs genericVnfs = new GenericVnfs();
         genericVnfs.getGenericVnf().addAll(genericVnfList);
         return ResponseEntity.ok(genericVnfs);
+    }
+
+    @DeleteMapping(value = "/generic-vnf/{vnf-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> deleteGenericVnf(@PathVariable("vnf-id") final String vnfId,
+            @RequestParam(name = "resource-version") final String resourceVersion, final HttpServletRequest request) {
+        LOGGER.info("Will delete GenericVnf for 'vnf-id': {} and 'resource-version': {}", vnfId, resourceVersion);
+
+        if (cacheServiceProvider.deleteGenericVnf(vnfId, resourceVersion)) {
+            LOGGER.info("Successfully delete GenericVnf from cache for 'vnf-id': {} and 'resource-version': {}", vnfId,
+                    resourceVersion);
+            return ResponseEntity.noContent().build();
+        }
+
+        LOGGER.error("Unable to delete GenericVnf for 'vnf-id': {} and 'resource-version': {} ...", vnfId,
+                resourceVersion);
+        return getRequestErrorResponseEntity(request, GENERIC_VNF);
+
     }
 
 }

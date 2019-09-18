@@ -52,6 +52,11 @@ public class TestRestTemplateService {
         return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, clazz);
     }
 
+    public <T> ResponseEntity<T> invokeHttpDelete(final String url, final Class<T> clazz) {
+        final HttpEntity<?> request = new HttpEntity<>(getHttpHeaders());
+        return restTemplate.exchange(url, HttpMethod.DELETE, request, clazz);
+    }
+
     public <T> ResponseEntity<T> invokeHttpPost(final String url, final Object obj, final Class<T> clazz) {
         final HttpEntity<?> httpEntity = getHttpEntity(obj);
         return restTemplate.exchange(url, HttpMethod.POST, httpEntity, clazz);

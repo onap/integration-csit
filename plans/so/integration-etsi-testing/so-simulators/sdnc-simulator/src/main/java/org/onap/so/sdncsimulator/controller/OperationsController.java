@@ -19,9 +19,12 @@
  */
 package org.onap.so.sdncsimulator.controller;
 
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETEVNFINSTANCE;
 import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestinformationRequestInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
@@ -96,7 +99,8 @@ public class OperationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        final Output output = cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
+        final Output output = getOutput(apiVnfOperationInformation);
+
         final OutputRequest outputRequest = new OutputRequest(output);
 
         if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
@@ -107,6 +111,19 @@ public class OperationsController {
         LOGGER.error("Unable to add input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
         return ResponseEntity.badRequest().body(outputRequest);
 
+    }
+
+    private Output getOutput(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation) {
+        final GenericResourceApiRequestinformationRequestInformation requestInformation =
+                apiVnfOperationInformation.getRequestInformation();
+        if (requestInformation != null) {
+            final GenericResourceApiRequestActionEnumeration requestAction = requestInformation.getRequestAction();
+            if (DELETEVNFINSTANCE.equals(requestAction)) {
+                LOGGER.info("RequestAction: {} will delete vnf instance from cache ...", requestAction);
+                return cacheServiceProvider.deleteVnfOperationInformation(apiVnfOperationInformation);
+            }
+        }
+        return cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
     }
 
 }

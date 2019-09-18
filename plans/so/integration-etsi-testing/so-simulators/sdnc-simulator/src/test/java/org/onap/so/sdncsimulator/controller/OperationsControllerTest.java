@@ -20,11 +20,13 @@
 package org.onap.so.sdncsimulator.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getInvalidRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithRequestActionDeleteVnfInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithSvcActionActivateInput;
 import java.util.Optional;
 import org.junit.After;
@@ -306,6 +308,61 @@ public class OperationsControllerTest {
 
     }
 
+    @Test
+    public void test_postVnfOperationInformation_successfullyRemoveVnfFromExistingServiceInCache() throws Exception {
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        final HttpEntity<?> httpAddVnfEntity = new HttpEntity<>(getVnfRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseAddVnfEntity =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpAddVnfEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseAddVnfEntity.getStatusCode());
+
+        Optional<GenericResourceApiServicemodelinfrastructureService> serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        GenericResourceApiServicemodelinfrastructureService service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertNotNull(service.getServiceData());
+        assertNotNull(service.getServiceData().getVnfs());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertFalse(service.getServiceData().getVnfs().getVnf().isEmpty());
+
+        final HttpEntity<?> httpRemoveVnfEntity =
+                new HttpEntity<>(getVnfRequestWithRequestActionDeleteVnfInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseRemoveVnfEntity =
+                restTemplate.exchange(getVnfUrl(), HttpMethod.POST, httpRemoveVnfEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseRemoveVnfEntity.getStatusCode());
+
+        final OutputRequest actualOutputRequest = responseRemoveVnfEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+        assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
+
+        serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertNotNull(service.getServiceData());
+        assertNotNull(service.getServiceData().getVnfs());
+        assertNotNull(service.getServiceData().getVnfs().getVnf());
+        assertTrue(service.getServiceData().getVnfs().getVnf().isEmpty());
+
+
+    }
 
     private HttpHeaders getHttpHeaders() {
         return TestUtils.getHttpHeaders(userCredentials.getUsers().iterator().next().getUsername());

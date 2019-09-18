@@ -45,13 +45,17 @@ public class TestUtils {
     public static String getVnfRequestInput() throws IOException {
         return getFileAsString(getFile("test-data/vnfInput.json").toPath());
     }
-    
+
     public static String getVnfRequestWithSvcActionActivateInput() throws IOException {
         return getFileAsString(getFile("test-data/activateVnfInput.json").toPath());
     }
 
     public static String getInvalidRequestInput() throws IOException {
         return getFileAsString(getFile("test-data/InvalidInput.json").toPath());
+    }
+
+    public static String getVnfRequestWithRequestActionDeleteVnfInput() throws IOException {
+        return getFileAsString(getFile("test-data/deleteVnfInput.json").toPath());
     }
 
     public static String getFileAsString(final Path path) throws IOException {

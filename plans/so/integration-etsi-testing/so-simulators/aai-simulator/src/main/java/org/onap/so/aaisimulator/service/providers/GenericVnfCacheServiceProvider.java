@@ -47,5 +47,7 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
 
     List<GenericVnf> getGenericVnfs(final String selflink);
 
+    boolean deleteGenericVnf(final String vnfId, final String resourceVersion);
+
 
 }

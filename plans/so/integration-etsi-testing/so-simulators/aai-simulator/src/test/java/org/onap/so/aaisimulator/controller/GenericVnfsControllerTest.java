@@ -389,6 +389,24 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         assertEquals(VNF_ID, actualGenericVnf.getVnfId());
     }
 
+    @Test
+    public void test_deleteGenericVnf_usingVnfIdAndResourceVersion_removedFromCache() throws Exception {
+
+        addCustomerServiceAndGenericVnf();
+
+        final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(genericVnfOptional.isPresent());
+        final GenericVnf genericVnf = genericVnfOptional.get();
+
+        final String genericVnfDeleteUrl =
+                getUrl(GENERIC_VNF_URL, genericVnf.getVnfId()) + "?resource-version=" + genericVnf.getResourceVersion();
+
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpDelete(genericVnfDeleteUrl, Void.class);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+
+    }
+
     private void addCustomerServiceAndGenericVnf() throws Exception, IOException {
         final ResponseEntity<Void> customerResponse =
                 testRestTemplateService.invokeHttpPut(getUrl(CUSTOMERS_URL), TestUtils.getCustomer(), Void.class);
