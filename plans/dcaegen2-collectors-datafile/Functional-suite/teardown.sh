@@ -2,7 +2,7 @@
 
 running_containers=$(docker ps --filter name=dfc_ -qa)
 running_images=$(docker images -q)
-docker exec -it dfc_app0 cat /var/log/ONAP/application.log >> $WORKSPACE/archives/dfc_app0_application.log
+docker exec dfc_app0 cat /var/log/ONAP/application.log >> $WORKSPACE/archives/dfc_app0_application.log
 docker logs dfc_mr-sim >> $WORKSPACE/archives/dfc_mr-sim.log
 
 if [ -z "$running_containers" ]
