@@ -282,7 +282,7 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
         final Optional<Tenant> optional = getTenant(key, tenantId);
         if (optional.isPresent()) {
             final Tenant tenant = optional.get();
-            Vservers vServers = tenant.getVservers();
+            final Vservers vServers = tenant.getVservers();
             if (vServers != null) {
                 return vServers.getVserver().stream()
                         .filter(vServer -> vServer.getVserverId() != null && vServer.getVserverId().equals(vServerId))
@@ -291,6 +291,38 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
         }
         LOGGER.error("Unable to find vServer in cache ... ");
         return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteVserver(final CloudRegionKey key, final String tenantId, final String vServerId,
+            final String resourceVersion) {
+        final Optional<Vserver> optional = getVserver(key, tenantId, vServerId);
+        if (optional.isPresent()) {
+            final Optional<Tenant> tenantOptional = getTenant(key, tenantId);
+            if (tenantOptional.isPresent()) {
+                final Tenant tenant = tenantOptional.get();
+                final Vservers vServers = tenant.getVservers();
+                if (vServers != null) {
+                    return vServers.getVserver().removeIf(vServer -> {
+                        if (vServer.getVserverId() != null && vServer.getVserverId().equals(vServerId)
+                                && vServer.getResourceVersion() != null
+                                && vServer.getResourceVersion().equals(resourceVersion)) {
+                            LOGGER.info("Will remove Vserver from cache with vServerId: {} and resource-version: {} ",
+                                    vServerId, vServer.getResourceVersion());
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+
+            }
+
+        }
+        LOGGER.error(
+                "Unable to find Vserver for using key: {}, tenant-id: {}, vserver-id: {} and resource-version: {} ...",
+                key, tenantId, vServerId, resourceVersion);
+
+        return false;
     }
 
     private List<EsrSystemInfo> getEsrSystemInfoList(final CloudRegion cloudRegion) {
