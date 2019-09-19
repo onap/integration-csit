@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: prod
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "loggers,logfile,health,info,metrics"
+server:
+  port: 8433
+  ssl:
+    key-store-type: PKCS12
+    key-store-password: ericssondfc
+    key-store: classpath:keystore.jks
+    key-password: ericssondfc
+    keyAlias: tomcat-localhost
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    org.springframework.data: ERROR
+    org.springframework.web.reactive.function.client.ExchangeFunctions: ERROR
+    org.onap.dcaegen2.collectors.datafile: TRACE
+  file: /var/log/ONAP/application.log
+app:
+  filepath: /opt/app/datafile/config/datafile_endpoints.json
