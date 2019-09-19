@@ -261,7 +261,7 @@ sdnc:
 so:
   vnfm:
     adapter:
-      url: http://vnfm-adapter:9092/so/vnfm-adapter/v1/
+      url: https://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
       auth: Basic dm5mbTpwYXNzd29yZDEk
 
 appc:
@@ -326,3 +326,12 @@ org:
   onap:
     so:
       cloud-owner: CloudOwner
+rest:
+  http:
+    client:
+      configuration:
+        ssl:
+          keyStore: classpath:org.onap.so.p12
+          keyStorePassword: 'RLe5ExMWW;Kd6GTSt0WQz;.Y'
+          trustStore: classpath:org.onap.so.trust.jks
+          trustStorePassword: '6V%8oSU$,%WbYp3IUe;^mWt4'
