@@ -199,7 +199,7 @@ services:
       - "8080:8080"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/api-handler-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/override-files/api-handler-infra/onapheat:/app/config
     environment:
       - APP=api-handler-infra
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -245,18 +245,18 @@ services:
       - catalog-db-adapter
       - request-db-adapter
 ################################################################################
-  vnfm-adapter:
+  so-vnfm-adapter:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${TAG}
     ports:
       - "9092:9092"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${CONFIG_DIR_PATH}/override-files/vnfm-adapter/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/override-files/so-vnfm-adapter/onapheat:/app/config
     environment:
-    - APP=vnfm-adapter
+    - APP=so-vnfm-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
-      vnfm-adapter-test
+      so-vnfm-adapter
     depends_on:
       - request-db-adapter
     logging:
@@ -284,7 +284,7 @@ services:
       sdc-simulator
     depends_on:
       - mariadb
-      - vnfm-adapter
+      - so-vnfm-adapter
     logging:
       driver: "json-file"
       options:
@@ -302,25 +302,27 @@ services:
       aai-simulator
     depends_on:
       - mariadb
-      - vnfm-adapter
+      - so-vnfm-adapter
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "5"
 ################################################################################
-  vnfm-simulator:
+  so-vnfm-simulator:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-simulator:${TAG}
     ports:
       - "9093:9093"
+    volumes:
+      - ${CONFIG_DIR_PATH}/override-files/vnfm-simulator/onapheat:/app/config
     environment:
       - APP=VNFM-SIMULATOR
       - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
-      vnfm-simulator
+      so-vnfm-simulator
     depends_on:
       - mariadb
-      - vnfm-adapter
+      - so-vnfm-adapter
     logging:
       driver: "json-file"
       options:
@@ -340,7 +342,7 @@ services:
       - CATALOG_DB=catalogdb
     depends_on:
       - mariadb
-      - vnfm-adapter
+      - so-vnfm-adapter
     command:
       - "/config/apply-workarounds.sh"
 #################################################################################
@@ -355,7 +357,7 @@ services:
       sdnc-simulator
     depends_on:
       - mariadb
-      - vnfm-adapter
+      - so-vnfm-adapter
     logging:
       driver: "json-file"
       options:
@@ -376,6 +378,6 @@ services:
       - TIMEOUT_IN_SECONDS=300 #5 mins
     depends_on:
       - aai-simulator
-    command: 
+    command:
         - "/config/populate-aai-simulator.sh"
 ################################################################################
