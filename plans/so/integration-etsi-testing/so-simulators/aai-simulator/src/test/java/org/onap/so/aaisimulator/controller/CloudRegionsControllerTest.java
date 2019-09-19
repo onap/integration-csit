@@ -320,6 +320,35 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         assertEquals("active", actualVserver.getProvStatus());
     }
 
+    @Test
+    public void test_deleteVServer_successfullyRemoveFromCache() throws Exception {
+        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+
+        invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+
+        final String tenantUrl = url + TENANTS_TENANT + TENANT_ID;
+        addTenantAndAssertResponse(tenantUrl);
+
+        final String vServerAddUrl = tenantUrl + VSERVER_URL + VSERVER_ID;
+
+        final ResponseEntity<Void> vServerAddResponse =
+                testRestTemplateService.invokeHttpPut(vServerAddUrl, TestUtils.getVserver(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, vServerAddResponse.getStatusCode());
+
+        final Optional<Vserver> optional =
+                cloudRegionCacheServiceProvider.getVserver(CLOUD_REGION_KEY, TENANT_ID, VSERVER_ID);
+        assertTrue(optional.isPresent());
+        final Vserver vserver = optional.get();
+
+        final String vServerRemoveUrl = vServerAddUrl + "?resource-version=" + vserver.getResourceVersion();
+
+        final ResponseEntity<Void> responseEntity =
+                testRestTemplateService.invokeHttpDelete(vServerRemoveUrl, Void.class);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+        assertFalse(cloudRegionCacheServiceProvider.getVserver(CLOUD_REGION_KEY, TENANT_ID, VSERVER_ID).isPresent());
+
+
+    }
 
     private void addTenantAndAssertResponse(final String tenantUrl) throws IOException {
         final ResponseEntity<Void> responseEntity =

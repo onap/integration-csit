@@ -45,6 +45,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -290,6 +291,32 @@ public class CloudRegionsController {
         }
         LOGGER.error("Unable to find Vserver in cache using key: {}, tenant-id: {}  and vserver-id: {}...", key,
                 tenantId, vServerId);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+
+    @DeleteMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/vservers/vserver/{vserver-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> deleteVserver(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
+            @RequestParam(name = "resource-version") final String resourceVersion, final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Will delete Vserver using key: {}, tenant-id: {}, vserver-id: {} and resource-version: {}...", key,
+                tenantId, vServerId, resourceVersion);
+
+
+        if (cacheServiceProvider.deleteVserver(key, tenantId, vServerId, resourceVersion)) {
+            LOGGER.info(
+                    "Successfully delete Vserver from cache for key: {}, tenant-id: {}, vserver-id: {} and resource-version: {}",
+                    key, tenantId, vServerId, resourceVersion);
+            return ResponseEntity.noContent().build();
+        }
+
+        LOGGER.error(
+                "Unable to delete Vserver from cache using key: {}, tenant-id: {}, vserver-id: {} and resource-version: {} ...",
+                key, tenantId, vServerId, resourceVersion);
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
     }
 }

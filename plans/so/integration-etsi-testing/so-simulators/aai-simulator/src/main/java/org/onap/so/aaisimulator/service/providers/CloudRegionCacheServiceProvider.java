@@ -56,4 +56,7 @@ public interface CloudRegionCacheServiceProvider extends Clearable {
     boolean putVserver(final CloudRegionKey key, final String tenantId, final String vServerId, Vserver vServer);
 
     Optional<Vserver> getVserver(final CloudRegionKey key, final String tenantId, final String vServerId);
+
+    boolean deleteVserver(final CloudRegionKey key, final String tenantId, final String vServerId,
+            final String resourceVersion);
 }

@@ -76,4 +76,10 @@ public class CloudRegionKey implements Serializable {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "CloudRegionKey [cloudOwner=" + cloudOwner + ", cloudRegionId=" + cloudRegionId + "]";
+    }
+
 }

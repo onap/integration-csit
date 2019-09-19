@@ -404,6 +404,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final ResponseEntity<Void> responseEntity =
                 testRestTemplateService.invokeHttpDelete(genericVnfDeleteUrl, Void.class);
         assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+        assertFalse(genericVnfCacheServiceProvider.getGenericVnf(VNF_ID).isPresent());
 
     }
 
