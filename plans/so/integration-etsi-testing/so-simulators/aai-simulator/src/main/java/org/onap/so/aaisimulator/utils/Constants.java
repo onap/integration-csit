@@ -67,7 +67,7 @@ public class Constants {
     public static final String OWNING_ENTITY_OWNING_ENTITY_ID = "owning-entity.owning-entity-id";
 
     public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
-    
+
     public static final String APPLICATION_MERGE_PATCH_JSON = "application/merge-patch+json";
 
     public static final String SERVICE_RESOURCE_TYPE = "service-instance";
@@ -129,6 +129,14 @@ public class Constants {
     public static final String ESR_SYSTEM_INFO = "esr-system-info";
 
     public static final String ESR_SYSTEM_INFO_LIST = "esr-system-info-list";
+
+    public static final String VSERVER_VSERVER_NAME = "vserver.vserver-name";
+
+    public static final String VSERVER_VSERVER_ID = "vserver.vserver-id";
+
+    public static final String HOSTED_ON = "tosca.relationships.HostedOn";
+
+    public static final String VSERVER = "vserver";
 
     private Constants() {}
 

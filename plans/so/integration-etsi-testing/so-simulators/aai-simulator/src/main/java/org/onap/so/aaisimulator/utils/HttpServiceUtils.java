@@ -45,6 +45,11 @@ public class HttpServiceUtils {
         return UriComponentsBuilder.fromHttpUrl(url.substring(0, url.indexOf(uri))).path(BASE_URL).build().toUri();
     }
 
+    public static URI getBaseUrl(final StringBuffer requestUrl, final String requestUri) {
+        return UriComponentsBuilder.fromHttpUrl(requestUrl.substring(0, requestUrl.indexOf(requestUri))).build()
+                .toUri();
+    }
+
     public static String getBaseServiceInstanceUrl(final HttpServletRequest request, final String relatedLink) {
         return UriComponentsBuilder.fromUri(getBaseUrl(request)).path(relatedLink).toUriString();
     }

@@ -24,6 +24,7 @@ import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGIONS;
 import static org.onap.so.aaisimulator.utils.Constants.ESR_SYSTEM_INFO_LIST;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.VSERVER;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
@@ -130,7 +131,7 @@ public class CloudRegionsController {
         }
 
         LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedTo(), key);
-        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+        return getRequestErrorResponseEntity(request, VSERVER);
 
     }
 
@@ -265,6 +266,27 @@ public class CloudRegionsController {
                 vServerId);
 
         if (cacheServiceProvider.putVserver(key, tenantId, vServerId, vServer)) {
+
+            if (vServer.getRelationshipList() != null) {
+                for (final Relationship relationship : vServer.getRelationshipList().getRelationship()) {
+                    if (relationship.getRelatedLink() != null) {
+                        final String requestUri = request.getRequestURI();
+                        final String targetBaseUrl =
+                                HttpServiceUtils.getBaseUrl(request.getRequestURL(), requestUri).toString();
+                        final HttpHeaders incomingHeader = getHeaders(request);
+                        final boolean result = cacheServiceProvider.addVServerRelationShip(incomingHeader,
+                                targetBaseUrl, requestUri, key, tenantId, vServerId, relationship);
+                        if (!result) {
+                            LOGGER.error(
+                                    "Unable to add Vserver relationship in cache using key: {}, tenantId: {}, vServerId: {}",
+                                    key, tenantId, vServerId);
+                            return getRequestErrorResponseEntity(request, CLOUD_REGION);
+                        }
+                        LOGGER.info("Successfully added relationship with {}", relationship.getRelatedLink());
+                    }
+                }
+            }
+
             LOGGER.info("Successfully added Vserver for key: {}, tenantId: {}, vServerId: {} ...", key, tenantId,
                     vServerId);
             return ResponseEntity.accepted().build();
@@ -318,5 +340,57 @@ public class CloudRegionsController {
                 "Unable to delete Vserver from cache using key: {}, tenant-id: {}, vserver-id: {} and resource-version: {} ...",
                 key, tenantId, vServerId, resourceVersion);
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @PutMapping(
+            value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/vservers/vserver/{vserver-id}"
+                    + RELATIONSHIP_LIST_RELATIONSHIP_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putVserverRelationShip(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
+            @RequestBody final Relationship relationship, final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+            final boolean result = cacheServiceProvider.addVServerRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), key, tenantId, vServerId, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
+        }
+        LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedTo(), key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+
+    }
+
+    @PutMapping(
+            value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/vservers/vserver/{vserver-id}"
+                    + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putBiDirectionalVServerRelationShip(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
+            @RequestBody final Relationship relationship, final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+
+        final Optional<Relationship> optional = cacheServiceProvider.addvServerRelationShip(key, tenantId, vServerId,
+                relationship, request.getRequestURI());
+
+        if (optional.isPresent()) {
+            final Relationship resultantRelationship = optional.get();
+            LOGGER.info("Relationship add, sending resultant relationship: {} in response ...", resultantRelationship);
+            return ResponseEntity.accepted().body(resultantRelationship);
+        }
+        LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedTo(), key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+
     }
 }

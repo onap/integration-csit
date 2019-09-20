@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.VSERVER;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_OWNER_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CLOUD_REGION_NAME;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
@@ -300,6 +301,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+        addCustomerServiceAndGenericVnf();
 
         final String tenantUrl = url + TENANTS_TENANT + TENANT_ID;
         addTenantAndAssertResponse(tenantUrl);
@@ -318,6 +320,41 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         assertEquals(VSERVER_NAME, actualVserver.getVserverName());
         assertEquals(VSERVER_ID, actualVserver.getVserverId());
         assertEquals("active", actualVserver.getProvStatus());
+        assertNotNull(actualVserver.getRelationshipList());
+        assertFalse(actualVserver.getRelationshipList().getRelationship().isEmpty());
+
+        final Optional<GenericVnf> optional = genericVnfCacheServiceProvider.getGenericVnf(VNF_ID);
+        assertTrue(optional.isPresent());
+        final GenericVnf genericVnf = optional.get();
+        assertNotNull(genericVnf.getRelationshipList());
+        assertFalse(genericVnf.getRelationshipList().getRelationship().isEmpty());
+
+        final Relationship expectedRelationShip = genericVnf.getRelationshipList().getRelationship().get(0);
+        assertEquals(VSERVER, expectedRelationShip.getRelatedTo());
+        assertNotNull(expectedRelationShip.getRelationshipData());
+        assertEquals(4, expectedRelationShip.getRelationshipData().size());
+
+        final List<RelationshipData> relationshipDataList = expectedRelationShip.getRelationshipData();
+        final RelationshipData vServerrelationshipData =
+                getRelationshipData(relationshipDataList, Constants.VSERVER_VSERVER_ID);
+        assertNotNull(vServerrelationshipData);
+        assertEquals(VSERVER_ID, vServerrelationshipData.getRelationshipValue());
+
+        final RelationshipData cloudOwnerRelationshipData =
+                getRelationshipData(relationshipDataList, Constants.CLOUD_REGION_CLOUD_OWNER);
+        assertNotNull(cloudOwnerRelationshipData);
+        assertEquals(CLOUD_OWNER_NAME, cloudOwnerRelationshipData.getRelationshipValue());
+
+        final RelationshipData cloudRegionIdRelationshipData =
+                getRelationshipData(relationshipDataList, Constants.CLOUD_REGION_CLOUD_REGION_ID);
+        assertNotNull(cloudRegionIdRelationshipData);
+        assertEquals(CLOUD_REGION_NAME, cloudRegionIdRelationshipData.getRelationshipValue());
+
+        final RelationshipData tenantRelationshipData =
+                getRelationshipData(relationshipDataList, Constants.TENANT_TENANT_ID);
+        assertNotNull(tenantRelationshipData);
+        assertEquals(TENANT_ID, tenantRelationshipData.getRelationshipValue());
+
     }
 
     @Test
@@ -325,6 +362,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
         final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
+        addCustomerServiceAndGenericVnf();
 
         final String tenantUrl = url + TENANTS_TENANT + TENANT_ID;
         addTenantAndAssertResponse(tenantUrl);

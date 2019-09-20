@@ -25,10 +25,14 @@ import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_OWNER;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_REGION_ID;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_OWNER_DEFINED_TYPE;
+import static org.onap.so.aaisimulator.utils.Constants.HOSTED_ON;
 import static org.onap.so.aaisimulator.utils.Constants.LOCATED_IN;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_ID;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.VSERVER;
+import static org.onap.so.aaisimulator.utils.Constants.VSERVER_VSERVER_ID;
+import static org.onap.so.aaisimulator.utils.Constants.VSERVER_VSERVER_NAME;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
@@ -62,6 +66,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServiceProvider
         implements CloudRegionCacheServiceProvider {
+
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudRegionCacheServiceProviderImpl.class);
 
@@ -322,6 +328,100 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
                 "Unable to find Vserver for using key: {}, tenant-id: {}, vserver-id: {} and resource-version: {} ...",
                 key, tenantId, vServerId, resourceVersion);
 
+        return false;
+    }
+
+    @Override
+    public Optional<Relationship> addvServerRelationShip(final CloudRegionKey key, final String tenantId,
+            final String vServerId, final Relationship relationship, final String requestUri) {
+        final Optional<Vserver> optional = getVserver(key, tenantId, vServerId);
+        if (optional.isPresent()) {
+            final Vserver vServer = optional.get();
+            RelationshipList relationshipList = vServer.getRelationshipList();
+            if (relationshipList == null) {
+                relationshipList = new RelationshipList();
+                vServer.setRelationshipList(relationshipList);
+            }
+            relationshipList.getRelationship().add(relationship);
+            LOGGER.info("Successfully added relation to Vserver with key: {}, tenantId: {} and vServerId: {}", key,
+                    tenantId, vServerId);
+            final String relatedLink = getBiDirectionalRelationShipListRelatedLink(requestUri);
+
+            final Relationship resultantRelationship = getVserverRelationship(key, tenantId, vServer, relatedLink);
+
+            return Optional.of(resultantRelationship);
+        }
+
+        LOGGER.error("Unable to find Vserver using key: {}, tenantId: {} and vServerId: {}...", key, tenantId,
+                vServerId);
+        return Optional.empty();
+    }
+
+    private Relationship getVserverRelationship(final CloudRegionKey key, final String tenantId, final Vserver vServer,
+            final String relatedLink) {
+        final Relationship resultantRelationship = new Relationship();
+        resultantRelationship.setRelatedTo(VSERVER);
+        resultantRelationship.setRelationshipLabel(HOSTED_ON);
+        resultantRelationship.setRelatedLink(relatedLink);
+
+        final List<RelationshipData> relationshipDataList = resultantRelationship.getRelationshipData();
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_OWNER, key.getCloudOwner()));
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_REGION_ID, key.getCloudRegionId()));
+        relationshipDataList.add(getRelationshipData(TENANT_TENANT_ID, tenantId));
+        relationshipDataList.add(getRelationshipData(VSERVER_VSERVER_ID, vServer.getVserverId()));
+
+        final List<RelatedToProperty> relatedToPropertyList = resultantRelationship.getRelatedToProperty();
+
+        final RelatedToProperty relatedToProperty = new RelatedToProperty();
+        relatedToProperty.setPropertyKey(VSERVER_VSERVER_NAME);
+        relatedToProperty.setPropertyValue(vServer.getVserverName());
+        relatedToPropertyList.add(relatedToProperty);
+        return resultantRelationship;
+    }
+
+    @Override
+    public boolean addVServerRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestUriString, final CloudRegionKey key, final String tenantId, final String vServerId,
+            final Relationship relationship) {
+        try {
+            final Optional<Vserver> optional = getVserver(key, tenantId, vServerId);
+            if (optional.isPresent()) {
+                final Vserver vServer = optional.get();
+                final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
+                final Relationship outGoingRelationShip = getVserverRelationship(key, tenantId, vServer,
+                        getRelationShipListRelatedLink(requestUriString));
+                final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
+                        outGoingRelationShip, targetUrl, Relationship.class);
+                if (optionalRelationship.isPresent()) {
+                    final Relationship resultantRelationship = optionalRelationship.get();
+
+                    RelationshipList relationshipList = vServer.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        vServer.setRelationshipList(relationshipList);
+                    }
+
+                    final Optional<Relationship> relationShipExists = relationshipList.getRelationship().stream()
+                            .filter(relation -> relation.getRelatedTo().equals(resultantRelationship.getRelatedTo())
+                                    && relation.getRelatedLink().equals(resultantRelationship.getRelatedLink()))
+                            .findAny();
+
+                    if (relationShipExists.isPresent()) {
+                        LOGGER.info("relationship {} already exists in cache ", resultantRelationship);
+                        return true;
+                    }
+
+                    LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
+                    return relationshipList.getRelationship().add(resultantRelationship);
+                }
+
+            }
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to add two-way relationship for key: {}, tenantId: {} and vServerId: {}", key,
+                    tenantId, vServerId, exception);
+        }
+        LOGGER.error("Unable to add Vserver relationship for key: {}, tenantId: {} and vServerId: {}...", key, tenantId,
+                vServerId);
         return false;
     }
 
