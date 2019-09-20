@@ -34,7 +34,7 @@ server:
 
 vnfds:
   vnfdlist:
-  -  vnfdid: 1
+  -  vnfdid: sgsn-mme_12df452s04131
      vnfclist:
      - vnfcid: VNFC1
        resourceTemplateId: vnfd1_vnfc1
