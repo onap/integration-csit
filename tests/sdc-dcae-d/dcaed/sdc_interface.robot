@@ -22,7 +22,7 @@ ${SDC_ARTIFACT_UPLOAD_TEMPLATE}    artifact_upload.jinja
 ${SDC_USER_REMARKS_TEMPLATE}    user_remarks.jinja
 ${SDC_RESOURCE_INSTANCE_TEMPLATE}    resource_instance.jinja
 
-${SDC_BE_ENDPOINT}  http://localhost:8080
+${SDC_BE_ENDPOINT}  ${SDC_BE_PROTOCOL}://localhost:${SDC_BE_PORT}
 
 *** Keywords ***
 Onboard DCAE Microservice
