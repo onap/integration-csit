@@ -58,6 +58,10 @@ public class TestUtils {
         return getFileAsString(getFile("test-data/deleteVnfInput.json").toPath());
     }
 
+    public static String getServiceRequestWithRequestActionDeleteServiceInput() throws IOException {
+        return getFileAsString(getFile("test-data/deleteServiceInput.json").toPath());
+    }
+
     public static String getFileAsString(final Path path) throws IOException {
         return new String(Files.readAllBytes(path));
     }
