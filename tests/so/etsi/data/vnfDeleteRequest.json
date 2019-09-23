@@ -1,0 +1,25 @@
+{
+	"requestDetails": {
+		"modelInfo": {
+			"modelType": "vnf",
+			"modelInvariantId": "b0f14066-2b65-40d2-b5a4-c8f2116fb5fc",
+			"modelVersionId": "84b9649a-4eb9-4967-9abe-e8702f55518b",
+			"modelName": "Sol004Zip3VSP",
+			"modelCustomizationName": "Sol004Zip3VSP 0",
+			"modelCustomizationId": "ff0860ac-fa9a-4fff-956b-80eeb7a330bc",
+			"modelVersion": "1.0"
+		},
+		"requestInfo": {
+			"source": "VID",
+			"requestorId": "demo"
+		},
+		"requestParameters": {
+			"testApi": "GR_API"
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "nordixcloud",
+			"cloudOwner": "CloudOwner",
+			"tenantId": "693c7729b2364a26a3ca602e6f66187d"
+		}
+	}
+}
