@@ -119,6 +119,34 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     }
 
     @Override
+    public Output deleteServiceOperationInformation(final GenericResourceApiServiceOperationInformation input) {
+        final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
+        final String svcRequestId = getSvcRequestId(input.getSdncRequestHeader());
+
+        if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId())) {
+            final String serviceInstanceId = serviceInformation.getServiceInstanceId();
+            final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                    getGenericResourceApiServicemodelinfrastructureService(serviceInstanceId);
+            if (optional.isPresent()) {
+                final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
+                LOGGER.info("Deleting GenericResourceApiServiceOperationInformation from cache using key: {}",
+                        serviceInstanceId);
+                cache.evict(serviceInstanceId);
+                return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.OK.toString())
+                        .responseMessage(EMPTY_STRING).svcRequestId(svcRequestId).serviceResponseInformation(
+                                new GenericResourceApiInstanceReference().instanceId(serviceInstanceId));
+            }
+            LOGGER.error(
+                    "Unable to find existing GenericResourceApiServiceModelInfrastructure in cache using service instance id: {}",
+                    serviceInstanceId);
+
+        }
+        LOGGER.error("Unable to remove service instance from cache due to invalid input: {}... ", input);
+        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                .responseMessage("Unable to remove service").svcRequestId(svcRequestId);
+    }
+
+    @Override
     public Optional<GenericResourceApiServicemodelinfrastructureService> getGenericResourceApiServicemodelinfrastructureService(
             final String serviceInstanceId) {
         final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
@@ -210,7 +238,14 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                             getExistingVnf(vnfId, vnfsList);
 
                     if (vnfInstanceOptional.isPresent()) {
-                        vnfsList.removeIf(vnf -> vnf.getVnfId() != null && vnf.getVnfId().equals(vnfId));
+                        vnfsList.removeIf(vnf -> {
+                            final String existingVnfId = vnf.getVnfId();
+                            if (existingVnfId != null && existingVnfId.equals(vnfId)) {
+                                LOGGER.info("Remove vnf with id: {} ... ", existingVnfId);
+                                return true;
+                            }
+                            return false;
+                        });
 
                         return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.OK.toString())
                                 .responseMessage(EMPTY_STRING).svcRequestId(svcRequestId)

@@ -19,6 +19,7 @@
  */
 package org.onap.so.sdncsimulator.controller;
 
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETESERVICEINSTANCE;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETEVNFINSTANCE;
 import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
 import javax.servlet.http.HttpServletRequest;
@@ -73,14 +74,14 @@ public class OperationsController {
             return ResponseEntity.badRequest().build();
         }
 
-        final Output output = cacheServiceProvider.putServiceOperationInformation(apiServiceOperationInformation);
+        final Output output = getOutput(apiServiceOperationInformation);
         final OutputRequest outputRequest = new OutputRequest(output);
 
         if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
-            LOGGER.info("Sucessfully added service in cache sending response: {}", outputRequest);
+            LOGGER.info("Sucessfully executed service request sending response: {}", outputRequest);
             return ResponseEntity.ok(outputRequest);
         }
-        LOGGER.error("Unable to add input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
+        LOGGER.error("Unable to execute input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
         return ResponseEntity.badRequest().body(outputRequest);
 
     }
@@ -100,17 +101,29 @@ public class OperationsController {
         }
 
         final Output output = getOutput(apiVnfOperationInformation);
-
         final OutputRequest outputRequest = new OutputRequest(output);
 
         if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
-            LOGGER.info("Sucessfully added vnf in cache sending response: {}", outputRequest);
+            LOGGER.info("Sucessfully executed request vnf sending response: {}", outputRequest);
             return ResponseEntity.ok(outputRequest);
         }
 
-        LOGGER.error("Unable to add input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
+        LOGGER.error("Unable to execute input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
         return ResponseEntity.badRequest().body(outputRequest);
 
+    }
+
+    private Output getOutput(final GenericResourceApiServiceOperationInformation serviceOperationInformation) {
+        final GenericResourceApiRequestinformationRequestInformation requestInformation =
+                serviceOperationInformation.getRequestInformation();
+        if (requestInformation != null) {
+            final GenericResourceApiRequestActionEnumeration requestAction = requestInformation.getRequestAction();
+            if (DELETESERVICEINSTANCE.equals(requestAction)) {
+                LOGGER.info("RequestAction: {} will delete service instance from cache ...", requestAction);
+                return cacheServiceProvider.deleteServiceOperationInformation(serviceOperationInformation);
+            }
+        }
+        return cacheServiceProvider.putServiceOperationInformation(serviceOperationInformation);
     }
 
     private Output getOutput(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation) {

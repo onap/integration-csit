@@ -34,6 +34,9 @@ public interface ServiceOperationsCacheServiceProvider {
     Output putServiceOperationInformation(
             final GenericResourceApiServiceOperationInformation apiServiceOperationInformation);
 
+    Output deleteServiceOperationInformation(
+            final GenericResourceApiServiceOperationInformation serviceOperationInformation);
+
     Optional<GenericResourceApiServicemodelinfrastructureService> getGenericResourceApiServicemodelinfrastructureService(
             final String serviceInstanceId);
 

@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getInvalidRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getServiceRequestWithRequestActionDeleteServiceInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithRequestActionDeleteVnfInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithSvcActionActivateInput;
@@ -302,7 +303,7 @@ public class OperationsControllerTest {
         assertNotNull(vnf.getVnfId());
         assertEquals(VNF_INSTANCE_ID, vnf.getVnfId());
         assertNotNull(vnf.getVnfData());
-        GenericResourceApiOperStatusData vnfLevelOperStatus = vnf.getVnfData().getVnfLevelOperStatus();
+        final GenericResourceApiOperStatusData vnfLevelOperStatus = vnf.getVnfData().getVnfLevelOperStatus();
         assertNotNull(vnfLevelOperStatus);
         assertEquals(GenericResourceApiLastRpcActionEnumeration.ACTIVATE, vnfLevelOperStatus.getLastRpcAction());
 
@@ -361,6 +362,43 @@ public class OperationsControllerTest {
         assertNotNull(service.getServiceData().getVnfs().getVnf());
         assertTrue(service.getServiceData().getVnfs().getVnf().isEmpty());
 
+
+    }
+
+    @Test
+    public void test_postServiceOperationInformation_withActionDeleteServiceInstance_successfullyRemoveServiceFromExistingServiceInCache()
+            throws Exception {
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Optional<GenericResourceApiServicemodelinfrastructureService> serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        final GenericResourceApiServicemodelinfrastructureService service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+
+        final HttpEntity<?> httpRemoveServiceEntity =
+                new HttpEntity<>(getServiceRequestWithRequestActionDeleteServiceInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseRemoveServiceEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpRemoveServiceEntity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, responseRemoveServiceEntity.getStatusCode());
+
+        final OutputRequest actualOutputRequest = responseRemoveServiceEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+        assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
+
+        serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertFalse(serviceOptional.isPresent());
 
     }
 
