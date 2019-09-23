@@ -15,43 +15,33 @@
 # limitations under the License.
 #
 
-set -x
-
 echo "This is ${WORKSPACE}/scripts/sdc-dcae-d/setup_sdc_dcaed.sh"
 
-# Clone sdc enviroment template
-mkdir -p ${WORKSPACE}/data/environments/
-mkdir -p ${WORKSPACE}/data/clone/
-cd ${WORKSPACE}/data/clone
-git clone --depth 1 http://gerrit.onap.org/r/sdc/dcae-d/dt-be-main
-git clone --depth 1 http://gerrit.onap.org/r/sdc
+# I am leaving this here for explicity - but the same is already set inside setup sdc...
+export ENV_NAME='CSIT'
 
-chmod -R 777 ${WORKSPACE}/data/clone
+# run sdc deployment
+set -- # to wipe out arguments...
+source ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh
+export ROBOT_VARIABLES
+
+# fail quick if error
+set -exo pipefail
+
+# prepare dcae-d
+mkdir -p "${WORKSPACE}/data/clone/"
+cd "${WORKSPACE}/data/clone"
+git clone --depth 1 "https://gerrit.onap.org/r/sdc/dcae-d/dt-be-main"
 
 # set enviroment variables
-
-export ENV_NAME='CSIT'
-export MR_IP_ADDR='10.0.0.1'
-export TEST_SUITE=$1
-
-ifconfig
-IP_ADDRESS=`ip route get 8.8.8.8 | awk '/src/{ print $7 }'`
-export HOST_IP=$IP_ADDRESS
-
-# setup enviroment json
-
-cat ${WORKSPACE}/data/clone/sdc/sdc-os-chef/environments/Template.json | sed "s/yyy/"$IP_ADDRESS"/g" > ${WORKSPACE}/data/environments/$ENV_NAME.json
-
-source ${WORKSPACE}/data/clone/sdc/version.properties
-export RELEASE=$major.$minor-STAGING-latest
 source ${WORKSPACE}/data/clone/dt-be-main/version.properties
 export DCAE_RELEASE=$major.$minor-STAGING-latest
-export DEP_ENV=$ENV_NAME
 
-cp ${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc-dcae-d/
 cp ${WORKSPACE}/data/clone/dt-be-main/docker/scripts/docker_run.sh ${WORKSPACE}/scripts/sdc-dcae-d/dcaed_docker_run.sh
 
-${WORKSPACE}/scripts/sdc-dcae-d/docker_run.sh -r ${RELEASE} -e ${ENV_NAME} -p 10001
 ${WORKSPACE}/scripts/sdc-dcae-d/dcaed_docker_run.sh -r ${DCAE_RELEASE} -e ${ENV_NAME} -p 10001
 
+# This file is sourced in another script which is out of our control...
+set +e
+set +o pipefail
 
