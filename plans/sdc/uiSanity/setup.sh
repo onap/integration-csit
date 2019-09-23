@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+# It can enable HTTPS for SDC uiSanity tests
+export SDC_TEST_HTTPS="${SDC_TEST_HTTPS:-false}"
+
 # By default all images are from remote upstream registry, this option
 # provides the chance to test locally built images
 export SDC_LOCAL_IMAGES="${SDC_LOCAL_IMAGES:-false}"
