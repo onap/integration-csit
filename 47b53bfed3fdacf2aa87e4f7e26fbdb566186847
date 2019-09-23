@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "131b9e26_f94809e6",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2019-09-23T14:53:41Z",
+      "side": 1,
+      "message": "typo - change to \"execute\"",
+      "range": {
+        "startLine": 84,
+        "startChar": 32,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "47b53bfed3fdacf2aa87e4f7e26fbdb566186847",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d434f5c_163fc541",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2019-09-23T14:53:41Z",
+      "side": 1,
+      "message": "typo - change to \"execute\"",
+      "range": {
+        "startLine": 111,
+        "startChar": 32,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "47b53bfed3fdacf2aa87e4f7e26fbdb566186847",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
