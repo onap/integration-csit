@@ -11,7 +11,7 @@ ${DCAE_CREATE_BLUEPRINT_PATH}   /SERVICE/createBluePrint
 ${DCAE_VFCMT_TEMPLATE}   create_vfcmt.jinja
 ${DCAE_COMPOSITION_TEMPLATE}   dcae_composition.jinja
 ${DCAE_MONITORING_CONFIGURATION_TEMPLATE}   dcae_monitoring_configuration.jinja
-${DCAE_BE_ENDPOINT}   http://localhost:8082
+${DCAE_BE_ENDPOINT}   https://localhost:8444
 
 *** Keywords ***
 Create Monitoring Template
