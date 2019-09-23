@@ -1,9 +1,20 @@
 #!/bin/bash
 
 function usage {
-    echo "usage: setup_sdc_for_sanity.sh {tad|tud}"
-    echo "setup sdc and run api test suite: setup_sdc_for_sanity.sh tad"
-    echo "setup sdc and run ui test suite: setup_sdc_for_sanity.sh tud"
+cat <<EOF
+USAGE
+    setup_sdc_for_sanity.sh [tad|tud]
+
+EXAMPLES
+    setup_sdc_for_sanity.sh
+        just setup sdc component (containers)
+
+    setup_sdc_for_sanity.sh tad
+        setup sdc and run api test suite
+
+    setup_sdc_for_sanity.sh tud
+        setup sdc and run ui test suite
+EOF
 }
 
 # arg: <variable name>
@@ -38,11 +49,24 @@ set -exo pipefail
 
 echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh"
 
+ENABLE_SIMULATOR=
+case "$1" in
+    tad|tud)
+        # enable test
+        export TEST_SUITE="-${1}"
+        ;;
+    '')
+        # we will just setup sdc - no tests
+        export TEST_SUITE=""
 
-if [ "$1" != "tad" ] && [ "$1" != "tud" ]; then
-    usage
-    exit 1
-fi
+        # this is mandatory
+        ENABLE_SIMULATOR="--simulator"
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
 
 # Clone sdc enviroment template
 mkdir -p "${WORKSPACE}/data/environments/"
@@ -59,7 +83,7 @@ if using_local_images && [ -n "$SDC_LOCAL_GITREPO" ] ; then
         exit 1
     fi
 else
-    git clone --depth 1 http://gerrit.onap.org/r/sdc -b ${GERRIT_BRANCH}
+    git clone --depth 1 "https://gerrit.onap.org/r/sdc" -b ${GERRIT_BRANCH}
 fi
 
 # TODO: why?
@@ -69,7 +93,6 @@ chmod -R 777 "${WORKSPACE}/data/clone"
 
 export ENV_NAME='CSIT'
 export MR_IP_ADDR='10.0.0.1'
-export TEST_SUITE="$1"
 
 ifconfig
 IP_ADDRESS=`ip route get 8.8.8.8 | awk '/src/{ print $7 }'`
@@ -111,13 +134,13 @@ if using_local_images ; then
         --local \
         -r "${RELEASE}" \
         -e "${ENV_NAME}" \
-        -p 10001 "-${TEST_SUITE}"
+        -p 10001 ${TEST_SUITE} ${ENABLE_SIMULATOR}
 else
     echo "[INFO]: We will download images from the default registry (tag: ${RELEASE})"
     ${WORKSPACE}/scripts/sdc/docker_run.sh \
         -r "${RELEASE}" \
         -e "${ENV_NAME}" \
-        -p 10001 "-${TEST_SUITE}"
+        -p 10001 ${TEST_SUITE} ${ENABLE_SIMULATOR}
 fi
 
 # final step if the robot test needs to be adjusted
