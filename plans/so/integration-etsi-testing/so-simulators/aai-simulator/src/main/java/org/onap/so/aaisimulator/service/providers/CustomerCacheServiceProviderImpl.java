@@ -152,6 +152,9 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
 
             }
         }
+        LOGGER.error(
+                "Unable to find ServiceInstance using globalCustomerId: {}, serviceType: {} and serviceInstanceId: {} ...",
+                globalCustomerId, serviceType, serviceInstanceId);
         return Optional.empty();
     }
 
@@ -225,6 +228,42 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
             return true;
         }
         LOGGER.error("Unable to find ServiceInstance ...");
+        return false;
+    }
+
+    @Override
+    public boolean deleteSericeInstance(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String resourceVersion) {
+        final Cache cache = getCache(CUSTOMER_CACHE.getName());
+        final Customer value = cache.get(globalCustomerId, Customer.class);
+
+        if (value != null) {
+            final Optional<ServiceSubscription> serviceSubscription = value.getServiceSubscriptions()
+                    .getServiceSubscription().stream().filter(s -> serviceType.equals(s.getServiceType())).findFirst();
+
+            if (serviceSubscription.isPresent()) {
+                LOGGER.info("Found service subscription ...");
+                final ServiceInstances serviceInstances = serviceSubscription.get().getServiceInstances();
+                if (serviceInstances != null) {
+
+                    serviceInstances.getServiceInstance().removeIf(serviceInstance -> {
+                        final String existingServiceInstanceId = serviceInstance.getServiceInstanceId();
+                        final String existingResourceVersion = serviceInstance.getResourceVersion();
+                        if (existingServiceInstanceId != null && existingServiceInstanceId.equals(serviceInstanceId)
+                                && existingResourceVersion != null && existingResourceVersion.equals(resourceVersion)) {
+                            LOGGER.info("Removing ServiceInstance with serviceInstanceId: {} and resourceVersion: {}",
+                                    existingServiceInstanceId, existingResourceVersion);
+                            return true;
+                        }
+                        return false;
+                    });
+
+
+                    return true;
+                }
+
+            }
+        }
         return false;
     }
 

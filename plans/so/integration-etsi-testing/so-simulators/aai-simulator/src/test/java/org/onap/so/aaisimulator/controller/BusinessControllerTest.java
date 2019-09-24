@@ -335,8 +335,8 @@ public class BusinessControllerTest extends AbstractSpringBootTest {
 
         invokeServiceInstanceEndPointAndAssertResponse();
 
-        final String relationShipUrl =
-                getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+        final String relationShipUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL,
+                BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity2 = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getRelationShipJsonObject(), Relationship.class);
@@ -358,6 +358,26 @@ public class BusinessControllerTest extends AbstractSpringBootTest {
         assertFalse(genericVnfs.getGenericVnf().isEmpty());
         final GenericVnf genericVnf = genericVnfs.getGenericVnf().get(0);
         assertEquals(GENERIC_VNF_NAME, genericVnf.getVnfName());
+    }
+
+    @Test
+    public void test_DeleteSericeInstance_ServiceInstanceRemovedFromCache() throws Exception {
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
+
+        invokeCustomerEndPointAndAssertResponse();
+
+        invokeServiceInstanceEndPointAndAssertResponse();
+
+        final Optional<ServiceInstance> optional =
+                cacheServiceProvider.getServiceInstance(GLOBAL_CUSTOMER_ID, SERVICE_TYPE, SERVICE_INSTANCE_ID);
+        assertTrue(optional.isPresent());
+        final ServiceInstance serviceInstance = optional.get();
+
+        final ResponseEntity<Void> responseEntity = testRestTemplateService
+                .invokeHttpDelete(url + "?resource-version=" + serviceInstance.getResourceVersion(), Void.class);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+        assertFalse(cacheServiceProvider.getServiceInstance(GLOBAL_CUSTOMER_ID, SERVICE_TYPE, SERVICE_INSTANCE_ID)
+                .isPresent());
     }
 
     private void invokeServiceInstanceEndPointAndAssertResponse() throws IOException {
