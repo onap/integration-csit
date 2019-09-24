@@ -25,9 +25,9 @@ services:
   so-monitoring:
     image: onap/so/so-monitoring:${TAG}
 ################################################################################
-  vnfm-adapter:
+  so-vnfm-adapter:
     image: onap/so/vnfm-adapter:${TAG}
 ################################################################################
-  vnfm-simulator:
+  so-vnfm-simulator:
     image: onap/so/vnfm-simulator:${TAG}
 ################################################################################

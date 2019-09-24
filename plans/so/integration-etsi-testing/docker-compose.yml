@@ -129,8 +129,8 @@ services:
       - "8085:8085"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/sdc-controller/onapheat:/app/config
       - ${CONFIG_DIR_PATH}/distribution-test-zip/zipped_sdc_csar.tar.gz:/distribution-test-zip/zipped_sdc_csar.tar.gz
+      - ${CONFIG_DIR_PATH}/override-files/sdc-controller/onapheat:/app/config
     environment:
       - APP=sdc-controller
       - JVM_ARGS=-Xms64m -Xmx512m
