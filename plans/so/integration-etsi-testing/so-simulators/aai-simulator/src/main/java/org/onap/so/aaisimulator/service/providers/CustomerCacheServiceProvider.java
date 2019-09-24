@@ -59,4 +59,7 @@ public interface CustomerCacheServiceProvider extends Clearable {
     Optional<Relationship> addRelationShip(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final Relationship relationship, final String requestUri);
 
+    boolean deleteSericeInstance(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String resourceVersion);
+
 }

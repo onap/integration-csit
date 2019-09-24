@@ -50,6 +50,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -323,5 +324,33 @@ public class BusinessController {
                 relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
 
         return getRequestErrorResponseEntity(request);
+    }
+
+    @DeleteMapping(
+            value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> deleteSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
+            @PathVariable("service-type") final String serviceType,
+            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+            @RequestParam(name = "resource-version") final String resourceVersion, final HttpServletRequest request) {
+
+        LOGGER.info(
+                "Will delete SericeInstance for 'global-customer-id': {}, 'service-type': {}, 'service-instance-id': {} and 'resource-version': {}",
+                globalCustomerId, serviceType, serviceInstanceId, resourceVersion);
+
+        if (cacheServiceProvider.deleteSericeInstance(globalCustomerId, serviceType, serviceInstanceId,
+                resourceVersion)) {
+            LOGGER.info(
+                    "Successfully deleted SericeInstance from cache for 'global-customer-id': {}, 'service-type': {}, 'service-instance-id': {} and 'resource-version': {}",
+                    globalCustomerId, serviceType, serviceInstanceId, resourceVersion);
+            return ResponseEntity.noContent().build();
+        }
+
+        LOGGER.error(
+                "Unable to delete SericeInstance from cache for 'global-customer-id': {}, 'service-type': {}, 'service-instance-id': {} and 'resource-version': {}",
+                globalCustomerId, serviceType, serviceInstanceId, resourceVersion);
+
+        return getRequestErrorResponseEntity(request);
+
     }
 }
