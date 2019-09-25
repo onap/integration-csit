@@ -130,6 +130,10 @@ public class Constants {
 
     public static final String ESR_SYSTEM_INFO_LIST = "esr-system-info-list";
 
+    public static final String ESR_VNFM_VNFM_ID = "esr-vnfm.vnfm-id";
+
+    public static final String DEPENDS_ON = "tosca.relationships.DependsOn";
+
     public static final String VSERVER_VSERVER_NAME = "vserver.vserver-name";
 
     public static final String VSERVER_VSERVER_ID = "vserver.vserver-id";

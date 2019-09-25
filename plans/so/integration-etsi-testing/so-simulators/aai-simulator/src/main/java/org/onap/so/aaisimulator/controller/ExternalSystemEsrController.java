@@ -23,6 +23,8 @@ import static org.onap.so.aaisimulator.utils.Constants.ESR_SYSTEM_INFO;
 import static org.onap.so.aaisimulator.utils.Constants.ESR_SYSTEM_INFO_LIST;
 import static org.onap.so.aaisimulator.utils.Constants.ESR_VNFM;
 import static org.onap.so.aaisimulator.utils.Constants.EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL;
+import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
 import java.util.List;
@@ -33,10 +35,14 @@ import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.EsrVnfm;
 import org.onap.aai.domain.yang.EsrVnfmList;
+import org.onap.aai.domain.yang.Relationship;
 import org.onap.so.aaisimulator.service.providers.ExternalSystemCacheServiceProvider;
+import org.onap.so.aaisimulator.utils.HttpServiceUtils;
+import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +50,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -77,8 +84,8 @@ public class ExternalSystemEsrController {
 
     @GetMapping(value = "/esr-vnfm/{vnfm-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getEsrVnfm(@PathVariable("vnfm-id") final String vnfmId,
-            final HttpServletRequest request) {
-        LOGGER.info("Will retrieve ESR VNFM for 'vnfm id': {} ...", vnfmId);
+            @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
+        LOGGER.info("Will retrieve ESR VNFM for 'vnfm id': {} with depth: {}...", vnfmId, depth);
 
         final Optional<EsrVnfm> optional = cacheServiceProvider.getEsrVnfm(vnfmId);
         if (optional.isPresent()) {
@@ -87,7 +94,7 @@ public class ExternalSystemEsrController {
             return ResponseEntity.ok(esrVnfm);
         }
 
-        LOGGER.error("Couldn't Esr Vnfm for 'vnfm id': {} ...", vnfmId);
+        LOGGER.error("Couldn't Esr Vnfm for 'vnfm id': {} with depth: {}...", vnfmId, depth);
         return getRequestErrorResponseEntity(request, ESR_VNFM);
     }
 
@@ -142,6 +149,27 @@ public class ExternalSystemEsrController {
 
         LOGGER.error("Couldn't find esrSystemInfoList for 'vnfm id': {} ...", vnfmId);
         return getRequestErrorResponseEntity(request, ESR_SYSTEM_INFO);
+    }
+
+    @PutMapping(value = "/esr-vnfm/{vnfm-id}" + RELATIONSHIP_LIST_RELATIONSHIP_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putEsrVnfmRelationShip(@RequestBody final Relationship relationship,
+            @PathVariable("vnfm-id") final String vnfmId, final HttpServletRequest request) {
+        LOGGER.info("Will put RelationShip for 'vnfm-id': {} ...", vnfmId);
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+            final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), vnfmId, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
+        }
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
+        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, ESR_VNFM);
     }
 
 }

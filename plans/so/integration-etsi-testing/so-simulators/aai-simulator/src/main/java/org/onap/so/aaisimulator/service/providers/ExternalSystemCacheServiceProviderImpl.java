@@ -20,6 +20,11 @@
 package org.onap.so.aaisimulator.service.providers;
 
 import static org.onap.so.aaisimulator.utils.CacheName.ESR_VNFM_CACHE;
+import static org.onap.so.aaisimulator.utils.Constants.DEPENDS_ON;
+import static org.onap.so.aaisimulator.utils.Constants.ESR_VNFM;
+import static org.onap.so.aaisimulator.utils.Constants.ESR_VNFM_VNFM_ID;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
+import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,12 +33,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.EsrVnfm;
+import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.RelationshipData;
+import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,9 +55,14 @@ public class ExternalSystemCacheServiceProviderImpl extends AbstractCacheService
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalSystemCacheServiceProviderImpl.class);
 
+    private final HttpRestServiceProvider httpRestServiceProvider;
+
     @Autowired
-    public ExternalSystemCacheServiceProviderImpl(final CacheManager cacheManager) {
+    public ExternalSystemCacheServiceProviderImpl(final CacheManager cacheManager,
+            final HttpRestServiceProvider httpRestServiceProvider) {
         super(cacheManager);
+        this.httpRestServiceProvider = httpRestServiceProvider;
+
     }
 
     @Override
@@ -128,6 +142,53 @@ public class ExternalSystemCacheServiceProviderImpl extends AbstractCacheService
         }
         LOGGER.error("Unable to add EsrSystemInfo in cache for vnfmId: {} ", vnfmId);
         return false;
+    }
+
+    @Override
+    public boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestUriString, final String vnfmId, final Relationship relationship) {
+        try {
+            final Optional<EsrVnfm> optional = getEsrVnfm(vnfmId);
+            if (optional.isPresent()) {
+                final EsrVnfm esrVnfm = optional.get();
+                final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
+                final Relationship outGoingRelationShip =
+                        getRelationship(getRelationShipListRelatedLink(requestUriString), esrVnfm);
+                final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
+                        outGoingRelationShip, targetUrl, Relationship.class);
+                if (optionalRelationship.isPresent()) {
+                    final Relationship resultantRelationship = optionalRelationship.get();
+
+                    RelationshipList relationshipList = esrVnfm.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        esrVnfm.setRelationshipList(relationshipList);
+                    }
+                    if (relationshipList.getRelationship().add(resultantRelationship)) {
+                        LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
+                        return true;
+                    }
+                }
+            }
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to add two-way relationship for vnfmId: {}", vnfmId, exception);
+        }
+        LOGGER.error("Unable to add relationship in cache for vnfmId: {}", vnfmId);
+        return false;
+    }
+
+    private Relationship getRelationship(final String relatedLink, final EsrVnfm esrVnfm) {
+        final Relationship relationShip = new Relationship();
+        relationShip.setRelatedTo(ESR_VNFM);
+        relationShip.setRelationshipLabel(DEPENDS_ON);
+        relationShip.setRelatedLink(relatedLink);
+
+        final RelationshipData relationshipData = new RelationshipData();
+        relationshipData.setRelationshipKey(ESR_VNFM_VNFM_ID);
+        relationshipData.setRelationshipValue(esrVnfm.getVnfmId());
+        relationShip.getRelationshipData().add(relationshipData);
+
+        return relationShip;
     }
 
     private List<EsrSystemInfo> getEsrSystemInfoList(final EsrVnfm esrVnfm) {

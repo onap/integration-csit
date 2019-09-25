@@ -121,7 +121,7 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
                 final GenericVnf genericVnf = optional.get();
                 final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
                 final Relationship outGoingRelationShip =
-                        getRelationship(getRelationShipListRelatedLink(requestUriString), genericVnf);
+                        getRelationship(getRelationShipListRelatedLink(requestUriString), genericVnf, COMPOSED_OF);
                 final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
                         outGoingRelationShip, targetUrl, Relationship.class);
                 if (optionalRelationship.isPresent()) {
@@ -160,7 +160,8 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
             LOGGER.info("Successfully added relation to GenericVnf for vnfId: {}", vnfId);
 
             final String relatedLink = getBiDirectionalRelationShipListRelatedLink(requestURI);
-            final Relationship resultantRelationship = getRelationship(relatedLink, genericVnf);
+            final Relationship resultantRelationship =
+                    getRelationship(relatedLink, genericVnf, relationship.getRelationshipLabel());
             return Optional.of(resultantRelationship);
         }
         return Optional.empty();
@@ -230,10 +231,11 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         return false;
     }
 
-    private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf) {
+    private Relationship getRelationship(final String relatedLink, final GenericVnf genericVnf,
+            final String relationshipLabel) {
         final Relationship relationShip = new Relationship();
         relationShip.setRelatedTo(GENERIC_VNF);
-        relationShip.setRelationshipLabel(COMPOSED_OF);
+        relationShip.setRelationshipLabel(relationshipLabel);
         relationShip.setRelatedLink(relatedLink);
 
         final RelationshipData relationshipData = new RelationshipData();

@@ -66,7 +66,7 @@ mso:
       activateServerTLSAuth: false
       keyStorePassword:
       keyStorePath:
-      watchDogTimeout: 300
+      watchDogTimeout: 100
       isFitlerInEmptyResources: true
       messageBusAddress: vm1.mr.simpledemo.onap.org,vm1.mr.simpledemo.onap.org
   asdc:

@@ -24,6 +24,8 @@ import java.util.Optional;
 import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
 import org.onap.aai.domain.yang.EsrVnfm;
+import org.onap.aai.domain.yang.Relationship;
+import org.springframework.http.HttpHeaders;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -40,4 +42,7 @@ public interface ExternalSystemCacheServiceProvider extends Clearable {
     Optional<EsrSystemInfoList> getEsrSystemInfoList(final String vnfmId);
 
     boolean putEsrSystemInfo(final String vnfmId, final String esrSystemInfoId, final EsrSystemInfo esrSystemInfo);
+
+    boolean addRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestURI,
+            final String vnfmId, Relationship relationship);
 }

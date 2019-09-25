@@ -228,7 +228,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
         final Relationship relationship = relationshipList.getRelationship().get(0);
 
-        assertEquals(Constants.COMPOSED_OF, relationship.getRelationshipLabel());
+        assertEquals(Constants.BELONGS_TO, relationship.getRelationshipLabel());
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(1, relationship.getRelationshipData().size());
 
