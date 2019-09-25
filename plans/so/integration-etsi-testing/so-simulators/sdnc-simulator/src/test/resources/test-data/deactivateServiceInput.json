@@ -7,7 +7,7 @@
         },
         "sdnc-request-header": {
             "svc-request-id": "04fc9f50-87b8-430d-a232-ef24bd6c4150",
-            "svc-action": "delete"
+            "svc-action": "deactivate"
         },
         "service-information": {
             "onap-model-information": {

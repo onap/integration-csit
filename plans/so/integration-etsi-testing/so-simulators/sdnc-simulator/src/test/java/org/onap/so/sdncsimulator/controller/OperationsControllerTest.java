@@ -23,8 +23,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiRpcActionEnumeration.ASSIGN;
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiRpcActionEnumeration.DEACTIVATE;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getInvalidRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getRequestInput;
+import static org.onap.so.sdncsimulator.controller.TestUtils.getServiceRequestWithRequestActionDeleteServiceAndSvcActionDeactivateInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getServiceRequestWithRequestActionDeleteServiceInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestInput;
 import static org.onap.so.sdncsimulator.controller.TestUtils.getVnfRequestWithRequestActionDeleteVnfInput;
@@ -399,6 +402,49 @@ public class OperationsControllerTest {
         serviceOptional =
                 cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
         assertFalse(serviceOptional.isPresent());
+
+    }
+
+    @Test
+    public void test_postServiceOperationInformation_withActionDeleteServiceInstanceAndSvcActionDeactivate_successfullyUpdateExistingServiceInCache()
+            throws Exception {
+
+        final HttpEntity<?> httpEntity = new HttpEntity<>(getRequestInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> responseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, httpEntity, OutputRequest.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Optional<GenericResourceApiServicemodelinfrastructureService> serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+
+        GenericResourceApiServicemodelinfrastructureService service = serviceOptional.get();
+        assertNotNull(service.getServiceInstanceId());
+        assertNotNull(service.getServiceStatus());
+        assertEquals(ASSIGN, service.getServiceStatus().getRpcAction());
+
+        final HttpEntity<?> entity = new HttpEntity<>(
+                getServiceRequestWithRequestActionDeleteServiceAndSvcActionDeactivateInput(), getHttpHeaders());
+        final ResponseEntity<OutputRequest> deactivateResponseEntity =
+                restTemplate.exchange(getUrl(), HttpMethod.POST, entity, OutputRequest.class);
+        assertEquals(HttpStatus.OK, deactivateResponseEntity.getStatusCode());
+
+        final OutputRequest actualOutputRequest = deactivateResponseEntity.getBody();
+        assertNotNull(actualOutputRequest);
+        assertNotNull(actualOutputRequest.getOutput());
+
+        final Output actualObject = actualOutputRequest.getOutput();
+
+        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
+        assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
+
+        serviceOptional =
+                cacheServiceProvider.getGenericResourceApiServicemodelinfrastructureService(SERVICE_INSTANCE_ID);
+        assertTrue(serviceOptional.isPresent());
+        service = serviceOptional.get();
+        assertNotNull(service.getServiceStatus());
+        assertEquals(DEACTIVATE, service.getServiceStatus().getRpcAction());
 
     }
 

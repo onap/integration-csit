@@ -94,28 +94,37 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
         final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
         if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId())) {
-            final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
             final String serviceInstanceId = serviceInformation.getServiceInstanceId();
-            LOGGER.info("Adding GenericResourceApiServiceOperationInformation to cache with key: {}",
-                    serviceInstanceId);
 
-            final GenericResourceApiServicemodelinfrastructureService service =
-                    getServiceItem(input, serviceInstanceId);
-            cache.put(serviceInstanceId, service);
+            if (isServiceOperationInformationNotExists(serviceInstanceId, input)) {
+                final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
+                LOGGER.info("Adding GenericResourceApiServiceOperationInformation to cache with key: {}",
+                        serviceInstanceId);
 
-            final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
+                final GenericResourceApiServicemodelinfrastructureService service =
+                        getServiceItem(input, serviceInstanceId);
+                cache.put(serviceInstanceId, service);
 
-            return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
-                    .responseCode(serviceStatus.getResponseCode()).responseMessage(serviceStatus.getResponseMessage())
-                    .svcRequestId(svcRequestId).serviceResponseInformation(new GenericResourceApiInstanceReference()
-                            .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)));
+                final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
 
+                return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
+                        .responseCode(serviceStatus.getResponseCode())
+                        .responseMessage(serviceStatus.getResponseMessage()).svcRequestId(svcRequestId)
+                        .serviceResponseInformation(new GenericResourceApiInstanceReference()
+                                .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)));
+            }
+            LOGGER.error("serviceInstanceId: {} already exists", serviceInstanceId);
+            return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                    .responseMessage("serviceInstanceId: " + serviceInstanceId + " already exists")
+                    .svcRequestId(svcRequestId);
         }
+
         LOGGER.error(
                 "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
                 input);
         return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
                 .responseMessage("Service instance not found").svcRequestId(svcRequestId);
+
     }
 
     @Override
@@ -464,6 +473,35 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         }
 
         return identifier;
+
+    }
+
+    private boolean isServiceOperationInformationNotExists(final String serviceInstanceId,
+            final GenericResourceApiServiceOperationInformation input) {
+        final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
+        final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                getGenericResourceApiServicemodelinfrastructureService(serviceInstanceId);
+
+        if (optional.isPresent()) {
+            final GenericResourceApiServicemodelinfrastructureService existingService = optional.get();
+            final GenericResourceApiServicestatusServiceStatus serviceStatus = existingService.getServiceStatus();
+            if (serviceStatus != null) {
+                final GenericResourceApiRpcActionEnumeration rpcAction = serviceStatus.getRpcAction();
+                final String svcAction = getSvcAction(requestHeader);
+                if (rpcAction != null && rpcAction.toString().equals(svcAction)) {
+                    LOGGER.error("Found Service with id: {} and RpcAction: {} same as SvcAction:  {}",
+                            serviceInstanceId, rpcAction, svcAction);
+                    return false;
+                }
+
+                final Cache cache = getCache(SERVICE_TOPOLOGY_OPERATION_CACHE);
+                LOGGER.info(
+                        "Deleting existing GenericResourceApiServiceOperationInformation from cache using key: {} as SvcAction is changed from {} to {}",
+                        serviceInstanceId, rpcAction, svcAction);
+                cache.evict(serviceInstanceId);
+            }
+        }
+        return true;
 
     }
 

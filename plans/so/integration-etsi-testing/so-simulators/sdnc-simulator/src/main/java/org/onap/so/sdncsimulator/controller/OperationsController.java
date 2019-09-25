@@ -21,12 +21,15 @@ package org.onap.so.sdncsimulator.controller;
 
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETESERVICEINSTANCE;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETEVNFINSTANCE;
+import static org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration.DELETE;
 import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestinformationRequestInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiSdncrequestheaderSdncRequestHeader;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
@@ -116,10 +119,14 @@ public class OperationsController {
     private Output getOutput(final GenericResourceApiServiceOperationInformation serviceOperationInformation) {
         final GenericResourceApiRequestinformationRequestInformation requestInformation =
                 serviceOperationInformation.getRequestInformation();
-        if (requestInformation != null) {
+        final GenericResourceApiSdncrequestheaderSdncRequestHeader sdncRequestHeader =
+                serviceOperationInformation.getSdncRequestHeader();
+        if (requestInformation != null && sdncRequestHeader != null) {
             final GenericResourceApiRequestActionEnumeration requestAction = requestInformation.getRequestAction();
-            if (DELETESERVICEINSTANCE.equals(requestAction)) {
-                LOGGER.info("RequestAction: {} will delete service instance from cache ...", requestAction);
+            final GenericResourceApiSvcActionEnumeration svcAction = sdncRequestHeader.getSvcAction();
+            if (DELETESERVICEINSTANCE.equals(requestAction) && DELETE.equals(svcAction)) {
+                LOGGER.info("RequestAction: {} and SvcAction: {} will delete service instance from cache ...",
+                        requestAction, svcAction);
                 return cacheServiceProvider.deleteServiceOperationInformation(serviceOperationInformation);
             }
         }

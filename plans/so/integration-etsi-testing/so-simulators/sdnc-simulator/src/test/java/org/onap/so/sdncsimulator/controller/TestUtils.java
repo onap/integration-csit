@@ -62,6 +62,12 @@ public class TestUtils {
         return getFileAsString(getFile("test-data/deleteServiceInput.json").toPath());
     }
 
+    public static String getServiceRequestWithRequestActionDeleteServiceAndSvcActionDeactivateInput()
+            throws IOException {
+        return getFileAsString(getFile("test-data/deactivateServiceInput.json").toPath());
+    }
+
+
     public static String getFileAsString(final Path path) throws IOException {
         return new String(Files.readAllBytes(path));
     }
