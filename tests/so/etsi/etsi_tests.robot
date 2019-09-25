@@ -106,3 +106,30 @@ Delete VNF Instance
     Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
+
+Delete Service Instance
+    Run Keyword If      "${service_instance_Id}" != "${EMPTY}"      Log to Console    VNF Instance ID :${service_instance_Id} received
+    ...                ELSE      Fail           Log to Console  Invalid Service Instance ID :${service_instance_Id} recieved
+
+    Create Session   api_handler_session  http://${REPO_IP}:8080
+    ${data}=    Get Binary File     ${CURDIR}${/}data${/}serviceDeleteRequest.json
+    &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
+    ${service_delete_request}=    Delete Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}     data=${data}     headers=${headers}
+    ${service_delete_json_response}=    Evaluate     json.loads("""${service_delete_request.content}""")    json
+    Log to Console      ${service_delete_json_response}
+    ${request_ID}=          Set Variable         ${service_delete_json_response}[requestReferences][requestId]
+    ${actual_request_state}=    Set Variable    ""
+
+    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+    \   Log To Console      ${orchestration_status_request.content}
+    \   ${orchestration_json_response}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
+    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+    \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+
+    Log To Console     final repsonse status received: ${actual_request_state}
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
