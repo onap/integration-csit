@@ -1,0 +1,19 @@
+{
+    "requestDetails": {
+         "modelInfo": {
+              "modelType": "service",
+              "modelInvariantId": "0ddc448d-5513-44bc-8b02-5759d84600d5",
+              "modelVersionId": "28d4acf3-4791-4998-8d06-1cdf6d1767a9",
+              "modelName": "manualDistributionTestService",
+              "modelVersion": "1.0"
+         },
+        "requestInfo": {
+             "source": "VID",
+             "requestorId": "demo"
+        },
+        "requestParameters": {
+            "testApi": "GR_API",
+            "aLaCarte": true
+        }
+    }
+}
