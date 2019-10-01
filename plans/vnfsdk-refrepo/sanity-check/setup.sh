@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 # These scripts are sourced by run-csit.sh.
-
+VNFSDK_REFREPO_DOCKER_VERSION=1.3-STAGING-latest
 
 #Start postgres database
 docker run -d -i -t --name=postgres   -p 5432:5432 nexus3.onap.org:10001/onap/vnfsdk/refrepo/postgres:latest
@@ -23,7 +23,7 @@ docker run -d -i -t --name=postgres   -p 5432:5432 nexus3.onap.org:10001/onap/vn
 POSTGRES=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' postgres`
 
 #Start market place
-docker run -d -i -t --name=refrepo -e POSTGRES_SERVICE_HOST=$POSTGRES  -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:1.1-STAGING-latest
+docker run -d -i -t --name=refrepo -e POSTGRES_SERVICE_HOST=$POSTGRES  -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
 
 # Wait for Market place initialization
 echo Wait for VNF Repository initialization
@@ -37,4 +37,3 @@ REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' refrepo`
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REPO_IP:${REPO_IP}"
 echo ${ROBOT_VARIABLES}
-
