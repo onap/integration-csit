@@ -50,6 +50,7 @@ mkdir -p "${WORKSPACE}/data/clone/"
 
 cd "${WORKSPACE}/data/clone"
 if using_local_images && [ -n "$SDC_LOCAL_GITREPO" ] ; then
+    SDC_LOCAL_GITREPO=$(realpath "$SDC_LOCAL_GITREPO")
     if [ -d "$SDC_LOCAL_GITREPO" ] ; then
         rm -rf ./sdc
         cp -a "$SDC_LOCAL_GITREPO" ./sdc
