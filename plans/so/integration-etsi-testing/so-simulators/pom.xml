@@ -12,8 +12,10 @@
     <properties>
         <jax.ws.rs>2.1</jax.ws.rs>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
     </properties>
 
     <modules>
@@ -21,6 +23,7 @@
         <module>sdc-simulator</module>
         <module>aai-simulator</module>
         <module>sdnc-simulator</module>
+        <module>vnfm-simulator</module>
         <module>package</module>
     </modules>
 
