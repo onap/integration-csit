@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd59de7c_6368fadc",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/vnfm-simulator/vnfm-api/src/main/resources/vnfm-sim-swagger.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4327
+      },
+      "writtenOn": "2019-10-04T14:29:00Z",
+      "side": 1,
+      "message": "Tabs",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "43566fbe275d7b126e1444faf004e257109bb0c8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
