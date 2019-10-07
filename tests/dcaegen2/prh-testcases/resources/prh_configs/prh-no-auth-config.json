@@ -16,6 +16,7 @@
   "dmaap.dmaapUpdateProducerConfiguration.dmaapUserPassword": "admin",
   "dmaap.dmaapUpdateProducerConfiguration.dmaapContentType": "application/json",
   "aai.aaiClientConfiguration.pnfUrl": "http://aai:3333/aai/v12/network/pnfs/pnf",
+  "aai.aaiClientConfiguration.baseUrl": "https://aai:3334/aai/v12/network",
   "aai.aaiClientConfiguration.aaiUserName": "DCAE",
   "aai.aaiClientConfiguration.aaiUserPassword": "DCAE",
   "aai.aaiClientConfiguration.aaiIgnoreSslCertificateErrors": true,
