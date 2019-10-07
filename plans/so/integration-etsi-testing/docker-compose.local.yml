@@ -28,6 +28,3 @@ services:
   so-vnfm-adapter:
     image: onap/so/vnfm-adapter:${TAG}
 ################################################################################
-  so-vnfm-simulator:
-    image: onap/so/vnfm-simulator:${TAG}
-################################################################################

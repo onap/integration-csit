@@ -99,6 +99,29 @@
                                 </assembly>
                             </build>
                         </image>
+                        <image>
+                            <name>simulators/vnfm-simulator</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files</dockerFileDir>
+                                <dockerFile>Dockerfile.so-simulator-base-image</dockerFile>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <assembly>
+                                    <inline>
+                                        <dependencySets>
+                                            <dependencySet>
+                                                <includes>
+                                                    <include>org.onap.so.simulators.vnfm:vnfm-service</include>
+                                                </includes>
+                                                <outputFileNameMapping>app.jar</outputFileNameMapping>
+                                            </dependencySet>
+                                        </dependencySets>
+                                    </inline>
+                                </assembly>
+                            </build>
+                        </image>
                     </images>
                 </configuration>
                 <executions>
@@ -145,6 +168,11 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>sdnc-simulator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.onap.so.simulators.vnfm</groupId>
+            <artifactId>vnfm-service</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

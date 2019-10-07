@@ -310,10 +310,11 @@ services:
         max-file: "5"
 ################################################################################
   so-vnfm-simulator:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-simulator:${TAG}
+    image: simulators/vnfm-simulator:latest
     ports:
       - "9093:9093"
     volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/vnfm-simulator/onapheat:/app/config
     environment:
       - APP=VNFM-SIMULATOR
