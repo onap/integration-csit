@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015cfb10_fc010323",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2019-10-09T09:04:12Z",
+      "side": 1,
+      "message": "I assume both of these reservations are now obsolete and should be removed from the commit message",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 68
+      },
+      "revId": "45aa7a3847891f3c2f480f74218e115bc28f74df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
