@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc6e48f6_3500d38d",
+        "filename": "plans/multicloud-fcaps/functionality1/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1889
+      },
+      "writtenOn": "2019-10-09T13:12:45Z",
+      "side": 1,
+      "message": "the version should be 1.4.1 , thanks",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "8c3f80d021a2001dfd0c2df329c2af9b5751e8d9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
