@@ -124,9 +124,9 @@ class AAIHandler(BaseHTTPRequestHandler):
                 else:
                     httpServerLib.set_response_404_not_found(self)
                     logger.info('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 404 Not found, actual link: ' + created_logical_link)
-            elif re.search('aai/v12/network/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
+            elif re.search('aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
                 httpServerLib.set_response_200_ok(self, payload = json.dumps(service_instance).encode('utf-8'))
-                logger.debug('AAIHandler GET aai/v12/network/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
+                logger.debug('AAIHandler GET aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')
