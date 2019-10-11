@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   datarouter-prov:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov
     container_name: datarouter-prov
     hostname: dmaap-dr-prov
     ports:
@@ -25,7 +25,7 @@ services:
       - "dcae-pm-mapper:3.3.3.3"
 
   datarouter-node:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node
     container_name: datarouter-node
     hostname: dmaap-dr-node
     ports:
