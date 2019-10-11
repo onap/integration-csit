@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Kornel Janiak <kornel.janiak@nokia.com>
+Code-Review+2: Daniel Rose <dr695h@att.com>
+Submitted-by: Daniel Rose <dr695h@att.com>
+Submitted-at: Fri, 11 Oct 2019 14:18:20 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/96848
+Project: integration/csit
+Branch: refs/heads/master
