@@ -39,7 +39,5 @@ Login to VID Internally
     Input Text   id=loginId    ${username}
     Input Password  id=password  ${password}
     Click Element  id=loginBtn
-    ${cookie_value}     Get Cookie Value    JSESSIONID
-    [Return]  JSESSIONID=${cookie_value}
-
-
+    ${cookie}     Get Cookie    JSESSIONID
+    [Return]  JSESSIONID=${cookie.value}
