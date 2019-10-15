@@ -22,6 +22,30 @@
       "revId": "2af2c9b1c56ce4f6a68dbad07bcd4ed0cbd53013",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93344c3d_0c526aa3",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/controller/BusinessController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2019-10-15T16:13:39Z",
+      "side": 1,
+      "message": "Committed this file by mistake, will revert the change",
+      "parentUuid": "5b8cf993_41fd1472",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "2af2c9b1c56ce4f6a68dbad07bcd4ed0cbd53013",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
