@@ -1,0 +1,127 @@
+{
+  "nsFlavourId": "nsFlavour123",
+  "sapData": [
+    {
+      "sapdId": "23",
+      "sapName": "sap123",
+      "description": "sap desc",
+      "sapProtocolData": [
+        {
+          "layerProtocol": "IP_OVER_ETHERNET",
+          "ipOverEthernet": {
+            "macAddress": "7C-76-35-4C-31-78",
+            "ipAddresses": [
+              {
+                "type": "IPV4",
+                "fixedAddresses": [
+                  "192.168.43.12"
+                ],
+                "numDynamicAddresses": 0,
+                "addressRange": {
+                  "minAddress": "192.168.253.0",
+                  "maxAddress": "192.168.253.255"
+                },
+                "subnetId": "255.255.255.0"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "addpnfData": [
+    {
+      "pnfId": "pnf123",
+      "pnfName": "pnfName123",
+      "pnfdId": "pnfd123",
+      "pnfProfileId": "pnfPro123",
+      "cpData": [
+        {
+          "cpInstanceI16": {
+            "IdentifierInPnf": {}
+          },
+          "cpdId": {
+            "IdentifierInNsd": {}
+          },
+          "cpProtocolData": [
+            {
+              "layerProtocol": "IP_OVER_ETHERNET",
+              "ipOverEthernet": {
+                "macAddress": "7C-76-35-4C-31-78",
+                "ipAddresses": [
+                  {
+                    "type": "IPV4",
+                    "fixedAddresses": [
+                      "192.168.43.15"
+                    ],
+                    "numDynamicAddresses": 0,
+                    "addressRange": {
+                      "minAddress": "192.168.43.0",
+                      "maxAddress": "192.168.43.255"
+                    },
+                    "subnetId": "255.255.255.0"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vnfInstanceData": [
+    {
+      "vnfInstanceId": "vnf123",
+      "vnfProfileId": "vnfPro123"
+    }
+  ],
+  "nestedNsInstanceId": [
+    "nested123"
+  ],
+  "localizationLanguage": [
+    {
+      "vnfProfileId": "string",
+      "locationConstraints": {
+        "countryCode": "460",
+        "civicAddressElement": [
+          {
+            "caType": "type1",
+            "caValue": "123"
+          }
+        ]
+      }
+    }
+  ],
+  "additionalParamForNs": {
+    "additionalProp1": "nsProp1",
+    "additionalProp2": "nsProp2",
+    "additionalProp3": "nsProp3"
+  },
+  "additionalParamsForVnf": [
+    {
+      "vnfProfileId": "vnfPro456",
+      "additionalParams": {
+        "additionalProp1": "vnfProp1",
+        "additionalProp2": "vnfProp2",
+        "additionalProp3": "vnfProp3"
+      }
+    }
+  ],
+  "startTime": "2019-10-08T01:45:26.226Z",
+  "nsInstantiationLevelId": "345678",
+  "additionalAffinityOrAntiAffiniityRule": [
+    {
+      "vnfdId": [
+        "123"
+      ],
+      "vnfProfileId": [
+        "456"
+      ],
+      "vnfInstanceId": [
+        "789"
+      ],
+      "affinityOrAntiAffiinty": "AFFINITY",
+      "scope": "NFVI_POP"
+    }
+  ]
+}

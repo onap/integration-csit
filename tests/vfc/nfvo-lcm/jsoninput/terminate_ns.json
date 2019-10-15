@@ -1,0 +1,14 @@
+{
+  "scaleType": "type2",
+  "scaleNsData": [
+    {
+      "scaleNsByStepsData": [
+        {
+          "aspectId": "123",
+          "numberOfSteps": "3",
+          "scalingDirection": "north"
+        }
+      ]
+    }
+  ]
+}
