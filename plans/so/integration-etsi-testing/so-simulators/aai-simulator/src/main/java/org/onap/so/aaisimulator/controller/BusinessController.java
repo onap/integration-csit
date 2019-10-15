@@ -83,7 +83,7 @@ public class BusinessController {
     }
 
     @GetMapping(value = "{global-customer-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<?> getCustomer(@PathVariable("global-customer-id") final String globalCustomerId,
+    public ResponseEntity<?> getCustomer1(@PathVariable("global-customer-id") final String globalCustomerId,
             final HttpServletRequest request) {
         LOGGER.info("Will retrieve customer for 'global customer id': {} ...", globalCustomerId);
 

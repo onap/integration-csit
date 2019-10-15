@@ -19,14 +19,13 @@
  */
 package org.onap.so.aaisimulator.utils;
 
-import static org.onap.so.aaisimulator.utils.Constants.EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL;
-import org.onap.so.aaisimulator.utils.Constants;
-
 /**
  * @author waqas.ikram@ericsson.com
  *
  */
 public class TestConstants {
+
+    public static final String BASE_URL_V17 = "/aai/v17";
 
     public static final String SERVICE_INSTANCES_URL = "/service-instances";
 
@@ -44,13 +43,13 @@ public class TestConstants {
 
     public static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
 
-    public static final String CUSTOMERS_URL = Constants.CUSTOMER_URL + GLOBAL_CUSTOMER_ID;
+    public static final String CUSTOMERS_URL = BASE_URL_V17 + "/business/customers/customer/" + GLOBAL_CUSTOMER_ID;
 
     public static final String VNF_ID = "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701";
 
     public static final String GENERIC_VNF_NAME = "EsyVnfInstantiationTest2";
 
-    public static final String GENERIC_VNF_URL = Constants.GENERIC_VNFS_URL + "/generic-vnf/";
+    public static final String GENERIC_VNF_URL = BASE_URL_V17 + "/network/generic-vnfs/generic-vnf/";
 
     public static final String GENERIC_VNFS_URL = "/generic-vnfs";
 
@@ -68,7 +67,9 @@ public class TestConstants {
 
     public static final String TENANTS_TENANT = "/tenants/tenant/";
 
-    public static final String ESR_VNFM_URL = EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL + "/esr-vnfm/";
+    public static final String ESR_VNFM_URL = BASE_URL_V17 + "/external-system/esr-vnfm-list/esr-vnfm/";
+
+    public static final String EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL = BASE_URL_V17 + "/external-system/esr-vnfm-list";
 
     public static final String ESR_VNFM_ID = "c5e99cee-1996-4606-b697-838d51d4e1a3";
 
@@ -97,6 +98,20 @@ public class TestConstants {
     public static final String VSERVER_NAME = "CsitVServer";
 
     public static final String VSERVER_ID = "f84fdb9b-ad7c-49db-a08f-e443b4cbd033";
+
+    public static final String OWNING_ENTITY_URL = BASE_URL_V17 + "/business/owning-entities/owning-entity/";
+
+    public static final String LINES_OF_BUSINESS_URL = BASE_URL_V17 + "/business/lines-of-business/line-of-business/";
+
+    public static final String PLATFORMS_URL = BASE_URL_V17 + "/business/platforms/platform/";
+
+    public static final String CLOUD_REGIONS = BASE_URL_V17 + "/cloud-infrastructure/cloud-regions/cloud-region/";
+
+    public static final String GENERIC_VNFS_URL_1 = BASE_URL_V17 + "/network/generic-vnfs";
+
+    public static final String NODES_URL = BASE_URL_V17 + "/nodes";
+
+    public static final String PROJECT_URL = BASE_URL_V17 + "/business/projects/project/";
 
     private TestConstants() {}
 

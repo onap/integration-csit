@@ -44,6 +44,7 @@ import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,7 +73,7 @@ public class OwningEntityControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putOwningEntity_successfullyAddedToCache() throws Exception {
-        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final String url = getUrl(TestConstants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
 
@@ -92,7 +93,7 @@ public class OwningEntityControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_getOwningEntityCount_correctResult() throws Exception {
-        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final String url = getUrl(TestConstants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
 
@@ -113,7 +114,7 @@ public class OwningEntityControllerTest extends AbstractSpringBootTest {
     public void test_putOwningEntityRelationShip_successfullyAddedToCache() throws Exception {
         addCustomerAndServiceInstance();
 
-        final String url = getUrl(Constants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
+        final String url = getUrl(TestConstants.OWNING_ENTITY_URL, OWN_ENTITY_ID_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getOwningEntity(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
@@ -170,7 +171,7 @@ public class OwningEntityControllerTest extends AbstractSpringBootTest {
         assertEquals(1, serviceRelationshipList.size());
         final Relationship relationship = serviceRelationshipList.get(0);
         assertEquals(Constants.BELONGS_TO, relationship.getRelationshipLabel());
-        assertEquals(Constants.OWNING_ENTITY_URL + OWN_ENTITY_ID_VALUE, relationship.getRelatedLink());
+        assertEquals(TestConstants.OWNING_ENTITY_URL + OWN_ENTITY_ID_VALUE, relationship.getRelatedLink());
 
         final List<RelationshipData> serviceRelationshipDataList = serviceRelationshipList.get(0).getRelationshipData();
         assertFalse(serviceRelationshipDataList.isEmpty());
