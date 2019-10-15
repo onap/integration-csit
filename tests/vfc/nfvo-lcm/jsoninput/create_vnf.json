@@ -1,0 +1,5 @@
+{
+  "vnfIndex": "vnf123",
+  "nsInstanceId": "123",
+  "additionalParamForVnf": "addInfo"
+}

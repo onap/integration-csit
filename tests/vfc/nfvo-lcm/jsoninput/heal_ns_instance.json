@@ -1,0 +1,42 @@
+{
+  "healVnfData": [
+    {
+      "vnfInstanceId": "vnf123",
+      "cause": "string",
+      "additionalParams": {
+        "additionalProp1": {
+          "action": "action1",
+          "actionvminfo": {
+            "vmid": "vm123",
+            "vduid": "vdu123",
+            "vmname": "vmname1"
+          }
+        },
+        "additionalProp2": {
+          "action": "action2",
+          "actionvminfo": {
+            "vmid": "vm456",
+            "vduid": "vdu456",
+            "vmname": "vmname456"
+          }
+        },
+        "additionalProp3": {
+          "action": "action3",
+          "actionvminfo": {
+            "vmid": "vm789",
+            "vduid": "vdu789",
+            "vmname": "vmname789"
+          }
+        }
+      }
+    }
+  ],
+  "healNsData": {
+    "degreeHealing": "HEAL_RESTORE",
+    "actionsHealing": [
+      "action for healing"
+    ],
+    "healScript": "script2",
+    "additionalParamsforNs": "additional info"
+  }
+}

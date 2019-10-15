@@ -1,0 +1,12 @@
+{
+  "updateType": "ADD_VNF",
+  "addVnfInstance": [
+    {
+      "vnfInstanceId": "456",
+      "vnfProfileId": "456"
+    }
+  ],
+  "updateTime": {
+    "DateTime": {}
+  }
+}
