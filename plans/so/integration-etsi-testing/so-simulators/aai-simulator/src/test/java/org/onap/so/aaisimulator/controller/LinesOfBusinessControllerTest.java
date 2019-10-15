@@ -62,7 +62,7 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_putLineOfBusiness_successfullyAddedToCache() throws Exception {
 
-        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final String url = getUrl(TestConstants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
         final ResponseEntity<Void> lineOfBusinessResponse =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, lineOfBusinessResponse.getStatusCode());
@@ -82,7 +82,7 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_getLineOfBusinessWithFormatCount() throws Exception {
 
-        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final String url = getUrl(TestConstants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
         final ResponseEntity<Void> lineOfBusinessResponse =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, lineOfBusinessResponse.getStatusCode());
@@ -103,13 +103,13 @@ public class LinesOfBusinessControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
-        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final String url = getUrl(TestConstants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
         final ResponseEntity<Void> response =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
 
-        final String relationShipUrl =
-                getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+        final String relationShipUrl = getUrl(TestConstants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME,
+                BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
                 TestUtils.getGenericVnfRelationShip(), Relationship.class);

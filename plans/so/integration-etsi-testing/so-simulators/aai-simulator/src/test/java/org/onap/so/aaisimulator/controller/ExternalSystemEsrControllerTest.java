@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.Constants.EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
 import static org.onap.so.aaisimulator.utils.TestConstants.ESR_PASSWORD;
@@ -58,6 +57,7 @@ import org.onap.aai.domain.yang.RelationshipList;
 import org.onap.so.aaisimulator.service.providers.ExternalSystemCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,7 +103,7 @@ public class ExternalSystemEsrControllerTest extends AbstractSpringBootTest {
         final String esrVnfmUrl = getUrl(ESR_VNFM_URL, ESR_VNFM_ID);
         addEsrVnfmAndAssertResponse(esrVnfmUrl);
 
-        final String esrVnfmListUrl = getUrl(EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL);
+        final String esrVnfmListUrl = getUrl(TestConstants.EXTERNAL_SYSTEM_ESR_VNFM_LIST_URL);
         final ResponseEntity<EsrVnfmList> response =
                 testRestTemplateService.invokeHttpGet(esrVnfmListUrl, EsrVnfmList.class);
 

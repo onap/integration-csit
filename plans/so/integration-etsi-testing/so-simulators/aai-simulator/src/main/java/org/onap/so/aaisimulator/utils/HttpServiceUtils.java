@@ -19,13 +19,14 @@
  */
 package org.onap.so.aaisimulator.utils;
 
-import static org.onap.so.aaisimulator.utils.Constants.BASE_URL;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -37,12 +38,30 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 public class HttpServiceUtils {
 
+    private static final String START_WITH_FORWARD_SLASH = "(^/.*?)";
+    private static final String ALPHANUMERIC = "((?:v+[a-z0-9]*)/)";
+    private static final String REGEX = START_WITH_FORWARD_SLASH + ALPHANUMERIC;
+    private static final Pattern PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+
     private HttpServiceUtils() {}
 
     public static URI getBaseUrl(final HttpServletRequest request) {
         final StringBuffer url = request.getRequestURL();
         final String uri = request.getRequestURI();
-        return UriComponentsBuilder.fromHttpUrl(url.substring(0, url.indexOf(uri))).path(BASE_URL).build().toUri();
+        return UriComponentsBuilder.fromHttpUrl(url.substring(0, url.indexOf(uri))).path(getBaseUrl(uri)).build()
+                .toUri();
+    }
+
+    private static String getBaseUrl(final String uri) {
+        final Matcher matcher = PATTERN.matcher(uri);
+        if (matcher.find()) {
+            final StringBuilder builder = new StringBuilder();
+            for (int index = 0; index < matcher.groupCount() - 1; index++) {
+                builder.append(matcher.group(index));
+            }
+            return builder.toString();
+        }
+        return uri;
     }
 
     public static URI getBaseUrl(final StringBuffer requestUrl, final String requestUri) {
@@ -58,7 +77,7 @@ public class HttpServiceUtils {
         return getHeaders(request, APPLICATION_XML);
     }
 
-    public static HttpHeaders getHeaders(final HttpServletRequest request, MediaType mediaType) {
+    public static HttpHeaders getHeaders(final HttpServletRequest request, final MediaType mediaType) {
         final HttpHeaders headers = new HttpHeaders();
         for (final Enumeration<String> enumeration = request.getHeaderNames(); enumeration.hasMoreElements();) {
             final String headerName = enumeration.nextElement();

@@ -57,6 +57,7 @@ import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider
 import org.onap.so.aaisimulator.service.providers.LinesOfBusinessCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.PlatformCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -188,7 +189,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
     public void test_putGenericVnfRelationToPlatform_successfullyAddedToCache() throws Exception {
         addCustomerServiceAndGenericVnf();
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+        final String platformUrl = getUrl(TestConstants.PLATFORMS_URL, PLATFORM_NAME);
         final ResponseEntity<Void> platformResponse =
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
@@ -211,7 +212,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         assertEquals(Constants.USES, relationship.getRelationshipLabel());
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(1, relationship.getRelationshipData().size());
-        assertEquals(Constants.PLATFORMS_URL + PLATFORM_NAME, relationship.getRelatedLink());
+        assertEquals(TestConstants.PLATFORMS_URL + PLATFORM_NAME, relationship.getRelatedLink());
 
 
         final List<RelationshipData> relationshipData = relationship.getRelationshipData();
@@ -227,7 +228,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
     public void test_putGenericVnfRelationToLineOfBusiness_successfullyAddedToCache() throws Exception {
         addCustomerServiceAndGenericVnf();
 
-        final String url = getUrl(Constants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
+        final String url = getUrl(TestConstants.LINES_OF_BUSINESS_URL, LINE_OF_BUSINESS_NAME);
         final ResponseEntity<Void> responseEntity =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getLineOfBusiness(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
@@ -248,7 +249,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship relationship = relationshipList.getRelationship().get(0);
 
         assertEquals(Constants.USES, relationship.getRelationshipLabel());
-        assertEquals(Constants.LINES_OF_BUSINESS_URL + LINE_OF_BUSINESS_NAME, relationship.getRelatedLink());
+        assertEquals(TestConstants.LINES_OF_BUSINESS_URL + LINE_OF_BUSINESS_NAME, relationship.getRelatedLink());
 
         assertFalse(relationship.getRelationshipData().isEmpty());
         assertEquals(1, relationship.getRelationshipData().size());
@@ -266,7 +267,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
     public void test_putGenericVnfRelationToCloudRegion_successfullyAddedToCache() throws Exception {
         addCustomerServiceAndGenericVnf();
 
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         final ResponseEntity<Void> responseEntity =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getCloudRegion(), Void.class);
@@ -288,7 +289,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         final Relationship relationship = relationshipList.getRelationship().get(0);
 
         assertEquals(Constants.LOCATED_IN, relationship.getRelationshipLabel());
-        assertEquals(Constants.CLOUD_REGIONS + CLOUD_OWNER_NAME + "/" + CLOUD_REGION_NAME,
+        assertEquals(TestConstants.CLOUD_REGIONS + CLOUD_OWNER_NAME + "/" + CLOUD_REGION_NAME,
                 relationship.getRelatedLink());
 
         assertFalse(relationship.getRelationshipData().isEmpty());
@@ -373,7 +374,7 @@ public class GenericVnfsControllerTest extends AbstractSpringBootTest {
         addCustomerServiceAndGenericVnf();
 
         final String selfLink = "http://localhost:9921/generic-vnf/" + VNF_ID;
-        final String url = getUrl(Constants.GENERIC_VNFS_URL) + "?selflink=" + selfLink;
+        final String url = getUrl(TestConstants.GENERIC_VNFS_URL_1) + "?selflink=" + selfLink;
         final ResponseEntity<GenericVnfs> response = testRestTemplateService.invokeHttpGet(url, GenericVnfs.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 

@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.Constants.NODES_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
 import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
@@ -47,7 +46,7 @@ import org.onap.so.aaisimulator.models.Format;
 import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,7 +77,7 @@ public class NodesControllerTest extends AbstractSpringBootTest {
         invokeCustomerandServiceInstanceUrls();
 
         final ResponseEntity<ServiceInstance> actual = testRestTemplateService
-                .invokeHttpGet(getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL), ServiceInstance.class);
+                .invokeHttpGet(getUrl(TestConstants.NODES_URL, SERVICE_INSTANCE_URL), ServiceInstance.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertTrue(actual.hasBody());
@@ -97,7 +96,7 @@ public class NodesControllerTest extends AbstractSpringBootTest {
         invokeCustomerandServiceInstanceUrls();
 
         final ResponseEntity<Results> actual = testRestTemplateService.invokeHttpGet(
-                getUrl(Constants.NODES_URL, SERVICE_INSTANCE_URL) + "?format=" + Format.PATHED.getValue(),
+                getUrl(TestConstants.NODES_URL, SERVICE_INSTANCE_URL) + "?format=" + Format.PATHED.getValue(),
                 Results.class);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -123,7 +122,8 @@ public class NodesControllerTest extends AbstractSpringBootTest {
                 testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
 
-        final String nodeGenericVnfsUrl = getUrl(NODES_URL, GENERIC_VNFS_URL) + "?vnf-name=" + GENERIC_VNF_NAME;
+        final String nodeGenericVnfsUrl =
+                getUrl(TestConstants.NODES_URL, GENERIC_VNFS_URL) + "?vnf-name=" + GENERIC_VNF_NAME;
 
         final ResponseEntity<GenericVnfs> actual =
                 testRestTemplateService.invokeHttpGet(nodeGenericVnfsUrl, GenericVnfs.class);
