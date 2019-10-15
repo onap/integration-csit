@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8cf993_41fd1472",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/controller/BusinessController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2019-10-15T16:02:48Z",
+      "side": 1,
+      "message": "(opinion) this name change makes it sound like this method is now for getting customer 1 (or the first customer), rather than for getting a customer by providing the customer id...  maybe consider revising the name for this?",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "2af2c9b1c56ce4f6a68dbad07bcd4ed0cbd53013",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
