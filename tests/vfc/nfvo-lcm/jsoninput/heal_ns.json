@@ -1,0 +1,22 @@
+{
+  "healVnfData": {
+    "vnfInstanceId": "123",
+    "cause": "new",
+    "additionalParams": {
+      "action": "add",
+      "actionvminfo": {
+        "vmid": "123",
+        "vduid": "1",
+        "vmname": "wm123"
+      }
+    }
+  },
+  "healNsData": {
+    "degreeHealing": "HEAL_RESTORE",
+    "actionsHealing": [
+      "One action"
+    ],
+    "healScript": "script of NS heal",
+    "additionalParamsforNs": "Addition params of NS heal"
+  }
+}
