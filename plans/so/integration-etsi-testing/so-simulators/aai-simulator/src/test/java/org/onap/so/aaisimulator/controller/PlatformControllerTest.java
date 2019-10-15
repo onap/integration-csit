@@ -62,7 +62,7 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_putPlatform_successfullyAddedToCache() throws Exception {
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+        final String platformUrl = getUrl(TestConstants.PLATFORMS_URL, PLATFORM_NAME);
         final ResponseEntity<Void> platformResponse =
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
@@ -81,7 +81,7 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_getPlatformWithFormatCount() throws Exception {
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+        final String platformUrl = getUrl(TestConstants.PLATFORMS_URL, PLATFORM_NAME);
 
         final ResponseEntity<Void> platformResponse =
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
@@ -103,13 +103,13 @@ public class PlatformControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
-        final String platformUrl = getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME);
+        final String platformUrl = getUrl(TestConstants.PLATFORMS_URL, PLATFORM_NAME);
         final ResponseEntity<Void> platformResponse =
                 testRestTemplateService.invokeHttpPut(platformUrl, TestUtils.getPlatform(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, platformResponse.getStatusCode());
 
         final String platformRelationShipUrl =
-                getUrl(Constants.PLATFORMS_URL, PLATFORM_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+                getUrl(TestConstants.PLATFORMS_URL, PLATFORM_NAME, BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService
                 .invokeHttpPut(platformRelationShipUrl, TestUtils.getGenericVnfRelationShip(), Relationship.class);

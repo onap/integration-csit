@@ -24,7 +24,7 @@ Invoke Service Instantiation
     ${service_instantiation_request}=    Post Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances    data=${data}    headers=${headers}
     Run Keyword If  '${service_instantiation_request.status_code}' == '200'  log to console   \nexecuted with expected result
     log to console      ${service_instantiation_request.content}
-    ${service_instantiation_json_response}=    Evaluate     json.loads("""${service_instantiation_request.content}""", strict=False)    json
+    ${service_instantiation_json_response}=    Evaluate     json.loads(r"""${service_instantiation_request.content}""", strict=False)    json
     ${request_ID}=          Set Variable         ${service_instantiation_json_response}[requestReferences][requestId]
     ${service_instance_Id}=     Set Variable       ${service_instantiation_json_response}[requestReferences][instanceId]
     SET GLOBAL VARIABLE       ${service_instance_Id}
@@ -34,7 +34,7 @@ Invoke Service Instantiation
     \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
     \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
     \   log to console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads("""${orchestration_status_request.content}""", strict=False)    json
+    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   Log To Console    Received actual repsonse status:${actual_request_state}
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
@@ -51,13 +51,13 @@ Invoke VNF Instantiation
 
     Create Session   api_handler_session  http://${REPO_IP}:8080
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}vnfInstantiationRequest.json
-    ${vnf_instantiate_request_json}=    evaluate    json.loads('''${data}''', strict=False)    json
+    ${vnf_instantiate_request_json}=    evaluate    json.loads(r'''${data}''', strict=False)    json
     set to dictionary    ${vnf_instantiate_request_json}[requestDetails][relatedInstanceList][0][relatedInstance]        instanceId=${service_instance_Id}
     ${vnf_instantiate_request_string}=    evaluate    json.dumps(${vnf_instantiate_request_json})    json
     &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
     ${vnf_instantiate_request}=    Post Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}/vnfs   data=${vnf_instantiate_request_string}    headers=${headers}
     Run Keyword If  '${vnf_instantiate_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    ${vnf_instantiate_json_response}=    Evaluate     json.loads("""${vnf_instantiate_request.content}""")    json
+    ${vnf_instantiate_json_response}=    Evaluate     json.loads(r"""${vnf_instantiate_request.content}""")    json
     ${request_ID}=          Set Variable         ${vnf_instantiate_json_response}[requestReferences][requestId]
     ${actual_request_state}=    SET VARIABLE    ""
     ${vnf_instance_Id}=     Set Variable       ${vnf_instantiate_json_response}[requestReferences][instanceId]
@@ -67,7 +67,7 @@ Invoke VNF Instantiation
     \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
     \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
     \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads("""${orchestration_status_request.content}""", strict=False)    json
+    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
     \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
@@ -88,7 +88,7 @@ Delete VNF Instance
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}vnfDeleteRequest.json
     &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
     ${vnf_delete_request}=    Delete Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}/vnfs/${vnf_instance_Id}     data=${data}     headers=${headers}
-    ${vnf_delete_json_response}=    Evaluate     json.loads("""${vnf_delete_request.content}""")    json
+    ${vnf_delete_json_response}=    Evaluate     json.loads(r"""${vnf_delete_request.content}""")    json
     Log to Console      ${vnf_delete_json_response}
     ${request_ID}=          Set Variable         ${vnf_delete_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
@@ -97,7 +97,7 @@ Delete VNF Instance
     \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
     \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
     \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
+    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
     \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
@@ -116,7 +116,7 @@ Delete Service Instance
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}serviceDeleteRequest.json
     &{headers}=  Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
     ${service_delete_request}=    Delete Request    api_handler_session    /onap/so/infra/serviceInstantiation/v7/serviceInstances/${service_instance_Id}     data=${data}     headers=${headers}
-    ${service_delete_json_response}=    Evaluate     json.loads("""${service_delete_request.content}""")    json
+    ${service_delete_json_response}=    Evaluate     json.loads(r"""${service_delete_request.content}""")    json
     Log to Console      ${service_delete_json_response}
     ${request_ID}=          Set Variable         ${service_delete_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
@@ -125,7 +125,7 @@ Delete Service Instance
     \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
     \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
     \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads("""${orchestration_status_request.content}""")    json
+    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
     \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds

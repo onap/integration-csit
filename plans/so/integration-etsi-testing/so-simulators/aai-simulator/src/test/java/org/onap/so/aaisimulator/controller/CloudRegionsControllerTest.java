@@ -100,7 +100,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putCloudRegion_successfullyAddedToCache() throws Exception {
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
@@ -119,7 +119,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_getCloudRegionWithDepthValue_shouldReturnMatchedCloudRegion() throws Exception {
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
@@ -140,11 +140,11 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
     @Test
     public void test_putGenericVnfRelationShipToPlatform_successfullyAddedToCache() throws Exception {
 
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
-        final String relationShipUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
+        final String relationShipUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
                 BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
 
         final ResponseEntity<Relationship> responseEntity = testRestTemplateService.invokeHttpPut(relationShipUrl,
@@ -178,12 +178,12 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putTenant_successfullyAddedToCache() throws Exception {
-        final String cloudRegionUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String cloudRegionUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(cloudRegionUrl);
 
-        final String tenantUrl =
-                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME + TENANTS_TENANT + TENANT_ID);
+        final String tenantUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME,
+                "/" + CLOUD_REGION_NAME + TENANTS_TENANT + TENANT_ID);
         addTenantAndAssertResponse(tenantUrl);
 
         final ResponseEntity<Tenant> response = testRestTemplateService.invokeHttpGet(tenantUrl, Tenant.class);
@@ -204,15 +204,15 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
         addCustomerServiceAndGenericVnf();
 
-        final String cloudRegionUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String cloudRegionUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
         invokeCloudRegionHttpPutEndPointAndAssertResponse(cloudRegionUrl);
 
-        final String tenantUrl =
-                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, TENANTS_TENANT + TENANT_ID);
+        final String tenantUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
+                TENANTS_TENANT + TENANT_ID);
         addTenantAndAssertResponse(tenantUrl);
 
-        final String tenantRelationShipUrl = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME,
-                TENANTS_TENANT + TENANT_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
+        final String tenantRelationShipUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME,
+                "/" + CLOUD_REGION_NAME, TENANTS_TENANT + TENANT_ID, RELATIONSHIP_LIST_RELATIONSHIP_URL);
 
         final ResponseEntity<Void> tenantRelationShipResponse = testRestTemplateService
                 .invokeHttpPut(tenantRelationShipUrl, TestUtils.getGenericVnfRelatedLink(), Void.class);
@@ -262,12 +262,12 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putEsrSystemInfo_successfullyAddedToCache() throws Exception {
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
 
-        final String esrSystemInfoListUrl =
-                getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME, ESR_SYSTEM_INFO_LIST_URL);
+        final String esrSystemInfoListUrl = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME,
+                "/" + CLOUD_REGION_NAME, ESR_SYSTEM_INFO_LIST_URL);
 
         final String esrSystemInfoUrl = esrSystemInfoListUrl + "/esr-system-info/" + ESR_SYSTEM_INFO_ID;
         final ResponseEntity<Void> esrSystemInfoResponse =
@@ -298,7 +298,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putVServer_successfullyAddedToCache() throws Exception {
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
         addCustomerServiceAndGenericVnf();
@@ -359,7 +359,7 @@ public class CloudRegionsControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_deleteVServer_successfullyRemoveFromCache() throws Exception {
-        final String url = getUrl(Constants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
+        final String url = getUrl(TestConstants.CLOUD_REGIONS, CLOUD_OWNER_NAME, "/" + CLOUD_REGION_NAME);
 
         invokeCloudRegionHttpPutEndPointAndAssertResponse(url);
         addCustomerServiceAndGenericVnf();

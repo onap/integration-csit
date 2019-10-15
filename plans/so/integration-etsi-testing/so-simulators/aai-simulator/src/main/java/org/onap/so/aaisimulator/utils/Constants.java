@@ -25,7 +25,7 @@ package org.onap.so.aaisimulator.utils;
  */
 public class Constants {
 
-    public static final String BASE_URL = "/aai/v15";
+    public static final String BASE_URL = "/aai/v{version:\\d+}";
 
     public static final String NODES_URL = BASE_URL + "/nodes";
 

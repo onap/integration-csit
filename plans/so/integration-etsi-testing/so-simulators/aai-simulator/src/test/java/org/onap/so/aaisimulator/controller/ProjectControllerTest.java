@@ -43,6 +43,7 @@ import org.onap.so.aaisimulator.models.Results;
 import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
 import org.onap.so.aaisimulator.service.providers.ProjectCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.Constants;
+import org.onap.so.aaisimulator.utils.TestConstants;
 import org.onap.so.aaisimulator.utils.TestRestTemplateService;
 import org.onap.so.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class ProjectControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_putProject_successfullyAddedToCache() throws Exception {
-        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final String url = getUrl(TestConstants.PROJECT_URL, PROJECT_NAME_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
 
@@ -98,13 +99,13 @@ public class ProjectControllerTest extends AbstractSpringBootTest {
     public void test_putProjectRelationShip_successfullyAddedToCache() throws Exception {
         addCustomerAndServiceInstance();
 
-        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final String url = getUrl(TestConstants.PROJECT_URL, PROJECT_NAME_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
         assertEquals(HttpStatus.ACCEPTED, actual.getStatusCode());
 
         final String projectRelationshipUrl =
-                getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE, RELATIONSHIP_LIST_RELATIONSHIP_URL);
+                getUrl(TestConstants.PROJECT_URL, PROJECT_NAME_VALUE, RELATIONSHIP_LIST_RELATIONSHIP_URL);
 
         final ResponseEntity<Void> putResponse = testRestTemplateService.invokeHttpPut(projectRelationshipUrl,
                 TestUtils.getBusinessProjectRelationship(), Void.class);
@@ -155,7 +156,7 @@ public class ProjectControllerTest extends AbstractSpringBootTest {
         assertEquals(1, serviceRelationshipList.size());
         final Relationship relationship = serviceRelationshipList.get(0);
         assertEquals(Constants.USES, relationship.getRelationshipLabel());
-        assertEquals(Constants.PROJECT_URL + PROJECT_NAME_VALUE, relationship.getRelatedLink());
+        assertEquals(TestConstants.PROJECT_URL + PROJECT_NAME_VALUE, relationship.getRelatedLink());
 
 
         final List<RelationshipData> serviceRelationshipDataList = serviceRelationshipList.get(0).getRelationshipData();
@@ -171,7 +172,7 @@ public class ProjectControllerTest extends AbstractSpringBootTest {
 
     @Test
     public void test_getProjectCount_correctResult() throws Exception {
-        final String url = getUrl(Constants.PROJECT_URL, PROJECT_NAME_VALUE);
+        final String url = getUrl(TestConstants.PROJECT_URL, PROJECT_NAME_VALUE);
         final ResponseEntity<Void> actual =
                 testRestTemplateService.invokeHttpPut(url, TestUtils.getBusinessProject(), Void.class);
 
