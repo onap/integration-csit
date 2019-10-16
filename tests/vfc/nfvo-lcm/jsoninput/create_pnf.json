@@ -4,5 +4,7 @@
   "pnfdId": "456",
   "pnfdInfoId": "011234",
   "pnfProfileId": "456788",
-  "cpInfo": "cp info"
+  "cpInfo": "cp info",
+  "emsId": "",
+  "nsInstances": ""
 }

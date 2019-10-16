@@ -33,6 +33,7 @@ ${update_ns_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/update_ns.json
 ${terminate_ns_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/terminate_ns.json
 ${update_job_ns_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/update_job_ns.json
 ${create_vnf_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/create_vnf.json
+${scaling_vnf_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/scaling_vnf.json
 ${terminate_vnf_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/terminate_vnf.json
 ${create_vl_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/create_vl.json
 ${create_sfcs_json}    ${SCRIPTS}/../tests/vfc/nfvo-lcm/jsoninput/create_sfc.json
@@ -95,8 +96,10 @@ CreateNSTest
 
 CreateSfcTest
     [Documentation]    Create sfc function test
+    ${uuid}=    Generate UUID4
     ${json_value}=     json_from_file      ${create_sfcs_json}
     Set To Dictionary    ${json_value}    nsInstanceId=${nsInstId}
+    Set To Dictionary    ${json_value}    fpinstid=${uuid}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
@@ -147,6 +150,18 @@ QueryVnfTest
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
+ScalingVnfTest
+    [Documentation]    Scaling vnf function test
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+	${json_value}=     json_from_file      ${scaling_vnf_json}
+    ${json_string}=     string_from_json   ${json_value}
+    ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
+    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Set Request Body    ${json_string}
+    ${resp}=    Post Request    web_session     ${vnfs_url}/${vnfInstId}/scaling    ${json_string}
+    ${responese_code}=     Convert To String      ${resp.status_code}
+    List Should Contain Value    ${return_ok_list}   ${responese_code}
+
 TerminateVnfTest
     [Documentation]    Terminate vnf function test
     ${json_value}=     json_from_file      ${terminate_vnf_json}
@@ -154,7 +169,7 @@ TerminateVnfTest
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
     Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${terminate_vnfs_url}    ${json_string}
+    ${resp}=    Post Request    web_session     ${terminate_vnfs_url}/${vnfInstId}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -268,7 +283,6 @@ UpdateNSTest
     [Documentation]    Scale Ns function test
     ${json_value}=     json_from_file      ${update_ns_json}
     ${json_string}=     string_from_json   ${json_value}
-    Log    ${json_string}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
     Set Request Body    ${json_string}
@@ -314,9 +328,19 @@ LcmGetNsTest
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
-CreatePnfsTest
+CreatePnfTest
     [Documentation]    Create pnf function test
+    ${uuid4_1}=    Generate UUID4
+    ${uuid4_2}=    Generate UUID4
+    ${uuid4_3}=    Generate UUID4
+    ${uuid4_4}=    Generate UUID4
+    ${uuid4_5}=    Generate UUID4
     ${json_value}=     json_from_file      ${create_pnfs_json}
+    Set To Dictionary    ${json_value}    pnfdId=${uuid4_1}
+    Set To Dictionary    ${json_value}    pnfdInfoId=${uuid4_2}
+    Set To Dictionary    ${json_value}    pnfProfileId=${uuid4_3}
+    Set To Dictionary    ${json_value}    emsId=${uuid4_4}
+    Set To Dictionary    ${json_value}    nsInstances=${uuid4_5}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}

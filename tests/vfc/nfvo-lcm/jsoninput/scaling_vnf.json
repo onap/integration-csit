@@ -1,0 +1,12 @@
+{
+    "scaleVnfData": {
+        "type": "SCALE_OUT",
+        "aspectId": "demo_aspect1",
+        "numberOfSteps": "1",
+        "additionalParam": {
+            "additionalProp1": "Prop1",
+            "additionalProp2": "Prop2",
+            "additionalProp3": "Prop3"
+        }
+    }
+}
