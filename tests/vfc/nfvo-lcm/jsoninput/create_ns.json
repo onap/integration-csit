@@ -1,7 +1,10 @@
 {
-  "nsName": "ns1",
-  "csarId": "123",
-  "nsdId": "1",
-  "description": "ns1 desc",
-  "test": "test"
+    "context": {
+        "globalCustomerId": "global-customer-id-test1",
+        "serviceType": "service-type-test1"
+    },
+    "csarId": "default",
+    "nsName": "ns",
+    "nsDescription": "description",
+    "nsdId": "nsdId"
 }

@@ -1,6 +1,7 @@
 {
-  "fpindex": "123",
+  "fpindex": "1",
+  "fpinstid": ""
   "nsInstanceId": "123",
   "context": "create sfc",
-  "sdnControllerId": "123"
+  "sdnControllerId": "sdnControllerId_1"
 }

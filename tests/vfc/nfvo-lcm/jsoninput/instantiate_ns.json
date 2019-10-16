@@ -1,51 +1,17 @@
 {
-  "locationConstraints": [
-    {
-      "vnfProfileId": "123",
-      "locationConstraints": {
-        "vimId": "vim123"
-      }
-    }
-  ],
-  "additionalParamForNs": {
-    "additionalProp1": "Prop1",
-    "additionalProp2": "Prop2",
-    "additionalProp3": "Prop3"
-  },
-  "addpnfData": [
-    {
-      "pnfId": "123",
-      "pnfName": "pdf123",
-      "pnfdId": "123",
-      "pnfProfileId": "123",
-      "cpData": [
-        {
-          "cpInstanceId": "123",
-          "cpdId": "123",
-          "cpProtocolData": [
-            {
-              "layerProtocol": "IP_OVER_ETHERNET",
-              "ipOverEthernet": {
-                "macAddress": "7C-76-35-4C-31-78",
-                "ipAddresses": [
-                  {
-                    "type": "IPV4",
-                    "fixedAddresses": [
-                      "192.168.43.10"
-                    ],
-                    "numDynamicAddresses": 0,
-                    "addressRange": {
-                      "minAddress": "192.168.253.0",
-                      "maxAddress": "192.168.253.255"
-                    },
-                    "subnetId": "255.255.255.0"
-                  }
-                ]
-              }
-            }
-          ]
+    "additionalParamForNs": {
+        "sdnControllerId": "2"
+    },
+    "nsFlavourId": 12345,
+    "localizationLanguage": [{
+        "vnfProfileId": "vnfd1",
+        "locationConstraints": {
+            "countryCode": "countryCode",
+            "civicAddressElement": [
+                        {"caType": "type1",
+                         "caValue": 1
+                         }
+            ]
         }
-      ]
-    }
-  ]
+    }]
 }

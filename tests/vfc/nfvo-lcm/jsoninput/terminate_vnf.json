@@ -1,4 +1,4 @@
 {
-  "terminationType": "vnf",
-  "gracefulTerminationTimeout": "3600"
+  "terminationType": "FORCEFUL",
+  "gracefulTerminationTimeout": "600"
 }
