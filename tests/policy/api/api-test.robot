@@ -78,6 +78,20 @@ CreateNewMonitoringPolicy
      Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
      Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
+SimpleCreateNewMonitoringPolicy
+     [Documentation]    Create a new Monitoring TCA policiy using simple endpoint
+     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Post Request   policy  /policy/api/v1/policies  data=${postjson}   headers=${headers}
+     Log    Received response from policy ${resp.text}
+     ${postjsonobject}   To Json    ${postjson}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
+     Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
+
 RetrievePoliciesOfType
      [Documentation]    Retrieve all Policies Created for a specific Policy Type
      ${auth}=    Create List    healthcheck    zb!XztG34
