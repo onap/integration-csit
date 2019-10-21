@@ -31,6 +31,7 @@ ExecuteXacmlPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    CreateMonitorPolicyType
      Wait Until Keyword Succeeds    2 min    5 sec    CreateNewMonitorPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    DeployMonitorPolicy
+     Wait Until Keyword Succeeds    2 min    10 sec   GetAbbreviatedDecisionResult
      Wait Until Keyword Succeeds    2 min    10 sec   GetDecision
      
 *** Keywords ***
@@ -86,7 +87,19 @@ GetStatisticsAfterDeployed
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
      Should Be Equal As Strings    ${resp.json()['totalPoliciesCount']     1
-     
+
+GetAbbreviatedDecisionResult
+    [Documentation]    Get Decision with abbreviated results from Policy Xacml PDP
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.decision.request.json
+     Log    Creating session https://${POLICY_PDPX_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_PDPX_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${params}=  Create Dictionary		abbrev=true
+     ${resp}=   Post Request     policy  /policy/pdpx/v1/decision	params=${params}  data=${postjson}   headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+
 GetDecision
     [Documentation]    Get Decision from Policy Xacml PDP
      ${auth}=    Create List    healthcheck    zb!XztG34
