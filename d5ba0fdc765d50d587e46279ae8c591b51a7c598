@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf42d1d5_4533b1ab",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-10-22T18:20:07Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "d5ba0fdc765d50d587e46279ae8c591b51a7c598",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60ed6605_9ea53ecd",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2019-10-22T18:20:07Z",
+      "side": 1,
+      "message": "remove tab",
+      "revId": "d5ba0fdc765d50d587e46279ae8c591b51a7c598",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
