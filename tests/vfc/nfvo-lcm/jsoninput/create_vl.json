@@ -1,6 +1,109 @@
 {
-  "vlIndex": "23456",
-  "nsInstanceId": "234",
-  "context": "create a new vl",
-  "additionalParamForNs": "vl1"
+	"vlIndex": "1",
+	"nsInstanceId": "234",
+	"context": {
+		"vls": [{
+				"vl_id": "1",
+				"description": " ",
+				"properties": {
+					"vl_profile": {
+						"networkName": "vl_inst_name",
+						"network_type": "vlan",
+						"segmentationId": "segmentation_id",
+						"physicalNetwork": "physical_network",
+						"mtu": "1500",
+						"vlanTransparent": "True",
+						"dhcp_enabled": "False",
+						"cidr": "190.168.100.0/24",
+						"ip_version": "4",
+						"dhcpEnabled": "True",
+						"gatewayIp": "190.168.100.1",
+						"dns_nameservers": "dns_nameservers",
+						"host_routes": "host_routes",
+						"start_ip": "190.168.100.2",
+						"end_ip": "190.168.100.100"
+					},
+					"location_info": {
+						"host": "True",
+						"vimid": {
+							"cloud_owner": "cloud_owner",
+							"cloud_regionid": "cloud_regionid"
+						},
+						"region": "True",
+						"tenant": "tenantname"
+					}
+				},
+				"route_external": "False"
+			},
+			{
+				"vl_id": "2",
+				"description": " ",
+				"properties": {
+					"vl_profile": {
+						"networkName": "vl_inst_name",
+						"network_type": "vlan",
+						"segmentationId": "segmentation_id",
+						"physicalNetwork": "physical_network",
+						"mtu": "1500",
+						"vlanTransparent": "True",
+						"dhcp_enabled": "False",
+						"cidr": "190.168.100.0/24",
+						"ip_version": "4",
+						"dhcpEnabled": "True",
+						"gatewayIp": "190.168.100.1",
+						"dns_nameservers": "dns_nameservers",
+						"host_routes": "host_routes",
+						"start_ip": "190.168.100.2",
+						"end_ip": "190.168.100.100"
+					},
+					"location_info": {
+						"host": "True",
+						"vimid": {
+							"cloud_owner": "cloud_owner",
+							"cloud_regionid": "cloud_regionid"
+						},
+						"region": "True",
+						"tenant": "tenantname"
+					}
+				},
+				"route_external": "False"
+			}
+		],
+		"vnffgs": {
+			"vnffg_id": "56789",
+			"description": "",
+			"properties": {
+				"vendor": "zte",
+				"version": "1.1.2",
+				"number_of_endpoints": "7",
+				"dependent_virtual_link": [
+					"2",
+					"1"
+				],
+				"connection_point": [
+					"CP01",
+					"CP02"
+				],
+				"constituent_vnfs": [
+					"VNF1",
+					"VNF2",
+					"VNF3"
+				],
+				"constituent_pnfs": [
+					"pnf1",
+					"pnf2"
+				]
+			},
+			"members": [
+				"forwarding_path1",
+				"forwarding_path2"
+			]
+		}
+	},
+	"additionalParamForNs": {
+		"location": {
+			"cloud_owner": "cloud_owner",
+			"cloud_regionid": "cloud_regionid"
+		}
+	}
 }
