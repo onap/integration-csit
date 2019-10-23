@@ -1,12 +1,9 @@
 {
   "updateType": "ADD_VNF",
-  "addVnfInstance": [
-    {
-      "vnfInstanceId": "456",
-      "vnfProfileId": "456"
-    }
-  ],
-  "updateTime": {
-    "DateTime": {}
-  }
+  "OperateVnfData": [{
+        "vnfInstanceId": "test_vnf_001",
+        "changeStateTo": {"OperationalStates": "STOPPED"},
+        "stopType": "GRACEFUL",
+        "gracefulStopTimeout": "2020-01-01"
+    }]
 }
