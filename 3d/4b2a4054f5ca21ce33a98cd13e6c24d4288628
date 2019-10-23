@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Daniel Rose <dr695h@att.com>
+Verified+1: Daniel Rose <dr695h@att.com>
+Submitted-by: Daniel Rose <dr695h@att.com>
+Submitted-at: Wed, 23 Oct 2019 21:08:48 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/97364
+Project: integration/csit
+Branch: refs/heads/master
