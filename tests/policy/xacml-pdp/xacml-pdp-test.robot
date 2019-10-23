@@ -26,13 +26,14 @@ Statistics
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
-     
+
 ExecuteXacmlPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    CreateMonitorPolicyType
      Wait Until Keyword Succeeds    2 min    5 sec    CreateNewMonitorPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    DeployMonitorPolicy
+     Wait Until Keyword Succeeds    2 min    10 sec   GetAbbreviatedDecisionResult
      Wait Until Keyword Succeeds    2 min    10 sec   GetDecision
-     
+
 *** Keywords ***
 
 CreateMonitorPolicyType
@@ -77,7 +78,7 @@ DeployMonitorPolicy
 
 GetStatisticsAfterDeployed
      [Documentation]    Runs Policy Xacml PDP Statistics after policy is deployed
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_PDPX_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PDPX_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -86,7 +87,25 @@ GetStatisticsAfterDeployed
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
      Should Be Equal As Strings    ${resp.json()['totalPoliciesCount']     1
-     
+
+GetAbbreviatedDecisionResult
+    [Documentation]    Get Decision with abbreviated results from Policy Xacml PDP
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.decision.request.json
+     Log    Creating session https://${POLICY_PDPX_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_PDPX_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${params}=  Create Dictionary      abbrev=true
+     ${resp}=   Post Request     policy  /policy/pdpx/v1/decision     params=${params}  data=${postjson}   headers=${headers}
+     Log    Received response from policy ${resp.text}
+     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   onap.restart.tca
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Dictionary Should Contain Key    ${policy}    type
+     Dictionary Should Contain Key    ${policy}    metadata
+     Dictionary Should Not Contain Key    ${policy}    properties
+     Dictionary Should Not Contain Key    ${policy}    name
+     Dictionary Should Not Contain Key    ${policy}    version
+
 GetDecision
     [Documentation]    Get Decision from Policy Xacml PDP
      ${auth}=    Create List    healthcheck    zb!XztG34
