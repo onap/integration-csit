@@ -1,14 +1,12 @@
 {
-  "scaleType": "ns",
-  "scaleNsData": [
-    {
-      "scaleNsByStepsData": [
+    "scaleType": "SCALE_NS",
+    "scaleNsData": [
         {
-          "aspectId": "123",
-          "numberOfSteps": "3",
-          "scalingDirection": "north"
+            "scaleNsByStepsData": [{
+                "aspectId": "1",
+                "numberOfSteps": 1,
+                "scalingDirection": "0"
+            }]
         }
-      ]
-    }
-  ]
+    ]
 }
