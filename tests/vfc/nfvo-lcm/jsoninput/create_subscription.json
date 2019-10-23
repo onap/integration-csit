@@ -1,54 +1,19 @@
 {
-  "callbackUri": "/api/nslcm/v1/subscriptions",
-  "filter": {
-    "nsInstanceSubscriptionFilter": {
-      "nsdIds": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-      ],
-      "vnfdIds": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-      ],
-      "pnfdIds": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-      ],
-      "nsInstanceIds": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-      ],
-      "nsInstanceNames": [
-        "ns1"
-      ]
+    "callbackUri": "http://aurl.com",
+    "authentication": {
+        "authType": ["BASIC"],
+        "paramsBasic": {
+            "username": "username",
+            "password": "password"
+        }
     },
-    "notificationTypes": [
-      "NsLcmOperationOccurrenceNotification"
-    ],
-    "operationTypes": [
-      "INSTANTIATE"
-    ],
-    "operationStates": [
-      "STARTING"
-    ],
-    "nsComponentTypes": [
-      "VNF"
-    ],
-    "lcmOpNameImpactingNsComponent": [
-      "VNF_INSTANTIATE"
-    ],
-    "lcmOpOccStatusImpactingNsComponent": [
-      "START"
-    ]
-  },
-  "authentication": {
-    "authType": [
-      "BASIC"
-    ],
-    "paramsBasic": {
-      "userName": "test",
-      "password": "test"
-    },
-    "paramsOauth2ClientCredentials": {
-      "clientId": "123",
-      "clientPassword": "test",
-      "tokenEndpoint": "test"
+    "filter": {
+        "notificationTypes": ["NsLcmOperationOccurrenceNotification"],
+        "operationTypes": [
+            "INSTANTIATE"
+        ],
+        "operationStates": [
+            "STARTING"
+        ]
     }
-  }
 }
