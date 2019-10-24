@@ -22,6 +22,30 @@
       "revId": "51d837f65e7d811ac0f09028f885ca2e1f9fdd54",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c716d7_11e45f62",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1757
+      },
+      "writtenOn": "2019-10-24T12:58:42Z",
+      "side": 1,
+      "message": "The lines below assert that the \"type\" and \"metadata\" items are present and the rest of the items are not (lines 103-108)",
+      "parentUuid": "0698ef14_692d6845",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 87
+      },
+      "revId": "51d837f65e7d811ac0f09028f885ca2e1f9fdd54",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
