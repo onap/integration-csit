@@ -46,6 +46,30 @@
       "revId": "51d837f65e7d811ac0f09028f885ca2e1f9fdd54",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf8a181_b0facab1",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-10-24T13:00:23Z",
+      "side": 1,
+      "message": "Oh duh. Good job!!",
+      "parentUuid": "08c716d7_11e45f62",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 87
+      },
+      "revId": "51d837f65e7d811ac0f09028f885ca2e1f9fdd54",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
