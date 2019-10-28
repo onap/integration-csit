@@ -1,5 +1,5 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
-# Place the suites in run order.
+# Place the suites in run order. 
 vfc/nfvo-catalog/test.robot
 vfc/nfvo-catalog/Subscriptions.robot
 vfc/nfvo-catalog/IndividualSubscription.robot
