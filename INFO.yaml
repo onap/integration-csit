@@ -3,11 +3,11 @@ project: 'integration-csit'
 project_creation_date: '2017-02-10'
 lifecycle_state: 'Incubation'
 project_lead: &onap_releng_ptl
-    name: 'Yang Xu'
-    email: 'yang.xu3@huawei.com'
-    id: 'xuyang11'
-    company: 'Huawei'
-    timezone: 'America/New York'
+    name: 'Morgan Richomme'
+    email: 'morgan.richomme@orange.com'
+    id: 'mrichomme'
+    company: 'Orange'
+    timezone: 'France/Paris'
 primary_contact: *onap_releng_ptl
 issue_tracking:
     type: 'jira'
@@ -133,5 +133,14 @@ committers:
         company: 'Nokia'
         id: 'mwagner9'
         timezone: 'Poland/Wroclaw'
+    - name: 'Morgan Richomme'
+      email: 'morgan.richomme@orange.com'
+      company: 'orange'
+      id: 'mrichomme'
+      timezone: 'France/Paris'
 tsc:
     approval: 'https://lists.onap.org/pipermail/onap-tsc'
+    changes:
+        - type: 'Addition'
+          name: 'Morgan Richomme'
+          link: 'https://wiki.onap.org/display/DW/TSC+2019-10-17'
