@@ -12,3 +12,9 @@ ${GLOBAL_DCAE_USERNAME}            console
 ${GLOBAL_DCAE_PASSWORD}            ZjJkYjllMjljMTI2M2Iz
 ${VESC_HTTPS_USER}                 sample1
 ${VESC_HTTPS_PD}                   sample1
+${VESC_HTTPS_WRONG_PD}             sample
+${VESC_HTTPS_WRONG_USER}           sample
+${VESC_ROOTCA_CERT}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/rootCA.crt
+${VESC_ROOTCA_KEY}                 %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/rootCAdec.key
+${VESC_WRONG_CERT}                 %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.crt
+${VESC_WRONG_KEY}                  %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.key

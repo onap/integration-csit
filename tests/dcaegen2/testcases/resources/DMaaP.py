@@ -75,11 +75,12 @@ def deque_event(wait_sec=25):
 class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       
     def do_PUT(self):
+        logger.console("PUT")
         self.send_response(405)
         return
         
     def do_POST(self):
-        
+        logger.console("POST")
         resp_code = 0
         # Parse the form data posted
         '''
