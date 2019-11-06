@@ -42,10 +42,10 @@ def enque_event(evt):
     if DcaeVariables.VESEventQ is not None:
         try:
             DcaeVariables.VESEventQ.put(evt)
-            if DcaeVariables.IsRobotRun:
-                logger.console("DMaaP Event enqued - size=" + str(len(evt)))
-            else:
-                print ("DMaaP Event enqueued - size=" + str(len(evt)))
+            # if DcaeVariables.IsRobotRun:
+            #     logger.console("DMaaP Event enqued - size=" + str(len(evt)))
+            # else:
+            #     print ("DMaaP Event enqueued - size=" + str(len(evt)))
             return True
         except Exception as e:
             print (str(e))
@@ -55,13 +55,13 @@ def enque_event(evt):
 
 def deque_event(wait_sec=25):
     if DcaeVariables.IsRobotRun:
-        logger.console("Enter DequeEvent")
+        # logger.console("Enter DequeEvent")
     try:
         evt = DcaeVariables.VESEventQ.get(True, wait_sec)
-        if DcaeVariables.IsRobotRun:
-            logger.console("DMaaP Event dequeued - size=" + str(len(evt)))
-        else:
-            print("DMaaP Event dequeued - size=" + str(len(evt)))
+        # if DcaeVariables.IsRobotRun:
+        #     logger.console("DMaaP Event dequeued - size=" + str(len(evt)))
+        # else:
+        #     print("DMaaP Event dequeued - size=" + str(len(evt)))
         return evt
     except Exception as e:
         if DcaeVariables.IsRobotRun:
@@ -75,11 +75,12 @@ def deque_event(wait_sec=25):
 class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       
     def do_PUT(self):
+        logger.console("PUT")
         self.send_response(405)
         return
         
     def do_POST(self):
-        
+        logger.console("POST")
         resp_code = 0
         # Parse the form data posted
         '''
@@ -120,11 +121,11 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             content_len = int(self.headers.getheader('content-length', 0))
             post_body = self.rfile.read(content_len)
             
-            if DcaeVariables.IsRobotRun:
-                logger.console("\n" + "DMaaP Receive Event:\n" + post_body)
-            else:
-                print("\n" + "DMaaP Receive Event:")
-                print (post_body)
+            # if DcaeVariables.IsRobotRun:
+            #     logger.console("\n" + "DMaaP Receive Event:\n" + post_body)
+            # else:
+            #     print("\n" + "DMaaP Receive Event:")
+            #     print (post_body)
             
             indx = post_body.index("{")
             if indx != 0:
