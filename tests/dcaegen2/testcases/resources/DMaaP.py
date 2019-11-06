@@ -43,7 +43,7 @@ def enque_event(evt):
         try:
             DcaeVariables.VESEventQ.put(evt)
             if DcaeVariables.IsRobotRun:
-                logger.console("DMaaP Event enqued - size=" + str(len(evt)))
+                # logger.console("DMaaP Event enqued - size=" + str(len(evt)))
             else:
                 print ("DMaaP Event enqueued - size=" + str(len(evt)))
             return True
@@ -55,11 +55,11 @@ def enque_event(evt):
 
 def deque_event(wait_sec=25):
     if DcaeVariables.IsRobotRun:
-        logger.console("Enter DequeEvent")
+        # logger.console("Enter DequeEvent")
     try:
         evt = DcaeVariables.VESEventQ.get(True, wait_sec)
         if DcaeVariables.IsRobotRun:
-            logger.console("DMaaP Event dequeued - size=" + str(len(evt)))
+            # logger.console("DMaaP Event dequeued - size=" + str(len(evt)))
         else:
             print("DMaaP Event dequeued - size=" + str(len(evt)))
         return evt
@@ -75,11 +75,12 @@ def deque_event(wait_sec=25):
 class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       
     def do_PUT(self):
+        logger.console("PUT")
         self.send_response(405)
         return
         
     def do_POST(self):
-        
+        logger.console("POST")
         resp_code = 0
         # Parse the form data posted
         '''
@@ -121,7 +122,7 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             post_body = self.rfile.read(content_len)
             
             if DcaeVariables.IsRobotRun:
-                logger.console("\n" + "DMaaP Receive Event:\n" + post_body)
+                # logger.console("\n" + "DMaaP Receive Event:\n" + post_body)
             else:
                 print("\n" + "DMaaP Receive Event:")
                 print (post_body)
