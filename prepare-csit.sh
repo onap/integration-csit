@@ -41,12 +41,12 @@ else
 fi
 
 # install required Robot libraries
-pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1
+pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1 --proxy http://10.144.1.10:8080/
 
 # install eteutils
 mkdir -p ${ROBOT_VENV}/src/onap
 rm -rf ${ROBOT_VENV}/src/onap/testsuite
-pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
+pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre --proxy http://10.144.1.10:8080/
 
 pip freeze
 

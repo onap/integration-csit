@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     The main interface for interacting with DCAE. It handles low level stuff like managing the http request library and DCAE required fields
 Library 	      RequestsLibrary
-Library	          DcaeLibrary   
+Library	          DcaeLibrary
 Library           OperatingSystem
 Library           Collections
 Variables         ../resources/DcaeVariables.py
@@ -9,6 +9,7 @@ Resource          ../resources/dcae_properties.robot
 
 *** Variables ***
 ${DCAE_HEALTH_CHECK_BODY}    %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
+
 
 *** Keywords ***
 Create sessions
@@ -18,6 +19,17 @@ Create sessions
     ${auth}=  Create List  ${VESC_HTTPS_USER}   ${VESC_HTTPS_PD}
     Create Session    dcae_vesc_url_https    ${VESC_URL_HTTPS}  auth=${auth}  disable_warnings=1
     Set Suite Variable    ${suite_dcae_vesc_url_https_session}    dcae_vesc_url_https
+    ${wrong_auth}=  Create List  ${VESC_HTTPS_WRONG_USER}  ${VESC_HTTPS_WRONG_PD}
+    Create Session  dcae_vesc_url_https_wrong_auth  ${VESC_URL_HTTPS}  auth=${wrong_auth}  disable_warnings=1
+    Set Suite Variable  ${suite_dcae_vesc_url_https_wrong_auth_session}  dcae_vesc_url_https_wrong_auth
+    ${certs}=  Create List  ${VESC_ROOTCA_CERT}  ${VESC_ROOTCA_KEY}
+    Create Client Cert Session  dcae_vesc_url_https_cert  ${VESC_URL_HTTPS}  client_certs=${certs}  disable_warnings=1
+    Set Suite Variable  ${suite_dcae_vesc_url_https_cert_session}  dcae_vesc_url_https_cert
+    ${wrong_certs}=  Create List  ${VESC_WRONG_CERT}  ${VESC_WRONG_KEY}
+    Create Client Cert Session  dcae_vesc_url_https_wrong_cert  ${VESC_URL_HTTPS}  client_certs=${wrong_certs}  disable_warnings=1  verify=${False}
+    Set Suite Variable  ${suite_dcae_vesc_url_https_wrong_cert_session}  dcae_vesc_url_https_wrong_cert
+    Create Session  dcae_vesc_url_https_wo_auth  ${VESC_URL_HTTPS}  disable_warnings=1
+    Set Suite Variable  ${suite_dcae_vesc_url_https_wo_auth_session}  dcae_vesc_url_https_wo_auth
 
 Create header
     ${headers}=    Create Dictionary    Content-Type=application/json
@@ -33,8 +45,8 @@ Get DCAE Nodes
     Log    Received response from dcae consul: ${resp.json()}
     Should Be Equal As Strings 	${resp.status_code} 	200
     ${NodeList}=   Get Json Value List   ${resp.text}   Node
-    ${NodeListLength}=  Get Length  ${NodeList}  
-    ${len}=  Get Length   ${NodeList}   
+    ${NodeListLength}=  Get Length  ${NodeList}
+    ${len}=  Get Length   ${NodeList}
     Should Not Be Equal As Integers   ${len}   0
     [Return]    ${NodeList}
 
@@ -56,7 +68,7 @@ DCAE Node Health Check
 
 DCAE Check Health Status
     [Arguments]    ${NodeName}    ${ItemStatus}   ${CheckType}
-    Should Be Equal As Strings    ${ItemStatus}    passing   
+    Should Be Equal As Strings    ${ItemStatus}    passing
     Log   Node: ${NodeName} ${CheckType} check pass ok
 
 VES Collector Suite Setup DMaaP
@@ -76,11 +88,11 @@ Check DCAE Results
     @{headers}=    Get From Dictionary    ${json['returns']}    columns
     # Retrieve column names from headers
     ${columns}=    Create List
-    :for    ${header}    in    @{headers}
+    :for    ${header}    IN    @{headers}
     \    ${colName}=    Get From Dictionary    ${header}    colName
     \    Append To List    ${columns}    ${colName}
     # Process each row making sure status=GREEN
-    :for    ${row}    in    @{rows}
+    :for    ${row}    IN    @{rows}
     \    ${cells}=    Get From Dictionary    ${row}    cells
     \    ${dict}=    Make A Dictionary    ${cells}    ${columns}
     \    Dictionary Should Contain Item    ${dict}    healthTestStatus    GREEN
@@ -91,15 +103,15 @@ Make A Dictionary
     ${dict}=    Create Dictionary
     ${collength}=    Get Length    ${columns}
     ${namelength}=    Get Length    ${names}
-    :for    ${index}    in range    0   ${collength}
+    :for    ${index}    IN RANGE    0   ${collength}
     \    ${name}=    Evaluate     ${names}[${index}]
     \    ${valued}=    Evaluate     ${columns}[${index}]
     \    ${value}=    Get From Dictionary    ${valued}    ${valueName}
-    \    Set To Dictionary    ${dict}   ${name}    ${value}     
+    \    Set To Dictionary    ${dict}   ${name}    ${value}
     [Return]     ${dict}
 
 Json String To Dictionary
-    [Arguments]  ${json_string}   
+    [Arguments]  ${json_string}
     ${json_dict}=  evaluate    json.loads('''${json_string}''')    json
     [Return]   ${json_dict}
 
@@ -110,7 +122,7 @@ Dictionary To Json String
 
 Get DCAE Service Component Status
     [Documentation]   Get the status of a DCAE Service Component
-    [Arguments]    ${url}    ${urlpath}     ${usr}    ${passwd}    
+    [Arguments]    ${url}    ${urlpath}     ${usr}    ${passwd}
     ${auth}=  Create List  ${usr}  ${passwd}
     ${session}=    Create Session 	dcae-service-component 	${url}    auth=${auth}
     ${resp}= 	Get Request 	dcae-service-component 	${urlpath}
@@ -120,14 +132,14 @@ Publish Event To VES Collector No Auth
     [Documentation]    Send an event to VES Collector
     [Arguments]     ${evtpath}   ${evtdata}
     ${resp}= 	Post Request 	${suite_dcae_vesc_url_session} 	${evtpath}     data=${evtdata}   headers=${suite_headers}
-    #Log    Received response from dcae ${resp.json()}
+#    Log    Received response from dcae ${resp.json()}
     [Return] 	${resp}
 
 Publish Event To VES Collector
     [Documentation]    Send an event to VES Collector
     [Arguments]     ${evtpath}   ${evtdata}
     ${resp}= 	Post Request 	${suite_dcae_vesc_url_https_session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
-    #Log    Received response from dcae ${resp.json()}
+#    Log    Received response from dcae ${resp.json()}
     [Return] 	${resp}
 
 Publish Event To VES Collector With Put Method
@@ -143,3 +155,27 @@ Publish Event To VES Collector With Put Method No Auth
     ${resp}= 	Put Request 	${suite_dcae_vesc_url_session} 	${evtpath}     data=${evtdata}   headers=${suite_headers}
     #Log    Received response from dcae ${resp.json()}
     [Return] 	${resp}
+
+Publish Event To VES Collector Wrong Auth
+    [Documentation]   Send an event to VES Collector by session with wrong auth
+    [Arguments]   ${evtpath}  ${evtdata}
+    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wrong_auth_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
+    [Return]   ${resp}
+
+Publish Event To VES Collector Cert
+    [Documentation]   Send an event to VES Collector by session with certs
+    [Arguments]   ${evtpath}  ${evtdata}
+    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_cert_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
+    [Return]   ${resp}
+
+Publish Event To VES Collector Wrong Cert
+    [Documentation]   Send an event to VES Collector by session with wrong certs
+    [Arguments]   ${evtpath}  ${evtdata}
+    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wrong_cert_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
+    [Return]   ${resp}
+
+Publish Event To VES Collector Without Auth And Cert
+    [Documentation]   Send an event to VES Collector by session without Auth and Cert
+    [Arguments]   ${evtpath}  ${evtdata}
+    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wo_auth_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
+    [Return]   ${resp}
