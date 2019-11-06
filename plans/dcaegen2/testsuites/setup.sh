@@ -21,11 +21,12 @@
 #get current host IP addres
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 
-VESC_IMAGE=nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.2-latest
+VESC_IMAGE=nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:latest
+
 echo VESC_IMAGE=${VESC_IMAGE}
 
 # Start DCAE VES Collector
-docker run -d -p 8080:8080/tcp -p 8443:8443/tcp -P --name vesc -e DMAAPHOST=${HOST_IP} ${VESC_IMAGE}
+docker run --add-host="onap-dmaap:${HOST_IP}" -d -p 8080:8080/tcp -p 8443:8443/tcp --name vesc -P -e DMAAPHOST="${HOST_IP}" ${VESC_IMAGE}
 
 VESC_IP=`get-instance-ip.sh vesc`
 export VESC_IP=${VESC_IP}
