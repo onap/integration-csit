@@ -17,8 +17,6 @@ import jsonschema
 import json
 import DcaeVariables
 import SimpleHTTPServer
-from robot.api import logger
-
 
 try:
     from cStringIO import StringIO
@@ -42,10 +40,6 @@ def enque_event(evt):
     if DcaeVariables.VESEventQ is not None:
         try:
             DcaeVariables.VESEventQ.put(evt)
-            if DcaeVariables.IsRobotRun:
-                logger.console("DMaaP Event enqued - size=" + str(len(evt)))
-            else:
-                print ("DMaaP Event enqueued - size=" + str(len(evt)))
             return True
         except Exception as e:
             print (str(e))
@@ -55,18 +49,14 @@ def enque_event(evt):
 
 def deque_event(wait_sec=25):
     if DcaeVariables.IsRobotRun:
-        logger.console("Enter DequeEvent")
+        pass
     try:
         evt = DcaeVariables.VESEventQ.get(True, wait_sec)
-        if DcaeVariables.IsRobotRun:
-            logger.console("DMaaP Event dequeued - size=" + str(len(evt)))
-        else:
-            print("DMaaP Event dequeued - size=" + str(len(evt)))
         return evt
     except Exception as e:
         if DcaeVariables.IsRobotRun:
-            logger.console(str(e))
-            logger.console("DMaaP Event dequeue timeout")
+            pass
+
         else:
             print("DMaaP Event dequeue timeout")
         return None
@@ -79,7 +69,6 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return
         
     def do_POST(self):
-        
         resp_code = 0
         # Parse the form data posted
         '''
@@ -119,12 +108,6 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if resp_code == 0:
             content_len = int(self.headers.getheader('content-length', 0))
             post_body = self.rfile.read(content_len)
-            
-            if DcaeVariables.IsRobotRun:
-                logger.console("\n" + "DMaaP Receive Event:\n" + post_body)
-            else:
-                print("\n" + "DMaaP Receive Event:")
-                print (post_body)
             
             indx = post_body.index("{")
             if indx != 0:
@@ -168,7 +151,6 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
-                # self.wfile.write("{'responses' : {'200' : {'description' : 'Success'}}}")
                 self.wfile.write("{'count': 1, 'serverTimeMs': 3}")
                 self.wfile.close()
         else:

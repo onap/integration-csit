@@ -64,7 +64,7 @@ class DcaeLibrary(object):
         return "false"
     
     @staticmethod
-    def enable_vesc_https_auth():
+    def enable_vesc_with_certBasicAuth():
         global client
         if 'Windows' in platform.system():
             try:
@@ -85,14 +85,13 @@ class DcaeLibrary(object):
         logger.console("Running script: " + script2run)
         subprocess.call(script2run)
         time.sleep(5)
-        return  
-                   
+        return
+
     @staticmethod
     def dmaap_message_receive(evtobj, action='contain'):
         
         evt_str = DMaaP.deque_event()
         while evt_str != None:
-            logger.console("DMaaP receive VES Event:\n" + evt_str)
             if action == 'contain':
                 if evtobj in evt_str:
                     logger.info("DMaaP Receive Expected Publish Event:\n" + evt_str)
