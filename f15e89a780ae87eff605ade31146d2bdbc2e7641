@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1439ce10_efba0f89",
+        "filename": "scripts/usecases/5G-Bulkpm/services.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-11-08T10:20:06Z",
+      "side": 1,
+      "message": "Should be more adaptive, people\u0027s environments vary there\u0027s no guarantee that a 120 sleep will work for everyone, probably better to have a higher overall timeout but check frequently to see if the service is online.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "f15e89a780ae87eff605ade31146d2bdbc2e7641",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519a82c8_1dea2284",
+        "filename": "scripts/usecases/5G-Bulkpm/services.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-11-08T10:20:06Z",
+      "side": 1,
+      "message": "Should be more adaptive, people\u0027s environments vary there\u0027s no guarantee that a 180 sleep will work for everyone, probably better to have a higher overall timeout but check frequently to see if the service is online.\n\nalso since this is done twice, could be worth putting it into a function",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "f15e89a780ae87eff605ade31146d2bdbc2e7641",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f796117_681081dd",
+        "filename": "scripts/usecases/5G-Bulkpm/services.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-11-08T10:20:06Z",
+      "side": 1,
+      "message": "I am not sure what the targetted environment is for this, but if it is to be run by people, you should document that this will restart their docker service, and not to use this on a machine that has pivotal services running through docker as it could cause an outage.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "f15e89a780ae87eff605ade31146d2bdbc2e7641",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
