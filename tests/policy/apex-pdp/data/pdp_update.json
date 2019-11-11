@@ -57,10 +57,6 @@
                             "version": "1.0.0"
                         },
                         {
-                            "name": "onap.Monitoring",
-                            "version": "1.0.0"
-                        },
-                        {
                             "name": "onap.policies.monitoring.cdap.tca.hi.lo.app",
                             "version": "1.0.0"
                         },
