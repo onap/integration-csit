@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "524de05e_e401ac4c",
+        "filename": "scripts/usecases/5G-Bulkpm/services.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-11-12T08:53:33Z",
+      "side": 1,
+      "message": "As discussed, please look into using the dcae inventory and dcae deployment handlers directly, this will remove the need to interact with kubernetes entirely and will make it so that the entire test can be setup, executed and dismantled within the robot framework flow (no need for any separate environment setup).",
+      "revId": "f15e89a780ae87eff605ade31146d2bdbc2e7641",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1439ce10_efba0f89",
         "filename": "scripts/usecases/5G-Bulkpm/services.sh",
         "patchSetId": 3
