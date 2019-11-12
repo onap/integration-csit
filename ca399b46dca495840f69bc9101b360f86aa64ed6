@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c63af8d6_d34e83c0",
+        "filename": "prepare-csit.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-11-12T12:38:19Z",
+      "side": 1,
+      "message": "remove unnecessary proxy",
+      "range": {
+        "startLine": 44,
+        "startChar": 130,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "ca399b46dca495840f69bc9101b360f86aa64ed6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18589de9_1eb1c890",
+        "filename": "prepare-csit.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-11-12T12:38:19Z",
+      "side": 1,
+      "message": "remove unnecessary proxy",
+      "range": {
+        "startLine": 49,
+        "startChar": 166,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "ca399b46dca495840f69bc9101b360f86aa64ed6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d3282a_32129e80",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-11-12T12:38:19Z",
+      "side": 1,
+      "message": "these variables should be in *** Variables *** section",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "ca399b46dca495840f69bc9101b360f86aa64ed6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e004826_73dd3aad",
+        "filename": "tests/dcaegen2/testcases/resources/dcae_keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-11-12T12:38:19Z",
+      "side": 1,
+      "message": "uncomment Log",
+      "range": {
+        "startLine": 135,
+        "startChar": 54,
+        "endLine": 136,
+        "endChar": 4
+      },
+      "revId": "ca399b46dca495840f69bc9101b360f86aa64ed6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ff7f44_016a2bec",
+        "filename": "tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-11-12T12:38:19Z",
+      "side": 1,
+      "message": "remove this sleep",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "ca399b46dca495840f69bc9101b360f86aa64ed6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
