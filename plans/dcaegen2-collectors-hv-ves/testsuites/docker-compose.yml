@@ -109,6 +109,7 @@ services:
       - HOSTNAME=${HV_VES_HOSTNAME}
       - CONSUL_HOST
       - CONFIG_BINDING_SERVICE
+      - CONFIG_BINDING_SERVICE_SERVICE_PORT
     healthcheck:
       interval: 10s
       timeout: 5s
@@ -133,6 +134,7 @@ services:
       - HOSTNAME=${HV_VES_HOSTNAME}
       - CONSUL_HOST
       - CONFIG_BINDING_SERVICE
+      - CONFIG_BINDING_SERVICE_SERVICE_PORT
     healthcheck:
       interval: 10s
       timeout: 5s
