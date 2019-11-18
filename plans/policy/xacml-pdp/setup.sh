@@ -103,3 +103,12 @@ echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
 
 ROBOT_VARIABLES="-v POLICY_PDPX_IP:${POLICY_PDPX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+
+cat /opt/app/policy/pdpx/etc/defaultConfig.json
+sleep 10s
+
+docker logs policy-xacml-pdp
+
+docker exec -it policy-xacml-pdp bash -c "cat /opt/app/policy/logs/debug.log"
+
+docker exec -it policy-xacml-pdp bash -c "cat /opt/app/policy/pdpx/etc/defaultConfig.json"
