@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
@@ -101,5 +101,6 @@ echo API IP IS ${POLICY_API_IP}
 echo PAP IP IS ${POLICY_PAP_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
+cat /opt/app/policy/pdpx/etc/defaultConfig.json
 
 ROBOT_VARIABLES="-v POLICY_PDPX_IP:${POLICY_PDPX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
