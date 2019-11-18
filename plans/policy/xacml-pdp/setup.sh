@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xv
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
@@ -16,7 +16,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-
 source ${SCRIPTS}/policy/config/policy-csit.conf
 export POLICY_MARIADB_VER
 echo ${GERRIT_BRANCH}
@@ -103,3 +102,13 @@ echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
 
 ROBOT_VARIABLES="-v POLICY_PDPX_IP:${POLICY_PDPX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+
+sleep 10s
+
+docker logs policy-xacml-pdp
+
+docker exec -it policy-xacml-pdp bash -c "cat /opt/app/policy/logs/debug.log"
+
+docker exec -it policy-xacml-pdp bash -c "cat /opt/app/policy/pdpx/etc/defaultConfig.json"
+
+cat /opt/app/policy/pdpx/etc/defaultConfig.json
