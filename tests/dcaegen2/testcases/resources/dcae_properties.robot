@@ -18,3 +18,5 @@ ${VESC_ROOTCA_CERT}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/
 ${VESC_ROOTCA_KEY}                 %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/rootCAdec.key
 ${VESC_WRONG_CERT}                 %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.crt
 ${VESC_WRONG_KEY}                  %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.key
+${VESC_OUTDATED_CERT}              %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/outdated.crt
+${VESC_OUTDATED_KEY}               %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/outdated.key
