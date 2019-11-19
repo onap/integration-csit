@@ -5,31 +5,31 @@ Library	          DcaeLibrary
 Library           OperatingSystem
 Library           Collections
 Variables         ../resources/DcaeVariables.py
+Resource          ../../../common.robot
 Resource          ../resources/dcae_properties.robot
-
-*** Variables ***
-${DCAE_HEALTH_CHECK_BODY}    %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
-
 
 *** Keywords ***
 Create sessions
     [Documentation]  Create all required sessions
-    Create Session    dcae_vesc_url    ${VESC_URL}
-    Set Suite Variable    ${suite_dcae_vesc_url_session}    dcae_vesc_url
     ${auth}=  Create List  ${VESC_HTTPS_USER}   ${VESC_HTTPS_PD}
-    Create Session    dcae_vesc_url_https    ${VESC_URL_HTTPS}  auth=${auth}  disable_warnings=1
-    Set Suite Variable    ${suite_dcae_vesc_url_https_session}    dcae_vesc_url_https
     ${wrong_auth}=  Create List  ${VESC_HTTPS_WRONG_USER}  ${VESC_HTTPS_WRONG_PD}
-    Create Session  dcae_vesc_url_https_wrong_auth  ${VESC_URL_HTTPS}  auth=${wrong_auth}  disable_warnings=1
-    Set Suite Variable  ${suite_dcae_vesc_url_https_wrong_auth_session}  dcae_vesc_url_https_wrong_auth
     ${certs}=  Create List  ${VESC_ROOTCA_CERT}  ${VESC_ROOTCA_KEY}
-    Create Client Cert Session  dcae_vesc_url_https_cert  ${VESC_URL_HTTPS}  client_certs=${certs}  disable_warnings=1
-    Set Suite Variable  ${suite_dcae_vesc_url_https_cert_session}  dcae_vesc_url_https_cert
     ${wrong_certs}=  Create List  ${VESC_WRONG_CERT}  ${VESC_WRONG_KEY}
+    ${outdated_certs}=  Create List  ${VESC_OUTDATED_CERT}  ${VESC_OUTDATED_KEY}
+    Create Session    dcae_vesc_url    ${VESC_URL}
+    Set Suite Variable    ${http_session}    dcae_vesc_url
+    Create Session    dcae_vesc_url_https    ${VESC_URL_HTTPS}  auth=${auth}  disable_warnings=1
+    Set Suite Variable    ${https_basic_auth_session}    dcae_vesc_url_https
+    Create Session  dcae_vesc_url_https_wrong_auth  ${VESC_URL_HTTPS}  auth=${wrong_auth}  disable_warnings=1
+    Set Suite Variable  ${https_wrong_auth_session}  dcae_vesc_url_https_wrong_auth
+    Create Client Cert Session  dcae_vesc_url_https_cert  ${VESC_URL_HTTPS}  client_certs=${certs}  disable_warnings=1
+    Set Suite Variable  ${https_valid_cert_session}  dcae_vesc_url_https_cert
     Create Client Cert Session  dcae_vesc_url_https_wrong_cert  ${VESC_URL_HTTPS}  client_certs=${wrong_certs}  disable_warnings=1  verify=${False}
-    Set Suite Variable  ${suite_dcae_vesc_url_https_wrong_cert_session}  dcae_vesc_url_https_wrong_cert
+    Set Suite Variable  ${https_invalid_cert_session}  dcae_vesc_url_https_wrong_cert
+    Create Client Cert Session  dcae_vesc_url_https_outdated_cert  ${VESC_URL_HTTPS}  client_certs=${outdated_certs}  disable_warnings=1  verify=${False}
+    Set Suite Variable  ${https_outdated_cert_session}  dcae_vesc_url_https_outdated_cert
     Create Session  dcae_vesc_url_https_wo_auth  ${VESC_URL_HTTPS}  disable_warnings=1
-    Set Suite Variable  ${suite_dcae_vesc_url_https_wo_auth_session}  dcae_vesc_url_https_wo_auth
+    Set Suite Variable  ${https_no_cert_no_auth_session}  dcae_vesc_url_https_wo_auth
 
 Create header
     ${headers}=    Create Dictionary    Content-Type=application/json
@@ -37,7 +37,6 @@ Create header
 
 Get DCAE Nodes
     [Documentation]    Get DCAE Nodes from Consul Catalog
-    #Log    Creating session   ${GLOBAL_DCAE_CONSUL_URL}
     ${session}=    Create Session 	dcae 	${GLOBAL_DCAE_CONSUL_URL}
     ${uuid}=    Generate UUID
     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json  X-Consul-Token=abcd1234  X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
@@ -64,7 +63,6 @@ DCAE Node Health Check
     ${len}=  Get Length  ${StatusList}
     Should Not Be Equal As Integers   ${len}   0
     DCAE Check Health Status    ${NodeName}   ${StatusList[0]}    Serf Health Status
-    #Run Keyword if  ${len} > 1  DCAE Check Health Status  ${NodeName}  ${StatusList[1]}  Serf Health Status
 
 DCAE Check Health Status
     [Arguments]    ${NodeName}    ${ItemStatus}   ${CheckType}
@@ -128,50 +126,47 @@ Get DCAE Service Component Status
     ${resp}= 	Get Request 	dcae-service-component 	${urlpath}
     [Return]    ${resp}
 
-Publish Event To VES Collector No Auth
-    [Documentation]    Send an event to VES Collector
-    [Arguments]     ${evtpath}   ${evtdata}
-    ${resp}= 	Post Request 	${suite_dcae_vesc_url_session} 	${evtpath}     data=${evtdata}   headers=${suite_headers}
-    [Return] 	${resp}
-
 Publish Event To VES Collector
     [Documentation]    Send an event to VES Collector
-    [Arguments]     ${evtpath}   ${evtdata}
-    ${resp}= 	Post Request 	${suite_dcae_vesc_url_https_session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
+    [Arguments]     ${session}  ${evtpath}   ${evtdata}
+    ${resp}= 	Post Request 	${session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
     [Return] 	${resp}
 
 Publish Event To VES Collector With Put Method
     [Documentation]    Send an event to VES Collector
-    [Arguments]     ${evtpath}   ${evtdata}
-    ${resp}= 	Put Request 	${suite_dcae_vesc_url_https_session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
+    [Arguments]     ${session}  ${evtpath}   ${evtdata}
+    ${resp}= 	Put Request 	${session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
     [Return] 	${resp}
 
-Publish Event To VES Collector With Put Method No Auth
-    [Documentation]    Send an event to VES Collector
-    [Arguments]     ${evtpath}   ${evtdata}
-    ${resp}= 	Put Request 	${suite_dcae_vesc_url_session} 	${evtpath}     data=${evtdata}   headers=${suite_headers}
-    [Return] 	${resp}
+Send Request And Validate Response
+    [Documentation]  Post singel event to passed url with passed data and validate received response
+    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_code}=None
+    ${evtdata}=  Get Data From File  ${evtjson}
+    ${resp}=  Run Keyword  ${keyword}  ${session}  ${evtpath}  ${evtdata}
+    Log    Receive HTTPS Status code ${resp.status_code}
+    Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
+    ${isEmpty}=   Is Json Empty    ${resp}
+    Run Keyword If   '${isEmpty}' == False   Log  ${resp.json()}
+    Run Keyword If  '${msg_code}' != 'None'  Check Whether Message Received  ${msg_code}
 
-Publish Event To VES Collector With Wrong Auth
-    [Documentation]   Send an event to VES Collector by session with wrong auth
-    [Arguments]   ${evtpath}  ${evtdata}
-    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wrong_auth_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
-    [Return]   ${resp}
+Check Whether Message Received
+    [Documentation]  Validare if message has been received
+    [Arguments]  ${msg_code}
+    ${ret}=  DMaaP Message Receive  ${msg_code}
+    Should Be Equal As Strings    ${ret}    true
 
-Publish Event To VES Collector With Cert
-    [Documentation]   Send an event to VES Collector by session with certs
-    [Arguments]   ${evtpath}  ${evtdata}
-    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_cert_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
-    [Return]   ${resp}
+Send Request And Expect Error
+    [Documentation]  Post singel event to passed url with passed data and expect error
+    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${error_type}  @{error_content}
+    ${evtdata}=  Get Data From File  ${evtjson}
+    ${err_msg}=  Run Keyword And Expect Error  ${error_type}  ${keyword}  ${session}  ${evtpath}  ${evtdata}
+    :FOR    ${content}    IN    @{error_content}
+    \    Should Contain   ${err_msg}  ${content}
+    Log  Recieved error message ${err_msg}
 
-Publish Event To VES Collector With Wrong Cert
-    [Documentation]   Send an event to VES Collector by session with wrong certs
-    [Arguments]   ${evtpath}  ${evtdata}
-    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wrong_cert_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
-    [Return]   ${resp}
-
-Publish Event To VES Collector Without Auth And Cert
-    [Documentation]   Send an event to VES Collector by session without Auth and Cert
-    [Arguments]   ${evtpath}  ${evtdata}
-    ${resp}=  Post Request  ${suite_dcae_vesc_url_https_wo_auth_session}  ${evtpath}  data=${evtdata}  headers=${suite_headers}
-    [Return]   ${resp}
+Run Healthcheck
+    [Documentation]  Run Healthcheck
+    ${uuid}=    Generate UUID
+    ${headers}=  Create Dictionary     Accept=*/*     X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
+    ${resp}= 	Get Request 	${http_session} 	/healthcheck        headers=${headers}
+    Should Be Equal As Strings 	${resp.status_code} 	200
