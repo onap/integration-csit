@@ -7,9 +7,10 @@ Library           OperatingSystem
 Library           Collections
 Library           DcaeLibrary
 Resource          ./resources/dcae_keywords.robot
+
 Test Teardown     Cleanup VES Events
-Suite Setup       Run keywords  VES Collector Suite Setup DMaaP  Create sessions  Create header
-Suite Teardown    VES Collector Suite Shutdown DMaaP
+Suite Setup       Run keywords  VES Collector Suite Setup DMaaP  Generate Certs  Create sessions  Create header
+Suite Teardown    Run keywords  VES Collector Suite Shutdown DMaaP  Remove Certs
 
 *** Test Cases ***
 
@@ -82,7 +83,6 @@ Healthcheck with Outdated Cert
     ${uuid}=    Generate UUID
     ${headers}=  Create Dictionary     Accept=*/*     X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
     ${err_msg}=  Run Keyword And Expect Error  SSLError:*  Get Request 	${https_outdated_cert_session} 	/healthcheck  headers=${headers}
-    Should Contain  ${err_msg}  bad handshake
     Should Contain  ${err_msg}  certificate unknown
     Log  Recieved error message ${err_msg}
 
@@ -135,14 +135,14 @@ Publish Single VES VNF Measurement Event With Cert
 
 Publish Single VES VNF Measurement Event With Wrong Cert
     [Tags]  DCAE-VESC-R1
-    [Documentation]  Post single event with valid data and invalid certificate to /eventListener/v7 endpoint over HTTPS and expect SSLError with bad handshake
-    @{err_content}  Create List  bad handshake  certificate unknown
+    [Documentation]  Post single event with valid data and invalid certificate to /eventListener/v7 endpoint over HTTPS and expect SSLError with certificate unknown
+    @{err_content}  Create List  certificate unknown
     Send Request And Expect Error  Publish Event To VES Collector  ${https_invalid_cert_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7}  SSLError:*  @{err_content}
 
 Publish Single VES VNF Measurement Event With Outdated Cert
     [Tags]  DCAE-VESC-R1
-    [Documentation]  Post single event with valid data and outdated certificate to /eventListener/v7 endpoint over HTTPS and expect SSLError with bad handshake
-    @{err_content}  Create List  bad handshake  certificate unknown
+    [Documentation]  Post single event with valid data and outdated certificate to /eventListener/v7 endpoint over HTTPS and expect SSLError with certificate unknown
+    @{err_content}  Create List  certificate unknown
     Send Request And Expect Error  Publish Event To VES Collector  ${https_outdated_cert_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7}  SSLError:*  @{err_content}
 
 Publish Single VES VNF Measurement Event Without Auth And Cert
@@ -167,14 +167,14 @@ Publish V7 Batch Event With Cert
 
 Publish V7 Batch With Wrong Cert
     [Tags]  DCAE-VESC-R1
-    [Documentation]  Post single event with valid data and invalid certificate to /eventListener/v7/eventBatch endpoint over HTTPS and expect SSLError with bad handshake
-    @{err_content}  Create List  bad handshake  certificate unknown
+    [Documentation]  Post single event with valid data and invalid certificate to /eventListener/v7/eventBatch endpoint over HTTPS and expect SSLError with certificate unknown
+    @{err_content}  Create List  certificate unknown
     Send Request And Expect Error  Publish Event To VES Collector   ${https_invalid_cert_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_VALID_BATCH_JSON_V7}  SSLError:*  @{err_content}
 
 Publish V7 Batch Event With Outdated Cert
     [Tags]  DCAE-VESC-R1
-    [Documentation]  Post single event with valid data and outdated certificate to /eventListener/v7/eventBatch endpoint over HTTPS and expect SSLError with bad handshake
-    @{err_content}  Create List  bad handshake  certificate unknown
+    [Documentation]  Post single event with valid data and outdated certificate to /eventListener/v7/eventBatch endpoint over HTTPS and expect SSLError with certificate unknown
+    @{err_content}  Create List  certificate unknown
     Send Request And Expect Error  Publish Event To VES Collector   ${https_outdated_cert_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_VALID_BATCH_JSON_V7}  SSLError:*  @{err_content}
 
 Publish V7 Batch Event Without Auth And Cert
