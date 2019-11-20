@@ -4,6 +4,7 @@ Library 	      RequestsLibrary
 Library	          DcaeLibrary
 Library           OperatingSystem
 Library           Collections
+Library           CertsLibrary
 Variables         ../resources/DcaeVariables.py
 Resource          ../../../common.robot
 Resource          ../resources/dcae_properties.robot
@@ -13,7 +14,7 @@ Create sessions
     [Documentation]  Create all required sessions
     ${auth}=  Create List  ${VESC_HTTPS_USER}   ${VESC_HTTPS_PD}
     ${wrong_auth}=  Create List  ${VESC_HTTPS_WRONG_USER}  ${VESC_HTTPS_WRONG_PD}
-    ${certs}=  Create List  ${VESC_ROOTCA_CERT}  ${VESC_ROOTCA_KEY}
+    ${certs}=  Create List  ${VESC_CERT}  ${VESC_KEY}
     ${wrong_certs}=  Create List  ${VESC_WRONG_CERT}  ${VESC_WRONG_KEY}
     ${outdated_certs}=  Create List  ${VESC_OUTDATED_CERT}  ${VESC_OUTDATED_KEY}
     Create Session    dcae_vesc_url    ${VESC_URL}

@@ -7,9 +7,10 @@ Library           OperatingSystem
 Library           Collections
 Library           DcaeLibrary
 Resource          ./resources/dcae_keywords.robot
+
 Test Teardown     Cleanup VES Events
-Suite Setup       Run keywords  VES Collector Suite Setup DMaaP  Create sessions  Create header
-Suite Teardown    VES Collector Suite Shutdown DMaaP
+Suite Setup       Run keywords  VES Collector Suite Setup DMaaP  Generate Certs  Create sessions  Create header
+Suite Teardown    Run keywords  VES Collector Suite Shutdown DMaaP  Remove Certs
 
 *** Test Cases ***
 
