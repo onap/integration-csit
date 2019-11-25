@@ -23,6 +23,7 @@ export ROBOT_VARIABLES="--pythonpath ${WORKSPACE}/tests/dcaegen2-collectors-hv-v
 export JAVA_OPTS="-Dio.netty.leakDetection.level=paranoid"
 export CONSUL_HOST="consul-server"
 export CONFIG_BINDING_SERVICE="config-binding-service"
+export CONFIG_BINDING_SERVICE_SERVICE_PORT="10000"
 
 export ONAP_NEXUS_REGISTRY="nexus3.onap.org:10001"
 export DOCKER_REGISTRY=${ONAP_NEXUS_REGISTRY}
