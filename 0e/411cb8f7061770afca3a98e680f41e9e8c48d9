@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Remigiusz Janeczek <remigiusz.janeczek@nokia.com>
+Code-Review+1: Piotr Wielebski <piotr.wielebski@nokia.com>
+Code-Review+2: Daniel Rose <dr695h@att.com>
+Submitted-by: Daniel Rose <dr695h@att.com>
+Submitted-at: Mon, 25 Nov 2019 20:07:10 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/98705
+Project: integration/csit
+Branch: refs/heads/master
