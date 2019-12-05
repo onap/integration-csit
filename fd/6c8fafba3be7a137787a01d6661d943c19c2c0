@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Marcin Przybysz <marcin.przybysz@nokia.com>
+Code-Review+1: Pawel Kasperkiewicz <pawel.kasperkiewicz@nokia.com>
+Code-Review+1: Vijay Venkatesh Kumar <vv770d@att.com>
+Code-Review+2: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-by: Mariusz Wagner <mariusz.wagner@nokia.com>
+Submitted-at: Thu, 05 Dec 2019 09:33:21 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/98294
+Project: integration/csit
+Branch: refs/heads/master
