@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0ca3f3_4ab563f5",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2019-12-05T13:49:21Z",
+      "side": 1,
+      "message": "change name this variable, for example: VES_EVENTLISTENER_V7",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "a7418ac770dce31ab0a84ba2e764559b5b888f02",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
