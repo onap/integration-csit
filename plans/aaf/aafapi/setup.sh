@@ -91,15 +91,15 @@ if [ -z "$SKIP_PULL" ]; then
   NEXUS_PASSWD=anonymous
   echo "$NEXUS_PASSWD" | docker login -u $NEXUS_USERNAME --password-stdin $DOCKER_REPOSITORY
 
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-cass:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-config:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-cm:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-fs:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-gui:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-hello:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-locate:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-oauth:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf-service:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cass:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_config:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_cm:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_fs:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_gui:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aafservice:$AAF_DOCKER_VERSION
 fi
 # Cassandra Install/Start
 cd ../auth-cass/docker
