@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e17265b0_6590865d",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2019-12-06T07:46:24Z",
+      "side": 1,
+      "message": "please also enlarge description, that withoint this test suite we test v5 and v7 API and secured/not secured connections and healtchecks.",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 111
+      },
+      "revId": "67f8c0f5b6067cc1c39a2351e7cfafe37eee5c45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7416076_ba0b053f",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2019-12-06T07:46:24Z",
+      "side": 1,
+      "message": "for me cleaning eents should be done after each test case, not as a a setup in next test. I mean it should be done as a test teardown each time, not test setup.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "67f8c0f5b6067cc1c39a2351e7cfafe37eee5c45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a556823_d824e4df",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2019-12-06T07:46:24Z",
+      "side": 1,
+      "message": "please create separate \"global\" file for variables, which will be available for all potential test suites within ves csit\u0027s and import it into test suite",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "67f8c0f5b6067cc1c39a2351e7cfafe37eee5c45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6ad15c_2df29904",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2019-12-06T07:46:24Z",
+      "side": 1,
+      "message": "it\u0027s excatly status.code",
+      "range": {
+        "startLine": 53,
+        "startChar": 102,
+        "endLine": 53,
+        "endChar": 111
+      },
+      "revId": "67f8c0f5b6067cc1c39a2351e7cfafe37eee5c45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52657951_772b856c",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2019-12-06T07:46:24Z",
+      "side": 1,
+      "message": "please create only one keyword \"Publish event to ves collector\" and forward parameters into it. Currently we have a lot of keyword where code is excatly the same, but difference is in what kind of parameter we provide , f.ex. good auth/bad auth, good cert/bad cert etc.\n\nWe can also hide this keyword inside \"Send request and Validate response\" and do not forward keyword as a input to keyword, but only parameters.",
+      "range": {
+        "startLine": 54,
+        "startChar": 40,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "67f8c0f5b6067cc1c39a2351e7cfafe37eee5c45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
