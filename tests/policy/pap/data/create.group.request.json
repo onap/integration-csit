@@ -17,12 +17,7 @@
                             "version": "1.0.0"
                         }
                     ],
-                    "policies": [
-                        {
-                            "name": "onap.restart.tca",
-                            "version": "1.0.0"
-                        }
-                    ]
+                    "policies": []
                 },
                 {
                     "pdpType": "pdpTypeB",
