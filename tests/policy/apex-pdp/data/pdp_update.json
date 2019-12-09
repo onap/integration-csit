@@ -2,110 +2,14 @@
     "groups": [
         {
             "name": "defaultGroup",
-            "description": "The default group that registers all supported policy types and pdps.",
-            "pdpGroupState": "ACTIVE",
-            "properties": {},
-            "pdpSubgroups": [
+            "deploymentSubgroups": [
                 {
                     "pdpType": "apex",
-                    "supportedPolicyTypes": [
-                        {
-                            "name": "onap.policies.controlloop.operational.Apex",
-                            "version": "1.0.0"
-                        }
-                    ],
+                    "action": "POST",
                     "policies": [{
                             "name": "onap.policies.controlloop.Operational.apex.sampledomain",
                             "version": "1.0.0"
                         }],
-                    "currentInstanceCount": 1,
-                    "desiredInstanceCount": 1,
-                    "properties": {},
-                    "pdpInstances": []
-                },
-                {
-                    "pdpType": "drools",
-                    "supportedPolicyTypes": [
-                        {
-                            "name": "onap.policies.controlloop.Operational",
-                            "version": "1.0.0"
-                        }
-                    ],
-                    "policies": [],
-                    "currentInstanceCount": 0,
-                    "desiredInstanceCount": 1,
-                    "properties": {},
-                    "pdpInstances": []
-                },
-                {
-                    "pdpType": "xacml",
-                    "supportedPolicyTypes": [
-                        {
-                            "name": "onap.policies.controlloop.guard.FrequencyLimiter",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.controlloop.guard.MinMax",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.controlloop.guard.Blacklist",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.controlloop.guard.coordination.FirstBlocksSecond",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.monitoring.cdap.tca.hi.lo.app",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.AffinityPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.DistancePolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.HpaPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.OptimizationPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.PciPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.QueryPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.SubscriberPolicy",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.Vim_fit",
-                            "version": "1.0.0"
-                        },
-                        {
-                            "name": "onap.policies.optimization.VnfPolicy",
-                            "version": "1.0.0"
-                        }
-                    ],
-                    "policies": [],
-                    "currentInstanceCount": 0,
-                    "desiredInstanceCount": 1,
-                    "properties": {},
-                    "pdpInstances": []
                 }
             ]
         }

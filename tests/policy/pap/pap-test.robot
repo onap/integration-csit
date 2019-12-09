@@ -34,7 +34,7 @@ CreatePdpGroups
      ${postjson}=  Get file  ${CURDIR}/data/create.group.request.json
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request     policy  /policy/pap/v1/pdps    data=${postjson}     headers=${headers}
+     ${resp}=   Post Request     policy  /policy/pap/v1/pdps/groups/batch    data=${postjson}     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
 
@@ -60,6 +60,17 @@ QueryPdpGroups
      Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  create.group.request
      Should Be Equal As Strings    ${resp.json()['groups'][0]['pdpGroupState']}  ACTIVE
      Should Be Equal As Strings    ${resp.json()['groups'][1]['name']}  defaultGroup
+
+DeployPdpGroups
+     [Documentation]    Runs Policy PAP Deploy Policies to PDP Groups
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_PAP_IP}:6969
+     ${postjson}=  Get file  ${CURDIR}/data/deploy.group.request.json
+     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Post Request     policy  /policy/pap/v1/pdps/deployments/batch    data=${postjson}     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
 
 UndeployPolicy
      [Documentation]    Runs Policy PAP Undeploy a Policy from PDP Groups
