@@ -1,0 +1,19 @@
+{
+    "groups": [
+        {
+            "name": "create.group.request",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "pdpTypeA",
+                    "action": "POST",
+                    "policies": [
+                        {
+                            "name": "onap.restart.tca",
+                            "version": "1.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
