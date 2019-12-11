@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedde4ff_fac40f8c",
+        "filename": "INFO.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2019-12-11T19:01:04Z",
+      "side": 1,
+      "message": "this is not allowed, \n\nPlease add one entry per name",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "43296a0bbe7b1b3fec1c638fc534749de073709d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
