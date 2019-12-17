@@ -70,9 +70,12 @@ sleep 3
 
 
 sudo apt-get -y install libxml2-utils
-export POLICY_API_VERSION="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_PAP_VERSION="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_XACML_PDP_VERSION="$(curl -q --silent https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_PAP_VERSION="${POLICY_PAP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_XACML_PDP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_XACML_PDP_VERSION="${POLICY_XACML_PDP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 
 echo ${POLICY_API_VERSION}
 echo ${POLICY_PAP_VERSION}

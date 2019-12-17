@@ -71,10 +71,14 @@ rm -rf ${WORK_DIR}
 sleep 3
 
 sudo apt-get -y install libxml2-utils
-export POLICY_API_VERSION="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_PAP_VERSION="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_APEX_PDP_VERSION="$(curl -q --silent https://git.onap.org/policy/apex-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_DISTRIBUTION_VERSION="$(curl -q --silent https://git.onap.org/policy/distribution/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_PAP_VERSION="${POLICY_PAP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_APEX_PDP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/apex-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_APEX_PDP_VERSION="${POLICY_APEX_PDP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_DISTRIBUTION_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/distribution/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_DISTRIBUTION_VERSION="${POLICY_DISTRIBUTION_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 
 echo ${POLICY_API_VERSION}
 echo ${POLICY_PAP_VERSION}

@@ -27,8 +27,10 @@ pip uninstall -y docker
 pip install -U docker==2.7.0
 
 sudo apt-get -y install libxml2-utils
-export POLICY_DROOLS_APPS_VERSION="$(curl -q --silent https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-echo ${POLICY_DRROLS_APPS_VERSION}
+POLICY_DROOLS_APPS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+echo ${POLICY_DROOLS_APPS_VERSION_EXTRACT}
+export POLICY_DROOLS_APPS_VERSION="${POLICY_DROOLS_APPS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+echo ${POLICY_DROOLS_APPS_VERSION}
 
 docker login -u docker -p docker nexus3.onap.org:10001
 
