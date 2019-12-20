@@ -44,10 +44,12 @@ import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse200;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201InstantiatedVnfInfoVnfcResourceInfo;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsBasic;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsOauth2ClientCredentials;
+import org.onap.so.svnfm.simulator.api.VeVnfmApi;
 import org.onap.so.svnfm.simulator.model.Vnfds;
 import org.onap.so.svnfm.simulator.repository.VnfOperationRepository;
 import org.onap.so.svnfm.simulator.config.ApplicationConfig;
 import org.onap.so.svnfm.simulator.model.VnfOperation;
+import org.onap.so.svnfm.simulator.util.PatternContainedChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -82,11 +84,12 @@ public abstract class OperationProgressor implements Runnable {
 
         final ApiClient apiClient = new ApiClient();
         String callBackUrl = subscriptionService.getSubscriptions().iterator().next().getCallbackUri();
-        callBackUrl = callBackUrl.substring(0, callBackUrl.indexOf("/lcn/"));
+        final PatternContainedChecker checker = new PatternContainedChecker("/lcn/", callBackUrl);
+        callBackUrl = checker.getText();
         apiClient.setBasePath(callBackUrl);
         apiClient.setKeyManagers(getKeyManagers());
         apiClient.setSslCaCert(getCertificateToTrust());
-        notificationClient = new DefaultApi(apiClient);
+        notificationClient = checker.isContained() ? new DefaultApi(apiClient) : new VeVnfmApi(apiClient);
 
         final org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.ApiClient grantApiClient =
                 new org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.ApiClient();
