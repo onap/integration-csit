@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 07 Jan 2020 10:24:37 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/99696
+Project: integration/csit
+Branch: refs/heads/master
