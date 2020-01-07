@@ -4,6 +4,7 @@ Documentation        store all properties that can change or are used in multipl
 ...                   make sure you prepend them with GLOBAL so that other files can easily see it is from this file.
 
 *** Variables ***
+
 ${GLOBAL_APPLICATION_ID}                 robot-dcaegen2
 ${GLOBAL_DCAE_CONSUL_URL}                http://135.205.228.129:8500
 ${GLOBAL_DCAE_CONSUL_URL1}               http://135.205.228.170:8500
@@ -14,8 +15,8 @@ ${VESC_HTTPS_USER}                       sample1
 ${VESC_HTTPS_PD}                         sample1
 ${VESC_HTTPS_WRONG_PD}                   sample
 ${VESC_HTTPS_WRONG_USER}                 sample
-${VESC_ROOTCA_CERT}                      %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/rootCA.crt
-${VESC_ROOTCA_KEY}                       %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/rootCAdec.key
+${VESC_CERT}                             %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/temporary.crt
+${VESC_KEY}                              %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/temporary.key
 ${VESC_WRONG_CERT}                       %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.crt
 ${VESC_WRONG_KEY}                        %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/wrong.key
 ${VESC_OUTDATED_CERT}                    %{WORKSPACE}/tests/dcaegen2/testcases/assets/certs/outdated.crt
@@ -45,3 +46,4 @@ ${CB_HEALTHCHECK_PATH}                   /healthcheck
 ${CB_SERVICE_COMPONENT_PATH}             /service_component/
 ${VES_Service_Name1}                     dcae-controller-ves-collector
 ${VES_Service_Name2}                     ves-collector-not-exist
+
