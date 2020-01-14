@@ -72,6 +72,13 @@ CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddres
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
 sed -i 's/4.4.4.4/'$MARIADB'/g' docker-compose.yml
+
+#Setting Up PM Mapper certs.
+cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 /tmp/pm-mapper-certs/
+cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass /tmp/pm-mapper-certs/
+cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 /tmp/pm-mapper-certs/
+cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass /tmp/pm-mapper-certs/
+
 docker-compose up -d
 
 cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
@@ -82,13 +89,6 @@ sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
 sed -i 's/2.2.2.2/'$DR_PROV_IP'/g' docker-compose.yml
 sed -i 's/3.3.3.3/'$PMMAPPER_IP'/g' docker-compose.yml
 docker-compose up -d
-
-# Setting up PM Mapper certs.
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
-docker restart pmmapper
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
 for i in {1..5}; do
