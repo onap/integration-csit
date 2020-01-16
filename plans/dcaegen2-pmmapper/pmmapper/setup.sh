@@ -2,93 +2,59 @@
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
 
-# Clone DMaaP Message Router repo
-mkdir -p $WORKSPACE/archives/dmaapmr
-cd $WORKSPACE/archives/dmaapmr
-git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
-sed -i 's/enableCadi: false/enableCadi: "false"/g' /$WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose/docker-compose.yml
-cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
-cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
-
-# start DMaaP MR containers with docker compose and configuration from docker-compose.yml
 docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d
 
-ZOOKEEPER=$(docker ps -a -q --filter="name=zookeeper_1")
-KAFKA=$(docker ps -a -q --filter="name=kafka_1")
-DMAAP=$(docker ps -a -q --filter="name=dmaap_1")
+TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper
 
-# Get IP address of KAFKA, Zookeeper
-KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $KAFKA)
-ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $ZOOKEEPER)
+export GATEWAY_IP=172.18.0.1
+export DR_NODE_IP=172.18.0.2
+export DR_PROV_IP=172.18.0.3
+export CONSUL_IP=172.18.0.4
+export CBS_IP=172.18.0.5
+export MARIADB_IP=172.18.0.6
+export PMMAPPER_IP=172.18.0.7
 
-# Shutdown DMAAP Container
-docker kill $DMAAP
+for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json; do
+  cp $TEST_PLANS_DIR/assets/${asset} /var/tmp/
+done
 
-# Initial docker-compose up and down is for populating kafka and zookeeper IPs in /var/tmp/MsgRtrApi.properites
-sed -i -e '/config.zk.servers=/ s/=.*/='$ZOOKEEPER_IP'/' /var/tmp/MsgRtrApi.properties
-sed -i -e '/kafka.metadata.broker.list=/ s/=.*/='$KAFKA_IP':9092/' /var/tmp/MsgRtrApi.properties
+sed -i 's/datarouter-mariadb/'$MARIADB_IP'/g' /var/tmp/provserver.properties
+#sed -i 's/<kafka-ip>/'$KAFKA_IP'/g' /var/tmp/addSubscriber.txt
+#sed -i 's/<kafka-ip>/'$KAFKA_IP'/g' /var/tmp/addFeed3.txt
+#sed -i 's/ipaddress/'$CBS_IP'/g' /var/tmp/cbs.json
+sed -i 's/ipaddress//g' /var/tmp/cbs.json
 
-# Start DMaaP MR containers with docker compose and configuration from docker-compose.yml
-docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d
-sleep 5
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d mariadb consul cbs
 
-# Get IP address of DMAAP Message Router.
-DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $DMAAP)
+echo "Waiting for MariaDB to come up healthy..."
+for i in {1..15}; do
+    if [ "$(docker inspect --format='{{json .State.Health.Status}}' mariadb)" = '"healthy"' ]
+    then
+      break
+    else
+      sleep 2
+    fi
+done
 
-# Clone DMaaP Data Router repo and Initialization of Data Router, Consul, Config Binding Service
-mkdir -p $WORKSPACE/archives/dmaapdr
-cd $WORKSPACE/archives/dmaapdr
-git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
-mkdir docker-compose
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
-cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-e2e.yml $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
-docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d
-echo "Disregard the message ERROR: for datarouter-node  Container 1234456 is unhealthy, this is expected behaiour at this stage"
-sleep 10
-docker kill cbs
-CONSUL_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' consul )
-sed -i -e '/CONSUL_HOST:/ s/:.*/: '$CONSUL_IP'/' docker-compose.yml
-MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
-sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/prov_data/provserver.properties
-docker-compose up -d
-DR_PROV_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-prov)
-DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d datarouter-node datarouter-prov
 
-# Consul Configuration for PM Mapper
-cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cbs.json /tmp/cbs.json
-sed -i 's/ipaddress/'${CBS_IP}'/g' /tmp/cbs.json
-curl --request PUT --data @/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service/register
-curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/config.json
+curl --request PUT --data @/var/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service/register
+curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT \
+      -H 'Accept: application/json' \
+      -H 'Content-Type: application/json' \
+      -H 'X-Requested-With: XMLHttpRequest' \
+      --data @$TEST_PLANS_DIR/assets/config.json
 
-# PM Mapper startup and configuration
-mkdir /tmp/docker-compose
-cd /tmp/docker-compose
-cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-pmmapper.yml /tmp/docker-compose/docker-compose.yml
-CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cbs)
-sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
-sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
-sed -i 's/4.4.4.4/'$MARIADB'/g' docker-compose.yml
-docker-compose up -d
-
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
-PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
-docker kill datarouter-node
-docker kill datarouter-prov
-sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml
-sed -i 's/2.2.2.2/'$DR_PROV_IP'/g' docker-compose.yml
-sed -i 's/3.3.3.3/'$PMMAPPER_IP'/g' docker-compose.yml
-docker-compose up -d
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d pmmapper
+sleep 2
 
 # Setting up PM Mapper certs.
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
-docker restart pmmapper
+docker cp $TEST_PLANS_DIR/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $TEST_PLANS_DIR/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
+docker cp $TEST_PLANS_DIR/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $TEST_PLANS_DIR/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
+
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml restart pmmapper
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
 for i in {1..5}; do
@@ -97,41 +63,39 @@ for i in {1..5}; do
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' pmmapper) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' $KAFKA) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' $ZOOKEEPER) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' $DMAAP) ]
+        [ $(docker inspect --format '{{ .State.Running }}' pmmapper) ]
     then
-        echo "Message Router, Data Router, Consul, Config Binding Service Running and PM Mapper services are running healthy"
+        echo "All required docker containers are running up."
         break
     else
-        echo sleep $i
         sleep $i
     fi
 done
+
 # Data Router Configuration.
-DR_NODE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' datarouter-node)
-DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' datarouter-prov)
-docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$DR_GATEWAY_IP"
-docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
+docker exec -i datarouter-prov sh -c \
+    "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$GATEWAY_IP"
+docker exec -i datarouter-prov sh -c \
+    "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$GATEWAY_IP"
 
 # Create PM Mapper feed and create PM Mapper subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" \
+      --data-ascii @$TEST_PLANS_DIR/assets/createFeed.json \
+      --post301 --location-trusted -k https://${DR_PROV_IP}:8443
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" \
+      --data-ascii @$TEST_PLANS_DIR/assets/addSubscriber.json \
+      --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 
 # Simulation setup for Message Router
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/mrserver.js mariadb:/
-docker exec mariadb /bin/bash -c "apt update"
-sleep 2
-docker exec mariadb /bin/bash -c "apt install nodejs -y"
-sleep 10
+docker cp $TEST_PLANS_DIR/assets/mrserver.js mariadb:/
+docker exec mariadb /bin/bash -c "apt update && apt install nodejs -y"
 docker exec mariadb /bin/bash -c "nodejs mrserver.js &" &
+sleep 2
 
-PMMAPPER_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pmmapper)
 docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper.log
-cat /tmp/pmmapper.log
 docker exec -it datarouter-prov sh -c "curl http://dmaap-dr-node:8080/internal/fetchProv"
 sleep 10
 curl -k https://$DR_PROV_IP:8443/internal/prov
+
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v CONSUL_IP:${CONSUL_IP} -v DR_PROV_IP:${DR_PROV_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v CBS_IP:${CBS_IP} -v PMMAPPER_IP:${PMMAPPER_IP} -v DR_NODE_IP:${DR_NODE_IP}"

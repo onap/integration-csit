@@ -1,12 +1,7 @@
 #!/bin/bash
 echo "Starting teardown script"
+TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper
+mkdir -p $WORKSPACE/archives
 docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
-kill-instance.sh $DMAAP
-kill-instance.sh $KAFKA
-kill-instance.sh $ZOOKEEPER
-kill-instance.sh datarouter-node
-kill-instance.sh datarouter-prov
-kill-instance.sh mariadb
-kill-instance.sh cbs
-kill-instance.sh consul
-kill-instance.sh pmmapper
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml logs > $WORKSPACE/archives/pmmapper-docker-compose.log
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml down -v
