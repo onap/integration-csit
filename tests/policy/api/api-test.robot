@@ -47,10 +47,7 @@ CreateTCAPolicyType
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Post Request   policy  /policy/api/v1/policytypes  data=${postjson}   headers=${headers}
      Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     ${postjsonobject}   To Json    ${postjson}
-     Dictionary Should Contain Key    ${resp.json()}	tosca_definitions_version 
-     Dictionary Should Contain Key    ${postjsonobject}	tosca_definitions_version
+     Should Be Equal As Strings    ${resp.status_code}     406
 
 RetrieveMonitoringPolicyTypes
      [Documentation]    Retrieve Monitoring related Policy Types
@@ -87,10 +84,7 @@ SimpleCreateNewMonitoringPolicy
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Post Request   policy  /policy/api/v1/policies  data=${postjson}   headers=${headers}
      Log    Received response from policy ${resp.text}
-     ${postjsonobject}   To Json    ${postjson}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
-     Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
+     Should Be Equal As Strings    ${resp.status_code}     406
 
 RetrievePoliciesOfType
      [Documentation]    Retrieve all Policies Created for a specific Policy Type
