@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f700bb8f_6a85346a",
+        "filename": "scripts/policy/config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-16T19:19:02Z",
+      "side": 1,
+      "message": "I think it is /usr/local/openjdk-11 now that we switched to debian.",
+      "revId": "8b711257d76a1ef6e9eb70999a5239560635a7b2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
