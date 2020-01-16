@@ -28,27 +28,12 @@ Statistics
      Should Be Equal As Strings    ${resp.json()['code']}  200
 
 ExecuteXacmlPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    CreateMonitorPolicyType
      Wait Until Keyword Succeeds    2 min    5 sec    CreateNewMonitorPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    DeployMonitorPolicy
      Wait Until Keyword Succeeds    2 min    10 sec   GetAbbreviatedDecisionResult
      Wait Until Keyword Succeeds    2 min    10 sec   GetDecision
 
 *** Keywords ***
-
-CreateMonitorPolicyType
-     [Documentation]    Create Monitoring Policy Type
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policies.monitoring.cdap.tca.hi.lo.app.json
-     Log    Creating session https://${POLICY_API_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request   policy  /policy/api/v1/policytypes  data=${postjson}   headers=${headers}
-     Log    Received response from policy2 ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     ${postjsonobject}   To Json    ${postjson}
-     Dictionary Should Contain Key    ${resp.json()}    tosca_definitions_version
-     Dictionary Should Contain Key    ${postjsonobject}    tosca_definitions_version
 
 CreateNewMonitorPolicy
      [Documentation]    Create a new Monitoring policy

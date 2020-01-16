@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,32 +44,9 @@ if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
     exit 1
 fi
 
-# bring down maven
-mkdir maven
-cd maven
-# download maven from automatically selected mirror server
-curl -vLO  "https://www.apache.org/dyn/mirrors/mirrors.cgi?cca2=us&preferred=http://apache.claz.org/&action=download&filename=maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
-if ! tar -xzvf apache-maven-3.3.9-bin.tar.gz ; then
-    echo "Installation of maven has failed!"
-    exit 1
-fi
-ls -l
-export PATH=${PATH}:${WORK_DIR}/maven/apache-maven-3.3.9/bin
-${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
-cd ..
-
-git clone http://gerrit.onap.org/r/oparent
-git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
-cd models/models-sim/models-sim-dmaap
-${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
-bash ./src/main/package/docker/docker_build.sh
-cd ${WORKSPACE}
-rm -rf ${WORK_DIR}
-sleep 3
-
-
-
 sudo apt-get -y install libxml2-utils
+bash ${SCRIPTS}/policy/policy-models-dmaap-sim.sh
+
 POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
@@ -80,6 +57,7 @@ export POLICY_XACML_PDP_VERSION="${POLICY_XACML_PDP_VERSION_EXTRACT:0:3}-SNAPSHO
 echo ${POLICY_API_VERSION}
 echo ${POLICY_PAP_VERSION}
 echo ${POLICY_XACML_PDP_VERSION}
+
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
 
