@@ -7,7 +7,7 @@ Library     json
 *** Test Cases ***
 Healthcheck
      [Documentation]    Runs Policy Api Health check
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -18,7 +18,7 @@ Healthcheck
 
 Statistics
      [Documentation]    Runs Policy Api Statistics
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -29,7 +29,7 @@ Statistics
 
 RetrievePolicyTypes
      [Documentation]    Gets Policy Types
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -38,10 +38,21 @@ RetrievePolicyTypes
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['version']}  1.0.0
 
-CreateTCAPolicyType
-     [Documentation]    Create TCA Policy Type
-     ${auth}=    Create List    healthcheck    zb!XztG34 
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.json
+CreateTCAPolicyTypeV1
+     [Documentation]    Create TCA Policy Type Version 1
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.v1.json
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Post Request   policy  /policy/api/v1/policytypes  data=${postjson}   headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}    406
+
+CreateTCAPolicyTypeV2
+     [Documentation]    Create TCA Policy Type Version 2
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.v2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -49,12 +60,12 @@ CreateTCAPolicyType
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${postjsonobject}   To Json    ${postjson}
-     Dictionary Should Contain Key    ${resp.json()}	tosca_definitions_version 
+     Dictionary Should Contain Key    ${resp.json()}	tosca_definitions_version
      Dictionary Should Contain Key    ${postjsonobject}	tosca_definitions_version
 
 RetrieveMonitoringPolicyTypes
      [Documentation]    Retrieve Monitoring related Policy Types
-     ${auth}=    Create List    healthcheck    zb!XztG34 
+     ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -64,10 +75,10 @@ RetrieveMonitoringPolicyTypes
      List Should Contain Value    ${resp.json()['policy_types']}  onap.policies.Monitoring
 
 
-CreateNewMonitoringPolicy
-     [Documentation]    Create a new Monitoring TCA policy
-     ${auth}=    Create List    healthcheck    zb!XztG34 
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+CreateNewMonitoringPolicyV1
+     [Documentation]    Create a new Monitoring TCA policy version 1
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -78,10 +89,21 @@ CreateNewMonitoringPolicy
      Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
      Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
-SimpleCreateNewMonitoringPolicy
-     [Documentation]    Create a new Monitoring TCA policiy using simple endpoint
-     ${auth}=    Create List    healthcheck    zb!XztG34 
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+SimpleCreateNewMonitoringPolicyV1
+     [Documentation]    Create a new Monitoring TCA policiy version 1 using simple endpoint
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Post Request   policy  /policy/api/v1/policies  data=${postjson}   headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}    406
+
+SimpleCreateNewMonitoringPolicyV2
+     [Documentation]    Create a new Monitoring TCA policiy version 2 using simple endpoint
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -95,7 +117,7 @@ SimpleCreateNewMonitoringPolicy
 RetrievePoliciesOfType
      [Documentation]    Retrieve all Policies Created for a specific Policy Type
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -106,8 +128,8 @@ RetrievePoliciesOfType
      Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
      Dictionary Should Contain Key	${expjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
-DeleteSpecificPolicy
-     [Documentation]    Delete Policy of a Type
+DeleteSpecificPolicyV1
+     [Documentation]    Delete the Monitoring Policy Version 1 of the TCA Policy Type
      ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
@@ -116,4 +138,40 @@ DeleteSpecificPolicy
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies/onap.restart.tca/versions/1.0.0     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     404
+
+DeleteSpecificPolicyV2
+     [Documentation]    Delete the Monitoring Policy Version 2 of the TCA Policy Type
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     404
+
+DeleteSpecificPolicyTypeV1
+     [Documentation]    Delete the TCA Policy Type Version 1
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0    headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0    headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     404
+
+DeleteSpecificPolicyTypeV2
+     [Documentation]    Delete the TCA Policy Type Version 2
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/2.0.0    headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/2.0.0    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     404

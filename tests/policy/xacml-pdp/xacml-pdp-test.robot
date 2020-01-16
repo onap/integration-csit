@@ -45,10 +45,7 @@ CreateMonitorPolicyType
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Post Request   policy  /policy/api/v1/policytypes  data=${postjson}   headers=${headers}
      Log    Received response from policy2 ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     ${postjsonobject}   To Json    ${postjson}
-     Dictionary Should Contain Key    ${resp.json()}    tosca_definitions_version
-     Dictionary Should Contain Key    ${postjsonobject}    tosca_definitions_version
+     Should Be Equal As Strings    ${resp.status_code}     406
 
 CreateNewMonitorPolicy
      [Documentation]    Create a new Monitoring policy
