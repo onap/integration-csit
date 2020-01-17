@@ -44,42 +44,33 @@ if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
     exit 1
 fi
 
-# bring down maven
-mkdir maven
-cd maven
-# download maven from automatically selected mirror server
-curl -vLO  "https://www.apache.org/dyn/mirrors/mirrors.cgi?cca2=us&preferred=http://apache.claz.org/&action=download&filename=maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz"
-if ! tar -xzvf apache-maven-3.3.9-bin.tar.gz ; then
-    echo "Installation of maven has failed!"
-    exit 1
-fi
-ls -l
-export PATH=${PATH}:${WORK_DIR}/maven/apache-maven-3.3.9/bin
-${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn -v
-cd ..
-
-git clone http://gerrit.onap.org/r/oparent
-git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
-cd models/models-sim/models-sim-dmaap
-${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn clean install -DskipTests  --settings ${WORK_DIR}/oparent/settings.xml
-bash ./src/main/package/docker/docker_build.sh
-cd ${WORKSPACE}
-rm -rf ${WORK_DIR}
-sleep 3
-
-
-
 sudo apt-get -y install libxml2-utils
 POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+POLICY_MODELS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/models/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_MODELS_VERSION="${POLICY_MODELS_VERSION_EXTRACT}"
 POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_PAP_VERSION="${POLICY_PAP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 POLICY_XACML_PDP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_XACML_PDP_VERSION="${POLICY_XACML_PDP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 
 echo ${POLICY_API_VERSION}
+echo ${POLICY_MODELS_VERSION}
 echo ${POLICY_PAP_VERSION}
 echo ${POLICY_XACML_PDP_VERSION}
+
+# download dmaap tarball and build docker image
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
+cd models/models-sim/models-sim-dmaap
+item=`curl --silent -L ${NEXUS_URL}/org/onap/policy/models/sim/policy-models-sim-dmaap/${POLICY_MODELS_VERSION} |
+    egrep 'policy-models-sim-dmaap-.*tarball'|
+    cut '-d"' -f2 | egrep 'gz$' | sort | tail -1`
+mkdir target
+curl -L $item -o target/policy-models-sim-dmaap-${POLICY_MODELS_VERSION}-tarball.tar.gz
+bash ./src/main/package/docker/docker_build.sh
+cd ${WORKSPACE}
+rm -rf ${WORK_DIR}
+
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
 
