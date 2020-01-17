@@ -16,6 +16,24 @@
       "revId": "63639b040436e4b030e4d430567be76ee4f9b96a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a81e9668_385573ac",
+        "filename": "scripts/policy/config/drools/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-17T15:56:50Z",
+      "side": 1,
+      "message": "Actually, remove this line, note that I removed yesterday in Patch Set 2, but seems to be overriden in latest patch.",
+      "parentUuid": "c428ee9f_8957fe89",
+      "revId": "63639b040436e4b030e4d430567be76ee4f9b96a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
