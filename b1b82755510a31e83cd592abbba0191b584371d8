@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3c94f43_1a191b1b",
+        "filename": "plans/policy/xacml-pdp/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-17T21:38:09Z",
+      "side": 1,
+      "message": "could add a test here to see if $item is empty and exit 1 with an error message if it is",
+      "revId": "b1b82755510a31e83cd592abbba0191b584371d8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
