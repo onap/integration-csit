@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14a7681_34d681e8",
+        "filename": "scripts/policy/config/drools/base.conf",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-01-17T17:30:04Z",
+      "side": 1,
+      "message": "-2020",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "b9f1a7b98380eb342a2654144f1da2eb50253680",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e754405_9b1b45a5",
+        "filename": "scripts/policy/policy-xacml-pdp/config/db/db.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-01-17T17:30:04Z",
+      "side": 1,
+      "message": "how the heck did this seriously get missed???",
+      "revId": "b9f1a7b98380eb342a2654144f1da2eb50253680",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b81674_d9c38d49",
+        "filename": "scripts/policy/policy-xacml-pdp/config/db/db.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-01-17T17:30:04Z",
+      "side": 1,
+      "message": "-2020",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "b9f1a7b98380eb342a2654144f1da2eb50253680",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
