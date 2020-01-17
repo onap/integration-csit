@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9f82c2bf_b02b2a80",
+        "filename": "scripts/policy/policy-xacml-pdp/config/db/db.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-17T18:44:21Z",
+      "side": 1,
+      "message": "my guess is that xacml keeps on going even if it can\u0027t access the DB",
+      "parentUuid": "2e754405_9b1b45a5",
+      "revId": "b9f1a7b98380eb342a2654144f1da2eb50253680",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b81674_d9c38d49",
         "filename": "scripts/policy/policy-xacml-pdp/config/db/db.sh",
         "patchSetId": 5
