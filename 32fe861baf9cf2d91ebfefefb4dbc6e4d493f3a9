@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ad3576_75c2a7a3",
+        "filename": "scripts/policy/policy-models-dmaap-sim.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-01-20T14:14:27Z",
+      "side": 1,
+      "message": "wrong char..as it sometimes trigger weird errors in CI, it is better to remove it",
+      "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118a53cb_4333b8c6",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-01-20T14:14:27Z",
+      "side": 1,
+      "message": "traling spaces",
+      "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
