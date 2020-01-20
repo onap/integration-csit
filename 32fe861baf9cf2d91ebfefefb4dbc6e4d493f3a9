@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08398f91_15f35de6",
+        "filename": "scripts/policy/config/policy-csit.conf",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:00:49Z",
+      "side": 1,
+      "message": "It\u0027s used in policy-models-dmaap-sim.sh",
+      "parentUuid": "14b6fe61_6826ad1d",
+      "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07ad3576_75c2a7a3",
         "filename": "scripts/policy/policy-models-dmaap-sim.sh",
         "patchSetId": 10
