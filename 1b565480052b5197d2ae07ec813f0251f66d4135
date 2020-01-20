@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cc53e3d_f6d05b0c",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T17:01:54Z",
+      "side": 1,
+      "message": "Done for other scripts also.",
+      "parentUuid": "a2ebb0b7_5cf0aecc",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5736293_1cab3419",
         "filename": "plans/policy/apex-pdp/setup.sh",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2020-01-20T15:33:50Z",
       "side": 1,
       "message": "I don\u0027t think this change is needed anymore.  However, doesn\u0027t libxml2-utils have to be installed before sim.sh is executed?\n\nsame comments apply to the other setup scripts",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73c7b4dc_14a264b0",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T17:01:54Z",
+      "side": 1,
+      "message": "fixed position and removed pass ad gnupg2",
+      "parentUuid": "d5736293_1cab3419",
       "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b406dfa_7cdb0963",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T17:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8483dc55_5e08bafc",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f175a6e1_7b3fd37b",
         "filename": "tests/policy/api/data/vCPE.policy.monitoring.input.tosca.v1.json",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2020-01-20T15:33:50Z",
       "side": 1,
       "message": "tabs \u003d\u003e spaces",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4de6f14_b2645b3f",
+        "filename": "tests/policy/api/data/vCPE.policy.monitoring.input.tosca.v1.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T17:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f175a6e1_7b3fd37b",
       "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -116,6 +188,24 @@
       "side": 1,
       "message": "This is no longer necessary now that we are preloading the Policy Types. Bilal, please remove the test itself.",
       "parentUuid": "7c628f1a_87521494",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "399ae34d_8beb1bca",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T17:01:54Z",
+      "side": 1,
+      "message": "Removed the test.",
+      "parentUuid": "e59662df_606ecba6",
       "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
