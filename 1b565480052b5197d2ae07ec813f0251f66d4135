@@ -101,6 +101,24 @@
       "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e59662df_606ecba6",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-01-20T15:36:10Z",
+      "side": 1,
+      "message": "This is no longer necessary now that we are preloading the Policy Types. Bilal, please remove the test itself.",
+      "parentUuid": "7c628f1a_87521494",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
