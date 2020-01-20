@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6499ee2d_838e88fd",
+        "filename": "scripts/policy/policy-models-dmaap-sim.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T15:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ad3576_75c2a7a3",
+      "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "118a53cb_4333b8c6",
         "filename": "tests/policy/api/api-test.robot",
         "patchSetId": 10
@@ -68,6 +86,24 @@
       "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7b2b00_c552205e",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2020-01-20T15:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "118a53cb_4333b8c6",
+      "revId": "32fe861baf9cf2d91ebfefefb4dbc6e4d493f3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
