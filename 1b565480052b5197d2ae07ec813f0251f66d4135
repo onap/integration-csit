@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2ebb0b7_5cf0aecc",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "may execute it via \"bash\" instead of \"source\", to avoid any environment pollution\n\nsame comment applies to the other setup.sh scripts that use the simulator",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5736293_1cab3419",
+        "filename": "plans/policy/apex-pdp/setup.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this change is needed anymore.  However, doesn\u0027t libxml2-utils have to be installed before sim.sh is executed?\n\nsame comments apply to the other setup scripts",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8483dc55_5e08bafc",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces\n\nsame comment on the next line",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f175a6e1_7b3fd37b",
+        "filename": "tests/policy/api/data/vCPE.policy.monitoring.input.tosca.v1.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "932b1c40_e0d6080c",
+        "filename": "tests/policy/api/data/vCPE.policy.monitoring.input.tosca.v2.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c628f1a_87521494",
+        "filename": "tests/policy/xacml-pdp/xacml-pdp-test.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-20T15:33:50Z",
+      "side": 1,
+      "message": "we need to fix this so that it will return 200.  Or if this step is no longer necessary, then we could remove \"CreateMonitorPolicyType\" altogether",
+      "revId": "1b565480052b5197d2ae07ec813f0251f66d4135",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
