@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+1: Chenfei Gao <cgao@research.att.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 21 Jan 2020 07:04:33 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/100381
+Project: integration/csit
+Branch: refs/heads/master
