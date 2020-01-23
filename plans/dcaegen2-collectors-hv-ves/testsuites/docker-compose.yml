@@ -103,7 +103,7 @@ services:
     ports:
       - "6060:6060"
       - "6061:6061/tcp"
-    command: ["--configuration-file", "/etc/hv-ves/configuration/secure.json"]
+    command: ["--configuration-file", "/etc/ves-hv/configuration/secure.json"]
     environment:
       - JAVA_OPTS
       - HOSTNAME=${HV_VES_HOSTNAME}
@@ -116,7 +116,7 @@ services:
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./collector/:/etc/hv-ves/
+      - ./collector/:/etc/ves-hv/
     depends_on:
       - config-binding-service
       - kafka
@@ -128,7 +128,7 @@ services:
     ports:
       - "7060:6060"
       - "7061:6061/tcp"
-    command: ["--configuration-file", "/etc/hv-ves/configuration/insecure.json"]
+    command: ["--configuration-file", "/etc/ves-hv/configuration/insecure.json"]
     environment:
       - JAVA_OPTS
       - HOSTNAME=${HV_VES_HOSTNAME}
@@ -141,7 +141,7 @@ services:
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./collector/:/etc/hv-ves/
+      - ./collector/:/etc/ves-hv/
     depends_on:
       - config-binding-service
       - kafka
