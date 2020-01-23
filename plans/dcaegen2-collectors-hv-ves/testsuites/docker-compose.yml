@@ -116,7 +116,7 @@ services:
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./collector/:/etc/hv-ves/
+      - ./collector/:/etc/ves-hv/
     depends_on:
       - config-binding-service
       - kafka
@@ -141,7 +141,7 @@ services:
       retries: 2
       test: ${HV_VES_HEALTHCHECK_CMD}
     volumes:
-      - ./collector/:/etc/hv-ves/
+      - ./collector/:/etc/ves-hv/
     depends_on:
       - config-binding-service
       - kafka
