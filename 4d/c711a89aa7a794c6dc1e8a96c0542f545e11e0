@@ -1,0 +1,9 @@
+Code-Review+1: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jessica Wagantall <jwagantall@linuxfoundation.org>
+Submitted-by: Jessica Wagantall <jwagantall@linuxfoundation.org>
+Submitted-at: Thu, 23 Jan 2020 18:59:18 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/99751
+Project: integration/csit
+Branch: refs/heads/master
