@@ -48,7 +48,7 @@ function gen_key() {
 
 function gen_ca() {
   local ca="$1"
-  keytool -genkeypair ${store_opts} -alias ${ca} -dname "${DNAME_PREFIX}-${ca}" -keystore ${ca}.p12
+  keytool -genkeypair ${store_opts} -alias ${ca} -dname "${DNAME_PREFIX}-${ca}" -keystore ${ca}.p12 -ext bc:c
   keytool -export -alias ${ca} -file ${ca}.crt ${store_opts} -keystore ${ca}.p12
 }
 
