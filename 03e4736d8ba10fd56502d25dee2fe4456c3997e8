@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1e8d8b_539b2825",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/addFeed3.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "You\u0027re sure those are correct? Unless this is a 1:1 copy from somewhere else.",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98eb00d_a52c68ae",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "If I\u0027m not wrong this file is evolution of plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-e2e.yml ? In that case please do \"git mv\" plus your changes instead of \"git rm\" and \"git add\" - easier to track the file changes.",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa74dc7b_23695707",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it fail in case mariadb service is not operational after 15 retries? I.e.:\n\n  else\n    sleep 2\n  fi\n  exit 1\ndone",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac1b0dc_0920ee6e",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "The same remark as above, shouldn\u0027t it \"exit 1\" in case this check didn\u0027t succeed?",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30b3e5c_0cd88b62",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "I think this kind of tasks could be spawned from docker compose template with \"command\" in relevant service declaration.",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9403312_d068e643",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-01-24T10:41:18Z",
+      "side": 1,
+      "message": "I think \"docker cp\" could be used.",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
