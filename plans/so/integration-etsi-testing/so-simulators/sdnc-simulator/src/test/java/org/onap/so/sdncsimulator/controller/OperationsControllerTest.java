@@ -71,6 +71,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Configuration
 public class OperationsControllerTest {
 
+    private static final String HTTP_STATUS_BAD_REQUEST = Integer.toString(HttpStatus.BAD_REQUEST.value());
+    private static final String HTTP_STATUS_OK = Integer.toString(HttpStatus.OK.value());
+
     private static final String SVC_REQUEST_ID = "04fc9f50-87b8-430d-a232-ef24bd6c4150";
 
     private static final String VNF_SVC_REQUEST_ID = "8fd2622b-01fc-424d-bfc8-f48bcd64e546";
@@ -112,7 +115,7 @@ public class OperationsControllerTest {
         final Output actualObject = actualOutputRequest.getOutput();
 
         assertNotNull(actualObject);
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertNotNull(actualObject.getServiceResponseInformation());
@@ -157,7 +160,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
         assertNotNull(actualObject);
-        assertEquals(HttpStatus.BAD_REQUEST.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_BAD_REQUEST, actualObject.getResponseCode());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
 
@@ -183,7 +186,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
 
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertNotNull(actualObject.getServiceResponseInformation());
@@ -242,7 +245,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = badOutputRequest.getOutput();
         assertNotNull(actualObject);
-        assertEquals(HttpStatus.BAD_REQUEST.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_BAD_REQUEST, actualObject.getResponseCode());
         assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
 
@@ -276,7 +279,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
 
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
         assertNotNull(actualObject.getServiceResponseInformation());
@@ -349,7 +352,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
 
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(VNF_SVC_REQUEST_ID, actualObject.getSvcRequestId());
 
@@ -395,7 +398,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
 
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
 
@@ -435,7 +438,7 @@ public class OperationsControllerTest {
 
         final Output actualObject = actualOutputRequest.getOutput();
 
-        assertEquals(HttpStatus.OK.toString(), actualObject.getResponseCode());
+        assertEquals(HTTP_STATUS_OK, actualObject.getResponseCode());
         assertEquals(Constants.YES, actualObject.getAckFinalIndicator());
         assertEquals(SVC_REQUEST_ID, actualObject.getSvcRequestId());
 
