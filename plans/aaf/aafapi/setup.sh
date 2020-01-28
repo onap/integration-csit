@@ -99,7 +99,7 @@ if [ -z "$SKIP_PULL" ]; then
   docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_hello:$AAF_DOCKER_VERSION
   docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_locate:$AAF_DOCKER_VERSION
   docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_oauth:$AAF_DOCKER_VERSION
-  docker pull $DOCKER_REPOSITORY/onap/aaf/aafservice:$AAF_DOCKER_VERSION
+  docker pull $DOCKER_REPOSITORY/onap/aaf/aaf_service:$AAF_DOCKER_VERSION
 fi
 # Cassandra Install/Start
 cd ../auth-cass/docker

@@ -1,0 +1,282 @@
+2019-12-10 17:23:44,968+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) uid=10001 gid=0(root) groups=0(root)
+2019-12-10 17:23:45,020+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Detected 12 available core(s).
+2019-12-10 17:23:45,024+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Detected 33353367552 bytes available host memory.
+2019-12-10 17:23:45,026+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Limiting application JVM to only use 4294967296 bytes of RAM.
+2019-12-10 17:23:45,033+0000 WARN  [/opt/primekey/bin/start.sh] (process:1) Using the H2 in memory database which is only suitable for ephemeral testing. Please configure the container's environment variables:
+  DATABASE_JDBC_URL
+    jdbc:mysql://database:3306/ejbca?characterEncoding=utf8
+    jdbc:postgresql://database/ejbca
+  DATABASE_USER
+  DATABASE_PASSWORD
+
+2019-12-10 17:23:45,043+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Starting application server:
+=========================================================================
+
+  JBoss Bootstrap Environment
+
+  JBOSS_HOME: /opt/primekey/wildfly-14.0.1.Final
+
+  JAVA: java
+
+  JAVA_OPTS:  -server   -Xms128m -Xmx3776m -Xss256k -XX:MetaspaceSize=160m -XX:MaxMetaspaceSize=256m -XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:ParallelGCThreads=12 -XX:ConcGCThreads=12 -Djava.util.concurrent.ForkJoinPool.common.parallelism=12 -XX:CICompilerCount=5 -XX:+ExitOnOutOfMemoryError -Djdk.tls.ephemeralDHKeySize=2048 -Djava.security.egd=file:/dev/random -Dcontainer.database.name=h2 -Dcontainer.hibernate.dialect=org.hibernate.dialect.H2Dialect -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true 
+
+=========================================================================
+
+2019-12-10 17:23:45,781+0000 INFO  [org.jboss.as] (MSC service thread 1-2) WFLYSRV0049: WildFly Full 14.0.1.Final (WildFly Core 6.0.2.Final) starting
+2019-12-10 17:23:46,498+0000 WARN  [org.jboss.as.server.deployment.scanner] (ServerService Thread Pool -- 15) WFLYDS0006: Reliable deployment behaviour is not possible when auto-deployment of exploded content is enabled (i.e. deployment without use of ".dodeploy"' marker files). Configuration of auto-deployment of exploded content is not recommended in any situation where reliability is desired. Configuring the deployment scanner's auto-deploy-exploded setting to "false" is recommended.
+2019-12-10 17:23:46,529+0000 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
+2019-12-10 17:23:46,763+0000 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-1) WFLYUT0003: Undertow 2.0.13.Final starting
+2019-12-10 17:23:46,892+0000 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-1) WFLYUT0012: Started server default-server.
+2019-12-10 17:23:46,894+0000 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-3) WFLYUT0018: Host default-host starting
+2019-12-10 17:23:46,907+0000 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-1) WFLYUT0006: Undertow HTTP listener remoting listening on 127.0.0.1:4447
+2019-12-10 17:23:49,235+0000 INFO  [org.jboss.as.jpa] (MSC service thread 1-2) WFLYJPA0002: Read persistence.xml for ejbca
+2019-12-10 17:23:49,570+0000 WARN  [org.jboss.as.jsf] (MSC service thread 1-6) WFLYJSF0005: Unknown JSF version 'NONE'.  Default version 'main' will be used instead.
+2019-12-10 17:23:49,570+0000 WARN  [org.jboss.as.jsf] (MSC service thread 1-8) WFLYJSF0005: Unknown JSF version 'NONE'.  Default version 'main' will be used instead.
+2019-12-10 17:23:49,838+0000 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 48) WFLYJPA0010: Starting Persistence Unit (phase 1 of 2) Service 'ejbca.ear#ejbca'
+2019-12-10 17:23:50,161+0000 ERROR [org.jboss.as.jsf] (MSC service thread 1-7) WFLYJSF0002: Could not load JSF managed bean class: org.ejbca.ui.web.admin.peerconnector.PeerConnectorsMBean
+2019-12-10 17:23:50,191+0000 ERROR [org.jboss.as.jsf] (MSC service thread 1-7) WFLYJSF0002: Could not load JSF managed bean class: org.ejbca.ui.web.admin.peerconnector.PeerMgmtMBean
+2019-12-10 17:23:50,204+0000 ERROR [org.jboss.as.jsf] (MSC service thread 1-7) WFLYJSF0002: Could not load JSF managed bean class: org.ejbca.ui.web.admin.peerconnector.PeerConnectorMBean
+2019-12-10 17:23:51,947+0000 INFO  [org.jboss.as.jpa] (ServerService Thread Pool -- 48) WFLYJPA0010: Starting Persistence Unit (phase 2 of 2) Service 'ejbca.ear#ejbca'
+2019-12-10 17:23:53,909+0000 WARN  [org.jboss.weld.Bootstrap] (MSC service thread 1-5) WELD-000146: BeforeBeanDiscovery.addAnnotatedType(AnnotatedType<?>) used for class com.sun.faces.flow.FlowDiscoveryCDIHelper is deprecated from CDI 1.1!
+2019-12-10 17:23:54,491+0000 SEVERE [javax.enterprise.resource.webcontainer.jsf.flow] (MSC service thread 1-5) Unable to obtain CDI 1.1 utilities for Mojarra
+2019-12-10 17:23:54,496+0000 SEVERE [javax.enterprise.resource.webcontainer.jsf.application.view] (MSC service thread 1-5) Unable to obtain CDI 1.1 utilities for Mojarra
+2019-12-10 17:23:55,822+0000 INFO  [org.ejbca.core.ejb.StartupSingletonBean] (ServerService Thread Pool -- 60) Init, EJBCA 6.15.2.5 Community (r33900) startup.
+2019-12-10 17:23:55,839+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 66) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 54) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 68) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 64) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 69) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 65) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 67) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 63) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, GET]
+2019-12-10 17:23:55,840+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 73) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:56,294+0000 INFO  [org.ejbca.core.ejb.StartupSingletonBean] (ServerService Thread Pool -- 60) BouncyCastle provider is from our ejbca.ear classloader.
+2019-12-10 17:23:56,298+0000 INFO  [org.ejbca.core.ejb.StartupSingletonBean] (ServerService Thread Pool -- 60) Registered AuthenticationTokens [PublicAccessAuthenticationToken, CliAuthenticationToken, CertificateAuthenticationToken, AlwaysAllowLocalAuthenticationToken]
+2019-12-10 17:23:56,300+0000 INFO  [org.cesecore.keys.token.CryptoTokenFactory] (ServerService Thread Pool -- 60) Class not found: se.primeKey.caToken.card.PrimeCAToken.
+2019-12-10 17:23:56,300+0000 INFO  [org.cesecore.keys.token.CryptoTokenFactory] (ServerService Thread Pool -- 60) Can not register se.primeKey.caToken.card.PrimeCAToken. This is normally not an error.
+2019-12-10 17:23:56,357+0000 INFO  [org.cesecore.audit.AuditDevicesConfig] (ServerService Thread Pool -- 60) Registered audit device using implementation: org.cesecore.audit.impl.log4j.Log4jDevice
+2019-12-10 17:23:56,358+0000 INFO  [org.cesecore.audit.AuditDevicesConfig] (ServerService Thread Pool -- 60) Configured exporter AuditExporterDummy for device Log4jDevice
+2019-12-10 17:23:56,390+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;EJBCA_STARTING;SUCCESS;SERVICE;EJBCA;Application internal;;mycahostname;;msg=Init, EJBCA 6.15.2.5 Community (r33900) startup.
+2019-12-10 17:23:56,393+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;LOG_MANAGEMENT_CHANGE;VOID;SECURITY_AUDIT;CORE;Application internal;;;;msg=No integrity protected security audit logger devices configured.
+2019-12-10 17:23:56,398+0000 INFO  [org.ejbca.core.ejb.authorization.AuthorizationSystemSessionBean] (ServerService Thread Pool -- 60) No roles or CAs exist, intializing Super Administrator Role with default CLI user.
+2019-12-10 17:23:56,404+0000 INFO  [org.cesecore.dbprotection.ProtectedData] (ServerService Thread Pool -- 60) No database integrity protection available in this version of EJBCA.
+2019-12-10 17:23:56,613+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;Application internal;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:23:56,642+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;SYSTEMCONF_CREATE;SUCCESS;GLOBALCONF;CORE;Application internal;;;;msg=Global configuration with id 0 created.
+2019-12-10 17:23:56,658+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (ServerService Thread Pool -- 60) Setting isUniqueCertificateSerialNumberIndex to: false
+2019-12-10 17:23:56,663+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;Internal upgrade;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:23:56,674+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;SYSTEMCONF_EDIT;SUCCESS;GLOBALCONF;CORE;Internal upgrade;;;;msg=Saved global configuration with id 0.;added:statedump_lockdown=false
+2019-12-10 17:23:56,680+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;Internal upgrade;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:23:56,682+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;SYSTEMCONF_CREATE;SUCCESS;GLOBALCONF;CORE;Internal upgrade;;;;msg=Global configuration with id UPGRADE created.
+2019-12-10 17:23:56,684+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;Internal upgrade;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:23:56,687+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;SYSTEMCONF_EDIT;SUCCESS;GLOBALCONF;CORE;Internal upgrade;;;;msg=Saved global configuration with id UPGRADE.;added:upgradedFromVersion=6.15.2.5;added:upgradedToVersion=6.15.2.5
+2019-12-10 17:23:56,689+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;Internal upgrade;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:23:56,691+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (ServerService Thread Pool -- 60) 2019-12-10 17:23:56+00:00;SYSTEMCONF_EDIT;SUCCESS;GLOBALCONF;CORE;Internal upgrade;;;;msg=Saved global configuration with id UPGRADE.;added:postUpgradedToVersion=6.10.1
+2019-12-10 17:23:56,694+0000 INFO  [org.ejbca.core.ejb.upgrade.UpgradeSessionBean] (ServerService Thread Pool -- 60) Database content version: 6.15.2.5, current application version: 6.15.2.5 -> Upgrade is not needed.
+2019-12-10 17:23:56,716+0000 INFO  [org.cesecore.certificates.ocsp.cache.OcspSigningCache] (ServerService Thread Pool -- 60) No default responder was defined. OCSP requests for certificates issued by unknown CAs will return "unauthorized" as per RFC6960, Section 2.3
+2019-12-10 17:23:56,717+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (ServerService Thread Pool -- 60) Reloading CA certificate cache.
+2019-12-10 17:23:56,733+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (ServerService Thread Pool -- 60) Reloaded CA certificate cache with 0 certificates
+2019-12-10 17:23:57,856+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 57) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:57,859+0000 WARN  [io.undertow.servlet] (ServerService Thread Pool -- 51) UT015020: Path /* is secured for some HTTP methods, however it is not secured for [HEAD, POST, GET]
+2019-12-10 17:23:57,875+0000 INFO  [org.jboss.as.server] (ServerService Thread Pool -- 28) WFLYSRV0010: Deployed "ejbca.ear" (runtime-name : "ejbca.ear")
+2019-12-10 17:23:57,912+0000 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
+2019-12-10 17:23:57,919+0000 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
+2019-12-10 17:23:57,919+0000 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0054: Admin console is not enabled
+2019-12-10 17:23:57,919+0000 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 14.0.1.Final (WildFly Core 6.0.2.Final) started in 12776ms - Started 5298 of 5343 services (150 services are lazy, passive or on-demand)
+2019-12-10 17:23:58,050+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Application /opt/primekey/appserver/standalone/deployments/ejbca.ear.deployed successfully started.
+2019-12-10 17:23:58,057+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Setting up in-bound connectivity...
+2019-12-10 17:24:00,053+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Configuration import automation tool is not present in this build. /opt/primekey/configdump/{stage.d|initialize.d}/*/*.yaml will be ignored.
+2019-12-10 17:24:03,504+0000 INFO  [org.cesecore.certificates.ca.CaSessionBean] (default task-2) CA with name ManagementCA does not exist.
+2019-12-10 17:24:03,509+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Initializing CA
+2019-12-10 17:24:03,510+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Generating rootCA keystore:
+2019-12-10 17:24:03,510+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA Type:x509
+2019-12-10 17:24:03,510+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA name: ManagementCA
+2019-12-10 17:24:03,510+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) SuperAdmin CN: null
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) DN: UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA token type: soft
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA token password: hidden
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Keytype: RSA
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Keyspec: 3072
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Validity: 3652d
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Policy ID: null
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Signature alg: SHA256WithRSA
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Certificate profile: ROOTCA
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA token properties: {}
+2019-12-10 17:24:03,511+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Signed by: Self signed
+2019-12-10 17:24:03,540+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:03+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/cryptotoken/modify
+2019-12-10 17:24:03,575+0000 INFO  [org.cesecore.keys.token.SoftCryptoToken] (default task-2) Error activating Crypto Token with ID -424022130. No keystore data available yet, creating new PKCS#12 keystore.
+2019-12-10 17:24:03,773+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:03+00:00;CRYPTOTOKEN_CREATE;SUCCESS;CRYPTOTOKEN;CORE;ejbca;-424022130;;;msg=Created CryptoToken with id -424022130;name=ManagementCA;encProviderName=BC;signProviderName=BC;added:tokenName=ManagementCA;autoActivation=added;autoActivationPinProtection=legacy
+2019-12-10 17:24:03,791+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:03+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/cryptotoken/keys/generate/-424022130
+2019-12-10 17:24:04,098+0000 INFO  [org.cesecore.keys.util.SignWithWorkingAlgorithm] (default task-2) Signature algorithm 'SHA1WithRSA' working for provider 'BC version 1.6'.
+2019-12-10 17:24:04,347+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:04+00:00;CRYPTOTOKEN_GEN_KEYPAIR;SUCCESS;CRYPTOTOKEN;CORE;ejbca;-424022130;;;msg=Generated new keypair in CryptoToken -424022130;keyAlias=signKey;keySpecification=3072
+2019-12-10 17:24:04,362+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:04+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/cryptotoken/keys/generate/-424022130
+2019-12-10 17:24:04,906+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:04+00:00;CRYPTOTOKEN_GEN_KEYPAIR;SUCCESS;CRYPTOTOKEN;CORE;ejbca;-424022130;;;msg=Generated new keypair in CryptoToken -424022130;keyAlias=encryptKey;keySpecification=3072
+2019-12-10 17:24:04,913+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Creating CA...
+2019-12-10 17:24:04,955+0000 INFO  [org.ejbca.core.ejb.ca.caadmin.CAAdminSessionBean] (default task-2) Creating an X509 CA: ManagementCA
+2019-12-10 17:24:04,971+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:04+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca_functionality/add_ca;resource1=/cryptotoken/use/-424022130
+2019-12-10 17:24:05,002+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;CA_CREATION;SUCCESS;CA;CORE;ejbca;701241556;;;msg=CA with id 701241556 and name ManagementCA added, status: 1. ;tokenproperties={defaultKey=encryptKey, certSignKey=signKey, crlSignKey=signKey};tokensequence=00000
+2019-12-10 17:24:05,009+0000 INFO  [org.cesecore.certificates.ca.internal.SernoGeneratorRandom] (default task-2) Using SHA1PRNG serialNumber RNG algorithm.
+2019-12-10 17:24:05,047+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca_functionality/edit_ca;resource1=/ca/701241556
+2019-12-10 17:24:05,048+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;CA_EDITING;SUCCESS;CA;CORE;ejbca;701241556;;;msg=CA with id 701241556 and name ManagementCA edited.;removed:expiretime=Thu Jan 01 00:00:00 UTC 1970;added:certificatechain=[MIIEszCCAxugAwIBAgIUEOvkDhuS0RuUUZI2gIPHkzuWRvQwDQYJKoZIhvcNAQEL
+BQAwYTEjMCEGCgmSJomT8ixkAQEME2MtMGM3NTRlZjFmOTk4YTM1OGMxFTATBgNV
+BAMMDE1hbmFnZW1lbnRDQTEjMCEGA1UECgwaRUpCQ0EgQ29udGFpbmVyIFF1aWNr
+c3RhcnQwHhcNMTkxMjEwMTcyNDA1WhcNMjkxMjA5MTcyNDA1WjBhMSMwIQYKCZIm
+iZPyLGQBAQwTYy0wYzc1NGVmMWY5OThhMzU4YzEVMBMGA1UEAwwMTWFuYWdlbWVu
+dENBMSMwIQYDVQQKDBpFSkJDQSBDb250YWluZXIgUXVpY2tzdGFydDCCAaIwDQYJ
+KoZIhvcNAQEBBQADggGPADCCAYoCggGBAL8DYJ8lCyj5QFV0bI/rAbhuvqT4zy/A
+kuIOYioW2qS/MekUfu1yE0C8kySiCzTFwH94DijWrTQudfulRpx5C3PBQV3HiELV
+xmbYg1Q8ILXn9yUu92rqzDO3iK1fj4wpm7zAj4Mc9ELOqZraoMalePTGaSc9+zIL
+ciEv+JhX/w/+oeRbJogsZutY9ah5NpLeHPJGoeAPOZyImzuiT/YDUjEte+IvyIoY
+1vb2QXdSRrsub4x+msEaG5O2kNRuDGdClE6JOQwZfqVDMc0JyHrCL+r3BVc+t5pB
+tmhEOUApdANkaq4hkEEl8rXIO2yzEgbtXDa4eh2pf7UDThbUXifVzPsd9+Fn/Z6U
+glMBejpaKnRz3r2HBSd0cYzW2yu6CfGtX8HLjrJYUyI4oN4+c/83WAY3hZsDDrLk
+Dpq6CheESNwhNAbzVaGqRYjuqbUSx2QOEcedOpcWzkk+hlOq2HzEyogl3f+yfAUW
+zT3WAFM6mdGXQAsRiFSNDqC4cSUWM6/i1QIDAQABo2MwYTAPBgNVHRMBAf8EBTAD
+AQH/MB8GA1UdIwQYMBaAFAoVr9+rQSvPN6oJ8/Suhu7CztZhMB0GA1UdDgQWBBQK
+Fa/fq0ErzzeqCfP0robuws7WYTAOBgNVHQ8BAf8EBAMCAYYwDQYJKoZIhvcNAQEL
+BQADggGBADJAzt7n3BBlKu6UsX+mA/ZAaW+QM36+9uJ8lP/1NdbJINncJss372wJ
+6WdVeDNum0UayUJNh/INZ4ggBvOPl+hXdBg3nEGQtQzbGuFrTfENEZ0rYhkWZk3c
+9jXhMDULSTVO2vvXp5f2sk5mt4bL5/NqgcaMZFGoQi73Q7kkfbj1xrA6WxKcBz1s
+mXhGbiY97pneQYLAuVMG0b7POrIUeAzcdI2fitz+7LNAjxilScq+4Cf9CsLDHbou
+liGAPtFgWIN9j6j/F+UC31IMEPf6mgOLoRD4HxeUOXEApOurevlosfEdZu/XDyZV
+lkQcSCrO4ruXHS4GyZJsF92Gmctb8nSl10Te3GOFYwtnYmZww9bYtvcW3QeiaEOD
+I6JeMuSc4yFH2ZIwNGc/3ndIxY3syePq9g9yEI04W4oxAiiQcrKFGJnP7BCRZtHb
+Bo/SKiXrWYo2m2l7g2LJrzwLAJpDMg+g5wzL5i8wc2ihVp4F04o048YnucAgtLsK
+wtZ+v+KPZA==];tokenproperties={defaultKey=encryptKey, certSignKey=signKey, crlSignKey=signKey};tokensequence=00000
+2019-12-10 17:24:05,066+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,072+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;CERT_STORED;SUCCESS;CERTIFICATE;CORE;ejbca;701241556;10EBE40E1B92D11B945192368083C7933B9646F4;SYSTEMCA;msg=Certificate stored for username 'SYSTEMCA', fp=a47eecee40fdd6f6ebd84b4e0f4379e923fcfdcd, subjectDN 'UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart', issuerDN 'UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart', serialNo=10EBE40E1B92D11B945192368083C7933B9646F4.
+2019-12-10 17:24:05,072+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (default task-2) Reloading CA certificate cache.
+2019-12-10 17:24:05,087+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (default task-2) Reloaded CA certificate cache with 1 certificates
+2019-12-10 17:24:05,089+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,104+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca_functionality/edit_ca;resource1=/ca/701241556
+2019-12-10 17:24:05,117+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,166+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca_functionality/create_crl
+2019-12-10 17:24:05,181+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,183+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;CRL_STORED;SUCCESS;CRL;CORE;ejbca;701241556;;;msg=Stored CRL with CRLNumber=1, fingerprint=a4ea9ca77d1b413e58335b83754dba5cd1315fda, issuerDN 'UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart'.
+2019-12-10 17:24:05,183+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;CRL_CREATION;SUCCESS;CRL;CORE;ejbca;701241556;;;msg=Created CRL with number 1 for CA 'ManagementCA' with DN 'UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart'.
+2019-12-10 17:24:05,184+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,184+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,188+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (default task-2) Reloading CA certificate cache.
+2019-12-10 17:24:05,190+0000 INFO  [org.cesecore.certificates.certificate.CertificateStoreSessionBean] (default task-2) Reloaded CA certificate cache with 1 certificates
+2019-12-10 17:24:05,202+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:05+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:05,206+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CAId for created CA: 701241556
+2019-12-10 17:24:05,207+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Created and published initial CRL.
+2019-12-10 17:24:05,207+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) CA initialized
+2019-12-10 17:24:05,207+0000 INFO  [org.ejbca.ui.cli.ca.CaInitCommand] (main) Note that any open browser sessions must be restarted to interact with this CA.
+2019-12-10 17:24:07,038+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:07+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:07,060+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Using certificate profile: ENDUSER, with id: 1
+2019-12-10 17:24:07,070+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Trying to add end entity:
+2019-12-10 17:24:07,070+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Username: superadmin
+2019-12-10 17:24:07,070+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Password: <password hidden>
+2019-12-10 17:24:07,070+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) DN: CN=SuperAdmin,O=EJBCA Container Quickstart,UID=c-0c754ef1f998a358c
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) CA Name: ManagementCA
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) SubjectAltName: null
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Email: null
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Type: 1
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Token: P12
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Certificate profile: 1
+2019-12-10 17:24:07,071+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) End entity profile: 1
+2019-12-10 17:24:07,085+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:07+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/create_end_entity;resource1=/ra_functionality/create_end_entity
+2019-12-10 17:24:07,102+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:07+00:00;RA_ADDENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;superadmin;msg=Added end entity superadmin.;caid=701241556;cardnumber=;certificateprofileid=1;endentityprofileid=1;hardtokenissuerid=0;status=10;subjectAltName=;subjectDN=B64:VUlEPWMtMGM3NTRlZjFmOTk4YTM1OGMsQ049U3VwZXJBZG1pbixPPUVKQkNBIENvbnRhaW5lciBRdWlja3N0YXJ0;subjectEmail=;tokentype=2;type=1;username=superadmin
+2019-12-10 17:24:07,108+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) User 'superadmin' has been added.
+2019-12-10 17:24:07,108+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Note: If batch processing should be possible, also use 'ra setclearpwd superadmin <pwd>'.
+2019-12-10 17:24:08,950+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:08+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:10,798+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:10+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:10,820+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Using certificate profile: SERVER, with id: 9
+2019-12-10 17:24:10,830+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Trying to add end entity:
+2019-12-10 17:24:10,830+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Username: mycahostname
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Password: <password hidden>
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) DN: CN=mycahostname,O=EJBCA Container Quickstart,UID=c-0c754ef1f998a358c
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) CA Name: ManagementCA
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) SubjectAltName: dnsName=mycahostname
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Email: null
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Type: 1
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Token: JKS
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Certificate profile: 9
+2019-12-10 17:24:10,831+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) End entity profile: 1
+2019-12-10 17:24:10,842+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:10+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/create_end_entity;resource1=/ra_functionality/create_end_entity
+2019-12-10 17:24:10,847+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:10+00:00;RA_ADDENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;mycahostname;msg=Added end entity mycahostname.;caid=701241556;cardnumber=;certificateprofileid=9;endentityprofileid=1;hardtokenissuerid=0;status=10;subjectAltName=B64:ZG5zTmFtZT1teWNhaG9zdG5hbWU=;subjectDN=B64:VUlEPWMtMGM3NTRlZjFmOTk4YTM1OGMsQ049bXljYWhvc3RuYW1lLE89RUpCQ0EgQ29udGFpbmVyIFF1aWNrc3RhcnQ=;subjectEmail=;tokentype=3;type=1;username=mycahostname
+2019-12-10 17:24:10,850+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) User 'mycahostname' has been added.
+2019-12-10 17:24:10,850+0000 INFO  [org.ejbca.ui.cli.ra.AddEndEntityCommand] (main) Note: If batch processing should be possible, also use 'ra setclearpwd mycahostname <pwd>'.
+2019-12-10 17:24:12,627+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:12+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/edit_end_entity;resource1=/ra_functionality/edit_end_entity
+2019-12-10 17:24:12,628+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:12+00:00;RA_EDITENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;mycahostname;msg=Edited end entity mycahostname, new status 10.
+2019-12-10 17:24:12,631+0000 INFO  [org.ejbca.ui.cli.ra.SetEndEntityStatusCommand] (main) New status for end entity mycahostname is 10
+2019-12-10 17:24:14,412+0000 INFO  [org.ejbca.ui.cli.ra.SetCleartextPasswordCommand] (main) Setting clear text password for user mycahostname
+2019-12-10 17:24:14,423+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:14+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/edit_end_entity;resource1=/ra_functionality/edit_end_entity
+2019-12-10 17:24:14,424+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:14+00:00;RA_EDITENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;mycahostname;msg=Password changed for end entity mycahostname.
+2019-12-10 17:24:16,428+0000 INFO  [org.ejbca.ui.cli.batch.BatchMakeP12Command] (main) Generating keys in directory /opt/primekey/tmp/tmp.D2VCgwjC3Z.
+2019-12-10 17:24:16,454+0000 INFO  [org.ejbca.ui.cli.batch.BatchMakeP12Command] (main) Loading configuration from defaults.
+2019-12-10 17:24:16,454+0000 INFO  [org.ejbca.ui.cli.batch.BatchMakeP12Command] (main) Generating RSA keys of size 2048 for mycahostname.
+2019-12-10 17:24:16,891+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;CA_USERAUTH;SUCCESS;CA;EJBCA;ejbca;701241556;;mycahostname;msg=Authenticated user mycahostname.
+2019-12-10 17:24:16,916+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca_functionality/create_certificate;resource1=/ca/701241556
+2019-12-10 17:24:16,917+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;CERT_REQUEST;SUCCESS;CERTIFICATE;CORE;ejbca;701241556;;mycahostname;subjectdn=UID=c-0c754ef1f998a358c,CN=mycahostname,O=EJBCA Container Quickstart;requestX500name=null;subjectaltname=dnsName=mycahostname;certprofile=9;keyusage=-1;notbefore=;notafter=;sequence=;publickey=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsPtlBf+tFHJKiWxpb4dlm72Fpydtw3rVdjO6DnsVYXTfnpapnBh287H08XYjb1XDipgCqMwkdF+5HxvJF6jvwDLcKvzWMcK9ehO77W2NsoXufrmUPp7Yg0QzPavtCXm+SDtGDOuAtzgQKimdSYI4EYDpRGxzkOlmnABggaQ//b+4q3Bo4NLqkTajR5CJhQJ8zNvmUlSh+btkeRzUrfILciNDIhjxZWDVbE8my26kVXFsafS9SBdzYpkXbof9Y2o7SZac2NW5Xl0+JM1W9k0SmkUrcW/lJiscR7X9g36ReDrbq1p/TJPG8JQwb3K3/HFymVgDMgD8B5NdaLlRLVG4nwIDAQAB
+2019-12-10 17:24:16,935+0000 INFO  [org.cesecore.certificates.ca.internal.CertificateValidity] (default task-1) Limiting validity of certificate because requested start of validity (Tue Dec 10 17:14:16 UTC 2019) is before CA start of validity (Tue Dec 10 17:24:05 UTC 2019).
+2019-12-10 17:24:16,954+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;CERT_STORED;SUCCESS;CERTIFICATE;CORE;ejbca;701241556;5B2B4F7F34EF35D68BFC0A615BCB9421D56E70F9;mycahostname;msg=Certificate stored for username 'mycahostname', fp=4a414e16dcec4f2cd0cc982ebe0a0d9584af6534, subjectDN 'UID=c-0c754ef1f998a358c,CN=mycahostname,O=EJBCA Container Quickstart', issuerDN 'UID=c-0c754ef1f998a358c,CN=ManagementCA,O=EJBCA Container Quickstart', serialNo=5B2B4F7F34EF35D68BFC0A615BCB9421D56E70F9.
+2019-12-10 17:24:16,954+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;CERT_CREATION;SUCCESS;CERTIFICATE;CORE;ejbca;701241556;5B2B4F7F34EF35D68BFC0A615BCB9421D56E70F9;mycahostname;subjectdn=UID=c-0c754ef1f998a358c,CN=mycahostname,O=EJBCA Container Quickstart;certprofile=9;issuancerevocationreason=-1;cert=MIIEYDCCAsigAwIBAgIUWytPfzTvNdaL/AphW8uUIdVucPkwDQYJKoZIhvcNAQELBQAwYTEjMCEGCgmSJomT8ixkAQEME2MtMGM3NTRlZjFmOTk4YTM1OGMxFTATBgNVBAMMDE1hbmFnZW1lbnRDQTEjMCEGA1UECgwaRUpCQ0EgQ29udGFpbmVyIFF1aWNrc3RhcnQwHhcNMTkxMjEwMTcyNDA1WhcNMjExMjA5MTcxNDE2WjBhMSMwIQYKCZImiZPyLGQBAQwTYy0wYzc1NGVmMWY5OThhMzU4YzEVMBMGA1UEAwwMbXljYWhvc3RuYW1lMSMwIQYDVQQKDBpFSkJDQSBDb250YWluZXIgUXVpY2tzdGFydDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALD7ZQX/rRRySolsaW+HZZu9hacnbcN61XYzug57FWF0356WqZwYdvOx9PF2I29Vw4qYAqjMJHRfuR8byReo78Ay3Cr81jHCvXoTu+1tjbKF7n65lD6e2INEMz2r7Ql5vkg7RgzrgLc4ECopnUmCOBGA6URsc5DpZpwAYIGkP/2/uKtwaODS6pE2o0eQiYUCfMzb5lJUofm7ZHkc1K3yC3IjQyIY8WVg1WxPJstupFVxbGn0vUgXc2KZF26H/WNqO0mWnNjVuV5dPiTNVvZNEppFK3Fv5SYrHEe1/YN+kXg626taf0yTxvCUMG9yt/xxcplYAzIA/AeTXWi5US1RuJ8CAwEAAaOBjzCBjDAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFAoVr9+rQSvPN6oJ8/Suhu7CztZhMBcGA1UdEQQQMA6CDG15Y2Fob3N0bmFtZTATBgNVHSUEDDAKBggrBgEFBQcDATAdBgNVHQ4EFgQUeUH2Rgg0o63CkHObG3j4JUyDiuUwDgYDVR0PAQH/BAQDAgWgMA0GCSqGSIb3DQEBCwUAA4IBgQAPScu+N+5H8nF7/bKU9A2SKaMt/V6/JYG9BgYkVlQacROY5hFTQ3WHahjexoZc3H+nWPE3XyqtEHrISRTP9mAGRy4anl21c0Z0xDVG9KgJgsjqlKgJAfHaoyeq/N8wWwmt3yS3xG6OOjFc9HLS0f797Pnml/zxW7LvPaHWBNcRGDh767PFOkhPVGMqQPiBPkssjshecYvI/CfzepV8JtDYoG4WRU5hz99YnGzXU+5xzck9ay9CjQTlNipgnUXn4IQcdgtT2/1NU4P+lN++qY4HQlt4ByimCSE3I6odb/wIWrQ/75UVn7QNwrU3liQEVSO6ItAHX/hbspc5WGDSsaoPHQefoCQrHVVcFuQvGUa2jNFYSN8BJPx2hVMLfrC0AcKx+WyGzXBdho6SnD+neybSNDuA+qiGExCZpBb0VgqMlwgm5WsypRxsfZAm71mRtLnX+4G1bMHF2UkMCvrRcBua5XYzF5p1mDbZWaYilVAG5PdOoF+FwxdqTis4uk5y3SI=
+2019-12-10 17:24:16,955+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-1) 2019-12-10 17:24:16+00:00;RA_EDITENDENTITY;SUCCESS;RA;CORE;Local admin call from EndEntityManagementSession.decRequestCounter;701241556;;mycahostname;msg=Edited end entity mycahostname, new status 40.
+2019-12-10 17:24:16,956+0000 INFO  [org.ejbca.core.ejb.ca.auth.EndEntityAuthenticationSessionBean] (default task-1) Changed status for 'mycahostname' to STATUS_GENERATED.
+2019-12-10 17:24:16,980+0000 INFO  [org.ejbca.ui.cli.batch.BatchMakeP12Command] (main) Created Keystore for 'mycahostname'.
+2019-12-10 17:24:17,007+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:17+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/edit_end_entity;resource1=/ra_functionality/edit_end_entity
+2019-12-10 17:24:17,007+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:17+00:00;RA_EDITENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;mycahostname;msg=Password changed for end entity mycahostname.
+2019-12-10 17:24:17,009+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:17+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:24:17,010+0000 INFO  [org.ejbca.ui.cli.batch.BatchMakeP12Command] (main) New user generated successfully - mycahostname.
+2019-12-10 17:24:17,011+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:17+00:00;SYSTEMCONF_CREATE;SUCCESS;GLOBALCONF;CORE;ejbca;;;;msg=Global configuration with id 1 created.
+2019-12-10 17:24:17,351+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Certificate stored in file </opt/primekey/tmp/tmp.D2VCgwjC3Z/keystore.der>
+2019-12-10 17:24:17,517+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Generated TLS certificate with fingerprint 158dd498aeb3d4160d513597a2a87cced3256cae7aeedc5d4699df4dbec1b406.
+2019-12-10 17:24:19,141+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:19+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/system_functionality/edit_systemconfiguration
+2019-12-10 17:24:19,142+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:19+00:00;SYSTEMCONF_EDIT;SUCCESS;GLOBALCONF;CORE;ejbca;;;;msg=Saved global configuration with id 1.;changed:cmp.allowautomatickeyupdate=true
+2019-12-10 17:24:17,519+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Importing keystore /opt/primekey/secrets/persistent/tls/mycahostname/server.jks to /opt/primekey/tmp/tmp.D2VCgwjC3Z/keystore.jks...
+2019-12-10 17:24:17,519+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Entry for alias mycahostname successfully imported.
+2019-12-10 17:24:17,519+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Entry for alias cacert successfully imported.
+2019-12-10 17:24:17,519+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Import command completed:  2 entries successfully imported, 0 entries failed or cancelled
+2019-12-10 17:24:23,346+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:23+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:23,393+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:23+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/create_end_entity;resource1=/ra_functionality/create_end_entity
+2019-12-10 17:24:23,396+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:23+00:00;RA_ADDENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;node123;msg=Added end entity node123.;caid=701241556;cardnumber=;certificateprofileid=1;endentityprofileid=1;hardtokenissuerid=0;status=10;subjectAltName=;subjectDN=B64:Q049Tm9kZTEyMw==;subjectEmail=;tokentype=1;type=1;username=node123
+2019-12-10 17:24:25,570+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:25+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/endentityprofilesrules/1/edit_end_entity;resource1=/ra_functionality/edit_end_entity
+2019-12-10 17:24:25,571+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:25+00:00;RA_EDITENDENTITY;SUCCESS;RA;CORE;ejbca;701241556;;node123;msg=Password changed for end entity node123.
+2019-12-10 17:24:28,014+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Will use application provided server side TLS keystore.
+2019-12-10 17:24:29,520+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:29+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:31,459+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:31+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:31,511+0000 INFO  [org.ejbca.ui.cli.ca.GetCaCertCommand] (main) Wrote CA certificate to '/opt/primekey/tmp/tmp.D2VCgwjC3Z/cacert.der' using DER encoding.
+2019-12-10 17:24:32,074+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Certificate was added to keystore
+2019-12-10 17:24:33,373+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Enabling HTTPS listener on 0.0.0.0:8443 with optional client certificate authentication.
+2019-12-10 17:24:36,247+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Enabling HTTP listener on 0.0.0.0:8080.
+2019-12-10 17:24:41,242+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Adding initial application RoleMember ("ManagementCA;CertificateAuthenticationToken:WITH_COMMONNAME;SuperAdmin").
+2019-12-10 17:24:42,834+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:42+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:42,860+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-2) 2019-12-10 17:24:42+00:00;ROLE_ACCESS_USER_ADDITION;SUCCESS;ROLES;CORE;ejbca;;;;msg=Added administrator aspect(s) SuperAdmin to role Super Administrator Role.;id=208515599;tokenType=CertificateAuthenticationToken;tokenIssuerId=701241556;tokenMatchKey=WITH_COMMONNAME (8);tokenMatchOperator=TYPE_EQUALCASE (1000);tokenMatchValue=SuperAdmin;roleId=1;nameSpace=;roleName=Super Administrator Role;description=Initial RoleMember.
+2019-12-10 17:24:44,776+0000 INFO  [org.cesecore.audit.impl.log4j.Log4jDevice] (default task-3) 2019-12-10 17:24:44+00:00;ACCESS_CONTROL;SUCCESS;ACCESSCONTROL;CORE;ejbca;;;;resource0=/ca/701241556
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) 
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) ###################################################################################################
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                                                 #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # Whenever you are ready for production:                                                          #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                                                 #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # Try out the commercially supported EJBCA Enterprise Cloud on AWS, fully featured with:          #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # - Additional enrollment APIs such as a REST API, EST, ACME and more.                            #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # - Support for external Registration Authority and OCSP responders                               #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # - Hardware Security Module support                                                              #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # - Application updates                                                                           #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # - ...and more!                                                                                  #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                                                 #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # Feel free to contact us directly for a cloud, on-prem, embedded or hybrid solution that fits    #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) # your specific needs.                                                                            #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                                                 #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #       https://aws.amazon.com/marketplace/seller-profile?id=7edf9048-58e6-4086-9d98-b8e0c1d78fce #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                        https://www.primekey.com #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                              sales@primekey.com #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) #                                                                                                 #
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) ###################################################################################################
+2019-12-10 17:24:45,137+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) 
+2019-12-10 17:24:45,148+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) Health check now reports application status at /ejbca/publicweb/healthcheck/ejbcahealth
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) 
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) **************************************************************************************
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) * A fresh installation was detected and a ManagementCA was created for your initial  *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) * administaration of the system.                                                     *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *                                                                                    *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) * Initial SuperAdmin client certificate enrollment URL (adapt port to your mapping): *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *                                                                                    *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *   URL:      https://mycahostname:443/ejbca/enrol/keystore.jsp
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *   Username: superadmin                                                             *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *   Password: 7XymF8SwJuTgutNznXgx6jxB                                               *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) *                                                                                    *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) * Once the P12 is downloaded, use "7XymF8SwJuTgutNznXgx6jxB" to import it.           *
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) **************************************************************************************
+2019-12-10 17:24:45,151+0000 INFO  [/opt/primekey/bin/start.sh] (process:1) 
