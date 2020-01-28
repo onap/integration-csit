@@ -78,6 +78,8 @@ import org.springframework.stereotype.Service;
 public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServiceProvider
         implements ServiceOperationsCacheServiceProvider {
 
+    private static final String HTTP_STATUS_BAD_REQUEST = Integer.toString(HttpStatus.BAD_REQUEST.value());
+    private static final String HTTP_STATUS_OK = Integer.toString(HttpStatus.OK.value());
     private static final String EMPTY_STRING = "";
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceOperationsCacheServiceProviderimpl.class);
 
@@ -114,7 +116,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                                 .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)));
             }
             LOGGER.error("serviceInstanceId: {} already exists", serviceInstanceId);
-            return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+            return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                     .responseMessage("serviceInstanceId: " + serviceInstanceId + " already exists")
                     .svcRequestId(svcRequestId);
         }
@@ -122,7 +124,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         LOGGER.error(
                 "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
                 input);
-        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                 .responseMessage("Service instance not found").svcRequestId(svcRequestId);
 
     }
@@ -141,7 +143,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                 LOGGER.info("Deleting GenericResourceApiServiceOperationInformation from cache using key: {}",
                         serviceInstanceId);
                 cache.evict(serviceInstanceId);
-                return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.OK.toString())
+                return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_OK)
                         .responseMessage(EMPTY_STRING).svcRequestId(svcRequestId).serviceResponseInformation(
                                 new GenericResourceApiInstanceReference().instanceId(serviceInstanceId));
             }
@@ -151,7 +153,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
         }
         LOGGER.error("Unable to remove service instance from cache due to invalid input: {}... ", input);
-        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                 .responseMessage("Unable to remove service").svcRequestId(svcRequestId);
     }
 
@@ -208,7 +210,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                                         .objectPath(getObjectPath(serviceInstanceId, vnfId)));
                     }
                     LOGGER.error("vnfId: {} already exists with SVC Action: {}", vnfId, svcAction);
-                    return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+                    return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                             .responseMessage("vnfId: " + vnfId + " already exists").svcRequestId(svcRequestId);
                 }
             }
@@ -220,7 +222,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
         LOGGER.error(
                 "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
                 input);
-        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                 .responseMessage("Unable to add vnf").svcRequestId(svcRequestId);
     }
 
@@ -256,7 +258,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
                             return false;
                         });
 
-                        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.OK.toString())
+                        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_OK)
                                 .responseMessage(EMPTY_STRING).svcRequestId(svcRequestId)
                                 .serviceResponseInformation(
                                         new GenericResourceApiInstanceReference().instanceId(serviceInstanceId))
@@ -271,7 +273,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
         }
         LOGGER.error("Unable to remove vnf instance from cache due to invalid input: {}... ", input);
-        return new Output().ackFinalIndicator(YES).responseCode(HttpStatus.BAD_REQUEST.toString())
+        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
                 .responseMessage("Unable to remove vnf").svcRequestId(svcRequestId);
 
     }
@@ -406,7 +408,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
         final GenericResourceApiServicestatusServiceStatus serviceStatus =
                 getServiceStatus(getSvcAction(input.getSdncRequestHeader()),
-                        getRequestAction(input.getRequestInformation()), HttpStatus.OK.toString());
+                        getRequestAction(input.getRequestInformation()), HTTP_STATUS_OK);
 
         return new GenericResourceApiServicemodelinfrastructureService().serviceData(apiServicedataServiceData)
                 .serviceStatus(serviceStatus).serviceInstanceId(serviceInstanceId);

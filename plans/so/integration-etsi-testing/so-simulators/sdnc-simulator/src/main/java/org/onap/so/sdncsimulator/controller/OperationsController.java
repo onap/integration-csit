@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(path = OPERATIONS_URL)
 public class OperationsController {
+    private static final String HTTP_STATUS_OK = HttpStatus.OK.value() + "";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationsController.class);
 
@@ -80,7 +81,7 @@ public class OperationsController {
         final Output output = getOutput(apiServiceOperationInformation);
         final OutputRequest outputRequest = new OutputRequest(output);
 
-        if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
+        if (output.getResponseCode().equals(HTTP_STATUS_OK)) {
             LOGGER.info("Sucessfully executed service request sending response: {}", outputRequest);
             return ResponseEntity.ok(outputRequest);
         }
@@ -106,7 +107,7 @@ public class OperationsController {
         final Output output = getOutput(apiVnfOperationInformation);
         final OutputRequest outputRequest = new OutputRequest(output);
 
-        if (output.getResponseCode().equals(HttpStatus.OK.toString())) {
+        if (output.getResponseCode().equals(HTTP_STATUS_OK)) {
             LOGGER.info("Sucessfully executed request vnf sending response: {}", outputRequest);
             return ResponseEntity.ok(outputRequest);
         }
