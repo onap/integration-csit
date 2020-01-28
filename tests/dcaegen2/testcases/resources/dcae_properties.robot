@@ -31,6 +31,7 @@ ${VES_EVENTLISTENER_V7}                  /eventListener/v7
 ${VES_BATCH_EVENT_ENDPOINT_V7}           /eventListener/v7/eventBatch
 ${VES_VALID_JSON_V7}                     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid.json
 ${VES_INVALID_JSON_V7}                   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_invalid.json
+${VES_MISSING_MANDATORY_DOMAIN_V7}       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_domain.json
 ${VES_VALID_BATCH_JSON_V7}               %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_valid.json
 ${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_single_fault_event.json
 ${EVENT_MEASURE_FILE}                    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_vfirewall_measurement.json
