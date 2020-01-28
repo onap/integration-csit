@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 echo "This is ${WORKSPACE}/scripts/policy/engine.sh"
+function container_cleanup() {
+	docker kill drools pdp pap brmsgw nexus mariadb
+	docker rm -f drools pdp pap brmsgw nexus mariadb
+}
 
 
 # the directory of the script
@@ -170,6 +174,7 @@ if [[ $rc != 0 ]]; then
         telnet ${MARIADB_IP} 3306 < /dev/null
         nc -vz ${MARIADB_IP} 3306
         docker logs mariadb
+	container_cleanup
         exit $rc
 fi
 
@@ -181,6 +186,7 @@ if [[ $rc != 0 ]]; then
         telnet ${NEXUS_IP} 8081 < /dev/null
         nc -vz ${NEXUS_IP} 8081
         docker logs nexus
+	container_cleanup
         exit $rc
 fi
 
@@ -192,6 +198,7 @@ if [[ $rc != 0 ]]; then
         telnet ${POLICY_IP} 9696 < /dev/null
         nc -vz ${POLICY_IP} 9696
         docker logs drools
+	container_cleanup
         exit $rc
 fi
 
@@ -203,6 +210,7 @@ if [[ $rc != 0 ]]; then
         telnet ${PAP_IP} 9091 < /dev/null
         nc -vz ${PAP_IP} 9091
         docker logs pap
+	container_cleanup
         exit $rc
 fi
 
@@ -214,6 +222,7 @@ if [[ $rc != 0 ]]; then
         telnet ${PDP_IP} 8081 < /dev/null
         nc -vz ${PDP_IP} 8081
         docker logs pdp
+	container_cleanup
         exit $rc
 fi
 
@@ -225,6 +234,7 @@ if [[ $rc != 0 ]]; then
         telnet ${BRMS_IP} 9989" < /dev/null
         nc -vz ${BRMS_IP} 9989"
         docker logs brmsgw
+	container_cleanup
         exit $rc
 fi
 
