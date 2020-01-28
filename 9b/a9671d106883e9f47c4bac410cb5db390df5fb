@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Kornel Janiak <kornel.janiak@nokia.com>
+Code-Review+2: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-by: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-at: Tue, 28 Jan 2020 08:10:22 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/100603
+Project: integration/csit
+Branch: refs/heads/master
