@@ -112,7 +112,7 @@ public class TestSvnfmController {
         final ResultActions resultActions = this.mockMvc
                 .perform(get(Constant.BASE_URL + VNF_INSTANCES_URL + VNF_INSTANCE_ID)
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         final MvcResult result = resultActions.andReturn();
         final String content = result.getResponse().getContentAsString();
