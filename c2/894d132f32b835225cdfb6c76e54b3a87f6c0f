@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Submitted-by: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-at: Wed, 29 Jan 2020 12:10:27 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/100408
+Project: integration/csit
+Branch: refs/heads/master
