@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "706bc668_ba6b3f9e",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/assets/addFeed3.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "Yes this is from repository dmaap/datarouter and is a direct lift of file datarouter-docker-compose/src/main/resources/prov_data/addFeed3.txt. A few of these files in the assets directory are lifts.",
+      "parentUuid": "9c1e8d8b_539b2825",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f98eb00d_a52c68ae",
         "filename": "plans/dcaegen2-pmmapper/pmmapper/docker-compose.yml",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2020-01-24T10:41:18Z",
       "side": 1,
       "message": "If I\u0027m not wrong this file is evolution of plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-e2e.yml ? In that case please do \"git mv\" plus your changes instead of \"git rm\" and \"git add\" - easier to track the file changes.",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372a106e_f0082939",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "I did a git mv but unfortunately the similarity index is quite low when I make the changes so git is determining it to be a delete and then new file, searched but haven\u0027t come across a solution to this.",
+      "parentUuid": "f98eb00d_a52c68ae",
       "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "20e9e753_31ac4117",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa74dc7b_23695707",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ac1b0dc_0920ee6e",
         "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c708b633_453c5dbe",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac1b0dc_0920ee6e",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0ca0400d_49d0c240",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "Done.\nReplaced this with node image in docker compose file to simplify usage.",
+      "parentUuid": "b30b3e5c_0cd88b62",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9403312_d068e643",
         "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6995ef9_aff32084",
+        "filename": "plans/dcaegen2-pmmapper/pmmapper/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-01-29T10:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9403312_d068e643",
+      "revId": "03e4736d8ba10fd56502d25dee2fe4456c3997e8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
