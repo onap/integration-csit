@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-by: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-at: Thu, 30 Jan 2020 12:36:00 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/100720
+Project: integration/csit
+Branch: refs/heads/master
