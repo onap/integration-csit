@@ -72,7 +72,8 @@ TIME_OUT=1000
 INTERVAL=30
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck ); echo $response
+  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck );
+  echo $response
 
   if [ "$response" == "200" ]; then
     echo SDNC started in $TIME seconds
@@ -107,42 +108,6 @@ sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-deploy.json
 sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-assign.json
 
 #########################check if server is up gracefully ######################################
-
-TIME_OUT=1500
-INTERVAL=60
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
-
-  if [ "$response" == "Level 100" ] ; then
-    echo SDNC karaf started in $TIME seconds
-    break;
-  fi
-
-  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
-done
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
-fi
-
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-
-  if [ "$response" == "Level 100" ] ; then
-    num_failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-    failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
-    echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
-  fi
-
-if [ "$num_failed_bundles" -ge 1 ]; then
-  echo "The following bundle(s) are in a failed state: "
-  echo "  $failed_bundles"
-fi
-
 
 # Sleep additional 3 minutes (180 secs) to give application time to finish
 
