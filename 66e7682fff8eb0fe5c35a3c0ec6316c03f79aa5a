@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1aff63e_222cabb1",
+        "filename": "plans/aaf/cert-service/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-05T12:16:13Z",
+      "side": 1,
+      "message": "this image is not proper one. please release image and use it.",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "66e7682fff8eb0fe5c35a3c0ec6316c03f79aa5a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
