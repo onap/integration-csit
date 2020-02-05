@@ -22,6 +22,40 @@
       "revId": "66e7682fff8eb0fe5c35a3c0ec6316c03f79aa5a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78089562_37684238",
+        "filename": "tests/aaf/cert-service/cert-service-test.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-05T12:28:35Z",
+      "side": 1,
+      "message": "test cases needs tags. those tags trigger then which test cases will be run by script.",
+      "revId": "66e7682fff8eb0fe5c35a3c0ec6316c03f79aa5a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d63565_ba29a39a",
+        "filename": "tests/aaf/cert-service/resources/cert-service-properties.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-05T12:28:35Z",
+      "side": 1,
+      "message": "is it used in those tests?",
+      "revId": "66e7682fff8eb0fe5c35a3c0ec6316c03f79aa5a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
