@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8783a09c_d7f6d45e",
+        "filename": "plans/usecases/config-over-netconf/test.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-06T14:17:06Z",
+      "side": 1,
+      "message": "Is this sdnc image version for master OOM or elalto branch? Because in elalto\u0027s sdnc chart it is:\n\nimage: onap/sdnc-image:1.7.4\n\nwhile for master OOM it is:\n\nimage: onap/sdnc-image:1.7.6\n\nSo in short is 1.7.5 valid here?",
+      "revId": "3664ceb8fe87845be506f20631cd3bafb46c07c2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
