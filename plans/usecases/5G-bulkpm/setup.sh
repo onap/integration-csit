@@ -202,7 +202,7 @@ curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: applica
 # PM Mapper startup and configuration
 mkdir /tmp/docker-compose
 cd /tmp/docker-compose
-cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/composefile/docker-compose-pmmapper.yml /tmp/docker-compose/docker-compose.yml
+cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/docker-compose-pmmapper.yml /tmp/docker-compose/docker-compose.yml
 CBS_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cbs)
 sed -i 's/CBSIP/'$CBS_IP'/g' docker-compose.yml
 sed -i 's/1.1.1.1/'$DR_NODE_IP'/g' docker-compose.yml

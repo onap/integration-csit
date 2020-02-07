@@ -7,8 +7,8 @@ Library     String
 
 *** Variables ***
 ${SDNC_KEYSTORE_CONFIG_PATH}    /config/netconf-keystore:keystore
-${SDNC_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2
-${PNFSIM_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2/yang-ext:mount/mynetconf:netconflist
+${SDNC_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/pnf-simulator
+${PNFSIM_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/pnf-simulator/yang-ext:mount/mynetconf:netconflist
 ${BP_UPLOAD_URL}    /api/v1/execution-service/upload
 ${BP_PROCESS_URL}    /api/v1/execution-service/process
 ${BP_ARCHIVE_PATH}    ${CURDIR}/data/blueprint_archive.zip

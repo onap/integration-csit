@@ -1,5 +1,5 @@
 <node xmlns="urn:TBD:params:xml:ns:yang:network-topology">
-  <node-id>netopeer2</node-id>
+  <node-id>pnf-simulator</node-id>
     <key-based xmlns="urn:opendaylight:netconf-node-topology">
    <key-id xmlns="urn:opendaylight:netconf-node-topology">ODL_private_key_0</key-id>
    <username xmlns="urn:opendaylight:netconf-node-topology">netconf</username>
