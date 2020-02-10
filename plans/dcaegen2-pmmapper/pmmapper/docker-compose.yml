@@ -93,9 +93,13 @@ services:
 
   pmmapper:
     container_name: pmmapper
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:1.1.3
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest
     ports:
      - "8081:8081"
+    volumes:
+      - /var/tmp/:/opt/app/pm-mapper/etc/certs/
+    depends_on:
+      - datarouter-prov
     environment:
        CONFIG_BINDING_SERVICE_SERVICE_HOST: $CBS_IP
        CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
