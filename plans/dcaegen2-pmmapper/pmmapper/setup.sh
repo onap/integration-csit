@@ -14,8 +14,9 @@ export CBS_IP=172.18.0.5
 export MARIADB_IP=172.18.0.6
 export NODE_IP=172.18.0.7
 export PMMAPPER_IP=172.18.0.8
+export $TEST_PLANS_DIR
 
-for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json mrserver.js; do
+for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json mrserver.js cert.jks.b64 jks.pass trust.jks.b64 trust.pass; do
   cp $TEST_PLANS_DIR/assets/${asset} /var/tmp/
 done
 
@@ -50,13 +51,6 @@ curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT \
 
 docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d pmmapper
 sleep 2
-
-# Setting up PM Mapper certs.
-docker cp $TEST_PLANS_DIR/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $TEST_PLANS_DIR/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
-docker cp $TEST_PLANS_DIR/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
-docker cp $TEST_PLANS_DIR/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
-
 docker-compose -f $TEST_PLANS_DIR/docker-compose.yml restart pmmapper
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
@@ -94,8 +88,8 @@ curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DM
       --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
 
 docker cp pmmapper:/var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log /tmp/pmmapper.log
-docker exec -it datarouter-prov sh -c "curl http://dmaap-dr-node:8080/internal/fetchProv"
 sleep 10
+docker exec -it datarouter-prov sh -c "curl http://dmaap-dr-node:8080/internal/fetchProv"
 curl -k https://$DR_PROV_IP:8443/internal/prov
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
