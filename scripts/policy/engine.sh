@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #
-# Copyright 2017-2019 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017-2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,16 +72,8 @@ ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_D
 docker build -t onap/policy-pe target/policy-pe
 
 cd ${WORK_DIR}
-git clone http://gerrit.onap.org/r/policy/drools-pdp
-cd drools-pdp/packages/docker 
-${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
-docker build -t onap/policy-drools target/policy-drools
-
-cd ${WORK_DIR}
 git clone http://gerrit.onap.org/r/policy/docker
 cd docker
-
-chmod +x config/drools/drools-tweaks.sh
 
 echo $IP > config/pe/ip_addr.txt
 ls -l config/pe/ip_addr.txt
@@ -90,6 +82,14 @@ cat config/pe/ip_addr.txt
 export MTU=9126
 
 export PRELOAD_POLICIES=false
+
+id
+ls -al config/*
+
+sed -i '/depends_on/ s/^/      user: "1000:1000"\n/' docker-compose-integration.yml
+sudo chmod -R 777 config
+sudo chown -R 1000:1000 config
+ls -al . config/ config/* config/*/*
 docker-compose -f docker-compose-integration.yml up -d 
 
 if [ ! $? -eq 0 ]; then
@@ -98,9 +98,6 @@ if [ ! $? -eq 0 ]; then
 fi 
 
 docker ps
-
-POLICY_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' drools`
-echo ${POLICY_IP}
 
 PDP_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' pdp`
 echo ${PDP_IP}
@@ -128,8 +125,8 @@ else
 	echo mariadb is not ready
 	echo Restarting...
 
-	docker kill drools pdp pap brmsgw nexus mariadb
-	docker rm -f drools pdp pap brmsgw nexus mariadb
+	docker kill pdp pap brmsgw nexus mariadb
+	docker rm -f pdp pap brmsgw nexus mariadb
 
 	docker-compose -f docker-compose-integration.yml up -d 
 	
@@ -139,9 +136,6 @@ else
 	fi 
 	
 	docker ps
-	
-	POLICY_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' drools`
-	echo ${POLICY_IP}
 	
 	PDP_IP=`docker inspect --format '{{ .NetworkSettings.Networks.docker_default.IPAddress}}' pdp`
 	echo ${PDP_IP}
@@ -184,17 +178,6 @@ if [[ $rc != 0 ]]; then
         exit $rc
 fi
 
-${DIR}/wait_for_port.sh ${POLICY_IP} 9696
-rc=$?
-if [[ $rc != 0 ]]; then
-        echo "cannot open ${POLICY_IP} 9696"
-	netstat -tnl
-        telnet ${POLICY_IP} 9696 < /dev/null
-        nc -vz ${POLICY_IP} 9696
-        docker logs drools
-        exit $rc
-fi
-
 ${DIR}/wait_for_port.sh ${PAP_IP} 9091
 rc=$?
 if [[ $rc != 0 ]]; then
@@ -228,22 +211,9 @@ if [[ $rc != 0 ]]; then
         exit $rc
 fi
 
-docker logs drools
 docker logs pap
 docker logs pdp
 docker logs brmsgw
-
-TIME_OUT=300
-INTERVAL=20 
-TIME=0 
-while [ "$TIME" -lt "$TIME_OUT" ]; do 
-    curl -k -i --user "demo@people.osaaf.org:demo123456!" -H "ContentType: application/json" -H "Accept: application/json" https://${POLICY_IP}:6969/healthcheck && break
-	
-  echo Sleep: $INTERVAL seconds before testing if Policy is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds 
-  sleep $INTERVAL 
-  TIME=$(($TIME+$INTERVAL))
-	
-done
 
 TIME_OUT=300
 INTERVAL=20 
