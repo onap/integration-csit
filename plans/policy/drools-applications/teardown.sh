@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2019 AT&T Intellectual Property. All rights reserved.
+# Copyright 2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,5 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-kill-instance.sh drools
-kill-instance.sh mariadb
+
+mkdir -p $WORKSPACE/archives/
+
+docker exec -it drools bash -c "cat /home/policy/.m2/settings.xml"
+docker exec -it drools bash -c '/opt/app/policy/bin/features status'
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/error.log"
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/network.log"
+docker logs drools > ${WORKSPACE}/archives/drools-apps.log
+
+docker exec -it drools bash -c '/opt/app/policy/bin/features status' > $WORKSPACE/archives/drools-apps-features.log
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/error.log" > $WORKSPACE/archives/drools-apps-error.log
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/network.log" > $WORKSPACE/archives/drools-apps-network.log
+
+docker logs drools > ${WORKSPACE}/archives/drools-apps.log
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml logs > $WORKSPACE/archives/docker-compose-drools-apps.log
+
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml down -v

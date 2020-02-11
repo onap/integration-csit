@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017-2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,21 +15,13 @@
 # limitations under the License.
 #
 
-function kill_instance() {
-local name=$1
-docker logs "${name}" >> "${WORKSPACE}"/archives/"${name}".log
-docker kill "${name}"
-docker rm -v "${name}"
-}
+mkdir -p $WORKSPACE/archives/
 
-mkdir -p "${WORKSPACE}"/archives
+docker exec -it drools bash -c '/opt/app/policy/bin/features status' > $WORKSPACE/archives/drools-apps-features.log
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/error.log" > $WORKSPACE/archives/drools-error.log
+docker exec -it drools bash -c "cat /var/log/onap/policy/pdpd/network.log" > $WORKSPACE/archives/drools-network.log
 
-kill_instance drools
-kill_instance pdp
-kill_instance brmsgw
-kill_instance pap
-kill_instance nexus
-kill_instance mariadb
+docker logs drools > ${WORKSPACE}/archives/drools.log
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools.yml logs > $WORKSPACE/archives/docker-compose-drools.log
 
-rm -fr "${WORK_DIR}"
-
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools.yml down -v
