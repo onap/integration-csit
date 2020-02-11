@@ -16,6 +16,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
+
+# OS upgrades
+
 source ${SCRIPTS}/policy/config/policy-csit.conf
 export POLICY_MARIADB_VER
 echo ${GERRIT_BRANCH}
@@ -32,10 +35,13 @@ echo ${POLICY_DROOLS_APPS_VERSION_EXTRACT}
 export POLICY_DROOLS_APPS_VERSION="${POLICY_DROOLS_APPS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 echo ${POLICY_DROOLS_APPS_VERSION}
 
-docker login -u docker -p docker nexus3.onap.org:10001
+echo "user information: $(id)"
+echo "docker and docker-compose versions:"
+docker -v && docker-compose -v
 
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_dependencies
+
 docker logs mariadb
 docker container ls -a
 
