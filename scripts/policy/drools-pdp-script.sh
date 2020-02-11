@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #
-# Copyright 2017-2019 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017-2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 echo "This is ${WORKSPACE}/scripts/policy/drools-pdp-script.sh"
-
 
 # the directory of the script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -90,6 +89,7 @@ cat config/pe/ip_addr.txt
 export MTU=9126
 
 export PRELOAD_POLICIES=false
+export DEBUG=y
 docker-compose -f docker-compose-integration.yml up -d 
 
 if [ ! $? -eq 0 ]; then
