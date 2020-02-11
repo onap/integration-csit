@@ -1,4 +1,4 @@
-# Copyright 2018 AT&T Intellectual Property. All rights reserved
+# Copyright 2018-2020 AT&T Intellectual Property. All rights reserved
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,42 +14,34 @@
 version: '2'
 services:
    mariadb:
-      image: mariadb:10.2.14
+      image: mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file: config/db/db.conf
+      env_file:
+         - ${WORKSPACE}/scripts/policy/config/db/db.conf
       volumes:
-         - ./config/db:/docker-entrypoint-initdb.d
+         - ${WORKSPACE}/scripts/policy/config/db:/docker-entrypoint-initdb.d
       expose:
-       - 3306
+         - 3306
    nexus:
       image: sonatype/nexus:2.14.8-01
       container_name: nexus
       hostname: nexus
-   pap:
-      image: onap/policy-pe
-      environment:
-       - PRELOAD_POLICIES=${PRELOAD_POLICIES}
-      container_name: pap
-      depends_on: 
-       - mariadb
-      hostname: pap
       expose:
-       - 8443
-       - 9091
-      command: pap
-      volumes:
-       - ./config/pe:/tmp/policy-install/config
+         - 8081
    drools:
-      image: onap/policy-drools
+      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
+      user: 1000:1000
       container_name: drools
       depends_on: 
-       - mariadb
-       - nexus
+         - mariadb
+         - nexus
       hostname: drools
       expose:
-       - 6969
-       - 9696
+         - 6969
+         - 9696
       volumes:
-       - ./config/drools:/tmp/policy-install/config
+         - ${WORKSPACE}/scripts/policy/config/drools/custom:/tmp/policy-install/config
+      env_file:
+         - ${WORKSPACE}/scripts/policy/config/drools/env/base.conf
