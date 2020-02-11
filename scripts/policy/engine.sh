@@ -184,17 +184,6 @@ if [[ $rc != 0 ]]; then
         exit $rc
 fi
 
-${DIR}/wait_for_port.sh ${POLICY_IP} 9696
-rc=$?
-if [[ $rc != 0 ]]; then
-        echo "cannot open ${POLICY_IP} 9696"
-	netstat -tnl
-        telnet ${POLICY_IP} 9696 < /dev/null
-        nc -vz ${POLICY_IP} 9696
-        docker logs drools
-        exit $rc
-fi
-
 ${DIR}/wait_for_port.sh ${PAP_IP} 9091
 rc=$?
 if [[ $rc != 0 ]]; then
@@ -228,22 +217,9 @@ if [[ $rc != 0 ]]; then
         exit $rc
 fi
 
-docker logs drools
 docker logs pap
 docker logs pdp
 docker logs brmsgw
-
-TIME_OUT=300
-INTERVAL=20 
-TIME=0 
-while [ "$TIME" -lt "$TIME_OUT" ]; do 
-    curl -k -i --user "demo@people.osaaf.org:demo123456!" -H "ContentType: application/json" -H "Accept: application/json" https://${POLICY_IP}:6969/healthcheck && break
-	
-  echo Sleep: $INTERVAL seconds before testing if Policy is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds 
-  sleep $INTERVAL 
-  TIME=$(($TIME+$INTERVAL))
-	
-done
 
 TIME_OUT=300
 INTERVAL=20 
