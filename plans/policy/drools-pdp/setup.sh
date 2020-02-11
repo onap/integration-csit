@@ -15,11 +15,12 @@
 # limitations under the License.
 #
 # Place the scripts in run order:
+
 source ${SCRIPTS}/common_functions.sh
 
-docker login -u docker -p docker nexus3.onap.org:10001
-docker pull nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0
-docker tag nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0 onap/policy-common-alpine:1.4.0
+echo "user information: $(id)"
+echo "docker and docker-compose versions:"
+docker -v && docker-compose -v
 
 source ${WORKSPACE}/scripts/policy/drools-pdp-script.sh
 
