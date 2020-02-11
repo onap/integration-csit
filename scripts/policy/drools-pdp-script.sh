@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #
-# Copyright 2017-2019 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017-2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 echo "This is ${WORKSPACE}/scripts/policy/drools-pdp-script.sh"
-
 
 # the directory of the script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -68,6 +67,9 @@ git clone http://gerrit.onap.org/r/oparent
 
 git clone http://gerrit.onap.org/r/policy/engine
 cd engine/packages/docker 
+sed -i "s@bin/bash@bin/bash -xv@g" src/main/docker/do-start.sh
+sed -i "s@./docker-install.sh@DEBUG=y ./docker-install.sh@g" src/main/docker/do-start.sh
+cat src/main/docker/do-start.sh
 ${WORK_DIR}/maven/apache-maven-3.3.9/bin/mvn prepare-package --settings ${WORK_DIR}/oparent/settings.xml
 docker build -t onap/policy-pe target/policy-pe
 
@@ -90,6 +92,7 @@ cat config/pe/ip_addr.txt
 export MTU=9126
 
 export PRELOAD_POLICIES=false
+export DEBUG=y
 docker-compose -f docker-compose-integration.yml up -d 
 
 if [ ! $? -eq 0 ]; then
@@ -128,9 +131,7 @@ else
 	echo mariadb is not ready
 	echo Restarting...
 
-	docker kill drools pdp pap brmsgw nexus mariadb
-	docker rm -f drools pdp pap brmsgw nexus mariadb
-
+	docker-compose -f docker-compose-integration.yml down -v
 	docker-compose -f docker-compose-integration.yml up -d 
 	
 	if [ ! $? -eq 0 ]; then
@@ -170,6 +171,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${MARIADB_IP} 3306 < /dev/null
 	nc -vz ${MARIADB_IP} 3306
 	docker logs mariadb
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
@@ -180,6 +182,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${NEXUS_IP} 8081 < /dev/null
 	nc -vz ${NEXUS_IP} 8081
 	docker logs nexus
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
@@ -190,6 +193,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${POLICY_IP} 9696 < /dev/null
 	nc -vz ${POLICY_IP} 9696
 	docker logs drools
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
@@ -200,6 +204,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${PAP_IP} 9091 < /dev/null
 	nc -vz ${PAP_IP} 9091
 	docker logs pap
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
@@ -210,6 +215,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${PDP_IP} 8081 < /dev/null
 	nc -vz ${PDP_IP} 8081
 	docker logs pdp
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
@@ -220,6 +226,7 @@ if [[ $rc != 0 ]]; then
 	telnet ${BRMS_IP} 9989" < /dev/null
 	nc -vz ${BRMS_IP} 9989"
 	docker logs brmsgw
+	docker-compose -f docker-compose-integration.yml down -v
 	exit $rc
 fi
 
