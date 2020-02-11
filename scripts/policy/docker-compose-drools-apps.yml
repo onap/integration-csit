@@ -35,6 +35,9 @@ services:
        - 9696
       volumes:
        - ${WORKSPACE}/scripts/policy/config/drools:/tmp/policy-install/config
+      env_file:
+        - ${WORKSPACE}/scripts/policy/config/drools/base.conf
+        - ${WORKSPACE}/scripts/policy/config/drools/feature-healthcheck.conf
       environment:
        - DEBUG=y
    start_dependencies:

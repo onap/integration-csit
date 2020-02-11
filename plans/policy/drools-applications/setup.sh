@@ -32,7 +32,24 @@ echo ${POLICY_DROOLS_APPS_VERSION_EXTRACT}
 export POLICY_DROOLS_APPS_VERSION="${POLICY_DROOLS_APPS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 echo ${POLICY_DROOLS_APPS_VERSION}
 
-docker login -u docker -p docker nexus3.onap.org:10001
+echo "docker versions:"
+echo "docker versions:"
+docker -v
+docker-compose -v
+
+echo "user information:"
+id
+groups
+cat /etc/passwd
+cat /etc/groups
+
+ls -al ${WORKSPACE}/scripts/policy/ ${WORKSPACE}/scripts/policy/config ${WORKSPACE}/scripts/policy/config/drools
+#sudo chown -R 1000:1000 ${WORKSPACE}/scripts/policy/config/drools
+
+rm ${WORKSPACE}/scripts/policy/config/drools/*.conf
+ls -al ${WORKSPACE}/scripts/policy/ ${WORKSPACE}/scripts/policy/config ${WORKSPACE}/scripts/policy/config/drools
+
+# docker login -u docker -p docker nexus3.onap.org:10001
 
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_dependencies
