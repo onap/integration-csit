@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Andy Walshe <andy.walshe@est.tech>
+Code-Review+1: Joseph O'Leary <joseph.o.leary@est.tech>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Wed, 12 Feb 2020 09:46:38 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/101456
+Project: integration/csit
+Branch: refs/heads/master
