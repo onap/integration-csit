@@ -1,0 +1,186 @@
+[
+  {
+    "httpRequest": {
+      "path": "/service_component_all/.*"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": "{
+   \"policy\":{
+      \"subscription\":{
+         \"subscriptionName\":\"ExtraPM-All-gNB-R2B\",
+         \"administrativeState\":\"UNLOCKED\",
+         \"fileBasedGP\":15,
+         \"fileLocation\":\"\/pm\/pm.xml\",
+         \"nfTypeModelInvariantId\":\"2829292\",
+         \"nfFilter\":{
+            \"swVersions\":[
+               \"1.0.0\",
+               \"1.0.1\"
+            ],
+            \"nfNames\":[
+               \"^pnf.*\",
+               \"^vnf.*\"
+            ]
+         },
+         \"measurementGroups\":[
+            {
+               \"measurementGroup\":{
+                  \"measurementTypes\":[
+                     {
+                        \"measurementType\":\"countera\"
+                     },
+                     {
+                        \"measurementType\":\"counterb\"
+                     }
+                  ],
+                  \"managedObjectDNsBasic\":[
+                     {
+                        \"DN\":\"dna\"
+                     },
+                     {
+                        \"DN\":\"dnb\"
+                     }
+                  ]
+               }
+            },
+            {
+               \"measurementGroup\":{
+                  \"measurementTypes\":[
+                     {
+                        \"measurementType\":\"counterc\"
+                     },
+                     {
+                        \"measurementType\":\"counterd\"
+                     }
+                  ],
+                  \"managedObjectDNsBasic\":[
+                     {
+                        \"DN\":\"dnc\"
+                     },
+                     {
+                        \"DN\":\"dnd\"
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   },
+   \"config\" : {
+      \"cert_path\" : \"/opt/app/pm-mapper/etc/certs/cert.pem\",
+      \"streams_publishes\" : {
+         \"policy_pm_publisher\" : {
+            \"dmaap_info\" : {
+               \"client_id\" : \"1475976809466\",
+               \"client_role\" : \"org.onap.dcae.pmPublisher\",
+               \"topic_url\" : \"https://node:30226/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS\",
+               \"location\" : \"san-francisco\"
+            },
+            \"type\" : \"message_router\"
+         },
+         \"other_publisher\" : {
+            \"dmaap_info\" : {
+               \"location\" : \"san-francisco\",
+               \"topic_url\" : \"https://node:30226/events/org.onap.dmaap.mr.SOME_OTHER_TOPIC\",
+               \"client_role\" : \"org.onap.dcae.pmControlPub\",
+               \"client_id\" : \"1875976809466\"
+            },
+            \"type\" : \"message_router\"
+         }
+      },
+      \"streams_subscribes\" : {
+         \"aai_subscriber\" : {
+            \"type\" : \"message_router\",
+            \"dmaap_info\" : {
+               \"client_id\" : \"1575976809466\",
+               \"client_role\" : \"org.onap.dcae.aaiSub\",
+               \"topic_url\" : \"https://node:30226/events/AAI_EVENT\",
+               \"location\" : \"san-francisco\"
+            }
+         },
+         \"policy_pm_subscriber\" : {
+            \"dmaap_info\" : {
+               \"location\" : \"san-francisco\",
+               \"topic_url\" : \"https://node:30226/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS\",
+               \"client_role\" : \"org.onap.dcae.pmSubscriber\",
+               \"client_id\" : \"1575876809456\"
+            },
+            \"type\" : \"message_router\"
+         }
+      },
+      \"key_path\" : \"/opt/app/pm-mapper/etc/certs/key.pem\",
+      \"aaf_identity\" : \"dcae@dcae.onap.org\",
+      \"aaf_password\" : \"demo123456!\"
+   }
+}"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/aai/v16/query.*"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": "{
+    \"results\": [
+        {
+            \"id\": \"327736\",
+            \"node-type\": \"pnf\",
+            \"url\": \"/aai/v16/network/pnfs/pnf/pnf207\",
+            \"properties\": {
+                \"pnf-name\": \"pnf207\",
+                \"pnf-id\": \"55e57cd1-ab8b-40cd-97d5-cfc774fef616\",
+                \"equip-type\": \"val8\",
+                \"equip-vendor\": \"Nokia\",
+                \"equip-model\": \"val6\",
+                \"ipaddress-v4-oam\": \"10.10.10.26\",
+                \"sw-version\": \"val7\",
+                \"in-maint\": false,
+                \"serial-number\": \"6061ZW3\",
+                \"ipaddress-v6-oam\": \"2001:0db8:0:0:0:0:1428:57ab\",
+                \"resource-version\": \"1573066346347\",
+                \"nf-role\": \"gNB\"
+            }
+        },
+        {
+            \"id\": \"241864\",
+            \"node-type\": \"generic-vnf\",
+            \"url\": \"/aai/v16/network/generic-vnfs/generic-vnf/1083ecbb-f3b3-49da-b5f5-b5962140ee99\",
+            \"properties\": {
+                \"vnf-id\": \"1083ecbb-f3b3-49da-b5f5-b5962140ee99\",
+                \"vnf-name\": \"vnf\",
+                \"vnf-type\": \"demoVCPEvBNG/vCPE_vbng 5eb5661a-0cb6 0\",
+                \"service-id\": \"2db01c96-4baa-4393-8d79-af8d7bf4698e\",
+                \"prov-status\": \"PREPROV\",
+                \"orchestration-status\": \"Inventoried\",
+                \"in-maint\": false,
+                \"is-closed-loop-disabled\": false,
+                \"resource-version\": \"1575541662410\",
+                \"model-invariant-id\": \"7129e420-d396-4efb-af02-6b83499b12f8\",
+                \"model-version-id\": \"e80a6ae3-cafd-4d24-850d-e14c084a5ca9\",
+                \"model-customization-id\": \"376dbe87-e9c5-4f2b-80e2-a420b373ee87\"
+            }
+        }
+    ]
+}"
+      }
+    }
+  }
+]
+

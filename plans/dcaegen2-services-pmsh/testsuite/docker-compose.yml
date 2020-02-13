@@ -1,0 +1,56 @@
+version: '3.3'
+
+services:
+  mockserver:
+    container_name: mockserver
+    image: mockserver/mockserver:mockserver-5.9.0
+    ports:
+      - 1080:1080
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializerJson.json
+    volumes:
+      - type: bind
+        source: /var/tmp
+        target: /config
+    networks:
+      pmsh-network:
+        ipv4_address: $MOCKSERVER_IP
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pmsh
+      POSTGRES_USER: pmsh
+    networks:
+      pmsh-network:
+        ipv4_address: $DB_IP
+
+  pmsh:
+    container_name: pmsh
+    image: onap/org.onap.dcaegen2.services.pmsh:latest
+    depends_on:
+      - db
+    environment:
+      HOSTNAME: "pmsh"
+      PROD_LOGGING: "True"
+      CONFIG_BINDING_SERVICE_SERVICE_HOST: $MOCKSERVER_IP
+      CONFIG_BINDING_SERVICE_SERVICE_PORT: 1080
+      PMSH_PG_URL: $DB_IP
+      PMSH_PG_USERNAME: pmsh
+      PMSH_PG_PASSWORD: pmsh
+      AAI_SERVICE_HOST: $MOCKSERVER_IP
+      AAI_SERVICE_PORT_AAI_SSL: 1080
+    networks:
+      pmsh-network:
+        ipv4_address: $PMSH_IP
+
+networks:
+  pmsh-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
