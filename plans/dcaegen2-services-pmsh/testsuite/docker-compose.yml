@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+  mockserver:
+    container_name: mockserver
+    image: mockserver/mockserver:mockserver-5.9.0
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializerJson.json
+    volumes:
+      - ./assets/mockserver.properties:/config/mockserver.properties
+      - ./assets/initializerJson.json:/config/initializerJson.json
+    networks:
+      pmsh-network:
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pmsh
+      POSTGRES_USER: pmsh
+    networks:
+      pmsh-network:
+
+  pmsh:
+    container_name: pmsh
+    image: onap/org.onap.dcaegen2.services.pmsh:latest
+    depends_on:
+      - db
+    volumes:
+      - ./assets/cert.pem:/opt/app/pmsh/etc/certs/cert.pem
+      - ./assets/key.pem:/opt/app/pmsh/etc/certs/key.pem
+    environment:
+      HOSTNAME: "pmsh"
+      CONFIG_BINDING_SERVICE_SERVICE_HOST: mockserver
+      CONFIG_BINDING_SERVICE_SERVICE_PORT: 1080
+      PMSH_PG_URL: db
+      PMSH_PG_USERNAME: pmsh
+      PMSH_PG_PASSWORD: pmsh
+      AAI_SERVICE_HOST: mockserver
+      AAI_SERVICE_PORT_AAI_SSL: 1080
+    healthcheck:
+      test: python -c "import requests;requests.get(\"https://localhost:8443/healthcheck\", verify=False)"
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      pmsh-network:
+
+networks:
+  pmsh-network:
+    driver: bridge
+
