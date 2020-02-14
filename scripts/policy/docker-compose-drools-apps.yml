@@ -1,4 +1,4 @@
-# Copyright 2019 AT&T Intellectual Property. All rights reserved
+# Copyright 2019-2020 AT&T Intellectual Property. All rights reserved
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,14 +34,8 @@ services:
        - 6969
        - 9696
       volumes:
-       - ${WORKSPACE}/scripts/policy/config/drools:/tmp/policy-install/config
-      environment:
-       - DEBUG=y
-   start_dependencies:
-      image: dadarek/wait-for-dependencies
-      container_name: policy-wait
-      depends_on:
-       - mariadb
-      hostname: policy-wait
-      command: mariadb:3306
-
+       - ${WORKSPACE}/scripts/policy/config/drools-apps/custom:/tmp/policy-install/config
+      env_file:
+        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/base.conf
+        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/feature-healthcheck.conf
+        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/feature-pooling-dmaap.conf

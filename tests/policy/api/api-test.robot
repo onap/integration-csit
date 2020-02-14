@@ -39,7 +39,7 @@ RetrievePolicyTypes
      Should Be Equal As Strings    ${resp.json()['version']}  1.0.0
 
 CreateTCAPolicyTypeV1
-     [Documentation]    Create TCA Policy Type Version 1
+     [Documentation]    Create TCA Policy Type Version 1. Trying to create an existing policy type with any change and same version should cause error.
      ${auth}=    Create List    healthcheck    zb!XztG34
      ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.v1.json
      Log    Creating session https://${POLICY_API_IP}:6969
@@ -86,13 +86,13 @@ CreateNewMonitoringPolicyV1
      Log    Received response from policy ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
+     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][1]}  onap.restart.tca
      Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
 SimpleCreateNewMonitoringPolicyV1
-     [Documentation]    Create a new Monitoring TCA policiy version 1 using simple endpoint
+     [Documentation]    Create a new Monitoring TCA policiy version 1 using simple endpoint. Trying to create an existing policy with any change and same version should cause error.
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1_2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -111,7 +111,7 @@ SimpleCreateNewMonitoringPolicyV2
      Log    Received response from policy ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
+     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][1]}  onap.restart.tca
      Dictionary Should Contain Key	${postjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
 RetrievePoliciesOfType
