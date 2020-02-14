@@ -56,9 +56,6 @@ ${CREATE_OPS_VOLTE_TEMPLATE}    opspolicy_vOLTE_R1.jinja
 
 
 *** Test Cases ***
-Policy Health check
-    Run Policy Health Check
-
 VFW Config Policy
     ${CONFIG_POLICY_VFW_NAME}=    Create Config VFW Policy
     Push Config Policy    ${CONFIG_POLICY_VFW_NAME}    ${CONFIG_POLICY_VFW_TYPE}  
