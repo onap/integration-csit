@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2019-2020 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,9 @@ echo ${POLICY_DROOLS_APPS_VERSION_EXTRACT}
 export POLICY_DROOLS_APPS_VERSION="${POLICY_DROOLS_APPS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 echo ${POLICY_DROOLS_APPS_VERSION}
 
-docker login -u docker -p docker nexus3.onap.org:10001
+echo "user information: $(id)"
+echo "docker information: "
+docker-compose -v && docker -v && docker info
 
 # Adding this waiting container to avoid race condition between api and mariadb containers.
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_dependencies
