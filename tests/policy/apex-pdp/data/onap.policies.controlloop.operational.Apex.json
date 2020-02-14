@@ -50,17 +50,17 @@
           "default": "1.0.0"
         },
         "id": {
-          "type": "int",
+          "type": "integer",
           "description": "Specifies the engine id",
           "required": true
         },
         "instance_count": {
-          "type": "int",
+          "type": "integer",
           "description": "Specifies the number of engine threads that should be run",
           "required": true
         },
         "deployment_port": {
-          "type": "int",
+          "type": "integer",
           "description": "Specifies the port to connect to for engine administration",
           "required": false,
           "default": 1
@@ -68,14 +68,12 @@
         "policy_model_file_name": {
           "type": "string",
           "description": "The name of the file from which to read the APEX policy model",
-          "required": false,
-          "default": ""
+          "required": false
         },
         "policy_type_impl": {
           "type": "string",
           "description": "The policy type implementation from which to read the APEX policy model",
-          "required": false,
-          "default": ""
+          "required": false
         },
         "periodic_event_period": {
           "type": "string",
@@ -119,7 +117,7 @@
           "required": false
         },
         "synchronous_mode": {
-          "type": "bool",
+          "type": "boolean",
           "description": "Specifies the event handler is syncronous (receive event and send response)",
           "required": false,
           "default": false
@@ -127,17 +125,15 @@
         "synchronous_peer": {
           "type": "string",
           "description": "The peer event handler (output for input or input for output) of this event handler in synchronous mode, this parameter is mandatory if the event handler is in synchronous mode",
-          "required": false,
-          "default": ""
+          "required": false
         },
         "synchronous_timeout": {
-          "type": "int",
+          "type": "integer",
           "description": "The timeout in milliseconds for responses to be issued by APEX torequests, this parameter is mandatory if the event handler is in synchronous mode",
-          "required": false,
-          "default": ""
+          "required": false
         },
         "requestor_mode": {
-          "type": "bool",
+          "type": "boolean",
           "description": "Specifies the event handler is in requestor mode (send event and wait for response mode)",
           "required": false,
           "default": false
@@ -145,14 +141,12 @@
         "requestor_peer": {
           "type": "string",
           "description": "The peer event handler (output for input or input for output) of this event handler in requestor mode, this parameter is mandatory if the event handler is in requestor mode",
-          "required": false,
-          "default": ""
+          "required": false
         },
         "requestor_timeout": {
-          "type": "int",
+          "type": "integer",
           "description": "The timeout in milliseconds for wait for responses to requests, this parameter is mandatory if the event handler is in requestor mode",
-          "required": false,
-          "default": ""
+          "required": false
         }
       }
     },
@@ -186,7 +180,7 @@
         }
       }
     },
-    "onap.datatypes.policies.controlloop.operational.apex.Environmental": {
+    "onap.datatypes.policies.controlloop.operational.apex.Environment": {
       "derived_from": "tosca.datatypes.Root",
       "properties": {
         "name": {
@@ -237,7 +231,7 @@
           }
         },
         "locking": {
-          "type": "onap.datatypes.policies.controlloop.operational.apex.plugin",
+          "type": "onap.datatypes.policies.controlloop.operational.apex.Plugin",
           "description": "The plugin to be used for locking context in and between APEX PDPs at runtime",
           "required": false
         },
