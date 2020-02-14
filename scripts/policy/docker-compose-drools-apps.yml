@@ -35,8 +35,9 @@ services:
        - 9696
       volumes:
        - ${WORKSPACE}/scripts/policy/config/drools:/tmp/policy-install/config
-      environment:
-       - DEBUG=y
+      env_file:
+        - ${WORKSPACE}/scripts/policy/config/drools/env/base.conf
+        - ${WORKSPACE}/scripts/policy/config/drools/env/feature-healthcheck.conf
    start_dependencies:
       image: dadarek/wait-for-dependencies
       container_name: policy-wait
