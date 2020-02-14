@@ -6,7 +6,6 @@
         "operational.sampledomain": {
           "type": "onap.policies.controlloop.operational.Apex",
           "type_version": "1.0.0",
-          "derived_from": "tosca.policies.Root",
           "name": "onap.policies.controlloop.Operational.apex.sampledomain",
           "version": "1.0.0",
           "properties": {
