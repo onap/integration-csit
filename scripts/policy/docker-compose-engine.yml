@@ -14,13 +14,14 @@
 version: '2'
 services:
    mariadb:
-      image: mariadb:10.2.14
+      image: mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file: config/db/db.conf
+      env_file:
+        - ${WORKSPACE}/scripts/policy/config/db/db.conf
       volumes:
-         - ./config/db:/docker-entrypoint-initdb.d
+        - ${WORKSPACE}/scripts/policy/config/db:/docker-entrypoint-initdb.d
       expose:
        - 3306
    nexus:
@@ -28,7 +29,7 @@ services:
       container_name: nexus
       hostname: nexus
    pap:
-      image: onap/policy-pe
+      image: nexus3.onap.org:10001/onap/policy-pe:${POLICY_ENGINE_VERSION}
       environment:
        - PRELOAD_POLICIES=${PRELOAD_POLICIES}
       container_name: pap
@@ -40,9 +41,9 @@ services:
        - 9091
       command: pap
       volumes:
-       - ./config/pe:/tmp/policy-install/config
+       - ${WORKSPACE}/scripts/policy/config/pe:/tmp/policy-install/config
    pdp:
-      image: onap/policy-pe
+      image: nexus3.onap.org:10001/onap/policy-pe:${POLICY_ENGINE_VERSION}
       container_name: pdp
       depends_on: 
        - pap
@@ -53,23 +54,11 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    brmsgw:
-      image: onap/policy-pe
+      image: nexus3.onap.org:10001/onap/policy-pe:${POLICY_ENGINE_VERSION}
       container_name: brmsgw
       depends_on: 
        - pap
       hostname: brmsgw
       command: brmsgw
       volumes:
-       - ./config/pe:/tmp/policy-install/config
-   drools:
-      image: onap/policy-drools
-      container_name: drools
-      depends_on: 
-       - mariadb
-       - nexus
-      hostname: drools
-      expose:
-       - 6969
-       - 9696
-      volumes:
-       - ./config/drools:/tmp/policy-install/config
+       - ${WORKSPACE}/scripts/policy/config/pe:/tmp/policy-install/config
