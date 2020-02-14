@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017, 2019 AT&T Intellectual Property. All rights reserved.
+# Copyright 2017, 2019-2020 AT&T Intellectual Property. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +16,6 @@
 #
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
-
-docker login -u docker -p docker nexus3.onap.org:10001
-docker pull nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0
-docker tag nexus3.onap.org:10001/onap/policy-common-alpine:1.4.0 onap/policy-common-alpine:1.4.0
 
 source ${WORKSPACE}/scripts/policy/engine.sh
 
