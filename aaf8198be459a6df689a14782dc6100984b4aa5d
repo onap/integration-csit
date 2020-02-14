@@ -16,6 +16,24 @@
       "revId": "aaf8198be459a6df689a14782dc6100984b4aa5d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ffcb2c_e656274e",
+        "filename": "tests/policy/api/data/vCPE.policy.monitoring.input.tosca.v1.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-02-14T19:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eff8903_454ad012",
+      "revId": "aaf8198be459a6df689a14782dc6100984b4aa5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
