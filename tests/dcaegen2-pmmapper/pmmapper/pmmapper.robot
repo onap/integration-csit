@@ -20,12 +20,15 @@ ${RECONFIGURE_ENDPOINT}                  /reconfigure
 ${NO_MANAGED_ELEMENT_PATH}               %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_managed_element.xml
 ${NO_MEASDATA_PATH}                      %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A_no_measdata.xml
 ${VALID_METADATA_PATH}                   %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/valid_metadata.json
+${NR_VALID_METADATA_PATH}                %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/valid_metadata.json
 ${DIFF_VENDOR_METADATA}                  %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
 ${NON_XML_FILE}                          %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/diff_vendor_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "tail -15 /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
 ${TYPE-A_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/A20181002.0000-1000-0015-1000_5G.xml
 ${TYPE-C_PM_DATA_FILE_PATH}              %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/C20190328.0000-0015.xml
+${NR-TYPE-A_PM_DATA_FILE_PATH}           %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/A20181004.0000-1000-0015-1000_5G.xml
+${NR-TYPE-C_PM_DATA_FILE_PATH}           %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/C20190329.0000-0015.xml
 ${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/vendor_filter_config.json
 ${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_config.json
 ${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
@@ -118,6 +121,22 @@ Verify that PM Mapper correctly identifies a non-xml file.
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           PM measurement file must have an extension of .xml
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           RequestID=8
 
+Verify that PM Mapper correctly maps an NR Type-A file based on counter filtering and publish 3gpp perf VES events to message router.
+    [Tags]                          PM_MAPPER_11
+    [Documentation]                 Verify 3GPP PM Mapper maps an NR Type-A file and publish 3gpp perf VES evnets to message router.
+    [Timeout]                       1 minute
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_PM_FILTER}             shell=yes
+    ${resp}=                        Get Request                      mapper_session                    ${RECONFIGURE_ENDPOINT}
+    Sleep                           5s
+    SendToDatarouter                ${NR-TYPE-A_PM_DATA_FILE_PATH}      ${NR_VALID_METADATA_PATH}            X-ONAP-RequestID=11
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
+
+Verify that PM Mapper correctly maps an NR Type-C file based on counter filtering and publish 3gpp perf VES events to message router.
+    [Tags]                          PM_MAPPER_12
+    [Documentation]                 Verify that PM Mapper maps an NR Type-C xml file and publish 3gpp perf VES evnets to message router.
+    [Timeout]                       1 minute
+    SendToDatarouter                ${NR-TYPE-C_PM_DATA_FILE_PATH}      ${NR_VALID_METADATA_PATH}           X-ONAP-RequestID=12
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
 
 *** Keywords ***
 
