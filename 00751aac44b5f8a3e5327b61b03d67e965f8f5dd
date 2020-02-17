@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa3cd9e5_6a6b0f4d",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2020-02-17T15:06:01Z",
+      "side": 1,
+      "message": "Type-C",
+      "range": {
+        "startLine": 136,
+        "startChar": 63,
+        "endLine": 136,
+        "endChar": 69
+      },
+      "revId": "00751aac44b5f8a3e5327b61b03d67e965f8f5dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
