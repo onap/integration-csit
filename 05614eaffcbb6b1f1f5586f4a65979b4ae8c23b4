@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "017e638f_42e30a31",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2020-02-17T17:57:29Z",
+      "side": 1,
+      "message": "with or without?",
+      "range": {
+        "startLine": 42,
+        "startChar": 99,
+        "endLine": 42,
+        "endChar": 103
+      },
+      "revId": "05614eaffcbb6b1f1f5586f4a65979b4ae8c23b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
