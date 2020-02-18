@@ -41,6 +41,11 @@ Publish Single VES VNF Measurement Event with empty json
     [Documentation]   Post single event with empty json to /eventListener/v7 endpoint and expect 400 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_EMPTY_JSON}  400
 
+Publish Single VES VNF Measurement Event wit parameter out of schema
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with parameter which is not defined in schema and send to /eventListener/v7 endpoint. Expected 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_PARAMETER_OUT_OF_SCHEMA_V7}  400
+
 Publish Single VES VNF Measurement Event with No Auth over HTTPS
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event over HTTPS with authentication disabled and expect ConnectionError
