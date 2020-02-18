@@ -26,7 +26,7 @@
             "eventSeverity": "CRITICAL",
             "vfStatus": "Active",
             "alarmAdditionalInformation": {
-                "PilotNumberPoolSize": "1000"
+               "PilotNumberPoolSize": "1000"
             }
         }
     }

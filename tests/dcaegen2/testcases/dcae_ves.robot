@@ -31,10 +31,15 @@ Publish Single VES VNF Measurement Event with wrong JSON
     [Documentation]   Post single event with invalid data to /eventListener/v7 endpoint and expect 400 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_INVALID_JSON_V7}  400
 
-Publish Single VES VNF Measurement Event with missing mandatory parameter domain
+Publish Single VES VNF Measurement Event with missing mandatory parameter
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event with lack of one of the mandatory parameters "domain" to /eventListener/v7 endpoint and expect 400 Response Status Code
-    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_MISSING_MANDATORY_DOMAIN_V7}  400
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_MISSING_MANDATORY_PARAMETER_V7}  400
+
+Publish Single VES VNF Measurement Event with empty json
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with empty json to /eventListener/v7 endpoint and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_EMPTY_JSON}  400
 
 Publish Single VES VNF Measurement Event with No Auth over HTTPS
     [Tags]    DCAE-VESC-R1
