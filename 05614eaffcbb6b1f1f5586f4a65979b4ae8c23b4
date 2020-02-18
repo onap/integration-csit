@@ -22,6 +22,30 @@
       "revId": "05614eaffcbb6b1f1f5586f4a65979b4ae8c23b4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25bf415d_37ad36d4",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-02-18T10:41:25Z",
+      "side": 1,
+      "message": "\"with\". In this test case, the version is not changed, but description is changed(any change to the Policy Type without updating the version). This returns 406. If there is any change to the existing PolicyType/Policy, we will have to make the change to an updated version.",
+      "parentUuid": "017e638f_42e30a31",
+      "range": {
+        "startLine": 42,
+        "startChar": 99,
+        "endLine": 42,
+        "endChar": 103
+      },
+      "revId": "05614eaffcbb6b1f1f5586f4a65979b4ae8c23b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
