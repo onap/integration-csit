@@ -22,6 +22,29 @@
       "revId": "00751aac44b5f8a3e5327b61b03d67e965f8f5dd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc39da2b_a943b217",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-02-18T12:34:12Z",
+      "side": 1,
+      "message": "C",
+      "range": {
+        "startLine": 141,
+        "startChar": 46,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "00751aac44b5f8a3e5327b61b03d67e965f8f5dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
