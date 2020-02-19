@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "096831df_826b12d7",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-02-19T10:04:45Z",
+      "side": 1,
+      "message": "Ye we\u0027re a bit inconsistent  with the naming. Just the cert SANs I requested are \u0027dcae-pmsh\u0027 prefixed so if we do start to use ONAP test certs the pod hostname will need to match the SAN.",
+      "parentUuid": "8f1af36b_19bb3ef9",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "10b0ca878142aa79b7c2ecc7bb4323fe4c808149",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e481500_66c98fa4",
         "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
         "patchSetId": 3
