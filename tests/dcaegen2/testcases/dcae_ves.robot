@@ -77,6 +77,11 @@ Publish VES Batch Events with missing mandatory parameter
     [Documentation]   Post event list where one of the events doesn't have mandatory domain param, to /eventListener/v7/eventBatch endpoint and expect 400 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_BATCH_MISSING_MANDATORY_PARAM_V7}  400
 
+Publish VES Batch Events wih parameter out of schema
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post event list where one of the events have additional dummy param, to /eventListener/v7/eventBatch endpoint and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_BATCH_PARAM_OUT_OF_SCHEMA_V7}  400
+
 Publish VES Event With Invalid Method
     [Tags]    DCAE-VESC-R1
     [Documentation]    Use invalid Put instead of Post method to expect 405 Response Status Code
