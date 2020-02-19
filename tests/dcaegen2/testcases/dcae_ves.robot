@@ -70,7 +70,12 @@ Publish VES VoLTE Fault Batch Events
 Publish VES Batch Events with empty json
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post empty json to /eventListener/v7/eventBatch endpoint and expect 400 Response Status Code
-    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_PATH}  ${VES_EMPTY_JSON}  400
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_EMPTY_JSON}  400
+
+Publish VES Batch Events with missing mandatory parameter
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post event list where one of the events doesn't have mandatory domain param, to /eventListener/v7/eventBatch endpoint and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_BATCH_MISSING_MANDATORY_PARAM_V7}  400
 
 Publish VES Event With Invalid Method
     [Tags]    DCAE-VESC-R1

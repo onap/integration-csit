@@ -35,6 +35,7 @@ ${VES_PARAMETER_OUT_OF_SCHEMA_V7}        %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${VES_MISSING_MANDATORY_PARAMETER_V7}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json
 ${VES_EMPTY_JSON}                        %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_empty_json.json
 ${VES_VALID_BATCH_JSON_V7}               %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_valid.json
+${VES_BATCH_MISSING_MANDATORY_PARAM_V7}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_missing_mandatory_parameter.json
 ${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_single_fault_event.json
 ${EVENT_MEASURE_FILE}                    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_vfirewall_measurement.json
 ${EVENT_DATA_FILE_BAD}                   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_single_fault_event_bad.json
