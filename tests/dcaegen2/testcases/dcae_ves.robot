@@ -99,6 +99,23 @@ Publish PNF Registration Event
     [Documentation]   Post PNF registration event and expect 200 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_ANY_EVENT_PATH}  ${EVENT_PNF_REGISTRATION}  202  QTFCOC540002E-reg
 
+Publish VES Event With Invalid Method V7
+    [Tags]    DCAE-VESC-R1
+    [Documentation]    Use invalid Put instead of Post method to expect 405 Response Status Code
+    Log   Send HTTP Request with invalid method Put instead of Post
+    Send Request And Validate Response  Publish Event To VES Collector With Put Method  ${http_session}  ${VES_EVENTLISTENER_V7}  ${EVENT_DATA_FILE}  405
+
+Publish VES Event With Invalid URL Path V7
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event to invalid url path and expect 404 Response  Status Code
+    Log   Send HTTP Request with invalid /listener/v5/ instead of /eventListener/v5 path
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  /listener/v7/  ${EVENT_DATA_FILE}  404
+
+Publish PNF Registration Event V7
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post PNF registration event and expect 200 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${EVENT_PNF_REGISTRATION_V7}  202  QTFCOC540002E-reg
+
 # Auth by certificate and basic auth username / password
 
 Enable VESC HTTPS with certBasicAuth
