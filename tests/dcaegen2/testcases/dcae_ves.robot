@@ -67,6 +67,11 @@ Publish VES VoLTE Fault Batch Events
     [Documentation]   Post single event with valid data to /eventListener/v5/eventBatch endpoint and expect 202 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_PATH}  ${EVENT_BATCH_DATA_FILE}  202  ab305d54-85b4-a31b-7db2-fb6b9e546025
 
+Publish VES Batch Events with empty json
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post empty json to /eventListener/v7/eventBatch endpoint and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_BATCH_EVENT_PATH}  ${VES_EMPTY_JSON}  400
+
 Publish VES Event With Invalid Method
     [Tags]    DCAE-VESC-R1
     [Documentation]    Use invalid Put instead of Post method to expect 405 Response Status Code
