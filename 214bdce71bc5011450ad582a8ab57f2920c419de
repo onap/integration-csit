@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22d56c5a_adc868df",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-02-20T09:43:49Z",
+      "side": 1,
+      "message": "Should we not get this after the container comes up?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "214bdce71bc5011450ad582a8ab57f2920c419de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c50eefe_1cdab9b5",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-02-20T09:43:49Z",
+      "side": 1,
+      "message": "Is this really necessary? Are we not just health checking here instead of in the Robot suite?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 89
+      },
+      "revId": "214bdce71bc5011450ad582a8ab57f2920c419de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
