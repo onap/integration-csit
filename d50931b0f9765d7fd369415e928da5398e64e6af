@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "903d87c8_98c734c6",
+        "filename": "tests/aaf/cert-service/cert-service-test.robot",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-20T12:33:42Z",
+      "side": 1,
+      "message": "Please enlarge names and write what CSR and PK are. People who don\u0027t know this functionality will not know meaning of those shortcuts",
+      "revId": "d50931b0f9765d7fd369415e928da5398e64e6af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5b2f08_e2ca2387",
+        "filename": "tests/aaf/cert-service/resources/cert-service-keywords.robot",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-20T12:33:42Z",
+      "side": 1,
+      "message": "Is it proper request? As I understod we would like to send some files to specific endpoint, but this line is a get request without any file send?",
+      "revId": "d50931b0f9765d7fd369415e928da5398e64e6af",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
