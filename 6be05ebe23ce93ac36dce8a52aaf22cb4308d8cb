@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8d46218_93fa0d81",
+        "filename": "plans/policy/drools-pdp/setup.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-02-20T02:11:14Z",
+      "side": 1,
+      "message": "aren\u0027t these steps done by the master csit script that invokes this?",
+      "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbe5af46_d3bada1d",
+        "filename": "scripts/policy/drools-pdp-script.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-02-20T02:11:14Z",
+      "side": 1,
+      "message": "maybe use single quotes instead of double quotes around these lines to preclude the possibility that \"*\" gets expanded somehow",
+      "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f272e19_3c31b3db",
+        "filename": "scripts/policy/drools-pdp-script.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-02-20T02:11:14Z",
+      "side": 1,
+      "message": "fyi: all of these wait_for_port calls could be eliminated by using an extra layer of dependencies in the docker yaml, as is done for xacml.  Of course, no need to change it now.  Same comment applies to the other start-up scripts.",
+      "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
