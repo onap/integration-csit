@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54e70566_ec9a749a",
+        "filename": "plans/policy/drools-pdp/setup.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-02-20T16:31:34Z",
+      "side": 1,
+      "message": "I don\u0027t think it does (some warnings will show without it) note that other setup.sh do the same thing.",
+      "parentUuid": "d8d46218_93fa0d81",
+      "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe5af46_d3bada1d",
         "filename": "scripts/policy/drools-pdp-script.sh",
         "patchSetId": 8
@@ -47,6 +65,24 @@
       "writtenOn": "2020-02-20T02:11:14Z",
       "side": 1,
       "message": "fyi: all of these wait_for_port calls could be eliminated by using an extra layer of dependencies in the docker yaml, as is done for xacml.  Of course, no need to change it now.  Same comment applies to the other start-up scripts.",
+      "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c70af14_3370c85d",
+        "filename": "scripts/policy/drools-pdp-script.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-02-20T16:31:34Z",
+      "side": 1,
+      "message": "Actually, this scripts is to be deleted, it leaked here from my initial testing.   It\u0027s not used anymore.",
+      "parentUuid": "3f272e19_3c31b3db",
       "revId": "6be05ebe23ce93ac36dce8a52aaf22cb4308d8cb",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
