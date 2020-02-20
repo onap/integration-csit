@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59048550_d48b4f7c",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-02-20T13:06:37Z",
+      "side": 1,
+      "message": "No container will be allocated ip address before docker-compose exits.",
+      "parentUuid": "22d56c5a_adc868df",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "214bdce71bc5011450ad582a8ab57f2920c419de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c50eefe_1cdab9b5",
         "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-20T09:43:49Z",
       "side": 1,
       "message": "Is this really necessary? Are we not just health checking here instead of in the Robot suite?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 89
+      },
+      "revId": "214bdce71bc5011450ad582a8ab57f2920c419de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "857e5f56_bb907ea5",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5169
+      },
+      "writtenOn": "2020-02-20T13:06:37Z",
+      "side": 1,
+      "message": "The performance of the machine running CSITs will vary hence issues have/will occur with dependent services not coming up in time so this gets around this issue.",
+      "parentUuid": "2c50eefe_1cdab9b5",
       "range": {
         "startLine": 13,
         "startChar": 0,
