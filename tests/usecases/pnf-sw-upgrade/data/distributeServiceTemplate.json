@@ -1,0 +1,35 @@
+{                                                                                          
+    "distributionID": "05fd08d8-c452-429a-a1ad-806c8d05e7c8",                                                                                                                                   
+    "serviceName": "Demo_svc",                                                                                                                                                                  
+    "serviceVersion": "1.0",                                                                                                                                                                    
+    "serviceUUID": "cd4decf6-4f27-4775-9561-0e683ed43635",                                                                                                                                      
+    "serviceDescription": "aaaa",                                                                                                                                                               
+    "serviceInvariantUUID": "fe41489e-1563-46a3-b90a-1db629e4375b",                                                                                                                             
+    "resources": [                                                                                                                                                                              
+      {                                                                                                                                                                                         
+        "resourceInstanceName": "Demo_pnf 0",                                                                                                                                                   
+        "resourceCustomizationUUID": "36b46817-2eaf-41b3-bfa3-11a7e0fd9bb2",                                                                                                                    
+        "resourceName": "Demo_pnf",                                                                                                                                                             
+        "resourceVersion": "1.0",                                                                                                                                                               
+        "resoucreType": "PNF",                                                                                                                                                                  
+        "resourceUUID": "a42f6566-6a29-43e1-bac9-b91a59d702ac",                                                                                                                                 
+        "resourceInvariantUUID": "fdf44827-35db-4ee5-bd70-7500e633576e",                                                                                                                        
+        "category": "Network L4+",                                                                                                                                                              
+        "subcategory": "Common Network Resources",                                                                                                                                              
+        "artifacts": []                                                                                                                                                                         
+      }                                                                                                                                                                                         
+    ],                                                                                                                                                                                          
+    "serviceArtifacts": [                                                                                                                                                                       
+      {                                                                                                                                                                                         
+        "artifactName": "service-DemoSvc-csar.csar",                                                                                                                                            
+        "artifactType": "TOSCA_CSAR",                                                                                                                                                           
+        "artifactURL": "//unzipped_sdc_csar/v1/catalog/services/DemoSvc/1.0/artifacts/service-DemoSvc-csar.csar",                                                                                              
+        "artifactChecksum": "Njk4NDM4YTdjYmM4NWFkN2M1YWZiM2IzYzdmNWZjZTU\u003d",                                                                                                                
+        "artifactDescription": "TOSCA definition package of the asset",                                                                                                                         
+        "artifactTimeout": 0,                                                                                                                                                                   
+        "artifactVersion": "1",                                                                                                                                                                 
+        "artifactUUID": "e2640671-a5ed-40a6-b231-8f33084b1c1a"                                                                                                                                  
+      }                                                                                                                                                                                         
+    ],                                                                                                                                                                                          
+    "workloadContext": "Production"                                                                                                                                                             
+  }                                                                 
