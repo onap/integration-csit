@@ -1,0 +1,43 @@
+{
+    "requestDetails":{
+      "requestInfo":{
+        "source":"VID",
+        "suppressRollback":false,
+        "requestorId":"demo"
+      },
+      "modelInfo":{
+        "modelType":"service",
+        "modelInvariantUuid":"fe41489e-1563-46a3-b90a-1db629e4375b",
+        "modelInvariantId" : "fe41489e-1563-46a3-b90a-1db629e4375b",
+        "modelUuid":"cd4decf6-4f27-4775-9561-0e683ed43635",
+        "modelVersionId" : "cd4decf6-4f27-4775-9561-0e683ed43635",
+        "modelName":"Demo_svc",
+        "modelVersion":"1.0"
+      },
+      "requestParameters":{
+        "userParams":[
+          {
+            "name":"targetSoftwareVersion",
+            "value":"pnf_sw_version-2.0.0"
+          },
+          {
+            "name":"pnfName",
+            "value":"PNFDemo"
+          }
+        ],
+        "subscriptionServiceType":"vCPE",
+        "aLaCarte":false
+   
+      },
+      "subscriberInfo": {
+              "globalSubscriberId": "DemoCustomer"
+          },
+     "project": {
+              "projectName": "pnfSWUProject"
+          },
+      "owningEntity": {
+          "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
+          "owningEntityName": "OE-Demonstration"
+          }
+    }
+  }

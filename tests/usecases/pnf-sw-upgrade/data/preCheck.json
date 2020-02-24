@@ -1,0 +1,26 @@
+{
+  "actionIdentifiers": {
+    "actionName": "preCheck",
+    "blueprintName": "PNF_CDS_RESTCONF",
+    "blueprintVersion": "1.0.0",
+    "mode": "sync"
+  },
+  "commonHeader": {
+    "originatorId": "sdnc",
+    "requestId": "123456-1000",
+    "subRequestId": "sub-123456-1000"
+  },
+  "payload": {
+    "config-assign-request": {
+      "resolution-key": "RES-KEY reskey",
+      "config-assign-properties": {
+        "service-instance-id": "siid_1234",
+        "pnf-id": "pnf-simulator",
+        "pnf-ipv4-address": "pnfaddr",
+        "service-model-uuid": "service-model-uuid",
+        "pnf-customization-uuid": "pnf-customization-uuid",
+        "target-software-version": "xxxxxxxxx"
+      }
+    }
+  }
+}
