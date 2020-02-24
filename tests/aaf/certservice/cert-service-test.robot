@@ -16,14 +16,24 @@ AAF Cert Service API Health Check
 AAF Cert Service API Send Valid CSR and Valid PK
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to /v1/certificate/test endpoint and expect 200
-    Send Request And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  200
+    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  200
+
+AAF Cert Service API Send Valid CSR and Valid PK to Wrong Path
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Send request to /v1/certificate/ endpoint and expect 404
+    Send Get Request with Header And Validate Response  /v1/certificate/  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  404
+
+AAF Cert Service API Send Request without Header
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Send request to /v1/certificate/ endpoint and expect 400
+    Send Get Request And Validate Response  ${CERT_PATH}  400
 
 AAF Cert Service API Send Invalid CSR and Valid PK
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to /v1/certificate/test endpoint and expect 400
-    Send Request And Validate Response  ${CERT_PATH}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
+    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
 
 AAF Cert Service API Send Valid CSR and Invalid PK
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to /v1/certificate/test endpoint and expect 400
-    Send Request And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
+    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
