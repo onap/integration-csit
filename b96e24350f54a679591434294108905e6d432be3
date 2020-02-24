@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "492d2163_dab5ee8c",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves_empty_json.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T08:25:33Z",
+      "side": 1,
+      "message": "Can you reformat it to \"{}\" so that JSON validator doesn\u0027t complain?\n\n|    | [NORMAL] JSONFormatBear:\n|    | This file can be reformatted by sorting keys and following indentation.\n|----|    | tests/dcaegen2/testcases/assets/json_events/ves_empty_json.json \n|    |++++| tests/dcaegen2/testcases/assets/json_events/ves_empty_json.json \n|   1|    |-{\n|   2|    |-\n|   3|    |-}\n|    |   1|+{}",
+      "revId": "b96e24350f54a679591434294108905e6d432be3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
