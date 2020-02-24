@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f9d829_e0483a49",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_batch_missing_mandatory_parameter.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:31:44Z",
+      "side": 1,
+      "message": "Empty line",
+      "revId": "73f731ff1a0735da22550fb983a753a717667fc2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e37ae9a_95f4618a",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_batch_missing_mandatory_parameter.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:31:44Z",
+      "side": 1,
+      "message": "Wrong indent, please be consistent (4 -\u003e 3)",
+      "revId": "73f731ff1a0735da22550fb983a753a717667fc2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff733af_27e6afee",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_batch_missing_mandatory_parameter.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:31:44Z",
+      "side": 1,
+      "message": "Empty line",
+      "revId": "73f731ff1a0735da22550fb983a753a717667fc2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
