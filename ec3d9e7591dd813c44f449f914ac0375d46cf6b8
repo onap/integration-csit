@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ace77b29_2e470858",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_parameter_out_of_schema.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:22:24Z",
+      "side": 1,
+      "message": "Superfluous space.",
+      "range": {
+        "startLine": 5,
+        "startChar": 19,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "ec3d9e7591dd813c44f449f914ac0375d46cf6b8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bfae8e_3cc09a8b",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:22:24Z",
+      "side": 1,
+      "message": "endpoint",
+      "range": {
+        "startLine": 46,
+        "startChar": 116,
+        "endLine": 46,
+        "endChar": 123
+      },
+      "revId": "ec3d9e7591dd813c44f449f914ac0375d46cf6b8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
