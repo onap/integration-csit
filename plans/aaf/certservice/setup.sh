@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:1.0.0
+AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
 
 echo AAFCERT_IMAGE=${AAFCERT_IMAGE}
 
