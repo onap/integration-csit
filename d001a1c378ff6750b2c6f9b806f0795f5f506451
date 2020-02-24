@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da921b16_75dd5da6",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-24T09:42:39Z",
+      "side": 1,
+      "message": "No newline at end of revision file.",
+      "revId": "d001a1c378ff6750b2c6f9b806f0795f5f506451",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
