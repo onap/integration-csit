@@ -1,0 +1,24 @@
+server:
+  port: 30224
+  tomcat:
+    max-threads: 4
+ssl-enable: false
+camunda:
+  rest:
+    api:
+      url: http://bpmn-infra:8081/sobpmnengine/engine/
+      engine: default
+      auth: Basic YXBpaEJwbW46cGFzc3dvcmQxJA==
+mso:
+  database:
+    rest:
+      api:
+        url: http://request-db-adapter:8083/infraActiveRequests/
+        auth: Basic YnBlbDpwYXNzd29yZDEk
+spring:
+ security:
+   usercredentials:
+   -
+     username: gui
+     password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+     role: GUI-Client

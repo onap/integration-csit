@@ -1,0 +1,337 @@
+aai:
+  auth:  221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885
+  dme2:
+    timeout: '30000'
+  endpoint: https://aai-simulator:9993
+  workflowAaiDistributionDelay: PT30S
+  pnfEntryNotificationTimeout: P14D
+camunda:
+  bpm:
+    admin-user:
+      id: admin
+      password: so_Admin123
+    history-level: full
+    job-execution:
+      max-pool-size: 30
+      core-pool-size: 3
+cds:
+    endpoint: blueprints-processor
+    port: 9111
+    auth: Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==
+    timeout: 60
+entitymanager:
+  packagesToScan: com
+pnf:
+  dmaap:
+    host: message-router
+    port: 3904
+    protocol: http
+    uriPathPrefix: events
+    topicName: pnfReady
+    consumerGroup: consumerGroup
+    consumerId: consumerId
+    topicListenerDelayInSeconds: 5
+mso:
+  msoKey: 07a7159d3bf51a0e53be7a8f89699be7
+  config:
+    path: /var/csar/
+  correlation:
+    timeout: 60
+  logPath: logs
+  async:
+    core-pool-size: 50
+    max-pool-size: 50
+    queue-capacity: 500
+  aai:
+    endpoint: https://aai-simulator:9993
+  adapters:
+    completemsoprocess:
+      endpoint:  http://bpmn-infra:8081/CompleteMsoProcess
+    requestDb:
+      endpoint: http://request-db-adapter:8083
+      auth: Basic YnBlbDpwYXNzd29yZDEk
+    db:
+      auth: 33293332AEC4930F655D8E2E8BB08937
+      password: wLg4sjrAFUS8rfVfdvTXeQ==
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8083/services/RequestsDbAdapter
+      spring:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8083
+    network:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/NetworkAdapter
+      rest:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/rest/v1/networks
+    openecomp:
+      db:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8083/services/RequestsDbAdapter
+    po:
+      auth: 33293332AEC4930F655D8E2E8BB08937
+      password: B8EBDE0311F0AF355CF3F2FD505A8CAD
+    sdnc:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8086/adapters/SDNCAdapter
+      rest:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8086/adapters/rest/v1/sdnc
+      timeout: PT60M
+    tenant:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/TenantAdapter
+    vnf:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/VnfAdapter
+      rest:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/rest/v1/vnfs
+    volume-groups:
+      rest:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/rest/v1/volume-groups
+    vnf-async:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/VnfAdapterAsync
+  bpmn:
+    process:
+      historyTimeToLive: '30'
+  callbackRetryAttempts: '5'
+  catalog:
+    db:
+      endpoint: http://catalog-db-adapter:8082/ecomp/mso/catalog
+      spring:
+        endpoint: http://catalog-db-adapter:8082
+  db:
+    auth: Basic YnBlbDpwYXNzd29yZDEk
+  default:
+    adapter:
+      namespace: http://org.onap.mso
+  healthcheck:
+    log:
+      debug: 'false'
+  infra:
+    customer:
+      id: testCustIdInfra
+  po:
+    timeout: PT60M
+  request:
+    db:
+      endpoint: http://c1.vm1.mso.simpledemo.onap.org:8083/
+  rollback: 'true'
+  sdnc:
+    password: 3141634BF7E070AA289CF2892C986C0B
+  service:
+    agnostic:
+      sniro:
+        endpoint: /sniro/api/v2/placement
+        host: http://c1.vm1.mso.simpledemo.onap.org:30253
+  site-name: CamundaEngine
+  sniro:
+    auth: test:testpwd
+    callback: http://c1.vm1.mso.simpledemo.onap.org:8086/adapters/rest/SDNCNotify
+    endpoint: http://replaceme:28090/optimizationInstance/V1/create
+    timeout: PT30M
+  oof:
+    auth: test:testpwd
+    callbackEndpoint: http://bpmn-infra:8081/mso/WorkflowMessage
+    endpoint: http://oof.api.simpledemo.openecomp.org:8698/api/oof/v1/placement
+    timeout: PT30M
+  workflow:
+    CreateGenericVNFV1:
+      aai:
+        volume-group:
+          uri: /aai/v6/cloud-infrastructure/volume-groups/volume-group
+    default:
+      aai:
+        version: '14'
+        cloud-region:
+          version: '14'
+        generic-vnf:
+          version: '14'
+        v14:
+          customer:
+            uri: /aai/v14/business/customers/customer
+          generic-query:
+            uri: /aai/v14/search/generic-query
+          generic-vnf:
+            uri: /aai/v14/network/generic-vnfs/generic-vnf
+          l3-network:
+            uri: /aai/v14/network/l3-networks/l3-network
+          network-policy:
+            uri: /aai/v14/network/network-policies/network-policy
+          nodes-query:
+            uri: /aai/v14/search/nodes-query
+          route-table-reference:
+            uri: /aai/v14/network/route-table-references/route-table-reference
+          tenant:
+            uri: /aai/v14/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/RegionOne/tenants/tenant
+          vce:
+            uri: /aai/v14/network/vces/vce
+          vpn-binding:
+            uri: /aai/v14/network/vpn-bindings/vpn-binding
+          sp-partner:
+            uri: /aai/v14/business/sp-partners/sp-partner
+          device:
+            uri: /aai/v14/network/devices/device
+        v11:
+          customer:
+            uri: /aai/v11/business/customers/customer
+          generic-query:
+            uri: /aai/v11/search/generic-query
+          generic-vnf:
+            uri: /aai/v11/network/generic-vnfs/generic-vnf
+          l3-network:
+            uri: /aai/v11/network/l3-networks/l3-network
+          network-policy:
+            uri: /aai/v11/network/network-policies/network-policy
+          nodes-query:
+            uri: /aai/v11/search/nodes-query
+          route-table-reference:
+            uri: /aai/v11/network/route-table-references/route-table-reference
+          tenant:
+            uri: /aai/v11/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/RegionOne/tenants/tenant
+          vce:
+            uri: /aai/v11/network/vces/vce
+          vpn-binding:
+            uri: /aai/v11/network/vpn-bindings/vpn-binding
+        v8:
+          configuration:
+            uri: /aai/v11/network/configurations/configuration
+          customer:
+            uri: /aai/v8/business/customers/customer
+          generic-query:
+            uri: /aai/v8/search/generic-query
+          l3-network:
+            uri: /aai/v8/network/l3-networks/l3-network
+          network-policy:
+            uri: /aai/v8/network/network-policies/network-policy
+          nodes-query:
+            uri: /aai/v8/search/nodes-query
+          route-table-reference:
+            uri: /aai/v8/network/route-table-references/route-table-reference
+          tenant:
+            uri: /aai/v8/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner/RegionOne/tenants/tenant
+          vce:
+            uri: /aai/v8/network/vces/vce
+          vpn-binding:
+            uri: /aai/v8/network/vpn-bindings/vpn-binding
+        v9:
+          cloud-region:
+            uri: /aai/v9/cloud-infrastructure/cloud-regions/cloud-region/CloudOwner
+          generic-vnf:
+            uri: /aai/v9/network/generic-vnfs/generic-vnf
+      retry:
+        attempts: '1'
+    deleteCinderVolumeV1:
+      aai:
+        volume-group:
+          uri: /aai/v6/cloud-infrastructure/volume-groups/volume-group
+    global:
+      default:
+        aai:
+          namespace: http://org.onap.aai.inventory/
+          version: 14
+    message:
+      endpoint: http://bpmn-infra:8081/mso/WorkflowMessage
+    notification:
+      name: GenericNotificationServiceATT
+    sdncadapter:
+      callback: http://bpmn-infra:8081/mso/SDNCAdapterCallbackService
+    vnfadapter:
+      create:
+        callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
+      delete:
+        callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
+      query:
+        callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
+      rollback:
+        callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
+  global:
+    dmaap:
+      username: testuser
+      password: alRyMzJ3NUNeakxl
+      host: http://10.42.111.36:904
+      auth: A4DE725B8B0D1A745049409B16762C16BC9B48555DC157272741D616323104442B3AAC052ED17E74EECA136B89C8C6615C8CC269ED5834EC47C6BE6A75DF39C6C07B07DF064CE268BE6510F472
+      publisher:
+        topic: replaceme
+policy:
+  auth: Basic dGVzdHBkcDphbHBoYTEyMw==
+  client:
+    auth: Basic bTAzNzQzOnBvbGljeVIwY2sk
+  endpoint: https://localhost:8081/pdp/api/
+  environment: TEST
+sdnc:
+  auth: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==
+  host: http://sdnc:8282
+  path: /restconf/operations/GENERIC-RESOURCE-API
+  si:
+    svc:
+      types: PORT-MIRROR,PPROBE
+
+so:
+  vnfm:
+    adapter:
+      url: https://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
+      auth: Basic dm5mbTpwYXNzd29yZDEk
+
+appc:
+  client:
+    topic:
+      read:
+        name: APPC-LCM-WRITE
+        timeout: 360000
+      write: APPC-LCM-READ
+      sdnc:
+        read:
+          name: SDNC-LCM-WRITE
+        write: SDNC-LCM-READ
+    response:
+      timeout: 360000
+    key: VIlbtVl6YLhNUrtU
+    secret: 64AG2hF4pYeG2pq7CT6XwUOT
+    service: ueb
+    poolMembers: ueb1.simpledemo.onap.org:3904,ueb2.simpledemo.onap.org:3904
+server:
+  port: 8081
+  tomcat:
+    max-threads: 50
+spring:
+  datasource:
+     driver-class-name: org.mariadb.jdbc.Driver
+     url: jdbc:mariadb://mariadb:3306/camundabpmn
+     username: camundauser
+     password: camunda123
+     dbcp2:
+      initial-size: 5
+      max-total: 20
+      validation-query: select 1
+      test-on-borrow: true
+  security:
+    usercredentials:
+    -
+      username: apihBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: sdncaBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: poBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: wmaBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: sniro
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: SNIRO-Client
+    -
+      username: mso_admin
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: ACTUATOR
+org:
+  onap:
+    so:
+      cloud-owner: CloudOwner
+rest:
+  http:
+    client:
+      configuration:
+        ssl:
+          keyStore: classpath:org.onap.so.p12
+          keyStorePassword: 'RLe5ExMWW;Kd6GTSt0WQz;.Y'
+          trustStore: classpath:org.onap.so.trust.jks
+          trustStorePassword: '6V%8oSU$,%WbYp3IUe;^mWt4'
