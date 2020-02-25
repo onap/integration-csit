@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35fa0e95_bb516310",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/valid_metadata.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T12:26:18Z",
+      "side": 1,
+      "message": "Kindly please fix the linting issue (closing bracket spacing and \" No newline at end of revision file\").\n\n|    | [NORMAL] JSONFormatBear:\n|    | This file can be reformatted by sorting keys and following indentation.\n|----|    | csit/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/valid_metadata.json\n|    |++++| csit/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/valid_metadata.json\n|   9|   9|     \"compression\": \"gzip\",\n|  10|  10|     \"fileFormatType\": \"org.3GPP.28.550#measData\",\n|  11|  11|     \"fileFormatVersion\": \"V9\"\n|  12|    |-  }\n|    |  12|+}",
+      "revId": "b55ec666cb94013862fe67025d4a3b773ac014b8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
