@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b4b4fe_cf19594f",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/initializerJson.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T11:05:50Z",
+      "side": 1,
+      "message": "Is this a valid JSON for sure? Linter is failing:\n\nplans/dcaegen2-services-pmsh/testsuite/assets/initializerJson.json\n|  15| ········\"json\":·\"{\n|    | [NORMAL] JSONFormatBear:\n|    | This file does not contain parsable JSON. Invalid control character at.\n\nPython\u0027s json.loads() also fails to load it:\njson.decoder.JSONDecodeError: Invalid control character at: line 15 column 19 (char 274)",
+      "revId": "fd6cd71d06b48264855a1f043fd523abef23e7dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffc3664_14502c8f",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/initializerJson.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T11:05:50Z",
+      "side": 1,
+      "message": "Trailing new line.",
+      "revId": "fd6cd71d06b48264855a1f043fd523abef23e7dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ce713b_1d7c38de",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/mockserver.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T11:05:50Z",
+      "side": 1,
+      "message": "\"domain names\" i guess?",
+      "range": {
+        "startLine": 16,
+        "startChar": 26,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "fd6cd71d06b48264855a1f043fd523abef23e7dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ae5585_b7cfcf33",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/mockserver.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T11:05:50Z",
+      "side": 1,
+      "message": "Trailing new line.",
+      "revId": "fd6cd71d06b48264855a1f043fd523abef23e7dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160df56f_93d338aa",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-25T11:05:50Z",
+      "side": 1,
+      "message": "Trailing new line (linter error)",
+      "revId": "fd6cd71d06b48264855a1f043fd523abef23e7dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
