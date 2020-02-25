@@ -16,6 +16,24 @@
       "revId": "d001a1c378ff6750b2c6f9b806f0795f5f506451",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a214bd5e_d55d8888",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-25T09:51:16Z",
+      "side": 1,
+      "message": "this newline is not in a file which was merged. it is somehow added by gerrit. I had the same comments last time to someones code, but in a fact there was no issue with new line .",
+      "parentUuid": "da921b16_75dd5da6",
+      "revId": "d001a1c378ff6750b2c6f9b806f0795f5f506451",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
