@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f4bb97_4854fbe9",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-02-25T08:21:15Z",
+      "side": 1,
+      "message": "This image doesn\u0027t exist in dockerhub which is the default docker registry, you should include the absolute image name including the registry.\n\nYou can see https://jenkins.onap.org/job/dcaegen2-services-pmsh-master-verify-csit-testsuite/5/console is failing to pull the image\n\n08:13:48 Pulling pmsh (onap/org.onap.dcaegen2.services.pmsh:latest)...\n08:13:48 pull access denied for onap/org.onap.dcaegen2.services.pmsh, repository does not exist or may require \u0027docker login\u0027: denied: requested access to the resource is denied",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 54
+      },
+      "revId": "dcf33f2685bec610e3232a2d676753e20718272a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
