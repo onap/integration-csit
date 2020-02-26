@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ea3a921_285a2a36",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-26T08:59:09Z",
+      "side": 1,
+      "message": "here also were 4 spaces. I changed it to 3 as you mentioned in prevoius review.",
+      "parentUuid": "33a66d19_b25be344",
+      "revId": "86fabf65c621914e38458d5362c78f9bce79c3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1897e4c_de6e3f55",
         "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2020-02-25T12:12:20Z",
       "side": 1,
       "message": "Are you using Windows editor that eats CRLFs at last line? It was ok now it\u0027s bad. Please consider e.g this: https://unix.stackexchange.com/questions/18743/whats-the-point-in-adding-a-new-line-to-the-end-of-a-file\n\nPlease fix the files in related commits in this regard.",
+      "revId": "86fabf65c621914e38458d5362c78f9bce79c3a9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04dfc62_956cf0ba",
+        "filename": "tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-02-26T08:59:09Z",
+      "side": 1,
+      "message": "Bartek, where this new line should be? In every single file from my commit?",
+      "parentUuid": "e1897e4c_de6e3f55",
       "revId": "86fabf65c621914e38458d5362c78f9bce79c3a9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
