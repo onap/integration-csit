@@ -2,7 +2,9 @@
     "event": {
         "commonEventHeader": {
             "version": "4.0.1",
+            "dummy": "dummy_value",
             "vesEventListenerVersion": "7.0.1",
+            "domain": "fault",
             "eventName": "Fault_Vscf:Acs-Ericcson_PilotNumberPoolExhaustion",
             "eventId": "ab305d54-85b4-a31b-7db2-fb6b9e546015",
             "sequence": 1,

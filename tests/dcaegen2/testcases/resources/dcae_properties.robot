@@ -31,14 +31,19 @@ ${VES_EVENTLISTENER_V7}                  /eventListener/v7
 ${VES_BATCH_EVENT_ENDPOINT_V7}           /eventListener/v7/eventBatch
 ${VES_VALID_JSON_V7}                     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid.json
 ${VES_INVALID_JSON_V7}                   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_invalid.json
-${VES_MISSING_MANDATORY_DOMAIN_V7}       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_domain.json
+${VES_PARAMETER_OUT_OF_SCHEMA_V7}        %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_parameter_out_of_schema.json
+${VES_MISSING_MANDATORY_PARAMETER_V7}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json
+${VES_EMPTY_JSON}                        %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_empty_json.json
 ${VES_VALID_BATCH_JSON_V7}               %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_valid.json
+${VES_BATCH_MISSING_MANDATORY_PARAM_V7}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_missing_mandatory_parameter.json
+${VES_BATCH_PARAM_OUT_OF_SCHEMA_V7}      %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_parameter_out_of_schema.json
 ${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_single_fault_event.json
 ${EVENT_MEASURE_FILE}                    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_vfirewall_measurement.json
 ${EVENT_DATA_FILE_BAD}                   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_single_fault_event_bad.json
 ${EVENT_BATCH_DATA_FILE}                 %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_fault_eventlist_batch.json
 ${EVENT_THROTTLING_STATE_DATA_FILE}      %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_volte_fault_provide_throttle_state.json
 ${EVENT_PNF_REGISTRATION}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_pnf_registration_event.json
+${EVENT_PNF_REGISTRATION_V7}             %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json
 ${DCAE_HEALTH_CHECK_BODY}                %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
 
 #DCAE Health Check
