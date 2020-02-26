@@ -20,12 +20,18 @@
 
 package org.onap.so.svnfm.simulator.constants;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * 
  * @author Lathishbabu Ganesan (lathishbabu.ganesan@est.tech)
  * @author ronan.kenny@est.tech
+ * @author Eoin Hanan (eoin.hanan@est.tech)
  */
 public class Constant {
+
+    @Value("${application.server.ssl.key-store}")
+    private static String SIMULATOR_PATH;
 
     public static final String BASE_URL = "/vnflcm/v1";
     public static final String VNF_PROVIDER = "XYZ";
@@ -36,4 +42,6 @@ public class Constant {
     public static final String VNF_CONFIG_PROPERTIES =
             "{\"isAutoScaleEnabled\": \"true\",\"isAutoHealingEnabled\": \"true\"}";
     public static final String IN_LINE_RESPONSE_201_CACHE = "inlineResponse201";
+    public static final String NOTIFICATION_BASE_URL = BASE_URL + "/notification";
+    public static final String CALL_BACK_URI = NOTIFICATION_BASE_URL;
 }

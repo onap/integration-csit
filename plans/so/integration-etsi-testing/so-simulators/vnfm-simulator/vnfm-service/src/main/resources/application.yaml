@@ -40,6 +40,9 @@ server:
     key-store: classpath:so-vnfm-simulator.p12
     key-store-type: PKCS12
 
+endpoint:
+  callbackUri: "http//vnfm-adapter.onap:9092/so/vnfm-adapter/v1/"
+
 vnfds:
   vnfdlist:
   -  vnfdid: 1
