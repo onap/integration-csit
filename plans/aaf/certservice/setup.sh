@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 ZTE Corporation.
+# Copyright 2020 Nokia.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,11 @@ AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservic
 
 echo AAFCERT_IMAGE=${AAFCERT_IMAGE}
 
+SCRIPT=`realpath $0`
+WORKDIR_PATH=`dirname $SCRIPT`
+
 # Start AAF Cert Srevice
-docker run -p 8080:8080 -d --name aafcert ${AAFCERT_IMAGE}
+docker run -p 8080:8080 -d --mount type=bind,source=${WORKDIR_PATH}/cmpServers.json,target=/etc/onap/aaf/certservice/cmpServers.json --name aafcert ${AAFCERT_IMAGE}
 
 AAFCERT_IP=`get-instance-ip.sh aafcert`
 export AAFCERT_IP=${AAFCERT_IP}
