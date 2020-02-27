@@ -20,28 +20,4 @@ Get Requests health check ok
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/healthcheck
     Should Be Equal As Strings  ${resp.status_code}     200
 
-List TCAs
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/getAllNames
-    Should Contain Match    ${resp}   *Name1_tca*
-    Should Contain Match    ${resp}   *tca_2*
-    Should Contain Match    ${resp}   *Name1_tca_3*
-
-Open TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *Name1_tca*
-    Should Contain Match    ${resp}   *Operational Policy Item*
-    Should Contain Match    ${resp}   *Operational policies*
-
-Open TCA2
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName2_tca_2
-    Should Contain Match    ${resp}   *Name2_tca_2*
-    Should Contain Match    ${resp}   *Operational Policy Item*
-    Should Contain Match    ${resp}   *1004*
-    Should Contain Match    ${resp}   *TCA Policy Scope*
-
-Open TCA3
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName1_tca_3
-    Should Contain Match    ${resp}   *Name1_tca_3*
-    Should Contain Match    ${resp}   *Operational Policy Item*
-    Should Contain Match    ${resp}   *1004*
-    Should Contain Match    ${resp}   *TCA Policy Scope*
+*** Need Work/new tests to integrate new API ***
