@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd45659_d3a820ab",
+        "filename": "plans/usecases/5G-bulkpm/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-02-27T14:22:55Z",
+      "side": 0,
+      "message": "It was commited in Change-Id: I518b92a1e6aa72e441bc62cc149870df6a8575e4 \"Changes to CSIT so it executes in ONAP also\" - so the case in \"else\" for running in ONAP is not needed anymore?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "0da675320e8150f26935c4ab3de89b7c7fba0d14",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
