@@ -7,9 +7,9 @@
             "measTypes": ["attTCHSeizures","succTCHSeizures2","succImmediateAssignProcs8"]
         }]
     },
-    "key_store_path": "/opt/app/pm-mapper/etc/cert.jks.b64",
+    "key_store_path": "/opt/app/pm-mapper/etc/cert.jks",
     "key_store_pass_path": "/opt/app/pm-mapper/etc/jks.pass",
-    "trust_store_path": "/opt/app/pm-mapper/etc/trust.jks.b64",
+    "trust_store_path": "/opt/app/pm-mapper/etc/trust.jks",
     "trust_store_pass_path": "/opt/app/pm-mapper/etc/trust.pass",
     "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
     "dmaap_dr_feed_name": "1",

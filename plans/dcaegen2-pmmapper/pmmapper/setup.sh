@@ -15,7 +15,7 @@ export MARIADB_IP=172.18.0.6
 export NODE_IP=172.18.0.7
 export PMMAPPER_IP=172.18.0.8
 
-for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json mrserver.js cert.jks.b64 jks.pass trust.jks.b64 trust.pass; do
+for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json mrserver.js cert.jks jks.pass trust.jks trust.pass; do
   cp $TEST_PLANS_DIR/assets/${asset} /var/tmp/
 done
 
