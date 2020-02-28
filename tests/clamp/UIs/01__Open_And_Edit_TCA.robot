@@ -21,16 +21,3 @@ Get Requests health check ok
     Create the sessions
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/healthcheck
     Should Be Equal As Strings  ${resp.status_code}     200
-
-Open Browser
-# Next line is to be enabled for Headless tests only (jenkins?). To see the tests disable the line.
-    Start Virtual Display    1920    1080
-    Set Selenium Speed      ${SELENIUM_SPEED_SLOW}
-    Open Browser    ${BASE_URL}/index.html    browser=firefox
-
-Reply to authentication popup
-    Run Keyword And Ignore Error    Insert into prompt    ${login} ${passw}
-    Confirm action
-
-Close Browser
-    Close Browser

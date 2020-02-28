@@ -20,7 +20,4 @@ Get Requests health check ok
     ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v1/healthcheck
     Should Be Equal As Strings  ${resp.status_code}     200
 
-Open TCA1
-    ${resp}=    Get Request    ${clamp_session}   /restservices/clds/v2/loop/LOOP_yHsgu_v1_0_ResourceInstanceName1_tca
-    Should Contain Match    ${resp}   *Name1_tca*
-    Should Contain Match    ${resp}   *Operational Policy*
+*** Need Work/new tests to integrate new UI ***
