@@ -40,7 +40,8 @@ class BbsLibrary(object):
         Get the correlationId, oldState, newState, stateInterface, macAddress, swVersion elements
         from the invalid message and place the elements into a JSON object (string) as fields for comparision
         """
-        json_to_python = json.loads(json_file)
+        eventString = json.loads(json_file)[0]
+        json_to_python = json.loads(eventString.replace("\\", ""))
         correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
         oldState = json_to_python.get("event").get("stateChangeFields").get("oldState")
         newState = json_to_python.get("event").get("stateChangeFields").get("newState")
@@ -73,7 +74,8 @@ class BbsLibrary(object):
         Get the correlationId, attachment-point, remote-id, cvlan, svlan, elements
         from the invalid message and place the elements into a JSON object (string) as fields for comparision
         """
-        json_to_python = json.loads(json_file)
+        eventString = json.loads(json_file)[0]
+        json_to_python = json.loads(eventString.replace("\\", ""))
         correlation_id = json_to_python.get("correlationId")
         attachmentPoint = json_to_python.get("additionalFields").get("attachment-point")
         remoteId = json_to_python.get("additionalFields").get("remote-id")
@@ -101,24 +103,30 @@ class BbsLibrary(object):
         try:
             python_policy = json.loads(json_policy).pop()
         except:
+            print("Python Policy Exception")
             python_policy = ""
         
         try:
             python_dmaap_policy = json.loads(dmaap_policy)
         except:
+            print("Python DMaaP Policy Exception")
             python_dmaap_policy = ""
 
         try:
-            d_policy = python_dmaap_policy.get("policyName")
+            d_policy = python_dmaap_policy[0].get("policyName")
         except:
+            print("Python DMaaP Policy Name extraction Exception")
             d_policy = ""
 
         try:
             j_policy = python_policy.get("policyName")
         except:
+            print("Python Policy Name extraction Exception")
             return "False"
         
         resp = "False"
+        print("Python DMaaP Policy Name : " + d_policy)
+        print("Python Policy Name : " + j_policy)
         if (d_policy == j_policy):
             resp = "True"
         return resp

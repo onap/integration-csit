@@ -1,0 +1,1 @@
+["{\"nf-role\":\"role\",\"equip-type\":\"Equipment-Type-1\",\"equip-vendor\":\"NVendor\",\"equip-model\":\"Equip_Model\",\"serial-number\":\"SN1234\",\"sw-version\":\"SW-version-1\",\"correlationId\":\"NVendor-Equip_Model-SN1234\",\"additionalFields\":{\"attachment-point\":\"olt1-1-1\",\"cvlan\":\"1005\",\"svlan\":\"100\",\"remote-id\":\"some-remote-id\",}}"]
