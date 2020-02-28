@@ -84,6 +84,10 @@ public class TestUtils {
         return getJsonString("test-data/generic-vnf.json");
     }
 
+    public static String getPnf() throws IOException {
+        return getJsonString("test-data/pnf.json");
+    }
+
     public static String getRelationShip() throws IOException {
         return getJsonString("test-data/relation-ship.json");
     }
