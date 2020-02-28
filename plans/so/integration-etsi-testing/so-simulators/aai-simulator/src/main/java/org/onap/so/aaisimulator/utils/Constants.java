@@ -49,6 +49,8 @@ public class Constants {
 
     public static final String GENERIC_VNFS_URL = NETWORK_URL + "/generic-vnfs";
 
+    public static final String PNFS_URL = NETWORK_URL+ "/pnfs";
+
     public static final String RELATIONSHIP_LIST_RELATIONSHIP_URL = "/relationship-list/relationship";
 
     public static final String BI_DIRECTIONAL_RELATIONSHIP_LIST_URL =
@@ -89,6 +91,8 @@ public class Constants {
     public static final String COMPOSED_OF = "org.onap.relationships.inventory.ComposedOf";
 
     public static final String GENERIC_VNF = "generic-vnf";
+
+    public static final String PNF = "pnf";
 
     public static final String PLATFORM = "platform";
 
