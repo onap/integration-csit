@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,32 +17,29 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.utils;
+package org.onap.so.aaisimulator.service.providers;
+
+import org.onap.aai.domain.yang.v15.Pnf;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
- * @author Waqas Ikram (waqas.ikram@est.tech)
- *
+ * @author Raj Gumma (raj.gumma@est.tech)
  */
-public enum CacheName {
+public interface PnfCacheServiceProvider extends Clearable {
 
-    CUSTOMER_CACHE("customer-cache"),
-    PROJECT_CACHE("project-cache"),
-    NODES_CACHE("nodes-cache"),
-    GENERIC_VNF_CACHE("generic-vnf-cache"),
-    PNF_CACHE("pnf-cache"),
-    OWNING_ENTITY_CACHE("owning-entity-cache"),
-    PLATFORM_CACHE("platform-cache"),
-    LINES_OF_BUSINESS_CACHE("lines-of-business-cache"),
-    CLOUD_REGION_CACHE("cloud-region-cache"),
-    ESR_VNFM_CACHE("esr-vnfm-cache");
+    void putPnf(final String pnfId, final Pnf pnf);
 
-    private String name;
+    Optional<Pnf> getPnf(final String pnfId);
 
-    private CacheName(final String name) {
-        this.name = name;
-    }
+    Optional<String> getPnfId(final String pnfName);
 
-    public String getName() {
-        return name;
-    }
+    boolean patchPnf(final String pnfId, final Pnf pnf);
+
+    List<Pnf> getPnfs(final String selflink);
+
+    boolean deletePnf(final String pnfId, final String resourceVersion);
+
+
 }
