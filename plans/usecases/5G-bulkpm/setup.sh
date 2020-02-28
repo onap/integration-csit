@@ -1,14 +1,6 @@
 #!/bin/bash
 # Place the scripts in run order:
 source ${SCRIPTS}/common_functions.sh
-
-CSIT=TRUE
-if [ ${CSIT} = "TRUE" ] ; then
-####################################################
-#Executes the below setup in an Docker Environment #
-####################################################
-
-echo "CSIT Test get executed in here"
 SFTP_PORT=22
 VESC_PORT=8080
 export VESC_PORT=${VESC_PORT}
@@ -80,7 +72,8 @@ sleep 10
 CONSUL_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' consul )
 sed -i -e '/CONSUL_HOST:/ s/:.*/: '$CONSUL_IP'/' docker-compose.yml
 HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-sed -i -e '/DMAAPHOST:/ s/:.*/: '$HOST_IP'/' docker-compose.yml
+DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $DMAAP)
+sed -i -e '/DMAAPHOST:/ s/:.*/: '$DMAAP_MR_IP'/' docker-compose.yml
 MARIADB=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mariadb )
 sed -i 's/datarouter-mariadb/'$MARIADB'/g' $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/prov_data/provserver.properties
 docker-compose up -d
@@ -197,7 +190,7 @@ curl -k https://$DR_PROV_IP:8443/internal/prov
 cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cbs.json /tmp/cbs.json
 sed -i 's/ipaddress/'${CBS_IP}'/g' /tmp/cbs.json
 curl --request PUT --data @/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service/register
-curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/config.json
+curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/plans/usecases/5G-bulkpm/assets/config.json
 
 # PM Mapper startup and configuration
 mkdir /tmp/docker-compose
@@ -248,80 +241,3 @@ curl -k https://$DR_PROV_IP:8443/internal/prov
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v SFTP_IP:${SFTP_IP}"
-
-else
-############################################################
-############################################################
-# Executes the below setup in an ONAP Environment          #
-# Make sure the steps in the README are completed first !! #
-############################################################
-############################################################
-SFTP_PORT=2222
-
-cp $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh.orig
-cp $WORKSPACE/plans/usecases/5G-bulkpm/onap.teardown.sh $WORKSPACE/plans/usecases/5G-bulkpm/teardown.sh
-
-#Get DataFileCollector POD name in this ONAP Deployment
-DFC_POD=$(kubectl -n onap get pods | grep datafile-collector | awk '{print $1}')
-export DFC_POD=${DFC_POD}
-export CLI_EXEC_CLI_DFC="kubectl exec -n onap ${DFC_POD} -it ls /target | grep .gz"
-
-# Get IP address of datarrouter-prov
-DR_PROV_IP=$(kubectl -n onap -o wide get pods | grep dmaap-dr-prov | awk '{print $6}')
-echo DR_PROV_IP=${DR_PROV_IP}
-DR_NODE_IP=$(kubectl -n onap -o=wide get pods | grep dmaap-dr-node | awk '{print $6}')
-echo DR_NODE_IP=${DR_NODE_IP}
-
-# Get IP address of exposed Ves and its port
-DMAAP_MR_IP=$(kubectl -n onap -o=wide get pods | grep dev-dmaap-message-router | grep -Ev "kafka|zookeeper" | awk '{print $6}')
-VESC_IP=$(kubectl get svc -n onap | grep vesc | awk '{print $4}')
-VESC_PORT=$(kubectl get svc -n onap | grep vesc | awk '{print $5}' | cut -d ":" -f2 | cut -d "/" -f1)
-echo VESC_IP=${VESC_IP}
-echo VESC_PORT=${VESC_PORT}
-
-export VESC_IP=${VESC_IP}
-export VESC_PORT=${VESC_PORT}
-export HOST_IP=${HOST_IP}
-export DMAAP_MR_IP=${DMAAP_MR_IP}
-
-#Get DataFileCollector POD name in this ONAP Deployment
-DFC_POD=$(kubectl -n onap get pods | grep datafile-collector | awk '{print $1}')
-export DFC_POD=${DFC_POD}
-
-pip install jsonschema uuid simplejson
-
-# Clone DMaaP Data Router repo
-mkdir -p $WORKSPACE/archives/dmaapdr
-cd $WORKSPACE/archives/dmaapdr
-git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
-mkdir docker-compose
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose
-cp $WORKSPACE/plans/usecases/5G-bulkpm/composefile/onap.docker-compose-e2e $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources/docker-compose/docker-compose.yml
-
-#Statup the SFTP and FileConsumer containers.
-docker login -u docker -p docker nexus3.onap.org:10001
-docker-compose up -d
-
-# Wait container ready
-sleep 2
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-# SFTP Configuration:
-# Update the File Ready Notification with actual sftp ip address and copy pm files to sftp server.
-cp $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotification.json $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpserver/'${HOST_IP}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-sed -i 's/sftpport/'${SFTP_PORT}'/g' $WORKSPACE/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
-docker cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/xNF.pm.xml.gz sftp:/home/admin/
-
-# Create default feed and create file consumer subscriber on data router
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.feed" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @$WORKSPACE/plans/usecases/5G-bulkpm/assets/createFeed.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443
-cp $WORKSPACE/plans/usecases/5G-bulkpm/assets/addSubscriber.json /tmp/addSubscriber.json
-sed -i 's/fileconsumer/'${HOST_IP}'/g' /tmp/addSubscriber.json
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:dradmin" --data-ascii @/tmp/addSubscriber.json --post301 --location-trusted -k https://${DR_PROV_IP}:8443/subscribe/1
-sleep 10
-curl -k https://$DR_PROV_IP:8443/internal/prov
-
-#Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v DR_PROV_IP:${DR_PROV_IP} -v DR_NODE_IP:${DR_NODE_IP} -v DMAAP_MR_IP:${DMAAP_MR_IP} -v VESC_IP:${VESC_IP} -v VESC_PORT:${VESC_PORT} -v DR_SUBSCIBER_IP:${DR_SUBSCIBER_IP} -v DFC_POD:${DFC_POD} -v HOST_IP:${HOST_IP} "
-
-fi;
