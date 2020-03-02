@@ -212,9 +212,9 @@ sed -i 's/3.3.3.3/'$PMMAPPER_IP'/g' docker-compose.yml
 docker-compose up -d
 
 # Setting up PM Mapper certs.
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/cert.jks pmmapper:opt/app/pm-mapper/etc/
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/jks.pass pmmapper:opt/app/pm-mapper/etc/
-docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks.b64 pmmapper:opt/app/pm-mapper/etc/
+docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.jks pmmapper:opt/app/pm-mapper/etc/
 docker cp $WORKSPACE/plans/dcaegen2-pmmapper/pmmapper/assets/trust.pass pmmapper:opt/app/pm-mapper/etc/
 docker restart pmmapper
 sleep 5
