@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3529a084_9a225f06",
+        "filename": "scripts/policy/config/pe/brmsgw-tweaks.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-02T20:02:11Z",
+      "side": 1,
+      "message": "tabs \u003d\u003e spaces\n\nsame comment elsewhere",
+      "revId": "6aa70dcc2cc24dd686f5365d2bae3ee41ece5b1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8b88874_f9c448f5",
+        "filename": "scripts/policy/docker-compose-engine.yml",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-02T20:02:11Z",
+      "side": 1,
+      "message": "trailing spaces\n\nsame comment below",
+      "revId": "6aa70dcc2cc24dd686f5365d2bae3ee41ece5b1f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
