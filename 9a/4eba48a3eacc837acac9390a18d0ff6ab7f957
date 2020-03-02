@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Andy Walshe <andy.walshe@est.tech>
+Code-Review+1: Joseph O'Leary <joseph.o.leary@est.tech>
+Code-Review+2: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-by: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-at: Mon, 02 Mar 2020 10:39:26 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/102556
+Project: integration/csit
+Branch: refs/heads/master
