@@ -16,6 +16,24 @@
       "revId": "2070574bb059eb665a3f00e7cba3c1a5380c5334",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0609b96_34e9bdd2",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-03-03T17:14:06Z",
+      "side": 1,
+      "message": "I changed this from policies[0] to policies[1] yesterday and the csit passed. But we shouldn\u0027t get every policy in db as response for Create. To fix this Liam has made the change now for returning only the created ones in response. So, reverting to policies[0].",
+      "parentUuid": "32862204_021a39a3",
+      "revId": "2070574bb059eb665a3f00e7cba3c1a5380c5334",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
