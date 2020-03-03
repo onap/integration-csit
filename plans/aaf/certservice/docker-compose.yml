@@ -1,0 +1,33 @@
+version: "2.1"
+
+services:
+  ejbca:
+    image: primekey/ejbca-ce
+    hostname: cahostname
+    container_name: aafcert-ejbca
+    ports:
+        - "80:8080"
+        - "443:8443"
+    volumes:
+        - $SCRIPTS_PATH:/opt/primekey/scripts
+    command: bash -c "
+      ./scripts/ejbca-configuration.sh &
+      /opt/primekey/bin/start.sh
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
+      interval: 10s
+      timeout: 3s
+      retries: 9
+
+  certservice:
+    image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
+    volumes:
+      - $CONFIGURATION_PATH:/etc/onap/aaf/certservice/cmpServers.json
+    container_name: aafcert
+    ports:
+      - "8080:8080"
+    depends_on:
+      ejbca:
+        condition: service_healthy
+
