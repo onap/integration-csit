@@ -15,15 +15,19 @@
 # limitations under the License.
 #
 
-AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
-
-echo AAFCERT_IMAGE=${AAFCERT_IMAGE}
-
 # ------------------------------------
-# Resolve path to cmp servers configuration
+# Resolve path to script's folder and cmp servers configuration
 
 SCRIPT=`realpath $0`
 CURRENT_WORKDIR_PATH=`dirname $SCRIPT`
+
+SCRIPTS_DIRECTORY="scripts"
+if test -d "$CURRENT_WORKDIR_PATH/plans/aaf/certservice/$SCRIPTS_DIRECTORY"; then
+    SCRIPTS_PATH="$CURRENT_WORKDIR_PATH/plans/aaf/certservice/$SCRIPTS_DIRECTORY"
+else test -f "$CURRENT_WORKDIR_PATH/$SCRIPTS_DIRECTORY";
+    SCRIPTS_PATH=$CURRENT_WORKDIR_PATH/$SCRIPTS_DIRECTORY
+fi
+echo "Use scripts from: $SCRIPTS_PATH"
 
 CONFIGURATION_FILE="cmpServers.json"
 if test -f "$CURRENT_WORKDIR_PATH/plans/aaf/certservice/$CONFIGURATION_FILE"; then
@@ -32,14 +36,17 @@ else test -f "$CURRENT_WORKDIR_PATH/$CONFIGURATION_FILE";
     CONFIGURATION_PATH=$CURRENT_WORKDIR_PATH/$CONFIGURATION_FILE
 fi
 echo "Use configuration from: $CONFIGURATION_PATH"
+
 # -------------------------------------
 
-# Start AAF Cert Srevice
-docker run -p 8080:8080 -d --mount type=bind,source=${CONFIGURATION_PATH},target=/etc/onap/aaf/certservice/cmpServers.json --name aafcert ${AAFCERT_IMAGE}
+export CONFIGURATION_PATH=${CONFIGURATION_PATH}
+export SCRIPTS_PATH=${SCRIPTS_PATH}
+
+docker-compose up -d
 
 AAFCERT_IP=`get-instance-ip.sh aafcert`
 export AAFCERT_IP=${AAFCERT_IP}
 
 # Wait container ready
-sleep 5
+sleep 10
 
