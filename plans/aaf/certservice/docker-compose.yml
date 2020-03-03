@@ -6,10 +6,10 @@ services:
     hostname: cahostname
     container_name: aafcert-ejbca
     ports:
-        - "80:8080"
-        - "443:8443"
+      - "80:8080"
+      - "443:8443"
     volumes:
-        - $SCRIPTS_PATH:/opt/primekey/scripts
+      - $SCRIPTS_PATH:/opt/primekey/scripts
     command: bash -c "
       ./scripts/ejbca-configuration.sh &
       /opt/primekey/bin/start.sh
@@ -19,6 +19,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 9
+    networks:
+      - certservice
 
   certservice:
     image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
@@ -30,4 +32,11 @@ services:
     depends_on:
       ejbca:
         condition: service_healthy
+    networks:
+      - certservice
+
+
+networks:
+  certservice:
+    driver: bridge
 

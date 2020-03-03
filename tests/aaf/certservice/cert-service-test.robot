@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation     AAF test case scenarios
+Documentation     AAF Cert Service API test case scenarios
 Library 	      RequestsLibrary
 Resource          ./resources/cert-service-keywords.robot
 
@@ -8,37 +8,37 @@ Suite Setup       Create sessions
 
 *** Test Cases ***
 
-AAF Cert Service API Health Check
+Health Check
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]   Run healthcheck
+    [Documentation]   Service is up and running
     Run Healthcheck
 
-AAF Cert Service API Reload Configuration
+Reload Configuration
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]   Reload configuration
+    [Documentation]   Configuration was changed
     Send Post Request And Validate Response  /actuator/refresh  200
 
-AAF Cert Service API Send Valid CSR and Valid PK
+Generate Certicicate For CA Name
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_PATH} endpoint and expect 200
-    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  200
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 200
+    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  200
 
-AAF Cert Service API Send Valid CSR and Valid PK to Wrong Path
+Report Not Found Error When Path Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to /v1/certificate/ endpoint and expect 404
-    Send Get Request with Header And Validate Response  /v1/certificate/  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  404
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/ endpoint and expect 404
+    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  404
 
-AAF Cert Service API Send Request without Header
+Report Bad Request Error When Header Is Missing
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request without header to ${CERT_PATH} endpoint and expect 400
-    Send Get Request And Validate Response  ${CERT_PATH}  400
+    [Documentation]  Send request without header to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 400
+    Send Get Request And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  400
 
-AAF Cert Service API Send Invalid CSR and Valid PK
+Report Bad Request Error When CSR Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_PATH} endpoint and expect 400
-    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 400
+    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
 
-AAF Cert Service API Send Valid CSR and Invalid PK
+Report Bad Request Error When PK Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_PATH} endpoint and expect 400
-    Send Get Request with Header And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 400
+    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
