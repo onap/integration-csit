@@ -11,23 +11,23 @@ Test Teardown     Reset Simulators
 *** Variables ***
 ${DMAAP_SIMULATOR_SETUP_URL}    http://${DMAAP_SIMULATOR_SETUP}
 ${AAI_SIMULATOR_SETUP_URL}    http://${AAI_SIMULATOR_SETUP}
-${AUTH_EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_with_all_fields.json
-${AUTH_EVENT_WITH_WRONG_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_with_wrong_sourceName.json
-${AUTH_EVENT_WITHOUT_SWVERSION}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_without_swversion.json
-${AUTH_EVENT_WITH_MISSING_RGMAC}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_with_missing_rgmac.json
-${AUTH_EVENT_WITH_MISSING_STATE}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_with_missing_new_old_state.json
-${AUTH_EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_event_with_missing_sourceName.json
-${AUTH_NOT_JSON_FORMAT}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_not_json_format.json
-${AUTH_POLICY}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/auth_policy_with_all_fields.json
-${UPDATE_EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_event_with_all_fields.json
-${UPDATE_EVENT_WITH_WRONG_CORRELATION}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_event_with_wrong_correlation.json
-${UPDATE_EVENT_WITH_MISSING_ATTACHMENT}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_event_with_missing_attachment.json
-${UPDATE_EVENT_WITH_MISSING_CORRELATION}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_event_with_missing_correlation.json
-${UPDATE_NOT_JSON_FORMAT}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_not_json_format.json
-${UPDATE_POLICY}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/json_events/update_policy_with_all_fields.json
-${AAI_PNFS}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/aai_records/aai_pnfs.json
-${AAI_SERVICES}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/aai_records/aai_services.json
-${AAI_PNF_NOT_FOUND}    %{WORKSPACE}/tests/dcaegen2/bbs-testcases/assets/aai_records/aai_pnf_not_found.json
+${AUTH_EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_with_all_fields.json
+${AUTH_EVENT_WITH_WRONG_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_with_wrong_sourceName.json
+${AUTH_EVENT_WITHOUT_SWVERSION}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_without_swversion.json
+${AUTH_EVENT_WITH_MISSING_RGMAC}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_with_missing_rgmac.json
+${AUTH_EVENT_WITH_MISSING_STATE}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_with_missing_new_old_state.json
+${AUTH_EVENT_WITH_MISSING_SOURCENAME}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_event_with_missing_sourceName.json
+${AUTH_NOT_JSON_FORMAT}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_not_json_format.json
+${AUTH_POLICY}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/auth_policy_with_all_fields.json
+${UPDATE_EVENT_WITH_ALL_VALID_REQUIRED_FIELDS}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_event_with_all_fields.json
+${UPDATE_EVENT_WITH_WRONG_CORRELATION}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_event_with_wrong_correlation.json
+${UPDATE_EVENT_WITH_MISSING_ATTACHMENT}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_event_with_missing_attachment.json
+${UPDATE_EVENT_WITH_MISSING_CORRELATION}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_event_with_missing_correlation.json
+${UPDATE_NOT_JSON_FORMAT}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_not_json_format.json
+${UPDATE_POLICY}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/json_events/update_policy_with_all_fields.json
+${AAI_PNFS}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/aai_records/aai_pnfs.json
+${AAI_SERVICES}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/aai_records/aai_services.json
+${AAI_PNF_NOT_FOUND}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/aai_records/aai_pnf_not_found.json
 
 *** Test Cases ***
 Valid DMaaP CPE_AUTHENTICATION event can trigger Policy

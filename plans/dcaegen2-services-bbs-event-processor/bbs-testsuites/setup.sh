@@ -7,7 +7,7 @@ export BBS_SERVICE="bbs"
 export DMAAP_SIMULATOR="dmaap_simulator"
 export AAI_SIMULATOR="aai_simulator"
 
-cd ${WORKSPACE}/tests/dcaegen2/bbs-testcases/resources/
+cd ${WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/resources/
 
 pip uninstall -y docker-py
 pip uninstall -y docker
