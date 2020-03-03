@@ -22,6 +22,30 @@
       "revId": "61f99c78ecafe27f073f9605fdd2802775d308ff",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59be6be7_4ce78dc5",
+        "filename": "plans/usecases/5G-bulkpm/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 4719
+      },
+      "writtenOn": "2020-03-03T10:23:35Z",
+      "side": 1,
+      "message": "DFC don\u0027t need those certs . I will remove those setup in next patch.",
+      "parentUuid": "135cb51a_2aecc93e",
+      "range": {
+        "startLine": 147,
+        "startChar": 61,
+        "endLine": 147,
+        "endChar": 74
+      },
+      "revId": "61f99c78ecafe27f073f9605fdd2802775d308ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
