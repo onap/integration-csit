@@ -40,7 +40,8 @@ class BbsLibrary(object):
         Get the correlationId, oldState, newState, stateInterface, macAddress, swVersion elements
         from the invalid message and place the elements into a JSON object (string) as fields for comparision
         """
-        json_to_python = json.loads(json_file)
+        eventString = json.loads(json_file)[0]
+        json_to_python = json.loads(eventString.replace("\\", ""))
         correlation_id = json_to_python.get("event").get("commonEventHeader").get("sourceName")
         oldState = json_to_python.get("event").get("stateChangeFields").get("oldState")
         newState = json_to_python.get("event").get("stateChangeFields").get("newState")
@@ -73,7 +74,8 @@ class BbsLibrary(object):
         Get the correlationId, attachment-point, remote-id, cvlan, svlan, elements
         from the invalid message and place the elements into a JSON object (string) as fields for comparision
         """
-        json_to_python = json.loads(json_file)
+        eventString = json.loads(json_file)[0]
+        json_to_python = json.loads(eventString.replace("\\", ""))
         correlation_id = json_to_python.get("correlationId")
         attachmentPoint = json_to_python.get("additionalFields").get("attachment-point")
         remoteId = json_to_python.get("additionalFields").get("remote-id")
@@ -109,7 +111,7 @@ class BbsLibrary(object):
             python_dmaap_policy = ""
 
         try:
-            d_policy = python_dmaap_policy.get("policyName")
+            d_policy = python_dmaap_policy[0].get("policyName")
         except:
             d_policy = ""
 
