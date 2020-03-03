@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135cb51a_2aecc93e",
+        "filename": "plans/usecases/5G-bulkpm/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-03-03T08:55:52Z",
+      "side": 1,
+      "message": "This should be changed as well i guess? Line 145 too.",
+      "range": {
+        "startLine": 147,
+        "startChar": 61,
+        "endLine": 147,
+        "endChar": 74
+      },
+      "revId": "61f99c78ecafe27f073f9605fdd2802775d308ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
