@@ -16,7 +16,7 @@
 #
 
 # ------------------------------------
-# Resolve path to script's folder and cmp servers configuration
+# Resolve path to script's directory and cmp servers configuration
 
 SCRIPT=`realpath $0`
 CURRENT_WORKDIR_PATH=`dirname $SCRIPT`
