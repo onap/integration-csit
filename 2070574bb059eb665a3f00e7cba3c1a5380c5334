@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32862204_021a39a3",
+        "filename": "tests/policy/api/api-test.robot",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-03T16:44:27Z",
+      "side": 1,
+      "message": "I wondered about that, but figured you had already tried it. :-)",
+      "revId": "2070574bb059eb665a3f00e7cba3c1a5380c5334",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
