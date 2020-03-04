@@ -116,6 +116,7 @@ if using_https ; then
         "${WORKSPACE}/data/environments/$ENV_NAME.json"
 fi
 
+cp "${WORKSPACE}/data/clone/sdc/catalog-fe/src/main/resources/config/plugins-configuration.yaml" "${WORKSPACE}/scripts/sdc/"
 cp "${WORKSPACE}/data/clone/sdc/sdc-os-chef/scripts/docker_run.sh" "${WORKSPACE}/scripts/sdc/"
 
 source "${WORKSPACE}/data/clone/sdc/version.properties"
