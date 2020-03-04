@@ -2,7 +2,7 @@
   "requests": [
     {
       "method": "GET",
-      "path": "/aai/v13/service-design-and-creation/models",
+      "path": "/aai/v16/service-design-and-creation/models",
       "queryParams": {
         "depth": "2",
         "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353"
@@ -10,14 +10,14 @@
     },
     {
       "method": "GET",
-      "path": "/aai/v13/business/customers/customer/CAR_2020_ER",
+      "path": "/aai/v16/business/customers/customer/CAR_2020_ER",
       "queryParams": {
         "depth": "2"
       }
     },
     {
       "method": "GET",
-      "path": "/aai/v13/query",
+      "path": "/aai/v16/query",
       "queryParams": {
         "format": "simple"
       }
@@ -31,7 +31,7 @@
     },
     {
       "method": "GET",
-      "path": "/aai/v13/business/customers",
+      "path": "/aai/v16/business/customers",
       "queryParams": {
         "subscriber-type": "INFRA",
         "depth": "0"
@@ -39,7 +39,7 @@
     },
     {
       "method": "GET",
-      "path": "/aai/v13/service-design-and-creation/models",
+      "path": "/aai/v16/service-design-and-creation/models",
       "queryParams": {
         "depth": "2",
         "model-invariant-id": "88a71d72-ec80-4357-808e-f288823cb353"
