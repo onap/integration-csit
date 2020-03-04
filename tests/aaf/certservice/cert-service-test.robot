@@ -21,12 +21,12 @@ Reload Configuration
 Generate Certicicate For CA Name
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 200
-    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  200
+    Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${VALID_PK_FILE}
 
 Report Not Found Error When Path Is Not Valid
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/ endpoint and expect 404
-    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  404
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/  ${VALID_CSR_FILE}  ${VALID_PK_FILE}  404
 
 Report Bad Request Error When Header Is Missing
     [Tags]      AAF-CERT-SERVICE
@@ -36,9 +36,9 @@ Report Bad Request Error When Header Is Missing
 Report Bad Request Error When CSR Is Not Valid
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 400
-    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${INVALID_CSR_FILE}  ${VALID_PK_FILE}  400
 
 Report Bad Request Error When PK Is Not Valid
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CA_NAME} endpoint and expect 400
-    Send Get Request with Header And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/${CA_NAME}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400

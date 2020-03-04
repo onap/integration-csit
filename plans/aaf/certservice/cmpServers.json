@@ -1,23 +1,23 @@
 {
   "cmpv2Servers": [
     {
-      "caName": "TEST",
-      "url": "http://127.0.0.1/ejbca/publicweb/cmp/cmp",
+      "caName": "ManagementCA",
+      "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
       "issuerDN": "CN=ManagementCA",
       "caMode": "CLIENT",
       "authentication": {
-        "iak": "xxx",
-        "rv": "yyy"
+        "iak": "mypassword",
+        "rv": "mypassword"
       }
     },
     {
       "caName": "TEST2",
-      "url": "http://127.0.0.1/ejbca/publicweb/cmp/cmpRA",
-      "issuerDN": "CN=ManagementCA2",
+      "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
+      "issuerDN": "CN=ManagementCA",
       "caMode": "RA",
       "authentication": {
-        "iak": "xxx",
-        "rv": "yyy"
+        "iak": "mypassword",
+        "rv": "mypassword"
       }
     }
   ]

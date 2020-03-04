@@ -32,11 +32,40 @@ Send Get Request And Validate Response
     ${resp}= 	Get Request 	${http_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
-Send Get Request with Header And Validate Response
-    [Documentation]   Send request to passed url and validate received response
-    [Arguments]   ${path}  ${csr_file}  ${pk_file}  ${resp_code}
+Send Get Request with Header
+    [Documentation]  Send request to passed url
+    [Arguments]  ${path}  ${csr_file}  ${pk_file}
+    [Return]  ${resp}
     ${headers}=  Create Header with CSR and PK  ${csr_file}  ${pk_file}
     ${resp}= 	Get Request 	${http_session}  ${path}  headers=${headers}
+
+Send Get Request with Header And Expect Success
+    [Documentation]   Send request to passed url and validate received response
+    [Arguments]   ${path}  ${csr_file}  ${pk_file}
+    ${resp}= 	Send Get Request with Header  ${path}  ${csr_file}  ${pk_file}
+    Should Be Equal As Strings 	${resp.status_code} 	200
+    Check Message Recieved On Success  ${resp.content}
+
+Check Message Recieved On Success
+    [Documentation]  Check if correct messsage has been sent on successful request
+    [Arguments]  ${content}
+    ${resp_content}=  Parse Json  ${content}
+    Dictionary Should Contain Key  ${resp_content}  certificateChain
+    @{list}=  Get From Dictionary  ${resp_content}  certificateChain
+    List Should Contain Certificates  @{list}
+    Dictionary Should Contain Key  ${resp_content}  trustedCertificates
+
+List Should Contain Certificates
+    [Documentation]  Verify if list contains certificates
+    [Arguments]  @{list}
+    :FOR    ${content}    IN    @{list}
+    \    Should Contain  ${content}  BEGIN CERTIFICATE
+    \    Should Contain  ${content}  END CERTIFICATE
+
+Send Get Request with Header And Expect Error
+    [Documentation]   Send request to passed url and validate received response
+    [Arguments]   ${path}  ${csr_file}  ${pk_file}  ${resp_code}
+    ${resp}= 	Send Get Request with Header  ${path}  ${csr_file}  ${pk_file}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
 Create Header with CSR and PK
@@ -52,4 +81,3 @@ Send Post Request And Validate Response
     [Arguments]   ${path}  ${resp_code}
     ${resp}= 	Post Request 	${http_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
-    
