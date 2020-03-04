@@ -57,5 +57,5 @@ AAFCERT_IP=`get-instance-ip.sh aafcert`
 export AAFCERT_IP=${AAFCERT_IP}
 
 # Wait container ready
-sleep 10
+sleep 15
 

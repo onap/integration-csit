@@ -2,7 +2,7 @@ version: "2.1"
 
 services:
   ejbca:
-    image: primekey/ejbca-ce
+    image: primekey/ejbca-ce:6.15.2.5
     hostname: cahostname
     container_name: aafcert-ejbca
     ports:
