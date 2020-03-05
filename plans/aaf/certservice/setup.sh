@@ -19,6 +19,11 @@ AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservic
 
 echo AAFCERT_IMAGE=${AAFCERT_IMAGE}
 
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
 # ------------------------------------
 # Resolve path to cmp servers configuration
 
