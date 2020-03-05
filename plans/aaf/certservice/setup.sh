@@ -27,6 +27,18 @@ SCRIPTS_DIRECTORY="scripts"
 JENKINS_SCRIPTS_PATH="$CURRENT_WORKDIR_PATH/$PROJECT_DIRECTORY/$SCRIPTS_DIRECTORY"
 LOCAL_SCRIPTS_PATH="$CURRENT_WORKDIR_PATH/$SCRIPTS_DIRECTORY"
 
+# ------------------------------------
+#Prepare enviroment for client
+#install docker sdk
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
+#export container name
+export ClientContainerName=CertServiceClient
+# ------------------------------------
+
 if test -d "$JENKINS_SCRIPTS_PATH"; then
     SCRIPTS_PATH=$JENKINS_SCRIPTS_PATH
 else test -f "$LOCAL_SCRIPTS_PATH";
