@@ -16,7 +16,7 @@ Health Check
 Reload Configuration
     [Tags]      AAF-CERT-SERVICE
     [Documentation]   Configuration was changed
-    Send Post Request And Validate Response  /actuator/refresh  200
+    Send Get Request And Validate Response  /reload  200
 
 Generate Certicicate For CA Name
     [Tags]      AAF-CERT-SERVICE
