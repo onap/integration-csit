@@ -19,6 +19,8 @@ AAFCERT_IMAGE=nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservic
 
 echo AAFCERT_IMAGE=${AAFCERT_IMAGE}
 
+pip install "docker<3"
+
 # ------------------------------------
 # Resolve path to cmp servers configuration
 

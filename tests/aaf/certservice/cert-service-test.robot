@@ -42,3 +42,9 @@ AAF Cert Service API Send Valid CSR and Invalid PK
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_PATH} endpoint and expect 400
     Send Get Request with Header And Validate Response  ${CERT_PATH}  ${VALID_CSR_FILE}  ${INVALID_PK_FILE}  400
+
+AAF Cert Service Client Send Correct Request
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Send request to ${AAFCERT_URL}
+    Run Cert Service Client Container
+
