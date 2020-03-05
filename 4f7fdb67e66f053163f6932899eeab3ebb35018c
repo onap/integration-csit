@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1b64b28_1dc82648",
+        "filename": "scripts/sdc/setup_sdc_for_sanity.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2020-03-05T12:17:23Z",
+      "side": 1,
+      "message": "It should be copied to the ${WORKSPACE}/data/environments/",
+      "revId": "4f7fdb67e66f053163f6932899eeab3ebb35018c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
