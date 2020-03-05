@@ -59,3 +59,13 @@ export AAFCERT_IP=${AAFCERT_IP}
 # Wait container ready
 sleep 15
 
+# ------------------------------------
+#Prepare enviroment for client
+#install docker sdk
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
+#export container name
+export ClientContainerName=CertServiceClient
