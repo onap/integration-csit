@@ -3,6 +3,7 @@
 Library 	      RequestsLibrary
 Library           HttpLibrary.HTTP
 Library           Collections
+Library           ../libraries/CertClientManager.py
 Resource          ../../../common.robot
 Resource          ./cert-service-properties.robot
 
@@ -81,3 +82,10 @@ Send Post Request And Validate Response
     [Arguments]   ${path}  ${resp_code}
     ${resp}= 	Post Request 	${http_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
+
+Run Cert Service Client Container And Validate Exit Code
+    [Documentation]  Run Cert Service Client Container And Validate Exit Code
+    [Arguments]   ${env_file}  ${expected_code}
+    ${exitcode}=  Client Run Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_ADDRESS}  ${CERT_SERVICE_NETWORK}
+    Client Remove Container  ${CLIENT_CONTAINER_NAME}
+    Should Be Equal As Strings  ${exitcode}  ${expected_code}
