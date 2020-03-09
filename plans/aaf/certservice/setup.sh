@@ -53,9 +53,22 @@ export SCRIPTS_PATH=${SCRIPTS_PATH}
 
 docker-compose up -d
 
-AAFCERT_IP=`get-instance-ip.sh aafcert`
-export AAFCERT_IP=${AAFCERT_IP}
-
+AAFCERT_IP='none'
 # Wait container ready
-sleep 15
+for i in {1..9}
+do
+   RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  http://${AAFCERT_IP}:8080/actuator/health)
+   if [[ "$RESP_CODE" == '200' ]]; then
+       echo 'AAF Cert Service is ready'
+       AAFCERT_IP=`get-instance-ip.sh aafcert`
+       export AAFCERT_IP=${AAFCERT_IP}
+       break
+   fi
+   echo 'Waiting for AAF Cert Service to start up...'
+   sleep 60s
+done
 
+if [[ $AAFCERT_IP == 'none' ]]; then
+    echo "AAF Cert Service is not ready!"
+    exit 1 # Return error code
+fi

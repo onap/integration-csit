@@ -16,7 +16,7 @@ services:
       "
     healthcheck:
       test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
-      interval: 10s
+      interval: 20s
       timeout: 3s
       retries: 9
     networks:
