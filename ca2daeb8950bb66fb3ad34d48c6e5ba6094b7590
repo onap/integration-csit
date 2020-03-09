@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "049bac0a_46ebafed",
+        "filename": "plans/aaf/certservice/scripts/ejbca-configuration.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-03-09T12:01:14Z",
+      "side": 1,
+      "message": "we should finish with error if it is possible",
+      "parentUuid": "17f76fe9_132e791c",
+      "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fe95a64_fd40cd6c",
         "filename": "plans/aaf/certservice/setup.sh",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2020-03-09T11:51:06Z",
       "side": 1,
       "message": "This healthcheck checks whether EJBCA and CertService are up (since docker-compose waits for EJBCA to be up before initializing app).\n\nEJBCA has maximum of 90 seconds to set up so EJBCA+app needs some more time than 90.\n\nAlso consider logging negative case of healthcheck.",
+      "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c58d17e_cd4049d1",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-03-09T12:01:14Z",
+      "side": 1,
+      "message": "hmm, ok we need to increase sleep to 30 sec ... I think. It should be enough.",
+      "parentUuid": "2fe95a64_fd40cd6c",
       "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
