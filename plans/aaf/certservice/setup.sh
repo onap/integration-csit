@@ -57,5 +57,14 @@ AAFCERT_IP=`get-instance-ip.sh aafcert`
 export AAFCERT_IP=${AAFCERT_IP}
 
 # Wait container ready
-sleep 15
+for i in {1..9}
+do
+   RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  http://${AAFCERT_IP}:8080/actuator/health)
+   if [[ "$RESP_CODE" == '200' ]]; then
+       echo 'CertService is ready'
+       break
+   fi 
+   echo 'Waiting for certService to start up...'
+   sleep 10s
+done
 
