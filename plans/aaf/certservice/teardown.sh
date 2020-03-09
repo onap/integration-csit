@@ -15,5 +15,7 @@
 # limitations under the License.
 #
 
+docker-compose down
+
 kill-instance.sh aafcert
 kill-instance.sh aafcert-ejbca
