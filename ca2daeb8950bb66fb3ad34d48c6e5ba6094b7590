@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2d6591_e0f3d985",
+        "filename": "plans/aaf/certservice/scripts/ejbca-configuration.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-03-09T11:51:06Z",
+      "side": 1,
+      "message": "As mentioned in other merge request, retries number should be same as in docker-compose.",
+      "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f76fe9_132e791c",
+        "filename": "plans/aaf/certservice/scripts/ejbca-configuration.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-03-09T11:51:06Z",
+      "side": 1,
+      "message": "What happens when EJBCA won\u0027t set up? Maybe echo some information and don\u0027t try to configure it then.",
+      "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe95a64_fd40cd6c",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-03-09T11:51:06Z",
+      "side": 1,
+      "message": "This healthcheck checks whether EJBCA and CertService are up (since docker-compose waits for EJBCA to be up before initializing app).\n\nEJBCA has maximum of 90 seconds to set up so EJBCA+app needs some more time than 90.\n\nAlso consider logging negative case of healthcheck.",
+      "revId": "ca2daeb8950bb66fb3ad34d48c6e5ba6094b7590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
