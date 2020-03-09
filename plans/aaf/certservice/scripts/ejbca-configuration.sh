@@ -1,7 +1,24 @@
 #!/bin/bash
 
 waitForEjbcaStartUp() {
-    sleep $1
+    
+    # Wait container ready
+    EJBCA_IS_READY=false
+    for i in {1..9}
+    do
+        RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth)
+        if [[ "$RESP_CODE" == '200' ]]; then
+            echo 'Ejbca is ready'
+            $EJBCA_IS_READY=true
+            break
+        fi
+        echo 'Waiting for Ejbca to start up...'
+        sleep 30s
+    done
+
+    if [[ $EJBCA_IS_READY == false ]]; then
+        exit 1 # Return error code
+    fi
 }
 
 configureEjbca() {
@@ -20,5 +37,5 @@ configureEjbca() {
     ejbca.sh ca getcacert --caname ManagementCA -f /dev/stdout > cacert.pem
 }
 
-waitForEjbcaStartUp 45
+waitForEjbcaStartUp
 configureEjbca
