@@ -18,6 +18,11 @@ Reload Configuration
     [Documentation]   Configuration was changed
     Send Get Request And Validate Response  /reload  200
 
+Check if app configuration is succesfully loaded
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]   Send request to /ready endpoint and expect 200
+    Send Get Request And Validate Response  /ready  200
+
 Generate Certificate In RA Mode For CA Name
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${RA_CA_NAME} endpoint and expect 200
