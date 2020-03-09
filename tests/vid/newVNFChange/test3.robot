@@ -16,6 +16,7 @@ Resource    ../resources/keywords/login_vid_keywords.robot
 add new VNF Change in VID GUI From SO SDC worfkow
     [Documentation]   create VNF Change from SO SDC workflows
 
+    Wait Until Element Is Visible     xpath=//div[@heading='VNF Changes']//a[1]
     Click Element    xpath=//div[@heading='VNF Changes']//a[1]
 
     Click Element    xpath=//div[@ng-click='vm.createNewChange()']
