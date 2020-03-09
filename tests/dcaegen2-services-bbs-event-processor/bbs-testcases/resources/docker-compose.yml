@@ -1,7 +1,7 @@
 version: '3'
 services:
   bbs:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.bbs-event-processor:1.0.0
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.bbs-event-processor:latest
     command: >
         --dmaap.dmaapConsumerConfiguration.dmaapHostName=dmaap_simulator
         --dmaap.dmaapConsumerConfiguration.dmaapPortNumber=2222
@@ -36,6 +36,10 @@ services:
       CONFIGS_APPLICATION_CPE-AUTHENTICATION_POLICYSCOPE: "cpe-auth_policy_scope"
       CONFIGS_APPLICATION_CPE-AUTHENTICATION_CLCONTROLNAME: "cpe-auth_cl"
       LOGGING_LEVEL_ORG_ONAP_BBS: TRACE
+      CONFIGS_SECURITY_TRUSTSTOREPATH: KeyStore.jks
+      CONFIGS_SECURITY_TRUSTSTOREPASSWORDPATH: KeyStorePass.txt
+      CONFIGS_SECURITY_KEYSTOREPATH: KeyStore.jks
+      CONFIGS_SECURITY_KEYSTOREPASSWORDPATH: KeyStorePass.txt
     container_name: bbs
     depends_on:
      - dmaap-bc
