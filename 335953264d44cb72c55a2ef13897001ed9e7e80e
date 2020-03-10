@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e46b2f_17bc576a",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-03-10T11:19:10Z",
+      "side": 1,
+      "message": "Successful create keystore and trust store",
+      "revId": "335953264d44cb72c55a2ef13897001ed9e7e80e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff4152c_01d02134",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-03-10T11:19:10Z",
+      "side": 1,
+      "message": "Creation of keystore and trustore unsuccesful, incorrect configuration",
+      "revId": "335953264d44cb72c55a2ef13897001ed9e7e80e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
