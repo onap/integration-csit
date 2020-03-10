@@ -47,3 +47,14 @@ Report Bad Request Error When PK Is Not Valid
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME} endpoint and expect 400
     Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME}  ${VALID_CLIENT_CSR_FILE}  ${INVALID_PK_FILE}  400
+
+Cert Service Client successful create keystore and trust store
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Run with correct env and expected exit code 0
+    Run Cert Service Client Container And Validate Exit Code  ${VALID_ENV_FILE}  0
+
+Creation of keystore and trustore unsuccesful, incorrect client configuration
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Run with invalid CaName env and expected exit code 5
+    Run Cert Service Client Container And Validate Exit Code  ${INVALID_ENV_FILE}  5
+
