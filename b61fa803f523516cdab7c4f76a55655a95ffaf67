@@ -22,6 +22,30 @@
       "revId": "b61fa803f523516cdab7c4f76a55655a95ffaf67",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c93e636b_75959a9d",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-10T12:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54755728_00f43787",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "b61fa803f523516cdab7c4f76a55655a95ffaf67",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
