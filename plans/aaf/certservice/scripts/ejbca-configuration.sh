@@ -1,9 +1,5 @@
 #!/bin/bash
 
-waitForEjbcaStartUp() {
-    sleep $1
-}
-
 configureEjbca() {
     ejbca.sh config cmp addalias --alias cmpRA
     ejbca.sh config cmp updatealias --alias cmpRA --key operationmode --value ra
@@ -20,5 +16,4 @@ configureEjbca() {
     ejbca.sh ca getcacert --caname ManagementCA -f /dev/stdout > cacert.pem
 }
 
-waitForEjbcaStartUp 45
 configureEjbca
