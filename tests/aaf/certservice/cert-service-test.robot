@@ -46,10 +46,10 @@ Report Bad Request Error When PK Is Not Valid
 Cert Service Client successful create keystore and trust store
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Run with correct env and expected exit code 0
-    Run Cert Service Client Container And Validate Exit Code  ${VALID_ENV_FILE}  0
+    Run Cert Service Client Container And Validate Exit Code With Correct JKS File Creation  ${VALID_ENV_FILE}  0
 
-Creation of keystore and trustore unsuccesful, incorrect client configuration
+Run Cert Service Client Container And Validate Exit Code And API Response
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Run with invalid CaName env and expected exit code 5
-    Run Cert Service Client Container And Validate Exit Code  ${INVALID_ENV_FILE}  5
+    Run Cert Service Client Container And Validate Exit Code With Expected API Response  ${INVALID_ENV_FILE}  5
 
