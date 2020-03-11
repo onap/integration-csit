@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3c77b5_8c894137",
+        "filename": "tests/vid/newVNFChange/test1.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-03-11T08:10:49Z",
+      "side": 1,
+      "message": "does it contains any timeout ? What when element will be not visible all time, test will go or will stack?",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "ce7e0704a1df1e17623b556fcb03ac77d7570ed4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
