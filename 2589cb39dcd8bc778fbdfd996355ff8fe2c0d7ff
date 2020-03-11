@@ -45,6 +45,30 @@
       "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d792c89_1383c0dd",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-03-11T18:28:05Z",
+      "side": 1,
+      "message": "Ok, will raise another patch with this.",
+      "parentUuid": "9ba3ad9f_faed5993",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
