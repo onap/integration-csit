@@ -83,9 +83,22 @@ Send Post Request And Validate Response
     ${resp}= 	Post Request 	${http_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
-Run Cert Service Client Container And Validate Exit Code
+Run Cert Service Client And Validate JKS File Creation With Correct Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
-    [Arguments]   ${env_file}  ${expected_code}
-    ${exitcode}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_ADDRESS}  ${CERT_SERVICE_NETWORK}
-    Remove Client Container  ${CLIENT_CONTAINER_NAME}
-    Should Be Equal As Strings  ${exitcode}  ${expected_code}
+    [Arguments]   ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_ADDRESS}  ${CERT_SERVICE_NETWORK}
+    ${can_open}=  Can Open Keystore And Truststore By Pass  ${CLIENT_CONTAINER_NAME}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by passpshase
+
+Run Cert Service Client And Validate Http Response Code With Expected Exit Code
+    [Documentation]  Run Cert Service Client Container And Validate Exit Code
+    [Arguments]   ${env_file}  ${expected_api_response_code}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_ADDRESS}  ${CERT_SERVICE_NETWORK}
+    ${can_find_API_response}=  Can Find Api Response In Logs  ${CLIENT_CONTAINER_NAME}
+    ${api_response_code}=  Get Api Response From Logs  ${CLIENT_CONTAINER_NAME}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  negative_path
+    Should Be True  ${can_find_API_response}  Cannot Find API response in logs
+    Should Be Equal As Strings  ${api_response_code}  ${expected_api_response_code}  API return ${api_response_code} but expected: ${expected_api_response_code}
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return unexpected exit code return: ${exitcode} , but expected: ${expected_exit_code}
