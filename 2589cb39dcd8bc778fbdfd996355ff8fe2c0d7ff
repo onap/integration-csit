@@ -69,6 +69,30 @@
       "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21539a1c_5edbaa24",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-03-11T18:37:02Z",
+      "side": 1,
+      "message": "I have made this change wherever this policytype is used, not just in this file. Hope that is fine.",
+      "parentUuid": "4d792c89_1383c0dd",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
