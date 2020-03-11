@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f7d3dd_d5c6e711",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-03-11T18:19:19Z",
+      "side": 1,
+      "message": "map -\u003e onap.datatypes.monitoring.tca_policy",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba3ad9f_faed5993",
+        "filename": "scripts/policy/config/pap/onap.policies.monitoring.cdap.tca.hi.lo.app.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-03-11T18:19:19Z",
+      "side": 1,
+      "message": "delete this",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "2589cb39dcd8bc778fbdfd996355ff8fe2c0d7ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
