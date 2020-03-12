@@ -1,0 +1,50 @@
+[
+  {
+    "httpRequest": {
+      "path": "/events/AAI_EVENT/dcae_pmsh_cg/AAI-EVENT"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": "{}"
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": {}
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": {}
+      }
+    }
+  }
+]

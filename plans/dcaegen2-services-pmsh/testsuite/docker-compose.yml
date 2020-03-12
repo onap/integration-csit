@@ -1,18 +1,6 @@
 version: '3.3'
 
 services:
-  mockserver:
-    container_name: mockserver
-    image: mockserver/mockserver:mockserver-5.9.0
-    environment:
-      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializerJson.json
-    volumes:
-      - ./assets/mockserver.properties:/config/mockserver.properties
-      - ./assets/initializerJson.json:/config/initializerJson.json
-    networks:
-      pmsh-network:
-
   db:
     container_name: db
     image: postgres
@@ -23,9 +11,45 @@ services:
     networks:
       pmsh-network:
 
+  aai-sim:
+    container_name: aai-sim
+    image: mockserver/mockserver:mockserver-5.9.0
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/aai-initializer.json
+    volumes:
+      - ./assets/mockserver.properties:/config/mockserver.properties
+      - ./assets/aai-initializer.json:/config/aai-initializer.json
+    networks:
+      pmsh-network:
+
+  cbs-sim:
+    container_name: cbs-sim
+    image: mockserver/mockserver:mockserver-5.9.0
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/cbs-initializer.json
+    volumes:
+      - ./assets/mockserver.properties:/config/mockserver.properties
+      - ./assets/cbs-initializer.json:/config/cbs-initializer.json
+    networks:
+      pmsh-network:
+
+  mr-sim:
+    container_name: mr-sim
+    image: mockserver/mockserver:mockserver-5.9.0
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mr-initializer.json
+    volumes:
+      - ./assets/mockserver.properties:/config/mockserver.properties
+      - ./assets/mr-initializer.json:/config/mr-initializer.json
+    networks:
+      pmsh-network:
+
   pmsh:
     container_name: pmsh
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pmsh
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pmsh:1.0.1
     depends_on:
       - db
     volumes:
@@ -33,12 +57,12 @@ services:
       - ./assets/key.pem:/opt/app/pmsh/etc/certs/key.pem
     environment:
       HOSTNAME: "dcae-pmsh"
-      CONFIG_BINDING_SERVICE_SERVICE_HOST: mockserver
+      CONFIG_BINDING_SERVICE_SERVICE_HOST: cbs-sim
       CONFIG_BINDING_SERVICE_SERVICE_PORT: 1080
       PMSH_PG_URL: db
       PMSH_PG_USERNAME: $DB_USER
       PMSH_PG_PASSWORD: $DB_PASSWORD
-      AAI_SERVICE_HOST: mockserver
+      AAI_SERVICE_HOST: aai-sim
       AAI_SERVICE_PORT_AAI_SSL: 1080
     networks:
       pmsh-network:

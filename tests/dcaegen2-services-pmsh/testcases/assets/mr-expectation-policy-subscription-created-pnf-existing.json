@@ -1,0 +1,39 @@
+[
+  {
+    "httpRequest": {
+      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": [
+        "{\"name\": \"ResponseEvent\", \"nameSpace\": \"org.onap.policy.apex.onap.pmcontrol\", \"source\": \"APEX\", \"target\": \"DCAE\", \"version\": \"0.0.1\", \"status\": {\"subscriptionName\": \"ExtraPM-All-gNB-R2B\", \"nfName\": \"pnf-existing\", \"changeType\": \"CREATE\", \"message\": \"success\"}}"
+      ]
+    },
+    "times": {
+      "remainingTimes": 1,
+      "unlimited": false
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": {}
+      }
+    }
+  }
+]
