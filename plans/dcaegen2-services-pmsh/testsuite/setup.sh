@@ -1,6 +1,5 @@
 #!/bin/bash
 # Place the scripts in run order:
-source ${SCRIPTS}/common_functions.sh
 
 export DB_USER=pmsh
 export DB_PASSWORD=pmsh
@@ -9,7 +8,7 @@ docker login -u docker -p docker nexus3.onap.org:10001
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d mockserver db
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d db aai-sim cbs-sim mr-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."
@@ -45,9 +44,11 @@ done
 # Wait for initialization of Docker containers
 containers_ok=false
 for i in {1..5}; do
-    if [ $(docker inspect --format '{{ .State.Running }}' mockserver) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' db) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' pmsh) ]
+    if [ $(docker inspect --format '{{ .State.Running }}' cbs-sim) ] && \
+       [ $(docker inspect --format '{{ .State.Running }}' aai-sim) ] && \
+       [ $(docker inspect --format '{{ .State.Running }}' mr-sim) ] && \
+       [ $(docker inspect --format '{{ .State.Running }}' db) ] && \
+       [ $(docker inspect --format '{{ .State.Running }}' pmsh) ]
     then
         echo "All required docker containers are up."
         containers_ok=true
@@ -58,5 +59,9 @@ for i in {1..5}; do
 done
 [ "$containers_ok" = "false" ] && echo "Error: required container not running." && exit 1
 
+DB_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db)
+MR_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" mr-sim)
+CBS_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" cbs-sim)
+
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP}"
+ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP} -v MR_SIM_IP_ADDRESS:${MR_SIM_IP_ADDRESS} -v DB_IP_ADDRESS:${DB_IP_ADDRESS} -v CBS_SIM_IP_ADDRESS:${CBS_SIM_IP_ADDRESS}"
