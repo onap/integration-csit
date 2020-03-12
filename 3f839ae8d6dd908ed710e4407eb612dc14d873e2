@@ -111,6 +111,52 @@
     },
     {
       "key": {
+        "uuid": "f2f7be7c_af8b5e3f",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-03-12T14:47:56Z",
+      "side": 1,
+      "message": "Can throw exception if file doesn\u0027t exist, so could be inside try and catch.\nAlso consider renaming it to something like storepass",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 48
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c5f67b_a48ce398",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-03-12T14:47:56Z",
+      "side": 1,
+      "message": "Doesn\u0027t this function always return true if any logs are present? It doesn\u0027t really do what it says it does i think.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b255ac39_871cdd4a",
         "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
         "patchSetId": 2
