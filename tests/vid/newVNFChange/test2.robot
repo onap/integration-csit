@@ -17,8 +17,8 @@ add new VNF Change in VID GUI From SO NATIVE worfkow
 
     Run Process  ${CURDIR}/../resources/scripts/SetFeatureFlag.sh FLAG_HANDLE_SO_WORKFLOWS true  shell=True  cwd=${CURDIR}/../resources/scripts/
     Reload Page
-    Wait Until Page Contains  VNF Changes    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
 
+    Wait Until Element Is Visible     xpath=//div[@heading='VNF Changes']//a[1]
     Click Element    xpath=//div[@heading='VNF Changes']//a[1]
 
     Click Element    xpath=//div[@ng-click='vm.createNewChange()']

@@ -14,7 +14,6 @@ ${body}=  {"workflowsDetails":[{"workflowName":"VNF In Place Software Update","v
 
 *** Test Cases ***
 add new VNF Change in VID GUI From Local worfkow
-    [Documentation]   Logs in to VID GUI
     Setup Browser
     Go To    ${VID_LOGIN_URL}
 
@@ -38,24 +37,25 @@ add new VNF Change in VID GUI From Local worfkow
     ${headers}=    Create Dictionary    Accept-Encoding=gzip  Accept-Encoding=deflate    Content-Type=application/json
     ${response}=  Post Request    vid    /vid/change-management/vnf_workflow_relation    headers=${headers}  data=${body}
 
+    Wait Until Element Is Visible     xpath=//div[@heading='VNF Changes']//a[1]
     Click Element    xpath=//div[@heading='VNF Changes']//a[1]
 
     Click Element    xpath=//div[@ng-click='vm.createNewChange()']
 
     Wait Until Page Contains    New VNF Change    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
 
-    Select From List  xpath=//select[@name='subscriber']  CAR_2020_ER
+    Select From List By Label  xpath=//select[@name='subscriber']  CAR_2020_ER
 
-    Select From List  xpath=//select[@name='serviceType']  gNB
+    Select From List By Label  xpath=//select[@name='serviceType']  gNB
 
-    Select From List  xpath=//select[@name='vnfType']  vLBMS
+    Select From List By Label  xpath=//select[@name='vnfType']  vLBMS
 
-    Select From List  xpath=//select[@name='fromVNFVersion']  3.0
+    Select From List By Label  xpath=//select[@name='fromVNFVersion']  3.0
 
     Click Element   xpath=//multiselect[@name='vnfName']
     Click Element   xpath=//a[contains(text(),'vnf-ws')]
 
-    Select From List  xpath=//select[@name='workflow']  VNF In Place Software Update
+    Select From List By Label  xpath=//select[@name='workflow']  VNF In Place Software Update
 
     Wait Until Page Contains    Operations timeout    ${GLOBAL_SELENIUM_BROWSER_WAIT_TIMEOUT}
     Input Text    xpath=//input[@id='internal-workflow-parameter-text-2-operations-timeout']    10
