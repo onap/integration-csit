@@ -1,0 +1,61 @@
+[
+  {
+    "httpRequest": {
+      "path": "/aai/v16/query.*"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "content-type": [
+          "application/json"
+        ]
+      },
+      "body": {
+        "type": "JSON",
+        "json": {
+          "results": [
+            {
+              "id": "303240",
+              "node-type": "generic-vnf",
+              "url": "/aai/v16/network/generic-vnfs/generic-vnf/230f339c-3e75-4f6b-8c9c-da4759da8222",
+              "properties": {
+                "vnf-id": "230f339c-3e75-4f6b-8c9c-da4759da8222",
+                "vnf-name": "vcpe_1",
+                "vnf-type": "demoVCPEInfra/vCPE_infra 0d1234cf-100c 0",
+                "service-id": "2db01c96-4baa-4393-8d79-af8d7bf4698e",
+                "prov-status": "PREPROV",
+                "orchestration-status": "Inventoried",
+                "in-maint": false,
+                "is-closed-loop-disabled": false,
+                "resource-version": "1575542300539",
+                "model-invariant-id": "c6aef848-e119-4572-9643-0b68da217358",
+                "model-version-id": "77c1a3d9-422a-4f78-bd8f-f7a357685b25",
+                "model-customization-id": "1f6a305d-74b6-4b92-b407-cd03284b6432"
+              }
+            },
+            {
+              "id": "209096",
+              "node-type": "pnf",
+              "url": "/aai/v16/network/pnfs/pnf/pnf-existing",
+              "properties": {
+                "pnf-name": "pnf-existing",
+                "pnf-id": "99700432-df00-473d-8ff9-2fb14243417a",
+                "equip-type": "Complicated",
+                "equip-vendor": "Thunder",
+                "equip-model": "MP63527",
+                "ipaddress-v4-oam": "10.10.10.32",
+                "sw-version": "2.1.5",
+                "in-maint": false,
+                "serial-number": "6061ZW3",
+                "ipaddress-v6-oam": "2001:0db8:0:0:0:0:1428:57ab",
+                "resource-version": "1573053304574",
+                "nf-role": "gNB",
+                "orchestration-status": "Active"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]
