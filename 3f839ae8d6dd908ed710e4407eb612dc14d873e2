@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "194b68d0_275fbb0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7ee291_7de5f96e",
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438d39e7_4e41f0da",
         "filename": "tests/aaf/certservice/cert-service-test.robot",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2020-03-12T14:11:25Z",
       "side": 1,
       "message": "small typos\n\"successfully creates keystore and truststore\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 62
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab4ba97_8b1ebd77",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438d39e7_4e41f0da",
       "range": {
         "startLine": 46,
         "startChar": 20,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "329934d0_b1d0620e",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "958d4971_c6214298",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17363817_ded7a14a",
         "filename": "tests/aaf/certservice/cert-service-test.robot",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "897099f3_92002c6d",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17363817_ded7a14a",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46eb9413_fcd2ca39",
         "filename": "tests/aaf/certservice/cert-service-test.robot",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2020-03-12T14:11:25Z",
       "side": 1,
       "message": "here same",
+      "range": {
+        "startLine": 54,
+        "startChar": 28,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "3f839ae8d6dd908ed710e4407eb612dc14d873e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08dd515d_77467f2c",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46eb9413_fcd2ca39",
       "range": {
         "startLine": 54,
         "startChar": 28,
