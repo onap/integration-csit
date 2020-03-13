@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d1ae00_2958c2c6",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-13T06:59:07Z",
+      "side": 1,
+      "message": "replace it with \"And Client 0 ${VALID...\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 59,
+        "endLine": 49,
+        "endChar": 71
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed332a7f_ad1e7e5c",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-13T06:59:07Z",
+      "side": 1,
+      "message": "Replace this with:\n\"And Client Exit Code  404  5  ${INVALID_ENV_FILE}\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 112
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03abaabc_bbb7bc2c",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-13T06:59:07Z",
+      "side": 1,
+      "message": "rename to pass or password",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b336df4_08889a86",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-13T06:59:07Z",
+      "side": 1,
+      "message": "same like in PS2",
+      "range": {
+        "startLine": 90,
+        "startChar": 51,
+        "endLine": 90,
+        "endChar": 53
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
