@@ -81,7 +81,7 @@ do
    sleep 30s
 done
 
-if [[ $AAFCERT_IP == 'none' ] || [ $AAFCERT_IP == '' ]]; then
+if [ "$AAFCERT_IP" == 'none' -o "$AAFCERT_IP" == '' ]; then
     echo "AAF Cert Service is not ready!"
     exit 1 # Return error code
 fi
