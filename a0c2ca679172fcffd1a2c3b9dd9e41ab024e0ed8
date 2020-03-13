@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c68aa5b6_76b9b46b",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d1ae00_2958c2c6",
+      "range": {
+        "startLine": 49,
+        "startChar": 59,
+        "endLine": 49,
+        "endChar": 71
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed332a7f_ad1e7e5c",
         "filename": "tests/aaf/certservice/cert-service-test.robot",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-13T06:59:07Z",
       "side": 1,
       "message": "Replace this with:\n\"And Client Exit Code  404  5  ${INVALID_ENV_FILE}\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 112
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06157bba_3687a0cd",
+        "filename": "tests/aaf/certservice/cert-service-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed332a7f_ad1e7e5c",
       "range": {
         "startLine": 54,
         "startChar": 60,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cd85d753_938578b6",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03abaabc_bbb7bc2c",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b336df4_08889a86",
         "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-13T06:59:07Z",
       "side": 1,
       "message": "same like in PS2",
+      "range": {
+        "startLine": 90,
+        "startChar": 51,
+        "endLine": 90,
+        "endChar": 53
+      },
+      "revId": "a0c2ca679172fcffd1a2c3b9dd9e41ab024e0ed8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "748b125b_824833bf",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-13T07:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b336df4_08889a86",
       "range": {
         "startLine": 90,
         "startChar": 51,
