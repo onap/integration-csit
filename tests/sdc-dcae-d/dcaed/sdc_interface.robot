@@ -83,7 +83,7 @@ Generate Unique Postfix
 # Directly copied from testsuite/robot/resources/sdc_interface.robot
 Certify SDC Catalog Resource
     [Documentation]    Certifies an SDC Catalog Resource by its id and returns the new id
-    [Arguments]    ${catalog_resource_id}    ${user_id}=${SDC_TESTER_USER_ID}
+    [Arguments]    ${catalog_resource_id}    ${user_id}=${SDC_DESIGNER_USER_ID}
     ${map}=    Create Dictionary    user_remarks=Robot remarks
     Templating.Create Environment    sdc_user_remarks    ${ASSETS_DIR}
     ${data}=   Templating.Apply Template    sdc_user_remarks   ${SDC_USER_REMARKS_TEMPLATE}    ${map}
@@ -114,15 +114,12 @@ Create Monitoring Configuration
     ${vfi_uuid}  ${vfi_name}   Add SDC Resource Instance   ${cs_unique_id}   ${vf_unique_id}   ${vf_name}
     [return]   ${cs_unique_id}   ${cs_uuid}    ${vfi_name}
 
+# Directly copied from testsuite/robot/resources/sdc_interface.robot
 Certify And Approve SDC Catalog Service
     [Documentation]    Perform the required steps to certify and approve the given SDC catalog service
     [Arguments]    ${cs_unique_id}
-
     Checkin SDC Catalog Service    ${cs_unique_id}
-    Request Certify SDC Catalog Service    ${cs_unique_id}
-    Start Certify SDC Catalog Service    ${cs_unique_id}
-    ${cert_cs_unique_id}=    Certify SDC Catalog Service    ${cs_unique_id}
-    Approve SDC Catalog Service    ${cert_cs_unique_id}
+    ${cert_cs_unique_id}=    Wait Until Keyword Succeeds   60s    10s   Certify SDC Catalog Service    ${cs_unique_id}
 
 # All the following methods are adjusted from sdc_interface.robot
 
@@ -137,39 +134,12 @@ Checkin SDC Catalog Service
     Should Be Equal As Strings  ${resp.status_code}     200
     [Return]    ${resp.json()}
 
-Request Certify SDC Catalog Service
-    [Documentation]    Requests certification of an SDC Catalog Service by its id
-    [Arguments]    ${catalog_service_id}
-    ${map}=    Create Dictionary    user_remarks=Robot remarks
-    Templating.Create Environment    sdc_user_remarks    ${ASSETS_DIR}
-    ${data}=   Templating.Apply Template    sdc_user_remarks   ${SDC_USER_REMARKS_TEMPLATE}    ${map}
-    ${resp}=    SDC.Run Post Request    ${SDC_BE_ENDPOINT}    ${SDC_CATALOG_SERVICES_PATH}/${catalog_service_id}${SDC_CATALOG_LIFECYCLE_PATH}/certificationRequest    ${data}   ${SDC_DESIGNER_USER_ID}
-    Should Be Equal As Strings  ${resp.status_code}     200
-    [Return]    ${resp.json()}
-
-Start Certify SDC Catalog Service
-    [Documentation]    Start certification of an SDC Catalog Service by its id
-    [Arguments]    ${catalog_service_id}
-    ${resp}=    SDC.Run Post Request    ${SDC_BE_ENDPOINT}    ${SDC_CATALOG_SERVICES_PATH}/${catalog_service_id}${SDC_CATALOG_LIFECYCLE_PATH}/startCertification    ${None}   ${SDC_TESTER_USER_ID}
-    Should Be Equal As Strings  ${resp.status_code}     200
-    [Return]    ${resp.json()}
-
 Certify SDC Catalog Service
     [Documentation]    Certifies an SDC Catalog Service by its id and returns the new id
     [Arguments]    ${catalog_service_id}
     ${map}=    Create Dictionary    user_remarks=Robot remarks
     Templating.Create Environment    sdc_user_remarks    ${ASSETS_DIR}
     ${data}=   Templating.Apply Template    sdc_user_remarks   ${SDC_USER_REMARKS_TEMPLATE}    ${map}
-    ${resp}=    SDC.Run Post Request    ${SDC_BE_ENDPOINT}    ${SDC_CATALOG_SERVICES_PATH}/${catalog_service_id}${SDC_CATALOG_LIFECYCLE_PATH}/certify    ${data}   ${SDC_TESTER_USER_ID}
+    ${resp}=    SDC.Run Post Request    ${SDC_BE_ENDPOINT}    ${SDC_CATALOG_SERVICES_PATH}/${catalog_service_id}${SDC_CATALOG_LIFECYCLE_PATH}/certify    ${data}   ${SDC_DESIGNER_USER_ID}
     Should Be Equal As Strings  ${resp.status_code}     200
     [Return]    ${resp.json()['uniqueId']}
-
-Approve SDC Catalog Service
-    [Documentation]    Approves an SDC Catalog Service by its id
-    [Arguments]    ${catalog_service_id}
-    ${map}=    Create Dictionary    user_remarks=Robot remarks
-    Templating.Create Environment    sdc_user_remarks    ${ASSETS_DIR}
-    ${data}=   Templating.Apply Template    sdc_user_remarks   ${SDC_USER_REMARKS_TEMPLATE}    ${map}
-    ${resp}=    SDC.Run Post Request    ${SDC_BE_ENDPOINT}    ${SDC_CATALOG_SERVICES_PATH}/${catalog_service_id}${SDC_CATALOG_SERVICE_DISTRIBUTION_STATE_PATH}${SDC_DISTRIBUTION_STATE_APPROVE_PATH}    ${data}   ${SDC_GOVERNOR_USER_ID}
-    Should Be Equal As Strings  ${resp.status_code}     200
-    [Return]    ${resp.json()}
