@@ -18,10 +18,9 @@ services:
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file:
-         - ${WORKSPACE}/scripts/policy/config/db/db.conf
+      env_file: config/db/db.conf
       volumes:
-         - ${WORKSPACE}/scripts/policy/config/db:/docker-entrypoint-initdb.d
+         - ./config/db:/docker-entrypoint-initdb.d
       expose:
        - 3306
    drools:
@@ -34,8 +33,30 @@ services:
        - 6969
        - 9696
       volumes:
-       - ${WORKSPACE}/scripts/policy/config/drools-apps/custom:/tmp/policy-install/config
+       - ./config/drools-apps/custom:/tmp/policy-install/config
       env_file:
-        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/base.conf
-        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/feature-healthcheck.conf
-        - ${WORKSPACE}/scripts/policy/config/drools-apps/env/feature-pooling-dmaap.conf
+        - config/drools-apps/env/base.conf
+        - config/drools-apps/env/feature-healthcheck.conf
+        - config/drools-apps/env/feature-pooling-dmaap.conf
+   start_dependencies:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 60
+      container_name: policy-wait
+      depends_on:
+        - mariadb
+      hostname: policy-wait
+      command:
+        mariadb:3306
+   start_all:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 120
+      container_name: policy-wait-all
+      depends_on:
+        - mariadb
+        - drools
+      hostname: policy-wait-all
+      command:
+        mariadb:3306
+        drools:6969

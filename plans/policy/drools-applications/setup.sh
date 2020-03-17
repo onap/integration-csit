@@ -39,12 +39,13 @@ echo "user information: $(id)"
 echo "docker and docker-compose versions:"
 docker -v && docker-compose -v
 
-docker container ls -a
+# Adding this waiting container due to race condition between drools and mariadb
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_dependencies
 
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml up -d
-sleep 2m
+# now bring everything else up
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools-apps.yml run --rm start_all
 
-docker container ls -a
+unset http_proxy https_proxy
 
 POLICY_DROOLS_IP=`get-instance-ip.sh drools`
 MARIADB_IP=`get-instance-ip.sh mariadb`
@@ -52,13 +53,7 @@ MARIADB_IP=`get-instance-ip.sh mariadb`
 echo DROOLS IP IS ${POLICY_DROOLS_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
-for i in {1..10}; do
-   curl -sS ${POLICY_DROOLS_IP}:6969 && break
-   echo sleep $i
-   sleep $i
-done
-
-# to give enough time to the usecases controller to come up
-sleep 2m
+# give enough time for the usecases controller to come up
+sleep 15
 
 ROBOT_VARIABLES="-v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
