@@ -27,6 +27,17 @@ Healthcheck
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['healthy']}  True
 
+Frankfurt
+     [Documentation]    Checks frankfurt controller is up
+     ${auth}=    Create List    demo@people.osaaf.org    demo123456!
+     Log    Creating session https://${POLICY_DROOLS_IP}:9696
+     ${session}=    Create Session      policy  https://${POLICY_DROOLS_IP}:9696   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Get Request     policy  /policy/pdp/engine/controllers/frankfurt/drools/facts     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.json()['frankfurt']}  0
+
 Usecases
      [Documentation]    Checks usecases controller is up
      ${auth}=    Create List    demo@people.osaaf.org    demo123456!

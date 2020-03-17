@@ -18,8 +18,10 @@
 sed -i "s/^dmaap/noop/g" \
     ${POLICY_HOME}/config/engine.properties \
     ${POLICY_HOME}/config/feature-lifecycle.properties \
+    ${POLICY_HOME}/config/frankfurt-controller.properties \
     ${POLICY_HOME}/config/usecases-controller.properties
 
 chmod 644 ${POLICY_HOME}/config/engine.properties \
     ${POLICY_HOME}/config/feature-lifecycle.properties \
+    ${POLICY_HOME}/config/frankfurt-controller.properties \
     ${POLICY_HOME}/config/usecases-controller.properties
