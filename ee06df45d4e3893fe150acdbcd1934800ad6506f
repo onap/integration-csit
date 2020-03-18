@@ -34,6 +34,24 @@
       "revId": "ee06df45d4e3893fe150acdbcd1934800ad6506f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3278767d_17ea5907",
+        "filename": "plans/aaf/certservice/teardown.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-18T13:16:21Z",
+      "side": 0,
+      "message": "client app is one which docker-compose does not include. Thats why just this container need to be removed \"manually\".",
+      "parentUuid": "9dd71980_7181728d",
+      "revId": "ee06df45d4e3893fe150acdbcd1934800ad6506f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
