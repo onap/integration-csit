@@ -18,7 +18,7 @@ conductorMaxRetries: 5  # if we don't get something in 30 minutes, give up
 conductorMinorVersion: 0
 
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
-policyPlatformUrl: http://127.0.0.1:5000/simulated/policy/pdp-has-vcpe-good/getConfig # Policy Dev platform URL
+policyPlatformUrl: http://127.0.0.1:5000/simulated/policy/pdpx/decision/v1 # Policy Dev platform URL
 policyPlatformEnv: TEST  # Environment for policy platform
 
 # Config for DMaaP
@@ -47,3 +47,6 @@ aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 configDbUrl: http://127.0.0.1:5000/simulated/configdb
 configDbGetCellListUrl: 'getCellList'
 configDbGetNbrListUrl: 'getNbrList'
+
+#key
+appkey: os35@rrtky400fdntc#001t5
