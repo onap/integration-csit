@@ -25,28 +25,28 @@ Check if application is ready
 
 Generate Certificate In RA Mode For CA Name
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${RA_CA_NAME} endpoint and expect 200
-    Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}/${RA_CA_NAME}  ${VALID_RA_CSR_FILE}  ${VALID_RA_PK_FILE}
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
+    Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${VALID_RA_CSR_FILE}  ${VALID_RA_PK_FILE}
 
 Report Not Found Error When Path To Service Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/ endpoint and expect 404
-    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/  ${VALID_CLIENT_CSR_FILE}  ${VALID_CLIENT_PK_FILE}  404
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT} endpoint and expect 404
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}  ${VALID_CLIENT_CSR_FILE}  ${VALID_CLIENT_PK_FILE}  404
 
 Report Bad Request Error When Header Is Missing In Request
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request without header to ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME} endpoint and expect 400
-    Send Get Request And Validate Response  ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME}  400
+    [Documentation]  Send request without header to ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME} endpoint and expect 400
+    Send Get Request And Validate Response  ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME}  400
 
 Report Bad Request Error When CSR Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME} endpoint and expect 400
-    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME}  ${INVALID_CSR_FILE}  ${VALID_CLIENT_PK_FILE}  400
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME} endpoint and expect 400
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME}  ${INVALID_CSR_FILE}  ${VALID_CLIENT_PK_FILE}  400
 
 Report Bad Request Error When PK Is Not Valid
     [Tags]      AAF-CERT-SERVICE
-    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME} endpoint and expect 400
-    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}/${CLIENT_CA_NAME}  ${VALID_CLIENT_CSR_FILE}  ${INVALID_PK_FILE}  400
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME} endpoint and expect 400
+    Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME}  ${VALID_CLIENT_CSR_FILE}  ${INVALID_PK_FILE}  400
 
 Cert Service Client successfully creates keystore and truststore
     [Tags]      AAF-CERT-SERVICE

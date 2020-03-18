@@ -35,6 +35,9 @@ pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+#Disable proxy - for local run
+unset http_proxy https_proxy
+
 #export container name
 export ClientContainerName=CertServiceClient
 # ------------------------------------
