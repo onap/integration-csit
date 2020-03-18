@@ -47,3 +47,6 @@ aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 configDbUrl: http://127.0.0.1:5000/simulated/configdb
 configDbGetCellListUrl: 'getCellList'
 configDbGetNbrListUrl: 'getNbrList'
+
+#key
+appkey: os35@rrtky400fdntc#001t5
