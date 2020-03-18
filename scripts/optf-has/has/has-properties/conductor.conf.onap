@@ -131,6 +131,9 @@ log_dir = /var/log
 #fatal_deprecations = false
 
 
+[auth]
+appkey = h@ss3crtky400fdntc#001
+
 [aaf_api]
 
 #
