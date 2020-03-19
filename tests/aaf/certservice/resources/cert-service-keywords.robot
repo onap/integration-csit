@@ -92,6 +92,15 @@ Run Cert Service Client And Validate JKS File Creation And Client Exit Code
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
     Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by passpshase
 
+Run Cert Service Client And Validate JKS Files Contain Expected Data
+    [Documentation]  Run Cert Service Client Container And Validate JKS Files Contain Expected Data
+    [Arguments]  ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_ADDRESS}  ${CERT_SERVICE_NETWORK}
+    ${contains_data}=  Owner Data Match Envs  ${env_file}  ${CLIENT_CONTAINER_NAME}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${contains_data}  Keystore doesn't contain expected data
+
 Run Cert Service Client And Validate Http Response Code And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
     [Arguments]   ${env_file}  ${expected_api_response_code}  ${expected_exit_code}
