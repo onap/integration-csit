@@ -3,7 +3,7 @@ Resource          sdc_interface.robot
 Resource          sdc_dcaed_interface.robot
 
 *** Test Cases ***
-# This test case implements the steps described in
+# For now, this test case implements the steps described in
 # https://wiki.onap.org/display/DW/How+to+Create+a+Service+with+a+Monitoring+Configuration+using+SDC
 Create Service With Monitoring Configuration Test
     [Tags]  sdc-dcae-d
