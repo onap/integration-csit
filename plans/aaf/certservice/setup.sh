@@ -34,6 +34,8 @@ echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
+pip uninstall pyopenssl cryptography -y
+pip install pyopenssl cryptography
 
 #Disable proxy - for local run
 unset http_proxy https_proxy
