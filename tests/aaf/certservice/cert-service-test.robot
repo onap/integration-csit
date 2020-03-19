@@ -53,6 +53,11 @@ Cert Service Client successfully creates keystore and truststore
     [Documentation]  Run with correct env and expected exit code 0
     Run Cert Service Client And Validate JKS File Creation And Client Exit Code  ${VALID_ENV_FILE}  0
 
+Cert Service Client successfully creates keystore and truststore with expected data
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]  Run with correct env and JKS files created with correct data
+    Run Cert Service Client And Validate JKS Files Contain Expected Data  ${VALID_ENV_FILE}  0
+
 Run Cert Service Client Container And Validate Exit Code And API Response
     [Tags]      AAF-CERT-SERVICE
     [Documentation]  Run with invalid CaName env and expected exit code 5
