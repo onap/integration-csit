@@ -4,6 +4,7 @@ Library 	      RequestsLibrary
 Library           HttpLibrary.HTTP
 Library           Collections
 Library           ../libraries/CertClientManager.py
+Library           ../libraries/JksFilesValidator.py
 Resource          ../../../common.robot
 Resource          ./cert-service-properties.robot
 
@@ -91,6 +92,16 @@ Run Cert Service Client And Validate JKS File Creation And Client Exit Code
     Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
     Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by passpshase
+
+Run Cert Service Client And Validate JKS Files Contain Expected Data
+    [Documentation]  Run Cert Service Client Container And Validate JKS Files Contain Expected Data
+    [Arguments]  ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
+    ${data}=  Get Data  ${env_file}
+    ${contains_data}=  Contains Expected Data  ${data}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${contains_data}  Keystore doesn't contain ${data.expectedData}. Actual data is: ${data.actualData}
 
 Run Cert Service Client And Validate Http Response Code And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code

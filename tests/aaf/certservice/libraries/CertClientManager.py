@@ -2,7 +2,6 @@ import docker
 import os
 import shutil
 import re
-from OpenSSL import crypto
 from docker.types import Mount
 
 ARCHIVES_PATH = os.getenv("WORKSPACE") + "/archives/"
@@ -10,7 +9,6 @@ MOUNT_PATH = os.getenv("WORKSPACE") + "/tests/aaf/certservice/tmp"
 
 ERROR_API_REGEX = 'Error on API response.*[0-9]{3}'
 RESPONSE_CODE_REGEX = '[0-9]{3}'
-
 
 class CertClientManager:
 
@@ -48,25 +46,6 @@ class CertClientManager:
         text_file.close()
         container.remove()
         self.remove_mount_dir()
-
-    def can_open_keystore_and_truststore_with_pass(self):
-        keystore_pass_path = MOUNT_PATH + '/keystore.pass'
-        keystore_jks_path = MOUNT_PATH + '/keystore.jks'
-        can_open_keystore = self.can_open_jks_file_by_pass_file(keystore_pass_path, keystore_jks_path)
-
-        truststore_pass_path = MOUNT_PATH + '/truststore.pass'
-        truststore_jks_path = MOUNT_PATH + '/truststore.jks'
-        can_open_truststore = self.can_open_jks_file_by_pass_file(truststore_pass_path, truststore_jks_path)
-
-        return can_open_keystore & can_open_truststore
-
-    def can_open_jks_file_by_pass_file(self, pass_file_path, jks_file_path):
-        try:
-            password = open(pass_file_path, 'rb').read()
-            crypto.load_pkcs12(open(jks_file_path, 'rb').read(), password)
-            return True
-        except:
-            return False
 
     def create_mount_dir(self):
         if not os.path.exists(MOUNT_PATH):
