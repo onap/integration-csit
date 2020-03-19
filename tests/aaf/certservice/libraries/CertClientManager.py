@@ -7,6 +7,10 @@ from OpenSSL import crypto
 
 ARCHIVES_PATH = os.getenv("WORKSPACE") + "/archives/"
 TMP_PATH = os.getenv("WORKSPACE") + "/tests/aaf/certservice/tmp"
+KEYSTORE_PASS_PATH = TMP_PATH + '/logs/log/keystore.pass'
+KEYSTORE_JKS_PATH = TMP_PATH + '/logs/log/keystore.jks'
+TRUSTSTORE_PASS_PATH = TMP_PATH + '/logs/log/truststore.pass'
+TRUSTSTORE_JKS_PATH = TMP_PATH + '/logs/log/truststore.jks'
 
 ERROR_API_REGEX = 'Error on API response.*[0-9]{3}'
 RESPONSE_CODE_REGEX = '[0-9]{3}'
@@ -32,6 +36,20 @@ class CertClientManager:
                 r_list.append(line)
         return r_list
 
+    def get_envs_as_dict(self, list):
+        di = {}
+        mappings = self.get_mappings()
+
+        for a in list:
+          l = a.split('=')
+          if mappings.get(l[0]) is not None:
+              key = mappings.get(l[0])
+              di[key] = l[1]
+        return di
+
+    def get_mappings(self):
+        return {'COMMON_NAME':'CN', 'ORGANIZATION':'O', 'ORGANIZATION_UNIT':'OU', 'LOCATION':'L', 'STATE':'ST', 'COUNTRY':'C'}
+
     def remove_client_container_and_save_logs(self, container_name, log_file_name):
         client = docker.from_env()
         container = client.containers.get(container_name)
@@ -42,14 +60,8 @@ class CertClientManager:
 
     def can_open_keystore_and_truststore_with_pass(self, container_name):
         self.copy_jks_file_to_tmp_dir(container_name)
-
-        keystore_pass_path = TMP_PATH + '/logs/log/keystore.pass'
-        keystore_jks_path = TMP_PATH + '/logs/log/keystore.jks'
-        can_open_keystore = self.can_open_jks_file_by_pass_file(keystore_pass_path, keystore_jks_path)
-
-        truststore_pass_path = TMP_PATH + '/logs/log/truststore.pass'
-        truststore_jks_path = TMP_PATH + '/logs/log/truststore.jks'
-        can_open_truststore = self.can_open_jks_file_by_pass_file(truststore_pass_path, truststore_jks_path)
+        can_open_keystore = self.can_open_jks_file_by_pass_file(KEYSTORE_PASS_PATH, KEYSTORE_JKS_PATH)
+        can_open_truststore = self.can_open_jks_file_by_pass_file(TRUSTSTORE_PASS_PATH, TRUSTSTORE_JKS_PATH)
 
         self.remove_tmp_dir(TMP_PATH)
         return can_open_keystore & can_open_truststore
@@ -73,13 +85,31 @@ class CertClientManager:
         my_tar.extractall(TMP_PATH + '/logs')
         my_tar.close()
 
+    def get_certificate(self, pass_file_path, jks_file_path):
+        password = open(pass_file_path, 'rb').read()
+        crypto.load_pkcs12(open(jks_file_path, 'rb').read(), password)
+        return crypto.load_pkcs12(open(jks_file_path, 'rb').read(), password).get_certificate()
+
+    def get_owner_data_from_certificate(self, certificate):
+        list = certificate.get_subject().get_components()
+        di = {}
+        for key, value in list:
+            di[key] = value
+        return di
+
     def can_open_jks_file_by_pass_file(self, pass_file_path, jks_file_path):
         try:
-            password = open(pass_file_path, 'rb').read()
-            crypto.load_pkcs12(open(jks_file_path, 'rb').read(), password)
+            self.get_certificate(pass_file_path, jks_file_path)
             return True
         except:
             return False
+
+    def owner_data_match_envs(self, path_to_env, container_name):
+        self.copy_jks_file_to_tmp_dir(container_name)
+        envs = self.get_envs_as_dict(self.read_list_env_from_file(path_to_env))
+        data = self.get_owner_data_from_certificate(self.get_certificate(KEYSTORE_PASS_PATH, KEYSTORE_JKS_PATH))
+        self.remove_tmp_dir(TMP_PATH)
+        return cmp(envs, data) == 0
 
     def remove_tmp_dir(self, tmp_path):
         shutil.rmtree(tmp_path)
