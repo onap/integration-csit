@@ -18,5 +18,3 @@ ${INVALID_ENV_FILE}                      %{WORKSPACE}/tests/aaf/certservice/asse
 ${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
 ${CLIENT_CONTAINER_NAME}                 %{ClientContainerName}
 ${CERT_SERVICE_NETWORK}                  certservice_certservice
-
-
