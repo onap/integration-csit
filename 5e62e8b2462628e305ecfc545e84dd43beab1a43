@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d76d5fe_fe5c2f7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-03-20T07:15:45Z",
+      "side": 1,
+      "message": "Please as always include a short info not only about change but also why it was changed, just to keep good practices.",
+      "revId": "5e62e8b2462628e305ecfc545e84dd43beab1a43",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
