@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9dec3a6_7b4911cc",
+        "filename": "tests/policy/apex-pdp/data/onap.policies.controlloop.operational.Apex.tosca.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2020-03-20T18:31:05Z",
+      "side": 1,
+      "message": "I thought this is optional and not necessary to have.\nDoes it work if we match the \"key\" with the \"name\" field and not have metadata?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "81b94381d9ee1aa89b513db342047ec8e71717e9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
