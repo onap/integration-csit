@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d1bc1b_a7c224d8",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-03-20T10:13:16Z",
+      "side": 1,
+      "message": "how it can inpact other people from other countries and different proxy settings who would like to use it? I think it is your local problem not global",
+      "revId": "25fac3a21f28662920fb5210c05f4dc36140769e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
