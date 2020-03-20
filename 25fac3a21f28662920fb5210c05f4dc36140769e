@@ -16,6 +16,24 @@
       "revId": "25fac3a21f28662920fb5210c05f4dc36140769e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271fff83_8e733ffb",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-20T11:56:35Z",
+      "side": 1,
+      "message": "No, this is global problem for those who are behind proxy. For ones working without proxy this will not affect at all.",
+      "parentUuid": "a8d1bc1b_a7c224d8",
+      "revId": "25fac3a21f28662920fb5210c05f4dc36140769e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
