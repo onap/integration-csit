@@ -9,7 +9,7 @@
 #  ${MAINURL} is now set from the command line per above
 |  ${BROWSER}  |  chrome
 |  ${SHORTTIME} | 5s
-|  ${LONGTIME} | 90s
+|  ${LONGTIME} | 180s
 |  ${TENMINUTES} | 600s
 #|  ${FFPROFILE_DIR} |  /home/dvz/.mozilla/firefox/s87c07vn.AppCZoomed50
 |  ${MAINURL} | https://localhost:8080/index.html
