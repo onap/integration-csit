@@ -22,6 +22,30 @@
       "revId": "81b94381d9ee1aa89b513db342047ec8e71717e9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78153248_341164cb",
+        "filename": "tests/policy/apex-pdp/data/onap.policies.controlloop.operational.Apex.tosca.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-03-20T18:33:40Z",
+      "side": 1,
+      "message": "Yes it works. Just the name and key has to match.\nI thought better to add metadata as well in case if this is made mandatory later ;)",
+      "parentUuid": "d9dec3a6_7b4911cc",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "81b94381d9ee1aa89b513db342047ec8e71717e9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
