@@ -7,7 +7,7 @@
                     "pdpType": "apex",
                     "action": "POST",
                     "policies": [{
-                            "name": "onap.policies.controlloop.Operational.apex.sampledomain",
+                            "name": "operational.apex.sampledomain",
                             "version": "1.0.0"
                         }]
                 }
