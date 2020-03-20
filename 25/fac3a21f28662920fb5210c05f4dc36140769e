@@ -1,0 +1,9 @@
+Code-Review+1: Remigiusz Janeczek <remigiusz.janeczek@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Bogumil Zebek <bogumil.zebek@nokia.com>
+Code-Review+2: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-by: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-at: Fri, 20 Mar 2020 11:59:38 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/103858
+Project: integration/csit
+Branch: refs/heads/master
