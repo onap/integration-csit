@@ -34,6 +34,24 @@
       "revId": "5f7b64b22b44e0866842b778760cf5ccfc23201b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778ae43b_e28eff99",
+        "filename": "plans/dcaegen2/testsuites/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-03-23T12:20:55Z",
+      "side": 1,
+      "message": "Correction: loopback address is not included, but quoting manual:\n\"Do not make any assumptions about the order of the output.\"",
+      "parentUuid": "825469d8_218de6b1",
+      "revId": "5f7b64b22b44e0866842b778760cf5ccfc23201b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
