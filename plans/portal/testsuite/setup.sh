@@ -11,7 +11,7 @@ XVFBPID=$!
 # Get pid of this spawned process to make sure we kill the correct process later
 
 #Get current IP of VM
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
 export HOST_IP=${HOST_IP}
 
 
@@ -172,7 +172,7 @@ fi
 
 
 #Get current IP of VM
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
 export HOST_IP=${HOST_IP}
 
 docker logs deliveries_portal-db_1

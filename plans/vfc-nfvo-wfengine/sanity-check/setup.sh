@@ -49,7 +49,7 @@ IMAGE="wfengine-activiti"
 IMAGE_ACTIVITI_NAME="${DOCKER_REPOSITORY}/${ORG}/${PROJECT}/${IMAGE}"
 
 #get current host IP addres
-SERVICE_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+SERVICE_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
 
 # start wfengine-activiti
 # docker run -d --name vfc_wfengine_activiti -p 8804:8080 -e SERVICE_IP=$SERVICE_IP -e SERVICE_PORT=8804 -e OPENPALETTE_MSB_IP=${MSB_IAG_IP} -e OPENPALETTE_MSB_PORT=80 ${IMAGE_ACTIVITI_NAME}
