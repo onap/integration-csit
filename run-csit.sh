@@ -22,6 +22,29 @@
 # functions
 #
 
+function on_exit(){
+    rc=$?
+    rsync -av "$WORKDIR/" "$WORKSPACE/archives"
+
+    # Record list of active docker containers
+    docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
+
+    # show memory consumption after all docker instances initialized
+    docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
+
+    # Run teardown script plan if it exists
+    cd "${TESTPLANDIR}"
+    TEARDOWN="${TESTPLANDIR}/teardown.sh"
+    if [ -f "${TEARDOWN}" ]; then
+        echo "Running teardown script ${TEARDOWN}"
+        source_safely "${TEARDOWN}"
+    fi
+    # TODO: do something with the output
+     exit $rc
+}
+# ensure that teardown and other finalizing steps are always executed
+trap on_exit EXIT
+
 function docker_stats(){
     #General memory details
     echo "> top -bn1 | head -3"
@@ -166,22 +189,5 @@ python -m robot.run -N ${TESTPLAN} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${TESTOP
 RESULT=$?
 load_set
 echo "RESULT: $RESULT"
-rsync -av "$WORKDIR/" "$WORKSPACE/archives"
-
-# Record list of active docker containers
-docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
-
-# show memory consumption after all docker instances initialized
-docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
-
-# Run teardown script plan if it exists
-cd "${TESTPLANDIR}"
-TEARDOWN="${TESTPLANDIR}/teardown.sh"
-if [ -f "${TEARDOWN}" ]; then
-    echo "Running teardown script ${TEARDOWN}"
-    source_safely "${TEARDOWN}"
-fi
-
-# TODO: do something with the output
-
+# Note that the final steps are done in on_exit function after this exit!
 exit $RESULT
