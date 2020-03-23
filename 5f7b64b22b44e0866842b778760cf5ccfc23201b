@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a5f46b_4eea1e3b",
+        "filename": "plans/dcaegen2/testsuites/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-03-23T12:17:34Z",
+      "side": 1,
+      "message": "Consider to use HOST_IP\u003d$(hostname -I | awk \u0027{print $1}\u0027).",
+      "revId": "5f7b64b22b44e0866842b778760cf5ccfc23201b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
