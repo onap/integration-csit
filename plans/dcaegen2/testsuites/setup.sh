@@ -19,7 +19,7 @@
 
 
 #get current host IP addres
-HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+HOST_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
 
 VESC_IMAGE=nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:latest
 
