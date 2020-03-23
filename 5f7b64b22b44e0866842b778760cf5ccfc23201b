@@ -52,6 +52,24 @@
       "revId": "5f7b64b22b44e0866842b778760cf5ccfc23201b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ba1d008_743e6413",
+        "filename": "plans/dcaegen2/testsuites/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-03-23T12:33:41Z",
+      "side": 1,
+      "message": "thank you for explanation",
+      "parentUuid": "778ae43b_e28eff99",
+      "revId": "5f7b64b22b44e0866842b778760cf5ccfc23201b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
