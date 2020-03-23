@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Ofir Sonsino <ofir.sonsino@intl.att.com>
+Code-Review+1: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Mon, 23 Mar 2020 09:31:23 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/103735
+Project: integration/csit
+Branch: refs/heads/master
