@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b8c1e59_5052032b",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-23T11:44:26Z",
+      "side": 1,
+      "message": "Consider to extract it to variable",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "ed0f3be44b4a98f19b0998982ed858cbfb0d1aa1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
