@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa77591_eee4dde3",
+        "filename": "run-csit.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-03-23T10:46:11Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "1e890ad7d38de98aed0806edcfcbfb7ae2d838d6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
