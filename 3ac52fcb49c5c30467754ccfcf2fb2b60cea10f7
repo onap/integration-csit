@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d252799_6fe7894b",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-03-24T06:33:17Z",
+      "side": 1,
+      "message": "Class was designed only for starting the cert client container.\n\nYou should not add the logic responsible for response validation here. \nYou need to create a new class for response validation.",
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
