@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bca9dab_c0e716e0",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T14:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "452b5f29_268eaa21",
+      "range": {
+        "startLine": 4,
+        "startChar": 30,
+        "endLine": 4,
+        "endChar": 40
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f335a354_fc279d49",
         "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "602605f8_8eb8391e",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T14:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f335a354_fc279d49",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e5e4a3_6cb5463d",
         "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
         "patchSetId": 10
@@ -62,6 +110,24 @@
       "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22eeac39_1a884d58",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T14:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e5e4a3_6cb5463d",
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "31082fb4_ced08278",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T14:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b26919_79bf3638",
+      "range": {
+        "startLine": 62,
+        "startChar": 60,
+        "endLine": 62,
+        "endChar": 97
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7643d276_8e3ba5e4",
         "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
         "patchSetId": 10
@@ -108,6 +198,30 @@
       "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b234344_751757d0",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T14:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7643d276_8e3ba5e4",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
