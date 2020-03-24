@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e1aee06_720d7c2a",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-24T09:07:05Z",
+      "side": 1,
+      "message": "Please, add info and comment about installing library, as above",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d252799_6fe7894b",
         "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
         "patchSetId": 9
@@ -31,6 +54,29 @@
       "side": 1,
       "message": "Actually good finding, also take account what Tomasz Wróbel did in order to check if certificate could be open. Move this also to other .py file.",
       "parentUuid": "2d252799_6fe7894b",
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19e0a07_3f63f6fc",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-24T09:07:05Z",
+      "side": 1,
+      "message": "Consider to add expected data and keystore data in assert message",
+      "range": {
+        "startLine": 102,
+        "startChar": 63,
+        "endLine": 102,
+        "endChar": 76
+      },
       "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
