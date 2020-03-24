@@ -16,6 +16,24 @@
       "revId": "bc1a21cf53f0c6653eb31c953256fc5322877481",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f96a4a8a_d12c5f5c",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-24T20:13:07Z",
+      "side": 0,
+      "message": "start-all will ensure the port is up so this is no longer needed.  Basically, this curl/sleep combo can be removed from all of the setup scripts and replaced with wait-for-dependency in the compose yaml",
+      "parentUuid": "2a3d2814_8088e8ab",
+      "revId": "bc1a21cf53f0c6653eb31c953256fc5322877481",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

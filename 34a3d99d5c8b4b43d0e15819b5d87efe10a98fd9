@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2be77baf_7a2222b7",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-24T20:13:07Z",
+      "side": 1,
+      "message": "I will try it without this and see what happens",
+      "parentUuid": "1ccb192e_bc2f44c0",
+      "revId": "34a3d99d5c8b4b43d0e15819b5d87efe10a98fd9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149ce169_64f8561c",
         "filename": "scripts/policy/config/drools-apps/env/base.conf",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a124399_9fd63e52",
+        "filename": "scripts/policy/config/drools-apps/env/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-24T20:13:07Z",
+      "side": 1,
+      "message": "right.  As the \"commit\" comments say, this will be removed in a later review, once drools-apps has been updated.",
+      "parentUuid": "149ce169_64f8561c",
+      "revId": "34a3d99d5c8b4b43d0e15819b5d87efe10a98fd9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f4e655_07198345",
         "filename": "scripts/policy/docker-compose-drools-apps.yml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2020-03-24T19:57:07Z",
       "side": 1,
       "message": "I don\u0027t think all these changes are needed ..",
+      "revId": "34a3d99d5c8b4b43d0e15819b5d87efe10a98fd9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6946d6c2_2ef9e5e5",
+        "filename": "scripts/policy/docker-compose-drools-apps.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-03-24T20:13:07Z",
+      "side": 1,
+      "message": "I\u0027ll try removing these two lines, and maybe restoring the \"expose\" instead of \"ports\", but will leave the other changes.",
+      "parentUuid": "86f4e655_07198345",
       "revId": "34a3d99d5c8b4b43d0e15819b5d87efe10a98fd9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
