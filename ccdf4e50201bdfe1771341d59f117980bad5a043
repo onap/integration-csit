@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "452b5f29_268eaa21",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-24T12:48:58Z",
+      "side": 1,
+      "message": "To fully separate it could be export as env variable on setup.sh \nOr export as robot variable in cert-service-properties.robot",
+      "range": {
+        "startLine": 4,
+        "startChar": 30,
+        "endLine": 4,
+        "endChar": 40
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b26919_79bf3638",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-03-24T12:48:58Z",
+      "side": 1,
+      "message": "To fully separate it might be extract to other class",
+      "range": {
+        "startLine": 62,
+        "startChar": 60,
+        "endLine": 62,
+        "endChar": 97
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
