@@ -34,6 +34,24 @@
       "revId": "bc1a21cf53f0c6653eb31c953256fc5322877481",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c0b13b3_a0cd05e6",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-03-24T20:50:43Z",
+      "side": 0,
+      "message": "Note that sourcing in this script in integration/csit repo: https://git.onap.org/integration/csit/tree/scripts/common_functions.sh, see last function wait_for_service_init, it could be made in one line.",
+      "parentUuid": "f96a4a8a_d12c5f5c",
+      "revId": "bc1a21cf53f0c6653eb31c953256fc5322877481",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

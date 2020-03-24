@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "8fd90f95_195764b7",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-03-24T20:50:43Z",
+      "side": 1,
+      "message": "this is ok, but not needed in LF jenkins env.",
+      "revId": "34a3d99d5c8b4b43d0e15819b5d87efe10a98fd9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149ce169_64f8561c",
         "filename": "scripts/policy/config/drools-apps/env/base.conf",
         "patchSetId": 1
