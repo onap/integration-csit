@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a3d2814_8088e8ab",
+        "filename": "plans/policy/drools-applications/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-03-24T19:57:07Z",
+      "side": 0,
+      "message": "I think you may need this for healthcheck robot test.   I think we need to ensure that when the robot test is invoked the port is up.   There may be a race condition drools between coming up and robot test start executing.",
+      "revId": "bc1a21cf53f0c6653eb31c953256fc5322877481",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
