@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "f335a354_fc279d49",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-03-24T13:40:32Z",
+      "side": 1,
+      "message": "I think you could import it as:\nfrom CertClientManager import MOUNT_PATH, CertClientManager\nthat would allow to replace calls like manager.CertClientManager() just with CertClientManager()",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e5e4a3_6cb5463d",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-03-24T13:40:32Z",
+      "side": 1,
+      "message": "Consider ordering methods according to sequence of their occurrence and if they are used be used outside (like public methods) or shouldn\u0027t (like private methods).",
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b26919_79bf3638",
         "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
         "patchSetId": 10
@@ -41,6 +81,29 @@
         "startChar": 60,
         "endLine": 62,
         "endChar": 97
+      },
+      "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7643d276_8e3ba5e4",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-03-24T13:40:32Z",
+      "side": 1,
+      "message": "Not sure if it is better, but python allows returning multiple variables so it would be possible to create call like:\n${data}    ${isEqual}\u003d  Get And Compare Data  ${env_file}",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 54
       },
       "revId": "ccdf4e50201bdfe1771341d59f117980bad5a043",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
