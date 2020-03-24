@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccc139db_ea694763",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T12:15:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e1aee06_720d7c2a",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d252799_6fe7894b",
         "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
         "patchSetId": 9
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "b256a126_7edb5ea6",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T12:15:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c54b92f_848959da",
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e19e0a07_3f63f6fc",
         "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
         "patchSetId": 9
@@ -80,6 +122,30 @@
       "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb4ee89_730ae453",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-24T12:15:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e19e0a07_3f63f6fc",
+      "range": {
+        "startLine": 102,
+        "startChar": 63,
+        "endLine": 102,
+        "endChar": 76
+      },
+      "revId": "3ac52fcb49c5c30467754ccfcf2fb2b60cea10f7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
