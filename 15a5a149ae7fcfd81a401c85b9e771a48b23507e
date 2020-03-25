@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ef262cb_1d01c52e",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b19c50_9cc39e82",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d21b9b47_33212d77",
         "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-25T06:59:06Z",
       "side": 1,
       "message": "Change method name to: \"read_env_list...\" it will sound much better.",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc6639bf_6c95db10",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21b9b47_33212d77",
       "range": {
         "startLine": 23,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "88cd5482_381aeb62",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f39f0765_5527df27",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c665536b_5ad2ef0c",
         "filename": "tests/aaf/certservice/libraries/EnvsReader.py",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2020-03-25T06:59:06Z",
       "side": 1,
       "message": "As mentioned before swap in order \"list\" with \"env\"",
+      "range": {
+        "startLine": 3,
+        "startChar": 6,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42734d93_1c601c1a",
+        "filename": "tests/aaf/certservice/libraries/EnvsReader.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c665536b_5ad2ef0c",
       "range": {
         "startLine": 3,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6fec819e_74b04b19",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "568392eb_b5c92c1b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "405bfb33_02271327",
         "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9ad0e660_82d87df8",
+        "filename": "tests/aaf/certservice/libraries/JksFilesValidator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "405bfb33_02271327",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce3bc3ff_fb6c1eda",
         "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
         "patchSetId": 11
@@ -151,6 +295,30 @@
       "writtenOn": "2020-03-25T06:59:06Z",
       "side": 1,
       "message": "I think we need here different log_file_name than one for positive path.",
+      "range": {
+        "startLine": 101,
+        "startChar": 69,
+        "endLine": 101,
+        "endChar": 82
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92142695_c21485c7",
+        "filename": "tests/aaf/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2020-03-25T07:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce3bc3ff_fb6c1eda",
       "range": {
         "startLine": 101,
         "startChar": 69,
