@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "f39f0765_5527df27",
+        "filename": "tests/aaf/certservice/libraries/CertClientManager.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-03-25T07:01:33Z",
+      "side": 1,
+      "message": "For better visibility replace this with \"client_container_\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "15a5a149ae7fcfd81a401c85b9e771a48b23507e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c665536b_5ad2ef0c",
         "filename": "tests/aaf/certservice/libraries/EnvsReader.py",
         "patchSetId": 11
