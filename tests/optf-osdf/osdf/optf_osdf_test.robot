@@ -33,14 +33,14 @@ SendPlacementWithValidAuth
     Should Be Equal As Integers    ${resp.status_code}    202
     Should Be Equal     accepted    ${response_json['requestStatus']}
 
-#SendPCIOptimizationWithAuth
-#    [Documentation]    It sends a POST request PCI Optimization service
-#
-#    ${data}=         Get Binary File     ${CURDIR}${/}data${/}pci-opt-request.json
-#    ${resp}=         Http Post        host=${osdf_host}   restUrl=/api/oof/v1/pci     data=${data}    auth=${pci_auth}
-#    ${response_json}    json.loads    ${resp.content}
-#    Should Be Equal As Integers    ${resp.status_code}    202
-#    Should Be Equal     accepted    ${response_json['requestStatus']}
+SendPCIOptimizationWithAuth
+    [Documentation]    It sends a POST request PCI Optimization service
+
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}pci-opt-request.json
+    ${resp}=         Http Post        host=${osdf_host}   restUrl=/api/oof/v1/pci     data=${data}    auth=${pci_auth}
+    ${response_json}    json.loads    ${resp.content}
+    Should Be Equal As Integers    ${resp.status_code}    202
+    Should Be Equal     accepted    ${response_json['requestStatus']}
 
 
 
