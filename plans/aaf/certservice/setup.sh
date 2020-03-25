@@ -35,6 +35,11 @@ pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
+#reinstall pyopenssl library
+echo "Reinstall pyopenssl library."
+pip uninstall pyopenssl -y
+pip install pyopenssl==17.5.0
+
 #Disable proxy - for local run
 unset http_proxy https_proxy
 
