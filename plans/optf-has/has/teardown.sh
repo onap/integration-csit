@@ -33,5 +33,6 @@ echo "# optf/has music scripts calling";
 source ${WORKSPACE}/scripts/optf-has/has/music_teardown_script.sh
 
 echo "# aaf-sms teardown.sh script";
-source ${WORKSPACE}/plans/aaf/sms-test-plan/teardown.sh
+kill-instance.sh sms
+kill-instance.sh vault
 

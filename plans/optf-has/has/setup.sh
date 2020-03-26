@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 echo "# aaf-sms setup.sh script";
-source ${WORKSPACE}/plans/aaf/sms-test-plan/setup.sh
+source ${WORKSPACE}/scripts/optf-has/has/setup-sms.sh
 
 #
 # add here eventual scripts needed for music

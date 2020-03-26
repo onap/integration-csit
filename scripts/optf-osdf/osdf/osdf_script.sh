@@ -52,9 +52,9 @@ sed  -i -e "s%127.0.0.1:5000%${OSDF_SIM_IP}:5000%g" $OSDF_CONF
 sed  -i -e "s%aaf-sms.onap:10443%${SMS_IP}:10443%g" $OSDF_CONF
 
 #Preload secrets
-docker exec -i sms /bin/sh -c "mkdir -p /preload/config"
+docker exec --user root -i sms  /bin/sh -c "mkdir -p /preload/config"
 docker cp /tmp/sms/properties/osdf.json sms:/preload/config/osdf.json
-docker exec -i sms /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
+docker exec --user root -i sms  /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
 
 docker logs vault
 docker run -d --name optf-osdf -v ${OSDF_CONF}:/opt/osdf/config/osdf_config.yaml -p "8698:8699" ${IMAGE_NAME}:${IMAGE_VER}
