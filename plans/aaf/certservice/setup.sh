@@ -75,13 +75,15 @@ docker-compose up -d
 
 AAFCERT_IP='none'
 # Wait container ready
-for i in {1..9}
+for i in {1..3}
 do
-   AAFCERT_IP=`get-instance-ip.sh aafcert`
-   RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  http://${AAFCERT_IP}:8080/actuator/health)
-   if [[ "$RESP_CODE" == '200' ]]; then
+   AAFCERT_IP=`get-instance-ip.sh aafcert-service`
+   RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret | \
+   python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
+   if [[ "$RESP_CODE" == "UP" ]]; then
        echo 'AAF Cert Service is ready'
        export AAFCERT_IP=${AAFCERT_IP}
+       echo "AAFCERT_IP="$AAFCERT_IP
        docker exec aafcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
        break
    fi
