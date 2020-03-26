@@ -5,19 +5,20 @@ Resource          ./cert-service-properties.robot
 Library 	      RequestsLibrary
 Library           HttpLibrary.HTTP
 Library           Collections
-Library           ../libraries/CertClientManager.py  ${MOUNT_PATH}
+Library           ../libraries/CertClientManager.py  ${MOUNT_PATH}  ${TRUSTSTORE_PATH}
 Library           ../libraries/JksFilesValidator.py  ${MOUNT_PATH}
 
 *** Keywords ***
 
 Create sessions
     [Documentation]  Create all required sessions
-    Create Session    aaf_cert_service_url    ${AAFCERT_URL}
-    Set Suite Variable    ${http_session}    aaf_cert_service_url
+    ${certs}=  Create List  ${CERTSERVICE_SERVER_CRT}  ${CERTSERVICE_SERVER_KEY}
+    Create Client Cert Session  alias  ${AAFCERT_URL}  client_certs=${certs}  verify=${ROOTCA}
+    Set Suite Variable  ${https_valid_cert_session}  alias
 
 Run Healthcheck
     [Documentation]  Run Healthcheck
-    ${resp}= 	Get Request 	${http_session} 	/actuator/health
+    ${resp}=  Get Request 	${https_valid_cert_session} 	/actuator/health
     Should Be Equal As Strings 	${resp.status_code} 	200
     Validate Recieved Response  ${resp}  status  UP
 
@@ -31,7 +32,7 @@ Validate Recieved Response
 Send Get Request And Validate Response
     [Documentation]   Send request to passed url and validate received response
     [Arguments]   ${path}  ${resp_code}
-    ${resp}= 	Get Request 	${http_session}  ${path}
+    ${resp}= 	Get Request 	${https_valid_cert_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
 Send Get Request with Header
@@ -39,7 +40,7 @@ Send Get Request with Header
     [Arguments]  ${path}  ${csr_file}  ${pk_file}
     [Return]  ${resp}
     ${headers}=  Create Header with CSR and PK  ${csr_file}  ${pk_file}
-    ${resp}= 	Get Request 	${http_session}  ${path}  headers=${headers}
+    ${resp}= 	Get Request 	${https_valid_cert_session}  ${path}  headers=${headers}
 
 Send Get Request with Header And Expect Success
     [Documentation]   Send request to passed url and validate received response
@@ -81,7 +82,7 @@ Create Header with CSR and PK
 Send Post Request And Validate Response
     [Documentation]   Send request to passed url and validate received response
     [Arguments]   ${path}  ${resp_code}
-    ${resp}= 	Post Request 	${http_session}  ${path}
+    ${resp}= 	Post Request 	${https_valid_cert_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
 Run Cert Service Client And Validate JKS File Creation And Client Exit Code
