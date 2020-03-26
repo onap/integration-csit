@@ -10,10 +10,12 @@ ARCHIVES_PATH = os.getenv("WORKSPACE") + "/archives/"
 ERROR_API_REGEX = 'Error on API response.*[0-9]{3}'
 RESPONSE_CODE_REGEX = '[0-9]{3}'
 
+
 class CertClientManager:
 
-    def __init__(self, mount_path):
+    def __init__(self, mount_path, truststore_path):
         self.mount_path = mount_path
+        self.truststore_path = truststore_path
 
     def run_client_container(self, client_image, container_name, path_to_env, request_url, network):
         self.create_mount_dir()
@@ -25,8 +27,9 @@ class CertClientManager:
             name=container_name,
             environment=environment,
             network=network,
-            user='root', #Run container as root to avoid permission issues with volume mount access
-            mounts=[Mount(target='/var/certs', source=self.mount_path, type='bind')],
+            user='root',  # Run container as root to avoid permission issues with volume mount access
+            mounts=[Mount(target='/var/certs', source=self.mount_path, type='bind'),
+                    Mount(target='/etc/onap/aaf/certservice/certs/', source=self.truststore_path, type='bind')],
             detach=True
         )
         exitcode = container.wait()
