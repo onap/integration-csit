@@ -16,6 +16,9 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - SDNC_CONFIG_DIR=/opt/onap/sdnc/data/properties
       - MYSQL_PASSWD=password
+      - ODL_CERT_DIR=/opt/opendaylight/current/certs
+      - ODL_ADMIN_USERNAME=admin
+      - ODL_ADMIN_PASSWORD=Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
     dns:
       - ${DNS_IP_ADDR-10.0.100.1}
     logging:

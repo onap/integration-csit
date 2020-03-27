@@ -63,14 +63,15 @@ Get pnf workflow
     ${download_workflow_uuid}=    Set Variable    ""
     ${download_workflow_name}=    Set Variable    ""
 
-    :FOR    ${member}     IN      @{all_wf_members}
-    \   ${workflow_uuid}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactUuid]
-    \   ${workflow_name}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactName]
-    \   Log to console   The workflow ${workflow_name} has uuid : ${workflow_uuid}
-    \   ${activate_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_uuid}   ${activate_workflow_uuid} 
-    \   ${activate_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_name}   ${activate_workflow_name}
-    \   ${download_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_uuid}   ${download_workflow_uuid}
-    \   ${download_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_name}   ${download_workflow_name}
+    FOR    ${member}     IN      @{all_wf_members}
+       ${workflow_uuid}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactUuid]
+       ${workflow_name}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactName]
+       Log to console   The workflow ${workflow_name} has uuid : ${workflow_uuid}
+       ${activate_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_uuid}   ${activate_workflow_uuid} 
+       ${activate_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_name}   ${activate_workflow_name}
+       ${download_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_uuid}   ${download_workflow_uuid}
+       ${download_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_name}   ${download_workflow_name}
+    END
     
     SET GLOBAL VARIABLE       ${activate_workflow_uuid}
     SET GLOBAL VARIABLE       ${download_workflow_uuid}
@@ -91,20 +92,21 @@ Invoke Service Instantiation for pnf software download
     ${request_ID}=          Set Variable         ${service_instantiation_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
 
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   log to console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   Log To Console    Received actual repsonse status:${actual_request_state}
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETED' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+     FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       log to console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       Log To Console    Received actual repsonse status:${actual_request_state}
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+     END
 
     Log To Console     final repsonse status received: ${actual_request_state}
-    Run Keyword If  '${actual_request_state}' == 'COMPLETED'  log to console   \nexecuted with expected result
-    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETED'
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
 
 Test verify PNF Configuration for software download
      [Documentation]    Checking PNF configuration params
@@ -122,11 +124,12 @@ Test verify PNF Configuration for software download
      ${pnfsim_software_resp_json}=    Evaluate     json.loads(r"""${pnfsim_software_resp.content}""", strict=False)    json
      ${all_upgp_members}=    Set Variable     ${pnfsim_software_resp_json['software-upgrade']['upgrade-package']}
 
-     :FOR    ${member}     IN      @{all_upgp_members}
-     \   ${soft_ver}=    Get From Dictionary   ${member}     software-version
-     \   ${soft_status}=    Get From Dictionary   ${member}     current-status
-     \   Log to console   The node ${pnfName} has software version ${soft_ver} : ${soft_status}
-     \   Run Keyword If  '${soft_ver}' == 'pnf_sw_version-2.0.0'   Exit For Loop
+     FOR    ${member}     IN      @{all_upgp_members}
+        ${soft_ver}=    Get From Dictionary   ${member}     software-version
+        ${soft_status}=    Get From Dictionary   ${member}     current-status
+        Log to console   The node ${pnfName} has software version ${soft_ver} : ${soft_status}
+        Run Keyword If  '${soft_ver}' == 'pnf_sw_version-2.0.0'   Exit For Loop
+     END
 
      Run Keyword If  '${soft_ver}' == 'pnf_sw_version-2.0.0'  log to console   \nexecuted with expected result
      Should Be Equal As Strings    '${soft_ver}'    'pnf_sw_version-2.0.0'
@@ -142,20 +145,21 @@ Invoke Service Instantiation for pnf software activation
     ${service_instantiation_json_response}=    Evaluate     json.loads(r"""${service_instantiation_request.content}""", strict=False)    json
     ${request_ID}=          Set Variable         ${service_instantiation_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   log to console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   Log To Console    Received actual repsonse status:${actual_request_state}
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETED' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+     FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       log to console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       Log To Console    Received actual repsonse status:${actual_request_state}
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+     END
 
     Log To Console     final repsonse status received: ${actual_request_state}
-    Run Keyword If  '${actual_request_state}' == 'COMPLETED'  log to console   \nexecuted with expected result
-    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETED'
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
     
 Test verify PNF Configuration for software activate 
      [Documentation]    Checking PNF configuration params
@@ -173,11 +177,12 @@ Test verify PNF Configuration for software activate
      ${pnfsim_software_resp_json}=    Evaluate     json.loads(r"""${pnfsim_software_resp.content}""", strict=False)    json
      ${all_upgp_members}=    Set Variable     ${pnfsim_software_resp_json['software-upgrade']['upgrade-package']}
 
-     :FOR    ${member}     IN      @{all_upgp_members}
-     \   ${soft_ver}=    Get From Dictionary   ${member}     software-version
-     \   ${soft_status}=    Get From Dictionary   ${member}     current-status
-     \   Log to console   The node ${pnfName} has software version ${soft_ver} : ${soft_status}
-     \   Run Keyword If  '${soft_ver}' == 'pnf_sw_version-3.0.0'   Exit For Loop
+     FOR    ${member}     IN      @{all_upgp_members}
+        ${soft_ver}=    Get From Dictionary   ${member}     software-version
+        ${soft_status}=    Get From Dictionary   ${member}     current-status
+        Log to console   The node ${pnfName} has software version ${soft_ver} : ${soft_status}
+        Run Keyword If  '${soft_ver}' == 'pnf_sw_version-3.0.0'   Exit For Loop
+     END
 
      Run Keyword If  '${soft_ver}' == 'pnf_sw_version-3.0.0'  log to console   \nexecuted with expected result
      Should Be Equal As Strings    '${soft_ver}'    'pnf_sw_version-3.0.0'
@@ -186,16 +191,17 @@ Test verify PNF Configuration for software activate
 Test AAI-update for target software version verify
     Create Session   aai_simulator_session  https://${REPO_IP}:9993
     &{headers}=  Create Dictionary    Authorization=Basic YWFpOmFhaS5vbmFwLm9yZzpkZW1vMTIzNDU2IQ==    Content-Type=application/json    Accept=application/json    verify=False
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${get_pnf_request}=    Get Request    aai_simulator_session    aai/v11/network/pnfs/pnf/${pnfName}     headers=${headers}
-    \   Run Keyword If  '${get_pnf_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   ${get_pnf_json_response}=    Evaluate     json.loads(r"""${get_pnf_request.content}""", strict=False)    json
-    \   Log to console  ${get_pnf_json_response}
-    \   ${sw_version}=          Set Variable         ${get_pnf_json_response}[sw-version]
-    \   Log to console  ${sw_version}
-    \   Run Keyword If  '${sw_version}' == 'pnf_sw_version-3.0.0'   Exit For Loop
-    \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+    FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${get_pnf_request}=    Get Request    aai_simulator_session    aai/v11/network/pnfs/pnf/${pnfName}     headers=${headers}
+       Run Keyword If  '${get_pnf_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       ${get_pnf_json_response}=    Evaluate     json.loads(r"""${get_pnf_request.content}""", strict=False)    json
+       Log to console  ${get_pnf_json_response}
+       ${sw_version}=          Set Variable         ${get_pnf_json_response}[sw-version]
+       Log to console  ${sw_version}
+       Run Keyword If  '${sw_version}' == 'pnf_sw_version-3.0.0'   Exit For Loop
+       log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+    END
 
     Log To Console     final target software version received: ${sw_version}
     Run Keyword If  '${sw_version}' == 'pnf_sw_version-3.0.0'  log to console   \nexecuted with expected result
