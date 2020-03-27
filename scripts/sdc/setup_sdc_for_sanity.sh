@@ -94,7 +94,7 @@ chmod -R 777 "${WORKSPACE}/data/clone"
 export ENV_NAME='CSIT'
 export MR_IP_ADDR='10.0.0.1'
 
-ifconfig
+ip a
 IP_ADDRESS=`ip route get 8.8.8.8 | awk '/src/{ print $7 }'`
 export HOST_IP="$IP_ADDRESS"
 
