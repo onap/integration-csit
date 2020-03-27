@@ -20,7 +20,7 @@
 
 #
 echo "# aaf-sms setup.sh script";
-source ${WORKSPACE}/plans/aaf/sms-test-plan/setup.sh
+source ${WORKSPACE}/scripts/optf-osdf/osdf/setup-sms.sh
 
 echo "# simulator scripts calling";
 source ${WORKSPACE}/scripts/optf-osdf/osdf/simulator_script.sh

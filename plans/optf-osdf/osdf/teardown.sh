@@ -31,5 +31,6 @@ kill-instance.sh optf-osdf
 kill-instance.sh osdf_sim
 
 echo "# aaf-sms teardown.sh script";
-source ${WORKSPACE}/plans/aaf/sms-test-plan/teardown.sh
+kill-instance.sh sms
+kill-instance.sh vault
 

@@ -72,9 +72,9 @@ sed  -i -e "s%localhost:8100/%${AAFSIM_IP}:8100/%g" /tmp/conductor/properties/co
 #SMS
 sed  -i -e "s%aaf-sms.onap:10443%${SMS_IP}:10443%g" /tmp/conductor/properties/conductor.conf
 #Preload secrets
-docker exec -i sms /bin/sh -c "mkdir -p /preload/config"
+docker exec --user root -i sms /bin/sh -c "mkdir -p /preload/config"
 docker cp /tmp/sms/properties/has.json sms:/preload/config/has.json
-docker exec -i sms /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
+docker exec --user root -i sms /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
 docker logs vault
 
 #onboard conductor into music
