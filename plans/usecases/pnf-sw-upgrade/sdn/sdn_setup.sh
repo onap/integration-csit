@@ -50,10 +50,6 @@ while [ "$TIME" -lt "$TIME_OUT" ]; do
   TIME=$(($TIME+$INTERVAL))
 done
 
-export LOCAL_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
-sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/mount.xml
-
-
 if [ "$TIME" -ge "$TIME_OUT" ]; then
    echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
 fi
