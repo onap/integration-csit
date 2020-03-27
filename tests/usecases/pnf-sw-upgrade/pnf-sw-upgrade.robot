@@ -98,13 +98,13 @@ Invoke Service Instantiation for pnf software download
     \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   Log To Console    Received actual repsonse status:${actual_request_state}
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETED' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
     \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
     \   SLEEP   ${SLEEP_INTERVAL_SEC}s
 
     Log To Console     final repsonse status received: ${actual_request_state}
-    Run Keyword If  '${actual_request_state}' == 'COMPLETED'  log to console   \nexecuted with expected result
-    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETED'
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
 
 Test verify PNF Configuration for software download
      [Documentation]    Checking PNF configuration params
@@ -149,13 +149,13 @@ Invoke Service Instantiation for pnf software activation
     \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
     \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
     \   Log To Console    Received actual repsonse status:${actual_request_state}
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETED' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
     \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
     \   SLEEP   ${SLEEP_INTERVAL_SEC}s
 
     Log To Console     final repsonse status received: ${actual_request_state}
-    Run Keyword If  '${actual_request_state}' == 'COMPLETED'  log to console   \nexecuted with expected result
-    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETED'
+    Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
     
 Test verify PNF Configuration for software activate 
      [Documentation]    Checking PNF configuration params
