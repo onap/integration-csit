@@ -17,9 +17,9 @@ Suite Teardown    Run keywords  VES Collector Suite Shutdown DMaaP  Remove Certs
 #No authentication tests
 
 VES Collector HTTP Health Check
-    [Tags]    DCAE-VESC-R1
-    [Documentation]   Run healthcheck
-    Run Healthcheck
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
+    [Documentation]   Run healthcheck over HTTP
+    Run Healthcheck  ${http_session}
 
 Publish Single VES VNF Measurement Event API V7
     [Tags]    DCAE-VESC-R1
@@ -94,9 +94,9 @@ Publish VES Event With Invalid URL Path
     Log   Send HTTP Request with invalid /listener/v5/ instead of /eventListener/v5 path
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  /listener/v5/  ${EVENT_DATA_FILE}  404
 
-Publish PNF Registration Event
+Publish 'Other' Registration Event
     [Tags]    DCAE-VESC-R1
-    [Documentation]   Post PNF registration event and expect 200 Response Status Code
+    [Documentation]   Post an event aligned with “other” domain and expect HTTP 202 Accepeted Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_ANY_EVENT_PATH}  ${EVENT_PNF_REGISTRATION}  202  QTFCOC540002E-reg
 
 Publish VES Event With Invalid Method V7
@@ -111,21 +111,26 @@ Publish VES Event With Invalid URL Path V7
     Log   Send HTTP Request with invalid /listener/v5/ instead of /eventListener/v5 path
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  /listener/v7/  ${EVENT_DATA_FILE}  404
 
-Publish PNF Registration Event V7
+Publish 'Other' Registration Event V7
     [Tags]    DCAE-VESC-R1
-    [Documentation]   Post PNF registration event and expect 200 Response Status Code
+    [Documentation]   Post an event aligned with “other” domain and expect HTTP 202 Accepeted Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${EVENT_PNF_REGISTRATION_V7}  202  registration_38407540
 
 # Auth by certificate and basic auth username / password
 
 Enable VESC HTTPS with certBasicAuth
-    [Tags]    DCAE-VESC-R1
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
     [Documentation]  Enable VESC Https and Authentication and Run Health Check
     Enable VESC with certBasicAuth
-    Run Healthcheck
+    Run Healthcheck  ${https_basic_auth_session}
+
+VES Collector HTTP Health Check with certBasicAuth
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
+    [Documentation]   Run healthcheck over HTTP with certBasicAuth
+    Run Healthcheck  ${http_session}
 
 Healthcheck with Outdated Cert
-    [Tags]    DCAE-VESC-R1
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
     [Documentation]  Run healthcheck with outdated cert
     ${uuid}=    Generate UUID
     ${headers}=  Create Dictionary     Accept=*/*     X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}

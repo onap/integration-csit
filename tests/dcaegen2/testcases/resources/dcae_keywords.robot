@@ -167,7 +167,8 @@ Send Request And Expect Error
 
 Run Healthcheck
     [Documentation]  Run Healthcheck
+    [Arguments]  ${session}
     ${uuid}=    Generate UUID
     ${headers}=  Create Dictionary     Accept=*/*     X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
-    ${resp}= 	Get Request 	${http_session} 	/healthcheck        headers=${headers}
+    ${resp}= 	Get Request 	${session} 	/healthcheck        headers=${headers}
     Should Be Equal As Strings 	${resp.status_code} 	200
