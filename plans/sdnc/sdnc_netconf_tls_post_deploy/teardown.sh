@@ -17,6 +17,8 @@
 # Modifications copyright (c) 2017 AT&T Intellectual Property
 #
 
+docker cp sdnc_controller_container:/opt/opendaylight/data/log/karaf.log $WORKSPACE/archives/karaf.log
+docker cp sdnc_controller_container:/opt/opendaylight/data/log/installCerts.log $WORKSPACE/archives/installCerts.log
 kill-instance.sh sdnc_controller_container
 kill-instance.sh sdnc_dgbuilder_container
 kill-instance.sh sdnc_portal_container
@@ -24,9 +26,8 @@ kill-instance.sh sdnc_db_container
 kill-instance.sh sdnc_ueblistener_container
 kill-instance.sh sdnc_dmaaplistener_container
 kill-instance.sh sdnc_ansible_container
-kill-instance.sh netopeer
-kill-instance.sh sftp-server
-kill-instance.sh ftpes-server-vsftpd
-kill-instance.sh ftpes-server-pure-ftpd
+kill-instance.sh pnfsimulator_pnf-simulator_1
+kill-instance.sh pnfsimulator_mongo-express_1
+kill-instance.sh pnfsimulator_mongo_1
 
 # $WORKSPACE/archives/appc deleted with archives folder when tests starts so we keep it at the end for debugging
