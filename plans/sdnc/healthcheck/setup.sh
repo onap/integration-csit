@@ -24,8 +24,8 @@ export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.7-STAGING-latest
-export CCSDK_DOCKER_IMAGE_VERSION=0.6-STAGING-latest
+export DOCKER_IMAGE_VERSION=1.8-STAGING-latest
+export CCSDK_DOCKER_IMAGE_VERSION=0.7-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -96,10 +96,8 @@ TIME_OUT=1500
 INTERVAL=60
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
+  response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level | grep Level)
+  response=${response%$'\n'}
 
   if [ "$response" == "Level 100" ] ; then
     echo SDNC karaf started in $TIME seconds
@@ -115,9 +113,10 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
 fi
 
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
+response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level | grep Level)
+response=${response%$'\n'}
 
-  if [ "$response" == "Level 100" ] ; then
+if [ "$response" == "Level 100" ] ; then
     num_failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
     failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
     echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
