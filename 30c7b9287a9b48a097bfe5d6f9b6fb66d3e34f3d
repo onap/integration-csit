@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60a49367_b9fb0ff2",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5597
+      },
+      "writtenOn": "2020-04-01T13:13:42Z",
+      "side": 1,
+      "message": "No, please revert the previous test name. You can simply omit \"v7\".\npnfRegistration domain started to exist in V7.\n\"Publish PNF Registration Event\" would be fine.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 37
+      },
+      "revId": "30c7b9287a9b48a097bfe5d6f9b6fb66d3e34f3d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da02e17_2b42507f",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5597
+      },
+      "writtenOn": "2020-04-01T13:13:42Z",
+      "side": 1,
+      "message": "...PNF Registration event...",
+      "range": {
+        "startLine": 116,
+        "startChar": 27,
+        "endLine": 116,
+        "endChar": 64
+      },
+      "revId": "30c7b9287a9b48a097bfe5d6f9b6fb66d3e34f3d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
