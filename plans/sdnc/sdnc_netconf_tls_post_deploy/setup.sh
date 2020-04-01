@@ -19,13 +19,13 @@
 # Place the scripts in run order:
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${WORKSPACE}/scripts/sdnc/script1.sh
-export DOCKER_SDNC_TAG=1.5.2
+export DOCKER_SDNC_TAG=1.8.0
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.5.2
-export CCSDK_DOCKER_IMAGE_VERSION=0.4-STAGING-latest
+export DOCKER_IMAGE_VERSION=1.8.0
+export CCSDK_DOCKER_IMAGE_VERSION=0.7-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -36,7 +36,7 @@ fi
 # Clone SDNC repo to get docker-compose for SDNC
 mkdir -p $WORKSPACE/archives/integration
 cd $WORKSPACE/archives
-git clone -b dublin --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
+git clone -b master --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
 cd $WORKSPACE/archives/integration
 git pull
 HOST_IP_ADDR=localhost
@@ -72,13 +72,15 @@ docker pull $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERS
 docker tag $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-dmaap-listener-image:latest
 
 CERT_SUBPATH=plans/sdnc/sdnc_netconf_tls_post_deploy/certs
+cd $CERT_SUBPATH
+
 export SDNC_CERT_PATH=${WORKSPACE}/${CERT_SUBPATH}
 sed -i 's/sdnc_controller_container/sdnc_controller_container\n    volumes: \n      - $SDNC_CERT_PATH:\/opt\/opendaylight\/current\/certs/' docker-compose.yml
 # start SDNC containers with docker compose and configuration from docker-compose.yml
 docker-compose up -d
 
 cd $WORKSPACE/archives/integration/test/mocks/pnfsimulator
-./simulator.sh start&
+docker-compose up -d
 
 # WAIT 10 minutes maximum and test every 5 seconds if SDNC is up using HealthCheck API
 TIME_OUT=1000
@@ -110,9 +112,8 @@ TIME_OUT=1500
 INTERVAL=60
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-docker exec sdnc_controller_container rm -f /opt/opendaylight/current/etc/host.key
+response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level | grep Level)
+response=$(response%$'\n'}
 
   if [ "$response" == "Level 100" ] ; then
     echo SDNC karaf started in $TIME seconds
@@ -128,11 +129,12 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
 fi
 
-response=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
+response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level|grep Level)
+response=$(response%$'\n'}
 
   if [ "$response" == "Level 100" ] ; then
-    num_failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-    failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
+    num_failed_bundles=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
+    failed_bundles=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
     echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
   fi
 
