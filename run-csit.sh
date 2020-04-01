@@ -130,7 +130,7 @@ source_safely "${WORKSPACE}/prepare-csit.sh"
 # Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
 source_safely "${ROBOT_VENV}/bin/activate"
 
-WORKDIR=$(mktemp -d --suffix=-robot-workdir)
+WORKDIR=$(mktemp -d )
 cd "${WORKDIR}"
 
 # Add csit scripts to PATH
