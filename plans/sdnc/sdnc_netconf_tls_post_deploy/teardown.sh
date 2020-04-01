@@ -24,9 +24,8 @@ kill-instance.sh sdnc_db_container
 kill-instance.sh sdnc_ueblistener_container
 kill-instance.sh sdnc_dmaaplistener_container
 kill-instance.sh sdnc_ansible_container
-kill-instance.sh netopeer
-kill-instance.sh sftp-server
-kill-instance.sh ftpes-server-vsftpd
-kill-instance.sh ftpes-server-pure-ftpd
+kill-instance.sh pnfsimulator_pnf-simulator_1
+kill-instance.sh pnfsimulator_mongo-express_1
+kill-instance.sh pnfsimulator_mongo_1
 
 # $WORKSPACE/archives/appc deleted with archives folder when tests starts so we keep it at the end for debugging
