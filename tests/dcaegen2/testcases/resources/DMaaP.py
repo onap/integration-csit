@@ -119,7 +119,7 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             global EvtSchema
             try:
                 if EvtSchema is None:
-                    with open(DcaeVariables.CommonEventSchemaV5) as opened_file:
+                    with open(DcaeVariables.CommonEventSchema) as opened_file:
                         EvtSchema = json.load(opened_file)
                 decoded_body = json.loads(post_body)
                 jsonschema.validate(decoded_body, EvtSchema)
@@ -368,8 +368,8 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 def test(handler_class=DMaaPHandler, server_class=BaseHTTPServer.HTTPServer, protocol="HTTP/1.0", port=3904):
-    print "Load event schema file: " + DcaeVariables.CommonEventSchemaV5
-    with open(DcaeVariables.CommonEventSchemaV5) as opened_file:
+    print "Load event schema file: " + DcaeVariables.CommonEventSchema
+    with open(DcaeVariables.CommonEventSchema) as opened_file:
         global EvtSchema
         EvtSchema = json.load(opened_file)
         
@@ -394,8 +394,8 @@ def _main_(handler_class=DMaaPHandler, server_class=BaseHTTPServer.HTTPServer, p
     else:
         port = 3904
     
-    print "Load event schema file: " + DcaeVariables.CommonEventSchemaV5
-    with open(DcaeVariables.CommonEventSchemaV5) as opened_file:
+    print "Load event schema file: " + DcaeVariables.CommonEventSchema
+    with open(DcaeVariables.CommonEventSchema) as opened_file:
         global EvtSchema
         EvtSchema = json.load(opened_file)
         
