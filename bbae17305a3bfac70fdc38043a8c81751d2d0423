@@ -22,6 +22,30 @@
       "revId": "bbae17305a3bfac70fdc38043a8c81751d2d0423",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a82f78a_272e917e",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-04-02T11:35:33Z",
+      "side": 1,
+      "message": "yes, because first of all, we have to run secure Ves. In next step we run tests for healthcheck(http and https)",
+      "parentUuid": "ff9fb6e4_6a79d9b4",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "bbae17305a3bfac70fdc38043a8c81751d2d0423",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
