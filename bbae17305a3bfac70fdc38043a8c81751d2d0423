@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9fb6e4_6a79d9b4",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5597
+      },
+      "writtenOn": "2020-04-02T10:16:09Z",
+      "side": 1,
+      "message": "Should we have here a Keyword \"Enable VESC with CertBasicAuth\", before Keyword \"Run Healthcheck?\nJust to make sure, that when such a test is executed stand-alone, it will give same results, as if it was run in a test-suite? ...assuming VES is runing in noAuth mode in these tests by default...",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "bbae17305a3bfac70fdc38043a8c81751d2d0423",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
