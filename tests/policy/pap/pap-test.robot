@@ -5,6 +5,17 @@ Library     OperatingSystem
 Library     json
 
 *** Test Cases ***
+LoadPolicy
+     [Documentation]    Loads prerequisite Policy via API
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+     ${resp}=   Post Request     policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies    data=${postjson}     headers=${headers}
+     Log    Received response from API ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+
 Healthcheck
      [Documentation]    Runs Policy PAP Health check
      ${auth}=    Create List    healthcheck    zb!XztG34

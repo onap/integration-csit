@@ -1,5 +1,5 @@
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2019-2020 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,9 +16,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 version: '2'
-networks:
-  default:
-    driver: bridge
 services:
    mariadb:
       image: mariadb:${POLICY_MARIADB_VER}
@@ -28,14 +25,14 @@ services:
       env_file: config/db/db.conf
       volumes:
          - ./config/db:/docker-entrypoint-initdb.d
-      ports:
-       - "3306:3306"
+      expose:
+       - 3306
    message-router:
       image: dmaap/simulator
       container_name: dmaap-simulator
       hostname: dmaap-simulator
-      ports:
-       - "3904:3904"
+      expose:
+       - 3904
    pap:
       image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
@@ -57,8 +54,8 @@ services:
        - message-router
        - pap
       hostname: policy-xacml-pdp
-      ports:
-       - "6969:6969"
+      expose:
+       - 6969
    start_dependencies:
       image: dadarek/wait-for-dependencies
       environment:

@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 Nordix Foundation.
-#  Modifications Copyright (C) 2019 AT&T Intellectual Property.
+#  Modifications Copyright (C) 2019-2020 AT&T Intellectual Property.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,19 +57,6 @@ echo PAP IP IS ${POLICY_PAP_IP}
 echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
-#Add policy type and policy to the database via the Policy Api
-AUTH="healthcheck:zb!XztG34"
-CONTYPE="Content-Type: application/json"
-URL=https://${POLICY_API_IP}:6969/policy/api/v1/policytypes
-CONFIGDIR=${WORKSPACE}/scripts/policy/config/pap
-POLTYPE=onap.policies.monitoring.cdap.tca.hi.lo.app
-
-SRCFILE=${CONFIGDIR}/${POLTYPE}.json
-curl -sS -k --user "${AUTH}" -H "${CONTYPE}" -d @${SRCFILE} $URL
-
-URL2=${URL}/${POLTYPE}/versions/1.0.0/policies
-SRCFILE=${CONFIGDIR}/vCPE.policy.monitoring.input.tosca.json
-curl -sS -k --user "${AUTH}" -H "${CONTYPE}" -d @${SRCFILE} $URL2
-
-
-ROBOT_VARIABLES="-v POLICY_PAP_IP:${POLICY_PAP_IP}"
+ROBOT_VARIABLES=""
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"

@@ -1,4 +1,4 @@
-# Copyright 2019 AT&T Intellectual Property. All rights reserved
+# Copyright 2019-2020 AT&T Intellectual Property. All rights reserved
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 version: '2'
-networks:
-  default:
-    driver: bridge
 services:
    mariadb:
       image: mariadb:${POLICY_MARIADB_VER}
@@ -24,16 +21,16 @@ services:
       env_file: config/db/db.conf
       volumes:
          - ./config/db:/docker-entrypoint-initdb.d
-      ports:
-       - "3306:3306"
+      expose:
+       - 3306
    api:
       image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - mariadb
       hostname: policy-api
-      ports:
-       - "6969:6969"
+      expose:
+       - 6969
    start_dependencies:
       image: dadarek/wait-for-dependencies
       environment:
