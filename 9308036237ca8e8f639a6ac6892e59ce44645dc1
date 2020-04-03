@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39a8b6c8_c97e8aec",
+        "filename": "plans/aaf/certservice/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-04-03T13:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f1c4acd_a9468d39",
+      "revId": "9308036237ca8e8f639a6ac6892e59ce44645dc1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6df2228_b3ce1538",
         "filename": "tests/aaf/certservice/resources/cert-service-properties.robot",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9308036237ca8e8f639a6ac6892e59ce44645dc1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f9eece_0847a634",
+        "filename": "tests/aaf/certservice/resources/cert-service-properties.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-04-03T13:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6df2228_b3ce1538",
+      "revId": "9308036237ca8e8f639a6ac6892e59ce44645dc1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
