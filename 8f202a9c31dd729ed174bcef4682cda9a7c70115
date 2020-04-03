@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5babbd09_d24e3cab",
+        "filename": "plans/aaf/certservice/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-04-03T12:33:20Z",
+      "side": 1,
+      "message": "revert to 9",
+      "revId": "8f202a9c31dd729ed174bcef4682cda9a7c70115",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
