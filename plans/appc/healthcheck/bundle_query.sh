@@ -17,19 +17,15 @@
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $SCRIPTS
 
+num_active_bundles=$(docker exec --tty appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Active | wc -l)
+num_failed_bundles=$(docker exec --tty appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
+failed_bundles=$(docker exec --tty appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
 
-num_bundles=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
-#num_failed_bundles=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-num_failed_bundles=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-failed_bundles=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
+echo "There are $num_failed_bundles failed bundles and $num_active_bundles active bundles."
 
-echo "There are $num_failed_bundles failed bundles out of $num_bundles installed bundles."
-
-if [ "$num_failed_bundles" -ge 1 ] || [ "$num_bundles" == "" ]; then
-  echo "There are $num_bundles bundles with $num_failed_bundles in a failed state. "
+if [ "$num_failed_bundles" -ge 1 ] || [ "$num_active_bundles" == "" ]; then
   echo "The following bundle(s) are in a failed state: "
   echo "  $failed_bundles"
   exit 1;
 fi
-
 exit 0

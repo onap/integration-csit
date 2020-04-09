@@ -20,9 +20,9 @@
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${WORKSPACE}/scripts/appc/script1.sh
 
-export APPC_DOCKER_IMAGE_VERSION=1.6.2-SNAPSHOT-latest
+export APPC_DOCKER_IMAGE_VERSION=1.7.2-SNAPSHOT-latest
 export DGBUILDER_DOCKER_IMAGE_VERSION=0.6.0
-export ANSIBLE_DOCKER_IMAGE_VERSION=0.6.1-STAGING-latest
+export ANSIBLE_DOCKER_IMAGE_VERSION=0.4.4
 export BRANCH=master
 export SOLUTION_NAME=onap
 
@@ -63,16 +63,13 @@ docker tag $NEXUS_DOCKER_REPO/${SOLUTION_NAME}/appc-cdt-image:$APPC_DOCKER_IMAGE
 # start APPC containers with docker compose and configuration from docker-compose.yml
 docker-compose up -d
 # WAIT 5 minutes maximum and test every 5 seconds if APPC is up using HealthCheck API
-TIME_OUT=2000
+TIME_OUT=1000
 INTERVAL=30
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
+  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-appc" -H "X-TransactionId: csit-appc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck ); echo $response
 
-startODL_status=$(docker exec appc_controller_container ps -e | grep startODL | wc -l)
-waiting_bundles=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Waiting | wc -l)
-run_level=$(docker exec appc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-
-  if [ "$run_level" == "Level 100" ] && [ "$startODL_status" -lt "1" ] && [ "$waiting_bundles" -lt "1" ] ; then
+  if [ "$response" == "200" ]; then
     echo APPC started in $TIME seconds
     break;
   fi
@@ -83,9 +80,52 @@ run_level=$(docker exec appc_controller_container /opt/opendaylight/current/bin/
 done
 
 if [ "$TIME" -ge "$TIME_OUT" ]; then
-  echo TIME OUT: Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
+   echo TIME OUT: APPC Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
 fi
 
+TIME_OUT=1000
+INTERVAL=60
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+  response=$(docker exec --tty appc_controller_container /opt/opendaylight/current/bin/client system:start-level)
+
+  if grep -q 'Level 100' <<< ${response}; then
+    echo APPC karaf started in $TIME seconds
+    break;
+  fi
+
+  echo Sleep: $INTERVAL seconds before testing if APPC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
+done
+
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+fi
+
+
+TIME_OUT=1000
+INTERVAL=60
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+  response=$(docker exec --tty appc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep appc-design-services-provider)
+
+  if grep -q 'appc-design-services-provider' <<< ${response}; then
+    echo APPC features started in $TIME seconds
+    break;
+  fi
+
+  echo Sleep: $INTERVAL seconds before testing if APPC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
+done
+
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+fi
+
+
+# Sleep additional 5 minutes (300 secs) to give application time to finish
 sleep 300
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
