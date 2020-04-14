@@ -1,0 +1,17 @@
+{
+  "closedLoopControlName": "ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a",
+  "closedLoopAlarmStart": 1463679805324,
+  "closedLoopEventClient": "microservice.stringmatcher",
+  "closedLoopEventStatus": "ONSET",
+  "requestID": "c7c6a4aa-bb61-4a15-b831-ba1472dd4a65",
+  "target_type": "VNF",
+  "target": "generic-vnf.vnf-name",
+  "AAI": {
+    "vserver.is-closed-loop-disabled": "false",
+    "vserver.prov-status": "ACTIVE",
+    "generic-vnf.vnf-name": "fw0002vm002fw002",
+    "vserver.vserver-name": "OzVServer"
+  },
+  "from": "DCAE",
+  "version": "1.0.2"
+}

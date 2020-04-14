@@ -17,7 +17,10 @@
 # ============LICENSE_END=====================================================
 #
 
-mkdir -p $WORKSPACE/archives/
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml logs > $WORKSPACE/archives/drools-applications.log
+#
+# Injects an ONSET event on the DCAE_CL_OUTPUT topic.
+#
 
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml down -v
+curl -k -H "Content-type: application/json" --data-binary @$1 \
+	https://localhost:3905/events/unauthenticated.DCAE_CL_OUTPUT
+echo
