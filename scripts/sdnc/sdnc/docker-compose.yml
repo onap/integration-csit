@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  mariadb:
+    image: nexus3.onap.org:10001/mariadb:10.1.11
+    ports:
+      - "3306:3306"
+    container_name: mariadb
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    hostname:
+      mariadb.so.testlab.onap.org
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+
+  sdnc:
+    image: onap/sdnc-image:latest
+    container_name: sdnc
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $SDNC_CERT_PATH:/opt/opendaylight/current/certs
+    entrypoint: ["/opt/onap/sdnc/bin/startODL.sh"]
+    ports:
+      - "8282:8181"
+    hostname:
+      sdnc
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - SDNC_CONFIG_DIR=/opt/onap/sdnc/data/properties
+      - MYSQL_PASSWD=password
+      - ODL_ADMIN_USERNAME=admin
+      - ODL_ADMIN_PASSWORD=Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+    depends_on:
+      - mariadb
+    dns:
+      - ${DNS_IP_ADDR-10.0.100.1}
+    logging:
+      driver:   "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    extra_hosts:
+      - sdnctldb02:${LOCAL_IP}
+      - sdnctldb01:${LOCAL_IP}
+      - dbhost:${LOCAL_IP}
