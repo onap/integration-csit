@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e04bd7eb_59d0f53d",
+        "filename": "tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5447
+      },
+      "writtenOn": "2020-04-14T10:45:26Z",
+      "side": 1,
+      "message": "It\u0027s better to suppress \"/bin/sh\" from the command line to avoid problems in the future",
+      "revId": "513c3a41ef6db7220f01bb9f83496ef1b9411f57",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
