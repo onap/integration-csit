@@ -17,7 +17,17 @@
 # ============LICENSE_END=====================================================
 #
 
-mkdir -p $WORKSPACE/archives/
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml logs > $WORKSPACE/archives/docker-compose-drools-apps.log
+#
+# Creates a topic, which happens as a side-effect of polling it.
+#
 
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml down -v
+if [ $# -lt 1 ]
+then
+    echo "arg(s): topic-name" >&2
+    exit 1
+fi
+
+topic="${1}"
+
+curl -s -k "https://${SIM_IP}:3905/events/${topic}/script/1?limit=1&timeout=0"
+echo

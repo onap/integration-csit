@@ -1,0 +1,16 @@
+{
+  "closedLoopControlName": "ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3",
+  "closedLoopAlarmStart": 1463679805324,
+  "closedLoopEventClient": "microservice.stringmatcher",
+  "closedLoopEventStatus": "ONSET",
+  "requestID": "c7c6a4aa-bb61-4a15-b831-ba1472dd4a65",
+  "target_type": "VNF",
+  "target": "vserver.vserver-name",
+  "AAI": {
+    "vserver.is-closed-loop-disabled": "false",
+    "vserver.prov-status": "ACTIVE",
+    "vserver.vserver-name": "OzVServer"
+  },
+  "from": "DCAE",
+  "version": "1.0.2"
+}

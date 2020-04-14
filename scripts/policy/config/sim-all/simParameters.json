@@ -1,0 +1,100 @@
+{
+    "dmaapProvider": {
+        "name": "DMaaP simulator",
+        "topicSweepSec": 300,
+        "restServerParameters": {
+            
+        }
+    },
+    "restServers": [
+        {
+            "name": "DMaaP simulator",
+            "providerClass": "org.onap.policy.models.sim.dmaap.rest.DmaapSimRestControllerV1",
+            "host": "0.0.0.0",
+            "port": 3905,
+            "https": true
+        },
+        {
+            "name": "A&AI simulator",
+            "providerClass": "org.onap.policy.simulators.AaiSimulatorJaxRs",
+            "host": "0.0.0.0",
+            "port": 6666,
+            "https": true,
+            "userName": "policy@policy.onap.org",
+            "password": "demo123456!"
+        },
+        {
+            "name": "SDNC simulator",
+            "providerClass": "org.onap.policy.simulators.SdncSimulatorJaxRs",
+            "host": "0.0.0.0",
+            "port": 6668,
+            "https": true
+        },
+        {
+            "name": "SO simulator",
+            "providerClass": "org.onap.policy.simulators.SoSimulatorJaxRs",
+            "host": "0.0.0.0",
+            "port": 6669,
+            "https": true,
+            "userName": "InfraPortalClient",
+            "password": "password1$"
+        },
+        {
+            "name": "VFC simulator",
+            "providerClass": "org.onap.policy.simulators.VfcSimulatorJaxRs",
+            "host": "0.0.0.0",
+            "port": 6670,
+            "https": true
+        }
+    ],
+    "topicSinks": [
+        {
+            "topic": "APPC-CL",
+            "servers": ["${HOST_NAME}"],
+            "topicCommInfrastructure": "DMAAP",
+            "useHttps": true,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
+        },
+        {
+            "topic": "APPC-LCM-WRITE",
+            "servers": ["${HOST_NAME}"],
+            "topicCommInfrastructure": "DMAAP",
+            "useHttps": true,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
+        }
+    ],
+    "topicSources": [
+        {
+            "topic": "APPC-CL",
+            "servers": ["${HOST_NAME}"],
+            "topicCommInfrastructure": "DMAAP",
+            "useHttps": true,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
+        },
+        {
+            "topic": "APPC-LCM-READ",
+            "servers": ["${HOST_NAME}"],
+            "topicCommInfrastructure": "DMAAP",
+            "useHttps": true,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
+        }
+    ],
+    "topicServers": [
+        {
+            "name": "APPC Legacy simulator",
+            "providerClass": "org.onap.policy.simulators.AppcLegacyTopicServer",
+            "sink": "APPC-CL",
+            "source": "APPC-CL"
+        },
+        {
+            "name": "APPC-LCM simulator",
+            "providerClass": "org.onap.policy.simulators.AppcLcmTopicServer",
+            "sink": "APPC-LCM-WRITE",
+            "source": "APPC-LCM-READ"
+        }
+    ]
+}
