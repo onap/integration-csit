@@ -1,0 +1,6 @@
+cmpRA.operationmode = ra
+cmpRA.responseprotection = pbe
+cmpRA.ra.endentityprofileid = 161023208
+cmpRA.ra.certificateprofile = MY_ENDUSER
+cmpRA.ra.caname = My_ManagementCA
+cmpRA.allowautomatickeyupdate = true
