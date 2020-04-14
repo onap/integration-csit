@@ -1,5 +1,5 @@
 <node xmlns="urn:TBD:params:xml:ns:yang:network-topology">
-  <node-id>netopeer2</node-id>
+  <node-id>PNFDemo</node-id>
     <key-based xmlns="urn:opendaylight:netconf-node-topology">
    <key-id xmlns="urn:opendaylight:netconf-node-topology">ODL_private_key_0</key-id>
    <username xmlns="urn:opendaylight:netconf-node-topology">netconf</username>
@@ -10,5 +10,5 @@
   <protocol xmlns="urn:opendaylight:netconf-node-topology">
   <name xmlns="urn:opendaylight:netconf-node-topology">TLS</name>
   </protocol>
- <max-connection-attempts xmlns="urn:opendaylight:netconf-node-topology">2</max-connection-attempts>
+ <max-connection-attempts xmlns="urn:opendaylight:netconf-node-topology">5</max-connection-attempts>
 </node>
