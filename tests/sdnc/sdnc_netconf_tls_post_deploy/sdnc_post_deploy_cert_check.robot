@@ -1,39 +1,60 @@
 *** Settings ***
-Library     Collections
-Library     RequestsLibrary
-Library     OperatingSystem
-Library     json
-Library     String
 
-*** Variables ***
-${SDNC_KEYSTORE_CONFIG_PATH}    /config/netconf-keystore:keystore
-${SDNC_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2
-${PNFSIM_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/netopeer2/yang-ext:mount/mynetconf:netconflist
+Documentation     SDNC, Netconf-Pnp-Simulator E2E Test Case Scenarios
 
- *** Test Cases ***
- Test SDNC Keystore
-      [Documentation]    Checking keystore after SDNC installation
-      Create Session   sdnc  http://localhost:8282/restconf
-      &{headers}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
-      ${resp}=    Get Request    sdnc    ${SDNC_KEYSTORE_CONFIG_PATH}    headers=${headers}
-      Should Be Equal As Strings    ${resp.status_code}    200
-      ${keystoreContent}=    Convert To String    ${resp.content}
-      Log to console  *************************
-      Log to console  ${resp.content}
-      Log to console  *************************
+Library 	      RequestsLibrary
+Resource          ./resources/sdnc-keywords.robot
 
-# Test SDNC PNF Mount
-#     [Documentation]    Checking PNF mount after SDNC installation
-#     Create Session   sdnc  http://localhost:8282/restconf
-#     ${mount}=    Get File     ${CURDIR}${/}data${/}mount.xml
-#     Log to console  ${mount}
-#     &{headers}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/xml    Accept=application/xml
-#     ${resp}=    Put Request    sdnc    ${SDNC_MOUNT_PATH}    data=${mount}    headers=${headers}
-#     Should Be Equal As Strings    ${resp.status_code}    201
-#     Sleep  30
-#     &{headers1}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
-#     ${resp1}=    Get Request    sdnc    ${PNFSIM_MOUNT_PATH}    headers=${headers1}
-#     Should Be Equal As Strings    ${resp1.status_code}    200
-#     Log to console  ${resp1.content}
-#     Should Contain  ${resp1.content}     netconf-id
-#     Should Contain  ${resp1.content}     netconf-param
+Suite Setup       Create sessions
+
+*** Test Cases ***
+
+Health Check AAF CertService
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]   Service is Up and Running
+    Run health check
+
+Reload AAF CertService Configuration
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]   Configuration is Reloaded
+    Send Get Request And Validate Response  /reload  200
+
+Check AAF CertService Container Is Ready
+    [Tags]      AAF-CERT-SERVICE
+    [Documentation]   Send Request to /ready Endpoint and Expect 200
+    Send Get Request And Validate Response  /ready  200
+
+Check SDNC Keystore For Netopeer2 Certificates
+     [Tags]      SDNC-NETOPEER2-CERT-DEPLOYMENT
+     [Documentation]    Checking Keystore after SDNC istallation
+     Send Get Request And Validate Response Sdnc  ${SDNC_KEYSTORE_CONFIG_PATH}  200
+
+Check SDNC And PNF TLS Connection Over Netopeer2 Certificates
+     [Tags]      SDNC-PNF-TLS-CONNECTION-CHECK
+     [Documentation]    Checking PNF Mount after SDNC Installation
+     Send Get Request And Validate TLS Connection Response  ${SDNC_MOUNT_PATH}  200
+
+Check PNF Delete And Remove Netopeer2 Certificates From Keystore
+     [Tags]      SDNC-PNF-MOUNT-DELETE-CLEAR-KEYSTORE
+     [Documentation]    Checking PNF Mount Delete from SDNC
+     Send Delete Request And Validate PNF Mount Deleted  ${SDNC_MOUNT_PATH}  200
+
+Check AAF-CertService Successfully Creates Certificates for SDNC
+    [Tags]      AAF-CERT-SERVICE-SDNC
+    [Documentation]  Run with SDNC CSR and Expected Exit Code 0
+    Run Cert Service Client And Validate JKS File Creation And Client Exit Code  ${SDNC_CSR_FILE}  ${SDNC_CONTAINER_NAME}  0
+
+Check SDNC-ODL Certificates Installation In Keystore And Truststore
+    [Tags]      SDNC-ODL-CERTIFICATE-KEYSTORE-VALIDATE
+    [Documentation]  Validate Certificates Got Installed in SDNC-ODL Keystore
+    Send Get Request And Validate Response Sdnc  ${SDNC_KEYSTORE_CONFIG_PATH}  200
+
+Check AAF-CertService Successfully Creates Certificates for Netconf-Pnp-Simulator
+    [Tags]      AAF-CERT-SERVICE-NETCONF_PNP_SIMULATOR
+    [Documentation]  Run with NETCONF-PNP-SIMULATOR CSR and Expect Exit Code 0
+    Run Cert Service Client And Validate JKS File Creation And Client Exit Code  ${NETCONF_PNP_SIM_CSR_FILE}  ${NETCONF_PNP_SIM_CONTAINER_NAME}  0
+
+Check SDNC-ODL Netconf-Pnp-Simulatore TLS Connection Establishment
+    [Tags]      SDNC-ODL-NETCONF-PNP_SIMULATION-TLS-CONNECTION
+    [Documentation]  Validate SDNC-ODL and Netconf-Pnp-Simulation TLS Connection Establishment
+    Send Get Request And Validate TLS Connection Response  ${SDNC_MOUNT_PATH}  200
