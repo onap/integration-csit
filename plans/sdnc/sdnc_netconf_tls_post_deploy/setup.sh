@@ -1,151 +1,172 @@
 #!/bin/bash
 #
-# Copyright 2016-2017 Huawei Technologies Co., Ltd.
+# ============LICENSE_START=======================================================
+#   Copyright (C) 2020 Nordix Foundation.
+# ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# Modifications copyright (c) 2017 AT&T Intellectual Property
-#
-# Place the scripts in run order:
-SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/scripts/sdnc/script1.sh
-export DOCKER_SDNC_TAG=1.8-STAGING-latest
-export NEXUS_USERNAME=docker
-export NEXUS_PASSWD=docker
-export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
-export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.8-STAGING-latest
-export CCSDK_DOCKER_IMAGE_VERSION=0.7-STAGING-latest
-export SDNC_GERRIT_BRANCH=frankfurt
-export INTEGRATION_GERRIT_BRANCH=master
+#  SPDX-License-Identifier: Apache-2.0
+# ============LICENSE_END=========================================================
+
+# @author Ajay Deep Singh (ajay.deep.singh@est.tech)
+
+# Source SDNC, AAF-CertService, Netconf-Pnp-Simulator config env
+source "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/sdnc-csit.env
+
+chmod +x "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config.sh
+chmod +x "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config_tls.sh
+
+# Export temp directory
+export TEMP_DIR_PATH=${TEMP_DIR_PATH}
+
+# Create temp directory to bind with docker containers
+mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/tmp
+mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
+mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
 if [ "$MTU" == "" ]; then
-	  export MTU="1450"
+  export MTU="1450"
 fi
 
-# Clone SDNC repo to get docker-compose for SDNC
-mkdir -p $WORKSPACE/archives/integration
-cd $WORKSPACE/archives
-git clone -b ${INTEGRATION_GERRIT_BRANCH} --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
-cd $WORKSPACE/archives/integration
-git pull
-HOST_IP_ADDR=localhost
-# Clone SDNC repo to get docker-compose for SDNC
-mkdir -p $WORKSPACE/archives/sdnc
-cd $WORKSPACE/archives
-git clone -b ${SDNC_GERRIT_BRANCH} --single-branch --depth=1 http://gerrit.onap.org/r/sdnc/oam.git sdnc
-cd $WORKSPACE/archives/sdnc
-git pull
+# Export default Networking bridge created on the host machine
+export LOCAL_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+
+# Prepare enviroment
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
+# Reinstall pyOpenSSL library
+echo "Reinstall pyOpenSSL library."
+pip uninstall pyopenssl -y
+pip install pyopenssl==17.5.0
+
+# Disable Proxy - for local run
 unset http_proxy https_proxy
-cd $WORKSPACE/archives/sdnc/installation/src/main/yaml
 
-sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV=\"AUTO\"/g" docker-compose.yml
-docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
+# Export AAF Certservice config path
+export AAF_INITIAL_CERTS
+export EJBCA_CERTPROFILE_PATH
+export AAF_CERTSERVICE_CONFIG_PATH
+export AAF_CERTSERVICE_SCRIPTS_PATH
+export CERT_PROFILE=${EJBCA_CERTPROFILE_PATH}
+export SCRIPTS_PATH=${AAF_CERTSERVICE_SCRIPTS_PATH}
+export CONFIGURATION_PATH=${AAF_CERTSERVICE_CONFIG_PATH}
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$DOCKER_SDNC_TAG onap/sdnc-image:latest
+# Generate Keystores, Truststores, Certificates and Keys
+make all -C ./certs/
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSION onap/sdnc-ansible-server-image:latest
+cp "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/root.crt "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/root.crt
+openssl pkcs12 -in "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer-keystore.p12 -clcerts -nokeys -password pass:secret | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' >"${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer.crt
+openssl pkcs12 -in "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer-keystore.p12 -nocerts -nodes -password pass:secret | sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' >"${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer.key
 
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-dgbuilder-image:latest
+echo "Generated KeyStores, Server Certificate and Key"
 
-docker pull $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION onap/admportal-sdnc-image:latest
+# Start EJBCA, AAF-CertService Containers with docker-compose and configuration from docker-compose.yml
+docker-compose -f "${SCRIPTS}"/sdnc/aaf-certservice/docker-compose.yml up -d
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-ueb-listener-image:latest
-
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION
-
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-dmaap-listener-image:latest
-
-CERT_SUBPATH=plans/sdnc/sdnc_netconf_tls_post_deploy/certs
-
-export SDNC_CERT_PATH=${WORKSPACE}/${CERT_SUBPATH}
-sed -i 's/sdnc_controller_container/sdnc_controller_container\n    volumes: \n      - $SDNC_CERT_PATH:\/opt\/opendaylight\/current\/certs/' docker-compose.yml
-# start SDNC containers with docker compose and configuration from docker-compose.yml
-docker-compose up -d
-
-# PNF simulator has permission problems - creates files as root, which causes build to be unstable
-# Commenting it out for now, since netconf mount is not working anyway.
-# cd $WORKSPACE/archives/integration/test/mocks/pnfsimulator/pnfsimulator
-# docker-compose up -d
-
-# WAIT 10 minutes maximum and test every 5 seconds if SDNC is up using HealthCheck API
-TIME_OUT=1000
-INTERVAL=30
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck ); echo $response
-
-  if [ "$response" == "200" ]; then
-    echo SDNC started in $TIME seconds
-    break;
+# Check if AAF-Certservice Service is healthy and ready
+AAFCERT_IP='none'
+for i in {1..9}; do
+  AAFCERT_IP=$(get-instance-ip.sh aaf-cert-service)
+  RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret |
+    python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
+  if [[ "${RESP_CODE}" == "UP" ]]; then
+    echo "AAF Cert Service is Ready."
+    export AAFCERT_IP=${AAFCERT_IP}
+    docker exec aafcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
+    break
   fi
-
-  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
+  echo "Waiting for AAF Cert Service to Start Up..."
+  sleep 2m
 done
 
-export PNF_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
-sed -i "s/pnfaddr/$PNF_IP/g" $WORKSPACE/tests/sdnc/sdnc_netconf_tls_post_deploy/data/mount.xml
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
+if [[ "${AAFCERT_IP}" == "none" || "${AAFCERT_IP}" == '' && "${RESP_CODE}" != "UP" ]]; then
+  echo "AAF CertService not started Could cause problems for testing activities...!"
 fi
 
-#sleep 800
+############################## SDNC Setup ##############################
 
-TIME_OUT=1500
-INTERVAL=60
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
+# Export Mariadb, SDNC tmp, cert directory path
+export SDNC_CERT_PATH=${SDNC_CERT_PATH}
 
-  if grep -q 'Level 100' <<< ${response}; then
-    echo SDNC karaf started in $TIME seconds
-    break;
+docker pull "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}"
+docker tag "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}" onap/sdnc-image:latest
+
+# Start Mariadb, SDNC Containers with docker-compose and configuration from docker-compose.yml
+docker-compose -f "${SCRIPTS}"/sdnc/sdnc/docker-compose.yml up -d
+
+# Check if SDNC Service is healthy and ready
+for i in {1..10}; do
+  SDNC_IP=$(get-instance-ip.sh sdnc)
+  RESP_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck)
+  if [[ "${RESP_CODE}" == '200' ]]; then
+    echo "SDNC Service is Ready."
+    break
   fi
-
-  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
+  echo "Waiting for SDNC Service to Start Up..."
+  sleep 2m
 done
 
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' && "${RESP_CODE}" != '200' ]]; then
+  echo "SDNC Service not started Could cause problems for testing activities...!"
 fi
 
-response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-
-  if grep -q 'Level 100' <<< ${response}; then
-    num_failed_bundles=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-    failed_bundles=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
-    echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
+# Check if SDNC-ODL Karaf Session started
+for i in {1..10}; do
+  EXEC_RESP=$(docker exec -it sdnc /opt/opendaylight/current/bin/client system:start-level)
+  if grep -q 'Level 100' <<<"${EXEC_RESP}"; then
+    echo "SDNC-ODL Karaf Session Started."
+    break
   fi
+  echo "Waiting for SDNC-ODL Karaf Session to Start Up..."
+  sleep 2m
+done
 
-if [ "$num_failed_bundles" -ge 1 ]; then
-  echo "The following bundle(s) are in a failed state: "
-  echo "  $failed_bundles"
+if ! grep -q 'Level 100' <<<"${EXEC_RESP}"; then
+  echo "SDNC-ODL Karaf Session not Started, Could cause problems for testing activities...!"
 fi
 
-# Sleep additional 5 minutes (300 secs) to give application time to finish
-sleep 200
+echo "Sleeping 5 minutes"
+sleep 5m
 
-# Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"
+###################### Netconf-PNP-Simulator Setup ######################
+
+# Export netconf-pnp simulator conf path
+export NETCONF_CONFIG_PATH=${NETCONF_CONFIG_PATH}
+
+# Start Netconf-Pnp-Simulator Container with docker-compose and configuration from docker-compose.yml
+docker-compose -f "${SCRIPTS}"/sdnc/netconf-pnp-simulator/docker-compose.yml up -d
+
+# Update default Networking bridge IP in mount.json file
+sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
+
+#########################################################################
+
+echo "Sleeping additional for 3 minutes to give application time to finish"
+sleep 3m
+
+# Export SDNC, AAF-Certservice-Cient, Netconf-Pnp-Simulator Continer Names
+export REQUEST_DATA_PATH="${REQUEST_DATA_PATH}"
+export SDNC_CONTAINER_NAME="${SDNC_CONTAINER_NAME}"
+export CLIENT_CONTAINER_NAME="${CLIENT_CONTAINER_NAME}"
+export NETCONF_PNP_SIM_CONTAINER_NAME="${NETCONF_PNP_SIM_CONTAINER_NAME}"
+
+REPO_IP='127.0.0.1'
+ROBOT_VARIABLES+=" -v REPO_IP:${REPO_IP} "
+ROBOT_VARIABLES+=" -v SCRIPTS:${SCRIPTS} "
+
+echo "Finished executing setup for SDNC-Netconf-TLS-Post-Deploy"
