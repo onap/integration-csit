@@ -17,7 +17,16 @@
 # ============LICENSE_END=====================================================
 #
 
-mkdir -p $WORKSPACE/archives/
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml logs > $WORKSPACE/archives/docker-compose-drools-apps.log
+#
+# Injects a management request on the PDP-PAP topic.
+#
 
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml down -v
+if [ $# -ne 1 ]
+then
+    echo "arg(s): json-message-file-name" >&2
+    exit 1
+fi
+
+curl -k -H "Content-type: application/json" --data-binary @$1 \
+    https://${SIM_IP}:3905/events/POLICY-PDP-PAP
+echo
