@@ -1,0 +1,47 @@
+version: "2.1"
+
+services:
+  ejbca:
+    image: primekey/ejbca-ce:6.15.2.5
+    hostname: cahostname
+    container_name: aafcert-ejbca
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - $SCRIPTS_PATH:/opt/primekey/scripts
+      - $CERT_PROFILE:/opt/primekey/certprofile
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
+      interval: 20s
+      timeout: 3s
+      retries: 9
+    networks:
+      - certservice
+
+  aaf-cert-service:
+    image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
+    volumes:
+      - $CONFIGURATION_PATH:/etc/onap/aaf/certservice/cmpServers.json
+      - $AAF_INITIAL_CERTS/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks
+      - $AAF_INITIAL_CERTS/root.crt:/etc/onap/aaf/certservice/certs/root.crt
+      - $AAF_INITIAL_CERTS/certServiceServer-keystore.jks:/etc/onap/aaf/certservice/certs/certServiceServer-keystore.jks
+      - $AAF_INITIAL_CERTS/certServiceServer-keystore.p12:/etc/onap/aaf/certservice/certs/certServiceServer-keystore.p12
+    container_name: aaf-cert-service
+    ports:
+      - "8443:8443"
+    depends_on:
+      ejbca:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl https://localhost:8443/actuator/health --cacert /etc/onap/aaf/certservice/certs/root.crt --cert-type p12 --cert /etc/onap/aaf/certservice/certs/certServiceServer-keystore.p12 --pass secret"]
+      interval: 10s
+      timeout: 3s
+      retries: 15
+    networks:
+      - certservice
+
+networks:
+  certservice:
+    driver: bridge
+    name: aaf-certservice_certservice
