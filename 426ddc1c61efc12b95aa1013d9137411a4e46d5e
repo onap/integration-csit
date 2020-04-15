@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5516c7_b0524180",
+        "filename": "scripts/policy/drools-apps/passive.drools.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2020-04-15T08:35:10Z",
+      "side": 1,
+      "message": "Tabs, they have snuck into other files too.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "426ddc1c61efc12b95aa1013d9137411a4e46d5e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c5b957_7a601a11",
+        "filename": "scripts/policy/drools-apps/policies.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2020-04-15T08:35:10Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "426ddc1c61efc12b95aa1013d9137411a4e46d5e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
