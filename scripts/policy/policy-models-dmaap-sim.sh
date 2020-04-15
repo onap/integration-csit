@@ -19,6 +19,10 @@
 
 source ${SCRIPTS}/policy/config/policy-csit.conf
 
+rm -rf ${WORKSPACE}/dmaap-sim
+mkdir ${WORKSPACE}/dmaap-sim
+cd ${WORKSPACE}/dmaap-sim
+
 POLICY_MODELS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/models/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_MODELS_VERSION="${POLICY_MODELS_VERSION_EXTRACT}"
 echo ${POLICY_MODELS_VERSION}
@@ -31,5 +35,3 @@ mkdir target
 curl -L $item -o target/policy-models-sim-dmaap-${POLICY_MODELS_VERSION}-tarball.tar.gz
 bash ./src/main/package/docker/docker_build.sh
 cd ${WORKSPACE}
-rm -rf ${WORK_DIR}
-

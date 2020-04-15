@@ -19,6 +19,10 @@
 
 source ${SCRIPTS}/policy/config/policy-csit.conf
 
+rm -rf ${WORKSPACE}/simulators
+mkdir ${WORKSPACE}/simulators
+cd ${WORKSPACE}/simulators
+
 POLICY_MODELS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/models/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_MODELS_VERSION="${POLICY_MODELS_VERSION_EXTRACT}"
 echo ${POLICY_MODELS_VERSION}
@@ -28,8 +32,7 @@ git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
 cd models/models-sim/policy-models-simulators
 item=`curl --silent -L ${NEXUS_URL}/org/onap/policy/models/sim/policy-models-simulators/${POLICY_MODELS_VERSION} | egrep 'policy-models-simulators-.*tarball' | cut '-d"' -f2 | egrep 'gz$' | sort | tail -1`
 mkdir target
-curl -L $item -o target/policy-models-simulators-${POLICY_MODELS_VERSION}-tarball.tar.gz
-bash ./src/main/package/docker/docker_build.sh
-cd ${WORKSPACE}
-rm -rf ${WORK_DIR}
+#curl -L $item -o target/policy-models-simulators-${POLICY_MODELS_VERSION}-tarball.tar.gz
+#bash ./src/main/package/docker/docker_build.sh
 
+cd ${WORKSPACE}

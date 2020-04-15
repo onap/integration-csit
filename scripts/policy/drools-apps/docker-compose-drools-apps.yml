@@ -39,6 +39,24 @@ services:
        - 6669
        - 6670
        - 3905
+   api:
+      image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
+      container_name: policy-api
+      depends_on:
+       - mariadb
+      hostname: policy-api
+      expose:
+       - 6969
+   pap:
+      image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
+      container_name: policy-pap
+      depends_on:
+       - mariadb
+      hostname: policy-pap
+      expose:
+       - 6969
+      volumes:
+       - ./custom/pap:/opt/app/policy/pap/etc:ro
    policy-xacml-pdp:
       image: nexus3.onap.org:10001/onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
       container_name: policy-xacml-pdp
@@ -49,7 +67,7 @@ services:
       expose:
        - 6969
       volumes:
-       - ./custom:/opt/app/policy/pdpx/etc:ro
+       - ./custom/xacml:/opt/app/policy/pdpx/etc:ro
    drools:
       image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools
@@ -82,6 +100,20 @@ services:
         policy.api.simpledemo.onap.org:6669
         policy.api.simpledemo.onap.org:6670
         policy.api.simpledemo.onap.org:3905
+   start_pap:
+      image: dadarek/wait-for-dependencies
+      environment:
+        TIMEOUT_LENGTH: 120
+      container_name: policy-wait-pap
+      depends_on:
+        - mariadb
+        - policy.api.simpledemo.onap.org
+        - pap
+      hostname: policy-wait-pap
+      command:
+        mariadb:3306
+        policy.api.simpledemo.onap.org:3905
+        pap:6969
    start_all:
       image: dadarek/wait-for-dependencies
       environment:
@@ -90,6 +122,8 @@ services:
       depends_on:
         - mariadb
         - policy.api.simpledemo.onap.org
+        - api
+        - pap
         - policy-xacml-pdp
         - drools
       hostname: policy-wait-all
@@ -100,4 +134,6 @@ services:
         policy.api.simpledemo.onap.org:6669
         policy.api.simpledemo.onap.org:6670
         policy.api.simpledemo.onap.org:3905
+        api:6969
+        pap:6969
         drools:6969

@@ -1,0 +1,27 @@
+{
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "xacml",
+                    "action": "POST",
+                    "policies": [
+                        {
+                            "name": "onap.restart.tca",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "onap.scaleout.tca",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "onap.vfirewall.tca",
+                            "version": "1.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

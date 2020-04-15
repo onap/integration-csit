@@ -1,0 +1,27 @@
+{
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "drools",
+                    "action": "POST",
+                    "policies": [
+                        {
+                            "name": "operational.restart",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "operational.scaleout",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "operational.modifyconfig",
+                            "version": "1.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
