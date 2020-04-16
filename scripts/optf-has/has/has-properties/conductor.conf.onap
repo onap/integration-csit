@@ -132,7 +132,8 @@ log_dir = /var/log
 
 
 [auth]
-appkey = h@ss3crtky400fdntc#001
+# appkey = h@ss3crtky400fdntc#001
+appkey =
 
 [aaf_api]
 
