@@ -33,8 +33,8 @@ cd ${DIR}
 # create directory for volume and copy configuration file
 # run docker containers
 OSDF_CONF=/tmp/osdf/properties/osdf_config.yaml
-IMAGE_NAME=nexus3.onap.org:10001/onap/optf-osdf
-IMAGE_VER=2.0.1-SNAPSHOT-latest
+IMAGE_NAME=nexus3.onap.org:10003/onap/optf-osdf
+IMAGE_VER=2.0.3-SNAPSHOT-latest
 
 mkdir -p /tmp/osdf/properties
 mkdir -p /tmp/sms/properties
