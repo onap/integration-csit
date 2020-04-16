@@ -31,7 +31,7 @@ cd ${DIR}
 COND_CONF=/tmp/conductor/properties/conductor.conf
 LOG_CONF=/tmp/conductor/properties/log.conf
 IMAGE_NAME=nexus3.onap.org:10001/onap/optf-has
-IMAGE_VER=1.3.2-SNAPSHOT-latest
+IMAGE_VER=2.0.2-SNAPSHOT-latest
 BUNDLE=/tmp/conductor/properties/AAF_RootCA.cer
 
 mkdir -p /tmp/conductor/properties
@@ -84,15 +84,15 @@ curl -vvvvv --noproxy "*" --request GET http://${MUSIC_IP}:8080/MUSIC/rest/v2/ve
 echo "Onboard conductor into music"
 curl -vvvvv --noproxy "*" --request POST http://${MUSIC_IP}:8080/MUSIC/rest/v2/admin/onboardAppWithMusic -H "Content-Type: application/json" -H "Authorization: Basic Y29uZHVjdG9yOmMwbmR1Y3Qwcg==" --data @${WORKSPACE}/tests/optf-has/has/data/onboard.json
 
-docker run -d --name cond-cont -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-cont --user root -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-controller --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-api -p "8091:8091" -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-api --port=8091 -- --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-api --user root -p "8091:8091" -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-api --port=8091 -- --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-solv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-solver --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-solv --user root -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-solver --config-file=/usr/local/bin/conductor.conf
 sleep 15
-docker run -d --name cond-resv -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-reservation --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-resv --user root -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-reservation --config-file=/usr/local/bin/conductor.conf
 sleep 5
-docker run -d --name cond-data -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-data --config-file=/usr/local/bin/conductor.conf
+docker run -d --name cond-data --user root -v ${COND_CONF}:/usr/local/bin/conductor.conf -v ${LOG_CONF}:/usr/local/bin/log.conf -v ${BUNDLE}:/usr/local/bin/AAF_RootCA.cer ${IMAGE_NAME}:${IMAGE_VER} python /usr/local/bin/conductor-data --config-file=/usr/local/bin/conductor.conf
 sleep 15
 
 COND_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' cond-api`
