@@ -48,8 +48,8 @@ mso:
       retry:
         count: 3
   aai:
-    endpoint: https://aai.api.simpledemo.onap.org:8443
-    auth: 2630606608347B7124C244AB0FE34F6F
+    endpoint: https://aai-simulator:9993
+    auth: 221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885
   extApi:
     endpoint: http://nbi.onap:8080/nbi/api/v3
   so:

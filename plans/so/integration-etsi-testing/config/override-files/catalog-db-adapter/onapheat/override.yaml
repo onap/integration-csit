@@ -1,0 +1,103 @@
+server:
+    port: 8082
+    tomcat:
+        max-threads: 50
+ssl-enable: false
+mso:
+  logPath: logs
+  site-name: onapheat
+  catalog:
+    db:
+      spring:
+        endpoint: http://catalog-db-adapter:8082
+  db:
+    auth: Basic YnBlbDpwYXNzd29yZDEk
+spring:
+  datasource:
+    hikari:
+      jdbcUrl: jdbc:mariadb://mariadb:3306/catalogdb
+      username: cataloguser
+      password: catalog123
+      driver-class-name: org.mariadb.jdbc.Driver
+      pool-name: catdb-pool
+      registerMbeans: true
+  flyway:
+    baseline-on-migrate: false
+    url: jdbc:mariadb://mariadb:3306/catalogdb
+    user: cataloguser
+    password: catalog123
+    outOfOrder: true
+    validateOnMigrate: false
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      enable-lazy-load-no-trans: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  security:
+    usercredentials:
+    -
+      username: bpel
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPEL-Client
+    -
+      username: mso_admin
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: ACTUATOR
+#Actuator
+management:
+  context-path: /manage
+cloud_config:
+  identity_services:
+    RAX_KEYSTONE:
+      identity_url: "https://identity.api.rackspacecloud.com/v2.0"
+      mso_id: "RACKSPACE_ACCOUNT_ID"
+      mso_pass: "RACKSPACE_ACCOUNT_APIKEY"
+      admin_tenant: "dummy"
+      member_role: "admin"
+      tenant_metadata: true
+      identity_server_type: "KEYSTONE"
+      identity_authentication_type: "RACKSPACE_APIKEY"
+      project_domain_name: "PROJECT_DOMAIN_NAME"
+      user_domain_name: "USER_DOMAIN_NAME"
+    DEFAULT_KEYSTONE:
+      identity_url: "dummy"
+      mso_id: "dummy"
+      mso_pass: "dummy"
+      admin_tenant: "dummy"
+      member_role: "admin"
+      tenant_metadata: true
+      identity_server_type: "KEYSTONE"
+      identity_authentication_type: "USERNAME_PASSWORD"
+      project_domain_name: "dummy"
+      user_domain_name: "dummy"
+  cloud_sites:
+    Dallas:
+      region_id: "DFW"
+      clli: "DFW"
+      aic_version: "2.5"
+      identity_service_id: "RAX_KEYSTONE"
+    Northern Virginia:
+      region_id: "IAD"
+      clli: "IAD"
+      aic_version: "2.5"
+      identity_service_id: "RAX_KEYSTONE"
+    Chicago:
+      region_id: "ORD"
+      clli: "ORD"
+      aic_version: "2.5"
+      identity_service_id: "RAX_KEYSTONE"
+    RegionOne:
+      region_id: "RegionOne"
+      clli: "RegionOne"
+      aic_version: "2.5"
+      identity_service_id: "DEFAULT_KEYSTONE"
+    DEFAULT:
+      region_id: "dummyRegionId"
+      clli: "dummyClli"
+      aic_version: "2.5"
+      identity_service_id: "DEFAULT_KEYSTONE"
+
+

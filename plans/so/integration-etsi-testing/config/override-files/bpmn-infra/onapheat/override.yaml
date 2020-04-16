@@ -5,6 +5,11 @@ aai:
   endpoint: https://aai-simulator:9993
   workflowAaiDistributionDelay: PT30S
   pnfEntryNotificationTimeout: P14D
+cds:
+  endpoint: blueprints-processor
+  port: 9111
+  auth: Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==
+  timeout: 60
 camunda:
   bpm:
     admin-user:
@@ -14,11 +19,6 @@ camunda:
     job-execution:
       max-pool-size: 30
       core-pool-size: 3
-cds:
-    endpoint: blueprints-processor
-    port: 9111
-    auth: Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==
-    timeout: 60
 entitymanager:
   packagesToScan: com
 pnf:
@@ -27,10 +27,13 @@ pnf:
     port: 3904
     protocol: http
     uriPathPrefix: events
-    topicName: pnfReady
+    topicName: unauthenticated.PNF_READY
     consumerGroup: consumerGroup
     consumerId: consumerId
     topicListenerDelayInSeconds: 5
+bpelURL: http://bpmn-infra:8081
+msb-ip: msb-iag
+msb-port: 80
 mso:
   msoKey: 07a7159d3bf51a0e53be7a8f89699be7
   config:
@@ -82,6 +85,12 @@ mso:
         endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/rest/v1/volume-groups
     vnf-async:
       endpoint: http://c1.vm1.mso.simpledemo.onap.org:8087/services/VnfAdapterAsync
+    vfc:
+      rest:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8084/services/v1/vfcadapter
+    workflow:
+      message:
+        endpoint: http://c1.vm1.mso.simpledemo.onap.org:8081/mso/WorkflowMessage
   bpmn:
     process:
       historyTimeToLive: '30'
@@ -225,6 +234,9 @@ mso:
       endpoint: http://bpmn-infra:8081/mso/WorkflowMessage
     notification:
       name: GenericNotificationServiceATT
+    sdnc:
+      replication:
+        delay: PT60S
     sdncadapter:
       callback: http://bpmn-infra:8081/mso/SDNCAdapterCallbackService
     vnfadapter:
@@ -236,16 +248,23 @@ mso:
         callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
       rollback:
         callback: http://c1.vm1.mso.simpledemo.onap.org:8087/mso/vnfAdapterNotify
+  use:
+    qualified:
+      host: false
   global:
     dmaap:
       username: testuser
       password: alRyMzJ3NUNeakxl
       host: http://10.42.111.36:904
-      auth: A4DE725B8B0D1A745049409B16762C16BC9B48555DC157272741D616323104442B3AAC052ED17E74EECA136B89C8C6615C8CC269ED5834EC47C6BE6A75DF39C6C07B07DF064CE268BE6510F472
       publisher:
         topic: replaceme
+  naming:
+    endpoint: http://naming.demo.onap.com:8081/web/service/v1/genNetworkElementName
+    auth: Basic bTA0NzY4QG5vbi1wcm9kLm1zby5lY29tcC5hdHQuY29tOkF0dG0wNDc2OExpZmUhQA==
 policy:
   auth: Basic dGVzdHBkcDphbHBoYTEyMw==
+  default:
+    disposition: Skip
   client:
     auth: Basic bTAzNzQzOnBvbGljeVIwY2sk
   endpoint: https://localhost:8081/pdp/api/
@@ -257,13 +276,15 @@ sdnc:
   si:
     svc:
       types: PORT-MIRROR,PPROBE
-
-so:
-  vnfm:
-    adapter:
-      url: https://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
-      auth: Basic dm5mbTpwYXNzd29yZDEk
-
+  dmaap:
+    host: ueb1.simpledemo.onap.org:3904
+    timeout: 30000
+  lcm:
+    path: '/restconf/operations/LCM:'
+    actionTimeout: 300000
+    dmapp:
+      readTopic: SDNC-LCM-WRITE
+      writeTopic: SDNC-LCM-READ
 appc:
   client:
     topic:
@@ -272,8 +293,7 @@ appc:
         timeout: 360000
       write: APPC-LCM-READ
       sdnc:
-        read:
-          name: SDNC-LCM-WRITE
+        read: SDNC-LCM-WRITE
         write: SDNC-LCM-READ
     response:
       timeout: 360000
@@ -281,21 +301,34 @@ appc:
     secret: 64AG2hF4pYeG2pq7CT6XwUOT
     service: ueb
     poolMembers: ueb1.simpledemo.onap.org:3904,ueb2.simpledemo.onap.org:3904
+sniro:
+  conductor:
+    enabled: true
+    host: http://sniro-emulator:80
+    uri: /v1/release-orders
+    headers.auth: Basic dGVzdDp0ZXN0cHdk
+  manager:
+    timeout: PT30M
+    host: http://sniro-emulator:80
+    uri.v1: /sniro/api/v2/placement
+    uri.v2: /sniro/api/placement/v2
+    headers.auth: Basic dGVzdDp0ZXN0cHdk
+    headers.patchVersion: 1
+    headers.minorVersion: 1
+    headers.latestVersion: 2
 server:
   port: 8081
   tomcat:
     max-threads: 50
 spring:
   datasource:
-     driver-class-name: org.mariadb.jdbc.Driver
-     url: jdbc:mariadb://mariadb:3306/camundabpmn
-     username: camundauser
-     password: camunda123
-     dbcp2:
-      initial-size: 5
-      max-total: 20
-      validation-query: select 1
-      test-on-borrow: true
+    hikari:
+      jdbcUrl: jdbc:mariadb://mariadb:3306/camundabpmn
+      username: camundauser
+      password: camunda123
+      driver-class-name: org.mariadb.jdbc.Driver
+      pool-name: bpmn-pool
+      registerMbeans: true
   security:
     usercredentials:
     -
@@ -322,6 +355,11 @@ spring:
       username: mso_admin
       password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
       role: ACTUATOR
+so:
+  vnfm:
+    adapter:
+      url: https://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
+      auth: Basic dm5mbTpwYXNzd29yZDEk
 org:
   onap:
     so:
@@ -335,3 +373,4 @@ rest:
           keyStorePassword: 'RLe5ExMWW;Kd6GTSt0WQz;.Y'
           trustStore: classpath:org.onap.so.trust.jks
           trustStorePassword: '6V%8oSU$,%WbYp3IUe;^mWt4'
+
