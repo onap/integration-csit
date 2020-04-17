@@ -11,6 +11,7 @@ mkdir -p $WORKSPACE/archives/dmaapmr
 cd $WORKSPACE/archives/dmaapmr
 git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
 sed -i 's/enableCadi: false/enableCadi: "false"/g' /$WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose/docker-compose.yml
+sed -i 's/net:/default:/g' /$WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose/docker-compose.yml
 cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
 cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
 
