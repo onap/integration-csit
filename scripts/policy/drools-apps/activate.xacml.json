@@ -1,9 +1,0 @@
-{
-	"messageName": "PDP_STATE_CHANGE",
-	"requestId": "88891208-2a73-452c-8d71-c93b422a7e03",
-	"timestampMs": 1584652299629,
-	"name": "policy-xacml-pdp",
-	"pdpGroup": "defaultGroup",
-	"pdpSubgroup": "xacml",
-	"state": "ACTIVE"
-}
