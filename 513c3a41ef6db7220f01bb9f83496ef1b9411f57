@@ -16,6 +16,24 @@
       "revId": "513c3a41ef6db7220f01bb9f83496ef1b9411f57",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc28b4e_767c83e9",
+        "filename": "tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2020-04-18T19:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e04bd7eb_59d0f53d",
+      "revId": "513c3a41ef6db7220f01bb9f83496ef1b9411f57",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
