@@ -61,10 +61,6 @@ echo ${POLICY_XACML_PDP_VERSION}
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_dependencies
 
-#Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
-
 # now bring everything else up
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-xacml-pdp/docker-compose-pdpx.yml run --rm start_all
 
