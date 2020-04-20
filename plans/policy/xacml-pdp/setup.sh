@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2019-2020 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,11 +72,16 @@ POLICY_PDPX_IP=`get-instance-ip.sh policy-xacml-pdp`
 DMAAP_IP=`get-instance-ip.sh dmaap-simulator`
 POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 
-
 echo PDP IP IS ${POLICY_PDPX_IP}
 echo API IP IS ${POLICY_API_IP}
 echo PAP IP IS ${POLICY_PAP_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
 
-ROBOT_VARIABLES="-v POLICY_PDPX_IP:${POLICY_PDPX_IP} -v POLICY_API_IP:${POLICY_API_IP} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+DATA2=${WORKSPACE}/dmaap-sim/models/models-examples/src/main/resources/policies
+
+ROBOT_VARIABLES=""
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA2:${DATA2}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PDPX_IP:${POLICY_PDPX_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
