@@ -15,8 +15,8 @@ Test Teardown     Delete All Sessions
 *** Variables ***
 
 ${PMSH_BASE_URL}                    https://${PMSH_IP}:8443
-${MR_BASE_URL}                      http://${MR_SIM_IP_ADDRESS}:1080
-${CBS_BASE_URL}                     http://${CBS_SIM_IP_ADDRESS}:1080
+${MR_BASE_URL}                      https://${MR_SIM_IP_ADDRESS}:3095
+${CBS_BASE_URL}                     https://${CBS_SIM_IP_ADDRESS}:10443
 ${HEALTHCHECK_ENDPOINT}             /healthcheck
 
 ${MR_EXPECTATION_AAI_PNF_CREATED}               %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-expectation-aai-pnf-created.json
@@ -27,8 +27,8 @@ ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}         %{WORKSPACE}/tests/dcaegen2-serv
 
 ${ADMIN_STATE_LOCKED_PATTERN}       'administrativeState': 'LOCKED'
 ${ADMIN_STATE_UNLOCKED_PATTERN}     'administrativeState': 'UNLOCKED'
-${CLI_EXEC_GET_CBS_CONFIG_FIRST}    docker exec pmsh /bin/sh -c "grep -m 1 'PMSH Configuration from Configbinding Service' /var/log/ONAP/dcaegen2/services/pmsh/debug.log"
-${CLI_EXEC_GET_CBS_CONFIG_LAST}     docker exec pmsh /bin/sh -c "grep 'PMSH Configuration from Configbinding Service' /var/log/ONAP/dcaegen2/services/pmsh/debug.log | tail -1"
+${CLI_EXEC_GET_CBS_CONFIG_FIRST}    docker exec pmsh /bin/sh -c "grep -m 1 'PMSH config from CBS' /var/log/ONAP/dcaegen2/services/pmsh/debug.log"
+${CLI_EXEC_GET_CBS_CONFIG_LAST}     docker exec pmsh /bin/sh -c "grep 'PMSH config from CBS' /var/log/ONAP/dcaegen2/services/pmsh/debug.log | tail -1"
 
 ${DB_CMD_NETWORK_FUNCTIONS_COUNT}   docker exec db bash -c "psql -U pmsh -d pmsh -A -t -c 'select count(*) from network_functions;'"
 ${DB_CMD_NF_TO_SUB_REL_COUNT}       docker exec db bash -c "psql -U pmsh -d pmsh -A -t -c 'select count(*) from nf_to_sub_rel;'"
