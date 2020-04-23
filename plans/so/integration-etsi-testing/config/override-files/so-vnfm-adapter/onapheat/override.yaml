@@ -18,8 +18,19 @@ aai:
   auth: 221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885
   version: v15
   endpoint:  https://aai-simulator:9993
+spring:
+  security:
+    usercredentials:
+    - username: vnfm
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPEL-Client
+    - username: mso_admin
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: ACTUATOR
 mso:
   key: 07a7159d3bf51a0e53be7a8f89699be7
+  site-name: localSite
+  logPath: ./logs/vnfm-adapter
 sdc:
   username: mso
   password: 76966BDD3C7414A03F7037264FF2E6C8EEC6C28F2B67F2840A1ED857C0260FEE731D73F47F828E5527125D29FD25D3E0DE39EE44C058906BF1657DE77BF897EECA93BDC07FA64F
@@ -28,3 +39,7 @@ sdc:
   toscametapath: Artifacts/Deployment/OTHER/TOSCA.meta
 vnfmadapter:
   endpoint: https://so-vnfm-adapter:9092
+etsi-catalog-manager:
+  vnfpkgm:
+    endpoint: http://modeling-etsicatalog:8806/api/vnfpkgm/v1
+
