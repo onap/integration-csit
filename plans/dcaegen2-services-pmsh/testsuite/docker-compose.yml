@@ -18,8 +18,8 @@ services:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/aai-initializer.json
     volumes:
-      - ./assets/mockserver.properties:/config/mockserver.properties
-      - ./assets/aai-initializer.json:/config/aai-initializer.json
+      - ./assets/aai_sim/aai_mockserver.properties:/config/mockserver.properties
+      - ./assets/aai_sim/aai-initializer.json:/config/aai-initializer.json
     networks:
       pmsh-network:
 
@@ -29,9 +29,13 @@ services:
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/cbs-initializer.json
+      LOG_LEVEL: "DEBUG"
+      SERVER_PORT: 10443
     volumes:
-      - ./assets/mockserver.properties:/config/mockserver.properties
-      - ./assets/cbs-initializer.json:/config/cbs-initializer.json
+      - ./assets/cbs_sim/cbs_mockserver.properties:/config/mockserver.properties
+      - ./assets/cbs_sim/cbs-initializer.json:/config/cbs-initializer.json
+      - ./assets/ssl_certs/mock_server_cacert.pem:/var/tmp/mock_server_cacert.pem
+      - ./assets/ssl_certs/mock_server_key.pem:/var/tmp/mock_server_key.pem
     networks:
       pmsh-network:
 
@@ -41,29 +45,32 @@ services:
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mr-initializer.json
+      LOG_LEVEL: "DEBUG"
+      SERVER_PORT: 3095
     volumes:
-      - ./assets/mockserver.properties:/config/mockserver.properties
-      - ./assets/mr-initializer.json:/config/mr-initializer.json
+      - ./assets/mr_sim/mr_mockserver.properties:/config/mockserver.properties
+      - ./assets/mr_sim/mr-initializer.json:/config/mr-initializer.json
     networks:
       pmsh-network:
 
   pmsh:
     container_name: pmsh
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pmsh:1.0.1
+    image: onap/org.onap.dcaegen2.services.pmsh:latest
     depends_on:
       - db
     volumes:
-      - ./assets/cert.pem:/opt/app/pmsh/etc/certs/cert.pem
-      - ./assets/key.pem:/opt/app/pmsh/etc/certs/key.pem
+      - ./assets/ssl_certs/cert.pem:/opt/app/pmsh/etc/certs/cert.pem
+      - ./assets/ssl_certs/key.pem:/opt/app/pmsh/etc/certs/key.pem
+      - ./assets/ssl_certs/mock_server_cacert.pem:/opt/app/pmsh/etc/certs/cacert.pem
     environment:
       HOSTNAME: "dcae-pmsh"
-      CONFIG_BINDING_SERVICE_SERVICE_HOST: cbs-sim
-      CONFIG_BINDING_SERVICE_SERVICE_PORT: 1080
+      CONFIG_BINDING_SERVICE: cbs-sim
       PMSH_PG_URL: db
       PMSH_PG_USERNAME: $DB_USER
       PMSH_PG_PASSWORD: $DB_PASSWORD
       AAI_SERVICE_HOST: aai-sim
-      AAI_SERVICE_PORT_AAI_SSL: 1080
+      AAI_SERVICE_PORT: 1080
+      DCAE_CA_CERTPATH: '/opt/app/pmsh/etc/certs/cacert.pem'
     networks:
       pmsh-network:
 
