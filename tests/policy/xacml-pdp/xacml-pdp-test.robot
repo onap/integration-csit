@@ -151,7 +151,7 @@ GetNamingDecision
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Post Request     policy  /policy/pdpx/v1/decision  data=${postjson}   headers=${headers}
      Log    Received response from policy ${resp.text}
-     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   SDNC_Policy.ONAP_VNF_NAMING_TIMESTAMP
+     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP
      Should Be Equal As Strings    ${resp.status_code}     200
      Dictionary Should Contain Key    ${policy}    type
      Dictionary Should Contain Key    ${policy}    type_version
