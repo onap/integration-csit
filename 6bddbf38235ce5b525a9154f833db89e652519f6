@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e2101f_bb3b3105",
+        "filename": "tests/policy/apex-pdp/apex-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-05-04T22:50:15Z",
+      "side": 1,
+      "message": "Note: since this CSIT uses dmaap-sim, policy-models is cloned, thus could take the json files from models-examples instead of using copies in the CSIT data directory.  That\u0027s how it\u0027s done in the CSIT for xacml-pdp.",
+      "revId": "6bddbf38235ce5b525a9154f833db89e652519f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
