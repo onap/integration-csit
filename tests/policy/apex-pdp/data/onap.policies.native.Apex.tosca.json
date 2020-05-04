@@ -3,14 +3,11 @@
   "topology_template": {
     "policies": [
       {
-        "operational.apex.sampledomain": {
-          "type": "onap.policies.controlloop.operational.Apex",
+        "onap.policies.native.apex.Sampledomain": {
+          "type": "onap.policies.native.Apex",
           "type_version": "1.0.0",
           "version": "1.0.0",
-          "metadata": {
-            "policy-id": "operational.apex.sampledomain",
-            "policy-version": 1
-          },
+          "name": "onap.policies.native.apex.Sampledomain",
           "properties": {
             "engineServiceParameters": {
               "name": "MyApexEngine",

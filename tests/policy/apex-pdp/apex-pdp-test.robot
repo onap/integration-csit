@@ -18,43 +18,28 @@ Healthcheck
      Should Be Equal As Strings    ${resp.json()['code']}  200
 
 ExecuteApexPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    CreateOperationalPolicyType
-     Wait Until Keyword Succeeds    2 min    5 sec    CreateNewOperationalPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    DeployOperationalPolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    DeployPolicy
      Wait Until Keyword Succeeds    4 min    10 sec    RunEventOnApexEngine
 
 *** Keywords ***
 
-CreateOperationalPolicyType
-     [Documentation]    Create Operational Policy Type
+CreatePolicy
+     [Documentation]    Create a new Apex policy
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policies.controlloop.operational.Apex.json
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policies.native.Apex.tosca.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request   policy  /policy/api/v1/policytypes  data=${postjson}   headers=${headers}
-     Log    Received response from policy2 ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     ${postjsonobject}   To Json    ${postjson}
-     Dictionary Should Contain Key    ${resp.json()}    tosca_definitions_version
-     Dictionary Should Contain Key    ${postjsonobject}    tosca_definitions_version
-
-CreateNewOperationalPolicy
-     [Documentation]    Create a new Operational Apex policy
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policies.controlloop.operational.Apex.tosca.json
-     Log    Creating session https://${POLICY_API_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.controlloop.operational.Apex/versions/1.0.0/policies  data=${postjson}   headers=${headers}
+     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  data=${postjson}   headers=${headers}
      Log    Received response from policy4 ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200
      Dictionary Should Contain Key    ${resp.json()}    tosca_definitions_version
      Dictionary Should Contain Key    ${postjsonobject}    tosca_definitions_version
 
-DeployOperationalPolicy
-     [Documentation]    Make the PAP to initiate a PDP_UPDATE with policies
+DeployPolicy
+     [Documentation]    Deploy the policy in apex-pdp engine
      ${auth}=    Create List    healthcheck    zb!XztG34
      ${postjson}=  Get file  ${CURDIR}/data/pdp_update.json
      Log    Creating session https://${POLICY_PAP_IP}:6969
