@@ -64,8 +64,8 @@ echo ${POLICY_APEX_PDP_VERSION}
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-apex-pdp/docker-compose-apex.yml run --rm start_dependencies
 
 #Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+docker exec --tty mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec --tty mariadb  /docker-entrypoint-initdb.d/db.sh
 
 # now bring everything else up
 docker-compose -f ${WORKSPACE}/scripts/policy/policy-apex-pdp/docker-compose-apex.yml run --rm start_all
