@@ -16,17 +16,17 @@
         "dmaap_info": {
           "username": "dradmin",
           "location": "san-francisco",
-          "log_url": "https://dmaapdrhost:8443/feedlog/1",
+          "log_url": "https://dmaap-dr-prov:8443/feedlog/1",
           "publisher_id": "972.360gm",
           "password": "dradmin",
-          "publish_url": "https://dmaapdrhost:8443/publish/1"
+          "publish_url": "https://dmaap-dr-prov:8443/publish/1"
         }
       }
     },
     "streams_subscribes": {
       "dmaap_subscriber": {
         "dmaap_info": {
-             "topic_url":"http://dradmin:dradmin@dmaapmrhost:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12"
+             "topic_url":"http://dradmin:dradmin@dmaap-message-router:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12"
         },
         "type": "message_router"
       }
