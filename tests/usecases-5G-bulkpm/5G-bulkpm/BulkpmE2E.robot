@@ -5,6 +5,8 @@ Library           OperatingSystem
 Library           Collections
 Library           Process
 Resource          resources/bulkpm_keywords.robot
+Library           resources/JsonValidatorLibrary.py
+Library           resources/xNFLibrary.py
 
 
 *** Variables ***
@@ -12,21 +14,21 @@ ${VESC_URL}                              http://%{VESC_IP}:%{VESC_PORT}
 ${GLOBAL_APPLICATION_ID}                 robot-ves
 ${VES_ANY_EVENT_PATH}                    /eventListener/v7
 ${HEADER_STRING}                         content-type=application/json
-${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/usecases/5G-bulkpm/assets/json_events/FileExistNotificationUpdated.json
+${EVENT_DATA_FILE}                       %{WORKSPACE}/tests/usecases-5G-bulkpm/5G-bulkpm/assets/json_events/FileExistNotification.json
 
 ${TARGETURL_TOPICS}                      http://${DMAAP_MR_IP}:3904/topics
 ${TARGETURL_SUBSCR}                      http://${DMAAP_MR_IP}:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12?timeout=1000
 ${CLI_EXEC_CLI}                          curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${CLI_EXEC_CLI_FILECONSUMER}             docker exec fileconsumer-node /bin/sh -c "ls /opt/app/subscriber/delivery | grep .xml"
-${CLI_EXEC_CLI_DFC_LOG}                  docker exec dfc /bin/sh -c "cat /var/log/ONAP/application.log" > /tmp/dfc_docker.log.robot
-${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Datafile file published" /tmp/dfc_docker.log.robot
+${CLI_EXEC_CLI_DFC_LOG}                  docker exec dcaegen2-datafile-collector /bin/sh -c "cat /var/log/ONAP/application.log" > %{WORKSPACE}/archives/dfc_docker.log
+${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Datafile file published" %{WORKSPACE}/archives/dfc_docker.log
 ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/A20181002.0000-1000-0015-1000_5G.xml.M %{WORKSPACE}
-${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/A20181002.0000-1000-0015-1000_5G.xml.M  %{WORKSPACE}/metadata.json
-${CLI_EXEC_CLI_PMMAPPER_LOG}             docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > /tmp/pmmapper_docker.log.robot
-${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}        grep "XML validation successful Event" /tmp/pmmapper_docker.log.robot
-${CLI_EXEC_CLI_PMMAPPER_LOG_GREP_VES}    grep "Successfully published VES events to messagerouter" /tmp/pmmapper_docker.log.robot
-${metadataSchemaPath}                    %{WORKSPACE}/tests/usecases/5G-bulkpm/assets/metadata.schema.json
-${metadataJsonPath}                      %{WORKSPACE}/metadata.json
+${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/A20181002.0000-1000-0015-1000_5G.xml.M  %{WORKSPACE}/archives/metadata.json
+${CLI_EXEC_CLI_PMMAPPER_LOG}             docker exec dcaegen2-pm-mapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > %{WORKSPACE}/archives/pmmapper_docker.log
+${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}        grep "XML validation successful Event" %{WORKSPACE}/archives/pmmapper_docker.log
+${CLI_EXEC_CLI_PMMAPPER_LOG_GREP_VES}    grep "Successfully published VES events to messagerouter" %{WORKSPACE}/archives/pmmapper_docker.log
+${metadataSchemaPath}                    %{WORKSPACE}/tests/usecases-5G-bulkpm/5G-bulkpm/assets/metadata.schema.json
+${metadataJsonPath}                      %{WORKSPACE}/archives/metadata.json
 
 *** Test Cases ***
 
@@ -79,7 +81,7 @@ Verify Default Feed And File Consumer Subscription On Datarouter
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
     Should Contain                  ${cli_cmd_output.stdout}        https://dmaap-dr-prov/publish/1
-    Should Contain                  ${cli_cmd_output.stdout}        http://${DR_SUBSCIBER_IP}:7070
+    Should Contain                  ${cli_cmd_output.stdout}        http://datarouter-subscriber:7070
 
 
 Verify Fileconsumer Receive PM file from Data Router

@@ -21,7 +21,7 @@
             "arrayOfNamedHashMap": [
                 { "name": "A20181002.0000-1000-0015-1000_5G.xml.gz",
                   "hashMap":{
-                            "location": "sftp://admin:admin@sftpserver:sftpport/A20181002.0000-1000-0015-1000_5G.xml.gz",
+                            "location": "sftp://admin:admin@sftp:22/A20181002.0000-1000-0015-1000_5G.xml.gz",
                             "compression": "gzip",
                             "fileFormatType": "org.3GPP.32.435#measCollec",
                             "fileFormatVersion": "V10"
