@@ -1,8 +1,8 @@
 {
     "delivery":{
-       "url":"http://fileconsumer:7070",
-       "user":"LOGIN",
-       "password":"PASSWORD",
+       "url":"http://dcae-pm-mapper:8081/delivery",
+       "user":"username",
+       "password":"password",
        "use100":true
     },
     "follow_redirect":false,
@@ -14,6 +14,7 @@
        "log": "https://dmaap-dr-prov/feedlog/1",
        "feed": "https://dmaap-dr-prov/feed/1"
     },
-    "subscriber":"admin",
-    "decompress":true
+    "subscriber":"pmmapper",
+    "decompress":true,
+    "privilegedSubscriber": true
  }

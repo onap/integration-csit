@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import logging
-from simplejson import load
+
 from jsonschema import validate, ValidationError, SchemaError
+from simplejson import load
 
 
 class JsonValidatorLibrary(object):
@@ -11,14 +11,15 @@ class JsonValidatorLibrary(object):
     def __init__(self):
         pass
 
-    def validate(self, schemaPath, jsonPath):
-        logging.info("Schema path: " + schemaPath)
-        logging.info("JSON path: " + jsonPath)
+    @staticmethod
+    def validate(schema_path, json_path):
+        logging.info("Schema path: " + schema_path)
+        logging.info("JSON path: " + json_path)
         schema = None
         data = None
         try:
-            schema = load(open(schemaPath, 'r'))
-            data = load(open(jsonPath, 'r'))
+            schema = load(open(schema_path, 'r'))
+            data = load(open(json_path, 'r'))
         except (IOError, ValueError, OSError) as e:
             logging.error(e.message)
             return 1
@@ -33,6 +34,7 @@ class JsonValidatorLibrary(object):
         print("JSON validation successful")
         return 0
 
+
 if __name__ == '__main__':
     lib = JsonValidatorLibrary()
-    # sys.exit(JsonValidatorLibrary().validate(sys.argv[1], sys.argv[2]))
+# sys.exit(JsonValidatorLibrary().validate(sys.argv[1], sys.argv[2]))
