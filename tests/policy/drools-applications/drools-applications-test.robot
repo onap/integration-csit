@@ -124,7 +124,7 @@ DeployXacmlPolicies
     Log    Received response from pap ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
-    ...            responseTo    xacml    ACTIVE
+    ...            responseTo    xacml    ACTIVE    restart
     Log    Received status ${result.stdout}
     Should Be Equal As Integers        ${result.rc}    0
     Should Contain    ${result.stdout}    onap.restart.tca
