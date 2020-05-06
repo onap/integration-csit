@@ -24,6 +24,7 @@ package org.onap.so.svnfm.simulator.constants;
  * 
  * @author Lathishbabu Ganesan (lathishbabu.ganesan@est.tech)
  * @author ronan.kenny@est.tech
+ * @author Eoin Hanan (eoin.hanan@est.tech)
  */
 public class Constant {
 
@@ -36,4 +37,9 @@ public class Constant {
     public static final String VNF_CONFIG_PROPERTIES =
             "{\"isAutoScaleEnabled\": \"true\",\"isAutoHealingEnabled\": \"true\"}";
     public static final String IN_LINE_RESPONSE_201_CACHE = "inlineResponse201";
+    public static final String PACKAGE_MANAGEMENT_BASE_URL = "/vnfpkgm/v1";
+    public static final String SUBSCRIPTION_ENDPOINT = "/subscribe";
+    public static final String NOTIFICATION_ENDPOINT = "/notification";
+    public static final String VNFM_ADAPTER_ENDPOINT = "https://so-vnfm-adapter.onap:9092/so/vnfm-adapter/v1/";
+    public static final String VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT = VNFM_ADAPTER_ENDPOINT + "vnfpkgm/v1/subscriptions";
 }

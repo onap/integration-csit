@@ -1,0 +1,17 @@
+{
+  "id": "string",
+  "notificationType": "VnfPackageChangeNotification",
+  "subscriptionId": "string",
+  "vnfPkgId": "string",
+  "vnfdId": "string",
+  "changeType": "OP_STATE_CHANGE",
+  "operationalState": ["ENABLED"],
+  "_links": {
+    "vnfPackage": {
+      "href": "string"
+    },
+    "subscription": {
+      "href": "string"
+    }
+  }
+}
