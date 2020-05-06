@@ -1,0 +1,35 @@
+{
+  "config": {
+    "//description": "This file is only used for testing purposes",
+    "dmaap.ftpesConfig.keyCert": "/opt/app/datafile/etc/cert/cert.jks",
+    "dmaap.ftpesConfig.keyPasswordPath": "/opt/app/datafile/etc/cert/jks.pass",
+    "dmaap.ftpesConfig.trustedCa": "/opt/app/datafile/etc/cert/trust.jks",
+    "dmaap.ftpesConfig.trustedCaPasswordPath": "/opt/app/datafile/etc/cert/trust.pass",
+    "dmaap.security.trustStorePath": "/opt/app/datafile/etc/cert/trust.jks",
+    "dmaap.security.trustStorePasswordPath": "/opt/app/datafile/etc/cert/trust.pass",
+    "dmaap.security.keyStorePath": "/opt/app/datafile/etc/cert/cert.jks",
+    "dmaap.security.keyStorePasswordPath": "/opt/app/datafile/etc/cert/jks.pass",
+    "dmaap.security.enableDmaapCertAuth": "false",
+    "streams_publishes": {
+      "PM_MEAS_FILES": {
+        "type": "data_router",
+        "dmaap_info": {
+          "username": "dradmin",
+          "location": "san-francisco",
+          "log_url": "https://dmaap-dr-prov:8443/feedlog/1",
+          "publisher_id": "972.360gm",
+          "password": "dradmin",
+          "publish_url": "https://dmaap-dr-prov:8443/publish/1"
+        }
+      }
+    },
+    "streams_subscribes": {
+      "dmaap_subscriber": {
+        "dmaap_info": {
+             "topic_url":"http://dradmin:dradmin@dmaap-message-router:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT/OpenDcae-c12/C12"
+        },
+        "type": "message_router"
+      }
+    }
+  }
+}
