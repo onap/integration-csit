@@ -20,7 +20,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("vnfmadapter")
-                .secret("$2a$10$dHzTlqSBcm8hdO52LBvnX./zNTvUzzJy.lZrc4bCBL5gkln0wX6T6")
+                .secret("$2a$10$dHzTlqSBcm8hdO52LBvnX./zNTvUzzJy.lZrc4bCBL5gkln0wX6T6") //123456
                 .authorizedGrantTypes("client_credentials").scopes("write").accessTokenValiditySeconds(ONE_DAY)
                 .refreshTokenValiditySeconds(ONE_DAY);
     }

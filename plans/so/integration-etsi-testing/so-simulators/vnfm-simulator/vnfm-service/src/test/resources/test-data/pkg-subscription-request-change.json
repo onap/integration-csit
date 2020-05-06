@@ -1,0 +1,43 @@
+{
+  "filter": {
+    "notificationTypes": [
+      "VnfPackageChangeNotification"
+    ],
+    "vnfProductsFromProviders": [
+      {
+        "vnfProvider": "Ericsson",
+        "vnfProducts": [
+          {
+            "vnfProductName": "VnfProducts",
+            "versions": [
+              {
+                "vnfSoftwareVersion": "vnfSoftwareVersion",
+                "vnfdVersions": [
+                  "version1"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "vnfdId": [
+      "VNFDID"
+    ],
+    "vnfPkgId": [
+      "VNFPKGID"
+    ],
+    "operationalState": ["ENABLED"],
+    "usageState": []
+  },
+  "callbackUri": "https://so-vnfm-simulator.onap:9093/vnfpkgm/v1/notification",
+  "authentication": {
+    "authType": [
+      "BASIC"
+    ],
+    "paramsBasic": {
+      "userName": "vnfm",
+      "password": "password1$"
+    }
+  }
+}

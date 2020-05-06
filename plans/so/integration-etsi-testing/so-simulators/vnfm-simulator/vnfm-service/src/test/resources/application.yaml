@@ -34,16 +34,6 @@ server:
    port: 9093
    tomcat:
       max-threads: 50
-   ssl:
-      key-alias: so@so.onap.org
-      key--store-password: 7Em3&j4.19xYiMelhD5?xbQ.
-      key-store: classpath:so-vnfm-simulator.p12
-      key-store-type: PKCS12
-http:
-   client:
-      ssl:
-         trust-store: classpath:so-vnfm-adapter.p12
-         trust-store-password: ywsqCy:EEo#j}HJHM7z^Rk[L
 endpoint:
    callbackUri: https://so-vnfm-simulator.onap:9093/vnfpkgm/v1/notification
 vnfm-adapter:

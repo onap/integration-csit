@@ -65,7 +65,7 @@ public class SvnfmController {
     /**
      * To create the Vnf and stores the response in cache
      *
-     * @param CreateVnfRequest
+     * @param createVNFRequest
      * @return InlineResponse201
      */
     @PostMapping(value = "/vnf_instances")
