@@ -1,0 +1,152 @@
+version: '2.1'
+services:
+  datarouter-prov:
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:latest
+    container_name: dmaap-datarouter-prov
+    hostname: dmaap-dr-prov
+    ports:
+     - "443:8443"
+     - "8443:8443"
+     - "8080:8080"
+    volumes:
+     - ../prov_data/provserver.properties:/opt/app/datartr/etc/provserver.properties
+     - ../prov_data/addSubscriber.txt:/opt/app/datartr/addSubscriber.txt
+     - ../prov_data/addFeed3.txt:/opt/app/datartr/addFeed3.txt
+    depends_on:
+      mariadb_container:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://dmaap-dr-prov:8080/internal/prov"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - datarouter-prov
+          - dmaap-dr-prov
+
+  datarouter-node:
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:latest
+    container_name: dmaap-datarouter-node
+    hostname: dmaap-dr-node
+    ports:
+     - "9443:8443"
+     - "9090:8080"
+    volumes:
+     - ../node_data/node.properties:/opt/app/datartr/etc/node.properties
+    depends_on:
+      datarouter-prov:
+        condition: service_healthy
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - datarouter-node
+          - dmaap-dr-node
+
+  datarouter-subscriber:
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-subscriber:latest
+    container_name: fileconsumer-node
+    hostname: subscriber.com
+    ports:
+     - "7070:7070"
+    volumes:
+     - ../subscriber_data/subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - datarouter-subscriber
+
+  mariadb_container:
+    image: mariadb:10.2.14
+    container_name: dmaap-dr-prov-mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: datarouter
+      MYSQL_DATABASE: datarouter
+      MYSQL_USER: datarouter
+      MYSQL_PASSWORD: datarouter
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - datarouter-mariadb
+
+  sftp:
+    container_name: sftp
+    image: atmoz/sftp
+    ports:
+      - "2222:22"
+    command: admin:admin:1001
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - sftp
+
+  ves:
+    container_name: dcaegen2-vescollector
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.4.4
+    environment:
+       DMAAPHOST: dmaap-message-router
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - dcaegen2-ves-collector
+
+  dfc:
+    container_name: dcaegen2-datafile-collector
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
+    ports:
+      - "8433:8433"
+    volumes:
+      - ./dfc/application.yaml:/opt/app/datafile/config/application.yaml
+      - ./dfc/datafile_endpoints.json:/opt/app/datafile/config/datafile_endpoints.json
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - dcaegen2-datafile-collector
+
+  cbs-sim:
+    container_name: config-binding-service-sim
+    image: mockserver/mockserver:mockserver-5.10.0
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/cbs-initializer.json
+      LOG_LEVEL: "DEBUG"
+      SERVER_PORT: 10000
+    volumes:
+      - ./cbs_sim/cbs_mockserver.properties:/config/mockserver.properties
+      - ./cbs_sim/cbs-initializer.json:/config/cbs-initializer.json
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - config-binding-service
+
+  pmmapper:
+    container_name: dcaegen2-pm-mapper
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./pm_mapper_certs/cert.jks:/opt/app/pm-mapper/etc/cert.jks:ro
+      - ./pm_mapper_certs/jks.pass:/opt/app/pm-mapper/etc/jks.pass:ro
+      - ./pm_mapper_certs/trust.jks:/opt/app/pm-mapper/etc/trust.jks:ro
+      - ./pm_mapper_certs/trust.pass:/opt/app/pm-mapper/etc/trust.pass:ro
+    environment:
+      CONFIG_BINDING_SERVICE_SERVICE_HOST: config-binding-service
+      CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
+      HOSTNAME: pmmapper
+    networks:
+      tmp_bulk-pm-network:
+        aliases:
+          - dcae-pm-mapper
+
+networks:
+  tmp_bulk-pm-network:
+    external: true
+
