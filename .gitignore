@@ -3,6 +3,7 @@
 .classpath
 .settings/
 target/
+temp/
 autorelease/build/*/
 autorelease/dist
 log.html
