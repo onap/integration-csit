@@ -72,8 +72,8 @@ zip -F ${SCRIPT_DIR}/config/distribution/csar/sample_csar_with_apex_policy.csar 
 docker-compose -f ${SCRIPT_DIR}/docker-compose-distribution.yml run --rm start_dependencies
 
 #Configure the database
-docker exec -it mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec -it mariadb  /docker-entrypoint-initdb.d/db.sh
+docker exec --tty mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
+docker exec --tty mariadb  /docker-entrypoint-initdb.d/db.sh
 
 # now bring everything else up
 docker-compose -f ${SCRIPT_DIR}/docker-compose-distribution.yml run --rm start_all
