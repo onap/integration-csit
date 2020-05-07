@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46bcd2ac_18254ad7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5006
+      },
+      "writtenOn": "2020-05-07T10:58:56Z",
+      "side": 0,
+      "message": "I see that this commit doesn\u0027t have test folder paths changed , are you planning something else for that , please clarify.",
+      "revId": "d0cb4ba1ee79050aef906ec3a14f839caf865ede",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
