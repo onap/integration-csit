@@ -44,6 +44,8 @@ if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
     exit 1
 fi
 
+SCR_DMAAP=${SCRIPTS}/policy/drools-apps
+
 sudo apt-get -y install libxml2-utils
 bash ${SCRIPTS}/policy/policy-models-dmaap-sim.sh
 
@@ -81,6 +83,7 @@ echo DMAAP_IP IS ${DMAAP_IP}
 DATA2=${WORKSPACE}/dmaap-sim/models/models-examples/src/main/resources/policies
 
 ROBOT_VARIABLES=""
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SCR_DMAAP:${SCR_DMAAP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA2:${DATA2}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PDPX_IP:${POLICY_PDPX_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
