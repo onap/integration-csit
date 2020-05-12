@@ -1,0 +1,8 @@
+Code-Review+1: Dan Timoney <dtimoney@att.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 12 May 2020 10:18:02 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/107489
+Project: integration/csit
+Branch: refs/heads/master
