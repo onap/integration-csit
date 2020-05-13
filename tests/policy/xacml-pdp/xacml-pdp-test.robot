@@ -2,6 +2,7 @@
 Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
+Library     Process
 Library     json
 
 *** Test Cases ***
@@ -26,6 +27,11 @@ Statistics
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
+
+MakeTopics
+     [Documentation]    Creates the Policy topics
+     ${result}=     Run Process     ${SCR_DMAAP}/make_topic.sh   POLICY-PDP-PAP
+     Should Be Equal As Integers        ${result.rc}    0
 
 ExecuteXacmlPolicy
      Wait Until Keyword Succeeds    0 min   15 sec  CreateMonitorPolicy
@@ -78,6 +84,8 @@ DeployPolicies
      Log    Received response from policy5 ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200
+     ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
+     ...            responseTo    xacml    ACTIVE    onap.restart.tca
 
 GetStatisticsAfterDeployed
      [Documentation]    Runs Policy Xacml PDP Statistics after policy is deployed
