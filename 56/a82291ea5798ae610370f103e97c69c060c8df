@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+1: Ram Krishna Verma <ram_krishna.verma@bell.ca>
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 15 May 2020 07:52:15 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/107636
+Project: integration/csit
+Branch: refs/heads/master
