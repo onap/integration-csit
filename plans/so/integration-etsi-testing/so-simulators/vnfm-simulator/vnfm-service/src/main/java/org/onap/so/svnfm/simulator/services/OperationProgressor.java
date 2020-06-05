@@ -2,32 +2,11 @@ package org.onap.so.svnfm.simulator.services;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.ApiResponse;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantRequest;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsAddResources;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsLinks;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsLinksVnfLcmOpOcc;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.InlineResponse201;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.*;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.ApiClient;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.ApiException;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.api.DefaultApi;
@@ -40,41 +19,53 @@ import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperatio
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.NotificationTypeEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.OperationEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.OperationStateEnum;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse200;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201InstantiatedVnfInfoVnfcResourceInfo;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsBasic;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsOauth2ClientCredentials;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.*;
 import org.onap.so.svnfm.simulator.api.VeVnfmApi;
-import org.onap.so.svnfm.simulator.model.Vnfds;
-import org.onap.so.svnfm.simulator.repository.VnfOperationRepository;
 import org.onap.so.svnfm.simulator.config.ApplicationConfig;
 import org.onap.so.svnfm.simulator.model.VnfOperation;
+import org.onap.so.svnfm.simulator.model.Vnfds;
+import org.onap.so.svnfm.simulator.repository.VnfOperationRepository;
 import org.onap.so.svnfm.simulator.util.PatternContainedChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.*;
+
 public abstract class OperationProgressor implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationProgressor.class);
     private static final String CERTIFICATE_TO_TRUST = "so-vnfm-adapter.crt.pem";
-
-    private Resource keyStoreResource = new ClassPathResource("so-vnfm-simulator.p12");
-    private String keyStorePassword = "7Em3&j4.19xYiMelhD5?xbQ.";
-
     protected final VnfOperation operation;
     protected final SvnfmService svnfmService;
+    protected final Vnfds vnfds;
     private final VnfOperationRepository vnfOperationRepository;
     private final ApplicationConfig applicationConfig;
-    protected final Vnfds vnfds;
     private final SubscriptionService subscriptionService;
     private final DefaultApi notificationClient;
     private final org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.api.DefaultApi grantClient;
+    private final Resource keyStoreResource = new ClassPathResource("so-vnfm-simulator.p12");
+    private final String keyStorePassword = "7Em3&j4.19xYiMelhD5?xbQ.";
 
     public OperationProgressor(final VnfOperation operation, final SvnfmService svnfmService,
-            final VnfOperationRepository vnfOperationRepository, final ApplicationConfig applicationConfig,
-            final Vnfds vnfds, final SubscriptionService subscriptionService) {
+                               final VnfOperationRepository vnfOperationRepository, final ApplicationConfig applicationConfig,
+                               final Vnfds vnfds, final SubscriptionService subscriptionService) {
         this.operation = operation;
         this.svnfmService = svnfmService;
         this.vnfOperationRepository = vnfOperationRepository;
@@ -83,7 +74,7 @@ public abstract class OperationProgressor implements Runnable {
         this.subscriptionService = subscriptionService;
 
         final ApiClient apiClient = new ApiClient();
-        String callBackUrl = subscriptionService.getSubscriptions().iterator().next().getCallbackUri();
+        String callBackUrl = getLastLccnSubscriptionRequest().getCallbackUri();
         final PatternContainedChecker checker = new PatternContainedChecker("/lcn/", callBackUrl);
         callBackUrl = checker.getText();
         apiClient.setBasePath(callBackUrl);
@@ -137,7 +128,6 @@ public abstract class OperationProgressor implements Runnable {
                     buildNotification(NotificationStatusEnum.START, OperationStateEnum.PROCESSING);
             sendNotification(notificationOfProcessing);
 
-
             final GrantRequest grantRequest = buildGrantRequest();
             final InlineResponse201 grantResponse = sendGrantRequest(grantRequest);
             final List<InlineResponse201InstantiatedVnfInfoVnfcResourceInfo> vnfcs = handleGrantResponse(grantResponse);
@@ -154,7 +144,6 @@ public abstract class OperationProgressor implements Runnable {
         } catch (final Exception exception) {
             LOGGER.error("Error in OperationProgressor ", exception);
         }
-
     }
 
     private void sleep(final long milliSeconds) {
@@ -174,7 +163,7 @@ public abstract class OperationProgressor implements Runnable {
     }
 
     private VnfLcmOperationOccurrenceNotification buildNotification(final NotificationStatusEnum status,
-            final OperationStateEnum operationState) {
+                                                                    final OperationStateEnum operationState) {
         final VnfLcmOperationOccurrenceNotification notification = new VnfLcmOperationOccurrenceNotification();
         notification.setId(UUID.randomUUID().toString());
         notification.setNotificationType(NotificationTypeEnum.VNFLCMOPERATIONOCCURRENCENOTIFICATION);
@@ -189,7 +178,6 @@ public abstract class OperationProgressor implements Runnable {
                 new LcnVnfLcmOperationOccurrenceNotificationLinksVnfInstance();
         vnfInstanceLink.setHref(getVnfLink());
         links.setVnfInstance(vnfInstanceLink);
-
 
         final LcnVnfLcmOperationOccurrenceNotificationLinksVnfInstance operationLink =
                 new LcnVnfLcmOperationOccurrenceNotificationLinksVnfInstance();
@@ -222,22 +210,17 @@ public abstract class OperationProgressor implements Runnable {
         LOGGER.info("Sending notification: {}", notification);
         try {
             final SubscriptionsAuthenticationParamsBasic subscriptionAuthentication =
-                    subscriptionService.getSubscriptions().iterator().next().getAuthentication().getParamsBasic();
-            final String auth =
-                    subscriptionAuthentication.getUserName() + ":" + subscriptionAuthentication.getPassword();
+                    getLastLccnSubscriptionRequest().getAuthentication().getParamsBasic();
+            final String auth = subscriptionAuthentication.getUserName() + ":" + subscriptionAuthentication.getPassword();
             final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
             String authHeader = "Basic " + new String(encodedAuth);
-
-            notificationClient.lcnVnfLcmOperationOccurrenceNotificationPostWithHttpInfo(notification,
-                    MediaType.APPLICATION_JSON, authHeader);
+            notificationClient.lcnVnfLcmOperationOccurrenceNotificationPostWithHttpInfo(notification, MediaType.APPLICATION_JSON, authHeader);
         } catch (final ApiException exception) {
             LOGGER.error("Error sending notification: " + notification, exception);
             LOGGER.error("Response code: {}, body: {}, basePath: {}", exception.getCode(), exception.getResponseBody(),
                     notificationClient.getApiClient().getBasePath());
-
         }
     }
-
 
     public GrantRequest buildGrantRequest() {
         final GrantRequest grantRequest = new GrantRequest();
@@ -275,15 +258,11 @@ public abstract class OperationProgressor implements Runnable {
     private InlineResponse201 sendGrantRequest(final GrantRequest grantRequest) {
         LOGGER.info("Sending grant request: {}", grantRequest);
         try {
-
             final SubscriptionsAuthenticationParamsOauth2ClientCredentials subscriptionAuthentication =
-                    subscriptionService.getSubscriptions().iterator().next().getAuthentication()
-                            .getParamsOauth2ClientCredentials();
-
+                    getLastLccnSubscriptionRequest().getAuthentication().getParamsOauth2ClientCredentials();
             final String authHeader = applicationConfig.getGrantAuth().equals("oauth")
                     ? "Bearer " + getToken(notificationClient.getApiClient(), subscriptionAuthentication)
                     : null;
-
             final ApiResponse<InlineResponse201> response = grantClient.grantsPostWithHttpInfo(grantRequest,
                     MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON, authHeader);
             LOGGER.info("Grant Response: {}", response);
@@ -307,7 +286,7 @@ public abstract class OperationProgressor implements Runnable {
     }
 
     private String getToken(final ApiClient apiClient,
-            final SubscriptionsAuthenticationParamsOauth2ClientCredentials oauthClientCredentials) {
+                            final SubscriptionsAuthenticationParamsOauth2ClientCredentials oauthClientCredentials) {
         final String basePath = apiClient.getBasePath().substring(0, apiClient.getBasePath().indexOf("/so/"));
         final String tokenUrl = basePath + "/oauth/token?grant_type=client_credentials";
 
@@ -321,7 +300,6 @@ public abstract class OperationProgressor implements Runnable {
             connection.connect();
 
             return getResponse(connection).get("access_token").getAsString();
-
         } catch (IOException exception) {
             LOGGER.error("Error getting token", exception);
             return null;
@@ -348,4 +326,16 @@ public abstract class OperationProgressor implements Runnable {
         return jsonObject;
     }
 
+    private LccnSubscriptionRequest getLastLccnSubscriptionRequest() {
+        final Collection<LccnSubscriptionRequest> subscriptions = subscriptionService.getSubscriptions();
+        final Iterator<LccnSubscriptionRequest> iterator = subscriptions.iterator();
+
+        LccnSubscriptionRequest last = null;
+
+        while (iterator.hasNext()) {
+            last = iterator.next();
+        }
+
+        return last;
+    }
 }
