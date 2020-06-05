@@ -344,3 +344,28 @@ services:
     command:
         - "/config/populate-aai-simulator.sh"
 ################################################################################
+  ve-vnfm-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/ve-vnfm-adapter:${TAG}
+    ports:
+      - "9098:9098"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH}/override-files/ve-vnfm-adapter/onapheat:/app/config
+    environment:
+      - APP=ve-vnfm-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+    hostname:
+      ve-vnfm-adapter
+    depends_on:
+      - request-db-adapter
+      - aai-simulator
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+################################################################################
+
