@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3d28c5_fa50d5a0",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5006
+      },
+      "writtenOn": "2020-06-08T12:25:05Z",
+      "side": 1,
+      "message": "last iteration will sleep 5 sec, still selected var might give wrong result for last iteration, coz its a derived variable , unlike other for loops.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "764d4147fdeaddf6b8af5a8b3a7f474c73b1e90e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3a3f27_58cecc7f",
+        "filename": "tests/dcaegen2-services-pmsh/testcases/pmsh.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5006
+      },
+      "writtenOn": "2020-06-08T12:25:05Z",
+      "side": 1,
+      "message": "How come this exact number for sleep is calculated, same for other sleeps for below tc",
+      "range": {
+        "startLine": 55,
+        "startChar": 36,
+        "endLine": 55,
+        "endChar": 39
+      },
+      "revId": "764d4147fdeaddf6b8af5a8b3a7f474c73b1e90e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
