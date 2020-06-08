@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d071ee37_9446a864",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-06-08T15:04:11Z",
+      "side": 1,
+      "message": "Suggested fix?",
+      "parentUuid": "3a3d28c5_fa50d5a0",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "764d4147fdeaddf6b8af5a8b3a7f474c73b1e90e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f3a3f27_58cecc7f",
         "filename": "tests/dcaegen2-services-pmsh/testcases/pmsh.robot",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-06-08T12:25:05Z",
       "side": 1,
       "message": "How come this exact number for sleep is calculated, same for other sleeps for below tc",
+      "range": {
+        "startLine": 55,
+        "startChar": 36,
+        "endLine": 55,
+        "endChar": 39
+      },
+      "revId": "764d4147fdeaddf6b8af5a8b3a7f474c73b1e90e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6df4de_95b49da0",
+        "filename": "tests/dcaegen2-services-pmsh/testcases/pmsh.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-06-08T15:04:11Z",
+      "side": 1,
+      "message": "The tasks on each thread in PMSH are triggered periodically. This one is 30 secs so +1 to allow for task execution. They could be reduced but left as is to allow for timing delay.",
+      "parentUuid": "6f3a3f27_58cecc7f",
       "range": {
         "startLine": 55,
         "startChar": 36,
