@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "03bba2b3_3225b7c0",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5006
+      },
+      "writtenOn": "2020-06-10T06:05:49Z",
+      "side": 1,
+      "message": "containers_ok\u003dfalse\nfor i in {0..5}; do\n    if [[ \"$containers_ok\" \u003d \"true\" ]]\n    then\n        echo \"All required docker containers are up.\"\n        break\n    else\n        sleep ${i}\n    fi\n    containers_ok\u003d[[ $(docker inspect --format \u0027{{ .State.Running }}\u0027 cbs-sim) ]] \u0026\u0026 \\\n       [[ $(docker inspect --format \u0027{{ .State.Running }}\u0027 aai-sim) ]] \u0026\u0026 \\\n       [[ $(docker inspect --format \u0027{{ .State.Running }}\u0027 mr-sim) ]] \u0026\u0026 \\\n       [[ $(docker inspect --format \u0027{{ .State.Running }}\u0027 db) ]] \u0026\u0026 \\\n       [[ $(docker inspect --format \u0027{{ .State.Running }}\u0027 pmsh) ]]\ndone",
+      "parentUuid": "d071ee37_9446a864",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "764d4147fdeaddf6b8af5a8b3a7f474c73b1e90e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f3a3f27_58cecc7f",
         "filename": "tests/dcaegen2-services-pmsh/testcases/pmsh.robot",
         "patchSetId": 2
