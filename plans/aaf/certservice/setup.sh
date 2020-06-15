@@ -40,6 +40,9 @@ echo "Reinstall pyopenssl library."
 pip uninstall pyopenssl -y
 pip install pyopenssl==17.5.0
 
+#install pyjks for .jks files management
+pip install pyjks
+
 #Disable proxy - for local run
 unset http_proxy https_proxy
 

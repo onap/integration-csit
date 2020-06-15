@@ -6,7 +6,9 @@ Library 	      RequestsLibrary
 Library           HttpLibrary.HTTP
 Library           Collections
 Library           ../libraries/CertClientManager.py  ${MOUNT_PATH}  ${TRUSTSTORE_PATH}
-Library           ../libraries/JksFilesValidator.py  ${MOUNT_PATH}
+Library           ../libraries/P12ArtifactsValidator.py  ${MOUNT_PATH}
+Library           ../libraries/JksArtifactsValidator.py  ${MOUNT_PATH}
+Library           ../libraries/PemArtifactsValidator.py  ${MOUNT_PATH}
 
 *** Keywords ***
 
@@ -85,7 +87,7 @@ Send Post Request And Validate Response
     ${resp}= 	Post Request 	${https_valid_cert_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
 
-Run Cert Service Client And Validate JKS File Creation And Client Exit Code
+Run Cert Service Client And Validate PKCS12 File Creation And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
     [Arguments]   ${env_file}  ${expected_exit_code}
     ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
@@ -94,14 +96,41 @@ Run Cert Service Client And Validate JKS File Creation And Client Exit Code
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
     Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by passpshase
 
+Run Cert Service Client And Validate JKS File Creation And Client Exit Code
+    [Documentation]  Run Cert Service Client Container And Validate Exit Code
+    [Arguments]   ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
+    ${can_open}=  Can Open Keystore And Truststore With Pass Jks
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by passpshase
+
+Run Cert Service Client And Validate PKCS12 Files Contain Expected Data
+    [Documentation]  Run Cert Service Client Container And Validate PKCS12 Files Contain Expected Data
+    [Arguments]  ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
+    ${data}    ${isEqual}=  Get And Compare Data P12  ${env_file}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path_with_data
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${isEqual}  Keystore doesn't contain ${data.expectedData}. Actual data is: ${data.actualData}
+
 Run Cert Service Client And Validate JKS Files Contain Expected Data
     [Documentation]  Run Cert Service Client Container And Validate JKS Files Contain Expected Data
     [Arguments]  ${env_file}  ${expected_exit_code}
     ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
-    ${data}    ${isEqual}=  Get And Compare Data  ${env_file}
+    ${data}    ${isEqual}=  Get And Compare Data Jks  ${env_file}
     Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path_with_data
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
     Should Be True  ${isEqual}  Keystore doesn't contain ${data.expectedData}. Actual data is: ${data.actualData}
+
+Run Cert Service Client And Validate PEM Files Contain Expected Data
+    [Documentation]  Run Cert Service Client Container And Validate PEM Files Contain Expected Data
+    [Arguments]  ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
+    ${existNotEmpty}=  Artifacts Exist And Are Not Empty
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path_with_data
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
+    Should Be True  ${existNotEmpty}  PEM artifacts not created properly
 
 Run Cert Service Client And Validate Http Response Code And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
@@ -113,3 +142,11 @@ Run Cert Service Client And Validate Http Response Code And Client Exit Code
     Should Be True  ${can_find_API_response}  Cannot Find API response in logs
     Should Be Equal As Strings  ${api_response_code}  ${expected_api_response_code}  API return ${api_response_code} but expected: ${expected_api_response_code}
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return unexpected exit code return: ${exitcode} , but expected: ${expected_exit_code}
+
+Run Cert Service Client And Validate Client Exit Code
+    [Documentation]  Run Cert Service Client Container And Validate Exit Code
+    [Arguments]   ${env_file}  ${expected_exit_code}
+    ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
+    Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  negative_path
+    Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return unexpected exit code return: ${exitcode} , but expected: ${expected_exit_code}
+
