@@ -19,6 +19,10 @@ ${INVALID_PK_FILE}                       %{WORKSPACE}/tests/aaf/certservice/asse
 
 ${CERT_SERVICE_ADDRESS}                  https://${CERT_SERVICE_CONTAINER_NAME}:${CERT_SERVICE_PORT}
 ${VALID_ENV_FILE}                        %{WORKSPACE}/tests/aaf/certservice/assets/valid_client_docker.env
+${VALID_ENV_FILE_JKS}                    %{WORKSPACE}/tests/aaf/certservice/assets/valid_client_docker_jks.env
+${VALID_ENV_FILE_P12}                    %{WORKSPACE}/tests/aaf/certservice/assets/valid_client_docker_p12.env
+${VALID_ENV_FILE_PEM}                    %{WORKSPACE}/tests/aaf/certservice/assets/valid_client_docker_pem.env
+${INVALID_ENV_FILE_OUTPUT_TYPE}          %{WORKSPACE}/tests/aaf/certservice/assets/invalid_client_docker_output_type.env
 ${INVALID_ENV_FILE}                      %{WORKSPACE}/tests/aaf/certservice/assets/invalid_client_docker.env
 ${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
 ${CLIENT_CONTAINER_NAME}                 %{ClientContainerName}
