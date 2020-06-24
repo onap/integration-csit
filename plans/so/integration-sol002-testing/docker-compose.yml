@@ -1,0 +1,97 @@
+version: '3'
+services:
+################################################################################
+  mariadb:
+    image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:10.1.11
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ${TEST_LAB_DIR}/volumes/mariadb/conf.d:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    hostname:
+      mariadb.so.testlab.onap.org
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  aai-simulator:
+    image: simulators/aai-simulator:latest
+    ports:
+      - "9993:9993"
+    environment:
+    - APP=AAI-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      aai-simulator
+    depends_on:
+      - mariadb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  so-vnfm-simulator:
+    image: simulators/vnfm-simulator:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH}/override-files/vnfm-simulator/onapheat:/app/config
+    environment:
+      - APP=VNFM-SIMULATOR
+      - JVM_ARGS=-Xms64m -Xmx512m -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=38018
+    hostname:
+      so-vnfm-simulator
+    depends_on:
+      - mariadb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  populate-aai-config:
+    image: jobs/workaround-job-container:latest
+    ports:
+       - "9995:9995"
+    volumes:
+      - ${CONFIG_DIR_PATH}/populate-aai-simulator.sh:/config/populate-aai-simulator.sh
+      - ${CONFIG_DIR_PATH}/wait-for.sh:/config/wait-for.sh
+      - ${CONFIG_DIR_PATH}/aai-simulator-populate-data:/config/aai-simulator-populate-data/
+    environment:
+      - AAI_SIMULATOR_HOST=aai-simulator
+      - AAI_SIMULATOR_PORT=9993
+      - TIMEOUT_IN_SECONDS=300 #5 mins
+    depends_on:
+      - aai-simulator
+    command:
+        - "/config/populate-aai-simulator.sh"
+################################################################################
+  ve-vnfm-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/ve-vnfm-adapter:${TAG}
+    ports:
+      - "9098:9098"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH}/override-files/ve-vnfm-adapter/onapheat:/app/config
+    environment:
+      - APP=ve-vnfm-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+    hostname:
+      ve-vnfm-adapter
+    depends_on:
+      - aai-simulator
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" aai-simulator:9993 -- "/app/start-app.sh"'
+################################################################################
