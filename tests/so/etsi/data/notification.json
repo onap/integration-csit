@@ -1,0 +1,9 @@
+{
+	"id": "d184f5f6-8b10-4fb7-b59d-a276be6218ba",
+	"notificationType": "VnfLcmOperationOccurrenceNotification",
+	"_links": {
+		"vnfInstance": {
+			"href": "http"
+		}
+	}
+}
