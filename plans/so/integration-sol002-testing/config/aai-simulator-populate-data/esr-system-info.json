@@ -1,0 +1,11 @@
+{
+    "esr-system-info-id": "5c067098-f2e3-40f7-a7ba-155e7c61e916",
+    "system-name": "vnfmSimulator",
+    "type": "simulator",
+    "vendor": "EST",
+    "version": "V1.0",
+    "service-url": "https://so-vnfm-simulator:9093/vnflcm/v1",
+    "user-name": "",
+    "password": "",
+    "system-type": "VNFM"
+}
