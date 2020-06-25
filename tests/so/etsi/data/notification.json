@@ -1,0 +1,26 @@
+{
+    "id": "3aa49739-aabd-4d40-8c32-b5b97940201b",
+    "notificationType": "VnfLcmOperationOccurrenceNotification",
+    "subscriptionId": null,
+    "timeStamp": null,
+    "notificationStatus": "START",
+    "operationState": "PROCESSING",
+    "vnfInstanceId": "a23c5388-e035-4ca6-a126-662ad8dd8686",
+    "operation": "INSTANTIATE",
+    "isAutomaticInvocation": null,
+    "vnfLcmOpOccId": null,
+    "affectedVnfcs": null,
+    "affectedVirtualLinks": null,
+    "affectedVirtualStorages": null,
+    "changedInfo": null,
+    "changedExtConnectivity": null,
+    "error": null,
+    "_links": {
+        "vnfInstance": {
+            "href": "https://so-vnfm-simulator:9093/vnflcm/v1/vnf_instances/a23c5388-e035-4ca6-a126-662ad8dd8686"
+        },
+        "subscription": null,
+        "vnfLcmOpOcc": null
+    }
+}
+
