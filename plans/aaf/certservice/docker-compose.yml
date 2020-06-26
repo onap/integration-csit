@@ -19,7 +19,7 @@ services:
       - certservice
 
   aaf-cert-service:
-    image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:latest
+    image: nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-api:frankfurt-latest
     volumes:
       - $CONFIGURATION_PATH:/etc/onap/aaf/certservice/cmpServers.json
       - ./certs/truststore.jks:/etc/onap/aaf/certservice/certs/truststore.jks

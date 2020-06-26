@@ -20,7 +20,7 @@ ${INVALID_PK_FILE}                       %{WORKSPACE}/tests/aaf/certservice/asse
 ${CERT_SERVICE_ADDRESS}                  https://${CERT_SERVICE_CONTAINER_NAME}:${CERT_SERVICE_PORT}
 ${VALID_ENV_FILE}                        %{WORKSPACE}/tests/aaf/certservice/assets/valid_client_docker.env
 ${INVALID_ENV_FILE}                      %{WORKSPACE}/tests/aaf/certservice/assets/invalid_client_docker.env
-${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:latest
+${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.aaf.certservice.aaf-certservice-client:frankfurt-latest
 ${CLIENT_CONTAINER_NAME}                 %{ClientContainerName}
 ${CERT_SERVICE_NETWORK}                  certservice_certservice
 ${MOUNT_PATH}                            %{WORKSPACE}/tests/aaf/certservice/tmp
