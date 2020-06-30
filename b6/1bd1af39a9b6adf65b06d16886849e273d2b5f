@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jan Malkiewicz <jan.malkiewicz@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Tue, 30 Jun 2020 09:35:42 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/109594
+Project: integration/csit
+Branch: refs/heads/frankfurt
