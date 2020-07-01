@@ -59,7 +59,7 @@ NslcmSwaggerTest
 NslcmSwaggerByMSBTest
     [Documentation]    query swagger info of nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${queryswagger_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -72,7 +72,7 @@ CreateNSTest
     ${json_value}=     json_from_file      ${create_ns_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_url}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -87,7 +87,7 @@ CreateVnfTest
     Set To Dictionary    ${json_value}    nsInstanceId=${nsInstId}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${vnfs_url}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -99,7 +99,7 @@ CreateVnfTest
 QueryVnfTest
     [Documentation]    Query vnf function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${vnfs_url}/${vnfInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -109,7 +109,7 @@ TerminateVnfTest
     ${json_value}=     json_from_file      ${terminate_vnf_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${terminate_vnfs_url}/${vnfInstId}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -121,7 +121,7 @@ CreateVlTest
     Set To Dictionary    ${json_value}    nsInstanceId=${nsInstId}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${vls_url}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -133,7 +133,7 @@ CreateVlTest
 DeleteVlTest
     [Documentation]    Delete vl function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=    Delete Request    web_session     ${vls_url}/${vlInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -143,7 +143,7 @@ ScaleNSTest
     ${json_value}=     json_from_file      ${scale_ns_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/scale    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -154,7 +154,7 @@ HealNSTest
     ${json_value}=     json_from_file      ${heal_ns_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/heal    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -166,7 +166,7 @@ HealNSTest
 GetJobTest
     [Documentation]    Query Ns Job function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${get_job_url}/${jobInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -176,7 +176,7 @@ UpdateNSTest
     ${json_value}=     json_from_file      ${update_ns_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/update    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -187,7 +187,7 @@ TerminateNSTest
     ${json_value}=     json_from_file      ${terminate_ns_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/terminate    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -196,7 +196,7 @@ TerminateNSTest
 DeleteNSTest
     [Documentation]    Delete NS function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=    Delete Request    web_session     ${ns_url}/${nsInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -204,7 +204,7 @@ DeleteNSTest
 LcmHealthCheckTest
     [Documentation]    check health for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${healthcheck_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -215,7 +215,7 @@ LcmHealthCheckTest
 LcmGetNsTest
     [Documentation]    get ns instances for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${ns_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -223,7 +223,7 @@ LcmGetNsTest
 QueryAllPnfsTest
     [Documentation]    Query all pnfs function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${pnfs_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -233,7 +233,7 @@ CreateNSInstanceTest
     ${json_value}=     json_from_file      ${create_ns_instance_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json    globalcustomerid=global-customer-id-test1    servicetype=service-type-test1
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_instances_url}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -245,7 +245,7 @@ CreateNSInstanceTest
 QueryNSInstancesTest
     [Documentation]    Query Ns Instances function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${ns_instances_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
@@ -256,7 +256,7 @@ UpdateNSInstanceTest
     ${json_string}=     string_from_json   ${json_value}
     Log    ${json_string}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_instances_url}/${nsInstId}/update    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -267,7 +267,7 @@ TerminateNSInstanceTest
     ${json_value}=     json_from_file      ${terminate_ns_instance_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${ns_instances_url}/${nsInstanceId}/terminate    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -278,7 +278,7 @@ LcmCreateSubscriptionsTest
     ${json_value}=     json_from_file      ${create_subscriptions_json}
     ${json_string}=     string_from_json   ${json_value}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     Set Request Body    ${json_string}
     ${resp}=    Post Request    web_session     ${get_subscriptions_url}    ${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
@@ -287,7 +287,7 @@ LcmCreateSubscriptionsTest
 LcmGetSubscriptionsTest
     [Documentation]    get subscriptions for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
-    Create Session    web_session    http://${MSB_IAG_IP}:80    headers=${headers}
+    Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
     ${resp}=  Get Request    web_session    ${get_subscriptions_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
