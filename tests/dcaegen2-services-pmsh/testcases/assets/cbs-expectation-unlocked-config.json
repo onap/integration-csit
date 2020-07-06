@@ -77,6 +77,8 @@
             "control_loop_name": "pmsh-control-loop",
             "operational_policy_name": "pmsh-operational-policy",
             "cert_path": "/opt/app/pmsh/etc/certs/cert.pem",
+            "enable_tls": true,
+            "ca_cert_path": "/opt/app/pmsh/etc/certs/cacert.pem",
             "streams_publishes": {
               "policy_pm_publisher": {
                 "dmaap_info": {

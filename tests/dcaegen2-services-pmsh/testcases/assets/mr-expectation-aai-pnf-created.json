@@ -1,7 +1,10 @@
 [
   {
     "httpRequest": {
-      "path": "/events/AAI_EVENT/dcae_pmsh_cg/AAI-EVENT"
+      "path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event",
+      "queryStringParameters" : {
+        "timeout" : [ "1000" ]
+      }
     },
     "httpResponse": {
       "statusCode": 200,
@@ -21,7 +24,10 @@
   },
   {
     "httpRequest": {
-      "path": "/events/AAI_EVENT/dcae_pmsh_cg/AAI-EVENT"
+      "path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event",
+      "queryStringParameters" : {
+        "timeout" : [ "1000" ]
+      }
     },
     "httpResponse": {
       "statusCode": 200,

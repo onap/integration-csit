@@ -6,7 +6,7 @@ export DB_PASSWORD=pmsh
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai-sim cbs-sim mr-sim
+docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim mr-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."
@@ -38,37 +38,6 @@ for i in {1..30}; do
     fi
 done
 [[ "$pmsh_response" != "200" ]] && echo "Error: PMSH container state not healthy" && exit 1
-
-# Set log level to DEBUG
-docker exec pmsh /bin/sh -c "cat > log_config.yaml <<EOF
-version: 1
-
-disable_existing_loggers: true
-
-loggers:
-  onap_logger:
-    level: DEBUG
-    handlers: [onap_log_handler, stdout_handler]
-    propagate: false
-handlers:
-  onap_log_handler:
-    class: logging.handlers.RotatingFileHandler
-    filename: /var/log/ONAP/dcaegen2/services/pmsh/application.log
-    mode: a
-    maxBytes: 10000000
-    backupCount: 10
-    formatter: mdcFormatter
-  stdout_handler:
-    class: logging.StreamHandler
-    formatter: mdcFormatter
-formatters:
-  mdcFormatter:
-    format: '%(asctime)s | %(threadName)s | %(thread)d | %(levelname)s | %(module)s
-      | %(funcName)s | %(mdc)s | %(message)s'
-    mdcfmt: '{ServiceName} | {RequestID} | {InvocationID}'
-    datefmt: '%Y-%m-%dT%H:%M:%S%z'
-    (): onaplogging.mdcformatter.MDCFormatter
-EOF"
 
 # Wait for initialization of Docker containers
 containers_ok="false"

@@ -1,0 +1,27 @@
+version: 1
+
+disable_existing_loggers: true
+
+loggers:
+  onap_logger:
+    level: DEBUG
+    handlers: [onap_log_handler, stdout_handler]
+    propagate: false
+handlers:
+  onap_log_handler:
+    class: logging.handlers.RotatingFileHandler
+    filename: /var/log/ONAP/dcaegen2/services/pmsh/application.log
+    mode: a
+    maxBytes: 10000000
+    backupCount: 10
+    formatter: mdcFormatter
+  stdout_handler:
+    class: logging.StreamHandler
+    formatter: mdcFormatter
+formatters:
+  mdcFormatter:
+    format: '%(asctime)s | %(threadName)s | %(thread)d | %(levelname)s | %(module)s
+      | %(funcName)s | %(mdc)s | %(message)s'
+    mdcfmt: '{ServiceName} | {RequestID} | {InvocationID}'
+    datefmt: '%Y-%m-%dT%H:%M:%S%z'
+    (): onaplogging.mdcformatter.MDCFormatter
