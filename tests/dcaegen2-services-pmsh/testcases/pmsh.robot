@@ -64,7 +64,7 @@ Verify Policy response on MR is handled
     [Documentation]                 Verify policy response on MR is handled
     [Timeout]                       40 seconds
     SimulatePolicyResponse          ${MR_EXPECTATION_POLICY_RESPONSE_PNF_EXISTING}
-    Sleep                           7 seconds      Ensure Policy response on MR is picked up
+    Sleep                           15 seconds      Ensure Policy response on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_sub_status']}     CREATED
 
@@ -73,7 +73,7 @@ Verify AAI event on MR detailing new PNF being detected is handled
     [Documentation]                 Verify PNF created AAI event on MR is handled
     [Timeout]                       30 seconds
     SimulateNewPNF
-    Sleep                           12 seconds      Ensure AAI event on MR is picked up
+    Sleep                           15 seconds      Ensure AAI event on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_name']}            pnf_newly_discovered
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['orchestration_status']}   Active
@@ -105,7 +105,7 @@ SetAdministrativeStateToUnlocked
 
 SimulateNewPNF
     ${data}=        Get Data From File    ${MR_EXPECTATION_AAI_PNF_CREATED}
-    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/AAI_EVENT/dcae_pmsh_cg/AAI-EVENT"}
+    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event"}
     Should Be True      ${resp.status_code} == 200
     ${resp} =       Put Request     mr_sim_session  /expectation     data=${data}
     Should Be True      ${resp.status_code} == 201
@@ -113,14 +113,14 @@ SimulateNewPNF
 SimulatePolicyResponse
     [Arguments]                     ${expected_contents}
     ${data}=        Get Data From File    ${expected_contents}
-    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"}
+    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/unauthenticated.PMSH_CL_INPUT/dcae_pmsh_cg/dcae_pmsh_policy_cl_input"}
     Should Be True      ${resp.status_code} == 200
     ${resp} =       Put Request     mr_sim_session  /expectation     data=${data}
     Should Be True      ${resp.status_code} == 201
 
 SimulateDeletedPNF
     ${data}=        Get Data From File    ${MR_EXPECTATION_AAI_PNF_REMOVED}
-    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/AAI_EVENT/dcae_pmsh_cg/AAI-EVENT"}
+    ${resp} =       Put Request     mr_sim_session  /clear  data={"path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event"}
     Should Be True      ${resp.status_code} == 200
     ${resp} =       Put Request     mr_sim_session  /expectation     data=${data}
     Should Be True      ${resp.status_code} == 201

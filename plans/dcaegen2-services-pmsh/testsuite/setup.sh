@@ -6,7 +6,7 @@ export DB_PASSWORD=pmsh
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai-sim cbs-sim mr-sim
+docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim mr-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."

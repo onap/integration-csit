@@ -1,7 +1,10 @@
 [
   {
     "httpRequest": {
-      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"
+      "path": "/events/unauthenticated.PMSH_CL_INPUT/dcae_pmsh_cg/dcae_pmsh_policy_cl_input",
+      "queryStringParameters" : {
+        "timeout" : [ "1000" ]
+      }
     },
     "httpResponse": {
       "statusCode": 200,
@@ -21,7 +24,10 @@
   },
   {
     "httpRequest": {
-      "path": "/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS/dcae_pmsh_cg/policy_response_consumer"
+      "path": "/events/unauthenticated.PMSH_CL_INPUT/dcae_pmsh_cg/dcae_pmsh_policy_cl_input",
+      "queryStringParameters" : {
+        "timeout" : [ "1000" ]
+      }
     },
     "httpResponse": {
       "statusCode": 200,

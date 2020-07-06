@@ -1,7 +1,7 @@
 [
   {
     "httpRequest": {
-      "path": "/aai/v16/query.*"
+      "path": "/aai/v19/query.*"
     },
     "httpResponse": {
       "statusCode": 200,

@@ -11,15 +11,18 @@ services:
     networks:
       pmsh-network:
 
-  aai-sim:
+  aai:
     container_name: aai-sim
     image: mockserver/mockserver:mockserver-5.9.0
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/aai-initializer.json
+      LOG_LEVEL: "DEBUG"
     volumes:
       - ./assets/aai_sim/aai_mockserver.properties:/config/mockserver.properties
       - ./assets/aai_sim/aai-initializer.json:/config/aai-initializer.json
+      - ./assets/ssl_certs/mock_server_cacert.pem:/var/tmp/mock_server_cacert.pem
+      - ./assets/ssl_certs/mock_server_key.pem:/var/tmp/mock_server_key.pem
     networks:
       pmsh-network:
 
@@ -68,7 +71,6 @@ services:
       PMSH_PG_URL: db
       PMSH_PG_USERNAME: $DB_USER
       PMSH_PG_PASSWORD: $DB_PASSWORD
-      AAI_SERVICE_HOST: aai-sim
       AAI_SERVICE_PORT: 1080
       DCAE_CA_CERTPATH: '/opt/app/pmsh/etc/certs/cacert.pem'
     networks:
