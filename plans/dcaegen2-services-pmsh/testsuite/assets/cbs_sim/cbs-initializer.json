@@ -77,12 +77,14 @@
             "control_loop_name": "pmsh-control-loop",
             "operational_policy_name": "pmsh-operational-policy",
             "cert_path": "/opt/app/pmsh/etc/certs/cert.pem",
+            "enable_tls": true,
+            "ca_cert_path": "/opt/app/pmsh/etc/certs/cacert.pem",
             "streams_publishes": {
               "policy_pm_publisher": {
                 "dmaap_info": {
                   "client_id": "1475976809466",
                   "client_role": "org.onap.dcae.pmPublisher",
-                  "topic_url": "https://mr-sim:3095/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS",
+                  "topic_url": "https://mr-sim:3095/events/unauthenticated.DCAE_CL_OUTPUT",
                   "location": "san-francisco"
                 },
                 "type": "message_router"
@@ -101,7 +103,7 @@
               "policy_pm_subscriber": {
                 "dmaap_info": {
                   "location": "san-francisco",
-                  "topic_url": "https://mr-sim:3095/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS",
+                  "topic_url": "https://mr-sim:3095/events/unauthenticated.PMSH_CL_INPUT",
                   "client_role": "org.onap.dcae.pmSubscriber",
                   "client_id": "1575876809456"
                 },
