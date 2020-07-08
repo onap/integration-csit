@@ -21,6 +21,5 @@ docker-compose -f "${SCRIPTS}"/sdnc/netconf-pnp-simulator/docker-compose.yml dow
 
 make clear -C "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs
 
-rm -rf "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/tmp
 rm -rf "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
 rm -rf "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
