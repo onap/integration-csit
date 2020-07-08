@@ -30,7 +30,6 @@ chmod +x "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config
 export TEMP_DIR_PATH=${TEMP_DIR_PATH}
 
 # Create temp directory to bind with docker containers
-mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/tmp
 mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
 mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
 
@@ -53,6 +52,9 @@ pip install -U docker==2.7.0
 echo "Reinstall pyOpenSSL library."
 pip uninstall pyopenssl -y
 pip install pyopenssl==17.5.0
+
+# Install PYJKS for .jks files management
+pip install pyjks
 
 # Disable Proxy - for local run
 unset http_proxy https_proxy

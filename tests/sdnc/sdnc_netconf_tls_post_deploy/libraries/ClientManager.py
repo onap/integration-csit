@@ -25,6 +25,7 @@ import shutil
 import subprocess
 
 import docker
+import jks
 from OpenSSL import crypto
 from docker.types import Mount
 
@@ -42,8 +43,10 @@ class ClientManager:
         self.serverKeyPem = mount_path + '/server_key.pem'
         self.serverCertPem = mount_path + '/server_cert.pem'
         self.keystoreJksPath = mount_path + '/keystore.jks'
+        self.keystoreP12Path = mount_path + '/keystore.p12'
         self.keystorePassPath = mount_path + '/keystore.pass'
         self.truststoreJksPath = mount_path + '/truststore.jks'
+        self.truststoreP12Path = mount_path + '/truststore.p12'
         self.truststorePassPath = mount_path + '/truststore.pass'
 
     # Function Create docker container.
@@ -65,10 +68,27 @@ class ClientManager:
         exitcode = container.wait()
         return exitcode
 
+    # Function to validate keystore/truststore can be opened with generated pass-phrase.
+    def can_open_keystore_and_truststore_with_pass(self, container_name):
+        if container_name != NETCONF_PNP_SIM_CONTAINER_NAME:
+            return self.can_open_keystore_and_truststore_jks_files()
+        else:
+            return self.can_open_keystore_and_truststore_p12_files()
+
     # Function to validate keystore.jks/truststore.jks can be opened with generated pass-phrase.
-    def can_open_keystore_and_truststore_with_pass(self):
-        can_open_keystore = self.can_open_jks_file_with_pass_file(self.keystorePassPath, self.keystoreJksPath)
-        can_open_truststore = self.can_open_jks_file_with_pass_file(self.truststorePassPath, self.truststoreJksPath)
+    def can_open_keystore_and_truststore_jks_files(self):
+        try:
+            jks.KeyStore.load(self.keystoreJksPath, open(self.keystorePassPath, 'rb').read())
+            jks.KeyStore.load(self.truststoreJksPath, open(self.truststorePassPath, 'rb').read())
+            return True
+        except Exception as e:
+            print("UnExpected Error in validating keystore.jks/truststore.jks: {0}".format(e))
+            return False
+
+    # Function to validate keystore.p12/truststore.p12 can be opened with generated pass-phrase.
+    def can_open_keystore_and_truststore_p12_files(self):
+        can_open_keystore = self.can_open_p12_file_with_pass_file(self.keystorePassPath, self.keystoreP12Path)
+        can_open_truststore = self.can_open_p12_file_with_pass_file(self.truststorePassPath, self.truststoreP12Path)
         return can_open_keystore & can_open_truststore
 
     # Method for Uploading Certificate in SDNC-Container.
@@ -76,9 +96,9 @@ class ClientManager:
     def can_install_keystore_and_truststore_certs(self, cmd, container_name):
         continue_exec = True
         if container_name == NETCONF_PNP_SIM_CONTAINER_NAME:
-            print("Generating PEM files for {0} from JKS files".format(container_name))
-            continue_exec = self.create_pem(self.keystorePassPath, self.keystoreJksPath, self.truststorePassPath,
-                                            self.truststoreJksPath)
+            print("Generating PEM files for {0} from P12 files".format(container_name))
+            continue_exec = self.create_pem(self.keystorePassPath, self.keystoreP12Path, self.truststorePassPath,
+                                            self.truststoreP12Path)
         if continue_exec:
             print("Initiate Configuration Push for : {0}".format(container_name))
             resp_code = self.execute_bash_config(cmd, container_name)
@@ -89,19 +109,22 @@ class ClientManager:
                 print("Execution Failed for: {0}".format(container_name))
                 return False
 
-    def create_pem(self, keystore_pass_file_path, keystore_jks_file_path, truststore_pass_file_path,
-                   truststore_jks_file_path):
+    def create_pem(self, keystore_pass_path, keystore_p12_path, truststore_pass_path, truststore_p12_path):
         # Create [server_key.pem, server_cert.pem, ca.pem] files for Netconf-Pnp-Simulation/TLS Configuration.
         try:
-            keystore_p12 = self.get_pkcs12(keystore_pass_file_path, keystore_jks_file_path)
-            truststore_p12 = self.get_pkcs12(truststore_pass_file_path, truststore_jks_file_path)
             with open(self.serverKeyPem, "wb+") as key_file:
-                key_file.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, keystore_p12.get_privatekey()))
+                key_file.write(crypto.dump_privatekey(crypto.FILETYPE_PEM,
+                                                      self.get_pkcs12(keystore_pass_path,
+                                                                      keystore_p12_path).get_privatekey()))
             with open(self.serverCertPem, "wb+") as server_cert_file:
-                server_cert_file.write(crypto.dump_certificate(crypto.FILETYPE_PEM, keystore_p12.get_certificate()))
+                server_cert_file.write(crypto.dump_certificate(crypto.FILETYPE_PEM,
+                                                               self.get_pkcs12(keystore_pass_path,
+                                                                               keystore_p12_path).get_certificate()))
             with open(self.caCertPem, "wb+") as ca_cert_file:
                 ca_cert_file.write(
-                    crypto.dump_certificate(crypto.FILETYPE_PEM, truststore_p12.get_ca_certificates()[0]))
+                    crypto.dump_certificate(crypto.FILETYPE_PEM,
+                                            self.get_pkcs12(truststore_pass_path,
+                                                            truststore_p12_path).get_ca_certificates()[0]))
             return True
         except IOError as err:
             print("I/O Error: {0}".format(err))
@@ -110,12 +133,12 @@ class ClientManager:
             print("UnExpected Error: {0}".format(e))
             return False
 
-    def can_open_jks_file_with_pass_file(self, pass_file_path, jks_file_path):
+    def can_open_p12_file_with_pass_file(self, pass_file_path, p12_file_path):
         try:
-            if jks_file_path.split('/')[-1] == 'truststore.jks':
-                pkcs12 = self.get_pkcs12(pass_file_path, jks_file_path).get_ca_certificates()[0]
+            if p12_file_path.split('/')[-1] == 'truststore.p12':
+                pkcs12 = self.get_pkcs12(pass_file_path, p12_file_path).get_ca_certificates()[0]
             else:
-                pkcs12 = self.get_pkcs12(pass_file_path, jks_file_path).get_certificate()
+                pkcs12 = self.get_pkcs12(pass_file_path, p12_file_path).get_certificate()
             if pkcs12 is None:
                 return False
             return True
@@ -143,11 +166,10 @@ class ClientManager:
         shutil.rmtree(self.mount_path)
 
     @staticmethod
-    def get_pkcs12(pass_file_path, jks_file_path):
+    def get_pkcs12(pass_file_path, p12_file_path):
         # Load PKCS12 Object
         password = open(pass_file_path, 'rb').read()
-        p12 = crypto.load_pkcs12(open(jks_file_path, 'rb').read(), password)
-        return p12
+        return crypto.load_pkcs12(open(p12_file_path, 'rb').read(), password)
 
     @staticmethod
     def execute_bash_config(cmd, container_name):
