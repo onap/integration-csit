@@ -48,7 +48,7 @@ function using_https {
 set -exo pipefail
 
 echo "This is ${WORKSPACE}/scripts/sdc/setup_sdc_for_sanity.sh"
-
+echo "lets check what is ${1} ${2}"
 ENABLE_SIMULATOR=
 case "$1" in
     tad|tud)
@@ -58,16 +58,17 @@ case "$1" in
     '')
         # we will just setup sdc - no tests
         export TEST_SUITE=""
-
-        # this is mandatory
         ENABLE_SIMULATOR="--simulator"
+        # this is mandatory
         ;;
     *)
-        usage
-        exit 1
+        export TEST_SUITE=""
+        ENABLE_SIMULATOR="--simulator"
+    #     # usage
+    #     exit 1
         ;;
 esac
-
+echo "Lets check is simulator is enabled or not ${ENABLE_SIMULATOR}"
 # Clone sdc enviroment template
 mkdir -p "${WORKSPACE}/data/environments/"
 mkdir -p "${WORKSPACE}/data/clone/"
@@ -78,6 +79,7 @@ if using_local_images && [ -n "$SDC_LOCAL_GITREPO" ] ; then
     if [ -d "$SDC_LOCAL_GITREPO" ] ; then
         rm -rf ./sdc
         cp -a "$SDC_LOCAL_GITREPO" ./sdc
+        # echo "[skipping copying git repo of sdc]"
     else
         echo "[ERROR]: Local git repo for sdc does not exist: ${SDC_LOCAL_GITREPO}"
         exit 1
