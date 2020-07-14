@@ -22,3 +22,4 @@ services:
       CONSUL_PORT: 8500
       CONFIG_BINDING_SERVICE: "config-binding-service"
       HOSTNAME: "dfc_app0"
+      KNOWN_HOSTS_FILE_PATH: "/opt/app/datafile/known_hosts"

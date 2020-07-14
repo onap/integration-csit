@@ -53,7 +53,6 @@ Verify single event with single 1MB FTPS file. From event poll to published file
 Verify Single Event From Event Poll To Published File
     [Documentation]                 Keyword to verify single event with file with given parameters.
     [Arguments]                     ${file_size_in_mb}    ${mr_tc}    ${ftp_type}
-    ${cli_cmd_output}=              Run Process     ${DFC_ROOT}/../dfc-containers-clean.sh
     Set Environment Variable        MR_TC                   ${mr_tc}
     Set Environment Variable        FILE_SIZE               ${file_size_in_mb}MB
     Set Environment Variable        FTP_TYPE                ${ftp_type}
@@ -85,10 +84,8 @@ Verify Single Event From Event Poll To Published File
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Published Files Equal        1                       #Verify 1 file published to DR sim
     DR Redir Sim Downloaded Volume Equal          ${file_size_in_mb} 000 000                                            #Verify correct number of bytes published file data in DR redir sim
-    ${cli_cmd_output}=              Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/dfc-kill.sh
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+
+    [Teardown]                      Test Teardown
 
 Set Default Environment Variables
     [Documentation]                 Set default environment variables for simulators setup

@@ -44,3 +44,13 @@ Start DFC
 	${cli_cmd_output}=          Run Process                    ${DFC_ROOT}/dfc-start.sh   cwd=${DFC_ROOT}   env:SIMGROUP_ROOT=${SIMGROUP_ROOT}
     Log To Console              Dfc-start:
     Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+
+
+Test Teardown
+	[Documentation]				Cleanup containers
+    ${cli_cmd_output}=          Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
+    Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=          Run Process             ${DFC_ROOT}/dfc-kill.sh
+    Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=          Run Process             ${DFC_ROOT}/../dfc-containers-clean.sh           stderr=STDOUT
+    Log To Console              Dfc containter clean: ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
