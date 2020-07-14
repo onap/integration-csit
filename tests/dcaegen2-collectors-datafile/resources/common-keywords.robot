@@ -38,3 +38,12 @@ DR Redir Sim Downloaded Volume Equal
 	[Arguments]            		${target_ctr_value}
     ${resp}=					Run Process     ${CLI_DR_REDIR_SIM_DOWNLOADED_VOLUME}  shell=yes
     Should Be Equal As Strings  ${resp.stdout}  ${target_ctr_value}
+
+Test Teardown
+	[Documentation]				Cleanup containers
+    ${cli_cmd_output}=          Run Process             ${SIMGROUP_ROOT}/simulators-kill.sh
+    Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=          Run Process             ${DFC_ROOT}/dfc-kill.sh
+    Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
+    ${cli_cmd_output}=          Run Process             ${DFC_ROOT}/../dfc-containers-clean.sh           stderr=STDOUT
+    Log To Console              Dfc containter clean: ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
