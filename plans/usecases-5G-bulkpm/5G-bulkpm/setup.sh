@@ -78,6 +78,11 @@ DR_GATEWAY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway
 DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dmaap-message-router-server)
 VESC_IP=$(docker inspect '--format={{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dcaegen2-vescollector)
 
+#Add SFTP server pubilc key to known hosts of datafile collector
+HOST_NAMES=$(docker inspect -f '{{ range .NetworkSettings.Networks}}{{join .Aliases ","}}{{end}}' sftp)
+KEY_ENTRY=$(echo $HOST_NAMES "$(docker exec sftp cat /etc/ssh/ssh_host_rsa_key.pub)" | sed -e 's/\w*@\w*$//')
+docker exec -i -u root dcaegen2-datafile-collector sh -c "echo $KEY_ENTRY >> /opt/app/datafile/known_hosts"
+
 # Add gateway IP to DR Prov
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$DR_GATEWAY_IP"
 docker exec -i datarouter-prov sh -c "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"

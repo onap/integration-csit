@@ -110,6 +110,8 @@ services:
       tmp_bulk-pm-network:
         aliases:
           - dcaegen2-datafile-collector
+    environment:
+      KNOWN_HOSTS_FILE_PATH: "/opt/app/datafile/known_hosts"
 
   cbs-sim:
     container_name: config-binding-service-sim
