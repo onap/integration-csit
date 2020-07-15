@@ -1,11 +1,11 @@
-<MeasDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData">
+<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData">
     <fileHeader dnPrefix="some dnPrefix" vendorName="FooBar Ltd"
                 fileFormatVersion="28.550 V1.0">
         <fileSender senderName="Dublin"/>
-        <MeasData beginTime="2018-10-02T12:00:00+01:00"/>
+        <measData beginTime="2018-10-02T12:00:00+01:00"/>
     </fileHeader>
     <measData>
-        <measuredEntity swVersion="r0.1" localDn="Dublin1"/>
+        <measEntity swVersion="r0.1" localDn="Dublin1"/>
         <measInfo measInfoId="measInfoId1">
             <job jobId="jobId1"/>
             <granPeriod endTime="2001-10-02T12:15:00Z" duration="PT100S"/>
@@ -18,7 +18,7 @@
         </measInfo>
     </measData>
     <measData>
-        <measuredEntity swVersion="r0.2" localDn="Dublin2"/>
+        <measEntity swVersion="r0.2" localDn="Dublin2"/>
         <measInfo measInfoId="measInfoId2">
             <job jobId="jobId"/>
             <granPeriod endTime="2002-10-02T12:15:00Z" duration="PT200S"/>
@@ -31,7 +31,7 @@
         </measInfo>
     </measData>
     <measData>
-        <measuredEntity swVersion="r0.3" localDn="Dublin3"/>
+        <measEntity swVersion="r0.3" localDn="Dublin3"/>
         <measInfo measInfoId="measInfoId3">
             <job jobId="jobId"/>
             <granPeriod endTime="2003-10-02T12:15:00Z" duration="PT300S"/>
@@ -44,6 +44,6 @@
         </measInfo>
     </measData>
     <fileFooter>
-        <MeasData endTime="2018-10-02T12:15:00+01:00"/>
+        <measData endTime="2018-10-02T12:15:00+01:00"/>
     </fileFooter>
-</MeasDataFile>
+</measDataFile>
