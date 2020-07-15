@@ -7,6 +7,6 @@
     "timeZoneOffset": "UTC+05.00",
     "location": "ftpes://192.168.0.101:22/ftp/rop/A20161224.1045-1100.bin.gz",
     "compression": "gzip",
-    "fileFormatType": "org.3GPP.28.550#measData",
+    "fileFormatType": "org.3GPP.28.532#measData",
     "fileFormatVersion": "V9"
 }

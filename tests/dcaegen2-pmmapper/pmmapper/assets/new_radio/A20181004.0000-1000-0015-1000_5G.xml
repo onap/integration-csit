@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="MeasDataCollection.xsl"?>
-<MeasDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData"
+<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData">
-    <fileHeader fileFormatVersion="28.550 V7.0" vendorName="Company NN" dnPrefix="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1">
+xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData">
+    <fileHeader fileFormatVersion="28.532 V7.0" vendorName="Company NN" dnPrefix="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1">
         <fileSender senderName="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1"/>
-        <MeasData beginTime="2000-03-01T14:00:00+02:00"/>
+        <measData beginTime="2000-03-01T14:00:00+02:00"/>
     </fileHeader>
     <measData>
-        <measuredEntity localDn="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1" userLabel="RNC Telecomville"/>
+        <measEntity localDn="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1" userLabel="RNC Telecomville"/>
         <measInfo>
             <job jobId="1231"/>
             <granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
@@ -83,6 +83,6 @@ xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measD
         </measInfo>
     </measData>
     <fileFooter>
-        <MeasData endTime="2000-03-01T14:15:00+02:00"/>
+        <measData endTime="2000-03-01T14:15:00+02:00"/>
     </fileFooter>
-</MeasDataFile>
+</measDataFile>
