@@ -13,7 +13,7 @@
             "pm-mapper"
          ],
          "User-Agent":[
-            "Java/1.8.0_171"
+            "Java/11.0.7"
          ],
          "Host":[
             "!some-random-host:10000"
