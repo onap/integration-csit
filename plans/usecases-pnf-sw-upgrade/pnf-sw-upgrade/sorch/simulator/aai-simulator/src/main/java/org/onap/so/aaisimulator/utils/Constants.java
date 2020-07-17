@@ -58,6 +58,8 @@ public class Constants {
 
     public static final String LINES_OF_BUSINESS_URL = BUSINESS_URL + "/lines-of-business/line-of-business/";
 
+    public static final String SERVICE_DESIGN_AND_CREATION_URL = BASE_URL + "/service-design-and-creation";
+
     public static final String HEALTHY = "healthy";
 
     public static final String PROJECT = "project";

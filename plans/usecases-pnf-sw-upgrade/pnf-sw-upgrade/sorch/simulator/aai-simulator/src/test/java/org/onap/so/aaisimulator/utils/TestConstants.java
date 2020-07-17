@@ -113,6 +113,8 @@ public class TestConstants {
 
     public static final String PROJECT_URL = BASE_URL_V17 + "/business/projects/project/";
 
+    public static final String SERVICE_DESIGN_AND_CREATION_URL = BASE_URL_V17 + "/service-design-and-creation";
+
     private TestConstants() {}
 
 }
