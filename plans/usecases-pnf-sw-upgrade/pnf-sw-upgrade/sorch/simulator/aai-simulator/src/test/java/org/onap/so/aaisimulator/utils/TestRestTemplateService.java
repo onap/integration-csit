@@ -17,9 +17,9 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.utils;
+package org.onap.aaisimulator.utils;
 
-import org.onap.so.simulator.model.UserCredentials;
+import org.onap.aaisimulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
