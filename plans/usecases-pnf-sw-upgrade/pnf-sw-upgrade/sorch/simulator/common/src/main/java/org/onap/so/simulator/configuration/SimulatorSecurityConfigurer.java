@@ -17,10 +17,10 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.simulator.configuration;
+package org.onap.aaisimulator.configuration;
 
 import java.util.List;
-import org.onap.so.simulator.model.User;
+import org.onap.aaisimulator.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

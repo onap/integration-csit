@@ -67,7 +67,7 @@
                                         <dependencySets>
                                             <dependencySet>
                                                 <includes>
-                                                    <include>org.onap.so.simulators:aai-simulator</include>
+                                                   <include>org.onap.so.simulators:aai-simulator</include>
                                                 </includes>
                                                 <outputFileNameMapping>app.jar</outputFileNameMapping>
                                             </dependencySet>
