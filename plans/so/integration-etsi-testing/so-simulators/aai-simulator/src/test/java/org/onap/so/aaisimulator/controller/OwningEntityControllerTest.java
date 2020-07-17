@@ -17,19 +17,19 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.controller;
+package org.onap.aaisimulator.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_TYPE;
+import static org.onap.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.aaisimulator.utils.TestConstants.GLOBAL_CUSTOMER_ID;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_TYPE;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -39,13 +39,13 @@ import org.onap.aai.domain.yang.OwningEntity;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.ServiceInstance;
-import org.onap.so.aaisimulator.models.Format;
-import org.onap.so.aaisimulator.models.Results;
-import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
-import org.onap.so.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.Constants;
-import org.onap.so.aaisimulator.utils.TestConstants;
-import org.onap.so.aaisimulator.utils.TestUtils;
+import org.onap.aaisimulator.models.Format;
+import org.onap.aaisimulator.models.Results;
+import org.onap.aaisimulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.aaisimulator.service.providers.OwnEntityCacheServiceProvider;
+import org.onap.aaisimulator.utils.Constants;
+import org.onap.aaisimulator.utils.TestConstants;
+import org.onap.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

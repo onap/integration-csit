@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.controller.configuration;
+package org.onap.aaisimulator.controller.configuration;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;

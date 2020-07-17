@@ -20,8 +20,8 @@
 package org.onap.so.sdncsimulator.configration;
 
 import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
-import org.onap.so.simulator.configuration.SimulatorSecurityConfigurer;
-import org.onap.so.simulator.model.UserCredentials;
+import org.onap.aaisimulator.configuration.SimulatorSecurityConfigurer;
+import org.onap.aaisimulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

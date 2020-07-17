@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>package</artifactId>
-        <groupId>org.onap.so.simulators</groupId>
+        <groupId>org.onap.aaisimulators</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -44,7 +44,7 @@
                                         <dependencySets>
                                             <dependencySet>
                                                 <includes>
-                                                    <include>org.onap.so.simulators:sdc-simulator</include>
+                                                    <include>org.onap.aaisimulators:sdc-simulator</include>
                                                 </includes>
                                                 <outputFileNameMapping>app.jar</outputFileNameMapping>
                                             </dependencySet>
@@ -67,7 +67,7 @@
                                         <dependencySets>
                                             <dependencySet>
                                                 <includes>
-                                                    <include>org.onap.so.simulators:aai-simulator</include>
+                                                    <include>org.onap.aaisimulators:aai-simulator</include>
                                                 </includes>
                                                 <outputFileNameMapping>app.jar</outputFileNameMapping>
                                             </dependencySet>
@@ -90,7 +90,7 @@
                                         <dependencySets>
                                             <dependencySet>
                                                 <includes>
-                                                    <include>org.onap.so.simulators:sdnc-simulator</include>
+                                                    <include>org.onap.aaisimulators:sdnc-simulator</include>
                                                 </includes>
                                                 <outputFileNameMapping>app.jar</outputFileNameMapping>
                                             </dependencySet>
@@ -113,7 +113,7 @@
                                         <dependencySets>
                                             <dependencySet>
                                                 <includes>
-                                                    <include>org.onap.so.simulators.vnfm:vnfm-service</include>
+                                                    <include>org.onap.aaisimulators.vnfm:vnfm-service</include>
                                                 </includes>
                                                 <outputFileNameMapping>app.jar</outputFileNameMapping>
                                             </dependencySet>
@@ -171,7 +171,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.onap.so.simulators.vnfm</groupId>
+            <groupId>org.onap.aaisimulators.vnfm</groupId>
             <artifactId>vnfm-service</artifactId>
             <version>${project.version}</version>
         </dependency>

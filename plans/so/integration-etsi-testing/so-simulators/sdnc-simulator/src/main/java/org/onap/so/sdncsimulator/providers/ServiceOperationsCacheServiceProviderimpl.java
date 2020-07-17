@@ -61,7 +61,7 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfrequestinputVn
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyVnfTopology;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyidentifierstructureVnfTopologyIdentifierStructure;
 import org.onap.so.sdncsimulator.models.Output;
-import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
+import org.onap.aaisimulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

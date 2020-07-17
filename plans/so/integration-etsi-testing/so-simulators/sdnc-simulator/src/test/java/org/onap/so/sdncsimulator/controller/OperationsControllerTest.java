@@ -46,7 +46,7 @@ import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
 import org.onap.so.sdncsimulator.providers.ServiceOperationsCacheServiceProvider;
 import org.onap.so.sdncsimulator.utils.Constants;
-import org.onap.so.simulator.model.UserCredentials;
+import org.onap.aaisimulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;

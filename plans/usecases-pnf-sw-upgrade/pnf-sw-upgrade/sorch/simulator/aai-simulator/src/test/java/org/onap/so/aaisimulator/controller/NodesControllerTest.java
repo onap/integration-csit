@@ -17,24 +17,24 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.controller;
+package org.onap.aaisimulator.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_LINK;
-import static org.onap.so.aaisimulator.utils.Constants.RESOURCE_TYPE;
-import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
-import static org.onap.so.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNFS_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_NAME;
-import static org.onap.so.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
-import static org.onap.so.aaisimulator.utils.TestConstants.VNF_ID;
+import static org.onap.aaisimulator.utils.Constants.RESOURCE_LINK;
+import static org.onap.aaisimulator.utils.Constants.RESOURCE_TYPE;
+import static org.onap.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
+import static org.onap.aaisimulator.utils.TestConstants.CUSTOMERS_URL;
+import static org.onap.aaisimulator.utils.TestConstants.GENERIC_VNFS_URL;
+import static org.onap.aaisimulator.utils.TestConstants.GENERIC_VNF_NAME;
+import static org.onap.aaisimulator.utils.TestConstants.GENERIC_VNF_URL;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_ID;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_INSTANCE_URL;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_NAME;
+import static org.onap.aaisimulator.utils.TestConstants.SERVICE_SUBSCRIPTIONS_URL;
+import static org.onap.aaisimulator.utils.TestConstants.VNF_ID;
 import java.io.IOException;
 import java.util.Map;
 import org.junit.After;
@@ -42,12 +42,12 @@ import org.junit.Test;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.ServiceInstance;
-import org.onap.so.aaisimulator.models.Format;
-import org.onap.so.aaisimulator.models.Results;
-import org.onap.so.aaisimulator.service.providers.CustomerCacheServiceProvider;
-import org.onap.so.aaisimulator.service.providers.NodesCacheServiceProvider;
-import org.onap.so.aaisimulator.utils.TestConstants;
-import org.onap.so.aaisimulator.utils.TestUtils;
+import org.onap.aaisimulator.models.Format;
+import org.onap.aaisimulator.models.Results;
+import org.onap.aaisimulator.service.providers.CustomerCacheServiceProvider;
+import org.onap.aaisimulator.service.providers.NodesCacheServiceProvider;
+import org.onap.aaisimulator.utils.TestConstants;
+import org.onap.aaisimulator.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

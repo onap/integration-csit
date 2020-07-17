@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.simulator.cache.provider;
+package org.onap.aaisimulator.cache.provider;
 
 import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;

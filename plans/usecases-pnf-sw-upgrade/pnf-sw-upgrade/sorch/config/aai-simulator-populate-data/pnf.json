@@ -5,7 +5,7 @@
   "equip-vendor":"PNFDemo-equip-vendor-val-52182",
   "equip-model":"PNFDemo-equip-model-val-8370",
   "management-option":"PNFDemo-management-option-val-72881",
-  "ipaddress-v4-oam":"pnfaddr",
+  "ipaddress-v4-oam":"172.17.0.1",
   "ipaddress-v6-oam":"0:0:0:0:0:0",
   "sw-version":"pnf_sw_version-1.0.0",
   "pnf-name":"PNFDemo",

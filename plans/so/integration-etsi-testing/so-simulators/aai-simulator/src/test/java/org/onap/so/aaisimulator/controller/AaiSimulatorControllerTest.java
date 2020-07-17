@@ -17,13 +17,13 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.controller;
+package org.onap.aaisimulator.controller;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.onap.so.aaisimulator.utils.Constants;
-import org.onap.so.aaisimulator.utils.TestConstants;
+import org.onap.aaisimulator.utils.Constants;
+import org.onap.aaisimulator.utils.TestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;

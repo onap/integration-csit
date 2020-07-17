@@ -17,10 +17,10 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.simulator.model;
+package org.onap.aaisimulator.model;
 
 import org.junit.Test;
-import org.onap.so.simulator.model.UserCredentials;
+import org.onap.aaisimulator.model.UserCredentials;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;

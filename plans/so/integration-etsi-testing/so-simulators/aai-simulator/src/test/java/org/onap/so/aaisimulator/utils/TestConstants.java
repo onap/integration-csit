@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.aaisimulator.utils;
+package org.onap.aaisimulator.utils;
 
 /**
  * @author waqas.ikram@ericsson.com
