@@ -30,6 +30,7 @@ ${VES_THROTTLE_STATE_EVENT_PATH}         /eventListener/v5/clientThrottlingState
 ${VES_EVENTLISTENER_V7}                  /eventListener/v7
 ${VES_BATCH_EVENT_ENDPOINT_V7}           /eventListener/v7/eventBatch
 ${VES_VALID_JSON_V7}                     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid.json
+${VES_VALID_JSON_V7_STND_DEF_FIELDS}     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid_eventWithStndDefinedFields.json
 ${VES_INVALID_JSON_V7}                   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_invalid.json
 ${VES_PARAMETER_OUT_OF_SCHEMA_V7}        %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_parameter_out_of_schema.json
 ${VES_MISSING_MANDATORY_PARAMETER_V7}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_missing_mandatory_parameter.json

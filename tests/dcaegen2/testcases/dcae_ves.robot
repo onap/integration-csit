@@ -26,6 +26,11 @@ Publish Single VES VNF Measurement Event API V7
     [Documentation]   Post single event with valid data to /eventListener/v7 endpoint and expect 202 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7}  202  ab305d54-85b4-a31b-7db2-fb6b9e546015
 
+Publish Single VES VNF Measurement Event with Standard Defined Fields API V7
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with valid data with Standard Defined Fields to /eventListener/v7 endpoint and expect 202 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS}  202  stndDefined-gNB-Nokia-PowerLost
+
 Publish Single VES VNF Measurement Event with wrong JSON
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event with invalid data to /eventListener/v7 endpoint and expect 400 Response Status Code
@@ -170,6 +175,12 @@ Publish Single VES VNF Measurement Event with certBasicAuth over HTTPS
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event with valid data and valid username/password to /eventListener/v7 endpoint over HTTPS and expect 202 Response Status Code
     Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7}  202  ab305d54-85b4-a31b-7db2-fb6b9e546015
+
+Publish Single VES VNF Measurement Event with Standard Defined Fields with certBasicAuth over HTTPS
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with valid data with Standard Defined Fields and valid username/password to /eventListener/v7 endpoint over HTTPS and expect 202 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS}  202  stndDefined-gNB-Nokia-PowerLost
+
 
 Publish Single VES VNF Measurement Event over HTTPS with wrong JSON
     [Tags]    DCAE-VESC-R1
