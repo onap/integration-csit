@@ -39,7 +39,7 @@ ${CLI_MR_LOG}                            cat /tmp/mr.log
 Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
     [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Received pm-mapper configuration
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Response code: 200, Server Response Received
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_02
@@ -137,6 +137,12 @@ Verify that PM Mapper correctly maps an NR Type-C file based on counter filterin
     [Timeout]                       1 minute
     SendToDatarouter                ${NR-TYPE-C_PM_DATA_FILE_PATH}      ${NR_VALID_METADATA_PATH}           X-ONAP-RequestID=12
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
+
+Verify that password receive from CBS are successfully encrypted
+    [Tags]                          PM_MAPPER_13
+    [Documentation]                 Verify that password receive from CBS are successfully encrypted.
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "aaf_password": *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "password": *****
 
 *** Keywords ***
 
