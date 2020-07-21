@@ -138,6 +138,12 @@ Verify that PM Mapper correctly maps an NR Type-C file based on counter filterin
     SendToDatarouter                ${NR-TYPE-C_PM_DATA_FILE_PATH}      ${NR_VALID_METADATA_PATH}           X-ONAP-RequestID=12
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
 
+Verify that password receive from CBS are successfully encrypted
+    [Tags]                          PM_MAPPER_14
+    [Documentation]                 Verify that password receive from CBS are successfully encrypted.
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "aaf_password": *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "password": *****
+
 *** Keywords ***
 
 SendToDatarouter
