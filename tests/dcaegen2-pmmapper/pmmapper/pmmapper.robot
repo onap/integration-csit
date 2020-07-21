@@ -149,6 +149,12 @@ Verify 3GPP PM Mapper maps Type-A file based on counter filtering with regexp
     SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}            X-ONAP-RequestID=6
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
 
+Verify that password receive from CBS are successfully encrypted
+    [Tags]                          PM_MAPPER_14
+    [Documentation]                 Verify that password receive from CBS are successfully encrypted.
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "aaf_password": *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "password": *****
+
 *** Keywords ***
 
 SendToDatarouter
