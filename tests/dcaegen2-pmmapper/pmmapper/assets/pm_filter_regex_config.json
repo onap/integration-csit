@@ -1,0 +1,42 @@
+{
+    "pm-mapper-filter": {
+        "filters":[{
+            "pmDefVsn": "1.0",
+            "nfType": "gnb",
+            "vendor": "Ericsson",
+            "measTypes": ["att.*"]
+        }]
+    },
+    "key_store_path": "/opt/app/pm-mapper/etc/cert.jks.b64",
+    "key_store_pass_path": "/opt/app/pm-mapper/etc/jks.pass",
+    "trust_store_path": "/opt/app/pm-mapper/etc/trust.jks.b64",
+    "trust_store_pass_path": "/opt/app/pm-mapper/etc/trust.pass",
+    "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
+    "dmaap_dr_feed_name": "1",
+    "aaf_identity": "aaf_admin@people.osaaf.org",
+    "aaf_password": "demo123456!",
+    "enable_http": true,
+    "streams_publishes": {
+      "dmaap_publisher": {
+        "type": "message_router",
+        "dmaap_info": {
+          "topic_url": "http://message-router:3904/events/org.onap.dmaap.mr.VES_PM",
+          "client_role": "org.onap.dcae.pmPublisher",
+          "location": "csit-pmmapper",
+          "client_id": "1562763644939"
+        }
+      }
+    },
+    "streams_subscribes": {
+      "dmaap_subscriber": {
+        "type": "data_router",
+        "dmaap_info": {
+          "username": "username",
+          "password": "password",
+          "location": "csit-pmmapper",
+          "delivery_url": "http://dcae-pm-mapper:8081/delivery",
+          "subscriber_id": 1
+        }
+      }
+    }
+}

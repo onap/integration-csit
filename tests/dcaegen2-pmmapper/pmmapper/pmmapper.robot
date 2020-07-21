@@ -31,6 +31,7 @@ ${NR-TYPE-A_PM_DATA_FILE_PATH}           %{WORKSPACE}/tests/dcaegen2-pmmapper/pm
 ${NR-TYPE-C_PM_DATA_FILE_PATH}           %{WORKSPACE}/tests/dcaegen2-pmmapper/pmmapper/assets/new_radio/C20190329.0000-0015.xml
 ${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/vendor_filter_config.json
 ${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_config.json
+${CLI_EXEC_PM_FILTER_regex}              curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @$WORKSPACE/tests/dcaegen2-pmmapper/pmmapper/assets/pm_filter_regex_config.json
 ${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
@@ -136,6 +137,16 @@ Verify that PM Mapper correctly maps an NR Type-C file based on counter filterin
     [Documentation]                 Verify that PM Mapper maps an NR Type-C xml file and publish 3gpp perf VES evnets to message router.
     [Timeout]                       1 minute
     SendToDatarouter                ${NR-TYPE-C_PM_DATA_FILE_PATH}      ${NR_VALID_METADATA_PATH}           X-ONAP-RequestID=12
+    CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
+
+Verify 3GPP PM Mapper maps Type-A file based on counter filtering with regexp
+    [Tags]                          PM_MAPPER_13
+    [Documentation]                 Verify 3GPP PM Mapper maps Type-A file based on counter filtering with wildcards/regexp and publish 3gpp perf VES evnets to message router.
+    [Timeout]                       1 minute
+    ${cli_cmd_output}=              Run Process                      ${CLI_EXEC_PM_FILTER_regex}             shell=yes
+    ${resp}=                        Get Request                      mapper_session                    ${RECONFIGURE_ENDPOINT}
+    Sleep                           5s
+    SendToDatarouter                ${TYPE-A_PM_DATA_FILE_PATH}      ${VALID_METADATA_PATH}            X-ONAP-RequestID=6
     CheckLog                        ${CLI_EXEC_CLI_PM_LOG}           Successfully published VES events to messagerouter
 
 *** Keywords ***
