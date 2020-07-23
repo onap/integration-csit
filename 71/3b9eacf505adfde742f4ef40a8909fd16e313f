@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Marek Kukulski <marek.kukulski@nokia.com>
+Code-Review+1: Damian Nowak <damian.nowak@nokia.com>
+Code-Review+1: Lukasz Muszkieta <lukasz.muszkieta@nokia.com>
+Code-Review+2: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-by: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-at: Thu, 23 Jul 2020 07:37:29 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/110410
+Project: integration/csit
+Branch: refs/heads/master
