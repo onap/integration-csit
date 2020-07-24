@@ -15,9 +15,7 @@
 # limitations under the License.
 
 docker exec vesc /opt/app/VESCollector/bin/appController.sh stop
-sleep 2
 docker cp ${WORKSPACE}/tests/dcaegen2/testcases/resources/collector.properties vesc:/opt/app/VESCollector/etc
-sleep 10
-docker exec vesc /opt/app/VESCollector/bin/appController.sh start
+docker exec -d vesc /opt/app/VESCollector/bin/appController.sh start
 sleep 5
 echo "VES Collector Restarted with certBasicAuth"
