@@ -38,3 +38,9 @@ DR Redir Sim Downloaded Volume Equal
 	[Arguments]            		${target_ctr_value}
     ${resp}=					Run Process     ${CLI_DR_REDIR_SIM_DOWNLOADED_VOLUME}  shell=yes
     Should Be Equal As Strings  ${resp.stdout}  ${target_ctr_value}
+
+Start DFC
+	[Documentation]				Start DFC container
+	${cli_cmd_output}=          Run Process                    ${DFC_ROOT}/dfc-start.sh   cwd=${DFC_ROOT}   env:SIMGROUP_ROOT=${SIMGROUP_ROOT}
+    Log To Console              Dfc-start:
+    Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}

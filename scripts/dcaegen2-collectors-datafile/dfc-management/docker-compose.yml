@@ -15,6 +15,8 @@ services:
       - "8433:8433"
     networks:
       dfcnet: null
+    volumes:
+      - $SIMGROUP_ROOT/tls/:/opt/app/datafile/etc/cert/
     environment:
       CONSUL_HOST: "consul-server"
       CONSUL_PORT: 8500
