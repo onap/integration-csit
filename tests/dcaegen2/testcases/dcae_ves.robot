@@ -132,7 +132,6 @@ Enable VESC HTTPS with certBasicAuth
 VES Collector HTTP Health Check with certBasicAuth
     [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
     [Documentation]   Run healthcheck over HTTP with certBasicAuth
-    Enable VESC with certBasicAuth
     Run Healthcheck  ${http_session}
 
 Healthcheck with Outdated Cert
