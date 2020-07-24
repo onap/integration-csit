@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "337e8fe7_f25090da",
+        "filename": "tests/dcaegen2/testcases/resources/collector.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-07-24T10:49:50Z",
+      "side": 1,
+      "message": "remove the unnecessary blank line",
+      "revId": "f8b7c31f9f45e5d2b56956fbdabe157551081df4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0d6bc4_7ed63bd5",
+        "filename": "tests/dcaegen2/testcases/resources/collector.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-07-24T10:49:50Z",
+      "side": 1,
+      "message": "remove the unnecessary blank line",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "f8b7c31f9f45e5d2b56956fbdabe157551081df4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d8d7f3_92228ec7",
+        "filename": "tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2020-07-24T10:49:50Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "f8b7c31f9f45e5d2b56956fbdabe157551081df4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
