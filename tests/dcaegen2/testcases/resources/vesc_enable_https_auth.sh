@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
+# Copyright 2020 Nokia
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-docker exec vesc /opt/app/VESCollector/bin/appController.sh stop
-sleep 2
 docker cp ${WORKSPACE}/tests/dcaegen2/testcases/resources/collector.properties vesc:/opt/app/VESCollector/etc
 sleep 10
-docker exec vesc /opt/app/VESCollector/bin/appController.sh start
-sleep 5
+docker restart vesc
+sleep 10
 echo "VES Collector Restarted with certBasicAuth"
