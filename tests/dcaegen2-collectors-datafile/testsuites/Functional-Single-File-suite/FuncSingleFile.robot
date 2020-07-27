@@ -33,21 +33,21 @@ Verify single event with single 50MB SFTP file. From event poll to published fil
     Verify Single Event From Event Poll To Published File   50   --tc102    SFTP
 
 
-######## Single file, FTPS
-Verify single event with single 1MB FTPS file. From event poll to published file
+######## Single file, FTPES
+Verify single event with single 1MB FTPES file. From event poll to published file
     [TAGS]                         DFC_FUNCTIONAL_10
-    [Documentation]                Verify single event with single FTPS 1MB file from event poll to published file.
-    Verify Single Event From Event Poll To Published File   1    --tc200    FTPS
+    [Documentation]                Verify single event with single FTPES 1MB file from event poll to published file.
+    Verify Single Event From Event Poll To Published File   1    --tc200    FTPES
 
-Verify single event with single 1MB FTPS file. From event poll to published file
+Verify single event with single 5MB FTPES file. From event poll to published file
     [TAGS]                         DFC_FUNCTIONAL_11
-    [Documentation]                Verify single event with single FTPS 5MB file from event poll to published file.
-    Verify Single Event From Event Poll To Published File   5    --tc201    FTPS
+    [Documentation]                Verify single event with single FTPES 5MB file from event poll to published file.
+    Verify Single Event From Event Poll To Published File   5    --tc201    FTPES
 
-Verify single event with single 1MB FTPS file. From event poll to published file
+Verify single event with single 50MB FTEPS file. From event poll to published file
     [TAGS]                         DFC_FUNCTIONAL_12
-    [Documentation]                Verify single event with single FTPS 50MB file from event poll to published file.
-    Verify Single Event From Event Poll To Published File   50   --tc202    FTPS
+    [Documentation]                Verify single event with single FTPES 50MB file from event poll to published file.
+    Verify Single Event From Event Poll To Published File   50   --tc202    FTPES
 
 *** Keywords ***
 Verify Single Event From Event Poll To Published File
@@ -104,4 +104,4 @@ Set Default Environment Variables
     Set Environment Variable        DR_FEEDS                2:A
     Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
-    Set Environment Variable        FTPS_SIMS               ftpes-server-vsftpd0:21
+    Set Environment Variable        FTPES_SIMS              ftpes-server-vsftpd0:21

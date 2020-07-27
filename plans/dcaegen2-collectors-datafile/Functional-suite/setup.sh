@@ -52,11 +52,11 @@ docker build -t drsim_common:latest .
 cd $SIMGROUP_ROOT
 
 #Copy ftp config for the ftp servers
-cp -r ../ftps-sftp-server/configuration .
-cp -r ../ftps-sftp-server/tls .
+cp -r ../ftpes-sftp-server/configuration .
+cp -r ../ftpes-sftp-server/tls .
 
-cd ../ftps-sftp-server
-docker build -t ftps_vsftpd:latest -f Dockerfile-ftps .
+cd ../ftpes-sftp-server
+docker build -t ftpes_vsftpd:latest -f Dockerfile-ftpes .
 
 
 #All containers will be started and stopped via the robot tests.
