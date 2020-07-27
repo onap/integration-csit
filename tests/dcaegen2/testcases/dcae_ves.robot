@@ -21,6 +21,26 @@ VES Collector HTTP Health Check
     [Documentation]   Run healthcheck over HTTP
     Run Healthcheck  ${http_session}
 
+Publish VES Event With Empty Stnd Domain Namespace Parameter
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with invalid data (empty stnd namespace parameter) to /eventListener/v7 endpoint, expect 400 Response Status Code and "Mandatory input event.commonEventHeader.stndDefinedNamespace is empty in request" message
+    Send Request Validate Response Status Code And Message  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_STDN_DEFINED_EMMPTY_NAMESPACE}   400   Mandatory input attribute event.commonEventHeader.stndDefinedNamespace is empty in request
+
+Publish VES Event AND Topic Cannot Be Found In Configuration
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event to /eventListener/v7 endpoint, expect 400 Response Status Code and "Invalid input value for event.commonEventHeader.stndDefinedNamespace stndDefinedNamespace received not present in VES Collector routing configuration. Unable to route event to appropriate DMaaP topic" message
+    Send Request Validate Response Status Code And Message  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_STDN_DEFINED_VALID_UNKNOW_TOPIC}    400   Invalid input value for event.commonEventHeader.stndDefinedNamespace stndDefinedNamespace received not present in VES Collector routing configuration. Unable to route event to appropriate DMaaP topic
+
+Publish VES Event With Missing Stnd Domain Namespace Parameter
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with invalid data (missing stnd namespace parameter) to /eventListener/v7 endpoint, expect 400 Response Status Code and "Mandatory input attribute event.commonEventHeader.stndDefinedNamespace is missing from request" message
+    Send Request Validate Response Status Code And Message  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_STDN_DEFINED_MISSING_NAMESPACE}    400   Mandatory input attribute event.commonEventHeader.stndDefinedNamespace is missing from request
+
+Publish Single VES Event With Empty JSON
+    [Tags]    DCAE-VESC-R1
+    [Documentation]   Post single event with empty json and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_EMPTY_JSON}  400
+
 Publish Single VES VNF Measurement Event API V7
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event with valid data to /eventListener/v7 endpoint and expect 202 Response Status Code
