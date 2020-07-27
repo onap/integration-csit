@@ -18,23 +18,23 @@ Create sessions
     ${wrong_certs}=  Create List  ${VESC_WRONG_CERT}  ${VESC_WRONG_KEY}
     ${outdated_certs}=  Create List  ${VESC_OUTDATED_CERT}  ${VESC_OUTDATED_KEY}
     Create Session    dcae_vesc_url    ${VESC_URL}
-    Set Suite Variable    ${http_session}    dcae_vesc_url
+    Set Global Variable    ${http_session}    dcae_vesc_url
     Create Session    dcae_vesc_url_https    ${VESC_URL_HTTPS}  auth=${auth}  disable_warnings=1
-    Set Suite Variable    ${https_basic_auth_session}    dcae_vesc_url_https
+    Set Global Variable    ${https_basic_auth_session}    dcae_vesc_url_https
     Create Session  dcae_vesc_url_https_wrong_auth  ${VESC_URL_HTTPS}  auth=${wrong_auth}  disable_warnings=1
-    Set Suite Variable  ${https_wrong_auth_session}  dcae_vesc_url_https_wrong_auth
+    Set Global Variable  ${https_wrong_auth_session}  dcae_vesc_url_https_wrong_auth
     Create Client Cert Session  dcae_vesc_url_https_cert  ${VESC_URL_HTTPS}  client_certs=${certs}  disable_warnings=1
-    Set Suite Variable  ${https_valid_cert_session}  dcae_vesc_url_https_cert
+    Set Global Variable  ${https_valid_cert_session}  dcae_vesc_url_https_cert
     Create Client Cert Session  dcae_vesc_url_https_wrong_cert  ${VESC_URL_HTTPS}  client_certs=${wrong_certs}  disable_warnings=1  verify=${False}
-    Set Suite Variable  ${https_invalid_cert_session}  dcae_vesc_url_https_wrong_cert
+    Set Global Variable  ${https_invalid_cert_session}  dcae_vesc_url_https_wrong_cert
     Create Client Cert Session  dcae_vesc_url_https_outdated_cert  ${VESC_URL_HTTPS}  client_certs=${outdated_certs}  disable_warnings=1  verify=${False}
-    Set Suite Variable  ${https_outdated_cert_session}  dcae_vesc_url_https_outdated_cert
+    Set Global Variable  ${https_outdated_cert_session}  dcae_vesc_url_https_outdated_cert
     Create Session  dcae_vesc_url_https_wo_auth  ${VESC_URL_HTTPS}  disable_warnings=1
-    Set Suite Variable  ${https_no_cert_no_auth_session}  dcae_vesc_url_https_wo_auth
+    Set Global Variable  ${https_no_cert_no_auth_session}  dcae_vesc_url_https_wo_auth
 
 Create header
     ${headers}=    Create Dictionary    Content-Type=application/json
-    Set Suite Variable    ${suite_headers}    ${headers}
+    Set Global Variable    ${suite_headers}    ${headers}
 
 Get DCAE Nodes
     [Documentation]    Get DCAE Nodes from Consul Catalog
