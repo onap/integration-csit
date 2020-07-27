@@ -25,7 +25,7 @@ ${CLI_EXEC_CLI_DFC_LOG_GREP}             grep "Datafile file published" %{WORKSP
 ${CLI_EXEC_CLI_FILECONSUMER_CP}          docker cp fileconsumer-node:/opt/app/subscriber/delivery/A20181002.0000-1000-0015-1000_5G.xml.M %{WORKSPACE}
 ${CLI_EXEC_RENAME_METADATA}              mv %{WORKSPACE}/A20181002.0000-1000-0015-1000_5G.xml.M  %{WORKSPACE}/archives/metadata.json
 ${CLI_EXEC_CLI_PMMAPPER_LOG}             docker exec dcaegen2-pm-mapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log" > %{WORKSPACE}/archives/pmmapper_docker.log
-${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}        grep "XML validation successful Event" %{WORKSPACE}/archives/pmmapper_docker.log
+${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}        grep "XML validation successful" %{WORKSPACE}/archives/pmmapper_docker.log
 ${CLI_EXEC_CLI_PMMAPPER_LOG_GREP_VES}    grep "Successfully published VES events to messagerouter" %{WORKSPACE}/archives/pmmapper_docker.log
 ${metadataSchemaPath}                    %{WORKSPACE}/tests/usecases-5G-bulkpm/5G-bulkpm/assets/metadata.schema.json
 ${metadataJsonPath}                      %{WORKSPACE}/archives/metadata.json
@@ -113,7 +113,7 @@ Verify PM-Mapper successfully receives uncompressed the PM XML file
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}    shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        XML validation successful Event
+    Should Contain                  ${cli_cmd_output.stdout}        XML validation successful
 
 Verify PM-Mapper successfully publishes VES event the Message Router
     [Tags]                          Bulk_PM_E2E_08
