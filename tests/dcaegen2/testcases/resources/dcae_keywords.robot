@@ -149,6 +149,13 @@ Send Request And Validate Response
     ${isEmpty}=   Is Json Empty    ${resp}
     Run Keyword If   '${isEmpty}' == False   Log  ${resp.json()}
     Run Keyword If  '${msg_code}' != 'None'  Check Whether Message Received  ${msg_code}
+    [Return]   ${resp}
+
+Send Request Validate Response Status Code And Message
+    [Documentation]  Post singel event to passed url and validate received response code and content
+    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_content}
+    ${resp}=  Send Request And Validate Response  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}
+    Should contain   ${resp.content}   ${msg_content}
 
 Check Whether Message Received
     [Documentation]  Validare if message has been received

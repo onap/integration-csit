@@ -46,7 +46,9 @@ ${EVENT_THROTTLING_STATE_DATA_FILE}      %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${EVENT_PNF_REGISTRATION}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_pnf_registration_event.json
 ${EVENT_PNF_REGISTRATION_V7}             %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json
 ${DCAE_HEALTH_CHECK_BODY}                %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
-
+${VES_STDN_DEFINED_EMMPTY_NAMESPACE}     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_namespace_invalid.json
+${VES_STDN_DEFINED_MISSING_NAMESPACE}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_missing_namespace_invalid.json
+${VES_STDN_DEFINED_VALID_UNKNOW_TOPIC}   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_valid_unknown_topic.json
 #DCAE Health Check
 ${CONFIG_BINDING_URL}                    http://localhost:8443
 ${CB_HEALTHCHECK_PATH}                   /healthcheck
