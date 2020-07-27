@@ -113,7 +113,7 @@ Verify PM-Mapper successfully receives uncompressed the PM XML file
     ${cli_cmd_output}=              Run Process                     ${CLI_EXEC_CLI_PMMAPPER_LOG_GREP}    shell=yes
     Log                             ${cli_cmd_output.stdout}
     Should Be Equal As Strings      ${cli_cmd_output.rc}            0
-    Should Contain                  ${cli_cmd_output.stdout}        XML validation successful Event
+    Should Contain                  ${cli_cmd_output.stdout}        XML validation successful
 
 Verify PM-Mapper successfully publishes VES event the Message Router
     [Tags]                          Bulk_PM_E2E_08
