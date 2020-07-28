@@ -16,6 +16,29 @@
       "revId": "1672fdcf0c0673f2d162dee650fa22dbd939a936",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce1a525_b1c2328d",
+        "filename": "tests/dcaegen2/testcases/resources/dcae_keywords.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-07-28T06:34:50Z",
+      "side": 1,
+      "message": "If I understand it correctly this method validates only error message. In that case I think it should be mentioned in method name and in msg_content parameter name, for example error_msg_content.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 54
+      },
+      "revId": "1672fdcf0c0673f2d162dee650fa22dbd939a936",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
