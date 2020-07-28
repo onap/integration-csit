@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8381f30_d67a7274",
+        "filename": "tests/dcaegen2/testcases/dcae_ves.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-07-28T05:29:25Z",
+      "side": 1,
+      "message": "... with topic which cannot ...",
+      "revId": "1672fdcf0c0673f2d162dee650fa22dbd939a936",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
