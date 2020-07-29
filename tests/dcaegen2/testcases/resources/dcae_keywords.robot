@@ -141,19 +141,20 @@ Publish Event To VES Collector With Put Method
 
 Send Request And Validate Response
     [Documentation]  Post singel event to passed url with passed data and validate received response
-    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_code}=None
+    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_code}=None  ${topic}=None
     ${evtdata}=  Get Data From File  ${evtjson}
     ${resp}=  Run Keyword  ${keyword}  ${session}  ${evtpath}  ${evtdata}
     Log    Receive HTTPS Status code ${resp.status_code}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
     ${isEmpty}=   Is Json Empty    ${resp}
     Run Keyword If   '${isEmpty}' == False   Log  ${resp.json()}
-    Run Keyword If  '${msg_code}' != 'None'  Check Whether Message Received  ${msg_code}
+    Run Keyword If  '${msg_code}' != 'None'  Check Whether Message Received  ${msg_code}  ${topic}
 
 Check Whether Message Received
     [Documentation]  Validare if message has been received
-    [Arguments]  ${msg_code}
-    ${ret}=  DMaaP Message Receive  ${msg_code}
+    [Arguments]  ${msg_code}  ${topic}
+    ${ret}=  Run Keyword If  '${topic}' != 'None'  DMaaP Message Receive On Topic  ${msg_code}  ${topic}
+    ...  ELSE  DMaaP Message Receive  ${msg_code}
     Should Be Equal As Strings    ${ret}    true
 
 Send Request And Expect Error

@@ -88,6 +88,18 @@ class DcaeLibrary(object):
         return
 
     @staticmethod
+    def dmaap_message_receive_on_topic(evtobj, topic):
+
+        evt_str = DMaaP.deque_event()
+        while evt_str != None:
+            if evtobj in evt_str and topic in evt_str:
+                logger.info("DMaaP Receive Expected Publish Event:\n" + evt_str)
+                logger.info("On Expected Topic:\n" + topic)
+                return 'true'
+            evt_str = DMaaP.deque_event()
+        return 'false'
+
+    @staticmethod
     def dmaap_message_receive(evtobj, action='contain'):
         
         evt_str = DMaaP.deque_event()
