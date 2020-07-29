@@ -128,6 +128,47 @@ RetrievePoliciesOfType
      Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
      Dictionary Should Contain Key	${expjsonobject['topology_template']['policies'][0]}  onap.restart.tca
 
+RetrieveAllPolicies
+     [Documentation]    Retrieve all Policies
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Get Request   policy  /policy/api/v1/policies     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     ${expjsonobject}   To Json    ${expjson}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
+     Dictionary Should Contain Key	${expjsonobject['topology_template']['policies'][0]}  onap.restart.tca
+
+RetrieveSpecificPolicy
+     [Documentation]    Retrieve a specific Policy named 'onap.restart.tca' and version '1.0.0'
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Get Request   policy  /policy/api/v1/policies/policies/onap.restart.tca/versions/1.0.0/versions/1.0.0     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     ${expjsonobject}   To Json    ${expjson}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Dictionary Should Contain Key    ${resp.json()['topology_template']['policies'][0]}  onap.restart.tca
+     Dictionary Should Contain Key	${expjsonobject['topology_template']['policies'][0]}  onap.restart.tca
+
+DeleteSpecificPolicy
+     [Documentation]    Delete a specific Policy named 'onap.restart.tca' and version '1.0.0'
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_API_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   Delete Request   policy  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0     headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${resp}=   Delete Request   policy  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     404
+
+
 DeleteSpecificPolicyV1
      [Documentation]    Delete the Monitoring Policy Version 1 of the TCA Policy Type
      ${auth}=    Create List    healthcheck    zb!XztG34
