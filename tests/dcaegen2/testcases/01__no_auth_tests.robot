@@ -14,7 +14,7 @@ Publish Single VES VNF Measurement Event API V7
 Publish Single VES VNF Measurement Event with Standard Defined Fields API V7
     [Tags]    DCAE-VESC-R1
     [Documentation]   Post single event with valid data with Standard Defined Fields to /eventListener/v7 endpoint and expect 202 Response Status Code
-    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS}  202  stndDefined-gNB-Nokia-PowerLost
+    Send Request And Validate Response  Publish Event To VES Collector  ${http_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS}  202  stndDefined-gNB-Nokia-PowerLost  unauthenticated.SEC_OTHER_OUTPUT
 
 Publish Single VES VNF Measurement Event with wrong JSON
     [Tags]    DCAE-VESC-R1
