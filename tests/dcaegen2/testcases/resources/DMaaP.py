@@ -106,14 +106,16 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         '''  
         
         if resp_code == 0:
+            topic = self.extract_topic_from_path()
             content_len = int(self.headers.getheader('content-length', 0))
             post_body = self.rfile.read(content_len)
             
             indx = post_body.index("{")
             if indx != 0:
                 post_body = post_body[indx:]
-            
-            if not enque_event(post_body):
+
+            event = "\""+topic+"\":" + post_body
+            if not enque_event(event):
                 print "enque event fails"
                    
             global EvtSchema
@@ -179,6 +181,9 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.wfile.write('\t%s=%s\n' % (field, form[field].value))
         '''
         return
+
+    def extract_topic_from_path(self):
+        return self.path["/events/".__len__():]
 
     def do_GET(self):
         """Serve a GET request."""
