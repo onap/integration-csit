@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfed990e_c8fbe2c3",
+        "filename": "plans/usecases-5G-bulkpm/5G-bulkpm/composefile/docker-compose-e2e.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-07-29T07:46:39Z",
+      "side": 1,
+      "message": "I think default value \"/home/datafile/.ssh/known_hosts\" would be better.",
+      "range": {
+        "startLine": 114,
+        "startChar": 30,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "7b7f25fed4bbc134cec89aa854f49c77c5244096",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
