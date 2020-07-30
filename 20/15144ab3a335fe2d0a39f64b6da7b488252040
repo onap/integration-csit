@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Ramesh Murugan Iyer <ramesh.murugan.iyer@est.tech>
+Code-Review+1: Dan Timoney <dtimoney@att.com>
+Code-Review+2: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-by: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-at: Thu, 30 Jul 2020 09:36:24 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/109969
+Project: integration/csit
+Branch: refs/heads/master
