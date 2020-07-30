@@ -139,6 +139,13 @@ Publish Event To VES Collector With Put Method
     ${resp}= 	Put Request 	${session}  	${evtpath}     data=${evtdata}   headers=${suite_headers}
     [Return] 	${resp}
 
+Send Request And Validate Response And Error Message
+    [Documentation]  Post singel event to passed url and validate received response code and content
+    [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_content}
+    ${resp}=  Send Request And Validate Response  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}
+    ${error_message}=  Set Variable  ${resp.json()['requestError']['ServiceException']['text']}
+    Should Be Equal As Strings  ${msg_content}  ${error_message}
+
 Send Request And Validate Response
     [Documentation]  Post singel event to passed url with passed data and validate received response
     [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_code}=None  ${topic}=None
@@ -149,6 +156,7 @@ Send Request And Validate Response
     ${isEmpty}=   Is Json Empty    ${resp}
     Run Keyword If   '${isEmpty}' == False   Log  ${resp.json()}
     Run Keyword If  '${msg_code}' != 'None'  Check Whether Message Received  ${msg_code}  ${topic}
+    [Return]  ${resp}
 
 Check Whether Message Received
     [Documentation]  Validare if message has been received
