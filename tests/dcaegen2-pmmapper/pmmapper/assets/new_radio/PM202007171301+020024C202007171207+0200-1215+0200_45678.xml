@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="MeasDataCollection.xsl"?>
+<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData">
+    <fileHeader fileFormatVersion="28.532 V7.0" vendorName="Company NN" dnPrefix="DC=a1.companyNN.com,SubNetwork=1,IRPAgent=1">
+        <fileSender senderName="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1"/>
+        <measData beginTime="2000-03-01T14:00:00+02:00"/>
+    </fileHeader>
+    <measData>
+        <measEntity localDn="SubNetwork=CountryNN,MeContext=MEC-Gbg-1,ManagedElement=RNC-Gbg-1" userLabel="RNC Telecomville"/>
+        <measInfo>
+            <job jobId="1231"/>
+            <granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+            <repPeriod duration="PT1800S"/>
+            <measType p="1">attTCHSeizures</measType>
+            <measType p="2">succTCHSeizures</measType>
+            <measType p="3">attImmediateAssignProcs</measType>
+            <measType p="4">succImmediateAssignProcs</measType>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-997">
+                <r p="1">234</r>
+                <r p="2">345</r>
+                <r p="3">567</r>
+                <r p="4">789</r>
+            </measValue>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-998">
+                <r p="1">890</r>
+                <r p="2">901</r>
+                <r p="3">123</r>
+                <r p="4">234</r>
+            </measValue>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-999">
+                <r p="1">456</r>
+                <r p="2">567</r>
+                <r p="3">678</r>
+                <r p="4">789</r>
+                <suspect>true</suspect>
+            </measValue>
+        </measInfo>
+        <measInfo measInfoId="ENodeBFunction">
+            <job jobId="1232"/>
+            <granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+            <repPeriod duration="PT1800S"/>
+            <measType p="1">attTCHSeizures1</measType>
+            <measType p="2">succTCHSeizures2</measType>
+            <measType p="3">attImmediateAssignProcs3</measType>
+            <measType p="4">succImmediateAssignProcs4</measType>
+            <measValue measObjLdn="ManagedElement=RNC-Gbg-1,ENodeBFunction=1">
+                <r p="1">4</r>
+                <r p="2">86,87,2,6,77,96,75,33,24</r>
+                <r p="3">40</r>
+                <r p="4">90</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+        <measInfo>
+            <job jobId="1233"/>
+            <granPeriod duration="PT900S" endTime="2000-03-01T14:14:30+02:00"/>
+            <repPeriod duration="PT1800S"/>
+            <measType p="1">attTCHSeizures5</measType>
+            <measType p="2">succTCHSeizures6</measType>
+            <measType p="3">attImmediateAssignProcs7</measType>
+            <measType p="4">succImmediateAssignProcs8</measType>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-997">
+                <r p="1">238</r>
+                <r p="2">344</r>
+                <r p="3">563</r>
+                <r p="4">787</r>
+            </measValue>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-998">
+                <r p="1">898</r>
+                <r p="2">905</r>
+                <r p="3">127</r>
+                <r p="4">238</r>
+            </measValue>
+            <measValue measObjLdn="RncFunction=RF-1,UtranCell=Gbg-999">
+                <r p="1">454</r>
+                <r p="2">569</r>
+                <r p="3">672</r>
+                <r p="4">785</r>
+                <suspect>true</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <fileFooter>
+        <measData endTime="2000-03-01T14:15:00+02:00"/>
+    </fileFooter>
+</measDataFile>
