@@ -12,140 +12,50 @@ import cgi
 import sys
 import shutil
 import mimetypes
-from jsonschema import validate
-import jsonschema
-import json
-import DcaeVariables
-import SimpleHTTPServer
+from ..library import DcaeVariables
 
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
 
-EvtSchema = None
-DMaaPHttpd = None
-
-
-def clean_up_event():
-    sz = DcaeVariables.VESEventQ.qsize()
-    for i in range(sz):
-        try:
-            self.evtQueue.get_nowait()
-        except:
-            pass
-
-
-def enque_event(evt):
-    if DcaeVariables.VESEventQ is not None:
-        try:
-            DcaeVariables.VESEventQ.put(evt)
-            return True
-        except Exception as e:
-            print (str(e))
-            return False
-    return False
-
-
-def deque_event(wait_sec=25):
-    if DcaeVariables.IsRobotRun:
-        pass
-    try:
-        evt = DcaeVariables.VESEventQ.get(True, wait_sec)
-        return evt
-    except Exception as e:
-        if DcaeVariables.IsRobotRun:
-            pass
-
-        else:
-            print("DMaaP Event dequeue timeout")
-        return None
-
 
 class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-      
+
+    def __init__(self, dmaap_simulator, *args):
+        self.dmaap_simulator = dmaap_simulator
+        BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, *args)
+
     def do_PUT(self):
         self.send_response(405)
         return
-        
+
     def do_POST(self):
         resp_code = 0
-        # Parse the form data posted
-        '''
-        form = cgi.FieldStorage(
-            fp=self.rfile, 
-            headers=self.headers,
-            environ={'REQUEST_METHOD':'POST',
-                     'CONTENT_TYPE':self.headers['Content-Type'],
-                     })
-        
-        
-        form = cgi.FieldStorage(
-        fp=self.rfile,
-        headers=self.headers,
-        environ={"REQUEST_METHOD": "POST"})
 
-        for item in form.list:
-            print "%s=%s" % (item.name, item.value)
-            
-        '''
-        
+        # Parse the form data posted
+
         if 'POST' not in self.requestline:
             resp_code = 405
-            
-        '''
-        if resp_code == 0:
-            if '/eventlistener/v5' not in self.requestline and '/eventlistener/v5/eventBatch' not in self.requestline and \
-                        '/eventlistener/v5/clientThrottlingState' not in self.requestline:
-                resp_code = 404
-         
-        
-        if resp_code == 0:
-            if 'Y29uc29sZTpaakprWWpsbE1qbGpNVEkyTTJJeg==' not in str(self.headers):
-                resp_code = 401
-        '''  
-        
+
         if resp_code == 0:
             topic = self.extract_topic_from_path()
             content_len = int(self.headers.getheader('content-length', 0))
             post_body = self.rfile.read(content_len)
-            
+
             indx = post_body.index("{")
             if indx != 0:
                 post_body = post_body[indx:]
 
-            event = "\""+topic+"\":" + post_body
-            if not enque_event(event):
+            event = "\"" + topic + "\":" + post_body
+            if not self.dmaap_simulator.enque_event(event):
                 print "enque event fails"
-                   
-            global EvtSchema
-            try:
-                if EvtSchema is None:
-                    with open(DcaeVariables.CommonEventSchema) as opened_file:
-                        EvtSchema = json.load(opened_file)
-                decoded_body = json.loads(post_body)
-                jsonschema.validate(decoded_body, EvtSchema)
-            except:
-                resp_code = 400
-        
+                resp_code = 500
+
         # Begin the response
         if not DcaeVariables.IsRobotRun:
             print ("Response Message:")
-        
-        '''
-        {
-          "200" : {
-            "description" : "Success",
-            "schema" : {
-              "$ref" : "#/definitions/DR_Pub"
-            }
-        }
-        
-        rspStr = "{'responses' : {'200' : {'description' : 'Success'}}}"
-        rspStr1 = "{'count': 1, 'serverTimeMs': 3}"
 
-        '''
-        
         if resp_code == 0:
             if 'clientThrottlingState' in self.requestline:
                 self.send_response(204)
@@ -157,29 +67,7 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.wfile.close()
         else:
             self.send_response(resp_code)
-        
-        '''
-        self.end_headers()
-        self.wfile.write('Client: %s\n' % str(self.client_address))
-        self.wfile.write('User-agent: %s\n' % str(self.headers['user-agent']))
-        self.wfile.write('Path: %s\n' % self.path)
-        self.wfile.write('Form data:\n')
-        self.wfile.close()
 
-        # Echo back information about what was posted in the form
-        for field in form.keys():
-            field_item = form[field]
-            if field_item.filename:
-                # The field contains an uploaded file
-                file_data = field_item.file.read()
-                file_len = len(file_data)
-                del file_data
-                self.wfile.write('\tUploaded %s as "%s" (%d bytes)\n' % \
-                        (field, field_item.filename, file_len))
-            else:
-                # Regular form value
-                self.wfile.write('\t%s=%s\n' % (field, form[field].value))
-        '''
         return
 
     def extract_topic_from_path(self):
@@ -369,50 +257,4 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         '.py': 'text/plain',
         '.c': 'text/plain',
         '.h': 'text/plain',
-        })
-
-
-def test(handler_class=DMaaPHandler, server_class=BaseHTTPServer.HTTPServer, protocol="HTTP/1.0", port=3904):
-    print "Load event schema file: " + DcaeVariables.CommonEventSchema
-    with open(DcaeVariables.CommonEventSchema) as opened_file:
-        global EvtSchema
-        EvtSchema = json.load(opened_file)
-        
-    server_address = ('', port)
-
-    handler_class.protocol_version = protocol
-    httpd = server_class(server_address, handler_class)
-    
-    global DMaaPHttpd
-    DMaaPHttpd = httpd
-    DcaeVariables.HTTPD = httpd
-
-    sa = httpd.socket.getsockname()
-    print "Serving HTTP on", sa[0], "port", sa[1], "..."
-    # httpd.serve_forever()
-
-
-def _main_(handler_class=DMaaPHandler, server_class=BaseHTTPServer.HTTPServer, protocol="HTTP/1.0"):
-    
-    if sys.argv[1:]:
-        port = int(sys.argv[1])
-    else:
-        port = 3904
-    
-    print "Load event schema file: " + DcaeVariables.CommonEventSchema
-    with open(DcaeVariables.CommonEventSchema) as opened_file:
-        global EvtSchema
-        EvtSchema = json.load(opened_file)
-        
-    server_address = ('', port)
-
-    handler_class.protocol_version = protocol
-    httpd = server_class(server_address, handler_class)
-
-    sa = httpd.socket.getsockname()
-    print "Serving HTTP on", sa[0], "port", sa[1], "..."
-    httpd.serve_forever()
-
-
-if __name__ == '__main__':
-    _main_()
+    })
