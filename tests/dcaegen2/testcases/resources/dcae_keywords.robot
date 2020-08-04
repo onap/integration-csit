@@ -1,13 +1,14 @@
 *** Settings ***
 Documentation     The main interface for interacting with DCAE. It handles low level stuff like managing the http request library and DCAE required fields
+Library	          robot_library.DcaeLibrary
+Library           robot_library.DmaapLibrary
+Library           robot_library.CertsLibrary
 Library 	      RequestsLibrary
-Library	          DcaeLibrary
 Library           OperatingSystem
 Library           Collections
-Library           CertsLibrary
-Variables         ../resources/DcaeVariables.py
+Variables         ./robot_library/DcaeVariables.py
 Resource          ../../../common.robot
-Resource          ../resources/dcae_properties.robot
+Resource          ./dcae_properties.robot
 
 *** Keywords ***
 Create sessions
