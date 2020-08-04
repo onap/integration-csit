@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eaa222d_c79a4a4b",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-08-04T10:56:45Z",
+      "side": 1,
+      "message": "Wrong keyword, change to TestTeardown as described in next comment.",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "6e69d6d681e3ff065bfba0754b1dc0791848aada",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d35339f_1058aad7",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-08-04T10:56:45Z",
+      "side": 1,
+      "message": "Keyword ClearLogs should do only what it say so move Delete All Sessions to new Keyword TestTeardown which then should have Delete All Sessions and ClearLogs",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 94
+      },
+      "revId": "6e69d6d681e3ff065bfba0754b1dc0791848aada",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
