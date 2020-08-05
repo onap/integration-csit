@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f3e7f49_2e17ea19",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-08-05T08:59:40Z",
+      "side": 1,
+      "message": "please use name which says what keyword does. Current name is confusing",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad75337a_8e58e9f8",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-08-05T08:59:40Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a68a81b_afb7ef5d",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-08-05T08:59:40Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919cb206_95fe750f",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-08-05T08:59:40Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec998380_48ac455d",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-08-05T08:59:40Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
