@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2d0b315_66aab131",
+        "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-08-05T09:08:12Z",
+      "side": 1,
+      "message": "Can you propose something? Test tear down currently do 2 thing close sessions and clean up logs. In future we may need to add 3rd and 4th thing how should this keyword be named then?",
+      "parentUuid": "1f3e7f49_2e17ea19",
+      "revId": "fc2539f06cea3bfde4a6a37b87c83ef42575b0a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad75337a_8e58e9f8",
         "filename": "tests/dcaegen2-pmmapper/pmmapper/pmmapper.robot",
         "patchSetId": 4
