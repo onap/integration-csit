@@ -19,7 +19,7 @@ docker-compose down
 
 make clear -C ./certs/
 echo "Removed old keystores"
-rm -rf ${WORKSPACE}/tests/aaf/certservice/assets/certs
+rm -rf ${WORKSPACE}/tests/oom/certservice/assets/certs
 echo "Removed old certificates"
 
 kill-instance.sh ${ClientContainerName}
