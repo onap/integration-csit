@@ -2,7 +2,7 @@
   "cmpv2Servers": [
     {
       "caName": "Client",
-      "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
+      "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
       "issuerDN": "CN=ManagementCA",
       "caMode": "CLIENT",
       "authentication": {
@@ -12,7 +12,7 @@
     },
     {
       "caName": "RA",
-      "url": "http://aafcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
+      "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
       "issuerDN": "CN=ManagementCA",
       "caMode": "RA",
       "authentication": {
