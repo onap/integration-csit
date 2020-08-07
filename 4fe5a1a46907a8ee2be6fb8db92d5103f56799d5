@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e18c886_487d9665",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DcaeLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please extract try body to a separate method",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45831113_73dbde96",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DcaeLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "lines 37-42 could also be extracted to a method",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebdaa9c_b789feff",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DcaeLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "consider extracting this try body to a method",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74f47c5_0bc40603",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DmaapLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please extract try body to a method",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56449430_fe6f8796",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DmaapLibrary.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Cosider using switch statements instead of if\u0027s",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf7ce45_f6a8b3fe",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPHandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Could you make this method be more readable?",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448dca33_66fe27f3",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPHandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please extract if bodies to methods",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ab7377_f618bbd6",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPHandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Could you make this method be more readable?",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e3ea0a_26a0a7b4",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPHandler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Could you make this method be more readable?",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf082ef_d28e2200",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPQueue.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please consider exstracting if body to a method",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f91177_0267164d",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_test/test_DMaaPSQueue.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please apply given/when/then test convention",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f2fab0_9eace080",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_test/test_DMaaPSimulator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3771
+      },
+      "writtenOn": "2020-08-07T10:53:17Z",
+      "side": 1,
+      "message": "Please apply given/when/then test convention",
+      "revId": "4fe5a1a46907a8ee2be6fb8db92d5103f56799d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
