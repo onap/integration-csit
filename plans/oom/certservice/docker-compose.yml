@@ -1,0 +1,47 @@
+version: "2.1"
+
+services:
+  ejbca:
+    image: primekey/ejbca-ce:6.15.2.5
+    hostname: cahostname
+    container_name: oomcert-ejbca
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - $SCRIPTS_PATH:/opt/primekey/scripts
+    healthcheck:
+      test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
+      interval: 20s
+      timeout: 3s
+      retries: 9
+    networks:
+      - certservice
+
+  oom-cert-service:
+    image: onap/org.onap.oom.platform.cert-service.oom-certservice-api:latest
+    volumes:
+      - $CONFIGURATION_PATH:/etc/onap/oom/certservice/cmpServers.json
+      - ./certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks
+      - ./certs/root.crt:/etc/onap/oom/certservice/certs/root.crt
+      - ./certs/certServiceServer-keystore.jks:/etc/onap/oom/certservice/certs/certServiceServer-keystore.jks
+      - ./certs/certServiceServer-keystore.p12:/etc/onap/oom/certservice/certs/certServiceServer-keystore.p12
+    container_name: oomcert-service
+    ports:
+      - "8443:8443"
+    depends_on:
+      ejbca:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl https://localhost:8443/actuator/health --cacert /etc/onap/oom/certservice/certs/root.crt --cert-type p12 --cert /etc/onap/oom/certservice/certs/certServiceServer-keystore.p12 --pass secret"]
+      interval: 10s
+      timeout: 3s
+      retries: 15
+    networks:
+      - certservice
+
+
+networks:
+  certservice:
+    driver: bridge
+
