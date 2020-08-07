@@ -29,7 +29,7 @@ class CertClientManager:
             network=network,
             user='root',  # Run container as root to avoid permission issues with volume mount access
             mounts=[Mount(target='/var/certs', source=self.mount_path, type='bind'),
-                    Mount(target='/etc/onap/aaf/certservice/certs/', source=self.truststore_path, type='bind')],
+                    Mount(target='/etc/onap/oom/platform/certservice/certs/', source=self.truststore_path, type='bind')],
             detach=True
         )
         exitcode = container.wait()

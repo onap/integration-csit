@@ -20,7 +20,7 @@
 
 SCRIPT=`realpath $0`
 CURRENT_WORKDIR_PATH=`dirname $SCRIPT`
-PROJECT_DIRECTORY="plans/aaf/certservice"
+PROJECT_DIRECTORY="plans/oom/platform/certservice"
 
 SCRIPTS_DIRECTORY="scripts"
 
@@ -75,35 +75,35 @@ export CONFIGURATION_PATH=${CONFIGURATION_PATH}
 export SCRIPTS_PATH=${SCRIPTS_PATH}
 
 #Generate keystores, truststores, certificates and keys
-mkdir -p ${WORKSPACE}/tests/aaf/certservice/assets/certs/
+mkdir -p ${WORKSPACE}/tests/oom/platform/certservice/assets/certs/
 make all -C ./certs/
-cp ${WORKSPACE}/plans/aaf/certservice/certs/root.crt ${WORKSPACE}/tests/aaf/certservice/assets/certs/root.crt
+cp ${WORKSPACE}/plans/oom/platform/certservice/certs/root.crt ${WORKSPACE}/tests/oom/platform/certservice/assets/certs/root.crt
 echo "Generated keystores"
-openssl pkcs12 -in ${WORKSPACE}/plans/aaf/certservice/certs/certServiceServer-keystore.p12 -clcerts -nokeys -password pass:secret | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ${WORKSPACE}/tests/aaf/certservice/assets/certs/certServiceServer.crt
+openssl pkcs12 -in ${WORKSPACE}/plans/oom/platform/certservice/certs/certServiceServer-keystore.p12 -clcerts -nokeys -password pass:secret | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ${WORKSPACE}/tests/oom/platform/certservice/assets/certs/certServiceServer.crt
 echo "Generated server certificate"
-openssl pkcs12 -in ${WORKSPACE}/plans/aaf/certservice/certs/certServiceServer-keystore.p12 -nocerts -nodes -password pass:secret| sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' > ${WORKSPACE}/tests/aaf/certservice/assets/certs/certServiceServer.key
+openssl pkcs12 -in ${WORKSPACE}/plans/oom/platform/certservice/certs/certServiceServer-keystore.p12 -nocerts -nodes -password pass:secret| sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' > ${WORKSPACE}/tests/oom/platform/certservice/assets/certs/certServiceServer.key
 echo "Generated server key"
 
 docker-compose up -d
 
-AAFCERT_IP='none'
+OOMCERT_IP='none'
 # Wait container ready
 for i in {1..9}
 do
-   AAFCERT_IP=`get-instance-ip.sh aafcert-service`
+   OOMCERT_IP=`get-instance-ip.sh oomcert-service`
    RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret | \
    python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
    if [[ "$RESP_CODE" == "UP" ]]; then
-       echo 'AAF Cert Service is ready'
-       export AAFCERT_IP=${AAFCERT_IP}
-       docker exec aafcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
+       echo 'OOM Cert Service is ready'
+       export OOMCERT_IP=${OOMCERT_IP}
+       docker exec oomcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
        break
    fi
-   echo 'Waiting for AAF Cert Service to start up...'
+   echo 'Waiting for OOM Cert Service to start up...'
    sleep 30s
 done
 
-if [ "$AAFCERT_IP" == 'none' -o "$AAFCERT_IP" == '' ]; then
-    echo "AAF Cert Service is not ready!"
+if [ "$OOMCERT_IP" == 'none' -o "$OOMCERT_IP" == '' ]; then
+    echo "OOM Cert Service is not ready!"
     exit 1 # Return error code
 fi
