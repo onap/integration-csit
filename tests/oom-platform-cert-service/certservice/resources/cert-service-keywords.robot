@@ -15,7 +15,7 @@ Library           ../libraries/PemArtifactsValidator.py  ${MOUNT_PATH}
 Create sessions
     [Documentation]  Create all required sessions
     ${certs}=  Create List  ${CERTSERVICE_SERVER_CRT}  ${CERTSERVICE_SERVER_KEY}
-    Create Client Cert Session  alias  ${AAFCERT_URL}  client_certs=${certs}  verify=${ROOTCA}
+    Create Client Cert Session  alias  ${OOMCERT_URL}  client_certs=${certs}  verify=${ROOTCA}
     Set Suite Variable  ${https_valid_cert_session}  alias
 
 Run Healthcheck
