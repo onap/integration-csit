@@ -73,6 +73,10 @@ module pnf-sw-upgrade {
                 description
                   "Free-text description of the UP.";
             }
+            leaf node-health {
+                type string;
+                description "Reflect Node Health Status";
+            }
         }
     }
 }
