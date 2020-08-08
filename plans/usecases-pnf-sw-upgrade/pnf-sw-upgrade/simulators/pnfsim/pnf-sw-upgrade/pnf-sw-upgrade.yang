@@ -74,5 +74,19 @@ module pnf-sw-upgrade {
                   "Free-text description of the UP.";
             }
         }
+        list node-status {
+            key "node-id";
+            leaf node-id {
+                type uint16;
+            }
+            leaf node-name {
+                type string;
+                description "Describes Node Name";
+            }
+            leaf node-health {
+                type string;
+                description "Reflect Node Health Status";
+            }
+        }
     }
 }
