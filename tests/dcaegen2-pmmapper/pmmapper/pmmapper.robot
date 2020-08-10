@@ -41,7 +41,7 @@ ${CLI_MR_LOG}                            cat /tmp/mr.log
 Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
     [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Response code: 200, Server Response Received
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Received pm-mapper configuration from ConfigBinding Service
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_02
