@@ -56,7 +56,7 @@ echo sleep 60
 sleep 60
 
 # start modeling-etsicatalog
-docker run -d --name modeling-etsicatalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${DB_IP}:3306 nexus3.onap.org:10001/onap/modeling/etsicatalog
+docker run -d --name modeling-etsicatalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e DB_IP=${DB_IP} nexus3.onap.org:10001/onap/modeling/etsicatalog
 EtsiCatalog_IP=`get-instance-ip.sh modeling-etsicatalog`
 for i in {1..10}; do
     curl -sS -m 1 ${EtsiCatalog_IP}:8806 && break
