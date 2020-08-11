@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Ramesh Murugan Iyer <ramesh.murugan.iyer@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Tue, 11 Aug 2020 12:17:38 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/111119
+Project: integration/csit
+Branch: refs/heads/master
