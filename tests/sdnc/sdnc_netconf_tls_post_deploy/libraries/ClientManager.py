@@ -25,7 +25,6 @@ import shutil
 import subprocess
 
 import docker
-import jks
 from OpenSSL import crypto
 from docker.types import Mount
 
@@ -39,13 +38,14 @@ class ClientManager:
     def __init__(self, mount_path, truststore_path):
         self.mount_path = mount_path
         self.truststore_path = truststore_path
+        self.keyPem = mount_path + '/key.pem'
         self.caCertPem = mount_path + '/ca.pem'
         self.serverKeyPem = mount_path + '/server_key.pem'
         self.serverCertPem = mount_path + '/server_cert.pem'
-        self.keystoreJksPath = mount_path + '/keystore.jks'
+        self.keystorePemPath = mount_path + '/keystore.pem'
         self.keystoreP12Path = mount_path + '/keystore.p12'
         self.keystorePassPath = mount_path + '/keystore.pass'
-        self.truststoreJksPath = mount_path + '/truststore.jks'
+        self.truststorePemPath = mount_path + '/truststore.pem'
         self.truststoreP12Path = mount_path + '/truststore.p12'
         self.truststorePassPath = mount_path + '/truststore.pass'
 
@@ -71,18 +71,19 @@ class ClientManager:
     # Function to validate keystore/truststore can be opened with generated pass-phrase.
     def can_open_keystore_and_truststore_with_pass(self, container_name):
         if container_name != NETCONF_PNP_SIM_CONTAINER_NAME:
-            return self.can_open_keystore_and_truststore_jks_files()
+            return self.can_open_keystore_and_truststore_pem_files()
         else:
             return self.can_open_keystore_and_truststore_p12_files()
 
-    # Function to validate keystore.jks/truststore.jks can be opened with generated pass-phrase.
-    def can_open_keystore_and_truststore_jks_files(self):
+    # Function to validate keystore.pem/truststore.pem exist and are not empty.
+    def can_open_keystore_and_truststore_pem_files(self):
         try:
-            jks.KeyStore.load(self.keystoreJksPath, open(self.keystorePassPath, 'rb').read())
-            jks.KeyStore.load(self.truststoreJksPath, open(self.truststorePassPath, 'rb').read())
-            return True
+            private_key = self.file_exist_and_not_empty(self.keyPem)
+            keystore_pem = self.file_exist_and_not_empty(self.keystorePemPath)
+            truststore_pem = self.file_exist_and_not_empty(self.truststorePemPath)
+            return private_key and keystore_pem and truststore_pem
         except Exception as e:
-            print("UnExpected Error in validating keystore.jks/truststore.jks: {0}".format(e))
+            print("UnExpected Error in validating keystore.pem/truststore.pem: {0}".format(e))
             return False
 
     # Function to validate keystore.p12/truststore.p12 can be opened with generated pass-phrase.
@@ -93,12 +94,14 @@ class ClientManager:
 
     # Method for Uploading Certificate in SDNC-Container.
     # Creating/Uploading Server-key, Server-cert, Ca-cert PEM files in Netconf-Pnp-Simulator.
-    def can_install_keystore_and_truststore_certs(self, cmd, container_name):
+    def can_install_keystore_and_truststore_certs(self, cmd, cmd_tls, container_name):
         continue_exec = True
         if container_name == NETCONF_PNP_SIM_CONTAINER_NAME:
             print("Generating PEM files for {0} from P12 files".format(container_name))
             continue_exec = self.create_pem(self.keystorePassPath, self.keystoreP12Path, self.truststorePassPath,
                                             self.truststoreP12Path)
+        else:
+            cmd = cmd_tls
         if continue_exec:
             print("Initiate Configuration Push for : {0}".format(container_name))
             resp_code = self.execute_bash_config(cmd, container_name)
@@ -164,6 +167,9 @@ class ClientManager:
 
     def remove_mount_dir(self):
         shutil.rmtree(self.mount_path)
+
+    def file_exist_and_not_empty(self, path_to_file):
+        return os.path.isfile(path_to_file) and os.path.getsize(path_to_file) > 0
 
     @staticmethod
     def get_pkcs12(pass_file_path, p12_file_path):

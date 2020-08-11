@@ -77,7 +77,7 @@ Run Cert Service Client And Validate JKS File Creation And Client Exit Code
     [Arguments]   ${env_file}  ${CONTAINER_NAME}  ${expected_exit_code}
     ${exit_code}=  Run Client Container  ${DOCKER_CLIENT_IMAGE}  ${CLIENT_CONTAINER_NAME}  ${env_file}  ${CERT_SERVICE_ADDRESS}${CERT_SERVICE_ENDPOINT}  ${CERT_SERVICE_NETWORK}
     ${can_open}=  Can Open Keystore And Truststore With Pass  ${CONTAINER_NAME}
-    ${install_certs}=  Can Install Keystore And Truststore Certs  ${CONF_SCRIPT}  ${CONTAINER_NAME}
+    ${install_certs}=  Can Install Keystore And Truststore Certs  ${CONF_SCRIPT}  ${CONF_TLS_SCRIPT}  ${CONTAINER_NAME}
     Remove Client Container And Save Logs  ${CLIENT_CONTAINER_NAME}  positive_path
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return: ${exitcode} exit code, but expected: ${expected_exit_code}
     Should Be True  ${can_open}  Cannot Open Keystore/TrustStore by Passphrase
