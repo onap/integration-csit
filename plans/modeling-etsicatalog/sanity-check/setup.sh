@@ -33,7 +33,7 @@ docker run -d -p 80:80 -e CONSUL_IP=$CONSUL_IP -e SDCLIENT_IP=$DISCOVERY_IP -e "
 MSB_IP==`get-instance-ip.sh msb_internal_apigateway`
 echo MSB_IP=${MSB_IP}
 
-docker run -d -p 3306:3306 --name vfc-db -v /var/lib/mysql -e MYSQL_ROOT_PASSWORD=root nexus3.onap.org:10001/library/mariadb
+docker run -d -p 3306:3306 --name vfc-db -v /var/lib/mysql -e MYSQL_USER="etsicatalog" -e MYSQL_PASSWORD="etsicatalog" -e MYSQL_ROOT_PASSWORD=root nexus3.onap.org:10001/library/mariadb
 DB_IP=`get-instance-ip.sh vfc-db`
 echo DB_IP=${DB_IP}
 
@@ -56,7 +56,7 @@ echo sleep 60
 sleep 60
 
 # start modeling-etsicatalog
-docker run -d --name modeling-etsicatalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e MYSQL_ADDR=${DB_IP}:3306 nexus3.onap.org:10001/onap/modeling/etsicatalog
+docker run -d --name modeling-etsicatalog -v /var/lib/mysql -e MSB_ADDR=${DISCOVERY_IP}:10081 -e DB_IP=${DB_IP} nexus3.onap.org:10001/onap/modeling/etsicatalog
 EtsiCatalog_IP=`get-instance-ip.sh modeling-etsicatalog`
 for i in {1..10}; do
     curl -sS -m 1 ${EtsiCatalog_IP}:8806 && break
