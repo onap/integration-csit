@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Pawel Kasperkiewicz <pawel.kasperkiewicz@nokia.com>
+Code-Review+1: Maciej Malewski <maciej.malewski@nokia.com>
+Code-Review+1: Adam Wudzinski <adam.wudzinski@nokia.com>
+Code-Review+1: Bogumil Zebek <bogumil.zebek@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Wed, 12 Aug 2020 09:29:06 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/111031
+Project: integration/csit
+Branch: refs/heads/master
