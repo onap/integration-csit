@@ -1,0 +1,14 @@
+{
+	"transactionId": "fff33db3-8fc9-4e29-89ff-7419c85900bd",
+	"requestId": "742b9e6a-aa55-487e-9d71-a4a5e05b3981",
+	"requestStatus": "completed",
+	"statusMessage": "success",
+	"solutions": {
+		"networkId": "ran-1",
+		"pciSolutions": [{
+			"cellId": "Chn0071",
+			"pci": "5"
+		}],
+		"anrSolutions": []
+	}
+}
