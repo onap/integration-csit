@@ -1,0 +1,134 @@
+{
+  "config": {
+    "sonhandler.badCountThreshold": 1,
+    "streams_subscribes": {
+      "performance_management_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "https://message-router.onap.svc.cluster.local:3905/events/unauthenticated.VES_MEASUREMENT_OUTPUT",
+          "client_role": "son-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-son-1"
+        },
+        "aaf_username": null
+      },
+      "fault_management_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "https://message-router.onap.svc.cluster.local:3905/events/unauthenticated.SEC_FAULT_OUTPUT",
+          "client_role": "son-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-son-1"
+        },
+        "aaf_username": null
+      },
+      "nbr_list_change_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "https://message-router.onap.svc.cluster.local:3905/events/PCI-NOTIF-TOPIC-NGHBR-LIST-CHANGE-INFO",
+          "client_role": "son-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-son-1"
+        },
+        "aaf_username": null
+      },
+      "dcae_cl_response_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "https://message-router.onap.svc.cluster.local:3905/events/DCAE_CL_RSP",
+          "client_role": "son-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-son-1"
+        },
+        "aaf_username": null
+      }
+    },
+    "postgres.port": "5432",
+    "sonhandler.pciOptimizer": "pci",
+    "sonhandler.maximumClusters": 5,
+    "sonhandler.numSolutions": 5,
+    "sonhandler.poorCountThreshold": 1,
+    "sonhandler.minCollision": 5,
+    "streams_publishes": {
+      "CL_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "https://message-router.onap.svc.cluster.local:3905/events/unauthenticated.DCAE_CL_OUTPUT",
+          "client_role": "son-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-son-1"
+        },
+        "aaf_username": null
+      }
+    },
+    "sonhandler.namespace": "onap",
+    "sonhandler.oof.endpoint": "/api/oof/v1/pci",
+    "postgres.password": "postgres",
+    "sonhandler.minConfusion": 5,
+    "sonhandler.sourceId": "SONHMS",
+    "postgres.username": "sonhms_admin",
+    "postgres.host": "postgres",
+    "sonhandler.policyRespTimer": 10,
+    "sonhandler.dmaap.server": [
+      "dmaap"
+    ],
+    "sonhandler.poorThreshold": 70,
+    "sonhandler.oofTriggerCountTimer": 30,
+    "cbsPollingInterval": 60,
+    "sonhandler.cg": "sonhms-cg",
+    "sonhandler.pollingInterval": 20,
+    "sonhandler.badThreshold": 50,
+    "sonhandler.bufferTime": 60,
+    "sonhandler.cid": "sonhms-cid",
+    "sonhandler.configDb.service": "http://configdb_oof_sim:5000",
+    "sonhandler.oofTriggerCountThreshold": 5,
+    "sonhandler.oof.service": "http://configdb_oof_sim:5000",
+    "sonhandler.pciAnrOptimizer": "pci_anr",
+    "sonhandler.policyNegativeAckThreshold": 1,
+    "sonhandler.policyFixedPciTimeInterval": 10000,
+    "sonhandler.pollingTimeout": 60,
+    "sonhandler.nfNamingCode": "RansimAgent",
+    "service_calls": {
+      "sdnr-getpnfname": [],
+      "sdnr-getpci": [],
+      "sdnr-getnbrlist": [],
+      "sdnr-getcelllist": [],
+      "oof-req": [],
+      "policy-req": []
+    }
+  },
+  "policies": {
+    "event": {
+      "action": "gathered",
+      "timestamp": "2019-09-18T14:57:55.320Z",
+      "update_id": "dbb88da8-8df1-489d-b51d-8d5cbbfbcd99",
+      "policies_count": 1
+    },
+    "items": [
+      {
+        "policyName": "com.Config_PCIMS_CONFIG_POLICY.1.xml",
+        "name": "com.Config_PCIMS_CONFIG_POLICY",
+        "config": {
+          "PCI_SDNR_TARGET_NAME": "SDNR",
+          "PCI_OPTMIZATION_ALGO_CATEGORY_IN_OOF": "OOF-PCI-OPTIMIZATION",
+          "PCI_NEIGHBOR_CHANGE_CLUSTER_TIMEOUT_IN_SECS": 60,
+          "PCI_MODCONFIGANR_POLICY_NAME": "ControlLoop-vSONH-7d4baf04-8875-4d1f-946d-06b874048b61",
+          "PCI_MODCONFIG_POLICY_NAME": "ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459"
+        },
+        "type_version": "1.0.0",
+        "version": "1.0.0",
+        "policyVersion": "1",
+        "type": "onap.policies.monitoring.docker.sonhandler.app",
+        "metadata": {
+          "policy-id": "com.Config_PCIMS_CONFIG_POLICY",
+          "policy-version": "1"
+        }
+      }
+    ]
+  }
+}
