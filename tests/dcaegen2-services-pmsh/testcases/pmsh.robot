@@ -21,7 +21,6 @@ ${SUBSCRIPTIONS_ENDPOINT}           /subscriptions
 
 ${MR_EXPECTATION_AAI_PNF_CREATED}               %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-expectation-aai-pnf-created.json
 ${MR_EXPECTATION_AAI_PNF_REMOVED}               %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-expectation-aai-pnf-deleted.json
-${MR_EXPECTATION_POLICY_RESPONSE_PNF_NEW}       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-expectation-policy-subscription-created-pnf-new.json
 ${MR_EXPECTATION_POLICY_RESPONSE_PNF_EXISTING}  %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-expectation-policy-subscription-created-pnf-existing.json
 ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}         %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/cbs-expectation-unlocked-config.json
 
@@ -62,18 +61,18 @@ Verify PNF detected in AAI when administrative state unlocked
 Verify Policy response on MR is handled
     [Tags]                          PMSH_04
     [Documentation]                 Verify policy response on MR is handled
-    [Timeout]                       40 seconds
+    [Timeout]                       60 seconds
     SimulatePolicyResponse          ${MR_EXPECTATION_POLICY_RESPONSE_PNF_EXISTING}
-    Sleep                           15 seconds      Ensure Policy response on MR is picked up
+    Sleep                           31 seconds      Ensure Policy response on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_sub_status']}     CREATED
 
 Verify AAI event on MR detailing new PNF being detected is handled
     [Tags]                          PMSH_05
     [Documentation]                 Verify PNF created AAI event on MR is handled
-    [Timeout]                       30 seconds
+    [Timeout]                       60 seconds
     SimulateNewPNF
-    Sleep                           15 seconds      Ensure AAI event on MR is picked up
+    Sleep                           31 seconds      Ensure AAI event on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_name']}            pnf_newly_discovered
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['orchestration_status']}   Active
@@ -82,9 +81,9 @@ Verify AAI event on MR detailing new PNF being detected is handled
 Verify AAI event on MR detailing PNF being deleted is handled
     [Tags]                          PMSH_06
     [Documentation]                 Verify PNF deleted AAI event on MR is handled
-    [Timeout]                       30 seconds
+    [Timeout]                       60 seconds
     SimulateDeletedPNF
-    Sleep                           12 seconds      Ensure AAI event on MR is picked up
+    Sleep                           31 seconds      Ensure AAI event on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Not Contain              ${resp.text}            pnf_newly_discovered
 

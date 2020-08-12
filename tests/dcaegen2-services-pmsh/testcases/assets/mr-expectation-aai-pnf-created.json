@@ -1,7 +1,7 @@
 [
   {
     "httpRequest": {
-      "path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event",
+      "path": "/events/AAI_EVENT/.*",
       "queryStringParameters" : {
         "timeout" : [ "1000" ]
       }
@@ -24,7 +24,7 @@
   },
   {
     "httpRequest": {
-      "path": "/events/AAI_EVENT/dcae_pmsh_cg/dcae_pmsh_aai_event",
+      "path": "/events/AAI_EVENT/.*",
       "queryStringParameters" : {
         "timeout" : [ "1000" ]
       }
@@ -36,7 +36,7 @@
           "application/json"
         ]
       },
-      "body": "{}"
+      "body": []
     }
   }
 ]
