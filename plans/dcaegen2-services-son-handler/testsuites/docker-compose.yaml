@@ -1,0 +1,94 @@
+#    ============LICENSE_START=======================================================
+#    son-handler
+#    ================================================================================
+#     Copyright (C) 2020 Wipro Limited.
+#     ==============================================================================
+#       Licensed under the Apache License, Version 2.0 (the "License");
+#       you may not use this file except in compliance with the License.
+#       You may obtain a copy of the License at
+#
+#            http://www.apache.org/licenses/LICENSE-2.0
+#
+#       Unless required by applicable law or agreed to in writing, software
+#       distributed under the License is distributed on an "AS IS" BASIS,
+#       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#       See the License for the specific language governing permissions and
+#       limitations under the License.
+#     ============LICENSE_END=========================================================
+
+version: '2.4'
+networks:
+  sonhms-default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1400
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - sonhms-default
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+    networks:
+      - sonhms-default
+  dmaap:
+    image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.8
+    container_name: dmaap
+    ports:
+      - "3904:3904"
+      - "3905:3905"
+    volumes:
+      - ./config/dmaap/MsgRtrApi.properties:/appl/dmaapMR1/bundleconfig/etc/appprops/MsgRtrApi.properties
+    depends_on:
+      - zookeeper
+      - kafka
+    networks:
+      - sonhms-default
+  postgres:
+    image: 'postgres:12-alpine'
+    container_name: sonhms-postgres
+    hostname: postgres
+    environment:
+     - POSTGRES_USER=sonhms_admin
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB=sonhms
+    ports:
+     - 5432
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "5432"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - sonhms-default
+  sonhms:
+    image: "nexus3.onap.org:10003/onap/org.onap.dcaegen2.services.son-handler:2.1.1-20200730T023738Z"
+    container_name: sonhms.onap
+    hostname: sonhms
+    environment:
+     - STANDALONE=true
+     - CONFIG_FILE=/etc/config_all.json
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./config/sonhms/config_all.json:/etc/config_all.json
+    depends_on:
+     - postgres
+    networks:
+      - sonhms-default
