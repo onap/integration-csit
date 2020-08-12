@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f14866f_9e1bcd83",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DcaeLibrary.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-08-12T09:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46cef6c3_971d8284",
+      "revId": "89b3b91d34a386150cad6befaf3855d7f1ec3a15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac6b5a7_cd5eec49",
         "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPServer.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "89b3b91d34a386150cad6befaf3855d7f1ec3a15",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f3afcf_946e6af8",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPServer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-08-12T09:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac6b5a7_cd5eec49",
+      "revId": "89b3b91d34a386150cad6befaf3855d7f1ec3a15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
