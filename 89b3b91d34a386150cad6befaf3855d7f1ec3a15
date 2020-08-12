@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46cef6c3_971d8284",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/DcaeLibrary.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-12T05:48:09Z",
+      "side": 1,
+      "message": "in python we do not use CamelCase. pls fix it",
+      "revId": "89b3b91d34a386150cad6befaf3855d7f1ec3a15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac6b5a7_cd5eec49",
+        "filename": "tests/dcaegen2/testcases/resources/robot_library/dmaap_simulator/DMaaPServer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-08-12T05:48:09Z",
+      "side": 1,
+      "message": "give proper name. what does \"sa\" mean ?",
+      "revId": "89b3b91d34a386150cad6befaf3855d7f1ec3a15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
