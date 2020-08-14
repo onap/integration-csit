@@ -3,8 +3,8 @@ server:
    tomcat:
       max-threads: 4
    ssl:
-      key-store: classpath:keystore/org.onap.so.p12
-      key-store-password: u!@JQoYD])@ykq.NKM,O7iA.
+      key-store: classpath:keystore/keystore.p12
+      key-store-password: mYHC98!qX}7h?W}jRv}MIXTJ
       keyStoreType: PKCS12
 ssl-enable: true
 spring:
@@ -21,5 +21,5 @@ spring:
 http:
    client:
       ssl:
-         trust-store: classpath:truststore/org.onap.so.trust.jks
-         trust-store-password: '[)3KV.k*!IlkFhWEq0Nv2dDa'
+         trust-store: classpath:truststore/truststore.jks
+         trust-store-password: '*TQH?Lnszprs4LmlAj38yds('

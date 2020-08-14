@@ -170,9 +170,9 @@ services:
       - "8081:8081"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/bpmn-infra/onapheat:/app/config
       - ${CONFIG_DIR_PATH}/certificates/aai-certificate/aai.cert:/app/ca-certificates/aai.cert
+      - ${CONFIG_DIR_PATH}/certificates/root-certificate/root.crt:/app/ca-certificates/root.crt
     environment:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
