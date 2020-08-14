@@ -32,9 +32,15 @@ docker run -d -p 80:80 -e CONSUL_IP=$MSB_CONSUL_IP -e SDCLIENT_IP=$MSB_DISCOVERY
 MSB_IAG_IP=`get-instance-ip.sh msb_internal_apigateway`
 echo MSB_IAG_IP=${MSB_IAG_IP}
 
-docker run -d -p 3306:3306 --name vfc-db -v /var/lib/mysql nexus3.onap.org:10001/onap/vfc/db
+# Start Mysql
+docker run -d -p 3306:3306 --name vfc-db -v /var/lib/mysql -e MYSQL_USER="gvnfm" -e MYSQL_PASSWORD="gvnfm" -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE="gvnfm" nexus3.onap.org:10001/library/mariadb
 VFC_DB_IP=`get-instance-ip.sh vfc-db`
 echo VFC_DB_IP=${VFC_DB_IP}
+
+# Start Redis
+docker run -d -p 6379:6379 --name vfc-redis redis
+VFC_REDIS_IP=`get-instance-ip.sh vfc-redis`
+echo VFC_REDIS_IP=${VFC_REDIS_IP}
 
 # Wait for initialization(8500 Consul, 10081 Service Registration & Discovery, 80 api gateway)
 for i in {1..10}; do
@@ -55,7 +61,7 @@ echo sleep 30
 sleep 30
 
 # start vfc-vnflcm
-docker run -d --name vfc-vnflcm -e MSB_ADDR=${MSB_IAG_IP}:80 -e MYSQL_ADDR=${VFC_DB_IP}:3306 nexus3.onap.org:10001/onap/vfc/vnflcm
+docker run -d --name vfc-vnflcm -e MSB_ADDR=${MSB_IAG_IP}:80 -e MYSQL_ADDR=${VFC_DB_IP}:3306 -e REDIS_HOST=${VFC_REDIS_IP} nexus3.onap.org:10001/onap/vfc/vnflcm
 VNFLCM_IP=`get-instance-ip.sh vfc-vnflcm`
 
 # Wait for initialization
