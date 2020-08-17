@@ -1,7 +1,7 @@
 [
   {
     "httpRequest": {
-      "path": "/events/unauthenticated.PMSH_CL_INPUT/dcae_pmsh_cg/dcae_pmsh_policy_cl_input",
+      "path": "/events/unauthenticated.PMSH_CL_INPUT/.*",
       "queryStringParameters" : {
         "timeout" : [ "1000" ]
       }
@@ -24,7 +24,7 @@
   },
   {
     "httpRequest": {
-      "path": "/events/unauthenticated.PMSH_CL_INPUT/dcae_pmsh_cg/dcae_pmsh_policy_cl_input",
+      "path": "/events/unauthenticated.PMSH_CL_INPUT/.*",
       "queryStringParameters" : {
         "timeout" : [ "1000" ]
       }
@@ -36,10 +36,7 @@
           "application/json"
         ]
       },
-      "body": {
-        "type": "JSON",
-        "json": {}
-      }
+      "body": []
     }
   }
 ]

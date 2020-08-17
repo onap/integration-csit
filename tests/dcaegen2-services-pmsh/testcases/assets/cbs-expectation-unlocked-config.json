@@ -84,7 +84,7 @@
                 "dmaap_info": {
                   "client_id": "1475976809466",
                   "client_role": "org.onap.dcae.pmPublisher",
-                  "topic_url": "https://mr-sim:3095/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS",
+                  "topic_url": "https://mr-sim:3095/events/unauthenticated.DCAE_CL_OUTPUT",
                   "location": "san-francisco"
                 },
                 "type": "message_router"
@@ -103,7 +103,7 @@
               "policy_pm_subscriber": {
                 "dmaap_info": {
                   "location": "san-francisco",
-                  "topic_url": "https://mr-sim:3095/events/org.onap.dmaap.mr.PM_SUBSCRIPTIONS",
+                  "topic_url": "https://mr-sim:3095/events/unauthenticated.PMSH_CL_INPUT",
                   "client_role": "org.onap.dcae.pmSubscriber",
                   "client_id": "1575876809456"
                 },
