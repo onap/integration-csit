@@ -1,0 +1,10 @@
+Code-Review+1: Bogumil Zebek <bogumil.zebek@nokia.com>
+Code-Review+1: Michał Bańka <michal.banka@nokia.com>
+Code-Review+1: Edyta Krukowska <edyta.krukowska@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Mon, 17 Aug 2020 11:30:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/110883
+Project: integration/csit
+Branch: refs/heads/master
