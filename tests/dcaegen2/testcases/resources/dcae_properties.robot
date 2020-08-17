@@ -46,7 +46,7 @@ ${EVENT_THROTTLING_STATE_DATA_FILE}      %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${EVENT_PNF_REGISTRATION}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_pnf_registration_event.json
 ${EVENT_PNF_REGISTRATION_V7}             %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json
 ${DCAE_HEALTH_CHECK_BODY}                %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
-${VES_STDN_DEFINED_EMMPTY_NAMESPACE}     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_namespace.json
+${VES_STDN_DEFINED_EMPTY_NAMESPACE}     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_namespace.json
 ${VES_STDN_DEFINED_MISSING_NAMESPACE}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_missing_namespace.json
 ${VES_NAMESPACE_3GPP_PROVISIONING_MISSING_SOURCENAME}   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Provisioning_missing_sourceName.json
 ${VES_STDN_DEFINED_3GPP_PROVISIONING}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Provisioning.json

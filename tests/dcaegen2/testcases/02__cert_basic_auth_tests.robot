@@ -125,7 +125,7 @@ Publish V7 Batch Event Without Auth And Cert
 Publish VES Event With Empty Stnd Domain Namespace Parameter
     [Tags]    DCAE-VESC-R1 DCAE-VESC-STNDDEFINED
     [Documentation]   Post single event with invalid data (empty stnd namespace parameter) to /eventListener/v7 endpoint, expect 400 Response Status Code and "Mandatory input %1 %2 is empty in request" message
-    Send Request And Validate Response And Error Message  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_STDN_DEFINED_EMMPTY_NAMESPACE}   400   Mandatory input %1 %2 is empty in request
+    Send Request And Validate Response And Error Message  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_STDN_DEFINED_EMPTY_NAMESPACE}   400   Mandatory input %1 %2 is empty in request
 
 Publish VES Event With Missing Stnd Domain Namespace Parameter
     [Tags]    DCAE-VESC-R1 DCAE-VESC-STNDDEFINED
