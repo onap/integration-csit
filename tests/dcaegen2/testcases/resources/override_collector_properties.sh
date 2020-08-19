@@ -13,11 +13,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+if [ $# -ne 1 ]; then
+    echo "Incorrect number of parameters"
+    exit 1
+fi
 
-docker exec vesc /opt/app/VESCollector/bin/appController.sh stop
+LOCAL_COLLECTOR_PROPERTIES_PATH=$1
+FILENAME=$(basename $LOCAL_COLLECTOR_PROPERTIES_PATH)
+ETC_PATH=/opt/app/VESCollector/etc
+APP_CONTROLLER_PATH=/opt/app/VESCollector/bin/appController.sh
+
+docker exec vesc $APP_CONTROLLER_PATH stop
 sleep 2
-docker cp ${WORKSPACE}/tests/dcaegen2/testcases/resources/collector.properties vesc:/opt/app/VESCollector/etc
+docker cp $LOCAL_COLLECTOR_PROPERTIES_PATH vesc:$ETC_PATH
 sleep 10
-docker exec vesc /opt/app/VESCollector/bin/appController.sh start
+docker exec vesc mv $ETC_PATH/$FILENAME $ETC_PATH/collector.properties
+docker exec vesc $APP_CONTROLLER_PATH start
 sleep 5
-echo "VES Collector Restarted with certBasicAuth"
+echo "VES Collector Restarted with overridden collector.properties"
