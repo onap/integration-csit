@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d70948b_8d1f532c",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/docker-compose.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-08-19T20:53:55Z",
+      "side": 1,
+      "message": "switch to latest",
+      "range": {
+        "startLine": 81,
+        "startChar": 78,
+        "endLine": 81,
+        "endChar": 100
+      },
+      "revId": "3d457a05e0d180faec09285561bca1023654332f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
