@@ -4,7 +4,7 @@ Resource          ./resources/dcae_keywords.robot
 Enable VESC HTTPS with certBasicAuth
     [Tags]    DCAE-VESC-R1  DCAE-VESC-HC
     [Documentation]  Enable VESC Https and Authentication and Run Health Check
-    Enable VESC with certBasicAuth
+    Override Collector Properties  ${VES_CERT_BASIC_AUTH_COLLECTOR_PROPERTIES}
     Run Healthcheck  ${https_basic_auth_session}
 
 VES Collector HTTP Health Check with certBasicAuth
