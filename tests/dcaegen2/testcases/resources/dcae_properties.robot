@@ -52,7 +52,10 @@ ${VES_NAMESPACE_3GPP_PROVISIONING_MISSING_SOURCENAME}   %{WORKSPACE}/tests/dcaeg
 ${VES_STDN_DEFINED_3GPP_PROVISIONING}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Provisioning.json
 ${VES_STDN_DEFINED_3GPP_HEARTBEAT}       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Heartbeat.json
 ${VES_STDN_DEFINED_3GPP_FAULTSUPERVISION}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-FaultSupervision.json
+${VES_STDN_DEFINED_INVALID_DATA}          %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_wrong_internal_file_reference.json
 ${VES_STDN_DEFINED_3GPP_PERFORMANCE_ASSURANCE}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-PerformanceAssurance.json
+${VES_CERT_BASIC_AUTH_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_basic_auth.properties
+${VES_DISABLED_STNDDEFINED_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_stnd_defined.properties
 
 #DCAE Health Check
 ${CONFIG_BINDING_URL}                    http://localhost:8443
