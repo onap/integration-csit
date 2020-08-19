@@ -6,11 +6,11 @@
       "version": "1.0.0",
       "description": "a base policy type for all policies that governs monitoring provisioning"
     },
-    "onap.policies.monitoring.cdap.tca.hi.lo.app": {
+    "onap.policies.monitoring.tcagen2": {
       "derived_from": "onap.policies.Monitoring",
       "version": "1.0.0",
       "properties": {
-        "tca_policy": {
+        "tca.policy": {
           "type": "onap.datatypes.monitoring.tca_policy",
           "description": "TCA Policy JSON"
         }
