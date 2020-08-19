@@ -1,11 +1,11 @@
 {
   "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
   "policy_types": {
-    "onap.policies.monitoring.cdap.tca.hi.lo.app": {
+    "onap.policies.monitoring.tcagen2": {
       "derived_from": "onap.policies.Monitoring",
       "version": "2.0.0",
       "properties": {
-        "tca_policy": {
+        "tca.policy": {
           "type": "onap.datatypes.monitoring.tca_policy",
           "description": "TCA Policy JSON"
         }

@@ -52,7 +52,7 @@ CreateMonitorPolicy
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies  data=${postjson}   headers=${headers}
+     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  data=${postjson}   headers=${headers}
      Log    Received response from policy4 ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200

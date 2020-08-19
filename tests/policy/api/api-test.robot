@@ -41,7 +41,7 @@ RetrievePolicyTypes
 CreateTCAPolicyTypeV1
      [Documentation]    Create TCA Policy Type Version 1. Trying to create an existing policy type with any change and same version should cause error.
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.v1.json
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.tcagen2.v1.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -52,7 +52,7 @@ CreateTCAPolicyTypeV1
 CreateTCAPolicyTypeV2
      [Documentation]    Create TCA Policy Type Version 2
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.cdap.tca.hi.lo.app.v2.json
+     ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.tcagen2.v2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -82,7 +82,7 @@ CreateNewMonitoringPolicyV1
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies  data=${postjson}   headers=${headers}
+     ${resp}=   Post Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  data=${postjson}   headers=${headers}
      Log    Received response from policy ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
      Should Be Equal As Strings    ${resp.status_code}     200
@@ -121,7 +121,7 @@ RetrievePoliciesOfType
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Get Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies     headers=${headers}
+     ${resp}=   Get Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies     headers=${headers}
      Log    Received response from policy ${resp.text}
      ${expjsonobject}   To Json    ${expjson}
      Should Be Equal As Strings    ${resp.status_code}     200
@@ -173,10 +173,10 @@ DeleteSpecificPolicyV2
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0     headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     404
 
 DeleteSpecificPolicyTypeV1
@@ -185,10 +185,10 @@ DeleteSpecificPolicyTypeV1
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0    headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0    headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/1.0.0    headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     404
 
 DeleteSpecificPolicyTypeV2
@@ -197,8 +197,8 @@ DeleteSpecificPolicyTypeV2
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/2.0.0    headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0    headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.cdap.tca.hi.lo.app/versions/2.0.0    headers=${headers}
+     ${resp}=   Delete Request   policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0    headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     404
