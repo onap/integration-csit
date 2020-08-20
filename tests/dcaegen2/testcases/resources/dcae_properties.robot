@@ -46,14 +46,18 @@ ${EVENT_THROTTLING_STATE_DATA_FILE}      %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${EVENT_PNF_REGISTRATION}                %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_pnf_registration_event.json
 ${EVENT_PNF_REGISTRATION_V7}             %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_pnf_registration_event.json
 ${DCAE_HEALTH_CHECK_BODY}                %{WORKSPACE}/tests/dcae/testcases/assets/json_events/dcae_healthcheck.json
-${VES_STND_DEFINED_EMPTY_NAMESPACE}     %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_namespace.json
+${VES_STND_DEFINED_EMPTY_NAMESPACE}      %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_namespace.json
 ${VES_STND_DEFINED_MISSING_NAMESPACE}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_missing_namespace.json
 ${VES_NAMESPACE_3GPP_PROVISIONING_MISSING_SOURCENAME}   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Provisioning_missing_sourceName.json
 ${VES_STND_DEFINED_3GPP_PROVISIONING}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Provisioning.json
 ${VES_STND_DEFINED_3GPP_HEARTBEAT}       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Heartbeat.json
 ${VES_STND_DEFINED_3GPP_FAULTSUPERVISION}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-FaultSupervision.json
 ${VES_STND_DEFINED_3GPP_PERFORMANCE_ASSURANCE}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-PerformanceAssurance.json
-${VES_STND_DEFINED_INVALID_DATA}         %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_invalid_data_fields.json
+${VES_STND_DEFINED_EMPTY_DATA}           %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_empty_data_fields.json
+${VES_STND_DEFINED_INVALID_DATA_NO_SCHEMA_REF}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_invalid_data_fields_no_schema_ref.json
+${VES_STND_DEFINED_INCORRECT_SCHEMA_REF}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_incorrect_schema_ref.json
+${VES_STND_DEFINED_NO_VALUE}             %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_no_value.json
+${VES_STND_DEFINED_INVALID_TYPE_DATA}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_invalid_type_data_field.json
 ${VES_CERT_BASIC_AUTH_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_basic_auth.properties
 ${VES_DISABLED_STNDDEFINED_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_stnd_defined.properties
 

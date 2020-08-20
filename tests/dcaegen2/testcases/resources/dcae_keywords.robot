@@ -141,14 +141,14 @@ Publish Event To VES Collector With Put Method
     [Return] 	${resp}
 
 Send Request And Validate Response And Error Message
-    [Documentation]  Post singel event to passed url and validate received response code and content
+    [Documentation]  Post single event to passed url and validate received response code and content
     [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_content}
     ${resp}=  Send Request And Validate Response  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}
     ${error_message}=  Set Variable  ${resp.json()['requestError']['ServiceException']['text']}
     Should Be Equal As Strings  ${msg_content}  ${error_message}
 
 Send Request And Validate Response
-    [Documentation]  Post singel event to passed url with passed data and validate received response
+    [Documentation]  Post single event to passed url with passed data and validate received response
     [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${resp_code}  ${msg_code}=None  ${topic}=None
     ${evtdata}=  Get Data From File  ${evtjson}
     ${resp}=  Run Keyword  ${keyword}  ${session}  ${evtpath}  ${evtdata}
@@ -160,7 +160,7 @@ Send Request And Validate Response
     [Return]  ${resp}
 
 Check Whether Message Received
-    [Documentation]  Validare if message has been received
+    [Documentation]  Validate if message has been received
     [Arguments]  ${msg_code}  ${topic}
     ${ret}=  Run Keyword If  '${topic}' != 'None'  DMaaP Message Receive On Topic  ${msg_code}  ${topic}
     ...  ELSE  DMaaP Message Receive  ${msg_code}
