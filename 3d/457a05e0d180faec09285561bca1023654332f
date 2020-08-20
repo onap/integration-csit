@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Vijay Venkatesh Kumar <vv770d@att.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 20 Aug 2020 09:15:29 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/111171
+Project: integration/csit
+Branch: refs/heads/master
