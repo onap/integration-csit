@@ -18,37 +18,37 @@ class DcaeLibrary(object):
 
     def __init__(self):
         pass
-    
+
     @staticmethod
-    def enable_vesc_with_cert_basic_auth():
+    def override_collector_properties(properties_path):
         global client
         if 'Windows' in platform.system():
             try:
-                DcaeLibrary.enable_https_auth_for_windows_platform_system()
+                DcaeLibrary.change_properties_for_windows_platform_system(properties_path)
             finally:
                 client.close()
             return
-        DcaeLibrary.enable_https_auth_for_non_windows_platform_system()
+        DcaeLibrary.change_properties_for_non_windows_platform_system(properties_path)
         return
 
     @staticmethod
-    def enable_https_auth_for_non_windows_platform_system():
+    def change_properties_for_non_windows_platform_system(properties_path):
         ws = os.environ['WORKSPACE']
-        script2run = ws + "/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh"
+        script2run = ws + '/tests/dcaegen2/testcases/resources/override_collector_properties.sh'
         logger.info("Running script: " + script2run)
         logger.console("Running script: " + script2run)
-        subprocess.call(script2run)
+        subprocess.call([script2run, properties_path])
         time.sleep(5)
 
     @staticmethod
-    def enable_https_auth_for_windows_platform_system():
+    def change_properties_for_windows_platform_system(properties_path):
         global client
         client = paramiko.SSHClient()
         client.load_system_host_keys()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.connect(os.environ['CSIT_IP'], port=22, username=os.environ['CSIT_USER'], password=os.environ['CSIT_PD'])
         stdin, stdout, stderr = client.exec_command(
-            '%{WORKSPACE}/tests/dcaegen2/testcases/resources/vesc_enable_https_auth.sh')
+            '%{WORKSPACE}' + '/tests/dcaegen2/testcases/resources/override_collector_properties.sh', properties_path)
         logger.console(stdout.read())
 
     @staticmethod

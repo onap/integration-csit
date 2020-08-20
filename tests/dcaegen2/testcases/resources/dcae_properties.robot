@@ -53,6 +53,9 @@ ${VES_STND_DEFINED_3GPP_PROVISIONING}    %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${VES_STND_DEFINED_3GPP_HEARTBEAT}       %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-Heartbeat.json
 ${VES_STND_DEFINED_3GPP_FAULTSUPERVISION}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-FaultSupervision.json
 ${VES_STND_DEFINED_3GPP_PERFORMANCE_ASSURANCE}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_3GPP-PerformanceAssurance.json
+${VES_STND_DEFINED_INVALID_DATA}         %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_invalid_data_fields.json
+${VES_CERT_BASIC_AUTH_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_basic_auth.properties
+${VES_DISABLED_STNDDEFINED_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_stnd_defined.properties
 
 #DCAE Health Check
 ${CONFIG_BINDING_URL}                    http://localhost:8443
