@@ -1,0 +1,10 @@
+{
+	"requestID": "d9a6d3de-c7b9-4dc7-bbb3-54953c62f7a9",
+	"closedLoopControlName": "ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459",
+	"version": "1.0.2",
+	"target": "DCAE",
+	"from": "SDNR",
+	"policyName": "PCI",
+	"policyVersion": "1.0.2",
+	"payload": " { \"Configurations\":[{ \"Status\": { \"Code\": 400, \"Value\": \"FAILURE\" }, \"data\":{\"FAPService\":{\"alias\":\"Chn0071\",\"X0005b9Lte\":{\"phyCellIdInUse\":5,\"pnfName\":\"ncserver5\"},\"CellConfig\":{\"LTE\":{\"RAN\":{\"Common\":{\"CellIdentity\":\"Chn0071\"}}}}}}} ]}"
+}

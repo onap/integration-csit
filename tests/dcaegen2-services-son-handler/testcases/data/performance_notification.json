@@ -1,0 +1,42 @@
+{
+	"event": {
+		"commonEventHeader": {
+			"version": "4.0",
+			"domain": "measurement",
+			"eventName": "Measurement_RansimAgent-Wipro_HandoffMetric",
+			"eventId": "measurement000002",
+			"sequence": 0,
+			"priority": "Normal",
+			"reportingEntityId": "cc305d54-75b4-431b-adb2-eb6b9e544567",
+			"reportingEntityName": "ncserver1",
+			"sourceId": "de305d54-75b4-431b-adb2-eb6b9e546456",
+			"sourceName": "Chn0002",
+			"startEpochMicrosec": 1551772223000000,
+			"lastEpochMicrosec": 1551790542000000,
+			"nfNamingCode": "RansimAgent",
+			"nfVendorName": "Wipro",
+			"vesEventListenerVersion": "7.0.1",
+			"timeZoneOffset": "UTC-05:30"
+		},
+		"measurementFields": {
+			"measurementInterval": 180,
+			"measurementFieldsVersion": "4.0",
+			"additionalMeasurements": [{
+					"hashMap": {
+						"networkId": "plmnid1",
+						"InterEnbOutAtt_X2HO": "300",
+						"InterEnbOutSucc_X2HO": "90"
+					},
+					"name": "Chn0004"
+				},
+				{
+					"hashMap": {
+						"InterEnbOutAtt_X2HO": "250",
+						"InterEnbOutSucc_X2HO": "70"
+					},
+					"name": "Chn0001"
+				}
+			]
+		}
+	}
+}
