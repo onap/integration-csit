@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Edyta Krukowska <edyta.krukowska@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Fri, 21 Aug 2020 05:53:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/111489
+Project: integration/csit
+Branch: refs/heads/master
