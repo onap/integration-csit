@@ -171,8 +171,9 @@ Send Request And Expect Error
     [Arguments]  ${keyword}  ${session}  ${evtpath}  ${evtjson}  ${error_type}  @{error_content}
     ${evtdata}=  Get Data From File  ${evtjson}
     ${err_msg}=  Run Keyword And Expect Error  ${error_type}  ${keyword}  ${session}  ${evtpath}  ${evtdata}
-    :FOR    ${content}    IN    @{error_content}
-    \    Should Contain   ${err_msg}  ${content}
+    FOR    ${content}    IN    @{error_content}
+           Should Contain   ${err_msg}  ${content}
+    END
     Log  Recieved error message ${err_msg}
 
 Run Healthcheck
