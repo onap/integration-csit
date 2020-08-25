@@ -11,7 +11,7 @@ cd ${WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/resour
 
 pip uninstall -y docker-py
 pip uninstall -y docker
-pip install -U docker==2.7.0
+pip install -U docker>=2.7.0
 docker-compose up -d --build
 
 BBS_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${BBS_SERVICE})
