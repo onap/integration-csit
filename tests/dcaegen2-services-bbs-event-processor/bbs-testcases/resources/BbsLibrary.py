@@ -18,7 +18,7 @@ class BbsLibrary(object):
 
         alog = container.logs(stream=False, tail=1000)
         try:
-            alog = alog.decode()
+            alog = alog.decode('utf-8').strip()
         except AttributeError:
             pass
 
