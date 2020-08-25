@@ -28,6 +28,7 @@ ${AAI_PNFS}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-test
 ${AAI_SERVICES}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/aai_records/aai_services.json
 ${AAI_PNF_NOT_FOUND}    %{WORKSPACE}/tests/dcaegen2-services-bbs-event-processor/bbs-testcases/assets/aai_records/aai_pnf_not_found.json
 
+
 *** Test Cases ***
 Valid DMaaP CPE_AUTHENTICATION event can trigger Policy
     [Documentation]    BBS get valid CPE_AUTHENTICATION event from DMaaP with required fields - BBS triggers Policy
