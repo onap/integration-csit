@@ -32,7 +32,6 @@ services:
          - 8081
    drools:
       image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
-      user: 1000:1000
       container_name: drools
       depends_on: 
          - mariadb
