@@ -21,5 +21,7 @@ services:
       CONSUL_HOST: "consul-server"
       CONSUL_PORT: 8500
       CONFIG_BINDING_SERVICE: "config-binding-service"
+      CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
       HOSTNAME: "dfc_app0"
       KNOWN_HOSTS_FILE_PATH: "/home/datafile/.ssh/known_hosts"
+
