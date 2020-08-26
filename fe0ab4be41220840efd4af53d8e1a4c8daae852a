@@ -22,6 +22,30 @@
       "revId": "fe0ab4be41220840efd4af53d8e1a4c8daae852a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105fb373_c411e338",
+        "filename": "scripts/policy/docker-compose-drools.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2020-08-26T15:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e89aa94_fd63e5b4",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "fe0ab4be41220840efd4af53d8e1a4c8daae852a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
