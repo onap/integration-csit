@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f06e973_210afbb7",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/docker-compose.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-08-27T14:54:52Z",
+      "side": 1,
+      "message": "We could set to latest, otherwise we need update csit for every revision.",
+      "range": {
+        "startLine": 81,
+        "startChar": 78,
+        "endLine": 81,
+        "endChar": 83
+      },
+      "revId": "a3a8cc55c81a662c74f9a07583c6aef82c8cd777",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
