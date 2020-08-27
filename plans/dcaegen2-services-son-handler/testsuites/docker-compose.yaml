@@ -78,7 +78,7 @@ services:
     networks:
       - sonhms-default
   sonhms:
-    image: "nexus3.onap.org:10003/onap/org.onap.dcaegen2.services.son-handler:2.1.1-20200730T023738Z"
+    image: "nexus3.onap.org:10003/onap/org.onap.dcaegen2.services.son-handler:2.1.1"
     container_name: sonhms.onap
     hostname: sonhms
     environment:
