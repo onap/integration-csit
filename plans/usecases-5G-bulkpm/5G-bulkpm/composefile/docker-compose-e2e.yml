@@ -112,6 +112,7 @@ services:
           - dcaegen2-datafile-collector
     environment:
       KNOWN_HOSTS_FILE_PATH: "/home/datafile/.ssh/known_hosts"
+      CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
 
   cbs-sim:
     container_name: config-binding-service-sim
