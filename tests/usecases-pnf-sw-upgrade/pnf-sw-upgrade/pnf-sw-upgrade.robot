@@ -66,18 +66,18 @@ Get pnf workflow
        ${workflow_uuid}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactUuid]
        ${workflow_name}=          Set Variable        ${member}[workflowSpecification][artifactInfo][artifactName]
        Log to console   The workflow ${workflow_name} has uuid : ${workflow_uuid}
-       ${activate_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_uuid}   ${activate_workflow_uuid}
-       ${activate_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSoftwareUpgrade'    ${workflow_name}   ${activate_workflow_name}
-       ${download_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_uuid}   ${download_workflow_uuid}
-       ${download_workflow_name}=    Set Variable If  '${workflow_name}' == 'PNFSWUPDownload'       ${workflow_name}   ${download_workflow_name}
+       ${activate_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'GenericPnfSoftwareUpgrade'    ${workflow_uuid}   ${activate_workflow_uuid}
+       ${activate_workflow_name}=    Set Variable If  '${workflow_name}' == 'GenericPnfSoftwareUpgrade'    ${workflow_name}   ${activate_workflow_name}
+       ${download_workflow_uuid}=    Set Variable If  '${workflow_name}' == 'GenericPnfSWUPDownload'       ${workflow_uuid}   ${download_workflow_uuid}
+       ${download_workflow_name}=    Set Variable If  '${workflow_name}' == 'GenericPnfSWUPDownload'       ${workflow_name}   ${download_workflow_name}
     END
 
     SET GLOBAL VARIABLE       ${activate_workflow_uuid}
     SET GLOBAL VARIABLE       ${download_workflow_uuid}
-    Run Keyword If  '${activate_workflow_name}' == 'PNFSoftwareUpgrade'  log to console   \nexecuted with expected result
-    Run Keyword If  '${download_workflow_name}' == 'PNFSWUPDownload'  log to console   \nexecuted with expected result
-    Should Be Equal As Strings    '${activate_workflow_name}'    'PNFSoftwareUpgrade'
-    Should Be Equal As Strings    '${download_workflow_name}'    'PNFSWUPDownload'
+    Run Keyword If  '${activate_workflow_name}' == 'GenericPnfSoftwareUpgrade'  log to console   \nexecuted with expected result
+    Run Keyword If  '${download_workflow_name}' == 'GenericPnfSWUPDownload'  log to console   \nexecuted with expected result
+    Should Be Equal As Strings    '${activate_workflow_name}'    'GenericPnfSoftwareUpgrade'
+    Should Be Equal As Strings    '${download_workflow_name}'    'GenericPnfSWUPDownload'
 
 Invoke Service Instantiation for pnf software download
     Create Session   api_handler_session  http://${REPO_IP}:8080
