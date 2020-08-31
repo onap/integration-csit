@@ -67,10 +67,10 @@ apply_workaround()
  BEGIN;
   
   insert into $WORKFLOW_TABLE_NAME(artifact_uuid, artifact_name, name, operation_name, version, description, body, resource_target, source) values
-  ('4752c287-c5a8-40a6-8fce-077e1d54104b','PNFSoftwareUpgrade','PNFSoftwareUpgrade','PNFSoftwareUpgrade',1.0,'Pnf Workflow to upgrade software',null,'pnf','native');
+  ('4752c287-c5a8-40a6-8fce-077e1d54104b','GenericPnfSoftwareUpgrade','GenericPnfSoftwareUpgrade','GenericPnfSoftwareUpgrade',1.0,'Pnf Workflow to upgrade software',null,'pnf','native');
 
   insert into $WORKFLOW_TABLE_NAME(artifact_uuid, artifact_name, name, operation_name, version, description, body, resource_target, source) values
-  ('02bffbd9-6af0-4f8d-bf9b-d1dfccd28c84','PNFSWUPDownload','PNFSWUPDownload','PNFSWUPDownload',1.0,'Pnf Workflow to download software',null,'pnf','native');
+  ('02bffbd9-6af0-4f8d-bf9b-d1dfccd28c84','GenericPnfSWUPDownload','GenericPnfSWUPDownload','GenericPnfSWUPDownload',1.0,'Pnf Workflow to download software',null,'pnf','native');
 
  COMMIT;
 EOF
