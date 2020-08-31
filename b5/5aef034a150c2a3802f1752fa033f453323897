@@ -1,0 +1,13 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Code-Review+1: Takamune Cho <takamune.cho@att.com>
+Code-Review+1: Ram Krishna Verma <ram_krishna.verma@bell.ca>
+Code-Review+1: Ajith Sreekumar <ajith.sreekumar@bell.ca>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Mon, 31 Aug 2020 07:12:43 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/111697
+Project: integration/csit
+Branch: refs/heads/master
