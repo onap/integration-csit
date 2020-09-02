@@ -1,6 +1,6 @@
 {
   "ONAPName": "SDNC",
-  "ONAPComponent": "SNDC-component",
+  "ONAPComponent": "SDNC-component",
   "ONAPInstance": "SDNC-component-instance",
   "requestId": "unique-request-sdnc-1",
   "action": "naming",
