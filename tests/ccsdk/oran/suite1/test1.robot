@@ -1,30 +1,15 @@
 *** Settings ***
 Library       OperatingSystem
 Library       RequestsLibrary
-
-*** Variables ***
-${MESSAGE}    Hello, world!
+Library       Process
 
 *** Test Cases ***
-String Equality Test
-    Should Be Equal    ${MESSAGE}    Hello, world!
-
-Dir Test
-    [Documentation]    Check if /tmp exists
-    Log                ${MESSAGE}
-    CheckDir           /tmp
-
-Url Test
-    [Documentation]    Check if google.com can be reached
-    CheckUrl           http://www.google.com
+Running FTC
+    [Documentation]    Check if FTC1 passes
+    Run FTC1 test
 
 *** Keywords ***
-CheckDir
-    [Arguments]                 ${path}
-    Directory Should Exist      ${path}
+Run FTC1 test
+    ${cli_cmd_output}=           Run Process          ./FTC1.sh            shell=yes
+    Log To Console               ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
-CheckUrl
-    [Arguments]                  ${url}
-    Create Session               session              ${url}
-    ${resp}=                     Get Request          session                  /
-    Should Be Equal As Integers  ${resp.status_code}  200

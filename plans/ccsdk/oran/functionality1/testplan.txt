@@ -2,4 +2,3 @@
 # Place the suites in run order.
 # Temporary change to trigger verify job.
 ccsdk/oran/suite1
-ccsdk/oran/suite2
