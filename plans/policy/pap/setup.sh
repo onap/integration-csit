@@ -30,12 +30,16 @@ pip install -U docker==2.7.0
 
 
 sudo apt-get -y install libxml2-utils
+bash ${SCRIPTS}/policy/policy-models-dmaap-sim.sh
+
 POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
 POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_PAP_VERSION="${POLICY_PAP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+
 echo ${POLICY_API_VERSION}
 echo ${POLICY_PAP_VERSION}
+
 # Adding this waiting container due to race condition between pap and mariadb
 docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-pap.yml run --rm start_dependencies
 
@@ -57,6 +61,9 @@ echo PAP IP IS ${POLICY_PAP_IP}
 echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
+DATA=${WORKSPACE}/dmaap-sim/models/models-examples/src/main/resources/policies
+
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"

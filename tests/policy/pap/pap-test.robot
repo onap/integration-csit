@@ -11,7 +11,7 @@ LoadPolicy
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.json
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
      ${resp}=   Post Request     policy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies    data=${postjson}     headers=${headers}
      Log    Received response from API ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
