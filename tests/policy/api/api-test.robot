@@ -78,7 +78,7 @@ RetrieveMonitoringPolicyTypes
 CreateNewMonitoringPolicyV1
      [Documentation]    Create a new Monitoring TCA policy version 1
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -92,7 +92,7 @@ CreateNewMonitoringPolicyV1
 SimpleCreateNewMonitoringPolicyV1
      [Documentation]    Create a new Monitoring TCA policiy version 1 using simple endpoint. Trying to create an existing policy with any change and same version should cause error.
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1_2.json
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v1_2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -103,7 +103,7 @@ SimpleCreateNewMonitoringPolicyV1
 SimpleCreateNewMonitoringPolicyV2
      [Documentation]    Create a new Monitoring TCA policiy version 2 using simple endpoint
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v2.json
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -117,7 +117,7 @@ SimpleCreateNewMonitoringPolicyV2
 RetrievePoliciesOfType
      [Documentation]    Retrieve all Policies Created for a specific Policy Type
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     ${expjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -131,7 +131,7 @@ RetrievePoliciesOfType
 RetrieveAllPolicies
      [Documentation]    Retrieve all Policies
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     ${expjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -144,7 +144,7 @@ RetrieveAllPolicies
 RetrieveSpecificPolicy
      [Documentation]    Retrieve a specific Policy named 'onap.restart.tca' and version '1.0.0'
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${expjson}=  Get file  ${CURDIR}/data/vCPE.policy.monitoring.input.tosca.v1.json
+     ${expjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json

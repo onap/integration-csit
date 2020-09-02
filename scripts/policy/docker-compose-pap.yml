@@ -23,6 +23,12 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d
       expose:
        - 3306
+   message-router:
+      image: dmaap/simulator
+      container_name: dmaap-simulator
+      hostname: dmaap-simulator
+      expose:
+       - 3904
    pap:
       image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
@@ -46,8 +52,11 @@ services:
       container_name: policy-wait
       depends_on:
         - mariadb
+        - message-router
       hostname: policy-wait
-      command: mariadb:3306
+      command:
+        mariadb:3306
+        message-router:3904
    start_all:
       image: dadarek/wait-for-dependencies
       environment:
@@ -60,5 +69,6 @@ services:
       hostname: policy-wait-all
       command:
         mariadb:3306
+        message-router:3904
         pap:6969
         api:6969
