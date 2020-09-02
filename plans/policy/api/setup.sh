@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2019-2020 AT&T Intellectual Property. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,6 +32,23 @@ pip install -U docker==2.7.0
 sudo apt-get -y install libxml2-utils
 POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
 export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+
+# download models - it contains the policy definitions
+rm -rf ${WORKSPACE}/models
+mkdir ${WORKSPACE}/models
+cd ${WORKSPACE}
+
+POLICY_MODELS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/models/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
+export POLICY_MODELS_VERSION="${POLICY_MODELS_VERSION_EXTRACT}"
+echo ${POLICY_MODELS_VERSION}
+
+git clone --depth 1 https://gerrit.onap.org/r/policy/models -b ${GERRIT_BRANCH}
+
+# create a couple of variations of the policy definitions
+sed -e 's!Measurement_vGMUX!ADifferentValue!' models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json >models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v1_2.json
+
+sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' -e 's!"policy-version": 1!"policy-version": 2!' models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json >models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
+
 echo ${POLICY_API_VERSION}
 
 # Adding this waiting container to avoid race condition between api and mariadb containers.
@@ -52,4 +69,8 @@ MARIADB_IP=`get-instance-ip.sh mariadb`
 echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
-ROBOT_VARIABLES="-v POLICY_API_IP:${POLICY_API_IP}"
+DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
+
+ROBOT_VARIABLES=""
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
