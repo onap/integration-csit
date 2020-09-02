@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ffa3d0_47661dd7",
+        "filename": "plans/ccsdk/oran/functionality1/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-02T14:55:19Z",
+      "side": 1,
+      "message": "This script seem to do nothing that print a text (at least the version i found in gitweb)",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853d4d60_0a2ac39e",
+        "filename": "plans/ccsdk/oran/functionality1/testplan.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-02T14:55:19Z",
+      "side": 1,
+      "message": "Perhaps a more descriptive name - policymanagement ?",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05acd529_2c36fc31",
+        "filename": "tests/ccsdk/oran/suite1/FTC1.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-02T14:55:19Z",
+      "side": 1,
+      "message": "This file should not be copied to this repo.\nIs it even possible to run it in this location? It requires (or rather the functions sourced in the beginning) a lot of other script, python and json files.",
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7664c6_7126545e",
+        "filename": "tests/ccsdk/oran/suite1/test1.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-02T14:55:19Z",
+      "side": 1,
+      "message": "The result from the test need to be checked in order to determine if the test was ok or not.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 84
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
