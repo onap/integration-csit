@@ -14,7 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Modifications copyright (c) 2017 AT&T Intellectual Property
-#
+# Place the scripts in run order:
+source ${WORKSPACE}/scripts/ccsdk/script1.sh
 
-echo "This is ${WORKSPACE}/scripts/ccsdk/script1.sh"
+CLONE_LOC=$(find ${WORKSPACE} -type f -name clone.sh)
+CLONE_PATH=path=${CLONE_LOC%/*}
+
+#Make the env vars available to the robot scripts
+ROBOT_VARIABLES="-b debug.log -v CLONE_PATH:${CLONE_PATH}"
