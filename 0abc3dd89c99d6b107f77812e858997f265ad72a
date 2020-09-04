@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59fb5fb9_bb259a31",
+        "filename": "plans/ccsdk/oran/policymanagement/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "I dont think you need a specific script. Not sure what this \u0027find\u0027 do?\nSomething like this should work (archives dir is automatically saved for later trouble shooting - available in jenkins after the test)\n\ncd $WORKSPACE/archives\ngit clone \"https://gerrit.o-ran-sc.org/r/nonrtric\"\n\nCLONE_PATH\u003d$WORKSPACE/archives/nonrtric/test/auto-test \nROBOT_VARIABLES\u003d\"-b debug.log -v CLONE_PATH:${CLONE_PATH}\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e561a5_8f59002d",
+        "filename": "plans/ccsdk/oran/policymanagement/teardown.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "You could remove all running containers here. Dont remember how we did that in DFC. The test script can also auto-clean all containers, by cmd parameter to the script.",
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f373c2e5_6796227d",
+        "filename": "plans/ccsdk/oran/policymanagement/testplan.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "perhaps a more descriptive name",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3b9288_8e0edff9",
+        "filename": "scripts/ccsdk/oran/clone.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "Put this in the setup script instead.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 50
+      },
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a21965_8f15446f",
+        "filename": "tests/ccsdk/oran/suite1/test1.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "better done in the setup script. This is not really a test, rather setup.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21589517_1656a731",
+        "filename": "tests/ccsdk/oran/suite1/test1.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-04T14:23:13Z",
+      "side": 1,
+      "message": "Script wont start. Need at least one parmeter. In addition, no check of script return code or test results is made. The script also need to run with the current working dir set, otherwise logs etc will be produced in a location that is not saved after the test.\n\nCan be done like this I think. I have not tested this, but very similar to what DFC uses to run script and wait for the return code. The test case return code can still be ok (0) although the test cases fails. The return code only means that the script executed corrected (so even if test cases fails the return code is 0. Only if the script fails in a fatal what the script return code will be non-zero). The actual test result code is saved in a file produced by the test script.   \nStart Process                   ${CLONE_PATH}/FTC1.sh   remote  shell\u003dtrue   cwd\u003d${CLONE_PATH}\n${cli_cmd_output}\u003d              Wait For Process    timeout\u003d3600\nShould Be Equal as Integers     ${cli_cmd_output.rc}    0\n${ResultFileContent}\u003d           Get File                        ${CLONE_PATH}/.resultFTC1.txt\nShould Be Equal As Integers     ${ResultFileContent}    0\n\nFor auto clean of containers after the test, the parameter \u0027auto-clean\u0027 can be added after the \u0027remote\u0027 parameter (not sure how to send multiple params in a robot script though)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 82
+      },
+      "revId": "0abc3dd89c99d6b107f77812e858997f265ad72a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
