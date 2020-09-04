@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce11aea6_0d96883a",
+        "filename": "plans/ccsdk/oran/functionality1/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4011
+      },
+      "writtenOn": "2020-09-04T13:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ffa3d0_47661dd7",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "853d4d60_0a2ac39e",
         "filename": "plans/ccsdk/oran/functionality1/testplan.txt",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97155a30_ee908218",
+        "filename": "plans/ccsdk/oran/functionality1/testplan.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4011
+      },
+      "writtenOn": "2020-09-04T13:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "853d4d60_0a2ac39e",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05acd529_2c36fc31",
         "filename": "tests/ccsdk/oran/suite1/FTC1.sh",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "c660511c4d3d40736a143de5bac94644e3713617",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b14ffc_9e7756f8",
+        "filename": "tests/ccsdk/oran/suite1/FTC1.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4011
+      },
+      "writtenOn": "2020-09-04T13:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05acd529_2c36fc31",
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "c660511c4d3d40736a143de5bac94644e3713617",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c097372c_6b79efec",
+        "filename": "tests/ccsdk/oran/suite1/test1.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4011
+      },
+      "writtenOn": "2020-09-04T13:42:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d7664c6_7126545e",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 84
+      },
+      "revId": "c660511c4d3d40736a143de5bac94644e3713617",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
