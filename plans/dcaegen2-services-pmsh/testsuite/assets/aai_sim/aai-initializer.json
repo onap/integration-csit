@@ -49,6 +49,8 @@
                 "serial-number": "6061ZW3",
                 "ipaddress-v6-oam": "2001:0db8:0:0:0:0:1428:57ab",
                 "resource-version": "1573053304574",
+                "model-invariant-id": "7129e420-d396-4efb-af02-6b83499b12f8",
+                "model-version-id": "77c1a3d9-422a-4f78-bd8f-f7a357685b25",
                 "nf-role": "gNB",
                 "orchestration-status": "Active"
               }
