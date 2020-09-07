@@ -49,6 +49,8 @@
                 "serial-number": "6061ZW3",
                 "ipaddress-v6-oam": "2001:0db8:0:0:0:0:1428:57ab",
                 "resource-version": "1573053304574",
+                "model-invariant-id": "7129e420-d396-4efb-af02-6b83499b12f8",
+                "model-version-id": "77c1a3d9-422a-4f78-bd8f-f7a357685b25",
                 "nf-role": "gNB",
                 "orchestration-status": "Active"
               }
@@ -57,5 +59,57 @@
         }
       }
     }
-  }
+  },
+  {
+      "httpRequest":{
+         "path":"/aai/v20/service-design-and-creation/models/model.*"
+      },
+      "httpResponse":{
+         "statusCode":200,
+         "headers":{
+            "content-type":[
+               "application/json"
+            ]
+         },
+         "body":{
+            "type":"JSON",
+            "json":{
+               "model-version-id":"6d25b637-8bca-47e2-af1a-61258424183d",
+               "model-name":"PNF102",
+               "model-version":"1.0",
+               "model-description":"sartgserg",
+               "sdnc-model-name":"pm_control",
+               "sdnc-model-version":"1.0.0",
+               "resource-version":"1598626661947",
+               "relationship-list":{
+                  "relationship":[
+                     {
+                        "related-to":"model-element",
+                        "relationship-label":"org.onap.relationships.inventory.IsA",
+                        "related-link":"/aai/v20/service-design-and-creation/models/model/c1a44771-3aa8-4888-a4f4-be89d1caa0cb/model-vers/model-ver/7256a992-10a7-4ac8-8c2c-63c67e5c48c8/model-elements/model-element/fddc70fe-8343-48c1-af2e-b54f551a32ee/model-elements/model-element/7bff45b7-8254-44e5-b7ad-6e10dee6dfc3",
+                        "relationship-data":[
+                           {
+                              "relationship-key":"model.model-invariant-id",
+                              "relationship-value":"c1a44771-3aa8-4888-a4f4-be89d1caa0cb"
+                           },
+                           {
+                              "relationship-key":"model-ver.model-version-id",
+                              "relationship-value":"7256a992-10a7-4ac8-8c2c-63c67e5c48c8"
+                           },
+                           {
+                              "relationship-key":"model-element.model-element-uuid",
+                              "relationship-value":"fddc70fe-8343-48c1-af2e-b54f551a32ee"
+                           },
+                           {
+                              "relationship-key":"model-element.model-element-uuid",
+                              "relationship-value":"7bff45b7-8254-44e5-b7ad-6e10dee6dfc3"
+                           }
+                        ]
+                     }
+                  ]
+               }
+            }
+         }
+      }
+   }
 ]
