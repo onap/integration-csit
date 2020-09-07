@@ -55,7 +55,6 @@ Verify PNF detected in AAI when administrative state unlocked
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['subscription_status']}                            UNLOCKED
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_name']}                pnf-existing
-    Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['orchestration_status']}   Active
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_sub_status']}          PENDING_CREATE
 
 Verify Policy response on MR is handled
@@ -75,7 +74,6 @@ Verify AAI event on MR detailing new PNF being detected is handled
     Sleep                           31 seconds      Ensure AAI event on MR is picked up
     ${resp}=                        Get Request                      pmsh_session  ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_name']}            pnf_newly_discovered
-    Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['orchestration_status']}   Active
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_sub_status']}          PENDING_CREATE
 
 Verify AAI event on MR detailing PNF being deleted is handled
