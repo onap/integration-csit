@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6325943b_60d18b6c",
+        "filename": "tests/ccsdk/oran/polmansuite/test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-08T15:08:15Z",
+      "side": 1,
+      "message": "redundant, can be removed",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "043395b72ac8f74e631a73b40fe553fa30412548",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0618ccca_0b49acad",
+        "filename": "tests/ccsdk/oran/polmansuite/test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-08T15:08:15Z",
+      "side": 1,
+      "message": "tabs to spaces",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "043395b72ac8f74e631a73b40fe553fa30412548",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e69075_079b437b",
+        "filename": "tests/ccsdk/oran/polmansuite/test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-08T15:08:15Z",
+      "side": 1,
+      "message": "redundant, can be removed",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "043395b72ac8f74e631a73b40fe553fa30412548",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
