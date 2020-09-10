@@ -22,6 +22,30 @@
       "revId": "bedaf1845ec99fe8c38f9df0d7033b9006f07290",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f27b744_04e280b9",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/aai_sim/aai-initializer.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4893
+      },
+      "writtenOn": "2020-09-10T13:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19cd9c7a_7621107a",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 3
+      },
+      "revId": "bedaf1845ec99fe8c38f9df0d7033b9006f07290",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
