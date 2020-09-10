@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19cd9c7a_7621107a",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/assets/aai_sim/aai-initializer.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-09-10T13:00:53Z",
+      "side": 1,
+      "message": "Add entry for sdc endpoint:\n\n,\n   {\n      \"httpRequest\":{\n         \"path\":\"/aai/v20/service-design-and-creation/models/model.*\"\n      },\n      \"httpResponse\":{\n         \"statusCode\":200,\n         \"headers\":{\n            \"content-type\":[\n               \"application/json\"\n            ]\n         },\n         \"body\":{\n            \"type\":\"JSON\",\n            \"json\":{\n               \"model-version-id\":\"6d25b637-8bca-47e2-af1a-61258424183d\",\n               \"model-name\":\"PNF102\",\n               \"model-version\":\"1.0\",\n               \"model-description\":\"sartgserg\",\n               \"sdnc-model-name\":\"pm_control\",\n               \"sdnc-model-version\":\"1.0.0\",\n               \"resource-version\":\"1598626661947\",\n               \"relationship-list\":{\n                  \"relationship\":[\n                     {\n                        \"related-to\":\"model-element\",\n                        \"relationship-label\":\"org.onap.relationships.inventory.IsA\",\n                        \"related-link\":\"/aai/v20/service-design-and-creation/models/model/c1a44771-3aa8-4888-a4f4-be89d1caa0cb/model-vers/model-ver/7256a992-10a7-4ac8-8c2c-63c67e5c48c8/model-elements/model-element/fddc70fe-8343-48c1-af2e-b54f551a32ee/model-elements/model-element/7bff45b7-8254-44e5-b7ad-6e10dee6dfc3\",\n                        \"relationship-data\":[\n                           {\n                              \"relationship-key\":\"model.model-invariant-id\",\n                              \"relationship-value\":\"c1a44771-3aa8-4888-a4f4-be89d1caa0cb\"\n                           },\n                           {\n                              \"relationship-key\":\"model-ver.model-version-id\",\n                              \"relationship-value\":\"7256a992-10a7-4ac8-8c2c-63c67e5c48c8\"\n                           },\n                           {\n                              \"relationship-key\":\"model-element.model-element-uuid\",\n                              \"relationship-value\":\"fddc70fe-8343-48c1-af2e-b54f551a32ee\"\n                           },\n                           {\n                              \"relationship-key\":\"model-element.model-element-uuid\",\n                              \"relationship-value\":\"7bff45b7-8254-44e5-b7ad-6e10dee6dfc3\"\n                           }\n                        ]\n                     }\n                  ]\n               }\n            }\n         }\n      }\n   }",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 3
+      },
+      "revId": "bedaf1845ec99fe8c38f9df0d7033b9006f07290",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
