@@ -46,6 +46,30 @@
       "revId": "4d5d87371a83f4c1b692360f432798bff0092bec",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e161a8_069c4a0e",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5047
+      },
+      "writtenOn": "2020-09-14T13:52:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0ede71a_f3d6e28d",
+      "range": {
+        "startLine": 125,
+        "startChar": 67,
+        "endLine": 125,
+        "endChar": 91
+      },
+      "revId": "4d5d87371a83f4c1b692360f432798bff0092bec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
