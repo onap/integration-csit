@@ -1,0 +1,12 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Chengkai Yan <martin.c.yan@est.tech>
+Code-Review+1: Sonia Sangari <sonia.sangari@est.tech>
+Code-Review+1: Maxime Bonneau <maxime.bonneau@est.tech>
+Code-Review+1: John  Keeney <John.Keeney@est.tech>
+Code-Review+1: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Code-Review+2: Paweł Wieczorek <p.wieczorek2@samsung.com>
+Submitted-by: Paweł Wieczorek <p.wieczorek2@samsung.com>
+Submitted-at: Mon, 14 Sep 2020 14:51:01 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/112235
+Project: integration/csit
+Branch: refs/heads/master
