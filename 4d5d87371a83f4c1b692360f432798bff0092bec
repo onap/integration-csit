@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df2454b6_222ec2e0",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5047
+      },
+      "writtenOn": "2020-09-14T12:56:41Z",
+      "side": 1,
+      "message": "For future reference: shouldn\u0027t these be moved from URL to query parameters?",
+      "range": {
+        "startLine": 125,
+        "startChar": 67,
+        "endLine": 125,
+        "endChar": 91
+      },
+      "revId": "4d5d87371a83f4c1b692360f432798bff0092bec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
