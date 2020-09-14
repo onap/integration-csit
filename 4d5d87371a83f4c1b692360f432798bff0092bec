@@ -22,6 +22,30 @@
       "revId": "4d5d87371a83f4c1b692360f432798bff0092bec",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ede71a_f3d6e28d",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-14T13:19:28Z",
+      "side": 1,
+      "message": "timeout and limit are query parameters and could be left out. In this case, the var is to setup the config for PMS who makes the call to the Message Router - these values are suitable for our testing. So only used for testing.",
+      "parentUuid": "df2454b6_222ec2e0",
+      "range": {
+        "startLine": 125,
+        "startChar": 67,
+        "endLine": 125,
+        "endChar": 91
+      },
+      "revId": "4d5d87371a83f4c1b692360f432798bff0092bec",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
