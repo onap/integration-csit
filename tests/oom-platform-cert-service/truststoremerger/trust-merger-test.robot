@@ -14,7 +14,7 @@ Trust Merger fails when file extension is invalid
 Trust Merger fails when truststore and passwords envs not provided
     [Tags]      OOM-TRUST-STORE-MERGER
     [Documentation]  Run with invalid empty envs and expect error code
-    Run Trust Merger And Expect Error  ${INVALID_ENV_EMPTY_FILE}  1
+    Run Trust Merger And Expect Error  ${INVALID_ENV_EMPTY_FILE}  2
 
 Trust Merger fails when list sizes are different
     [Tags]      OOM-TRUST-STORE-MERGER
