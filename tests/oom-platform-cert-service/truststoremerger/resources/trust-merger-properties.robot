@@ -15,18 +15,18 @@ ${PEM_TRUSTSTORE_MOUNT_PATH}                          %{WORKSPACE}/tests/oom-pla
 ${JKS_TRUSTSTORE_EXPECTED_PATH}                       %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/expected_truststores/jksAndPemAndP12.jks
 ${PEM_TRUSTSTORE_EXPECTED_PATH}                       %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/expected_truststores/pemAndP12.pem
 
-${INVALID_ENV_EMPTY_FILE}                             %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_file.env
-${INVALID_ENV_LIST_SIZE}                              %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_different_lists_size.env
-${INVALID_ENV_EMPTY_PASSWORDS}                        %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_passwords.env
-${INVALID_PASSWORD_PATHS}                             %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_password_path.env
-${INVALID_ENV_TRUSTSTORE_PATHS}                       %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_truststore_paths.env
+${INVALID_ENV_FILE_EMPTY}                             %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_file.env
+${INVALID_ENV_FILE_LIST_SIZE}                         %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_different_lists_size.env
+${INVALID_ENV_FILE_EMPTY_PASSWORDS}                   %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_passwords.env
+${INVALID_ENV_FILE_PASSWORD_PATHS}                    %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_password_path.env
+${INVALID_ENV_FILE_TRUSTSTORE_PATHS}                  %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_truststore_paths.env
 ${INVALID_ENV_FILE_PASSWORD}                          %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_file_password_pair.env
-${INVALID_ENV_EXTENSION}                              %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_extension.env
-${INVALID_ENV_DUPLICATED_ALIASES}                     %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_duplicated_aliases.env
-${INVALID_ENV_EMPTY_CERTS}                            %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_certs.env
-${VALID_ENV_JKS_PEM_P12}                              %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_jks_pem_p12.env
-${VALID_ENV_PEM_P12}                                  %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_pem_p12.env
-${VALID_ENV_SINGLE_TRUSTSTORE}                        %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_single_truststore.env
+${INVALID_ENV_FILE_EXTENSION}                         %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_extension.env
+${INVALID_ENV_FILE_DUPLICATED_ALIASES}                %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_duplicated_aliases.env
+${INVALID_ENV_FILE_EMPTY_CERTS}                       %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/invalid_empty_certs.env
+${VALID_ENV_FILE_JKS_PEM_P12}                         %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_jks_pem_p12.env
+${VALID_ENV_FILE_PEM_P12}                             %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_pem_p12.env
+${VALID_ENV_FILE_SINGLE_TRUSTSTORE}                   %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/valid_single_truststore.env
 
 ${TRUSTSTORE_JKS}                                     %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/truststores/truststore.jks
 ${TRUSTSTORE_JKS_PASS}                                %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/truststores/truststoreJks.pass
