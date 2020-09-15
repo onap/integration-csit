@@ -50,9 +50,6 @@ docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-odlsli-alpine-image:$CCSDK_DOCKER_IMAGE
 docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-dgbuilder-image:0.4-STAGING-latest
 
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-odlsli-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-odlsli-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-odlsli-image:0.4-STAGING-latest
-
 # start CCSDK containers with docker compose and configuration from docker-compose.yml
 curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose-`uname -s`-`uname -m` > docker-compose
 chmod +x docker-compose
