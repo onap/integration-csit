@@ -24,14 +24,16 @@
 
 function on_exit(){
     rc=$?
-    rsync -av "$WORKDIR/" "$WORKSPACE/archives"
+    if [[ ${WORKSPACE} ]]; then
+        if [[ ${WORKDIR} ]]; then
+            rsync -av "$WORKDIR/" "$WORKSPACE/archives"
+        fi
+        # Record list of active docker containers
+        docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
 
-    # Record list of active docker containers
-    docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
-
-    # show memory consumption after all docker instances initialized
-    docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
-
+        # show memory consumption after all docker instances initialized
+        docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
+    fi
     # Run teardown script plan if it exists
     cd "${TESTPLANDIR}"
     TEARDOWN="${TESTPLANDIR}/teardown.sh"
