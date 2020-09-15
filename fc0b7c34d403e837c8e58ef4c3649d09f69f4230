@@ -22,6 +22,30 @@
       "revId": "fc0b7c34d403e837c8e58ef4c3649d09f69f4230",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d0f77f_e387485b",
+        "filename": "run-csit.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-15T07:49:32Z",
+      "side": 1,
+      "message": "I left that untouched because the practical effect of undefined TESTPLANDIR in the next steps is that then it looks for the existence of plain \"/teardown.sh\" file and doesn\u0027t find it (assuming, of course, that there is no teardown.sh script under root directory - if that assumption is wrong, then something funny could happen, but I think it\u0027s a safe assumption to make)",
+      "parentUuid": "45b96451_b0b3f92e",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "fc0b7c34d403e837c8e58ef4c3649d09f69f4230",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
