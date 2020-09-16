@@ -27,14 +27,10 @@
 ##############################################
 ## Temporary fix to point to ONAP remote image
 ##############################################
-# Local Policy Agent image and tag
-#POLICY_AGENT_LOCAL_IMAGE="o-ran-sc/nonrtric-policy-agent"
-#POLICY_AGENT_LOCAL_IMAGE_TAG="2.1.0-SNAPSHOT"
+
 # Remote Policy Agent image and tag
 POLICY_AGENT_REMOTE_IMAGE="nexus3.onap.org:10003/onap/ccsdk-oran-a1policymanagementservice"
-POLICY_AGENT_REMOTE_IMAGE_TAG="1.0.0-SNAPSHOT"
-#POLICY_AGENT_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-policy-agent"
-#POLICY_AGENT_REMOTE_IMAGE_TAG="2.1.0"
+POLICY_AGENT_REMOTE_IMAGE_TAG="latest"
 
 
 # Control Panel local image and tag
@@ -47,14 +43,11 @@ CONTROL_PANEL_REMOTE_IMAGE_TAG="2.0.0"
 ##############################################
 ## Temporary fix to point to ONAP remote image
 ##############################################
-# SDNC A1 Controller local image and tag
-#SDNC_A1_CONTROLLER_LOCAL_IMAGE="o-ran-sc/nonrtric-a1-controller"
-#SDNC_A1_CONTROLLER_LOCAL_IMAGE_TAG="2.1.0-SNAPSHOT"
+
 # SDNC A1 Controller remote image and tag
 SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.onap.org:10003/onap/sdnc-image"
-SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.0.1-STAGING-latest"
-#SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-a1-controller"
-#SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.1.0"
+SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="latest"
+
 
 
 #SDNC DB remote image and tag
@@ -156,6 +149,7 @@ export SDNC_INTERNAL_PORT=8181                                  # SNDC A1 Contro
 export SDNC_EXTERNAL_SECURE_PORT=8443                           # SNDC A1 Controller container external securee port (host -> container)
 export SDNC_INTERNAL_SECURE_PORT=8443                           # SNDC A1 Controller container internal secure port (container -> container)
 export SDNC_DB_APP_NAME="sdnc-db"                               # Name of the SDNC DB container
+export SDNC_A1_TRUSTSTORE_PASSWORD="a1adapter"                  # SDNC truststore password
 SDNC_USER="admin"                                               # SDNC username
 SDNC_PWD="Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U"          # SNDC PWD
 SDNC_API_URL="/restconf/operations/A1-ADAPTER-API:"             # Base url path for SNDC API
