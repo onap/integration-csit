@@ -22,13 +22,12 @@ cd $WORKSPACE/archives
 git clone "https://gerrit.o-ran-sc.org/r/nonrtric"
 
 AUTOTEST_ROOT=$WORKSPACE/archives/nonrtric/test/auto-test
+POLMAN_PLANS=$WORKSPACE/plans/ccsdk-oran/polmansuite
 
-# Temporary solution to setup the Non-RT RIC components to point to ONAP images and tags
-# Shall be removed when the Non-RT RIC test env is moved/copied to ONAP
-cp $WORKSPACE/plans/ccsdk-oran/polmansuite/test_env.sh $WORKSPACE/archives/nonrtric/test/common
-
-# Temporary solution to not test with the SDNC image
-cp $WORKSPACE/plans/ccsdk-oran/polmansuite/FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC1.sh
+#Copy test script, adapted to ONAP images
+cp $POLMAN_PLANS/FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC1.sh
+cp $POLMAN_PLANS/FTC150.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC150.sh
 
 #Make the env vars availble to the robot scripts
-ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT}"
+ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT} -v POLMAN_PLANS:${POLMAN_PLANS}"
+
