@@ -32,3 +32,4 @@ Run Trust Merger And Merge Truststore Files To Pem
     Remove Merger Container And Save Logs  ${MERGER_CONTAINER_NAME}  positive_path
     Should Be Equal As Strings  ${exit_code}  ${expected_exit_code}  Client return unexpected exit code return: ${exitcode} , but expected: ${expected_exit_code}
     Should Be True  ${files_equal}
+
