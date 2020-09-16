@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4101d9b3_79d4816d",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-16T15:34:02Z",
+      "side": 1,
+      "message": "Hmm, based on discussion on integration Rocket chat I\u0027ll take back the port change part of this comment. Apparently 10003 is better here as (being the instance where the new docker images are pushed) it is always immediately up to date, while the others may be lagging behind",
+      "parentUuid": "b945a497_37170417",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8718f7_6a0eb65f",
         "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
         "patchSetId": 1
