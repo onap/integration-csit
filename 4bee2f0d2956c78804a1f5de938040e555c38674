@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "b945a497_37170417",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-09-16T12:48:27Z",
+      "side": 1,
+      "message": "10003 is referred to as \"push registry\" in ONAP while 10001 is for \"pull\", so it might be more appropriate to use the latter here? Also maybe ORAN and ONAP registries could be extracted to their own constants as they are used multiple times around this script",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8718f7_6a0eb65f",
         "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
         "patchSetId": 1
