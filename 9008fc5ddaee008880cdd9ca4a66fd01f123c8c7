@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0e5e67c_a69cd903",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/trust-merger-test.robot",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-17T13:32:39Z",
+      "side": 1,
+      "message": "Just wondering if it would be possible to use some constants for exist codes?",
+      "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
