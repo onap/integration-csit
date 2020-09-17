@@ -16,5 +16,5 @@
 #
 
 mkdir -p $WORKSPACE/archives/
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools.yml logs > $WORKSPACE/archives/docker-compose-drools.log
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools.yml down -v
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-all.yml logs > $WORKSPACE/archives/docker-compose-drools.log
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-all.yml down -v
