@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "792ea666_b38e7b9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-09-17T21:34:16Z",
+      "side": 1,
+      "message": "can specify a particular component, such as pap, and it will just bring up pap and the components it needs",
+      "revId": "1c39d51a12eafde8f7092610100ef296fb630e0f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afeecf5_16136955",
+        "filename": "scripts/policy/drools-apps/docker-compose-drools-apps.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-09-17T21:34:16Z",
+      "side": 1,
+      "message": "may be able to add apex-pdp to this yml and then this yml can be used to bring up any policy component",
+      "revId": "1c39d51a12eafde8f7092610100ef296fb630e0f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84970539_19488b93",
         "filename": "scripts/policy/wait_for_port.sh",
         "patchSetId": 1
