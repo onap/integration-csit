@@ -19,9 +19,6 @@
 
 # Select branch
 source ${SCRIPTS}/policy/config/policy-csit.conf
-export POLICY_MARIADB_VER
-echo ${GERRIT_BRANCH}
-echo ${POLICY_MARIADB_VER}
 
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
@@ -30,8 +27,7 @@ pip install -U docker==2.7.0
 
 
 sudo apt-get -y install libxml2-utils
-POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+source ${SCRIPTS}/policy/detmVers.sh
 
 # download models - it contains the policy definitions
 rm -rf ${WORKSPACE}/models
@@ -53,15 +49,8 @@ sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
 
 echo ${POLICY_API_VERSION}
 
-# Adding this waiting container to avoid race condition between api and mariadb containers.
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_dependencies
+docker-compose -f ${SCRIPTS}/policy/docker-compose-all.yml up -d api
 
-#Configure the database
-docker exec --tty mariadb  chmod +x /docker-entrypoint-initdb.d/db.sh
-docker exec --tty mariadb  /docker-entrypoint-initdb.d/db.sh
-
-# now bring everything else up
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-api.yml run --rm start_all
 
 unset http_proxy https_proxy
 
@@ -70,6 +59,9 @@ MARIADB_IP=`get-instance-ip.sh mariadb`
 
 echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
+
+# wait for the app to start up
+${SCRIPTS}/policy/wait_for_port.sh ${POLICY_API_IP} 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
