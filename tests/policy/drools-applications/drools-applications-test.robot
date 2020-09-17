@@ -35,10 +35,10 @@ Controller
     Log    Creating session https://${DROOLS_IP}:9696
     ${session}=    Create Session      policy  https://${DROOLS_IP}:9696   auth=${auth}
     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   Get Request     policy  /policy/pdp/engine/controllers/frankfurt/drools/facts     headers=${headers}
+    ${resp}=   Get Request     policy  /policy/pdp/engine/controllers/usecases/drools/facts     headers=${headers}
     Log    Received response from policy ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}     200
-    Should Be Equal As Strings    ${resp.json()['frankfurt']}  0
+    Should Be Equal As Strings    ${resp.json()['usecases']}  0
 
 MakeTopics
     [Documentation]    Creates the Policy topics
