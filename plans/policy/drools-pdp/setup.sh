@@ -24,26 +24,15 @@ pip uninstall -y docker-py
 pip uninstall -y docker
 pip install -U docker==2.7.0
 
-echo "user information: $(id)"
-echo "docker information:"
-docker -v && docker-compose -v && docker info
-
 # Component Versions
 
 source ${SCRIPTS}/policy/config/policy-csit.conf
-export POLICY_MARIADB_VER
-echo ${GERRIT_BRANCH}
-echo ${POLICY_MARIADB_VER}
 
 sudo apt-get -y install libxml2-utils
-POLICY_DROOLS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_DROOLS_VERSION="${POLICY_DROOLS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
-echo ${POLICY_DROOLS_VERSION}
 
-docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-drools.yml up -d
-sleep 2m
+source ${SCRIPTS}/policy/detmVers.sh
 
-docker container ls -a
+docker-compose -f ${SCRIPTS}/policy/docker-compose-all.yml up -d drools
 
 POLICY_DROOLS_IP=`get-instance-ip.sh drools`
 MARIADB_IP=`get-instance-ip.sh mariadb`
@@ -51,10 +40,10 @@ MARIADB_IP=`get-instance-ip.sh mariadb`
 echo DROOLS IP IS ${POLICY_DROOLS_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
-for i in {1..10}; do
-   curl -sS ${POLICY_DROOLS_IP}:9696 && break
-   echo sleep $i
-   sleep $i
-done
+# wait for the app to start up - looking for telemtry service on port 9696
+${SCRIPTS}/policy/wait_for_port.sh ${POLICY_DROOLS_IP} 9696
+
+# give enough time for the controllers to come up
+sleep 15
 
 ROBOT_VARIABLES="-v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
