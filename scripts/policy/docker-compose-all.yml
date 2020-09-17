@@ -22,9 +22,9 @@ services:
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file: ../config/db/db.conf
+      env_file: config/db/db.conf
       volumes:
-         - ../config/db:/docker-entrypoint-initdb.d:ro
+         - ./config/db:/docker-entrypoint-initdb.d:ro
       expose:
        - 3306
    policy.api.simpledemo.onap.org:
@@ -32,7 +32,7 @@ services:
       container_name: policy.api.simpledemo.onap.org
       hostname: policy.api.simpledemo.onap.org
       volumes:
-       - ../config/sim-all:/opt/app/policy/simulators/etc/parameters:ro
+       - ./config/sim-all:/opt/app/policy/simulators/etc/parameters:ro
       expose:
        - 6666
        - 6668
@@ -48,7 +48,7 @@ services:
       expose:
        - 6969
       volumes:
-       - ../wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
+       - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', 'bash ./policy-api.sh',
@@ -65,8 +65,8 @@ services:
       expose:
        - 6969
       volumes:
-       - ./custom/papDefaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
-       - ../wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
+       - ./config/pap/defaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
+       - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', 'bash ./policy-pap.sh',
@@ -74,7 +74,7 @@ services:
         'policy.api.simpledemo.onap.org', '3905',
         'api', '6969'
         ]
-   policy-xacml-pdp:
+   xacml-pdp:
       image: nexus3.onap.org:10001/onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
       container_name: policy-xacml-pdp
       depends_on:
@@ -85,14 +85,36 @@ services:
       expose:
        - 6969
       volumes:
-       - ./custom/xacmlDefaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
-       - ../wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
+       - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
+       - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', 'bash ./policy-pdpx.sh',
         'mariadb', '3306',
         'policy.api.simpledemo.onap.org', '3905',
         'pap', '6969'
+        ]
+   drools:
+      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
+      container_name: drools
+      depends_on:
+       - mariadb
+       - policy.api.simpledemo.onap.org
+       - pap
+      hostname: drools
+      expose:
+       - 6969
+       - 9696
+      volumes:
+       - ./config/drools/custom:/tmp/policy-install/config:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      env_file:
+        - config/drools/env/base.conf
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
+        'mariadb', '3306',
+        'policy.api.simpledemo.onap.org', '3905'
         ]
    drools-apps:
       image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
@@ -101,18 +123,18 @@ services:
        - mariadb
        - policy.api.simpledemo.onap.org
        - pap
-       - policy-xacml-pdp
-      hostname: drools
+       - xacml-pdp
+      hostname: drools-apps
       expose:
        - 6969
        - 9696
       volumes:
-       - ../config/drools-apps/custom:/tmp/policy-install/config:ro
-       - ../wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+       - ./config/drools-apps/custom:/tmp/policy-install/config:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
-        - ../config/drools-apps/env/base.conf
-        - ../config/drools-apps/env/feature-healthcheck.conf
-        - ../config/drools-apps/env/feature-pooling-dmaap.conf
+        - config/drools-apps/env/base.conf
+        - config/drools-apps/env/feature-healthcheck.conf
+        - config/drools-apps/env/feature-pooling-dmaap.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
@@ -123,4 +145,46 @@ services:
         'policy.api.simpledemo.onap.org', '6668',
         'policy.api.simpledemo.onap.org', '6669',
         'policy.api.simpledemo.onap.org', '6670'
+        ]
+   apex-pdp:
+      image: nexus3.onap.org:10001/onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
+      container_name: policy-apex-pdp
+      depends_on:
+       - mariadb
+       - policy.api.simpledemo.onap.org
+       - pap
+      hostname: policy-apex-pdp
+      expose:
+       - 6969
+       - 23324
+      volumes:
+       - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
+        'mariadb', '3306',
+        'policy.api.simpledemo.onap.org', '3905',
+        'pap', '6969'
+        ]
+   distribution:
+      image: nexus3.onap.org:10001/onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
+      container_name: policy-distribution
+      depends_on:
+       - mariadb
+       - api
+       - pap
+       - apex-pdp
+      hostname: policy-distribution
+      volumes:
+       - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
+       - ./policy-distribution/config/distribution/temp/:/opt/app/policy/distribution/etc/temp/:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './policy-dist.sh',
+        'mariadb', '3306',
+        'policy.api.simpledemo.onap.org', '3905',
+        'pap', '6969',
+        'apex-pdp', '6969'
         ]

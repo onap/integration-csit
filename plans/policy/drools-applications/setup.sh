@@ -20,9 +20,6 @@
 # OS upgrades
 
 source ${SCRIPTS}/policy/config/policy-csit.conf
-export POLICY_MARIADB_VER
-echo ${GERRIT_BRANCH}
-echo ${POLICY_MARIADB_VER}
 
 SCR2=${WORKSPACE}/scripts/policy/drools-apps
 
@@ -34,35 +31,13 @@ pip install -U docker==2.7.0
 sudo apt-get -y install libxml2-utils
 ${SCRIPTS}/policy/policy-models-simulators.sh
 
-POLICY_API_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_API_VERSION="${POLICY_API_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
-POLICY_PAP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_PAP_VERSION="${POLICY_PAP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
-POLICY_XACML_PDP_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-export POLICY_XACML_PDP_VERSION="${POLICY_XACML_PDP_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
-POLICY_DROOLS_APPS_VERSION_EXTRACT="$(curl -q --silent https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} | xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)"
-echo ${POLICY_DROOLS_APPS_VERSION_EXTRACT}
-export POLICY_DROOLS_APPS_VERSION="${POLICY_DROOLS_APPS_VERSION_EXTRACT:0:3}-SNAPSHOT-latest"
+source ${SCRIPTS}/policy/detmVers.sh
 
-echo ${POLICY_XACML_PDP_VERSION}
-echo ${POLICY_DROOLS_APPS_VERSION}
-
-echo "user information: $(id)"
-echo "docker and docker-compose versions:"
-docker -v && docker-compose -v
-
-# Adding this waiting container due to race condition between drools and mariadb
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_dependencies
-
-# Adding this waiting container due to race condition between pap and xacml
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_pap
-
-# now bring everything else up
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_all
+docker-compose -f ${SCRIPTS}/policy/docker-compose-all.yml up -d drools-apps
 
 unset http_proxy https_proxy
 
-DROOLS_IP=`get-instance-ip.sh drools`
+DROOLS_IP=`get-instance-ip.sh drools-apps`
 API_IP=`get-instance-ip.sh policy-api`
 PAP_IP=`get-instance-ip.sh policy-pap`
 XACML_IP=`get-instance-ip.sh policy-xacml-pdp`
@@ -74,6 +49,9 @@ echo API IP IS ${API_IP}
 echo PAP IP IS ${PAP_IP}
 echo XACML IP IS ${XACML_IP}
 echo SIMULATORS IP IS ${SIM_IP}
+
+# wait for the app to start up
+${SCRIPTS}/policy/wait_for_port.sh ${DROOLS_IP} 6969
 
 # give enough time for the controllers to come up
 sleep 15

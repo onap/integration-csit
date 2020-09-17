@@ -20,4 +20,4 @@
 mkdir -p $WORKSPACE/archives/
 docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml logs > $WORKSPACE/archives/docker-compose-drools-apps.log
 
-docker-compose -f ${WORKSPACE}/scripts/policy/drools-apps/docker-compose-drools-apps.yml down -v
+docker-compose -f ${WORKSPACE}/scripts/policy/docker-compose-all.yml down -v
