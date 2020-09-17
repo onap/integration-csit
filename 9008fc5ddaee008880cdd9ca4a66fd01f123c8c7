@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fef57e98_e1324f71",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-17T13:43:04Z",
+      "side": 1,
+      "message": "Consider, JKS_BAK_KEYSTORE_EXPECTED_PATH or BACKUP_JKS_KEYSTORE_EXPECTED_PATH",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e5e67c_a69cd903",
         "filename": "tests/oom-platform-cert-service/truststoremerger/trust-merger-test.robot",
         "patchSetId": 14
