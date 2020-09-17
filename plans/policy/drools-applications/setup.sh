@@ -51,14 +51,7 @@ echo "user information: $(id)"
 echo "docker and docker-compose versions:"
 docker -v && docker-compose -v
 
-# Adding this waiting container due to race condition between drools and mariadb
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_dependencies
-
-# Adding this waiting container due to race condition between pap and xacml
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_pap
-
-# now bring everything else up
-docker-compose -f ${SCR2}/docker-compose-drools-apps.yml run --rm start_all
+docker-compose -f ${SCR2}/docker-compose-drools-apps.yml up api
 
 unset http_proxy https_proxy
 
@@ -74,6 +67,9 @@ echo API IP IS ${API_IP}
 echo PAP IP IS ${PAP_IP}
 echo XACML IP IS ${XACML_IP}
 echo SIMULATORS IP IS ${SIM_IP}
+
+# wait for drools to start up
+${SCRIPTS}/policy/wait_for_port.sh ${DROOLS_IP} 6969
 
 # give enough time for the controllers to come up
 sleep 15
