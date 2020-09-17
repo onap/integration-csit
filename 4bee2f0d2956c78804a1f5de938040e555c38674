@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bca0c20f_bf9c65ab",
+        "filename": "plans/ccsdk-oran/polmansuite/FTC150.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-17T12:20:37Z",
+      "side": 1,
+      "message": "See answers to comment in test_env.sh\nstart_sdnc will be the only start cmd for sdnc once the test environment is refactored. The configuration file test_env.sh will point to the sdnc image to be used.",
+      "parentUuid": "8797700a_be59dd07",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b945a497_37170417",
         "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9d3411f2_14f22580",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-17T12:20:37Z",
+      "side": 1,
+      "message": "Ok, thanks for clarifying.\nKeep 10003.",
+      "parentUuid": "4101d9b3_79d4816d",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac8718f7_6a0eb65f",
         "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2020-09-16T12:38:18Z",
       "side": 1,
       "message": "Keep in mind that \"latest\" is more ambiguous than some specific numbered tag, so you need to remain alert of the related risk of using this. Unfortunately there is no unified strategy in ONAP CSITs for choosing the proper image to be tested (and I\u0027ve discovered just this week that for many projects this isn\u0027t still working properly; they are quite simply not testing their current versions at all!) so I can\u0027t point you to any single \"right\" way of doing this that would be unambiguously better than just taking \"latest\"",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c45382_f533fc43",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-17T12:20:37Z",
+      "side": 1,
+      "message": "From what I understood now after some investigation is that snapshot should be used for CSIT as snapshot images are built after merge. Staging is a release candidate and I guess they are built less often - so not ideal for CSIT. I guess the SDNC does not have snapshot because it is built from many different components? \nSo based on the investigation I will use snapshot/staging image tags like below:\nPOLICY_AGENT_REMOTE_IMAGE_TAG\u003d\"1.1.0-SNAPSHOT\"\nSDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG\u003d\"2.1.0-STAGING-latest\"",
+      "parentUuid": "ac8718f7_6a0eb65f",
       "range": {
         "startLine": 33,
         "startChar": 31,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2888092b_4a9e0da3",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-17T12:20:37Z",
+      "side": 1,
+      "message": "Cleaned out all vars starting with SDNC_ONAP* in the test_env.sh.\nThe test environment was initially intended to have the possibility to configure two different SDNC images with different start commands (start_sndc and start_sdnc_onap) and also two sets of vars. This never came into real use but kept for possible future use. \n\nThe start cmd start_sdnc_onap and related functions in the test environment will be removed when refactoring the test environment.",
+      "parentUuid": "b381e032_dafe007b",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09289e47_bc8eda4f",
         "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
         "patchSetId": 1
@@ -129,6 +225,30 @@
       "writtenOn": "2020-09-16T12:38:18Z",
       "side": 1,
       "message": "Strictly speaking, this is just the SDNC image as such, and it just happens to provide the A1 Adapter functionality now among other things - so not sure it needs to be mentioned in the variable name?",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 20
+      },
+      "revId": "4bee2f0d2956c78804a1f5de938040e555c38674",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e41a81_b6804e22",
+        "filename": "plans/ccsdk-oran/polmansuite/test_env.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2020-09-17T12:20:37Z",
+      "side": 1,
+      "message": "See answer above - this var and others removed from this file.\nA1_ADAPTER/A1_CONTROLLER is more an indication of the current target functionality for this test environment. \nHowever, it would be better with a generic name as it could be confusing if additional functionality will be tested. Will consider renaming when refactoring the test environment.",
+      "parentUuid": "09289e47_bc8eda4f",
       "range": {
         "startLine": 60,
         "startChar": 10,
