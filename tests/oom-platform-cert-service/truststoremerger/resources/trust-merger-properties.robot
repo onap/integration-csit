@@ -41,3 +41,21 @@ ${TRUSTSTORE_JKS_PASS}                                %{WORKSPACE}/tests/oom-pla
 ${TRUSTSTORE_P12}                                     %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/truststores/truststore.p12
 ${TRUSTSTORE_P12_PASS}                                %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/truststores/truststore.pass
 ${TRUSTSTORE_PEM}                                     %{WORKSPACE}/tests/oom-platform-cert-service/truststoremerger/assets/truststores/truststore.pem
+
+${EXITCODE_SUCCESS}                                    0
+${EXITCODE_CERTIFICATES_PATHS_VALIDATION_EXCEPTION}    1
+${EXITCODE_CONFIGURATION_EXCEPTION}                    2
+${EXITCODE_TRUSTSTORE_FILE_FACTORY_EXCEPTION}          3
+${EXITCODE_PASSWORD_READER_EXCEPTION}                  4
+${EXITCODE_CREATE_BACKUP_EXCEPTION}                    5
+${EXITCODE_KEYSTORE_INSTANCE_EXCEPTION}                6
+${EXITCODE_TRUSTSTORE_LOAD_FILE_EXCEPTION}             7
+${EXITCODE_TRUSTSTORE_DATA_OPERATION_EXCEPTION}        8
+${EXITCODE_MISSING_TRUSTSTORE_EXCEPTIONSUCCESS}        9
+${EXITCODE_ALIAS_CONFLICT_EXCEPTION}                   10
+${EXITCODE_WRITE_TRUSTSTORE_FILE_EXCEPTION}            11
+${EXITCODE_KEYSTORE_FILE_COPY_EXCEPTION}               12
+${EXITCODE_KEYSTORE_NOT_EXIST_EXCEPTION}               13
+${EXITCODE_UNEXPECTED_EXCEPTION}                       99
+
+
