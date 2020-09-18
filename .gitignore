@@ -26,3 +26,6 @@ env.properties
 *.pyc
 
 /bin/
+/venv/*
+
+/tests/aaf/certservice/tmp/*
