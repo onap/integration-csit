@@ -24,37 +24,19 @@
 # the test script is started. The name format is <container-name>_IMAGE, ie with 'LOCAL' or 'REMOTE'.
 
 
-##############################################
-## Temporary fix to point to ONAP remote image
-##############################################
-# Local Policy Agent image and tag
-#POLICY_AGENT_LOCAL_IMAGE="o-ran-sc/nonrtric-policy-agent"
-#POLICY_AGENT_LOCAL_IMAGE_TAG="2.1.0-SNAPSHOT"
 # Remote Policy Agent image and tag
 POLICY_AGENT_REMOTE_IMAGE="nexus3.onap.org:10003/onap/ccsdk-oran-a1policymanagementservice"
-POLICY_AGENT_REMOTE_IMAGE_TAG="1.0.0-SNAPSHOT"
-#POLICY_AGENT_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-policy-agent"
-#POLICY_AGENT_REMOTE_IMAGE_TAG="2.1.0"
+POLICY_AGENT_REMOTE_IMAGE_TAG="1.1.0-SNAPSHOT"
 
 
-# Control Panel local image and tag
-CONTROL_PANEL_LOCAL_IMAGE="o-ran-sc/nonrtric-controlpanel"
-CONTROL_PANEL_LOCAL_IMAGE_TAG="2.0.0-SNAPSHOT"
 # Control Panel remote image and tag
 CONTROL_PANEL_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-controlpanel"
 CONTROL_PANEL_REMOTE_IMAGE_TAG="2.0.0"
 
-##############################################
-## Temporary fix to point to ONAP remote image
-##############################################
-# SDNC A1 Controller local image and tag
-#SDNC_A1_CONTROLLER_LOCAL_IMAGE="o-ran-sc/nonrtric-a1-controller"
-#SDNC_A1_CONTROLLER_LOCAL_IMAGE_TAG="2.1.0-SNAPSHOT"
+
 # SDNC A1 Controller remote image and tag
 SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.onap.org:10003/onap/sdnc-image"
-SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.0.1-STAGING-latest"
-#SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-a1-controller"
-#SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.1.0"
+SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.1.0-STAGING-latest"
 
 
 #SDNC DB remote image and tag
@@ -63,20 +45,6 @@ SDNC_DB_REMOTE_IMAGE_TAG="5.6"
 #No local image for DB, remote image always used
 
 
-# SDNC ONAP A1 Adapte remote image and tag
-SDNC_ONAP_A1_ADAPTER_REMOTE_IMAGE="nexus3.onap.org:10003/onap/sdnc-image"
-SDNC_ONAP_A1_ADAPTER_REMOTE_IMAGE_TAG="1.8-STAGING-latest"
-#No local image for the A1 adapter, remote image always used
-
-#ONAP A1 Adatper remote image and tag
-SDNC_ONAP_DB_REMOTE_IMAGE="mysql/mysql-server"
-SDNC_ONAP_DB_REMOTE_IMAGE_TAG="5.6"
-#No local image for DB, remote image always used
-
-
-# Near RT RIC Simulator local image and tag
-RIC_SIM_LOCAL_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/a1-simulator"
-RIC_SIM_LOCAL_IMAGE_TAG="latest"
 # Near RT RIC Simulator remote image and tag
 RIC_SIM_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/a1-simulator"
 RIC_SIM_REMOTE_IMAGE_TAG="2.0.0"
@@ -90,7 +58,6 @@ CONSUL_REMOTE_IMAGE_TAG="1.7.2"
 
 #CBS remote image and tag
 CBS_REMOTE_IMAGE="nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app"
-CBS_REMOTE_IMAGE="onap/org.onap.dcaegen2.platform.configbinding.app-app"
 CBS_REMOTE_IMAGE_TAG="2.3.0"
 #No local image for CBS, remote image always used
 
@@ -156,24 +123,13 @@ export SDNC_INTERNAL_PORT=8181                                  # SNDC A1 Contro
 export SDNC_EXTERNAL_SECURE_PORT=8443                           # SNDC A1 Controller container external securee port (host -> container)
 export SDNC_INTERNAL_SECURE_PORT=8443                           # SNDC A1 Controller container internal secure port (container -> container)
 export SDNC_DB_APP_NAME="sdnc-db"                               # Name of the SDNC DB container
+export SDNC_A1_TRUSTSTORE_PASSWORD="a1adapter"                  # SDNC truststore password
 SDNC_USER="admin"                                               # SDNC username
 SDNC_PWD="Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U"          # SNDC PWD
 SDNC_API_URL="/restconf/operations/A1-ADAPTER-API:"             # Base url path for SNDC API
 SDNC_ALIVE_URL="/apidoc/explorer/"                              # Base url path for SNDC API docs (for alive check)
 SDNC_KARAF_LOG="/opt/opendaylight/data/log/karaf.log"           # Path to karaf log
 
-export SDNC_ONAP_APP_NAME="a1-adapter"                          # Name of the ONAP A1 Adapter container
-export SDNC_ONAP_EXTERNAL_PORT=8282                             # ONAP A1 Adapter container external port (host -> container)
-export SDNC_ONAP_INTERNAL_PORT=8181                             # ONAP A1 Adapter container internal port (container -> container)
-export SDNC_ONAP_EXTERNAL_SECURE_PORT=8443                      # SNDC A1 Adapter container external securee port (host -> container)
-export SDNC_ONAP_INTERNAL_SECURE_PORT=8343                      # SNDC A1 Adapter container internal secure port (container -> container)
-export SDNC_ONAP_DB_APP_NAME="sdnc-onap-db"                     # Name of the ONAP A1 Adapter DB container
-SDNC_ONAP_USER="admin"                                          # ONAP A1 Adapter username
-SDNC_ONAP_PWD="Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U"     # ONAP A1 Adapter PWD
-SDNC_ONAP_API_URL="/restconf/operations/A1-ADAPTER-API:"        # Base url path for ONAP A1 Adapter API
-SDNC_ONAP_ALIVE_URL="/apidoc/explorer/"                         # Base url path for ONAP A1 Adapter API docs (for alive check)
-SDNC_ONAP_PROPERTIES_FILE="/opt/onap/ccsdk/data/properties/a1-adapter-api-dg.properties"
-SDNC_ONAP_KARAF_LOG="/opt/opendaylight/data/log/karaf.log"      # Path to karaf log
 
 export CONTROL_PANEL_APP_NAME="control-panel"                   # Name of the Control Panel container
 export CONTROL_PANEL_EXTERNAL_PORT=8080                         # Control Panel container external port (host -> container)
