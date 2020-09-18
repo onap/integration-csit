@@ -25,7 +25,7 @@
         "databaseDriver": "org.mariadb.jdbc.Driver",
         "databaseUrl": "jdbc:mariadb://mariadb:3306/policyadmin",
         "databaseUser": "policy_user",
-        "databasePassword": "cG9saWN5X3VzZXI=",
+        "databasePassword": "policy_user",
         "persistenceUnit": "PolicyMariaDb"
     },
     "topicParameterGroup": {
