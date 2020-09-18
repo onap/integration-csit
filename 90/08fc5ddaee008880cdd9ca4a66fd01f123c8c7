@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tomasz Wróbel <tomasz.wrobel@nokia.com>
+Code-Review+1: Jan Malkiewicz <jan.malkiewicz@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Fri, 18 Sep 2020 09:55:29 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/112743
+Project: integration/csit
+Branch: refs/heads/master
