@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "0d5bb69b_affa0418",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T11:01:54Z",
+      "side": 1,
+      "message": "Follow naming convention of similar files.\nso: INVALID_ENV_FILE_KEYSTORE_SOURCE_PATHS\nIt will be even better rename all of them to follow:\nENV_FILE_INVALID_KEYSTORE_SOURCE_PATHS",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 156
+      },
+      "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e5e67c_a69cd903",
         "filename": "tests/oom-platform-cert-service/truststoremerger/trust-merger-test.robot",
         "patchSetId": 14
@@ -36,6 +59,47 @@
       "writtenOn": "2020-09-17T13:32:39Z",
       "side": 1,
       "message": "Just wondering if it would be possible to use some constants for exist codes?",
+      "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74acdcde_596f457b",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/trust-merger-test.robot",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T11:01:54Z",
+      "side": 1,
+      "message": "Very good idea, right now we need to look up to merger code.",
+      "parentUuid": "e0e5e67c_a69cd903",
+      "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4e8945_a3d9643f",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/trust-merger-test.robot",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 2837
+      },
+      "writtenOn": "2020-09-18T11:01:54Z",
+      "side": 1,
+      "message": "This keyword use python functions for truststores. We need consistent renames of functions. Possibly introduce another keyword for checking copied files which will call generic function under the hood.",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 180
+      },
       "revId": "9008fc5ddaee008880cdd9ca4a66fd01f123c8c7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
