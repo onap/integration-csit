@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c7a707_66c78338",
+        "filename": "scripts/policy/docker-compose-all.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-09-21T11:49:40Z",
+      "side": 1,
+      "message": "Question or rather a doubt: Is there a reason why these are specified here? Same doubt in other places.",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 21
+      },
+      "revId": "3eaf518380cfa8b8610d12359dafd081f9a9ab41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
