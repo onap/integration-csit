@@ -164,6 +164,30 @@
       "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6445e2d2_ccbbf369",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6714
+      },
+      "writtenOn": "2020-09-21T10:16:59Z",
+      "side": 1,
+      "message": "Renamed",
+      "parentUuid": "72111a81_04c64b92",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
