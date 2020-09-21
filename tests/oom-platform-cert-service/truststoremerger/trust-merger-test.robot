@@ -76,13 +76,13 @@ Trust Merger fails when only one extra optional env is set
     [Documentation]  Run with empty extra optional env and expect code
     Run Trust Merger And Expect Error  ${ENV_FILE_EMPTY_KEYSTORE_DESTINATION_PATH}  ${EXITCODE_CONFIGURATION_EXCEPTION}
 
-Trust Merger's Copier successfully backs up files
+Run Trust Merger For Jks And Check Copied Keystore Files
     [Tags]      OOM-TRUST-STORE-MERGER
     [Documentation]  Run with valid env file and expect successfully backed up file
-    Run Trust Merger And Merge Truststore Files To Jks  ${ENV_FILE_EXTRA_OPTIONAL_ENVS}  ${EXITCODE_SUCCESS}  ${JKS_KEYSTORE_MOUNT_PATH}  ${KEYSTORE_JKS_PASS}  ${JKSBAK_KEYSTORE_EXPECTED_PATH}
+    Run Trust Merger And Check Copied Keystore Files  ${ENV_FILE_EXTRA_OPTIONAL_ENVS}  ${EXITCODE_SUCCESS}  ${JKS_KEYSTORE_MOUNT_PATH}  ${KEYSTORE_JKS_PASS}  ${JKSBAK_KEYSTORE_EXPECTED_PATH}
 
-Trust Merger's Copier successfully copies file
+Run Trust Merger For Jks And Check Copied Keystore Files
     [Tags]      OOM-TRUST-STORE-MERGER
     [Documentation]  Run with valid env file and expect successfully copied file
-    Run Trust Merger And Merge Truststore Files To Jks  ${ENV_FILE_EXTRA_OPTIONAL_ENVS}  ${EXITCODE_SUCCESS}  ${JKS_KEYSTORE_MOUNT_PATH}  ${KEYSTORE_JKS_PASS}  ${JKS_KEYSTORE_EXPECTED_PATH}
+    Run Trust Merger And Check Copied Keystore Files  ${ENV_FILE_EXTRA_OPTIONAL_ENVS}  ${EXITCODE_SUCCESS}  ${JKS_KEYSTORE_MOUNT_PATH}  ${KEYSTORE_JKS_PASS}  ${JKS_KEYSTORE_EXPECTED_PATH}
 
