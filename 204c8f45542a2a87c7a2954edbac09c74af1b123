@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "791799d5_11295ab4",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-21T06:44:26Z",
+      "side": 1,
+      "message": "Yes, because AAF project has been abandoned, and these files shouldn\u0027t be exist in future. One \"?\" is enough.",
+      "parentUuid": "c00d0369_96d27262",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7580df4_9a7a99d3",
         "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
         "patchSetId": 2
@@ -93,6 +117,53 @@
       "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d01d35a_ebfdb5c2",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-21T06:44:26Z",
+      "side": 1,
+      "message": "So it should be NOT_OK.",
+      "parentUuid": "71605766_4fce5f56",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72111a81_04c64b92",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-21T06:44:26Z",
+      "side": 1,
+      "message": "NOT_OK_INVALID ? I think that INVALID sounds better.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
