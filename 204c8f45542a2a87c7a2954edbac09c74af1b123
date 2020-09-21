@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d4d82dd_6fbf2bc9",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-21T06:21:43Z",
+      "side": 1,
+      "message": "MR contains changes for oom-cert-service, Why ignoring aaf-certservice?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7580df4_9a7a99d3",
+        "filename": "tests/oom-platform-cert-service/truststoremerger/resources/trust-merger-properties.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-21T06:21:43Z",
+      "side": 1,
+      "message": "What does it mean NOK ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "204c8f45542a2a87c7a2954edbac09c74af1b123",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
