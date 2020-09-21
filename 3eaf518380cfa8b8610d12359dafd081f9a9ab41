@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d82f43cf_09c6e95f",
+        "filename": "scripts/policy/docker-compose-all.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-09-21T14:14:28Z",
+      "side": 1,
+      "message": "Do we really need this URI anymore? Given that they are associated with portal and we are not included in portal.",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "3eaf518380cfa8b8610d12359dafd081f9a9ab41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0c7a707_66c78338",
         "filename": "scripts/policy/docker-compose-all.yml",
         "patchSetId": 7
