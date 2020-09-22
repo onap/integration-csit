@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "805ab5fd_aeab4b64",
+        "filename": "scripts/policy/docker-compose-all.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-09-22T15:01:05Z",
+      "side": 1,
+      "message": "I agree, it would be better to use a different hostname if it was possible for the simulators, I find it too a bit obscure when configuring components to point to the simulators server with this name.   I suspect that this is used with this name to reuse one of the available names in the certificate for https.",
+      "parentUuid": "d82f43cf_09c6e95f",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "3eaf518380cfa8b8610d12359dafd081f9a9ab41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0c7a707_66c78338",
         "filename": "scripts/policy/docker-compose-all.yml",
         "patchSetId": 7
