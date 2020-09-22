@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2017 ZTE, Inc. and others.
+# Copyright 2020 Nokia.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,14 @@
 # limitations under the License.
 #
 
-kill-instance.sh ${MergerContainerName}
+#export container name
+export CertServicePostProcessorContainerName=CertServicePostProcessor
+
+#install docker sdk
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
+#install pyjks for .jks files management
+pip install pyjks

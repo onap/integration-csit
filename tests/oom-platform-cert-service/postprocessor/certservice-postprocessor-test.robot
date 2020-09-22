@@ -1,8 +1,8 @@
 *** Settings ***
 
 Documentation     Truststore merger test case scenarios
-Library 	      RequestsLibrary
-Resource          ./resources/trust-merger-keywords.robot
+Library 	        RequestsLibrary
+Resource          ./resources/test-keywords.robot
 
 *** Test Cases ***
 
