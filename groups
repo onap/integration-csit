@@ -2,4 +2,3 @@
 #
 73ea6bb2ef2c34f0bc9f9ac15459a89865e7c7e9                                         	saml/onap-gerrit-integration-csit-committers
 daebbf523be390041a1a9c0e340a6d833aae5043                                         	GitHub Replication
-ldap:cn=onap-gerrit-integration-csit-committers,ou=Groups,dc=freestandards,dc=org	ldap/onap-gerrit-integration-csit-committers
