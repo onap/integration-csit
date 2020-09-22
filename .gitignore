@@ -29,3 +29,4 @@ env.properties
 /venv/*
 
 /tests/aaf/certservice/tmp/*
+/tests/oom-platform-cert-service/postprocessor/tmp/*

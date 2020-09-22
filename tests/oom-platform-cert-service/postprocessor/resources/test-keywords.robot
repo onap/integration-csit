@@ -1,7 +1,7 @@
 *** Settings ***
 
 Resource          ../../../common.robot
-Resource          ./trust-merger-properties.robot
+Resource          ./test-properties.robot
 Library           ../libraries/TrustMergerManager.py  ${MOUNT_PATH}  ${TRUSTSTORES_PATH}
 Library           ../libraries/JksValidator.py
 Library           ../libraries/PemTruststoreValidator.py
