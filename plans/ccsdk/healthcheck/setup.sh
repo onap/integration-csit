@@ -45,10 +45,8 @@ sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" docker-compose.yml
 docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
 
 docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-odlsli-alpine-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-odlsli-alpine-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-odlsli-alpine-image:0.4-STAGING-latest
 
 docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-dgbuilder-image:0.4-STAGING-latest
 
 # start CCSDK containers with docker compose and configuration from docker-compose.yml
 curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose-`uname -s`-`uname -m` > docker-compose
