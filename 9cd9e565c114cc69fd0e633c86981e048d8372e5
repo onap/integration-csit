@@ -22,6 +22,52 @@
       "revId": "9cd9e565c114cc69fd0e633c86981e048d8372e5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc18408d_9e49d466",
+        "filename": "tests/oom-platform-cert-service/postprocessor/certservice-postprocessor-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-25T05:40:54Z",
+      "side": 1,
+      "message": "It could be OOM-CERTSERVICE-POST-PROCESSOR",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "9cd9e565c114cc69fd0e633c86981e048d8372e5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919698a6_6f3dba50",
+        "filename": "tests/oom-platform-cert-service/postprocessor/resources/test-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2020-09-25T05:40:54Z",
+      "side": 1,
+      "message": "Please change these variables also. It could be MERGER -\u003e POST_PROCESSOR.",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 82
+      },
+      "revId": "9cd9e565c114cc69fd0e633c86981e048d8372e5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
