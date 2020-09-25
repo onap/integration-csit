@@ -1,0 +1,9 @@
+Code-Review+1: Tomasz Wr�bel <tomasz.wrobel@nokia.com>
+Code-Review+1: Kornel Janiak <kornel.janiak@nokia.com>
+Code-Review+2: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Fri, 25 Sep 2020 06:27:04 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/113146
+Project: integration/csit
+Branch: refs/heads/master
