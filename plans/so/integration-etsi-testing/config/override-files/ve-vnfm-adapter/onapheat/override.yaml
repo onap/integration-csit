@@ -23,7 +23,7 @@ client:
   key-store: classpath:so-vnfm-adapter.p12
   key-store-password: 'ywsqCy:EEo#j}HJHM7z^Rk[L'
   trust-store: classpath:org.onap.so.trust.jks
-  trust-store-password: ',sx#.C*W)]wVgJC6ccFHI#:H'
+  trust-store-password: '[)3KV.k*!IlkFhWEq0Nv2dDa'
 
 mso:
   key: 07a7159d3bf51a0e53be7a8f89699be7

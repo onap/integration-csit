@@ -13,7 +13,7 @@ http:
   client:
     ssl:
       trust-store: classpath:org.onap.so.trust.jks
-      trust-store-password: ',sx#.C*W)]wVgJC6ccFHI#:H'
+      trust-store-password: '[)3KV.k*!IlkFhWEq0Nv2dDa'
 aai:
   auth: 221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885
   version: v15
