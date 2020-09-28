@@ -141,12 +141,13 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/bpmn-infra/onapheat:/app/config
-      - ${CONFIG_DIR_PATH}/certificates/aai-certificate/aai.crt:/app/ca-certificates/aai.crt
+      - ${CONFIG_DIR_PATH}/certificates/truststore/clientcert:/app/certificates/clientcert
     environment:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
+      - TRUSTSTORE=/app/certificates/clientcert
+      - TRUSTSTORE_PASSWORD=,sx#.C*W)]wVgJC6ccFHI#:H
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=so_user
@@ -172,11 +173,13 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/api-handler-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/clientcert:/app/certificates/clientcert
     environment:
       - APP=api-handler-infra
       - JVM_ARGS=-Xms64m -Xmx512m
+      - TRUSTSTORE=/app/certificates/clientcert
+      - TRUSTSTORE_PASSWORD=,sx#.C*W)]wVgJC6ccFHI#:H
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=so_user
@@ -218,8 +221,8 @@ services:
     ports:
       - "9092:9092"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/so-vnfm-adapter/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
     environment:
     - APP=so-vnfm-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
@@ -276,8 +279,8 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/vnfm-simulator/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
     environment:
       - APP=VNFM-SIMULATOR
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -349,11 +352,13 @@ services:
     ports:
       - "9098:9098"
     volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/override-files/ve-vnfm-adapter/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/clientcert:/app/certificates/clientcert
     environment:
       - APP=ve-vnfm-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
+      - TRUSTSTORE=/app/certificates/clientcert
+      - TRUSTSTORE_PASSWORD=,sx#.C*W)]wVgJC6ccFHI#:H
       - DB_HOST=mariadb
     hostname:
       ve-vnfm-adapter
