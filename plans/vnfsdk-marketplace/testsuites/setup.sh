@@ -14,8 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This script is sourced by run-csit.sh after Robot test completion.
+# These scripts are sourced by run-csit.sh.
 
+REFREPO_IMAGE_TAG=1.6.0-STAGING-latest POSTGRES_IMAGE_TAG=latest docker-compose up -d
 
-kill-instance.sh vnfmarket
+# Wait for Market place initialization
+echo Wait for VNF Repository initialization
+for i in {1..30}; do
+    sleep 1
+done
 
+REFREPO_IP=`get-instance-ip.sh refrepo`
+
+# Pass any variables required by Robot test suites in ROBOT_VARIABLES
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REPO_IP:${REFREPO_IP}"
+echo ${ROBOT_VARIABLES}
