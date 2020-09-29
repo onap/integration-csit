@@ -8,7 +8,7 @@ Library     json
 Library     HttpLibrary.HTTP
 
 *** Variables ***
-@{return_ok_list}=   200  201  202  204
+@{return_ok_list}=   200  201  202  204 404
 ${queryswagger_url}    /api/huaweivnfmdriver/v1/swagger.json
 ${createauthtoken_url}    /rest/plat/smapp/v1/oauth/token
 
