@@ -16,15 +16,15 @@
 #
 # These scripts are sourced by run-csit.sh.
 
+DOCKER_NETWORK_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
+REFREPO_IMAGE_TAG=1.6.0-STAGING-latest POSTGRES_IMAGE_TAG=latest docker-compose up -d
 
-
-#Start market place
-docker run -d -i -t --name=vnfmarket   -p 8702:8702 onap/vnfmarket
-
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' vnfmarket`
-
+# Wait for Market place initialization
+echo Wait for VNF Repository initialization
+for i in {1..30}; do
+    sleep 1
+done
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
-
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REPO_IP:${DOCKER_NETWORK_IP}"
+echo ${ROBOT_VARIABLES}
