@@ -16,15 +16,23 @@
 #
 # These scripts are sourced by run-csit.sh.
 
+REFREPO_IMAGE_TAG=1.6.0-STAGING-latest POSTGRES_IMAGE_TAG=latest docker-compose up -d
+DOCKER_IP=`get-docker-network-ip.sh`
 
+# Wait for Market place initialization
+echo Wait for VNF Repository initialization
+# Active waiting with healthcheck and max retry count
+MAX_RETRY=30
+TRY=1
+while (( $(curl -s -o /dev/null -w ''%{http_code}'' ${DOCKER_IP}:8702/onapapi/vnfsdk-marketplace/v1/PackageResource/healthcheck) != 200 )) && (($TRY < $MAX_RETRY)); do
+  sleep 4
+  TRY=$[$TRY+1]
+done
 
-#Start market place
-docker run -d -i -t --name=vnfmarket   -p 8702:8702 onap/vnfmarket
-
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' vnfmarket`
-
+# Get refrepo logs for easier debug in case of failure
+docker logs refrepo
+REFREPO_IP=`get-instance-ip.sh refrepo`
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
-
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REPO_IP:${REFREPO_IP}"
+echo ${ROBOT_VARIABLES}

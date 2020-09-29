@@ -15,25 +15,28 @@
 # limitations under the License.
 #
 # These scripts are sourced by run-csit.sh.
-VNFSDK_REFREPO_DOCKER_VERSION=1.3-STAGING-latest
 
-#Start postgres database
-docker run -d -i -t --name=postgres   -p 5432:5432 nexus3.onap.org:10001/onap/vnfsdk/refrepo/postgres:latest
-
-POSTGRES=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' postgres`
+VNFSDK_REFREPO_DOCKER_VERSION=1.6.0-STAGING-latest
 
 #Start market place
-docker run -d -i -t --name=refrepo -e POSTGRES_SERVICE_HOST=$POSTGRES  -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
+docker run -d -i -t --name refrepo -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
+DOCKER_IP=`get-docker-network-ip.sh`
 
 # Wait for Market place initialization
 echo Wait for VNF Repository initialization
-for i in {1..30}; do
-    sleep 1
+# Active waiting with healthcheck and max retry count
+MAX_RETRY=30
+TRY=1
+while (( $(curl -s -o /dev/null -w ''%{http_code}'' ${DOCKER_IP}:8702/onapapi/vnfsdk-marketplace/v1/PackageResource/healthcheck) != 200 )) && (($TRY < $MAX_RETRY)); do
+  sleep 4
+  TRY=$[$TRY+1]
 done
 
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' refrepo`
+REFREPO_IP=`get-instance-ip.sh refrepo`
 
+# Get refrepo logs for easier debug in case of failure
+docker logs refrepo
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REPO_IP:${REPO_IP}"
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REFREPO_IP:${REFREPO_IP}"
 echo ${ROBOT_VARIABLES}
