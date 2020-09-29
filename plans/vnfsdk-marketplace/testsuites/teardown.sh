@@ -14,17 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# These scripts are sourced by run-csit.sh.
+# This script is sourced by run-csit.sh after Robot test completion.
 
-
-
-#Start market place
-docker run -d -i -t --name=vnfmarket   -p 8702:8702 onap/vnfmarket
-
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' vnfmarket`
-
-
-# Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
-
+docker-compose down

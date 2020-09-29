@@ -14,10 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This script is sourced by run-csit.sh after Robot test completion.
+# These scripts are sourced by run-csit.sh.
 
+DOCKER_NETWORK_IP=`get-docker-network-ip.sh`
+VNFSDK_REFREPO_DOCKER_VERSION=1.6.0-STAGING-latest
 
-kill-instance.sh refrepo
-kill-instance.sh postgres
+#Start market place
+docker run -d -i -t --name refrepo -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
 
+# Wait for Market place initialization
+echo Wait for VNF Repository initialization
+for i in {1..30}; do
+    sleep 1
+done
 
+# Pass any variables required by Robot test suites in ROBOT_VARIABLES
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REFREPO_IP:${DOCKER_NETWORK_IP}"
+echo ${ROBOT_VARIABLES}
