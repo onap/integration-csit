@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3995fa35_d82e2b4e",
+        "filename": "plans/so/integration-etsi-testing/config/env",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2020-09-29T14:45:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e4eb620_315742fc",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 10
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ce95d2_a0f7c912",
         "filename": "plans/so/integration-etsi-testing/config/override-files/so-vnfm-adapter/onapheat/override.yaml",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "24dfef31_132d7631",
+        "filename": "plans/so/integration-etsi-testing/config/override-files/so-vnfm-adapter/onapheat/override.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2020-09-29T14:45:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae15b843_d60d5bc8",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eaf81a0_d0b7ddae",
         "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
         "patchSetId": 1
@@ -140,6 +188,30 @@
       "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303200cf_ce27f7cb",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2020-09-29T14:45:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5465e75b_fa2a0c0f",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 52
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
