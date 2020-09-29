@@ -16,15 +16,21 @@
 #
 # These scripts are sourced by run-csit.sh.
 
-
+DOCKER_NETWORK_IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $7}')
+VNFSDK_REFREPO_DOCKER_VERSION=1.6.0-STAGING-latest
 
 #Start market place
-docker run -d -i -t --name=vnfmarket   -p 8702:8702 onap/vnfmarket
+docker run -d -i -t --name refrepo -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
 
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' vnfmarket`
+# Wait for Market place initialization
+echo Wait for VNF Repository initialization
+for i in {1..60}; do
+    sleep 1
+done
 
+docker logs refrepo
+curl ${DOCKER_NETWORK_IP}:8702/onapapi/vnfsdk-marketplace/v1/PackageResource/healthcheck
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
-
+ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS} -v REFREPO_IP:${DOCKER_NETWORK_IP}"
+echo ${ROBOT_VARIABLES}
