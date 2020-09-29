@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c06fa00d_f5165ad1",
+        "filename": "plans/so/integration-etsi-testing/config/env",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2020-09-29T09:19:51Z",
+      "side": 1,
+      "message": "why change it latest?",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 10
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ce95d2_a0f7c912",
+        "filename": "plans/so/integration-etsi-testing/config/override-files/so-vnfm-adapter/onapheat/override.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2020-09-29T09:19:51Z",
+      "side": 1,
+      "message": "if password is changed then could you update oom project as well with this password \nhttps://gerrit.onap.org/r/gitweb?p\u003doom.git;a\u003dblob;f\u003dkubernetes/so/charts/so-vnfm-adapter/resources/config/overrides/override.yaml;h\u003d4128bc36ee563d3cb480827620c5c04ae1f5c8ff;hb\u003drefs/heads/master",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaf81a0_d0b7ddae",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2020-09-29T09:19:51Z",
+      "side": 1,
+      "message": "can see these properties used anywhere",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 52
+      },
+      "revId": "ae1ba0e0920e6b0332e72ce8f18fa4b21b5fcdf5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
