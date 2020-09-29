@@ -78,15 +78,6 @@ Invoke VNF Instantiation
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
 
-Invoke VNF Notification for SOL002
-    Create Session    ve-vnfm-adapter-session    http://${REPO_IP}:9098
-    ${data}=    Get Binary File    ${CURDIR}${/}data${/}notification.json
-    &{headers}=    Create Dictionary    Content-Type=application/json    Accept=application/json    Authorization=Basic YWRtaW46YTRiM2MyZDE=
-    ${notification_request}=    Post Request    ve-vnfm-adapter-session    /lcm/v1/vnf/instances/notifications    data=${data}    headers=${headers}
-    Log To Console    ${notification_request}
-    Run Keyword If    '${notification_request.status_code}' == '200'    Log To Console    \nexecuted with expected result
-    Should Be Equal As Strings    '${notification_request.status_code}'    '200'
-
 Delete VNF Instance
     Run Keyword If      "${vnf_instance_Id}" != "${EMPTY}"      Log to Console    VNF Instance ID :${vnf_instance_Id} received
     ...                ELSE      Fail           Log to Console  Invalid VNF Instance ID :${vnf_instance_Id} recieved
