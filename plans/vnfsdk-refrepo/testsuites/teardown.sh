@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
+# Copyright 2020 Nokia.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# These scripts are sourced by run-csit.sh.
+# This script is sourced by run-csit.sh after Robot test completion.
 
-
-
-#Start market place
-docker run -d -i -t --name=vnfmarket   -p 8702:8702 onap/vnfmarket
-
-REPO_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' vnfmarket`
-
-
-# Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
+kill-instance.sh refrepo
 

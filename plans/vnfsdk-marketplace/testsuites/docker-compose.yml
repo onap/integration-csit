@@ -1,0 +1,43 @@
+# Copyright 2020 Huawei Technologies Co., Ltd.
+# Copyright 2020 Nokia.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: '2'
+networks:
+    default:
+        driver: bridge
+        driver_opts:
+            com.docker.network.driver.mtu: ${NETWORK_DRIVER_MTU}
+
+services:
+    postgres:
+        container_name: "postgres"
+        restart: "always"
+        image: "nexus3.onap.org:10001/onap/vnfsdk/refrepo/postgres:${POSTGRES_IMAGE_TAG}"
+        mem_limit: "1g"
+        memswap_limit: "1g"
+        ports:
+         - "5432:5432"
+
+    refrepo:
+        container_name: "refrepo"
+        restart: "always"
+        image: "nexus3.onap.org:10001/onap/vnfsdk/refrepo:${REFREPO_IMAGE_TAG}"
+        ports:
+            - "8702-8703:8702-8703"
+            - "50051:50051"
+        environment:
+            POSTGRES_SERVICE_HOST: postgres
+        links:
+            - postgres

@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
+# Copyright 2020 Nokia.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +17,4 @@
 #
 # This script is sourced by run-csit.sh after Robot test completion.
 
-
-kill-instance.sh refrepo
-kill-instance.sh postgres
-
-
+docker-compose down
