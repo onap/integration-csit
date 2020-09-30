@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d43f3ac_11df9188",
+        "filename": "plans/vnfsdk-marketplace/testsuites/docker-compose.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "844aa73d_b69a6502",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f036fddb_53b77c51",
         "filename": "plans/vnfsdk-marketplace/testsuites/docker-compose.yml",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e771aa1_2eb9589b",
+        "filename": "plans/vnfsdk-marketplace/testsuites/docker-compose.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f036fddb_53b77c51",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b7d3f7b_80435466",
+        "filename": "plans/vnfsdk-marketplace/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e896a760_42bef74c",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d519e4d_c9af3b57",
         "filename": "plans/vnfsdk-marketplace/testsuites/setup.sh",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f95d09b_1897ff46",
+        "filename": "plans/vnfsdk-marketplace/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d519e4d_c9af3b57",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "06fc0b0a_b8bede08",
+        "filename": "plans/vnfsdk-refrepo/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5705f47_1c8b25c3",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a49ef9_316805c1",
         "filename": "tests/vnfsdk-refrepo/csar_validation_tests.robot",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c932167_98c02995",
+        "filename": "tests/vnfsdk-refrepo/csar_validation_tests.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-09-30T11:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a49ef9_316805c1",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
