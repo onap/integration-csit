@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844aa73d_b69a6502",
+        "filename": "plans/vnfsdk-marketplace/testsuites/docker-compose.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "add Nokia too",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f036fddb_53b77c51",
+        "filename": "plans/vnfsdk-marketplace/testsuites/docker-compose.yml",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "use variable too",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e896a760_42bef74c",
+        "filename": "plans/vnfsdk-marketplace/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "add Nokia",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d519e4d_c9af3b57",
+        "filename": "plans/vnfsdk-marketplace/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "split, each statement should be in separate line",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5705f47_1c8b25c3",
+        "filename": "plans/vnfsdk-refrepo/testsuites/setup.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "add information about Nokia",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a49ef9_316805c1",
+        "filename": "tests/vnfsdk-refrepo/csar_validation_tests.robot",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2020-09-30T11:15:52Z",
+      "side": 1,
+      "message": "it should be up and running",
+      "revId": "d130dd20ee78b50babe71645ac2ae8176a8fb1d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
