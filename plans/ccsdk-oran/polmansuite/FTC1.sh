@@ -20,8 +20,8 @@
 
 TC_ONELINE_DESCR="Sanity test, create service and then create,update and delete a policy using http/https and Agent REST/DMAAP with/without SDNC controller"
 
-#App names to exclude checking pulling images for, space separated list
-EXCLUDED_IMAGES="SDNC SDNC_ONAP"
+#App names to include in the test, space separated list
+INCLUDED_IMAGES="CBS CONSUL CP CR MR PA RICSIM SDNC"
 
 . ../common/testcase_common.sh  $@
 . ../common/agent_api_functions.sh
@@ -32,17 +32,8 @@ EXCLUDED_IMAGES="SDNC SDNC_ONAP"
 
 generate_uuid
 
-####################################
-####################################
-######## LIMITED TEST SCOPE ########
-######## THIS FILE SHALL    ########
-######## BE REMOVED WHEN    ########
-######## THE SDNC IMAGE     ########
-######## IS OK              ########
-####################################
-####################################
 # Tested variants of REST/DMAAP/SDNC config
-TESTED_VARIANTS="REST   DMAAP"
+TESTED_VARIANTS="REST   DMAAP   REST+SDNC   DMAAP+SDNC"
 #Test agent and simulator protocol versions (others are http only)
 TESTED_PROTOCOLS="HTTP HTTPS"
 
