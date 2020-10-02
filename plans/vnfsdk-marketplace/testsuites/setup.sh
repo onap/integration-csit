@@ -17,7 +17,7 @@
 #
 # These scripts are sourced by run-csit.sh.
 
-REFREPO_IMAGE_TAG=1.6.0-STAGING-latest \
+REFREPO_IMAGE_TAG=latest \
 POSTGRES_IMAGE_TAG=latest \
 NETWORK_DRIVER_MTU=1450 \
 docker-compose up -d

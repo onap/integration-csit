@@ -17,7 +17,7 @@
 #
 # These scripts are sourced by run-csit.sh.
 
-VNFSDK_REFREPO_DOCKER_VERSION=1.6.0-STAGING-latest
+VNFSDK_REFREPO_DOCKER_VERSION=latest
 
 #Start market place
 docker run -d -i -t --name refrepo -p 8702:8702 nexus3.onap.org:10001/onap/vnfsdk/refrepo:$VNFSDK_REFREPO_DOCKER_VERSION
