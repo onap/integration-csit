@@ -21,7 +21,7 @@
 TC_ONELINE_DESCR="Sanity test, create service and then create,update and delete a policy using http/https and Agent REST/DMAAP with/without SDNC controller"
 
 #App names to exclude checking pulling images for, space separated list
-EXCLUDED_IMAGES="SDNC SDNC_ONAP"
+EXCLUDED_IMAGES="SDNC SDNC_ONAP ECS PRODSTUB"
 
 . ../common/testcase_common.sh  $@
 . ../common/agent_api_functions.sh
