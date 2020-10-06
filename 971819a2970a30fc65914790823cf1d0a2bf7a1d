@@ -22,6 +22,30 @@
       "revId": "971819a2970a30fc65914790823cf1d0a2bf7a1d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc130291_2ba66bd8",
+        "filename": "scripts/policy/config/sim-all/simParameters.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-10-06T16:42:01Z",
+      "side": 1,
+      "message": "Otherwise, if this restServerParameters is not required here, I guess it will have to be removed? https://github.com/onap/policy-models/blob/master/models-sim/models-sim-dmaap/src/main/java/org/onap/policy/models/sim/dmaap/parameters/DmaapSimParameterGroup.java#L35",
+      "parentUuid": "2d735419_e46de28d",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "971819a2970a30fc65914790823cf1d0a2bf7a1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
