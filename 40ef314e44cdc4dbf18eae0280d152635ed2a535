@@ -16,6 +16,24 @@
       "revId": "40ef314e44cdc4dbf18eae0280d152635ed2a535",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a02ef1b_c4864738",
+        "filename": "tests/vnfsdk-refrepo/csar_validation_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5098
+      },
+      "writtenOn": "2020-10-06T08:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa2af02_c8714fec",
+      "revId": "40ef314e44cdc4dbf18eae0280d152635ed2a535",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
