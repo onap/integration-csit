@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa2af02_c8714fec",
+        "filename": "tests/vnfsdk-refrepo/csar_validation_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5234
+      },
+      "writtenOn": "2020-10-06T07:10:01Z",
+      "side": 1,
+      "message": "Can we keep Variables in seperate file and add it as Library here. As it is in VES CSITs for example.",
+      "revId": "40ef314e44cdc4dbf18eae0280d152635ed2a535",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
