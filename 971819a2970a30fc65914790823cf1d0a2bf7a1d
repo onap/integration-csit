@@ -46,6 +46,30 @@
       "revId": "971819a2970a30fc65914790823cf1d0a2bf7a1d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2e0280_5cde67ed",
+        "filename": "scripts/policy/config/sim-all/simParameters.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-07T12:49:50Z",
+      "side": 1,
+      "message": "fixed via:\n  https://gerrit.onap.org/r/c/policy/models/+/113581",
+      "parentUuid": "fc130291_2ba66bd8",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "971819a2970a30fc65914790823cf1d0a2bf7a1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
