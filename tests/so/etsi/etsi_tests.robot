@@ -30,16 +30,17 @@ Invoke Service Instantiation
     SET GLOBAL VARIABLE       ${service_instance_Id}
     ${actual_request_state}=    Set Variable    ""
 
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   log to console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   Log To Console    Received actual repsonse status:${actual_request_state}
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+    FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       log to console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       Log To Console    Received actual repsonse status:${actual_request_state}
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       log to console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+    END
 
     Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
@@ -63,15 +64,16 @@ Invoke VNF Instantiation
     ${vnf_instance_Id}=     Set Variable       ${vnf_instantiate_json_response}[requestReferences][instanceId]
     SET GLOBAL VARIABLE       ${vnf_instance_Id}
 
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+    FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       Log To Console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""", strict=False)    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+    END
 
     ${service_instance_Id}=     SET VARIABLE       ${orchestration_json_response}[request][instanceReferences][serviceInstanceId]
     Log To Console     final repsonse status received: ${actual_request_state}
@@ -102,15 +104,16 @@ Delete VNF Instance
     ${request_ID}=          Set Variable         ${vnf_delete_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
 
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+    FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       Log To Console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+    END
 
     Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
@@ -130,15 +133,16 @@ Delete Service Instance
     ${request_ID}=          Set Variable         ${service_delete_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
 
-    : FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
-    \   ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
-    \   Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
-    \   Log To Console      ${orchestration_status_request.content}
-    \   ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
-    \   ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
-    \   RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
-    \   Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
-    \   SLEEP   ${SLEEP_INTERVAL_SEC}s
+    FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
+       ${orchestration_status_request}=   Get Request  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
+       Run Keyword If  '${orchestration_status_request.status_code}' == '200'  log to console   \nexecuted with expected result
+       Log To Console      ${orchestration_status_request.content}
+       ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
+       ${actual_request_state}=     SET VARIABLE       ${orchestration_json_response}[request][requestStatus][requestState]
+       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
+       SLEEP   ${SLEEP_INTERVAL_SEC}s
+    END
 
     Log To Console     final repsonse status received: ${actual_request_state}
     Run Keyword If  '${actual_request_state}' == 'COMPLETE'  log to console   \nexecuted with expected result
