@@ -85,3 +85,29 @@ Publish Single VES Event With Incorrect StndDefined Data
     [Documentation]   Post single event with incorrect stndDefined data
     Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_STND_DEFINED_INVALID_TYPE_DATA}  202
 
+############################################################################################
+## Section for tests with stndDefined validation ON and schemas with refernce to other files
+############################################################################################
+Add refeerence to other schemas
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC  DCAE-VESC-STNDDEFINED
+    [Documentation]  Add refeerence to other schemas and Run Health Check
+    Override Collector Properties  ${VES_ADD_REFERENCE_TO_OTHER_SCHEMAS}
+    Run Healthcheck  ${https_basic_auth_session}
+
+
+Publish Single VES VNF Measurement Event with Standard Defined Fields with certBasicAuth over HTTPS and valid reference to other file
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC  DCAE-VESC-STNDDEFINED
+    [Documentation]   Post single event with valid data with Standard Defined Fields and valid username/password to /eventListener/v7 endpoint over HTTPS and valid reference to ther file and expect 202 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_WITH_RFERENCE_TO_VALID_SCHEMA}  202  stndDefined-gNB-Nokia-PowerLost
+
+
+Publish Single VES VNF Measurement Event with Standard Defined Fields with certBasicAuth over HTTPS and invalid reference to other schema file
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC  DCAE-VESC-STNDDEFINED
+    [Documentation]   Post single event with valid data with Standard Defined Fields and valid username/password to /eventListener/v7 endpoint over HTTPS and invalid reference to other schema file and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS_WRONG_SCHEMA_FILE_REF}  400
+
+
+Publish Single VES VNF Measurement Event with Standard Defined Fields with certBasicAuth over HTTPS and invalid internal schema reference
+    [Tags]    DCAE-VESC-R1  DCAE-VESC-HC  DCAE-VESC-STNDDEFINED
+    [Documentation]   Post single event with valid data with Standard Defined Fields and valid username/password to /eventListener/v7 endpoint over HTTPS and invalid internal schema reference and expect 400 Response Status Code
+    Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_VALID_JSON_V7_STND_DEF_FIELDS_WRONG_SCHEMA_INTERNAL_REF}  400

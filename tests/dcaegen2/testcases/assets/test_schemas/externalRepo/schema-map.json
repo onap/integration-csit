@@ -1,0 +1,14 @@
+[
+  {
+    "publicURL": "https://forge.3gpp.org/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/ves7_valid_eventWithStndDefinedFields_with_valid_schema_ref.json",
+    "localURL": "3gpp/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/ves7_valid_eventWithStndDefinedFields_with_valid_schema_ref.json"
+  },
+  {
+    "publicURL": "https://forge.3gpp.org/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/faultMnS_wrong_file_reference.yaml",
+    "localURL": "3gpp/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/faultMnS_wrong_file_reference.yaml"
+  },
+  {
+    "publicURL": "https://forge.3gpp.org/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/faultMnS_wrong_internal_reference.yaml",
+    "localURL": "3gpp/rep/sa5/MnS/blob/SA88-Rel16/OpenAPI/faultMnS_wrong_internal_reference.yaml"
+  }
+]
