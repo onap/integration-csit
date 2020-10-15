@@ -22,6 +22,30 @@
       "revId": "2be0858cbc1b07a865b0fc1f042992549965b9ed",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462388c3_7bd389cd",
+        "filename": "tests/dcaegen2/testcases/resources/override_collector_properties_with_new_files.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6482
+      },
+      "writtenOn": "2020-10-15T11:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb154ba_8f00aea0",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 51
+      },
+      "revId": "2be0858cbc1b07a865b0fc1f042992549965b9ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
