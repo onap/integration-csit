@@ -28,6 +28,8 @@ POLMAN_PLANS=$WORKSPACE/plans/ccsdk-oran/polmansuite
 cp $POLMAN_PLANS/FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC1.sh
 cp $POLMAN_PLANS/FTC150.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC150.sh
 
+TEST_ENV=$POLMAN_PLANS/test_env-${GERRIT_BRANCH}.sh
+
 #Make the env vars availble to the robot scripts
-ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT} -v POLMAN_PLANS:${POLMAN_PLANS}"
+ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT} -v TEST_ENV:${TEST_ENV}"
 

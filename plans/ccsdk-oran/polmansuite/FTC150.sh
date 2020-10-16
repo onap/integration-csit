@@ -20,8 +20,8 @@
 
 TC_ONELINE_DESCR="Sample tests of the SDNC A1 controller restconf API using http/https (no agent)"
 
-#App names to exclude checking pulling images for, space separated list
-EXCLUDED_IMAGES="PA CP SDNC_ONAP"
+#App names to include in the test, space separated list
+INCLUDED_IMAGES="RICSIM SDNC"
 
 . ../common/testcase_common.sh  $@
 . ../common/controller_api_functions.sh
@@ -32,7 +32,7 @@ EXCLUDED_IMAGES="PA CP SDNC_ONAP"
 generate_uuid
 
 #Test agent and simulator protocol versions (others are http only)
-NB_TESTED_PROTOCOLS="HTTP"
+NB_TESTED_PROTOCOLS="HTTP HTTPS"
 SB_TESTED_PROTOCOLS="HTTP HTTPS"
 
 for __nb_httpx in $NB_TESTED_PROTOCOLS ; do
