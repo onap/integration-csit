@@ -4,7 +4,7 @@ Library           Process
 
 *** Variables ***
 
-${health_check}    ${SCRIPTS}/health_check.sh
+${health_check}    ${SCRIPTS}/ccsdk/healthcheck/health_check.sh
 
 
 *** Test Cases ***
