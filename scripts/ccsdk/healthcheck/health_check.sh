@@ -13,13 +13,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Modifications copyright (c) 2020 Samsung Electronics Co., Ltd.
+#
 ###############################################################################
-SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo $SCRIPTS
-
 unset http_proxy https_proxy
 
-response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-ccsdk" -H "Accept: application/json" -H "Content-Type: application/json" -d '{"input":{"dummy":"dummy"}}' http://localhost:8383/restconf/operations/SLI-API:healthcheck )
+response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-ccsdk" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8383/restconf/operations/SLI-API:healthcheck )
 
 if [ "$response" == "200" ]; then
     echo "CCSDK health check passed."

@@ -15,22 +15,19 @@
 # limitations under the License.
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2020 Samsung Electronics Co., Ltd.
 #
 # Place the scripts in run order:
-SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/scripts/ccsdk/script1.sh
-
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 export NEXUS_DOCKER_REPO="nexus3.onap.org:10001"
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export DMAAP_TOPIC=AUTO
-export CCSDK_DOCKER_IMAGE_VERSION=0.6-STAGING-latest
+export CCSDK_DOCKER_IMAGE_VERSION=1.1-STAGING-latest
 
 if [ "$MTU" == "" ]; then
 	  export MTU="1450"
 fi
-
 
 # Clone CCSDK repo to get docker-compose for CCSDK
 mkdir -p $WORKSPACE/archives/ccsdk
@@ -53,37 +50,16 @@ curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose
 chmod +x docker-compose
 ./docker-compose up -d
 
-# WAIT 5 minutes maximum and test every 5 seconds if CCSDK is up using HealthCheck API
-TIME_OUT=500
-INTERVAL=30
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-ccsdk" -H "X-TransactionId: csit-ccsdk" -H "Accept: application/json" -H "Content-Type: application/json" -d '{"input":{"dummy":"dummy"}}' http://localhost:8383/restconf/operations/SLI-API:healthcheck ); echo $response
+# WAIT 5 minutes maximum and check karaf.log for readiness every 10 seconds
 
-  if [ "$response" == "200" ]; then
-    echo CCSDK started in $TIME seconds
-    break;
-  fi
-
-  echo Sleep: $INTERVAL seconds before testing if CCSDK is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
-done
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
-fi
-
-#sleep 800
-
-TIME_OUT=1500
-INTERVAL=60
+TIME_OUT=300
+INTERVAL=10
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
 
-response=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client system:start-level)
+docker exec -ti ccsdk_odlsli_container cat /opt/opendaylight/data/log/karaf.log | grep 'warp coils'
 
-  if [ "$response" == "Level 100" ] ; then
+  if [ $? == 0 ] ; then
     echo CCSDK karaf started in $TIME seconds
     break;
   fi
@@ -94,16 +70,16 @@ response=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/clie
 done
 
 if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
 fi
 
-response=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client system:start-level)
-num_bundles=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
+num_bundles=$(docker exec -ti ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d' ' -f1)
 
-  if [ "$response" == "Level 100" ] && [ "$num_bundles" -ge 333 ]; then
-    num_bundles=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d\| -f1)
-    num_failed_bundles=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-    failed_bundles=$(docker exec ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
+  if [ "$num_bundles" -ge 333 ]; then
+    num_bundles=$(docker exec -ti ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d' ' -f1)
+    num_failed_bundles=$(docker exec -ti ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
+    failed_bundles=$(docker exec -ti ccsdk_odlsli_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
     echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
   fi
 
