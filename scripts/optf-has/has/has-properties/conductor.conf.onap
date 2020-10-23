@@ -296,6 +296,7 @@ concurrent = true
 # Time between checking for new plans. Default value is 1. (integer value)
 # Minimum value: 1
 #polling_interval = 1
+opt_schema_file = /opt/has/conductor/etc/conductor/opt_schema.json
 
 # (integer value)
 # Minimum value: 1
@@ -335,7 +336,7 @@ concurrent = true
 #
 
 # Extensions list to use (list value)
-#extensions = aai
+extensions = aai,generator
 
 
 [messaging_server]

@@ -31,7 +31,7 @@ cd ${DIR}
 COND_CONF=/tmp/conductor/properties/conductor.conf
 LOG_CONF=/tmp/conductor/properties/log.conf
 IMAGE_NAME=nexus3.onap.org:10001/onap/optf-has
-IMAGE_VER=2.0.2-SNAPSHOT-latest
+IMAGE_VER=2.1.2-SNAPSHOT-latest
 BUNDLE=/tmp/conductor/properties/AAF_RootCA.cer
 
 mkdir -p /tmp/conductor/properties
