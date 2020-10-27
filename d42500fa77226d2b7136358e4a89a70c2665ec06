@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9a0c515_8bd506a9",
+        "filename": "plans/cli/sanity-check/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5021
+      },
+      "writtenOn": "2020-10-27T11:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea3ae56b_a0bd38fb",
+      "range": {
+        "startLine": 22,
+        "startChar": 82,
+        "endLine": 22,
+        "endChar": 96
+      },
+      "revId": "d42500fa77226d2b7136358e4a89a70c2665ec06",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a31d160_1f87cdfc",
         "filename": "tests/cli/startup/startup_check.robot",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "d42500fa77226d2b7136358e4a89a70c2665ec06",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b58486_3e5049b1",
+        "filename": "tests/cli/startup/startup_check.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5021
+      },
+      "writtenOn": "2020-10-27T11:33:45Z",
+      "side": 1,
+      "message": "Here cli default product version is open-cli.",
+      "parentUuid": "8a31d160_1f87cdfc",
+      "revId": "d42500fa77226d2b7136358e4a89a70c2665ec06",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
