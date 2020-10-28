@@ -19,10 +19,11 @@
 
 source ${SCRIPTS}/common_functions.sh
 
-MULTICLOUD_DOCKER_VERSION=1.4.1
+MULTICLOUD_FRAMEWORK_DOCKER_VERSION=1.6.0
+MULTICLOUD_VIO_DOCKER_VERSION=1.4.2
 # start multivim-broker
-docker run -d --name multivim-vio nexus3.onap.org:10001/onap/multicloud/vio:$MULTICLOUD_DOCKER_VERSION
-docker run -d --name multivim-broker --link multivim-vio -e MSB_ADDR=multivim-vio -e MSB_PORT=9004 nexus3.onap.org:10001/onap/multicloud/framework:$MULTICLOUD_DOCKER_VERSION
+docker run -d --name multivim-vio nexus3.onap.org:10001/onap/multicloud/vio:$MULTICLOUD_VIO_DOCKER_VERSION
+docker run -d --name multivim-broker --link multivim-vio -e MSB_ADDR=multivim-vio -e MSB_PORT=9004 nexus3.onap.org:10001/onap/multicloud/framework:$MULTICLOUD_FRAMEWORK_DOCKER_VERSION
 
 BROKER_IP=`get-instance-ip.sh multivim-broker`
 for i in {1..50}; do
