@@ -522,6 +522,170 @@ GetPlanWithHpaScoreMultiObj
     Should Be Equal    done    ${resultStatus}
     Should Be Equal    HPA-cloud_cloud-region-1    ${vim-id}
 
+# NSI selection template
+SendPlanWithNsiSelection
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nsi_selection_template_with_reuse.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNsiSelection
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    ${instance_name}=    Convert To String      ${response_json['plans'][0]['recommendations'][0]['URLLC']['candidate']['instance_name']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    done    ${resultStatus}
+    Should Be Equal    nsi_test_0211    ${instance_name}
+
+SendPlanWithNsiSelectionSliceProfile
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nsi_selection_template_with_create.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNsiSelectionSliceProfile
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    ${candidate_type}=    Convert To String      ${response_json['plans'][0]['recommendations'][0]['URLLC']['candidate']['inventory_type']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    done    ${resultStatus}
+    Should Be Equal    slice_profiles    ${candidate_type}
+
+SendPlanWithNoNsi
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nsi_selection_template_with_nonsi.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNoNsi
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    ${candidate_type}=    Convert To String      ${response_json['plans'][0]['recommendations'][0]['URLLC']['candidate']['inventory_type']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    done    ${resultStatus}
+    Should Be Equal    slice_profiles    ${candidate_type}
+
+SendPlanWithNssiSelection
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nssi_selection_template.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNssiSelection
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    ${instance_name}=    Convert To String      ${response_json['plans'][0]['recommendations'][0]['URLLC_core']['candidate']['instance_name']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    done    ${resultStatus}
+    Should Be Equal    nssi_test_0211    ${instance_name}
+
+SendPlanWithNssiSelectionUnmatched
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nssi_selection_template_unmatched.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNssiSelectionUnmatched
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    not found    ${resultStatus}
+
 
 *** Keywords ***
 

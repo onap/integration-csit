@@ -44,16 +44,10 @@ if [ ${USER} != 'jenkins' ]; then
 fi
 
 # prepare aaisim
-cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/aaisim/
-
-# check Dockerfile content
-cat ./Dockerfile
-
-# build aaisim
-docker build -t aaisim .  
+cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/
 
 # run aaisim
-docker run -d --name aaisim -p 8081:8081 aaisim
+./run_aaisim.sh
 
 AAISIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' aaisim`
 echo "AAISIM_IP=${AAISIM_IP}"
