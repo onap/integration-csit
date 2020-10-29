@@ -25,6 +25,8 @@ export NEXUS_PASSWD=docker
 export DMAAP_TOPIC=AUTO
 export CCSDK_DOCKER_IMAGE_VERSION=1.1-STAGING-latest
 
+echo OUTPUT JENKINS ENV PARAMETER BUILD_TAG: ${BUILD_TAG} 
+
 if [ "$MTU" == "" ]; then
 	  export MTU="1450"
 fi
