@@ -1,7 +1,7 @@
 [
   {
     "httpRequest": {
-      "path": "/aai/v20/query.*"
+      "path": "/aai/v21/query.*"
     },
     "httpResponse": {
       "statusCode": 200,
@@ -62,7 +62,7 @@
   },
   {
       "httpRequest":{
-         "path":"/aai/v20/service-design-and-creation/models/model.*"
+         "path":"/aai/v21/service-design-and-creation/models/model.*"
       },
       "httpResponse":{
          "statusCode":200,
