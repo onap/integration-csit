@@ -4,8 +4,8 @@
     "type": "simulator",
     "vendor": "EST",
     "version": "V1.0",
-    "service-url": "https://so-vnfm-simulator:9093/vnflcm/v1",
-    "user-name": "",
-    "password": "",
+    "service-url": "http://so-vnfm-simulator:9093/vnflcm/v1",
+    "user-name": "vnfm",
+    "password": "password1$",
     "system-type": "VNFM"
 }

@@ -32,7 +32,7 @@ public class ApplicationConfig implements ApplicationRunner {
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
-        baseUrl = "https://" + serverDnsName + ":" + environment.getProperty(PORT);
+        baseUrl = "http://" + serverDnsName + ":" + environment.getProperty(PORT);
     }
 
     public String getBaseUrl() {

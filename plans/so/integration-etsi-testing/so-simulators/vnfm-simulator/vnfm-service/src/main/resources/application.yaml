@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 spring:
+   profiles:
+      active: oauth-authentication
    h2:
       console: null
       enabled: true
@@ -35,40 +37,55 @@ server:
    tomcat:
       max-threads: 50
    ssl:
-      key-alias: so@so.onap.org
-      key--store-password: 7Em3&j4.19xYiMelhD5?xbQ.
-      key-store: classpath:so-vnfm-simulator.p12
-      key-store-type: PKCS12
-http:
-   client:
-      ssl:
-         trust-store: classpath:so-vnfm-adapter.p12
-         trust-store-password: ywsqCy:EEo#j}HJHM7z^Rk[L
+      enabled: false
+   request:
+      grant:
+         auth: none
 endpoint:
-   callbackUri: https://so-vnfm-simulator.onap:9093/vnfpkgm/v1/notification
+   callbackUri: http://so-vnfm-simulator.onap:9093/vnfpkgm/v1/notification
 vnfm-adapter:
    auth:
       name: vnfm
       password: password1$
 vnfds:
    vnfdlist:
-   -  vnfdid: 1
-      vnfclist:
-      -  vnfcid: VNFC1
-         resourceTemplateId: vnfd1_vnfc1
-         vduId: vnfd1_vduForVnfc1
-         type: COMPUTE
-      -  vnfcid: VNFC2
-         resourceTemplateId: vnfd1_vnfc2
-         vduId: vnfd1_vduForVnfc2
-         type: COMPUTE
-   -  vnfdid: 2
-      vnfclist:
-      -  vnfcid: VNFC3
-         resourceTemplateId: vnfd2_vnfc3
-         vduId: vnfd2_vduForVnfc3
-         type: COMPUTE
-      -  vnfcid: VNFC4
-         resourceTemplateId: vnfd2_vnfc4
-         vduId: vnfd2_vduForVnfc4
-         type: COMPUTE
+      -  vnfdid: 1
+         vnfclist:
+         -  vnfcid: VNFC1
+            resourceTemplateId: vnfd1_vnfc1
+            vduId: vnfd1_vduForVnfc1
+            type: COMPUTE
+         -  vnfcid: VNFC2
+            resourceTemplateId: vnfd1_vnfc2
+            vduId: vnfd1_vduForVnfc2
+            type: COMPUTE
+      -  vnfdid: 2
+         vnfclist:
+         -  vnfcid: VNFC3
+            resourceTemplateId: vnfd2_vnfc3
+            vduId: vnfd2_vduForVnfc3
+            type: COMPUTE
+         -  vnfcid: VNFC4
+            resourceTemplateId: vnfd2_vnfc4
+            vduId: vnfd2_vduForVnfc4
+            type: COMPUTE
+      -  vnfdid: b1bb0ce7-2222-4fa7-95ed-4840d70a1177
+         vnfclist:
+         -  vnfcid: VNFC5
+            resourceTemplateId: vnfd3_vnfc4
+            vduId: vnfd3_vduForVnfc4
+            type: COMPUTE
+         -  vnfcid: VNFC6
+            resourceTemplateId: vnfd3_vnfc5
+            vduId: vnfd3_vduForVnfc5
+            type: COMPUTE
+      -  vnfdid: 0c960b3a-d88f-11ea-87d0-0242ac130003
+         vnfclist:
+         -  vnfcid: VNFC7
+            resourceTemplateId: vnfd4_vnfc5
+            vduId: vnfd4_vduForVnfc5
+            type: COMPUTE
+         -  vnfcid: VNFC8
+            resourceTemplateId: vnfd4_vnfc6
+            vduId: vnfd4_vduForVnfc6
+            type: COMPUTE

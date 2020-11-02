@@ -358,19 +358,10 @@ spring:
 so:
   vnfm:
     adapter:
-      url: https://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
+      url: http://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
       auth: Basic dm5mbTpwYXNzd29yZDEk
 org:
   onap:
     so:
       cloud-owner: CloudOwner
-rest:
-  http:
-    client:
-      configuration:
-        ssl:
-          keyStore: file:/app/bpmn-infra-certs/org.onap.so.p12
-          keyStorePassword: 'RLe5ExMWW;Kd6GTSt0WQz;.Y'
-          trustStore: file:/app/bpmn-infra-certs/org.onap.so.trust.jks
-          trustStorePassword: '[)3KV.k*!IlkFhWEq0Nv2dDa'
 

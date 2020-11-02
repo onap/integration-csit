@@ -1,5 +1,7 @@
 package org.onap.so.svnfm.simulator.oauth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -14,13 +16,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * "oauth-authentication" is active
  */
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
 
     private static final int ONE_DAY = 60 * 60 * 24;
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("vnfmadapter")
-                .secret("$2a$10$dHzTlqSBcm8hdO52LBvnX./zNTvUzzJy.lZrc4bCBL5gkln0wX6T6") //123456
+        LOGGER.info("configuring oauth-authentication ...");
+        clients.inMemory().withClient("vnfm")
+                .secret("$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke") //password1$
                 .authorizedGrantTypes("client_credentials").scopes("write").accessTokenValiditySeconds(ONE_DAY)
                 .refreshTokenValiditySeconds(ONE_DAY);
     }

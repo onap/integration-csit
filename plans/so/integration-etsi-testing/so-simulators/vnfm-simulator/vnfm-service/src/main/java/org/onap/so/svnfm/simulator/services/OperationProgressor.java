@@ -1,12 +1,33 @@
 package org.onap.so.svnfm.simulator.services;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.ApiResponse;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantRequest;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsAddResources;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsLinks;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.GrantsLinksVnfLcmOpOcc;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.InlineResponse201;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.model.*;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.ApiClient;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.ApiException;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.api.DefaultApi;
@@ -19,7 +40,11 @@ import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperatio
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.NotificationTypeEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.OperationEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.VnfLcmOperationOccurrenceNotification.OperationStateEnum;
-import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.*;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse200;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201InstantiatedVnfInfoVnfcResourceInfo;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.LccnSubscriptionRequest;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsBasic;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.SubscriptionsAuthenticationParamsOauth2ClientCredentials;
 import org.onap.so.svnfm.simulator.api.VeVnfmApi;
 import org.onap.so.svnfm.simulator.config.ApplicationConfig;
 import org.onap.so.svnfm.simulator.model.VnfOperation;
@@ -30,23 +55,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.util.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public abstract class OperationProgressor implements Runnable {
 
@@ -211,10 +221,12 @@ public abstract class OperationProgressor implements Runnable {
         try {
             final SubscriptionsAuthenticationParamsBasic subscriptionAuthentication =
                     getLastLccnSubscriptionRequest().getAuthentication().getParamsBasic();
-            final String auth = subscriptionAuthentication.getUserName() + ":" + subscriptionAuthentication.getPassword();
+            final String auth =
+                    subscriptionAuthentication.getUserName() + ":" + subscriptionAuthentication.getPassword();
             final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
             String authHeader = "Basic " + new String(encodedAuth);
-            notificationClient.lcnVnfLcmOperationOccurrenceNotificationPostWithHttpInfo(notification, MediaType.APPLICATION_JSON, authHeader);
+            notificationClient.lcnVnfLcmOperationOccurrenceNotificationPostWithHttpInfo(notification,
+                    MediaType.APPLICATION_JSON, authHeader);
         } catch (final ApiException exception) {
             LOGGER.error("Error sending notification: " + notification, exception);
             LOGGER.error("Response code: {}, body: {}, basePath: {}", exception.getCode(), exception.getResponseBody(),
@@ -260,14 +272,22 @@ public abstract class OperationProgressor implements Runnable {
         try {
             final SubscriptionsAuthenticationParamsOauth2ClientCredentials subscriptionAuthentication =
                     getLastLccnSubscriptionRequest().getAuthentication().getParamsOauth2ClientCredentials();
+            SubscriptionsAuthenticationParamsBasic paramsBasic =
+                    getLastLccnSubscriptionRequest().getAuthentication().getParamsBasic();
+
             final String authHeader = applicationConfig.getGrantAuth().equals("oauth")
                     ? "Bearer " + getToken(notificationClient.getApiClient(), subscriptionAuthentication)
-                    : null;
+                    : getAuthorizationHeader(paramsBasic.getUserName(), paramsBasic.getPassword());
+
+            LOGGER.info("Sending grant request with authorization: {}", authHeader);
             final ApiResponse<InlineResponse201> response = grantClient.grantsPostWithHttpInfo(grantRequest,
                     MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON, authHeader);
             LOGGER.info("Grant Response: {}", response);
             return response.getData();
         } catch (final org.onap.so.adapters.vnfmadapter.extclients.vnfm.grant.ApiException exception) {
+            LOGGER.error("Status: {}", exception.getCode());
+            LOGGER.error("ResponseHeaders: {}", exception.getResponseHeaders());
+            LOGGER.error("ResponseBody: {}", exception.getResponseBody());
             LOGGER.error("Error sending notification: " + grantRequest, exception);
             return null;
         }
@@ -308,7 +328,11 @@ public abstract class OperationProgressor implements Runnable {
 
     private String getAuthorizationHeader(
             final SubscriptionsAuthenticationParamsOauth2ClientCredentials oauthClientCredentials) {
-        final String auth = oauthClientCredentials.getClientId() + ":" + oauthClientCredentials.getClientPassword();
+        return getAuthorizationHeader(oauthClientCredentials.getClientId(), oauthClientCredentials.getClientPassword());
+    }
+
+    private String getAuthorizationHeader(final String username, final String password) {
+        final String auth = username + ":" + password;
         final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.UTF_8));
         return "Basic " + new String(encodedAuth);
     }
