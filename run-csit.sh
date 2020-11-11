@@ -163,6 +163,16 @@ export PATH="${PATH}:${WORKSPACE}/docker/scripts:${WORKSPACE}/scripts:${ROBOT_VE
 export SCRIPTS="${WORKSPACE}/scripts"
 export ROBOT_VARIABLES=
 
+# use nexus3 as a mirror so-as to avoid the download rate limit
+# on dockerhub
+sudo bash -c "cat >/etc/docker/daemon.json" <<-EOM
+{
+    "registry-mirrors": ["https://nexus3.onap.org:10001"]
+}
+EOM
+sudo service docker stop
+sudo service docker start
+
 # Sign in to nexus3 docker repo
 docker login -u docker -p docker nexus3.onap.org:10001
 
