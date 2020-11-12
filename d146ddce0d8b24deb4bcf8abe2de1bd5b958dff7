@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12eae7a8_cd9a3dd3",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-11-12T13:09:40Z",
+      "side": 1,
+      "message": "I can\u0027t answer this.  All I can say is that all of the policy images are pushed to nexus3 and it appears that the other onap images are, too, as are the alpine and sonatype/nexus images.  I don\u0027t know if nexus3 is a true mirror or if it\u0027s primarily a repo for the onap images, but it certainly has what is needed for the policy CSITs.",
+      "parentUuid": "f6bda257_9f7a4b2d",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 57
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "312a64a1_acac9521",
         "filename": "run-csit.sh",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-11-12T09:46:09Z",
       "side": 1,
       "message": "Seems to work for Jenkins, but this has at least a pair of issues for local executions\n\n- this overwrites potentially existing docker daemon config (which at least Samsung developers need for internal purposes)\n- local user should have sudo privileges (or then provide the password every time, which is somewhat awkward)",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e5fe3a_3bed6359",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-11-12T13:09:40Z",
+      "side": 1,
+      "message": "- one option would be to have it just add the item to the json file\n- sudo privilege may have been a mistaken assumption on my part.  I assumed that sudo privileges were available, because all of the policy setup scripts, as well as those for A\u0026AI and DCAE use sudo.  When I think \"local user\", I typically think \"local VM\", where you do typically have sudo access.  For that matter, anybody that can run a docker command can get root access if they try\n\none way to address both issues would be to make it a default option so that it works this way when run from jenkins, but you local users can suppress it",
+      "parentUuid": "312a64a1_acac9521",
       "range": {
         "startLine": 168,
         "startChar": 0,
