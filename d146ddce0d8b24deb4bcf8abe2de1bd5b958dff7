@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312a64a1_acac9521",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-11-12T09:46:09Z",
+      "side": 1,
+      "message": "Seems to work for Jenkins, but this has at least a pair of issues for local executions\n\n- this overwrites potentially existing docker daemon config (which at least Samsung developers need for internal purposes)\n- local user should have sudo privileges (or then provide the password every time, which is somewhat awkward)",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
