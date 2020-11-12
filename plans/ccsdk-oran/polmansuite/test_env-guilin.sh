@@ -17,6 +17,9 @@
 #  ============LICENSE_END=================================================
 #
 
+#Profile for guilin release
+TEST_ENV_PROFILE="ONAP-GUILIN"
+
 # Set up the image and tags for the test. Do not add the image tag to the image names.
 
 # NOTE: A env var for each container is created by the test script.
@@ -26,7 +29,7 @@
 # Tag for guilin branch
 # Remote Policy Agent image and tag
 POLICY_AGENT_REMOTE_IMAGE="nexus3.onap.org:10003/onap/ccsdk-oran-a1policymanagementservice"
-POLICY_AGENT_REMOTE_IMAGE_TAG="1.0.1-SNAPSHOT"
+POLICY_AGENT_REMOTE_IMAGE_TAG="1.0.2-SNAPSHOT"
 
 
 # Control Panel remote image and tag
@@ -36,7 +39,7 @@ CONTROL_PANEL_REMOTE_IMAGE_TAG="2.0.0"
 # Tag for guilin branch
 # SDNC A1 Controller remote image and tag
 SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.onap.org:10003/onap/sdnc-image"
-SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.0.2-STAGING-latest"
+SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.0.3-STAGING-latest"
 
 
 #SDNC DB remote image and tag
@@ -97,6 +100,7 @@ export CR_INTERNAL_PORT=8090                                    # Callback recei
 export CR_EXTERNAL_SECURE_PORT=8091                             # Callback receiver container external secure port (host -> container)
 export CR_INTERNAL_SECURE_PORT=8091                             # Callback receiver container internal secure port (container -> container)
 export CR_APP_NAME="callback-receiver"                          # Name for the Callback receiver
+export CR_APP_CALLBACK="/callbacks"                             # Url for callbacks
 
 export CONSUL_HOST="consul-server"                              # Host name of consul
 export CONSUL_EXTERNAL_PORT=8500                                # Consul container external port (host -> container)
@@ -144,4 +148,9 @@ RESTBASE_SECURE="https://localhost:"$POLICY_AGENT_EXTERNAL_SECURE_PORT # Base ur
 DMAAPBASE="http://localhost:"$MR_EXTERNAL_PORT                  # Base url to the Dmaap adapter, http
 DMAAPBASE_SECURE="https://localhost:"$MR_EXTERNAL_SECURE_PORT   # Base url to the Dmaap adapter, https
 ADAPTER=$RESTBASE                                               # Adapter holds the address the agent R-APP interface (REST OR DMAAP)
+                                                                # The values of this var is swiched between the two base url when needed
+
+CR_RESTBASE="http://localhost:"$CR_EXTERNAL_PORT                # Base url to the Callback receiver REST interface
+CR_RESTBASE_SECURE="https://localhost:"$CR_EXTERNAL_SECURE_PORT # Base url to the secure Callback receiver REST interface
+CR_ADAPTER=$CR_RESTBASE                                         # Adapter holds the address the CR admin interface (REST only)
                                                                 # The values of this var is swiched between the two base url when needed
