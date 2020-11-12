@@ -141,6 +141,30 @@
       "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bd7218_d77051f3",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-11-12T14:04:48Z",
+      "side": 1,
+      "message": "you are right, though, in that some folks may already have this file.  Should we put some tests around it and only add the file if it isn\u0027t already there?  (For all I know, it\u0027s already there in the jenkins build environment, but guessing not.)\n\nis there another way to get docker to use nexus3 instead of dockerhub when docker-compose is executed?  I didn\u0027t see an option on docker-compose.",
+      "parentUuid": "94eb4692_ecdbe44e",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
