@@ -117,6 +117,30 @@
       "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eb4692_ecdbe44e",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-11-12T13:55:32Z",
+      "side": 1,
+      "message": "Yes, and none of those work for me without manual intervention :) \nThis is of course a minor annoyance (and looks like I\u0027ve even written one of the sudo-using scripts myself) and can not be avoided in case of /etc/docker/daemon.json",
+      "parentUuid": "ae67a8be_a2df44e0",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
