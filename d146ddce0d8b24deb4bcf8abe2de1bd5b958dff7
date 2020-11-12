@@ -93,6 +93,30 @@
       "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae67a8be_a2df44e0",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-11-12T13:10:55Z",
+      "side": 1,
+      "message": "actually, a lot of scripts assume sudo access is available",
+      "parentUuid": "51e5fe3a_3bed6359",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 3
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
