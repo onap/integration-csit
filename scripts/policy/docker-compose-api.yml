@@ -14,7 +14,7 @@
 version: '2'
 services:
    mariadb:
-      image: mariadb:${POLICY_MARIADB_VER}
+      image: nexus3.onap.org:10001/mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
