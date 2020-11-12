@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6bda257_9f7a4b2d",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-11-12T10:16:19Z",
+      "side": 1,
+      "message": "I quite not follow the idea: you are assuming here that any image that failed to be pulled from dockerhub will be available in nexus3.onap.org? How do they (dockerhub images) get there (ONAP\u0027s nexus)?",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 57
+      },
+      "revId": "d146ddce0d8b24deb4bcf8abe2de1bd5b958dff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "312a64a1_acac9521",
         "filename": "run-csit.sh",
         "patchSetId": 2
