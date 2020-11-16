@@ -17,6 +17,9 @@
 #  ============LICENSE_END=================================================
 #
 
+#Profile for current master branch
+TEST_ENV_PROFILE="ONAP-MASTER"
+
 # Set up the image and tags for the test. Do not add the image tag to the image names.
 
 # NOTE: A env var for each container is created by the test script.
@@ -79,6 +82,7 @@ export POLICY_AGENT_EXTERNAL_PORT=8081                          # Policy Agent c
 export POLICY_AGENT_INTERNAL_PORT=8081                          # Policy Agent container internal port (container -> container)
 export POLICY_AGENT_EXTERNAL_SECURE_PORT=8433                   # Policy Agent container external secure port (host -> container)
 export POLICY_AGENT_INTERNAL_SECURE_PORT=8433                   # Policy Agent container internal secure port (container -> container)
+export PMS_VERSION="V2"
 
 export POLICY_AGENT_APP_NAME="policy-agent"                     # Name for Policy Agent container
 POLICY_AGENT_LOGPATH="/var/log/policy-agent/application.log"    # Path the application log in the Policy Agent container
@@ -97,6 +101,7 @@ export CR_INTERNAL_PORT=8090                                    # Callback recei
 export CR_EXTERNAL_SECURE_PORT=8091                             # Callback receiver container external secure port (host -> container)
 export CR_INTERNAL_SECURE_PORT=8091                             # Callback receiver container internal secure port (container -> container)
 export CR_APP_NAME="callback-receiver"                          # Name for the Callback receiver
+export CR_APP_CALLBACK="/callbacks"                             # Url for callbacks
 
 export CONSUL_HOST="consul-server"                              # Host name of consul
 export CONSUL_EXTERNAL_PORT=8500                                # Consul container external port (host -> container)
@@ -144,4 +149,9 @@ RESTBASE_SECURE="https://localhost:"$POLICY_AGENT_EXTERNAL_SECURE_PORT # Base ur
 DMAAPBASE="http://localhost:"$MR_EXTERNAL_PORT                  # Base url to the Dmaap adapter, http
 DMAAPBASE_SECURE="https://localhost:"$MR_EXTERNAL_SECURE_PORT   # Base url to the Dmaap adapter, https
 ADAPTER=$RESTBASE                                               # Adapter holds the address the agent R-APP interface (REST OR DMAAP)
+                                                                # The values of this var is swiched between the two base url when needed
+
+CR_RESTBASE="http://localhost:"$CR_EXTERNAL_PORT                # Base url to the Callback receiver REST interface
+CR_RESTBASE_SECURE="https://localhost:"$CR_EXTERNAL_SECURE_PORT # Base url to the secure Callback receiver REST interface
+CR_ADAPTER=$CR_RESTBASE                                         # Adapter holds the address the CR admin interface (REST only)
                                                                 # The values of this var is swiched between the two base url when needed
