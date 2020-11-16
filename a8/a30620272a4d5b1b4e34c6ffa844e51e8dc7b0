@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Chengkai Yan <martin.c.yan@est.tech>
+Code-Review+1: Henrik Andersson <henrik.b.andersson@est.tech>
+Code-Review+1: John  Keeney <john.keeney@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Mon, 16 Nov 2020 16:04:05 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/114812
+Project: integration/csit
+Branch: refs/heads/master
