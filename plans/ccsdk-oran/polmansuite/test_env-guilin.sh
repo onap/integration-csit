@@ -19,6 +19,7 @@
 
 #Profile for guilin release
 TEST_ENV_PROFILE="ONAP-GUILIN"
+NEXUS_PROXY_REPO="nexus3.onap.org:10001/"
 
 # Set up the image and tags for the test. Do not add the image tag to the image names.
 
@@ -43,7 +44,7 @@ SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.0.3-STAGING-latest"
 
 
 #SDNC DB remote image and tag
-SDNC_DB_REMOTE_IMAGE="mysql/mysql-server"
+SDNC_DB_REMOTE_IMAGE=$NEXUS_PROXY_REPO"mysql/mysql-server"
 SDNC_DB_REMOTE_IMAGE_TAG="5.6"
 #No local image for DB, remote image always used
 
@@ -54,7 +55,7 @@ RIC_SIM_REMOTE_IMAGE_TAG="2.0.0"
 
 
 #Consul remote image and tag
-CONSUL_REMOTE_IMAGE="consul"
+CONSUL_REMOTE_IMAGE=$NEXUS_PROXY_REPO"consul"
 CONSUL_REMOTE_IMAGE_TAG="1.7.2"
 #No local image for Consul, remote image always used
 
