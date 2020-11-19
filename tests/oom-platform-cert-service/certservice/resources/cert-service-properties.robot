@@ -13,6 +13,8 @@ ${VALID_CLIENT_CSR_FILE}                 %{WORKSPACE}/tests/oom-platform-cert-se
 ${VALID_CLIENT_PK_FILE}                  %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client.pk
 ${VALID_RA_CSR_FILE}                     %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra.csr
 ${VALID_RA_PK_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra.pk
+${VALID_RA_ALL_SANS_CSR_FILE}            %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra_all_sans.csr
+${VALID_RA_ALL_SANS_PK_FILE}             %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra_all_sans.pk
 ${INVALID_CSR_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid.csr
 ${INVALID_PK_FILE}                       %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid.key
 

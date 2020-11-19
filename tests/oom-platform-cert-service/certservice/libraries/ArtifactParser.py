@@ -21,7 +21,7 @@ class ArtifactParser:
   def get_sans(self, cert):
     extension = cert.to_cryptography().extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
     dnsList = extension.value.get_values_for_type(x509.DNSName)
-    return ':'.join(map(lambda dns: dns.encode('ascii','ignore'), dnsList))
+    return ','.join(map(lambda dns: dns.encode('ascii','ignore'), dnsList))
 
   def get_envs_as_dict(self, list):
     envs = self.get_list_of_pairs_by_mappings(list)

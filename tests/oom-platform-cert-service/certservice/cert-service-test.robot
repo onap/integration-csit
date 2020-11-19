@@ -28,6 +28,11 @@ Generate Certificate In RA Mode For CA Name
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
     Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${VALID_RA_CSR_FILE}  ${VALID_RA_PK_FILE}
 
+Generate Certificate with all Sans types In RA Mode For CA Name
+    [Tags]      OOM-CERT-SERVICE
+    [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
+    Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${VALID_RA_ALL_SANS_CSR_FILE}  ${VALID_RA_ALL_SANS_PK_FILE}
+
 Report Not Found Error When Path To Service Is Not Valid
     [Tags]      OOM-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT} endpoint and expect 404
