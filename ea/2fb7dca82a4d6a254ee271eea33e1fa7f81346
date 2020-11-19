@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Henrik Andersson <henrik.b.andersson@est.tech>
+Code-Review+1: Sonia Sangari <sonia.sangari@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 19 Nov 2020 07:04:46 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/115003
+Project: integration/csit
+Branch: refs/heads/master
