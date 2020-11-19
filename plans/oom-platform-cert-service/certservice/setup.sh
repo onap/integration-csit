@@ -22,10 +22,10 @@ SCRIPT=`realpath $0`
 CURRENT_WORKDIR_PATH=`dirname $SCRIPT`
 PROJECT_DIRECTORY="plans/oom-platform-cert-service/certservice"
 
-SCRIPTS_DIRECTORY="scripts"
+RESOURCES_DIRECTORY="resources"
 
-JENKINS_SCRIPTS_PATH="$CURRENT_WORKDIR_PATH/$PROJECT_DIRECTORY/$SCRIPTS_DIRECTORY"
-LOCAL_SCRIPTS_PATH="$CURRENT_WORKDIR_PATH/$SCRIPTS_DIRECTORY"
+JENKINS_RESOURCES_PATH="$CURRENT_WORKDIR_PATH/$PROJECT_DIRECTORY/$RESOURCES_DIRECTORY"
+LOCAL_RESOURCES_PATH="$CURRENT_WORKDIR_PATH/$RESOURCES_DIRECTORY"
 
 # ------------------------------------
 #Prepare enviroment for client
@@ -50,12 +50,12 @@ unset http_proxy https_proxy
 export ClientContainerName=CertServiceClient
 # ------------------------------------
 
-if test -d "$JENKINS_SCRIPTS_PATH"; then
-    SCRIPTS_PATH=$JENKINS_SCRIPTS_PATH
-else test -f "$LOCAL_SCRIPTS_PATH";
-    SCRIPTS_PATH=$LOCAL_SCRIPTS_PATH
+if test -d "$JENKINS_RESOURCES_PATH"; then
+    RESOURCES_PATH=$JENKINS_RESOURCES_PATH
+else test -f "$LOCAL_RESOURCES_PATH";
+    RESOURCES_PATH=$LOCAL_RESOURCES_PATH
 fi
-echo "Use scripts from: $SCRIPTS_PATH"
+echo "Use resources from: $RESOURCES_PATH"
 
 CONFIGURATION_FILE="cmpServers.json"
 
@@ -72,7 +72,7 @@ echo "Use configuration from: $CONFIGURATION_PATH"
 # -------------------------------------
 
 export CONFIGURATION_PATH=${CONFIGURATION_PATH}
-export SCRIPTS_PATH=${SCRIPTS_PATH}
+export RESOURCES_PATH=${RESOURCES_PATH}
 
 #Generate keystores, truststores, certificates and keys
 mkdir -p ${WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/certs/
