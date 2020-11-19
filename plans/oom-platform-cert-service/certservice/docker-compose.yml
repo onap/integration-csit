@@ -9,7 +9,9 @@ services:
       - "80:8080"
       - "443:8443"
     volumes:
-      - $SCRIPTS_PATH:/opt/primekey/scripts
+      - $RESOURCES_PATH/ejbca-configuration.sh:/opt/primekey/scripts/ejbca-configuration.sh
+      - $RESOURCES_PATH/certprofile_CUSTOM_ENDUSER-1834889499.xml:/opt/primekey/custom_profiles/certprofile_CUSTOM_ENDUSER-1834889499.xml
+      - $RESOURCES_PATH/entityprofile_Custom_EndEntity-1356531849.xml:/opt/primekey/custom_profiles/entityprofile_Custom_EndEntity-1356531849.xml
     healthcheck:
       test: ["CMD-SHELL", "curl -kI https://localhost:8443/ejbca/publicweb/healthcheck/ejbcahealth"]
       interval: 20s
