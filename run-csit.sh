@@ -26,13 +26,13 @@ function on_exit(){
     rc=$?
     if [[ ${WORKSPACE} ]]; then
         if [[ ${WORKDIR} ]]; then
-            rsync -av "$WORKDIR/" "$WORKSPACE/archives"
+            rsync -av "$WORKDIR/" "$WORKSPACE/archives/$TESTPLAN"
         fi
         # Record list of active docker containers
-        docker ps --format "{{.Image}}" > "$WORKSPACE/archives/_docker-images.log"
+        docker ps --format "{{.Image}}" > "$WORKSPACE/archives/$TESTPLAN/_docker-images.log"
 
         # show memory consumption after all docker instances initialized
-        docker_stats | tee "$WORKSPACE/archives/_sysinfo-2-after-robot.txt"
+        docker_stats | tee "$WORKSPACE/archives/$TESTPLAN/_sysinfo-2-after-robot.txt"
     fi
     # Run teardown script plan if it exists
     cd "${TESTPLANDIR}"
@@ -135,9 +135,6 @@ if [ -z "$WORKSPACE" ]; then
     export WORKSPACE=$(git rev-parse --show-toplevel)
 fi
 
-rm -rf "$WORKSPACE/archives"
-mkdir -p "$WORKSPACE/archives"
-
 if [ -f "${WORKSPACE}/${1}/testplan.txt" ]; then
     export TESTPLAN="${1}"
 else
@@ -146,6 +143,9 @@ else
 fi
 
 export TESTOPTIONS="${2}"
+
+rm -rf "$WORKSPACE/archives/$TESTPLAN"
+mkdir -p "$WORKSPACE/archives/$TESTPLAN"
 
 TESTPLANDIR="${WORKSPACE}/${TESTPLAN}"
 
@@ -175,7 +175,7 @@ if [ -f "${SETUP}" ]; then
 fi
 
 # show memory consumption after all docker instances initialized
-docker_stats | tee "$WORKSPACE/archives/_sysinfo-1-after-setup.txt"
+docker_stats | tee "$WORKSPACE/archives/$TESTPLAN/_sysinfo-1-after-setup.txt"
 
 # Run test plan
 cd "$WORKDIR"
