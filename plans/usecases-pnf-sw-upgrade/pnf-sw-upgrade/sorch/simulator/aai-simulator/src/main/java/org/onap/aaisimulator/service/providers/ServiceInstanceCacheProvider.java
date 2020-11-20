@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,33 +17,16 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.aaisimulator.utils;
+package org.onap.aaisimulator.service.providers;
 
-/**
- * @author Waqas Ikram (waqas.ikram@est.tech)
- *
- */
-public enum CacheName {
+import java.util.Optional;
+import org.onap.aai.domain.yang.ServiceInstance;
 
-    CUSTOMER_CACHE("customer-cache"),
-    SERVICE_INSTANCE_CACHE("service-instance-cache"),
-    PROJECT_CACHE("project-cache"),
-    NODES_CACHE("nodes-cache"),
-    GENERIC_VNF_CACHE("generic-vnf-cache"),
-    PNF_CACHE("pnf-cache"),
-    OWNING_ENTITY_CACHE("owning-entity-cache"),
-    PLATFORM_CACHE("platform-cache"),
-    LINES_OF_BUSINESS_CACHE("lines-of-business-cache"),
-    CLOUD_REGION_CACHE("cloud-region-cache"),
-    ESR_VNFM_CACHE("esr-vnfm-cache");
+public interface ServiceInstanceCacheProvider {
 
-    private String name;
+    boolean patchServiceInstance(final String globalCustomerId, final ServiceInstance serviceInstance);
 
-    private CacheName(final String name) {
-        this.name = name;
-    }
+    Optional<ServiceInstance> getServiceInstance(final String globalCustomerId);
 
-    public String getName() {
-        return name;
-    }
+    boolean putServiceInstance(final String serviceInstanceId, final ServiceInstance serviceInstance);
 }
