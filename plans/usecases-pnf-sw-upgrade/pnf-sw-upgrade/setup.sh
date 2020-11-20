@@ -34,6 +34,12 @@ if [ "$MTU" == "" ]; then
 fi
 unset http_proxy https_proxy
 
+# Prepare Environment
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
+
 HOST_IP_ADDR=localhost
 
 ###################### setup so ##############################

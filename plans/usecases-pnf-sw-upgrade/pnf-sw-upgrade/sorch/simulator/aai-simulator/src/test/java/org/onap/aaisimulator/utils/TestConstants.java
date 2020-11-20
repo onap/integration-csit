@@ -33,17 +33,31 @@ public class TestConstants {
 
     public static final String SERVICE_INSTANCE_ID = "ccece8fe-13da-456a-baf6-41b3a4a2bc2b";
 
+    public static final String SVC_INSTANCE_NAME = "ETE_Customer_807c7a02-249c-4db8-9fa9-bee973fe08ce";
+
     public static final String SERVICE_INSTANCE_URL =
             SERVICE_INSTANCES_URL + "/service-instance/" + SERVICE_INSTANCE_ID;
 
+    public static final String SVC_INSTANCE_URL = SERVICE_INSTANCES_URL + "/service-instance/" + SVC_INSTANCE_NAME;
+
     public static final String SERVICE_TYPE = "vCPE";
+
+    public static final String SVC_TYPE = "pNF";
 
     public static final String SERVICE_SUBSCRIPTIONS_URL =
             "/service-subscriptions/service-subscription/" + SERVICE_TYPE;
 
+    public static final String SVC_SUBSCRIPTIONS_URL = "/service-subscriptions/service-subscription/"+ SVC_TYPE;
+
     public static final String GLOBAL_CUSTOMER_ID = "DemoCustomer";
 
+    public static final String SVC_INSTANCE_CUSTOMER_ID = "5df8b6de-2083-11e7-93ae-92361f002676";
+
+    public static final String SVC_INSTANCE_CUSTOMER_NAME = "Service_Ete_Name123452c4-3d7f-42ce-8188-818fab951269";
+
     public static final String CUSTOMERS_URL = BASE_URL_V17 + "/business/customers/customer/" + GLOBAL_CUSTOMER_ID;
+
+    public static final String CUSTOMER_BASE_URL = BASE_URL_V17 + "/business/customers/customer/" + SVC_INSTANCE_CUSTOMER_ID;
 
     public static final String VNF_ID = "dfd02fb5-d7fb-4aac-b3c4-cd6b60058701";
 
