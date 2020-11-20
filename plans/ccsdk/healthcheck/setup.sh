@@ -64,7 +64,7 @@ docker exec ccsdk_odlsli_container cat /opt/opendaylight/data/log/karaf.log | gr
     break;
   fi
 
-  echo Sleep: $INTERVAL seconds before testing if CCSDK is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  echo Sleep $INTERVAL seconds before testing if CCSDK is up. Total wait time up until now is $TIME seconds. Timeout is $TIME_OUT seconds
   sleep $INTERVAL
   TIME=$(($TIME+$INTERVAL))
 done
