@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# Not sure why this is needed.
-source ${SCRIPTS}/common_functions.sh
-
 # Initial Configuration.
 DATASTORE="consul"
 DATASTORE_IP="localhost"
