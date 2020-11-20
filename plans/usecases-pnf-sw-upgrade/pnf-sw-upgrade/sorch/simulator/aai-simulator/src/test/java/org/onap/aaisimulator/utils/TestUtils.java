@@ -80,6 +80,10 @@ public class TestUtils {
         return getJsonString("test-data/service-instance.json");
     }
 
+    public static String getSvcInstance() throws IOException {
+        return getJsonString("test-data/service-instance-aai.json");
+    }
+
     public static String getGenericVnf() throws IOException {
         return getJsonString("test-data/generic-vnf.json");
     }
