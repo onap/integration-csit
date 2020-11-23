@@ -1,10 +1,10 @@
 #!/bin/bash
 
-source $SO_DOCKER_PATH/so_teardown.sh
+echo 'Stop, Removing all running containers...'
+docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
 
-source $SDNC_DOCKER_PATH/sdn_teardown.sh
+echo 'Removing Volumes...'
+echo y | docker volume prune
 
-source $CDS_DOCKER_PATH/cds_teardown.sh
-
-PNFSIM_DOCKER_COMPOSE_PATH=$PNF_SIM_DOCKER_PATH/docker-compose.yml
-docker-compose -f $PNFSIM_DOCKER_COMPOSE_PATH -p $PROJECT_NAME down
+echo 'Removing Networks...'
+echo y | docker network prune
