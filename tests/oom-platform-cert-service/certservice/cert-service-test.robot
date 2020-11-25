@@ -68,6 +68,11 @@ Cert Service Client successfully creates keystore and truststore with expected d
     [Documentation]  Run with correct env and PKCS12 files created with correct data
     Run Cert Service Client And Validate PKCS12 Files Contain Expected Data  ${VALID_ENV_FILE}  0
 
+Cert Service Client successfully creates keystore and truststore with all SANs types provided
+    [Tags]      OOM-CERT-SERVICE
+    [Documentation]  Run with correct env and expected exit code 0
+    Run Cert Service Client And Validate PKCS12 Files Contain Expected Data  ${VALID_ENV_FILE_ALL_SANS_TYPES}  0
+
 Cert Service Client successfully creates keystore and truststore with expected data with OUTPUT_TYPE=JKS
     [Tags]      OOM-CERT-SERVICE
     [Documentation]  Run with correct env and JKS files created with correct data
