@@ -19,13 +19,20 @@ class ArtifactParser:
     return dict((k, v) for k, v in list)
 
   def get_sans(self, cert):
-    extension = cert.to_cryptography().extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
-    dnsList = extension.value.get_values_for_type(x509.DNSName)
-    return ','.join(map(lambda dns: dns.encode('ascii','ignore'), dnsList))
+    sans = cert.to_cryptography().extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value
+    sans_strings = [str(alt_name.value) for alt_name in sans]
+    return self.get_sorted_sans(sans_strings)
 
   def get_envs_as_dict(self, list):
     envs = self.get_list_of_pairs_by_mappings(list)
+    SANS = 'SANS'
+    sans_env_strings = SANS in envs and envs[SANS].split(",") or []
+    envs[SANS] = self.get_sorted_sans(sans_env_strings)
     return self.remove_nones_from_dict(envs)
+
+  def get_sorted_sans(self, sans_strings):
+    sans_strings.sort()
+    return ','.join(sans_strings)
 
   def remove_nones_from_dict(self, dictionary):
     return dict((k, v) for k, v in dictionary.iteritems() if k is not None)
