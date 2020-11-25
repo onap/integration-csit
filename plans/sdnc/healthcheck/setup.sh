@@ -15,17 +15,16 @@
 # limitations under the License.
 #
 # Modifications copyright (c) 2017 AT&T Intellectual Property
+# Modifications copyright (c) 2020 Samsung Electronics Co., Ltd.
 #
 # Place the scripts in run order:
-SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${WORKSPACE}/scripts/sdnc/script1.sh
-
+set -x
 export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=1.8-STAGING-latest
-export CCSDK_DOCKER_IMAGE_VERSION=0.7-STAGING-latest
+export DOCKER_IMAGE_VERSION=2.1-STAGING-latest
+export CCSDK_DOCKER_IMAGE_VERSION=1.1-STAGING-latest
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -55,9 +54,6 @@ docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$DOCKER_IMAGE_VERSI
 docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-dgbuilder-image:$CCSDK_DOCKER_IMAGE_VERSION onap/ccsdk-dgbuilder-image:latest
 
-docker pull $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION
-docker tag $NEXUS_DOCKER_REPO/onap/admportal-sdnc-image:$DOCKER_IMAGE_VERSION onap/admportal-sdnc-image:latest
-
 docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION
 docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ueb-listener-image:$DOCKER_IMAGE_VERSION onap/sdnc-ueb-listener-image:latest
 
@@ -69,36 +65,17 @@ docker tag $NEXUS_DOCKER_REPO/onap/sdnc-dmaap-listener-image:$DOCKER_IMAGE_VERSI
 # start SDNC containers with docker compose and configuration from docker-compose.yml
 docker-compose up -d
 
-# WAIT 10 minutes maximum and test every 5 seconds if SDNC is up using HealthCheck API
-TIME_OUT=1000
-INTERVAL=30
+# WAIT 5 minutes maximum and check karaf.log for readiness every 10 seconds
+
+TIME_OUT=300
+INTERVAL=10
+
 TIME=0
 while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck ); echo $response
 
-  if [ "$response" == "200" ]; then
-    echo SDNC started in $TIME seconds
-    break;
-  fi
+docker exec sdnc_controller_container cat /opt/opendaylight/data/log/karaf.log | grep 'warp coils'
 
-  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
-done
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: Docker containers not started in $TIME_OUT seconds... Could cause problems for testing activities...
-fi
-
-#sleep 800
-
-TIME_OUT=1500
-INTERVAL=60
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-
-  if grep -q 'Level 100' <<< ${response}; then
+  if [ $? == 0 ] ; then
     echo SDNC karaf started in $TIME seconds
     break;
   fi
@@ -109,24 +86,19 @@ while [ "$TIME" -lt "$TIME_OUT" ]; do
 done
 
 if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
 fi
 
-response=$(docker exec -ti sdnc_controller_container /opt/opendaylight/current/bin/client system:start-level)
-
-if  grep -q 'Level 100' <<< ${response}  ; then
-    num_failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
-    failed_bundles=$(docker exec sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
-    echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
-  fi
+num_bundles=$(docker exec -i sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | tail -1 | cut -d' ' -f1)
+num_failed_bundles=$(docker exec -i sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure | wc -l)
+failed_bundles=$(docker exec -i sdnc_controller_container /opt/opendaylight/current/bin/client bundle:list | grep Failure)
+echo There is/are $num_failed_bundles failed bundles out of $num_bundles installed bundles.
 
 if [ "$num_failed_bundles" -ge 1 ]; then
   echo "The following bundle(s) are in a failed state: "
   echo "  $failed_bundles"
 fi
-
-# Sleep additional 5 minutes (300 secs) to give application time to finish
-sleep 300
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"
