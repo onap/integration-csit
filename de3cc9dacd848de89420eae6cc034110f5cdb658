@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ec48126_575b49a4",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-11-26T10:13:26Z",
+      "side": 1,
+      "message": "Not sure why admportal version is no longer aligned with other SDNC components?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

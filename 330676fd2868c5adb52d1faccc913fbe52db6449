@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ccd1e5e_c90a4d76",
+        "filename": "tests/sdnc/healthcheck/test1.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-11-26T10:13:26Z",
+      "side": 0,
+      "message": "I feel like these should be replaced with something else like in integration tests (see https://jira.onap.org/browse/INT-1787) but couldn\u0027t immediately figure out how that should be done for Honolulu, so I just removed these for now.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 79
+      },
+      "revId": "330676fd2868c5adb52d1faccc913fbe52db6449",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
