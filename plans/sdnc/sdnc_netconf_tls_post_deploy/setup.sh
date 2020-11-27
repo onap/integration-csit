@@ -82,7 +82,7 @@ docker-compose -f "${SCRIPTS}"/sdnc/certservice/docker-compose.yml up -d
 
 # Check if AAF-Certservice Service is healthy and ready
 AAFCERT_IP='none'
-for i in {1..9}; do
+for i in {1..10}; do
   AAFCERT_IP=$(get-instance-ip.sh aaf-cert-service)
   RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret |
     python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
@@ -93,7 +93,7 @@ for i in {1..9}; do
     break
   fi
   echo "Waiting for AAF Cert Service to Start Up..."
-  sleep 2m
+  sleep 1m
 done
 
 if [[ "${AAFCERT_IP}" == "none" || "${AAFCERT_IP}" == '' ||  "${RESP_CODE}" != "UP" ]]; then
@@ -120,30 +120,39 @@ for i in {1..10}; do
     break
   fi
   echo "Waiting for SDNC Service to Start Up..."
-  sleep 2m
+  sleep 30s
 done
 
 if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]; then
-  echo "SDNC Service not started Could cause problems for testing activities...!"
+  echo "SDNC Service not started, setup failed"
+  exit 1
 fi
 
 # Check if SDNC-ODL Karaf Session started
-for i in {1..15}; do
-  EXEC_RESP=$(docker exec -it sdnc /opt/opendaylight/current/bin/client system:start-level)
-  if grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-    echo "SDNC-ODL Karaf Session Started."
-    break
+
+# WAIT 5 minutes maximum and check karaf.log for readiness every 10 seconds
+
+TIME_OUT=300
+INTERVAL=10
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+
+docker exec sdnc cat /opt/opendaylight/data/log/karaf.log | grep 'warp coils'
+
+  if [ $? == 0 ] ; then
+    echo SDNC-ODL karaf started in $TIME seconds
+    break;
   fi
-  echo "Waiting for SDNC-ODL Karaf Session to Start Up..."
-  sleep 2m
+
+  echo Sleep $INTERVAL seconds before testing if SDNC-ODL is up. Total wait time up until now is $TIME seconds. Timeout is $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
 done
 
-if ! grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-  echo "SDNC-ODL Karaf Session not Started, Could cause problems for testing activities...!"
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: SDNC-ODL karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
 fi
-
-echo "Sleeping 5 minutes"
-sleep 5m
 
 ###################### Netconf-PNP-Simulator Setup ######################
 
@@ -158,8 +167,6 @@ sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
 
 #########################################################################
 
-echo "Sleeping additional for 3 minutes to give application time to finish"
-sleep 3m
 
 # Export SDNC, AAF-Certservice-Cient, Netconf-Pnp-Simulator Continer Names
 export REQUEST_DATA_PATH="${REQUEST_DATA_PATH}"
