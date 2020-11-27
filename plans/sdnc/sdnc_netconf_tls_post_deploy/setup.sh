@@ -82,7 +82,7 @@ docker-compose -f "${SCRIPTS}"/sdnc/certservice/docker-compose.yml up -d
 
 # Check if AAF-Certservice Service is healthy and ready
 AAFCERT_IP='none'
-for i in {1..9}; do
+for i in {1..10}; do
   AAFCERT_IP=$(get-instance-ip.sh aaf-cert-service)
   RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret |
     python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
@@ -93,7 +93,7 @@ for i in {1..9}; do
     break
   fi
   echo "Waiting for AAF Cert Service to Start Up..."
-  sleep 2m
+  sleep 1m
 done
 
 if [[ "${AAFCERT_IP}" == "none" || "${AAFCERT_IP}" == '' ||  "${RESP_CODE}" != "UP" ]]; then
@@ -120,30 +120,30 @@ for i in {1..10}; do
     break
   fi
   echo "Waiting for SDNC Service to Start Up..."
-  sleep 2m
+  sleep 30s
 done
 
 if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]; then
-  echo "SDNC Service not started Could cause problems for testing activities...!"
+  echo "SDNC Service not started, setup failed"
+  exit 1
 fi
 
 # Check if SDNC-ODL Karaf Session started
-for i in {1..15}; do
-  EXEC_RESP=$(docker exec -it sdnc /opt/opendaylight/current/bin/client system:start-level)
+for i in {1..10}; do
+  EXEC_RESP=$(docker exec -i sdnc /opt/opendaylight/current/bin/client system:start-level)
   if grep -q 'Level 100' <<<"${EXEC_RESP}"; then
     echo "SDNC-ODL Karaf Session Started."
     break
   fi
   echo "Waiting for SDNC-ODL Karaf Session to Start Up..."
-  sleep 2m
+  sleep 30s
 done
 
 if ! grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-  echo "SDNC-ODL Karaf Session not Started, Could cause problems for testing activities...!"
+  echo "SDNC-ODL Karaf Session not Started, setup failed"
+  exit 1
 fi
 
-echo "Sleeping 5 minutes"
-sleep 5m
 
 ###################### Netconf-PNP-Simulator Setup ######################
 
@@ -158,8 +158,6 @@ sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
 
 #########################################################################
 
-echo "Sleeping additional for 3 minutes to give application time to finish"
-sleep 3m
 
 # Export SDNC, AAF-Certservice-Cient, Netconf-Pnp-Simulator Continer Names
 export REQUEST_DATA_PATH="${REQUEST_DATA_PATH}"
