@@ -69,6 +69,30 @@
       "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b468707_9163b324",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-11-30T14:04:55Z",
+      "side": 1,
+      "message": "admportal startup is still included in oam/installation/src/main/yaml/docker-compose.yml that this CSIT uses, is it ok to remove it from there?",
+      "parentUuid": "61cd7572_dc866e27",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 120
+      },
+      "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
