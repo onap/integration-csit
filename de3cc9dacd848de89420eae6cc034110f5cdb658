@@ -22,6 +22,53 @@
       "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b35c7cf_a3c94bf3",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2020-11-30T12:32:25Z",
+      "side": 1,
+      "message": "Admin portal was removed in Guilin due to lack of support",
+      "parentUuid": "2ec48126_575b49a4",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cd7572_dc866e27",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2020-11-30T12:32:25Z",
+      "side": 1,
+      "message": "These should be removed - admin portal is no longer supported",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 120
+      },
+      "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
