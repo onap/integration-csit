@@ -19,7 +19,7 @@ services:
       - certservice
 
   oom-cert-service:
-    image: nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-api:latest
+    image: nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-api:guilin-latest
     volumes:
       - $CONFIGURATION_PATH:/etc/onap/oom/certservice/cmpServers.json
       - ./certs/truststore.jks:/etc/onap/oom/certservice/certs/truststore.jks
