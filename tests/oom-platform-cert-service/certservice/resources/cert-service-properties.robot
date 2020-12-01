@@ -27,7 +27,7 @@ ${VALID_ENV_FILE_PEM}                    %{WORKSPACE}/tests/oom-platform-cert-se
 ${VALID_ENV_FILE_ALL_SANS_TYPES}         %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker_all_sans_types.env
 ${INVALID_ENV_FILE_OUTPUT_TYPE}          %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid_client_docker_output_type.env
 ${INVALID_ENV_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid_client_docker.env
-${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:latest
+${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:guilin-latest
 ${CLIENT_CONTAINER_NAME}                 %{ClientContainerName}
 ${CERT_SERVICE_NETWORK}                  certservice_certservice
 ${MOUNT_PATH}                            %{WORKSPACE}/tests/oom-platform-cert-service/certservice/tmp
