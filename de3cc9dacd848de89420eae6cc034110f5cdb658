@@ -93,6 +93,30 @@
       "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22b5251_8722aab2",
+        "filename": "plans/sdnc/healthcheck/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-12-01T12:26:46Z",
+      "side": 1,
+      "message": "Done (but the sliPluginUtils-provider version problem still remains)",
+      "parentUuid": "5b468707_9163b324",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 120
+      },
+      "revId": "de3cc9dacd848de89420eae6cc034110f5cdb658",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
