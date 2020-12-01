@@ -1,6 +1,6 @@
 *** Variables ***
 
-${CERT_POST_PROCESSOR_DOCKER_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:latest
+${CERT_POST_PROCESSOR_DOCKER_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:guilin-latest
 ${CERT_POST_PROCESSOR_CONTAINER_NAME}                 %{CertServicePostProcessorContainerName}
 ${BASE_PATH}                                          %{WORKSPACE}/tests/oom-platform-cert-service/postprocessor
 ${MOUNT_PATH}                                         ${BASE_PATH}/tmp
