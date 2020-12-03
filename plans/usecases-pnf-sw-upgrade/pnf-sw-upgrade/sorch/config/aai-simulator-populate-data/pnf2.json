@@ -1,0 +1,16 @@
+{
+  "pnf-name2":"6514",
+  "pnf-name2-source":"PNFDemo1-pnf-name2-source-val-99275",
+  "equip-type":"PNFDemo1-equip-type-val-20348",
+  "equip-vendor":"PNFDemo1-equip-vendor-val-52182",
+  "equip-model":"PNFDemo1-equip-model-val-8370",
+  "management-option":"PNFDemo1-management-option-val-72881",
+  "ipaddress-v4-oam":"pnfaddr",
+  "ipaddress-v6-oam":"0:0:0:0:0:0",
+  "sw-version":"pnf_sw_version-1.0.0",
+  "pnf-name":"PNFDemo1",
+  "pnf-id":"PNFDemo1",
+  "in-maint":false,
+  "resource-version":"1371558818531",
+  "selflink": "http://localhost:9993/pnf/PNFDemo1"
+}

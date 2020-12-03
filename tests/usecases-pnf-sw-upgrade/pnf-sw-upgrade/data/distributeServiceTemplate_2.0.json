@@ -1,0 +1,35 @@
+{
+  "distributionID": "6ac9fa0c-70f0-4213-a8d4-5b58d6a17697",
+    "serviceName": "Demo_svc",
+    "serviceVersion": "2.0",
+    "serviceUUID": "8351245d-50da-4695-8756-3a22618377f7",
+    "serviceDescription": "ServiceLevelUpgrade",
+    "serviceInvariantUUID": "fe41489e-1563-46a3-b90a-1db629e4375b",
+    "resources": [
+      {
+        "resourceInstanceName": "Demo_pnf 0",
+        "resourceCustomizationUUID": "23b43821-4eds-31f4-bfd4-66a7e0fd9bb2",
+        "resourceName": "Demo_pnf",
+        "resourceVersion": "1.0",
+        "resoucreType": "PNF",
+        "resourceUUID": "a42f6566-6a29-43e1-bac9-b91a59d702ac",
+        "resourceInvariantUUID": "fdf44827-35db-4ee5-bd70-7500e633576e",
+        "category": "Network L4+",
+        "subcategory": "Common Network Resources",
+        "artifacts": []
+      }
+    ],
+    "serviceArtifacts": [
+      {
+        "artifactName": "service-DemoSvc-csar_2.0.csar",
+        "artifactType": "TOSCA_CSAR",
+        "artifactURL": "//unzipped_sdc_csar/v1/catalog/services/DemoSvc/2.0/artifacts/service-DemoSvc-csar.csar",
+        "artifactChecksum": "YjFhZWZhOTU2MzljMDI4ZmVlNzlhOTgxYTcxMzg5ODI\u003d",
+        "artifactDescription": "TOSCA definition package of the asset",
+        "artifactTimeout": 0,
+        "artifactVersion": "2",
+        "artifactUUID": "809894a4-c862-4294-b2fb-e016b4268546"
+      }
+    ],
+    "workloadContext": "Production"
+  }
