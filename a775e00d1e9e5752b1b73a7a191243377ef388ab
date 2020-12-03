@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6681eca_a63e5c84",
+        "filename": "plans/usecases-pnf-sw-upgrade/pnf-sw-upgrade/sorch/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2020-12-03T10:36:02Z",
+      "side": 1,
+      "message": "This is very confusing (and it\u0027s also failing your verify job)\n- why is the repo excluded?\n- why is the version hardcoded here (instead of taken from variables defined in sorch/config/env)?\n- what\u0027s this 1.7.1-SNAPSHOT? 1.7.1 is not the latest version of bpmn-infra, and SNAPSHOT-tagged versions of bpmn-infra don\u0027t even exist in Nexus?",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "a775e00d1e9e5752b1b73a7a191243377ef388ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
