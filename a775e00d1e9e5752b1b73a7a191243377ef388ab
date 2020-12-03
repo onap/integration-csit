@@ -22,6 +22,30 @@
       "revId": "a775e00d1e9e5752b1b73a7a191243377ef388ab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81b8929_8fbb51a1",
+        "filename": "plans/usecases-pnf-sw-upgrade/pnf-sw-upgrade/sorch/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2020-12-03T10:47:18Z",
+      "side": 1,
+      "message": "Hi Lasse,\n\nThanks for comments but still this PR is not completed, I will update it and notify you for review.",
+      "parentUuid": "b6681eca_a63e5c84",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "a775e00d1e9e5752b1b73a7a191243377ef388ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
