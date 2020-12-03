@@ -1,9 +1,9 @@
 {
-  "service-instance-id": "5df8b6de-2083-11e7-93ae-92361f002676",
+  "service-instance-id": "df4decf6-h727-8875-8761-89683ed43645",
   "service-instance-name": "Service_Ete_Name123452c4-3d7f-42ce-8188-818fab951269",
   "environment-context": "General_Revenue-Bearing",
   "workload-context": "Production",
-  "model-version-id": "d88da85c-d9e8-4f73-b837-3a72a431622b",
+  "model-version-id": "cd4decf6-4f27-4775-9561-0e683ed43635",
   "modelInvariantId": "fe41489e-1563-46a3-b90a-1db629e4375b",
   "resource-version": "1595258335377",
   "selflink": "restconf/config/GENERIC-RESOURCE-API:services/service/5df8b6de-2083-11e7-93ae-92361f002676/service-data/service-topology/",

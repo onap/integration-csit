@@ -1,0 +1,20 @@
+{
+  "model-vers": {
+    "model-ver": [
+      {
+        "model-version-id": "cd4decf6-4f27-4775-9561-0e683ed43635",
+        "model-name": "EricService",
+        "model-version": "1.0",
+        "model-description": "service_instance_1.0",
+        "resource-version": "1594657102313"
+      },
+      {
+        "model-version-id": "4442dfc1-0d2d-46b4-b0bc-a2ac10448269",
+        "model-name": "EricService",
+        "model-version": "2.0",
+        "model-description": "service_instance_2.0",
+        "resource-version": "1594707742646"
+      }
+    ]
+  }
+}

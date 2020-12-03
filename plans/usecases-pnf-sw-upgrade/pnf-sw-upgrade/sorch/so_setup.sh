@@ -45,6 +45,7 @@ WAIT_FOR_WORKAROUND_SCRIPT=$CONFIG_DIR/"wait-for-workaround-job.sh"
 WAIT_FOR_POPULATE_AAI_SCRIPT=$CONFIG_DIR/"wait-for-aai-config-job.sh"
 WAIT_FOR_CONTAINER_SCRIPT=$CONFIG_DIR/"wait-for-container.sh"
 PNF_PAYLOAD_PATH=$CONFIG_DIR/aai-simulator-populate-data/pnf.json
+PNF2_PAYLOAD_PATH=$CONFIG_DIR/aai-simulator-populate-data/pnf2.json
 
 echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
@@ -142,6 +143,7 @@ export CONFIG_DIR_PATH=$CONFIG_DIR
 
 echo "updating PNF ip-address in pnf.json"
 sed -i "s/pnfaddr/$LOCAL_IP/g" $PNF_PAYLOAD_PATH
+sed -i "s/pnfaddr/$LOCAL_IP/g" $PNF2_PAYLOAD_PATH
 
 if [ "$DOCKER_ENVIRONMENT" == "remote" ]; then
   echo "Starting docker containers with remote images ..."
