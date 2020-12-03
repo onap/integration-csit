@@ -1,0 +1,38 @@
+{
+  "requestDetails": {
+    "subscriberInfo": {
+      "globalSubscriberId": "807c7a02-249c-4db8-9fa9-bee973fe08ce"
+    },
+    "modelInfo": {
+      "modelVersion": "2.0",
+      "modelVersionId": "8351245d-50da-4695-8756-3a22618377f7",
+      "modelInvariantId": "fe41489e-1563-46a3-b90a-1db629e4375b",
+      "modelName": "Demo_svc",
+      "modelType": "service"
+    },
+    "requestInfo": {
+      "suppressRollback": false,
+      "requestorId": "demo",
+      "instanceName": "testInstanceName",
+      "source": "VID"
+    },
+    "requestParameters": {
+      "subscriptionServiceType": "pNF",
+      "userParams": [
+        {
+          "name": "targetSoftwareVersion",
+          "value": "pnf_sw_version-4.0.0"
+        }
+      ],
+      "aLaCarte": false,
+      "payload": "{\"k1\": \"v1\"}"
+    },
+    "project": {
+      "projectName": "ServiceLevelUpgrade"
+    },
+    "owningEntity": {
+      "owningEntityId": "67f2e84c-734d-4e90-a1e4-d2ffa2e75849",
+      "owningEntityName": "OE-Test"
+    }
+  }
+}
