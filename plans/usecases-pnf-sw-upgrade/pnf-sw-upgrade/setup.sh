@@ -57,6 +57,7 @@ docker-compose -f $PNF_SIM_DOCKER_PATH/docker-compose.yml -p $PROJECT_NAME up -d
 ##### update pnf simulator ip in config deploy request #######
 RES_KEY=$(uuidgen -r)
 sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/mount.json
+sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/mount2.json
 
 ##############################################################
 

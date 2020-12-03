@@ -62,6 +62,7 @@ populate_aai_simulator()
  ESR_SYSTEM_INFO_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/esr-system-info.json
  CLOUD_ESR_SYSTEM_INFO_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/cloud-esr-system-info.json
  PNF_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/pnf.json
+ PNF2_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/pnf2.json
  SERVICE_INSTANCE_JSON_FILE=$AAI_SIMULATOR_DATA_DIR/service-instance-aai.json
  STATUS_CODE_ACCEPTED="202"
 
@@ -157,8 +158,16 @@ populate_aai_simulator()
      exit 1
  fi
 
+  echo "$SCRIPT_NAME $(current_timestamp): Adding PNF_2.0"
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/network/pnfs/pnf/PNFDemo1 -X PUT -d @$"$PNF2_JSON_FILE")
+
+  if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
+     echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put PNF data in AAI Simulator. Status code received: $status_code"
+     exit 1
+ fi
+
   echo "$SCRIPT_NAME $(current_timestamp): Adding ServiceInstance"
- status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/customers/customer/5df8b6de-2083-11e7-93ae-92361f002676/service-subscriptions/service-subscription/pNF/service-instances/service-instance/ETE_Customer_807c7a02-249c-4db8-9fa9-bee973fe08ce -X PUT -d @$"$SERVICE_INSTANCE_JSON_FILE")
+ status_code=$(curl -k --write-out %{http_code} --silent --output /dev/null -H "$BASIC_AUTHORIZATION_HEADER" -H "$ACCEPT_HEADER" -H "$CONTENT_TYPE_HEADER" $BASE_URL/business/customers/customer/807c7a02-249c-4db8-9fa9-bee973fe08ce/service-subscriptions/service-subscription/pNF/service-instances/service-instance/cd4decf6-4f27-4775-9561-0e683ed43635 -X PUT -d @$"$SERVICE_INSTANCE_JSON_FILE")
 
   if [[ "$status_code" -ne "$STATUS_CODE_ACCEPTED" ]] ; then
      echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to put ServiceInstance data in AAI Simulator. Status code received: $status_code"
