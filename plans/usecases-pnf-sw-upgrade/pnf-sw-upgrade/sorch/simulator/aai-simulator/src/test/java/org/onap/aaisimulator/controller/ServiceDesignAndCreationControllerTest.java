@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 package org.onap.aaisimulator.controller;
 
 import org.junit.Test;
+import org.onap.aaisimulator.models.ServiceModelVersion;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
@@ -37,31 +38,35 @@ public class ServiceDesignAndCreationControllerTest extends AbstractSpringBootTe
 
     @Test
     public void should_reply_sample_modelvers_response() {
-        final String url = getUrl(SERVICE_DESIGN_AND_CREATION_URL,
-                "/models/model/a51e2bef-961c-496f-b235-b4540400e885/model-vers");
-        ResponseEntity<String> actual = testRestTemplateService.invokeHttpGet(url, String.class);
-        String expectedXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-                "<model-vers xmlns=\"http://org.onap.aai.inventory/v11\">\n" +
-                "    <model-ver>\n" +
-                "        <model-version-id>c0818142-324d-4a8c-8065-45a61df247a5</model-version-id>\n" +
-                "        <model-name>EricService</model-name>\n" +
-                "        <model-version>1.0</model-version>\n" +
-                "        <model-description>blah</model-description>\n" +
-                "        <resource-version>1594657102313</resource-version>\n" +
-                "    </model-ver>\n" +
-                "    <model-ver>\n" +
-                "        <model-version-id>4442dfc1-0d2d-46b4-b0bc-a2ac10448269</model-version-id>\n" +
-                "        <model-name>EricService</model-name>\n" +
-                "        <model-version>2.0</model-version>\n" +
-                "        <model-description>blahhhh</model-description>\n" +
-                "        <resource-version>1594707742646</resource-version>\n" +
-                "    </model-ver>\n" +
-                "</model-vers>";
+        final String url = getUrl(SERVICE_DESIGN_AND_CREATION_URL, "/models/model/a51e2bef-961c-496f-b235-b4540400e885/model-vers");
+
+        ResponseEntity<?> actual = testRestTemplateService.invokeHttpGet(url, String.class);
+
+        String expectedXml = "{\n"
+            + "  \"model-vers\": {\n"
+            + "    \"model-ver\": [\n"
+            + "      {\n"
+            + "        \"model-version-id\": \"cd4decf6-4f27-4775-9561-0e683ed43635\",\n"
+            + "        \"model-name\": \"EricService\",\n"
+            + "        \"model-version\": \"1.0\",\n"
+            + "        \"model-description\": \"service_instance_1.0\",\n"
+            + "        \"resource-version\": \"1594657102313\"\n"
+            + "      },\n"
+            + "      {\n"
+            + "        \"model-version-id\": \"4442dfc1-0d2d-46b4-b0bc-a2ac10448269\",\n"
+            + "        \"model-name\": \"EricService\",\n"
+            + "        \"model-version\": \"2.0\",\n"
+            + "        \"model-description\": \"service_instance_2.0\",\n"
+            + "        \"resource-version\": \"1594707742646\"\n"
+            + "      }\n"
+            + "    ]\n"
+            + "  }\n"
+            + "}";
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         MediaType contentType = actual.getHeaders().getContentType();
         assertNotNull(contentType);
-        assertTrue(contentType.isCompatibleWith(MediaType.APPLICATION_XML));
+        assertTrue(contentType.isCompatibleWith(MediaType.APPLICATION_JSON));
         assertEquals(expectedXml, actual.getBody());
     }
 }

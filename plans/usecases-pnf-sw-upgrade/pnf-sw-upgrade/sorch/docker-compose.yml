@@ -140,6 +140,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
       - ${CONFIG_DIR_PATH}/distribution-test-zip/zipped_sdc_csar.tar.gz:/distribution-test-zip/zipped_sdc_csar.tar.gz
+      - ${CONFIG_DIR_PATH}/distribution-test-zip/zipped_sdc_csar_2.0.tar.gz:/distribution-test-zip/zipped_sdc_csar_2.0.tar.gz
       - ${CONFIG_DIR_PATH}/override-files/sdc-controller/onapheat:/app/config
     environment:
       - APP=sdc-controller
@@ -160,11 +161,11 @@ services:
     entrypoint:
       - /bin/sh
       - -c
-      - 'mkdir -p /app/distribution-test-zip/unzipped && cp -R /distribution-test-zip/zipped_sdc_csar.tar.gz /app && tar -xvzf /app/zipped_sdc_csar.tar.gz -C /app/distribution-test-zip/unzipped && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+      - 'mkdir -p /app/distribution-test-zip/unzipped && cp -R /distribution-test-zip/zipped_sdc_csar.tar.gz /app && cp -R /distribution-test-zip/zipped_sdc_csar_2.0.tar.gz /app && tar -xvzf /app/zipped_sdc_csar.tar.gz -C /app/distribution-test-zip/unzipped && tar -xvzf /app/zipped_sdc_csar_2.0.tar.gz -C /app/distribution-test-zip/unzipped  && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
   bpmn-infra:
     user: root
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}
+    image: onap/so/bpmn-infra:1.7.1-SNAPSHOT
     container_name: bpmn-infra
     ports:
       - "8081:8081"
@@ -246,6 +247,7 @@ services:
     container_name: aai-simulator
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ${CONFIG_DIR_PATH}/a51e2bef-961c-496f-b235-b4540400e885.json:/app/a51e2bef-961c-496f-b235-b4540400e885.json
     ports:
       - "9993:9993"
     environment:
