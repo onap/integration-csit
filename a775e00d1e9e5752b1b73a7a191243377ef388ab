@@ -46,6 +46,30 @@
       "revId": "a775e00d1e9e5752b1b73a7a191243377ef388ab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd206f35_800e03fd",
+        "filename": "plans/usecases-pnf-sw-upgrade/pnf-sw-upgrade/sorch/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-12-04T07:51:02Z",
+      "side": 1,
+      "message": "In such cases please set the WIP flag, that\u0027s the Gerritish way of stating that PR is a work in progress, also when you push with WIP flag set no one will be bothered with an review request from PR until WIP flag unset.",
+      "parentUuid": "d81b8929_8fbb51a1",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "a775e00d1e9e5752b1b73a7a191243377ef388ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
