@@ -50,6 +50,7 @@ echo PAP IP IS ${PAP_IP}
 echo XACML IP IS ${XACML_IP}
 echo SIMULATORS IP IS ${SIM_IP}
 
+
 # wait for the app to start up
 ${SCRIPTS}/policy/wait_for_port.sh ${DROOLS_IP} 6969
 
