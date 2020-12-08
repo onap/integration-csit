@@ -49,7 +49,9 @@ echo MARIADB IP IS ${MARIADB_IP}
 echo DMAAP_IP IS ${DMAAP_IP}
 
 # wait for the app to start up
-${SCRIPTS}/policy/wait_for_port.sh ${POLICY_PDPX_IP} 6969
+sed 's/\/ash/\/bash/g' ${SCRIPTS}/policy/wait_for_port.sh > ${SCRIPTS}/policy/wait_for_port.bash
+chmod 755 ${SCRIPTS}/policy/wait_for_port.bash
+${SCRIPTS}/policy/wait_for_port.bash ${POLICY_PDPX_IP} 6969
 
 DATA2=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
