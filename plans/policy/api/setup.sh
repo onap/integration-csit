@@ -57,7 +57,9 @@ echo API IP IS ${POLICY_API_IP}
 echo MARIADB IP IS ${MARIADB_IP}
 
 # wait for the app to start up
-${SCRIPTS}/policy/wait_for_port.sh ${POLICY_API_IP} 6969
+sed 's/\/ash/\/bash/g' ${SCRIPTS}/policy/wait_for_port.sh > ${SCRIPTS}/policy/wait_for_port.bash
+chmod 755 ${SCRIPTS}/policy/wait_for_port.bash
+${SCRIPTS}/policy/wait_for_port.bash ${POLICY_API_IP} 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
