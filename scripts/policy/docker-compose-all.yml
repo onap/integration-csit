@@ -51,7 +51,7 @@ services:
        - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
-        '-c', 'bash ./policy-api.sh',
+        '-c', './policy-api.sh',
         'mariadb', '3306'
         ]
    pap:
@@ -69,7 +69,7 @@ services:
        - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
-        '-c', 'bash ./policy-pap.sh',
+        '-c', './policy-pap.sh',
         'mariadb', '3306',
         'policy.api.simpledemo.onap.org', '3905',
         'api', '6969'
@@ -89,7 +89,7 @@ services:
        - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
-        '-c', 'bash ./policy-pdpx.sh',
+        '-c', './policy-pdpx.sh',
         'mariadb', '3306',
         'policy.api.simpledemo.onap.org', '3905',
         'pap', '6969'
