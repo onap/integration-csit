@@ -30,17 +30,17 @@ NEXUS_PROXY_REPO="nexus3.onap.org:10001/"
 
 # Remote Policy Agent image and tag
 POLICY_AGENT_REMOTE_IMAGE="nexus3.onap.org:10003/onap/ccsdk-oran-a1policymanagementservice"
-POLICY_AGENT_REMOTE_IMAGE_TAG="1.1.0-SNAPSHOT"
+POLICY_AGENT_REMOTE_IMAGE_TAG="1.1.1-SNAPSHOT"
 
 
 # Control Panel remote image and tag
 CONTROL_PANEL_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/nonrtric-controlpanel"
-CONTROL_PANEL_REMOTE_IMAGE_TAG="2.0.0"
+CONTROL_PANEL_REMOTE_IMAGE_TAG="2.2.0"
 
 
 # SDNC A1 Controller remote image and tag
 SDNC_A1_CONTROLLER_REMOTE_IMAGE="nexus3.onap.org:10003/onap/sdnc-image"
-SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.1.0-STAGING-latest"
+SDNC_A1_CONTROLLER_REMOTE_IMAGE_TAG="2.1.1-STAGING-latest"
 
 
 #SDNC DB remote image and tag
@@ -51,7 +51,7 @@ SDNC_DB_REMOTE_IMAGE_TAG="5.6"
 
 # Near RT RIC Simulator remote image and tag
 RIC_SIM_REMOTE_IMAGE="nexus3.o-ran-sc.org:10004/o-ran-sc/a1-simulator"
-RIC_SIM_REMOTE_IMAGE_TAG="2.0.0"
+RIC_SIM_REMOTE_IMAGE_TAG="2.1.0"
 
 
 #Consul remote image and tag
