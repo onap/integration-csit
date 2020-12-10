@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60a849aa_ffa498b9",
+        "filename": "scripts/policy/wait_for_port.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-12-10T15:13:39Z",
+      "side": 1,
+      "message": "since we\u0027re changing this file, maybe change tabs to spaces while we\u0027re at it",
+      "revId": "e7dba82eaedf20694a53c06f709af7299a47b0fa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
