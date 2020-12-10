@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa1b4d5_f1ec53da",
+        "filename": "scripts/policy/wait_for_port.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-12-10T14:19:23Z",
+      "side": 1,
+      "message": "change to /bin/ash, then the sed script should work",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "42324b4ea9d7aa3d2b826586df16ca19e3d0c5e9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
