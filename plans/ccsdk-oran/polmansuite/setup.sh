@@ -19,7 +19,7 @@
 
 cd $WORKSPACE/archives
 
-git clone "https://gerrit.o-ran-sc.org/r/nonrtric"
+git clone "https://gerrit.o-ran-sc.org/r/nonrtric" -b cherry
 
 AUTOTEST_ROOT=$WORKSPACE/archives/nonrtric/test/auto-test
 POLMAN_PLANS=$WORKSPACE/plans/ccsdk-oran/polmansuite
