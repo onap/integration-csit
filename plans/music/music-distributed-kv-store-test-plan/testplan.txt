@@ -1,3 +1,0 @@
-# Test suites are relative paths under [integration/csit.git]/tests/.
-# Place the suites in run order.
-music/music-distributed-kv-store-suite
