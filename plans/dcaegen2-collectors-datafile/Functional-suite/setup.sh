@@ -58,6 +58,8 @@ cp -r ../ftpes-sftp-server/tls .
 cd ../ftpes-sftp-server
 docker build -t ftpes_vsftpd:latest -f Dockerfile-ftpes .
 
+cd ../http-https-server
+docker build -t http_httpd:latest -f Dockerfile-http .
 
 #All containers will be started and stopped via the robot tests.
 
