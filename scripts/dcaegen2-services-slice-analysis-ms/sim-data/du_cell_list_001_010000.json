@@ -1,0 +1,323 @@
+{ 
+
+   "22":[ 
+
+      { 
+
+         "cellLocalId":112951562, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:34.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      }, 
+
+      { 
+
+         "cellLocalId":112951561, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:34.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      }, 
+
+      { 
+
+         "cellLocalId":112951568, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:34.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      } 
+
+   ], 
+
+   "11":[ 
+
+      { 
+
+         "cellLocalId":95697174, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:13.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      }, 
+
+      { 
+
+         "cellLocalId":95697175, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:13.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      }, 
+
+      { 
+
+         "cellLocalId":95697155, 
+
+         "operationalState":"ENABLED", 
+
+         "administrativeState":"UNLOCKED", 
+
+         "cellState":"ACTIVE", 
+
+         "pLMNInfoList":[ 
+
+            { 
+
+               "pLMNId":"310-410", 
+
+               "sNSSAI":{ 
+
+                  "sNSSAI":"001-010000", 
+
+                  "status":"ACTIVE", 
+
+                  "globalSubscriberId":null, 
+
+                  "subscriptionServiceType":null, 
+
+                  "configData":{ 
+
+                     "dLThptPerSlice":9, 
+
+                     "uLThptPerSlice":10, 
+
+                     "maxNumberOfConns":null, 
+
+                     "lastUpdatedTS":"2020-11-03T07:41:13.000+0000" 
+
+                  } 
+
+               } 
+
+            } 
+
+         ], 
+
+         "nRPCI":12, 
+
+         "nRTAC":310, 
+
+         "resourceType":"PRB" 
+
+      } 
+
+   ] 
+
+} 
