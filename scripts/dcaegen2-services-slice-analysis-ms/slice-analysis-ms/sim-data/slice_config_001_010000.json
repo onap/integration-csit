@@ -1,0 +1,27 @@
+{ 
+
+   "22":{ 
+
+      "dLThptPerSlice":27, 
+
+      "uLThptPerSlice":30, 
+
+      "maxNumberOfConns":3000, 
+
+      "lastUpdatedTS":"2020-11-03T07:40:45.000+0000" 
+
+   }, 
+
+   "11":{ 
+
+      "dLThptPerSlice":27, 
+
+      "uLThptPerSlice":30, 
+
+      "maxNumberOfConns":3000, 
+
+      "lastUpdatedTS":"2020-11-03T07:40:28.000+0000" 
+
+   } 
+
+} 
