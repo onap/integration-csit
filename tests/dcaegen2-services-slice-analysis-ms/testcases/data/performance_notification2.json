@@ -1,0 +1,56 @@
+{
+	"event": {
+		"commonEventHeader": {
+			"domain": "perf3gpp",
+			"eventId": "9e7c7db8-7a51-4bff-94f5-b530296edd7c",
+			"sequence": 0,
+			"eventName": "perf3gpp_AcmeNode-Acme_pmMeasResult",
+			"sourceName": "oteNB5309",
+			"reportingEntityName": "",
+			"priority": "Normal",
+			"startEpochMicrosec": 1538478000000,
+			"lastEpochMicrosec": 1538478900000,
+			"version": "4.0",
+			"vesEventListenerVersion": "7.1",
+			"timeZoneOffset": "UTC+05:00"
+		},
+		"perf3gppFields": {
+			"perf3gppFieldsVersion": "1.0",
+			"measDataCollection": {
+				"granularityPeriod": 1538482500000,
+				"measuredEntityUserName": "",
+				"measuredEntityDn": "1",
+				"measuredEntitySoftwareVersion": "r0.1",
+				"measInfoList": [{
+					"measInfoId": {
+						"sMeasInfoId": "some measInfoId"
+					},
+					"measTypes": {
+						"sMeasTypesList": ["SM.PrbUsedDl.001-010000", "SM.PrbUsedUl.001-010000"]
+					},
+					"measValuesList": [{
+						"measObjInstId": "103593989",
+						"suspectFlag": "false",
+						"measResults": [{
+							"p": 1,
+							"sValue": "75"
+						}, {
+							"p": 2,
+							"sValue": "84"
+						}]
+					}, {
+						"measObjInstId": "103593999",
+						"suspectFlag": "false",
+						"measResults": [{
+							"p": 1,
+							"sValue": "90"
+						}, {
+							"p": 2,
+							"sValue": "95"
+						}]
+					}]
+				}]
+			}
+		}
+	}
+}
