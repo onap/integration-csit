@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Bogumil Zebek <bogumil.zebek@nokia.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Krzysztof Kuzmicki <krzysztof.kuzmicki@nokia.com>
+Submitted-at: Thu, 07 Jan 2021 09:24:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/116534
+Project: integration/csit
+Branch: refs/heads/master
