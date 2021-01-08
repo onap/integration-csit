@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175aab97_e76c2794",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2021-01-08T11:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eccf8b5_fadd67b8",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "f9e8ce6d8a09f2020511b65ed4496235b8bd2b97",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37f7759_d1b71558",
         "filename": "plans/usecases-pnf-sw-upgrade/pnf-sw-upgrade/sorch/config/aai-simulator-populate-data/service-instance-aai.json",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "22968404_072f2392",
+        "filename": "plans/usecases-pnf-sw-upgrade/pnf-sw-upgrade/sorch/config/aai-simulator-populate-data/service-instance-aai.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2021-01-08T11:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37f7759_d1b71558",
+      "range": {
+        "startLine": 6,
+        "startChar": 33,
+        "endLine": 6,
+        "endChar": 45
+      },
+      "revId": "f9e8ce6d8a09f2020511b65ed4496235b8bd2b97",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf873225_c79b88fa",
         "filename": "tests/usecases-pnf-sw-upgrade/pnf-sw-upgrade/pnf-sw-upgrade.robot",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "f9e8ce6d8a09f2020511b65ed4496235b8bd2b97",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4d009d_79ddafb4",
+        "filename": "tests/usecases-pnf-sw-upgrade/pnf-sw-upgrade/pnf-sw-upgrade.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 6004
+      },
+      "writtenOn": "2021-01-08T11:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf873225_c79b88fa",
+      "range": {
+        "startLine": 287,
+        "startChar": 1,
+        "endLine": 287,
+        "endChar": 9
+      },
+      "revId": "f9e8ce6d8a09f2020511b65ed4496235b8bd2b97",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
