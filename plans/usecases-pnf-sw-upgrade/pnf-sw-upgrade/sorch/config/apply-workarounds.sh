@@ -72,6 +72,9 @@ apply_workaround()
   insert into $WORKFLOW_TABLE_NAME(artifact_uuid, artifact_name, name, operation_name, version, description, body, resource_target, source) values
   ('02bffbd9-6af0-4f8d-bf9b-d1dfccd28c84','GenericPnfSWUPDownload','GenericPnfSWUPDownload','GenericPnfSWUPDownload',1.0,'Pnf Workflow to download software',null,'pnf','native');
 
+  insert into $WORKFLOW_TABLE_NAME(artifact_uuid, artifact_name, name, operation_name, version, description, body, resource_target, source) values
+  ('03fcdjf2-6af0-4f8d-bf9b-s3frzca23c19','ServiceLevelUpgrade','ServiceLevelUpgrade','ServiceLevelUpgrade',1.0,'ServiceLevel Upgrade Workflow to upgrade software',null,'service','native');
+
  COMMIT;
 EOF
 
