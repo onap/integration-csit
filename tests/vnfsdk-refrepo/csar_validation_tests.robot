@@ -10,7 +10,6 @@ Perform vnf refrepo healthcheck
     ${response}=    Get Request    refrepo   /PackageResource/healthcheck
     Should Be Equal As Strings  ${response.status_code}     200
 
-
 Validate correct, no security CSAR
     [Documentation]    Valid CSAR with no security should PASS validation and should return no error
 
@@ -42,7 +41,7 @@ Validate secure CSAR with invalid certificate
     FOR   ${resault}  IN  @{json_response[0]["results"]["results"]}
         ${validation_errors}=  Get Length  ${resault["errors"]}
         run keyword if  "${resault["vnfreqName"]}" == "${CERTIFICATION_RULE}"
-        ...  Should Be Equal As Strings  ${validation_errors}  7
+        ...  Should Be Equal As Strings  ${validation_errors}  9
         run keyword if  "${resault["vnfreqName"]}" == "${PM_DICTIONARY_YAML_RULE}"
         ...  Should Be Equal As Strings  ${validation_errors}  1
         run keyword if  "${resault["vnfreqName"]}" == "${MANIFEST_FILE_RULE}"
@@ -66,7 +65,7 @@ Validate CSAR using selected rules
     FOR   ${resault}  IN  @{json_response[0]["results"]["results"]}
         ${validation_errors}=  Get Length  ${resault["errors"]}
         run keyword if  "${resault["vnfreqName"]}" == "${CERTIFICATION_RULE}"
-        ...  Should Be Equal As Strings  ${validation_errors}  7
+        ...  Should Be Equal As Strings  ${validation_errors}  9
         run keyword if  "${resault["vnfreqName"]}" == "${PM_DICTIONARY_YAML_RULE}"
         ...  Should Be Equal As Strings  ${validation_errors}  1
     END
