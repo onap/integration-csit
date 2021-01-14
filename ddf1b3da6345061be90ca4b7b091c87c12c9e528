@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80feb404_188505d2",
+        "filename": "scripts/policy/config/drools-apps/custom/features.pre.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-14T17:40:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5fd065d0_73be985d",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "ddf1b3da6345061be90ca4b7b091c87c12c9e528",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eebb7c19_8262a8e6",
         "filename": "scripts/policy/config/drools-apps/custom/features.pre.sh",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ddf1b3da6345061be90ca4b7b091c87c12c9e528",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501b191_9ab5b4fd",
+        "filename": "scripts/policy/config/drools-apps/custom/features.pre.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-14T17:40:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eebb7c19_8262a8e6",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "ddf1b3da6345061be90ca4b7b091c87c12c9e528",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
