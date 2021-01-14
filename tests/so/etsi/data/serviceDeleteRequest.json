@@ -2,9 +2,9 @@
     "requestDetails": {
          "modelInfo": {
               "modelType": "service",
-              "modelInvariantId": "0ddc448d-5513-44bc-8b02-5759d84600d5",
-              "modelVersionId": "28d4acf3-4791-4998-8d06-1cdf6d1767a9",
-              "modelName": "manualDistributionTestService",
+              "modelInvariantId": "10b3d278-e262-44ca-a0c0-4e663c2d7562",
+              "modelVersionId": "fdea6501-dabd-4428-b52c-623336a3b403",
+              "modelName": "EtsiServiceCSIT3",
               "modelVersion": "1.0"
          },
         "requestInfo": {

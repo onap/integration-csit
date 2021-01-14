@@ -8,7 +8,8 @@ ENV http_proxy=$HTTP_PROXY
 ENV https_proxy=$HTTPS_PROXY
 
 # Update the package list and upgrade installed packages
-RUN apk update && apk upgrade
+USER root
+RUN apk update
 
 # Install commonly needed tools
 RUN apk --no-cache add curl netcat-openbsd sudo nss
@@ -23,6 +24,8 @@ COPY configs/logging/logback-spring.xml /app
 COPY scripts/start-app.sh /app
 
 RUN chown -R so:so /app && chmod 700 /app/*.sh
+
+USER so
 
 # Springboot configuration (required)
 VOLUME /app/config

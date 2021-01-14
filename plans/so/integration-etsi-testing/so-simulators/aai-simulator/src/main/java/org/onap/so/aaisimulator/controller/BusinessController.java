@@ -23,12 +23,12 @@ import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSH
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
-import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
@@ -36,7 +36,6 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.Relationship;
-import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
@@ -263,33 +262,32 @@ public class BusinessController {
     public ResponseEntity<?> getRelatedToGenericVnf(@PathVariable("global-customer-id") final String globalCustomerId,
             @PathVariable("service-type") final String serviceType,
             @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestParam(name = "vnf-name", required = true) final String vnfName, final HttpServletRequest request) {
+            @RequestParam(name = "vnf-name", required = false) final String vnfName, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will retrieve generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
                 globalCustomerId, serviceType, serviceInstanceId, vnfName);
 
-        final Optional<Relationship> optional =
-                cacheServiceProvider.getRelationship(globalCustomerId, serviceType, serviceInstanceId, vnfName);
+        final List<String> relatedToVnfIds =
+                getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId, vnfName);
 
-        if (optional.isPresent()) {
 
-            final Relationship relationship = optional.get();
-            final Optional<RelationshipData> relationshipDataOptional = relationship.getRelationshipData().stream()
-                    .filter(existing -> GENERIC_VNF_VNF_ID.equals(existing.getRelationshipKey())).findFirst();
-
-            if (relationshipDataOptional.isPresent()) {
-                final RelationshipData relationshipData = relationshipDataOptional.get();
-                final String vnfId = relationshipData.getRelationshipValue();
+        if (!relatedToVnfIds.isEmpty()) {
+            final GenericVnfs genericVnfs = new GenericVnfs();
+            relatedToVnfIds.stream().forEach(vnfId -> {
                 final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(vnfId);
                 if (genericVnfOptional.isPresent()) {
-                    final GenericVnfs genericVnfs = new GenericVnfs();
-                    genericVnfs.getGenericVnf().add(genericVnfOptional.get());
-                    LOGGER.info("found service instance  {} in cache", relationship);
-                    return ResponseEntity.ok(genericVnfs);
+                    final GenericVnf genericVnf = genericVnfOptional.get();
+                    LOGGER.info("found related-to generic-vnf {} in cache", genericVnf);
+                    genericVnfs.getGenericVnf().add(genericVnf);
                 }
+            });
+            if (!genericVnfs.getGenericVnf().isEmpty()) {
+                LOGGER.info("Found {} related generic-vnfs", genericVnfs.getGenericVnf().size());
+                return ResponseEntity.ok(genericVnfs);
             }
         }
+
         LOGGER.error(
                 "Couldn't find  generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
                 globalCustomerId, serviceType, serviceInstanceId, vnfName);
@@ -352,5 +350,13 @@ public class BusinessController {
 
         return getRequestErrorResponseEntity(request);
 
+    }
+
+    private List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String vnfName) {
+        if (vnfName != null) {
+            return cacheServiceProvider.getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId, vnfName);
+        }
+        return cacheServiceProvider.getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId);
     }
 }

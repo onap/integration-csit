@@ -26,11 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.UUID;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.onap.so.sdcsimulator.utils.Constants;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StreamUtils;
 
 /**
@@ -42,18 +44,22 @@ public class ResourceProviderImplTest {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    private static final String DUMMY_CONTENT = "Hell world";
+    private static final String DUMMY_CONTENT = "Hello world";
+
+    private final PathMatchingResourcePatternResolver resourcePatternResolver =
+            new PathMatchingResourcePatternResolver();
 
     @Test
     public void test_getResource_withValidPath_matchContent() throws IOException {
         final File folder = temporaryFolder.newFolder();
-        final Path file = Files.createFile(folder.toPath().resolve("empty.csar"));
+        final String uuid = UUID.randomUUID().toString();
+        final Path file = Files.createFile(folder.toPath().resolve(uuid + Constants.DOT_CSAR));
 
         Files.write(file, DUMMY_CONTENT.getBytes());
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl(folder.getPath());
+        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl(folder.getPath(), resourcePatternResolver);
 
-        assertArrayEquals(DUMMY_CONTENT.getBytes(), objUnderTest.getResource("empty").get());
+        assertArrayEquals(DUMMY_CONTENT.getBytes(), objUnderTest.getResource(uuid).get());
     }
 
     @Test
@@ -62,21 +68,21 @@ public class ResourceProviderImplTest {
 
         final byte[] expectedResult = StreamUtils.copyToByteArray(classPathResource.getInputStream());
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("");
+        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("", resourcePatternResolver);
 
         assertArrayEquals(expectedResult, objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).get());
     }
 
     @Test
-    public void test_getResource_unbleToreadFileFromClasspath_emptyOptional() throws IOException {
+    public void test_getResource_unbleToReadFileFromClasspath_emptyOptional() throws IOException {
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("") {
+        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("", resourcePatternResolver) {
             @Override
             String getDefaultCsarPath() {
                 return "/some/dummy/path";
             }
         };
-        assertFalse(objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).isPresent());
+        assertFalse(objUnderTest.getResource(UUID.randomUUID().toString()).isPresent());
 
     }
 }

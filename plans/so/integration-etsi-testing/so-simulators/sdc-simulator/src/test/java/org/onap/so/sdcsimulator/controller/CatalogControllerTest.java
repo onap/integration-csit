@@ -24,19 +24,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Base64;
 import java.util.Optional;
+import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.onap.so.sdcsimulator.controller.CatalogController;
+import org.onap.so.sdcsimulator.models.ResourceArtifact;
 import org.onap.so.sdcsimulator.providers.ResourceProvider;
 import org.onap.so.sdcsimulator.utils.Constants;
+import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -64,8 +66,8 @@ public class CatalogControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Value("${spring.security.username}")
-    private String username;
+    @Autowired
+    private UserCredentials userCredentials;
 
     @Test
     public void test_getCsar_validCsarId_matchContent() {
@@ -78,6 +80,19 @@ public class CatalogControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
         assertEquals(3982, response.getBody().length);
+
+    }
+
+    @Test
+    public void test_getResources_validResourcesFromClassPath() {
+
+        final ResponseEntity<Set<ResourceArtifact>> response =
+                restTemplate.exchange(getBaseUrl() + "/resources", HttpMethod.GET, new HttpEntity<>(getHttpHeaders()),
+                        new ParameterizedTypeReference<Set<ResourceArtifact>>() {});
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals(3, response.getBody().size());
 
     }
 
@@ -99,7 +114,7 @@ public class CatalogControllerTest {
 
     private HttpHeaders getHttpHeaders() {
         final HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization", getBasicAuth(username));
+        requestHeaders.add("Authorization", getBasicAuth(userCredentials.getUsers().get(0).getUsername()));
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         return requestHeaders;
     }

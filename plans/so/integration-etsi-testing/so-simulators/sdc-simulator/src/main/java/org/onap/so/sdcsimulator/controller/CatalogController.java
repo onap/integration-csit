@@ -49,6 +49,12 @@ public class CatalogController {
         this.resourceProvider = resourceProvider;
     }
 
+    @GetMapping(value = "/resources", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getResources() {
+        LOGGER.info("Running getResources ...");
+        return ResponseEntity.ok().body(resourceProvider.getResource());
+    }
+
     @GetMapping(value = "/resources/{csarId}/toscaModel", produces = MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]> getCsar(@PathVariable("csarId") final String csarId) {
         LOGGER.info("Running getCsar for {} ...", csarId);

@@ -40,9 +40,10 @@ public class InstantiateOperationProgressor extends OperationProgressor {
     @Override
     protected List<GrantsAddResources> getAddResources(final String vnfdId) {
         final List<GrantsAddResources> resources = new ArrayList<>();
-
+        LOGGER.info("Will find GrantsAddResources for vnfdId: {}", vnfdId);
         for (final Vnfd vnfd : vnfds.getVnfdList()) {
             if (vnfd.getVnfdId().equals(vnfdId)) {
+                LOGGER.info("Found vnfd: {}", vnfd);
                 for (final Vnfc vnfc : vnfd.getVnfcList()) {
                     final GrantsAddResources addResource = new GrantsAddResources();
                     vnfc.setGrantResourceId(UUID.randomUUID().toString());
@@ -80,9 +81,12 @@ public class InstantiateOperationProgressor extends OperationProgressor {
                     addResource.getVimConnectionId());
         }
         LOGGER.info("VIM connections in grant response: {}", mapOfGrantResourceIdToVimConnectionId);
+        final String vnfInstanceId = operation.getVnfInstanceId();
+
+        LOGGER.info("vnfds: {}", vnfds);
 
         for (final Vnfd vnfd : vnfds.getVnfdList()) {
-            if (vnfd.getVnfdId().equals(svnfmService.getVnf(operation.getVnfInstanceId()).getVnfdId())) {
+            if (vnfd.getVnfdId().equals(svnfmService.getVnf(vnfInstanceId).getVnfdId())) {
                 for (final Vnfc vnfc : vnfd.getVnfcList()) {
                     final InlineResponse201InstantiatedVnfInfoVnfcResourceInfo vnfcResourceInfoItem =
                             new InlineResponse201InstantiatedVnfInfoVnfcResourceInfo();
