@@ -8,7 +8,7 @@
     </parent>
     <artifactId>aai-simulator</artifactId>
     <properties>
-        <version.aai.schema>1.0.0</version.aai.schema>
+        <version.aai.schema>1.8.1</version.aai.schema>
     </properties>
     <dependencies>
         <dependency>
