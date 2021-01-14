@@ -31,6 +31,17 @@ public class Vnfds {
         public void setVnfcList(final List<Vnfc> vnfclist) {
             this.vnfclist = vnfclist;
         }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("class Vnfd {\n");
+            sb.append("    vnfdId: ").append(vnfdId).append("\n");
+            sb.append("    vnfclist: ").append(vnfclist).append("\n");
+            sb.append("}");
+            return sb.toString();
+        }
+
     }
 
 
@@ -82,8 +93,20 @@ public class Vnfds {
             this.grantResourceId = grantResourceId;
         }
 
-    }
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("class Vnfc {\n");
+            sb.append("    vnfcId: ").append(vnfcId).append("\n");
+            sb.append("    type: ").append(type).append("\n");
+            sb.append("    vduId: ").append(vduId).append("\n");
+            sb.append("    resourceTemplateId: ").append(resourceTemplateId).append("\n");
+            sb.append("    grantResourceId: ").append(grantResourceId).append("\n");
+            sb.append("}");
+            return sb.toString();
+        }
 
+    }
 
     public List<Vnfd> getVnfdList() {
         return vnfdList;
@@ -93,5 +116,16 @@ public class Vnfds {
     public void setVnfdList(final List<Vnfd> vnfdList) {
         this.vnfdList = vnfdList;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("class Vnfds {\n");
+        sb.append("    vnfdList: ").append(vnfdList).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+
 
 }

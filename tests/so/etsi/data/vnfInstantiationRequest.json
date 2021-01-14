@@ -1,49 +1,47 @@
 {
-  "requestDetails": {
-    "requestInfo": {
-      "instanceName": "CsitEtsiVnfInstance",
-      "source": "VID",
-      "suppressRollback": false,
-      "requestorId": "demo",
-      "productFamilyId": "f13844f4-dbf8-4d0e-a979-45204f3ddb4e"
-    },
-    "modelInfo": {
-      "modelType": "vnf",
-      "modelInvariantId": "0a0b9979-863d-4b7e-b7f4-d27725a182b3",
-      "modelVersionId": "8f43a8c9-c677-462a-ae36-8ddb5990a60d",
-      "modelName": "manualDistributionTestVNF",
-      "modelVersion": "1.0",
-      "modelCustomizationId": "82ad3aa0-edc6-410c-a217-655fb064323f",
-      "modelCustomizationName": "manualDistributionTestVNF 0"
-    },
-    "requestParameters": {
-      "userParams": [],
-      "testApi": "GR_API"
-    },
-    "cloudConfiguration": {
-      "lcpCloudRegionId": "EtsiCloudRegion",
-      "cloudOwner": "CloudOwner",
-      "tenantId": "693c7729b2364a26a3ca602e6f66187d"
-    },
-    "lineOfBusiness": {
-      "lineOfBusinessName": "EtsiCsitLineOfBusiness"
-    },
-    "platform": {
-      "platformName": "EtsiCsitPlatform"
-    },
-    "relatedInstanceList": [
-      {
-        "relatedInstance": {
-          "instanceId": "",
-          "modelInfo": {
-            "modelType": "service",
-            "modelName": "Sol004Zip4Service",
-            "modelInvariantId": "0ddc448d-5513-44bc-8b02-5759d84600d5",
-            "modelVersion": "1.0",
-            "modelVersionId": "99d59273-4450-4034-9141-027f0c1a807a"
-          }
-        }
-      }
-    ]
-  }
+	"requestDetails": {
+		"requestInfo": {
+			"instanceName": "CsitEtsiVnfInstance",
+			"source": "VID",
+			"suppressRollback": false,
+			"requestorId": "demo",
+			"productFamilyId": "f13844f4-dbf8-4d0e-a979-45204f3ddb4e"
+		},
+		"modelInfo": {
+			"modelType": "vnf",
+			"modelInvariantId": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+			"modelVersionId": "73522444-e8e9-49c1-be29-d355800aa349",
+			"modelName": "EtsiVnfCSIT3",
+			"modelVersion": "1.0",
+			"modelCustomizationId": "3341825c-837c-4e84-8a82-cc69033ca92f",
+			"modelCustomizationName": "EtsiVnfCSIT3 0"
+		},
+		"requestParameters": {
+			"userParams": [],
+			"testApi": "GR_API"
+		},
+		"cloudConfiguration": {
+			"lcpCloudRegionId": "EtsiCloudRegion",
+			"cloudOwner": "CloudOwner",
+			"tenantId": "693c7729b2364a26a3ca602e6f66187d"
+		},
+		"lineOfBusiness": {
+			"lineOfBusinessName": "EtsiCsitLineOfBusiness"
+		},
+		"platform": {
+			"platformName": "EtsiCsitPlatform"
+		},
+		"relatedInstanceList": [{
+			"relatedInstance": {
+				"instanceId": "",
+				"modelInfo": {
+					"modelType": "service",
+					"modelName": "EtsiServiceCSIT3",
+					"modelInvariantId": "10b3d278-e262-44ca-a0c0-4e663c2d7562",
+					"modelVersion": "1.0",
+					"modelVersionId": "fdea6501-dabd-4428-b52c-623336a3b403"
+				}
+			}
+		}]
+	}
 }

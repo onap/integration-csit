@@ -22,6 +22,7 @@
 FROM docker.io/alpine
 
 # Install packages
-RUN apk update && apk upgrade && apk add mysql-client && apk add bash
+USER root
+RUN apk upgrade && apk add mysql-client
 
-RUN apk --no-cache add curl netcat-openbsd sudo nss
+RUN apk --no-cache add bash curl netcat-openbsd sudo nss 

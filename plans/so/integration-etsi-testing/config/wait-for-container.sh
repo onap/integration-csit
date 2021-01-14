@@ -142,6 +142,7 @@ process_arguments()
  $WAIT_FOR_SCRIPT -t "$TIME_OUT" -h "$HOST_IP" -p "$PORT"
 
  if [ $? -ne 0 ]; then
+   docker logs $CONTAINER_NAME
    echo "$SCRIPT_NAME $(current_timestamp) ERROR: wait-for.sh failed ..."
    exit 1
  fi

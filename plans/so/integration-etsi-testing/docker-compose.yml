@@ -6,10 +6,14 @@ services:
     ports:
       - "3306:3306"
     volumes:
+      - /var/lib/mysql
       - ${TEST_LAB_DIR}/volumes/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ${TEST_LAB_DIR}/volumes/mariadb/conf.d:/etc/mysql/conf.d
     environment:
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=etsicatalog
+      - MYSQL_PASSWORD=etsicatalog
+      - MYSQL_DATABASE=etsicatalog
     hostname:
       mariadb.so.testlab.onap.org
     logging:
@@ -345,27 +349,24 @@ services:
     command:
         - "/config/populate-aai-simulator.sh"
 ################################################################################
-  ve-vnfm-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/ve-vnfm-adapter:${TAG}
+  modeling-etsicatalog:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/modeling/etsicatalog:${ETSI_CATALOG_IMAGE_VERSION}
     ports:
-      - "9098:9098"
+      - "8806:8806"
     volumes:
-      - ${CONFIG_DIR_PATH}/override-files/ve-vnfm-adapter/onapheat:/app/config
-      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+      - /var/lib/mysql
+      - ${CONFIG_DIR_PATH}/wait-for.sh:/service/wait-for.sh
     environment:
-      - APP=ve-vnfm-adapter
-      - JVM_ARGS=-Xms64m -Xmx512m
-      - DB_HOST=mariadb
+      - DB_IP=mariadb
+      - SDC_ADDR=http://sdc-simulator:9991
     hostname:
-      ve-vnfm-adapter
+      modeling-etsicatalog
     depends_on:
-      - request-db-adapter
-      - aai-simulator
+      - mariadb
+      - sdc-simulator
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "5"
-    user: root
-    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
-################################################################################
+    entrypoint: /bin/sh -c '/service/wait-for.sh -t 30 -h mariadb -p 3306 && /service/modeling/etsicatalog/docker/docker-entrypoint.sh'

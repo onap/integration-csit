@@ -2,11 +2,11 @@
 	"requestDetails": {
 		"modelInfo": {
 			"modelType": "vnf",
-			"modelInvariantId": "b0f14066-2b65-40d2-b5a4-c8f2116fb5fc",
-			"modelVersionId": "84b9649a-4eb9-4967-9abe-e8702f55518b",
-			"modelName": "Sol004Zip3VSP",
-			"modelCustomizationName": "Sol004Zip3VSP 0",
-			"modelCustomizationId": "ff0860ac-fa9a-4fff-956b-80eeb7a330bc",
+			"modelInvariantId": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+			"modelVersionId": "73522444-e8e9-49c1-be29-d355800aa349",
+			"modelName": "EtsiVnfCSIT3",
+			"modelCustomizationName": "EtsiVnfCSIT3 0",
+			"modelCustomizationId": "3341825c-837c-4e84-8a82-cc69033ca92f",
 			"modelVersion": "1.0"
 		},
 		"requestInfo": {
