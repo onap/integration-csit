@@ -28,6 +28,5 @@ services:
   so-vnfm-adapter:
     image: onap/so/vnfm-adapter:${TAG}
 ################################################################################
-  ve-vnfm-adapter:
-    image: onap/so/ve-vnfm-adapter:${TAG}
-################################################################################
+  modeling-etsicatalog:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/modeling/etsicatalog:${ETSI_CATALOG_IMAGE_VERSION}

@@ -20,9 +20,9 @@
 
 package org.onap.so.sdcsimulator.providers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Optional;
+import java.util.Set;
+import org.onap.so.sdcsimulator.models.ResourceArtifact;
 
 /**
  * @author Eoin Hanan (eoin.hanan@est.tech)
@@ -31,6 +31,6 @@ public interface ResourceProvider {
 
     Optional<byte[]> getResource(final String csarId);
 
-    Optional<InputStream> getInputStream(final String csarId) throws IOException;
+    Set<ResourceArtifact> getResource();
 
 }
