@@ -20,17 +20,29 @@
 
 package org.onap.so.sdcsimulator.providers;
 
+import static org.onap.so.sdcsimulator.utils.Constants.CATALOG_URL;
+import static org.onap.so.sdcsimulator.utils.Constants.DOT_CSAR;
+import static org.onap.so.sdcsimulator.utils.Constants.MAIN_RESOURCE_FOLDER;
+import static org.onap.so.sdcsimulator.utils.Constants.WILD_CARD_REGEX;
+import static org.springframework.core.io.support.ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import org.onap.so.sdcsimulator.models.ResourceArtifact;
 import org.onap.so.sdcsimulator.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
@@ -44,8 +56,13 @@ public class ResourceProviderImpl implements ResourceProvider {
 
     private final String resourceLocation;
 
-    public ResourceProviderImpl(@Value("${sdc.resource.location:/app/csars/}") final String resourceLocation) {
+    private final ResourcePatternResolver resourcePatternResolver;
+
+    @Autowired
+    public ResourceProviderImpl(@Value("${sdc.resource.location:/app/csars/}") final String resourceLocation,
+            final ResourcePatternResolver resourcePatternResolver) {
         this.resourceLocation = resourceLocation;
+        this.resourcePatternResolver = resourcePatternResolver;
     }
 
     @Override
@@ -63,20 +80,89 @@ public class ResourceProviderImpl implements ResourceProvider {
     }
 
     @Override
-    public Optional<InputStream> getInputStream(final String csarId) throws IOException {
-        final Path filePath = Paths.get(resourceLocation, csarId + ".csar");
-        if (Files.exists(filePath)) {
-            return Optional.of(Files.newInputStream(filePath));
+    public Set<ResourceArtifact> getResource() {
+        final Set<ResourceArtifact> result = new HashSet<>();
+
+        final Path dir = Paths.get(resourceLocation);
+        if (Files.exists(dir)) {
+            try (final DirectoryStream<Path> stream = Files.newDirectoryStream(dir, WILD_CARD_REGEX + DOT_CSAR)) {
+                for (final Path entry : stream) {
+                    final String filename = getFilenameWithoutExtension(entry);
+                    final ResourceArtifact artifact = getResourceArtifact(filename);
+                    result.add(artifact);
+                    LOGGER.info("Found resource on file system: {}", artifact);
+
+
+                }
+            } catch (final IOException ioException) {
+                LOGGER.error("Unable to find resources on filesystem", ioException);
+            }
         }
 
-        LOGGER.info("Couldn't find file on file system '{}', will return default csar", filePath);
-        final ClassPathResource classPathResource = new ClassPathResource(getDefaultCsarPath(), this.getClass());
+        try {
+            final String csarFileLocationPattern =
+                    CLASSPATH_ALL_URL_PREFIX + MAIN_RESOURCE_FOLDER + WILD_CARD_REGEX + DOT_CSAR;
+            final Resource[] resources = resourcePatternResolver.getResources(csarFileLocationPattern);
+            if (resources != null) {
+
+                for (final Resource resource : resources) {
+                    final ResourceArtifact artifact =
+                            getResourceArtifact(getFilenameWithoutExtension(resource.getFilename()));
+                    result.add(artifact);
+                    LOGGER.info("Found resource in classpath: {}", artifact);
+                }
+            }
+
+        } catch (final IOException ioException) {
+            LOGGER.error("Unable to find resources in classpath", ioException);
+        }
+
+        return result;
+    }
+
+    private ResourceArtifact getResourceArtifact(final String filename) {
+        return new ResourceArtifact().uuid(filename).invariantUuid(filename).name(filename).version("1.0")
+                .toscaModelUrl(CATALOG_URL + "/resources/" + filename + "/toscaModel").category("Generic")
+                .subCategory("Network Service").resourceType("VF").lifecycleState("CERTIFIED")
+                .lastUpdaterUserId("SDC_SIMULATOR");
+    }
+
+    private String getFilenameWithoutExtension(final String filename) {
+        return filename.substring(0, filename.lastIndexOf('.'));
+    }
+
+    private String getFilenameWithoutExtension(final Path file) {
+        return getFilenameWithoutExtension(file.getFileName().toString());
+    }
+
+    private Optional<InputStream> getInputStream(final String csarId) throws IOException {
+        final Path filePath = Paths.get(resourceLocation, csarId + DOT_CSAR);
+        if (Files.exists(filePath)) {
+            LOGGER.info("Found resource in on file system using path: {}", filePath);
+            return Optional.of(Files.newInputStream(filePath));
+        }
+        LOGGER.warn("Couldn't find file on file system '{}', will search it in classpath", filePath);
+
+        final String path = MAIN_RESOURCE_FOLDER + csarId + DOT_CSAR;
+        ClassPathResource classPathResource = getClassPathResource(path);
         if (classPathResource.exists()) {
+            LOGGER.info("Found resource in classpath using path: {}", path);
+            return Optional.of(classPathResource.getInputStream());
+        }
+
+        LOGGER.warn("Couldn't find file on file system '{}', will return default csar", filePath);
+        classPathResource = getClassPathResource(getDefaultCsarPath());
+        if (classPathResource.exists()) {
+            LOGGER.info("Found  default csar in classpath");
             return Optional.of(classPathResource.getInputStream());
         }
 
         LOGGER.error("Couldn't find default csar in classpath ....");
         return Optional.empty();
+    }
+
+    private ClassPathResource getClassPathResource(final String path) {
+        return new ClassPathResource(path, this.getClass());
     }
 
     /*

@@ -12,12 +12,15 @@ import org.onap.so.adapters.vnfmadapter.extclients.vnfm.lcn.model.LcnVnfLcmOpera
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201.InstantiationStateEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201InstantiatedVnfInfoResourceHandle;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201InstantiatedVnfInfoVnfcResourceInfo;
-import org.onap.so.svnfm.simulator.model.Vnfds;
-import org.onap.so.svnfm.simulator.repository.VnfOperationRepository;
 import org.onap.so.svnfm.simulator.config.ApplicationConfig;
 import org.onap.so.svnfm.simulator.model.VnfOperation;
+import org.onap.so.svnfm.simulator.model.Vnfds;
+import org.onap.so.svnfm.simulator.repository.VnfOperationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TerminateOperationProgressor extends OperationProgressor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TerminateOperationProgressor.class);
 
     public TerminateOperationProgressor(final VnfOperation operation, final SvnfmService svnfmService,
             final VnfOperationRepository vnfOperationRepository, final ApplicationConfig applicationConfig,
@@ -33,9 +36,12 @@ public class TerminateOperationProgressor extends OperationProgressor {
     @Override
     protected List<GrantsAddResources> getRemoveResources(final String vnfdId) {
         final List<GrantsAddResources> resources = new ArrayList<>();
+        LOGGER.info("Will find RemoveResources for vnfdId: {}", vnfdId);
 
+        final String vnfInstanceId = operation.getVnfInstanceId();
         final org.onap.so.adapters.vnfmadapter.extclients.vnfm.model.InlineResponse201 vnf =
-                svnfmService.getVnf(operation.getVnfInstanceId());
+                svnfmService.getVnf(vnfInstanceId);
+        LOGGER.info("Found InlineResponse201: {} for vnfInstanceId: {}", vnf, vnfInstanceId);
         for (final InlineResponse201InstantiatedVnfInfoVnfcResourceInfo vnfc : vnf.getInstantiatedVnfInfo()
                 .getVnfcResourceInfo()) {
             final GrantsAddResources addResource = new GrantsAddResources();
