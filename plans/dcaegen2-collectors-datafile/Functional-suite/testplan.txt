@@ -1,4 +1,5 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
-dcaegen2-collectors-datafile/testsuites/Functional-Single-File-suite
+dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Ftp-suite
+dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Http-suite
 dcaegen2-collectors-datafile/testsuites/Strict-Host-Checking-suite
