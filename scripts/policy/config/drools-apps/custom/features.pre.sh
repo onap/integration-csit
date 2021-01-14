@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/sh
 # ============LICENSE_START===================================================
 # Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
 # ============================================================================
@@ -15,4 +15,4 @@
 # limitations under the License.
 # ============LICENSE_END=====================================================
 
-bash -c "features disable distributed-locking"
+sh -c "features disable distributed-locking"
