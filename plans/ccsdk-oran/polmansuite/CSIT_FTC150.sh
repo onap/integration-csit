@@ -20,11 +20,17 @@
 
 TC_ONELINE_DESCR="Sample tests of the SDNC A1 controller restconf API using http/https (no agent)"
 
-#App names to include in the test, space separated list
-INCLUDED_IMAGES="RICSIM SDNC"
+#App names to include in the test when running docker, space separated list
+DOCKER_INCLUDED_IMAGES="RICSIM SDNC"
+#App names to include in the test when running kubernetes, space separated list
+KUBE_INCLUDED_IMAGES=" RICSIM SDNC "
+#Prestarted app (not started by script) to include in the test when running kubernetes, space separated list
+KUBE_PRESTARTED_IMAGES=" "
 
-#SUPPORTED TEST ENV FILE
-SUPPORTED_PROFILES="ONAP-MASTER ONAP-GUILIN"
+#Supported test environment profiles
+SUPPORTED_PROFILES="ONAP-MASTER ONAP-HONOLULU"
+#Supported run modes
+SUPPORTED_RUNMODES="DOCKER KUBE"
 
 . ../common/testcase_common.sh  $@
 . ../common/controller_api_functions.sh
@@ -35,8 +41,8 @@ SUPPORTED_PROFILES="ONAP-MASTER ONAP-GUILIN"
 generate_uuid
 
 #Test agent and simulator protocol versions (others are http only)
-NB_TESTED_PROTOCOLS="HTTP HTTPS"
-SB_TESTED_PROTOCOLS="HTTP HTTPS"
+NB_TESTED_PROTOCOLS="HTTPS"
+SB_TESTED_PROTOCOLS="HTTPS"
 
 for __nb_httpx in $NB_TESTED_PROTOCOLS ; do
     for __sb_httpx in $SB_TESTED_PROTOCOLS ; do
@@ -49,10 +55,13 @@ for __nb_httpx in $NB_TESTED_PROTOCOLS ; do
 
 
         # Clean container and start all needed containers #
-        clean_containers
+        clean_environment
 
         start_ric_simulators ricsim_g1 1  OSC_2.1.0
         start_ric_simulators ricsim_g2 1  STD_1.1.3
+        if [ "$PMS_VERSION" == "V2" ]; then
+            start_ric_simulators ricsim_g3 1  STD_2.0.0
+        fi
 
         start_sdnc
 
@@ -113,4 +122,4 @@ done
 
 print_result
 
-auto_clean_containers
+auto_clean_environment

@@ -25,10 +25,10 @@ AUTOTEST_ROOT=$WORKSPACE/archives/nonrtric/test/auto-test
 POLMAN_PLANS=$WORKSPACE/plans/ccsdk-oran/polmansuite
 
 #Copy test script, adapted to ONAP images
-cp $POLMAN_PLANS/FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC1.sh
-cp $POLMAN_PLANS/FTC150.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC150.sh
+cp $POLMAN_PLANS/CSIT_FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/CSIT_FTC1.sh
+cp $POLMAN_PLANS/CSIT_FTC150.sh $WORKSPACE/archives/nonrtric/test/auto-test/CSIT_FTC150.sh
 
-TEST_ENV=$POLMAN_PLANS/test_env-${GERRIT_BRANCH}.sh
+TEST_ENV=$POLMAN_PLANS/test_env.sh
 
 #Make the env vars availble to the robot scripts
 ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT} -v TEST_ENV:${TEST_ENV}"
