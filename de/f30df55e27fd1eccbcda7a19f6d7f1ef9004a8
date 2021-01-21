@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Fiachra Corcoran <fiachra.corcoran@est.tech>
+Code-Review+1: Rahul Tyagi <rahul.tyagi@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 21 Jan 2021 17:49:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/117049
+Project: integration/csit
+Branch: refs/heads/master
