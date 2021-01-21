@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa58ab24_4b07e15f",
+        "filename": "plans/usecases-config-over-netconf/config-over-netconf/teardown.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-01-21T15:52:53Z",
+      "side": 1,
+      "message": "Should these be commented out?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "9577ad4025dc22b4515116a414a52ff5e80f5a77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
