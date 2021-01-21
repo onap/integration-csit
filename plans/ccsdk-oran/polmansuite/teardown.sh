@@ -17,10 +17,5 @@
 #  ============LICENSE_END=================================================
 
 # All started containers stopped and removed  by the test case
-
-
-# Fix ownership. Mounted resources to consul changes ownership which prevents csit test cleanup
-cd $WORKSPACE/archives/nonrtric/test/simulator-group/
-sudo chown $(id -u):$(id -g) consul_cbs
-sudo chown $(id -u):$(id -g) consul_cbs/consul
-
+docker stop $(docker ps -aq)
+docker system prune -f
