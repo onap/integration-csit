@@ -20,101 +20,102 @@
 
 # @author Rahul Tyagi (rahul.tyagi@est.tech)
 
-
-SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export PARENT=usecases-config-over-netconf
-export SUB_PARENT=config-over-netconf
-source ${WORKSPACE}/plans/$PARENT/$SUB_PARENT/test.properties
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${WORKSPACE}"/plans/usecases-config-over-netconf/config-over-netconf/test.properties
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
 if [ "$MTU" == "" ]; then
-	  export MTU="1450"
+  export MTU="1450"
 fi
 
-# clone integration branch for pnf-simulator
-mkdir -m 755 -p $WORKSPACE/temp/integration
-cd $WORKSPACE/temp
-git clone -b dublin --single-branch --depth=1 http://gerrit.onap.org/r/integration.git integration
+export CONFIG_OVER_NETCONF=${CONFIG_OVER_NETCONF}
 
-HOST_IP_ADDR=localhost
+# Prepare enviroment
+echo "Uninstall docker-py and reinstall docker."
+pip uninstall -y docker-py
+pip uninstall -y docker
+pip install -U docker==2.7.0
 
-# setup sdnc
-
-cd $SDNC_DOCKER_PATH
+# Disable Proxy - for local run
 unset http_proxy https_proxy
 
-docker pull $NETOPEER_DOCKER_REPO:$NETOPEER_IMAGE_TAG
-docker tag  $NETOPEER_DOCKER_REPO:$NETOPEER_IMAGE_TAG $NETOPEER_DOCKER_REPO:latest
-#sed -i "s/DMAAP_TOPIC_ENV=.*/DMAAP_TOPIC_ENV="AUTO"/g" diocker-compose.yml
-docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWD $NEXUS_DOCKER_REPO
+# Export default Networking bridge created on the host machine
+export LOCAL_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-image:$SDNC_IMAGE_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-image:$SDNC_IMAGE_TAG onap/sdnc-image:latest
+###################### Netconf-PNP-Simulator Setup ######################
 
-docker pull $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$ANSIBLE_IMAGE_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/sdnc-ansible-server-image:$ANSIBLE_IMAGE_TAG onap/sdnc-ansible-server-image:latest
+# Export Netconf-Pnp Simulator conf path
+export NETCONF_CONFIG_PATH
 
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG onap/ccsdk-blueprintsprocessor:latest
+# Start N etconf-Pnp-Simulator Container with docker-compose and configuration from docker-compose.yml
+docker-compose -f "${CONFIG_OVER_NETCONF}"/netconf-pnp-simulator/docker-compose.yml up -d
 
-export SDNC_CERT_PATH=${CERT_SUBPATH}
-#sed -i 's/sdnc_controller_container/sdnc_controller_container\n    volumes: \n      - $SDNC_CERT_PATH:\/opt\/opendaylight\/current\/certs/' docker-compose.yaml
-# start SDNC containers with docker compose and configuration from docker-compose.yml
-docker-compose up -d
+# Update default Networking bridge IP in mount.json file
+sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
 
-# start pnf simulator
+############################## SDNC Setup ##############################
 
-cd $INT_DOCKER_PATH
+export SDNC_CERT_PATH="${CERT_SUBPATH}"
 
-./simulator.sh start&
+docker pull "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}"
+docker tag "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}" onap/sdnc-image:latest
 
-# WAIT 10 minutes maximum and test every 5 seconds if SDNC is up using HealthCheck API
-TIME_OUT=1000
-INTERVAL=30
-TIME=0
-while [ "$TIME" -lt "$TIME_OUT" ]; do
-  response=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck );
-  echo $response
+docker pull "${NEXUS_DOCKER_REPO}"/onap/sdnc-ansible-server-image:"${ANSIBLE_IMAGE_TAG}"
+docker tag "${NEXUS_DOCKER_REPO}"/onap/sdnc-ansible-server-image:"${ANSIBLE_IMAGE_TAG}" onap/sdnc-ansible-server-image:latest
 
-  if [ "$response" == "200" ]; then
-    echo SDNC started in $TIME seconds
-    break;
+docker-compose -f "${CONFIG_OVER_NETCONF}"/sdn/docker-compose.yaml up -d
+
+# Check if SDNC Service is healthy and ready
+for i in {1..10}; do
+  SDNC_IP=$(get-instance-ip.sh sdnc_controller_container)
+  RESP_CODE=$(curl --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==" -X POST -H "X-FromAppId: csit-sdnc" -H "X-TransactionId: csit-sdnc" -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8282/restconf/operations/SLI-API:healthcheck)
+  if [[ "${RESP_CODE}" == '200' ]]; then
+    echo "SDNC Service is Ready."
+    break
   fi
-
-  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
-  sleep $INTERVAL
-  TIME=$(($TIME+$INTERVAL))
+  echo "Waiting for SDNC Service to Start Up..."
+  sleep 2m
 done
 
-export LOCAL_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
-sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/mount.xml
-
-
-if [ "$TIME" -ge "$TIME_OUT" ]; then
-   echo TIME OUT: karaf session not started in $TIME_OUT seconds... Could cause problems for testing activities...
+if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]; then
+  echo "SDNC Service not started Could cause problems for testing activities...!"
 fi
 
-########################################## blueprintsprocessor setup ##########################################################
-source $CDS_DOCKER_PATH/cds_setup.sh
+############################## CDS Setup ##############################
 
-########## update pnf simulator ip in config deploy request ########
+docker pull "${NEXUS_DOCKER_REPO}"/onap/ccsdk-blueprintsprocessor:"${BP_IMAGE_TAG}"
+docker tag "${NEXUS_DOCKER_REPO}"/onap/ccsdk-blueprintsprocessor:"${BP_IMAGE_TAG}" onap/ccsdk-blueprintsprocessor:latest
 
-NETOPEER_CONTAINER=$(docker ps -a -q --filter="name=netopeer")
-NETOPEER_CONTAINER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $SDNC_CONTAINER)
+docker-compose -f "${CONFIG_OVER_NETCONF}"/cds/docker-compose.yaml up -d
+
+echo "Sleeping 1 minute"
+sleep 1m
+
+BP_CONTAINER=$(docker ps -a -q --filter="name=bp-rest")
+CCSDK_MARIADB=$(docker ps -a -q --filter="name=ccsdk-mariadb")
+
+for i in {1..10}; do
+  if [ $(docker inspect --format='{{ .State.Running }}' "${BP_CONTAINER}") ] &&
+    [ $(docker inspect --format='{{ .State.Running }}' "${CCSDK_MARIADB}") ]; then
+    echo "Blueprint Proc Service Running"
+    break
+  else
+    echo sleep "${i}"
+    sleep "${i}"
+  fi
+done
+
+############################ Update Setup ############################
+
 RES_KEY=$(uuidgen -r)
-sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/config-deploy.json
-sed -i "s/pnfaddr/$LOCAL_IP/g" $REQUEST_DATA_PATH/config-assign.json
+sed -i "s/pnfaddr/$LOCAL_IP/g" "${REQUEST_DATA_PATH}"/config-deploy.json
+sed -i "s/pnfaddr/$LOCAL_IP/g" "${REQUEST_DATA_PATH}"/config-assign.json
 
-sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-deploy.json
-sed -i "s/reskey/$RES_KEY/g" $REQUEST_DATA_PATH/config-assign.json
-
-#########################check if server is up gracefully ######################################
-
-# Sleep additional 3 minutes (180 secs) to give application time to finish
-
-sleep 150
+sed -i "s/reskey/$RES_KEY/g" "${REQUEST_DATA_PATH}"/config-deploy.json
+sed -i "s/reskey/$RES_KEY/g" "${REQUEST_DATA_PATH}"/config-assign.json
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-
-ROBOT_VARIABLES="-v SCRIPTS:${SCRIPTS}"
+REPO_IP='127.0.0.1'
+ROBOT_VARIABLES+=" -v REPO_IP:${REPO_IP} "
+ROBOT_VARIABLES+=" -v SCRIPTS:${SCRIPTS} "
