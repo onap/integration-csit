@@ -23,9 +23,17 @@ services:
       - "8000:8080"
     restart: always
     environment:
-      APPLICATIONNAME: BlueprintsProcessor
-      BUNDLEVERSION: 1.0.0
-      APP_CONFIG_HOME: /opt/app/onap/config
-      STICKYSELECTORKEY:
-      ENVCONTEXT: dev
+      - APPLICATIONNAME=BlueprintsProcessor
+      - BUNDLEVERSION=1.0.0
+      - APP_CONFIG_HOME=/opt/app/onap/config
+      - ENVCONTEXT=dev
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${WORKSPACE}/plans/usecases-config-over-netconf/config-over-netconf/cds/resources:/opt/app/onap/res
+    entrypoint:
+      - /bin/sh
+      - -c
+      - "/opt/app/onap/res/importCerAndStartService.sh"
+    extra_hosts:
+      - sdnc:${LOCAL_IP}
 

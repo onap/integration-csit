@@ -9,7 +9,7 @@ Library     String
 ${SDNC_KEYSTORE_CONFIG_PATH}    /config/netconf-keystore:keystore
 ${SDNC_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/pnf-simulator
 ${PNFSIM_MOUNT_PATH}    /config/network-topology:network-topology/topology/topology-netconf/node/pnf-simulator/yang-ext:mount/mynetconf:netconflist
-${BP_UPLOAD_URL}    /api/v1/execution-service/upload
+${BP_UPLOAD_URL}    /api/v1/blueprint-model/publish
 ${BP_PROCESS_URL}    /api/v1/execution-service/process
 ${BP_ARCHIVE_PATH}    ${CURDIR}/data/blueprint_archive.zip
 
