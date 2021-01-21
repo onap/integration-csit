@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,10 +17,5 @@
 #  ============LICENSE_END=================================================
 
 # All started containers stopped and removed  by the test case
-
-
-# Fix ownership. Mounted resources to consul changes ownership which prevents csit test cleanup
-cd $WORKSPACE/archives/nonrtric/test/simulator-group/
-sudo chown $(id -u):$(id -g) consul_cbs
-sudo chown $(id -u):$(id -g) consul_cbs/consul
-
+docker stop $(docker ps -aq)
+docker system prune -f
