@@ -1,0 +1,69 @@
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
+#  ========================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#  ============LICENSE_END=================================================
+#
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  db:
+    image: mysql/mysql-server:5.6
+    container_name: sdnc-db
+    networks:
+      - default
+    ports:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=openECOMP1.0
+      - MYSQL_ROOT_HOST=%
+    logging:
+      driver:   "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+
+  a1-controller:
+    image: onap/sdnc-image:2.1.0
+    depends_on :
+      - db
+    container_name: a1-controller
+    networks:
+      - default
+    entrypoint: ["/opt/onap/sdnc/bin/startODL.sh"]
+    ports:
+      - 8282:8181
+      - 8443:8443
+    links:
+      - db:dbhost
+      - db:sdnctldb01
+      - db:sdnctldb02
+    environment:
+      - MYSQL_ROOT_PASSWORD=openECOMP1.0
+      - SDNC_DB_INIT=true
+      - SDNC_CONFIG_DIR=/opt/onap/sdnc/data/properties
+      - A1_TRUSTSTORE_PASSWORD=a1adapter
+    # For using own certs instead of the default ones (built into the container),
+    # place them in config/ directory, update the https-props-a1controller.properties file, and uncomment the following lines
+    #volumes:
+    #  - ./sdnc/config/keystore-a1controller.jks:/etc/ssl/certs/java/keystore.jks:ro
+    #  - ./sdnc/config/truststore-a1controller.jks:/etc/ssl/certs/java/truststore.jks:ro
+    #  - ./sdnc/config/https-props-a1controller.properties:/opt/onap/sdnc/data/properties/https-props.properties:ro
+    logging:
+      driver:   "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"

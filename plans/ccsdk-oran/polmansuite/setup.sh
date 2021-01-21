@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  ============LICENSE_START===============================================
-#  Copyright (C) 2020 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2021 Nordix Foundation. All rights reserved.
 #  ========================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -19,17 +19,16 @@
 
 cd $WORKSPACE/archives
 
-git clone "https://gerrit.o-ran-sc.org/r/nonrtric" -b cherry
-
-AUTOTEST_ROOT=$WORKSPACE/archives/nonrtric/test/auto-test
 POLMAN_PLANS=$WORKSPACE/plans/ccsdk-oran/polmansuite
+ARCHIVES=$WORKSPACE/archives
 
-#Copy test script, adapted to ONAP images
-cp $POLMAN_PLANS/FTC1.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC1.sh
-cp $POLMAN_PLANS/FTC150.sh $WORKSPACE/archives/nonrtric/test/auto-test/FTC150.sh
-
-TEST_ENV=$POLMAN_PLANS/test_env-${GERRIT_BRANCH}.sh
+#Copy test script
+cp $POLMAN_PLANS/docker-compose.yml $WORKSPACE/archives/docker-compose.yml
+cp -rf $POLMAN_PLANS/config/ $WORKSPACE/archives/config/
+cp -rf $POLMAN_PLANS/data/ $WORKSPACE/archives/data/
+cp -rf $POLMAN_PLANS/test/ $WORKSPACE/archives/test/
+cp -rf $POLMAN_PLANS/sdnc/ $WORKSPACE/archives/sdnc/
 
 #Make the env vars availble to the robot scripts
-ROBOT_VARIABLES="-b debug.log -v AUTOTEST_ROOT:${AUTOTEST_ROOT} -v TEST_ENV:${TEST_ENV}"
+ROBOT_VARIABLES="-b debug.log -v ARCHIVES:${ARCHIVES}"
 
