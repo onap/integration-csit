@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cf58f14_a04b3294",
+        "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-24T20:59:16Z",
+      "side": 1,
+      "message": "I guess this is wait for the components to come up.\nI suggest to let a small script (and put in the scripts dir) that wait for 2XX response from each container before continuing.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
