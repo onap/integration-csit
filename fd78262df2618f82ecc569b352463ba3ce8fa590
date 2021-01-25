@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "b983ce8d_7642ecab",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "This result should be the only once allowed to pass the test.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5766716e_65f82f5f",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "The opposite order should be ok too.",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 50
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea95b88_fd31ab55",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "Only one of the code should be allowed.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdb7745_b5114d31",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "Only one of the code should be allowed.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84de0e3d_4eeb9d52",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "Only one of the code should be allowed.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 13
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa29d5a7_694b5667",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "No check of response code and json?",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 128
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782aa5ef_ee08c8f6",
+        "filename": "plans/ccsdk-oran/polmansuite/data/preparePmsData.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-25T07:27:33Z",
+      "side": 1,
+      "message": "No check of response code and json?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 128
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cf58f14_a04b3294",
         "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
         "patchSetId": 7
