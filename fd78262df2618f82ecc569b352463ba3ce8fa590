@@ -183,6 +183,30 @@
       "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31785637_9fcc1fbf",
+        "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-01-25T10:07:04Z",
+      "side": 1,
+      "message": "Agreed, test cases should never have fixed sleeps this long (especially when nothing verifies successful startup afterwards)",
+      "parentUuid": "4cf58f14_a04b3294",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "fd78262df2618f82ecc569b352463ba3ce8fa590",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
