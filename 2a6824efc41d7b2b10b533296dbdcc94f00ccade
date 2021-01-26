@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94956bfa_dea3fde1",
+        "filename": "plans/ccsdk-oran/polmansuite/docker-compose.yml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-26T09:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2afd995a_29dfced1",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3395aa96_8156f70e",
         "filename": "plans/ccsdk-oran/polmansuite/sdnc/config/https-props-a1controller.properties",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de4f074_04c6f06d",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/config/https-props-a1controller.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-26T09:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3395aa96_8156f70e",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2a3f7ddd_60e566c8",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/docker-compose.yml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-26T09:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "374ed54a_8aef4bee",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359afd34_2a433f40",
         "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim.sh",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b45951e1_5fbb13ce",
+        "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-26T09:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359afd34_2a433f40",
+      "range": {
+        "startLine": 4,
+        "startChar": 17,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3df51a0_45e8c4bb",
         "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim_sdnc.sh",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7d74de_a58bb92e",
+        "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim_sdnc.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-26T09:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3df51a0_45e8c4bb",
+      "range": {
+        "startLine": 4,
+        "startChar": 17,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
