@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8789bb_2c95d347",
+        "filename": "plans/ccsdk-oran/polmansuite/config/application-policyagent.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-26T13:36:24Z",
+      "side": 1,
+      "message": "should be the org.onap...... package name",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcbd9d4_a89285df",
+        "filename": "plans/ccsdk-oran/polmansuite/config/application_configuration.json.sdnc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-26T13:36:24Z",
+      "side": 1,
+      "message": "This controller must be mapped in the rics below. Otherwise you are not using the controler at all!\nThere is metrics in the simlator /counter/remotehost (not sure of exact name) to check if it was pms or controller that contacted the sim over A1.",
+      "range": {
+        "startLine": 6,
+        "startChar": 12,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550b58fb_98ff9f39",
+        "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5074
+      },
+      "writtenOn": "2021-01-26T13:36:24Z",
+      "side": 1,
+      "message": "Is this needed?  Isnt docker-compose already installed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
