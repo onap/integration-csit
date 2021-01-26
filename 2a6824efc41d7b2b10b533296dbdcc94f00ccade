@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2afd995a_29dfced1",
+        "filename": "plans/ccsdk-oran/polmansuite/docker-compose.yml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2021-01-26T07:13:01Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3395aa96_8156f70e",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/config/https-props-a1controller.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2021-01-26T07:13:01Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374ed54a_8aef4bee",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/docker-compose.yml",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2021-01-26T07:13:01Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359afd34_2a433f40",
+        "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2021-01-26T07:13:01Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 17,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3df51a0_45e8c4bb",
+        "filename": "plans/ccsdk-oran/polmansuite/test/pms_a1sim_sdnc.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2021-01-26T07:13:01Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 4,
+        "startChar": 17,
+        "endLine": 4,
+        "endChar": 22
+      },
+      "revId": "2a6824efc41d7b2b10b533296dbdcc94f00ccade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
