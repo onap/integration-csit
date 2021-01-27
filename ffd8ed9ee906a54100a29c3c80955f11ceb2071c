@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa3a138b_6600f0ee",
+        "filename": "plans/ccsdk-oran/polmansuite/config/application-policyagent.yaml",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-27T13:42:26Z",
+      "side": 1,
+      "message": "This file is not needed, will remove it.",
+      "parentUuid": "8c8789bb_2c95d347",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dcbd9d4_a89285df",
         "filename": "plans/ccsdk-oran/polmansuite/config/application_configuration.json.sdnc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8c6233c1_ecd45245",
+        "filename": "plans/ccsdk-oran/polmansuite/config/application_configuration.json.sdnc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-27T13:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dcbd9d4_a89285df",
+      "range": {
+        "startLine": 6,
+        "startChar": 12,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550b58fb_98ff9f39",
         "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2021-01-26T13:36:24Z",
       "side": 1,
       "message": "Is this needed?  Isnt docker-compose already installed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "ffd8ed9ee906a54100a29c3c80955f11ceb2071c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0770d48f_62b8b0d0",
+        "filename": "plans/ccsdk-oran/polmansuite/setup.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-01-27T13:42:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "550b58fb_98ff9f39",
       "range": {
         "startLine": 25,
         "startChar": 0,
