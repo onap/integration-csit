@@ -1,0 +1,22 @@
+{
+  "id": "73522444-e8e9-49c1-be29-d355800aa349",
+  "vnfdId": "b1bb0ce7-2222-4fa7-95ed-4840d70a1177",
+  "vnfProductName": "",
+  "vnfSoftwareVersion": "",
+  "vnfdVersion": "1.0",
+  "checksum": {},
+  "softwareImages": [],
+  "onboardingState": "ONBOARDED",
+  "operationalState": "ENABLED",
+  "_links": {
+    "self": {
+      "href": "http://so-vnfm-adapter:9092/so/vnfm-adapter/v1/vnfpkgm/v1/vnf_packages/73522444-e8e9-49c1-be29-d355800aa349"
+    },
+    "vnfd": {
+      "href": "http://so-vnfm-adapter:9092/so/vnfm-adapter/v1/vnfpkgm/v1/vnf_packages/73522444-e8e9-49c1-be29-d355800aa349/vnfd"
+    },
+    "packageContent": {
+      "href": "http://so-vnfm-adapter:9092/so/vnfm-adapter/v1/vnfpkgm/v1/vnf_packages/73522444-e8e9-49c1-be29-d355800aa349/package_content"
+    }
+  }
+}

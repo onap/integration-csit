@@ -200,4 +200,7 @@ fi
 REPO_IP='127.0.0.1'
 ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
 
+# install required Robot libraries
+pip install robotframework-archivelibrary
+
 echo "Finished executing $SCRIPT_HOME/$SCRIPT_NAME"

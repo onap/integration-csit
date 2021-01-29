@@ -1,3 +1,5 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
-so/etsi/etsi_tests.robot
+so/etsi/etsi_package_onboarding_tests.robot
+so/etsi/etsi_vnf_lcm_tests.robot
+so/etsi/etsi_vnf_package_management_tests.robot
