@@ -1,0 +1,13 @@
+{
+   "name":"ResponseEvent",
+   "nameSpace":"org.onap.policy.apex.onap.pmcontrol",
+   "source":"APEX",
+   "target":"DCAE",
+   "version":"0.0.1",
+   "status":{
+      "subscriptionName":"ExtraPM-All-gNB-R2B",
+      "nfName":"pnf-existing",
+      "changeType":"CREATE",
+      "message":"success"
+   }
+}
