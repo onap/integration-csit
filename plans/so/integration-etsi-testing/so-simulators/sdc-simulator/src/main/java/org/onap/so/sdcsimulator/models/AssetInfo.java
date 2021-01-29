@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  *
  */
-public class ResourceArtifact implements Serializable {
+public class AssetInfo implements Serializable {
 
     private static final long serialVersionUID = 3967660000071162759L;
 
@@ -49,9 +49,6 @@ public class ResourceArtifact implements Serializable {
     @JsonProperty("category")
     private String category;
 
-    @JsonProperty("subCategory")
-    private String subCategory;
-
     @JsonProperty("resourceType")
     private String resourceType;
 
@@ -61,6 +58,9 @@ public class ResourceArtifact implements Serializable {
     @JsonProperty("lastUpdaterUserId")
     private String lastUpdaterUserId;
 
+    @JsonProperty("toscaResourceName")
+    private String toscaResourceName;
+
     public String getUuid() {
         return uuid;
     }
@@ -69,7 +69,7 @@ public class ResourceArtifact implements Serializable {
         this.uuid = uuid;
     }
 
-    public ResourceArtifact uuid(final String uuid) {
+    public AssetInfo uuid(final String uuid) {
         this.uuid = uuid;
         return this;
     }
@@ -82,7 +82,7 @@ public class ResourceArtifact implements Serializable {
         this.invariantUuid = invariantUuid;
     }
 
-    public ResourceArtifact invariantUuid(final String invariantUuid) {
+    public AssetInfo invariantUuid(final String invariantUuid) {
         this.invariantUuid = invariantUuid;
         return this;
     }
@@ -95,7 +95,7 @@ public class ResourceArtifact implements Serializable {
         this.name = name;
     }
 
-    public ResourceArtifact name(final String name) {
+    public AssetInfo name(final String name) {
         this.name = name;
         return this;
     }
@@ -108,7 +108,7 @@ public class ResourceArtifact implements Serializable {
         this.version = version;
     }
 
-    public ResourceArtifact version(final String version) {
+    public AssetInfo version(final String version) {
         this.version = version;
         return this;
     }
@@ -121,7 +121,7 @@ public class ResourceArtifact implements Serializable {
         this.toscaModelUrl = toscaModelUrl;
     }
 
-    public ResourceArtifact toscaModelUrl(final String toscaModelUrl) {
+    public AssetInfo toscaModelUrl(final String toscaModelUrl) {
         this.toscaModelUrl = toscaModelUrl;
         return this;
     }
@@ -134,21 +134,8 @@ public class ResourceArtifact implements Serializable {
         this.category = category;
     }
 
-    public ResourceArtifact category(final String category) {
+    public AssetInfo category(final String category) {
         this.category = category;
-        return this;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(final String subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public ResourceArtifact subCategory(final String subCategory) {
-        this.subCategory = subCategory;
         return this;
     }
 
@@ -160,7 +147,7 @@ public class ResourceArtifact implements Serializable {
         this.resourceType = resourceType;
     }
 
-    public ResourceArtifact resourceType(final String resourceType) {
+    public AssetInfo resourceType(final String resourceType) {
         this.resourceType = resourceType;
         return this;
     }
@@ -173,7 +160,7 @@ public class ResourceArtifact implements Serializable {
         this.lifecycleState = lifecycleState;
     }
 
-    public ResourceArtifact lifecycleState(final String lifecycleState) {
+    public AssetInfo lifecycleState(final String lifecycleState) {
         this.lifecycleState = lifecycleState;
         return this;
     }
@@ -186,8 +173,21 @@ public class ResourceArtifact implements Serializable {
         this.lastUpdaterUserId = lastUpdaterUserId;
     }
 
-    public ResourceArtifact lastUpdaterUserId(final String lastUpdaterUserId) {
+    public AssetInfo lastUpdaterUserId(final String lastUpdaterUserId) {
         this.lastUpdaterUserId = lastUpdaterUserId;
+        return this;
+    }
+
+    public String getToscaResourceName() {
+        return toscaResourceName;
+    }
+
+    public void setToscaResourceName(final String toscaResourceName) {
+        this.toscaResourceName = toscaResourceName;
+    }
+
+    public AssetInfo toscaResourceName(final String toscaResourceName) {
+        this.toscaResourceName = toscaResourceName;
         return this;
     }
 
@@ -201,27 +201,27 @@ public class ResourceArtifact implements Serializable {
         result = prime * result + ((lifecycleState == null) ? 0 : lifecycleState.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((resourceType == null) ? 0 : resourceType.hashCode());
-        result = prime * result + ((subCategory == null) ? 0 : subCategory.hashCode());
         result = prime * result + ((toscaModelUrl == null) ? 0 : toscaModelUrl.hashCode());
         result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
         result = prime * result + ((version == null) ? 0 : version.hashCode());
+
         return result;
     }
 
     @Override
     public boolean equals(final Object obj) {
-        if (obj instanceof ResourceArtifact) {
-            final ResourceArtifact other = (ResourceArtifact) obj;
+        if (obj instanceof AssetInfo) {
+            final AssetInfo other = (AssetInfo) obj;
             return ObjectUtils.nullSafeEquals(category, other.category)
                     && ObjectUtils.nullSafeEquals(invariantUuid, other.invariantUuid)
                     && ObjectUtils.nullSafeEquals(lastUpdaterUserId, other.lastUpdaterUserId)
                     && ObjectUtils.nullSafeEquals(lifecycleState, other.lifecycleState)
                     && ObjectUtils.nullSafeEquals(name, other.name)
                     && ObjectUtils.nullSafeEquals(resourceType, other.resourceType)
-                    && ObjectUtils.nullSafeEquals(subCategory, other.subCategory)
                     && ObjectUtils.nullSafeEquals(toscaModelUrl, other.toscaModelUrl)
                     && ObjectUtils.nullSafeEquals(uuid, other.uuid)
                     && ObjectUtils.nullSafeEquals(version, other.version);
+
         }
         return false;
     }
@@ -229,15 +229,16 @@ public class ResourceArtifact implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("class ResourceArtifact {\n");
+        sb.append("class AssetInfo {\n");
         sb.append("    uuid: ").append(uuid).append("\n");
         sb.append("    invariantUuid: ").append(invariantUuid).append("\n");
         sb.append("    name: ").append(name).append("\n");
         sb.append("    version: ").append(version).append("\n");
         sb.append("    toscaModelUrl: ").append(toscaModelUrl).append("\n");
         sb.append("    category: ").append(category).append("\n");
-        sb.append("    subCategory: ").append(subCategory).append("\n");
+        sb.append("    lifecycleState: ").append(lifecycleState).append("\n");
         sb.append("    lastUpdaterUserId: ").append(lastUpdaterUserId).append("\n");
+
         sb.append("}");
         return sb.toString();
     }

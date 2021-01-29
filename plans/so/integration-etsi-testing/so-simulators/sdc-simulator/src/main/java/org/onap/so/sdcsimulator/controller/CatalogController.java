@@ -22,7 +22,9 @@ package org.onap.so.sdcsimulator.controller;
 import static org.onap.so.sdcsimulator.utils.Constants.CATALOG_URL;
 import java.util.Optional;
 import javax.ws.rs.core.MediaType;
-import org.onap.so.sdcsimulator.providers.ResourceProvider;
+import org.onap.so.sdcsimulator.models.AssetType;
+import org.onap.so.sdcsimulator.models.Metadata;
+import org.onap.so.sdcsimulator.providers.AssetProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +44,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CatalogController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CatalogController.class);
 
-    private ResourceProvider resourceProvider;
+    private AssetProvider resourceProvider;
 
     @Autowired
-    public CatalogController(final ResourceProvider resourceProvider) {
+    public CatalogController(final AssetProvider resourceProvider) {
         this.resourceProvider = resourceProvider;
     }
 
     @GetMapping(value = "/resources", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getResources() {
         LOGGER.info("Running getResources ...");
-        return ResponseEntity.ok().body(resourceProvider.getResource());
+        return ResponseEntity.ok().body(resourceProvider.getAssetInfo(AssetType.RESOURCES));
     }
 
     @GetMapping(value = "/resources/{csarId}/toscaModel", produces = MediaType.APPLICATION_OCTET_STREAM)
     public ResponseEntity<byte[]> getCsar(@PathVariable("csarId") final String csarId) {
         LOGGER.info("Running getCsar for {} ...", csarId);
-        final Optional<byte[]> resource = resourceProvider.getResource(csarId);
+        final Optional<byte[]> resource = resourceProvider.getAsset(csarId, AssetType.RESOURCES);
         if (resource.isPresent()) {
             return new ResponseEntity<>(resource.get(), HttpStatus.OK);
         }
@@ -66,5 +68,39 @@ public class CatalogController {
 
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @GetMapping(value = "/resources/{csarId}/metadata",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<Metadata> getResourceMetadata(@PathVariable("csarId") final String csarId) {
+        LOGGER.info("Running getResourceMetadata for {} ...", csarId);
+        final Optional<Metadata> resource = resourceProvider.getMetadata(csarId, AssetType.RESOURCES);
+        if (resource.isPresent()) {
+            return new ResponseEntity<>(resource.get(), HttpStatus.OK);
+        }
+        LOGGER.error("Unable to find metadata for csarId: {}", csarId);
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @GetMapping(value = "/services", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getServices() {
+        LOGGER.info("Running getServices ...");
+        return ResponseEntity.ok().body(resourceProvider.getAssetInfo(AssetType.SERVICES));
+    }
+
+    @GetMapping(value = "/services/{csarId}/metadata",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<Metadata> getServiceMetadata(@PathVariable("csarId") final String csarId) {
+        LOGGER.info("Running getServiceMetadata for {} ...", csarId);
+        final Optional<Metadata> resource = resourceProvider.getMetadata(csarId, AssetType.SERVICES);
+        if (resource.isPresent()) {
+            return new ResponseEntity<>(resource.get(), HttpStatus.OK);
+        }
+        LOGGER.error("Unable to find metadata for csarId: {}", csarId);
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 }

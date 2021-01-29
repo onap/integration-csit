@@ -1,0 +1,62 @@
+{
+	"uuid": "9bb8c882-44a1-4b67-a12c-5a998e18d6ba",
+	"invariantUUID": "388a89d0-3d3d-47f8-8621-32b7b12975d4",
+	"name": "EtsiNsServiceCSIT1",
+	"version": "1.0",
+	"toscaModelURL": "/sdc/v1/catalog/services/9bb8c882-44a1-4b67-a12c-5a998e18d6ba/toscaModel",
+	"category": "ETSI Network Service",
+	"lifecycleState": "CERTIFIED",
+	"lastUpdaterUserId": "cs0008",
+	"distributionStatus": "DISTRIBUTED",
+	"lastUpdaterFullName": "Carlos Santana",
+	"resources": [{
+		"resourceInstanceName": "EtsiVnfCSIT3 0",
+		"resourceName": "EtsiVnfCSIT3",
+		"resourceInvariantUUID": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+		"resourceVersion": "1.0",
+		"resoucreType": "VF",
+		"resourceUUID": "73522444-e8e9-49c1-be29-d355800aa349",
+		"artifacts": [{
+			"artifactName": "vf-license-model.xml",
+			"artifactType": "VF_LICENSE",
+			"artifactURL": "/sdc/v1/catalog/services/9bb8c882-44a1-4b67-a12c-5a998e18d6ba/resourceInstances/etsivnfcsit30/artifacts/3e964c48-c539-41b6-b504-52905fbe1f93",
+			"artifactDescription": "VF license file",
+			"artifactChecksum": "MDAwOTQ0NWYzNzMzYjJmYjBlODc2ODUyY2MzOTIyMjQ=",
+			"artifactUUID": "3e964c48-c539-41b6-b504-52905fbe1f93",
+			"artifactVersion": "1",
+			"artifactLabel": "vflicense",
+			"artifactGroupType": "DEPLOYMENT"
+		}, {
+			"artifactName": "vgw6.csar",
+			"artifactType": "ETSI_PACKAGE",
+			"artifactURL": "/sdc/v1/catalog/services/9bb8c882-44a1-4b67-a12c-5a998e18d6ba/resourceInstances/etsivnfcsit30/artifacts/0737049a-204d-4009-932a-57a48119f5eb",
+			"artifactDescription": "Artifact created from csar",
+			"artifactChecksum": "ZjAyYjhmYzJkY2ExZjMyYzk1ZjlmNjk0YzkzNDNhY2Y=",
+			"artifactUUID": "0737049a-204d-4009-932a-57a48119f5eb",
+			"artifactVersion": "1",
+			"artifactLabel": "vgw6csar",
+			"artifactGroupType": "DEPLOYMENT"
+		}, {
+			"artifactName": "vendor-license-model.xml",
+			"artifactType": "VENDOR_LICENSE",
+			"artifactURL": "/sdc/v1/catalog/services/9bb8c882-44a1-4b67-a12c-5a998e18d6ba/resourceInstances/etsivnfcsit30/artifacts/f17c8eed-cf1f-44cd-a2b3-2caee9c34b17",
+			"artifactDescription": " Vendor license file",
+			"artifactChecksum": "NzY2ZGUzODNkNWEwNjM1MjRiMjNiNDY1ZWNkNWQyOTg=",
+			"artifactUUID": "f17c8eed-cf1f-44cd-a2b3-2caee9c34b17",
+			"artifactVersion": "1",
+			"artifactLabel": "vendorlicense",
+			"artifactGroupType": "DEPLOYMENT"
+		}]
+	}],
+	"artifacts": [{
+		"artifactName": "ns.csar",
+		"artifactType": "OTHER",
+		"artifactURL": "/sdc/v1/catalog/services/9bb8c882-44a1-4b67-a12c-5a998e18d6ba/artifacts/a6b88549-cf1f-4c08-9088-c5e3067db1c9",
+		"artifactDescription": "ns",
+		"artifactChecksum": "ODBmYmU0MDRkZWIxNGVkY2NjODkxMGE4MmZlMTNmOGU=",
+		"artifactUUID": "a6b88549-cf1f-4c08-9088-c5e3067db1c9",
+		"artifactVersion": "1",
+		"artifactLabel": "ns",
+		"artifactGroupType": "DEPLOYMENT"
+	}]
+}

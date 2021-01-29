@@ -22,6 +22,10 @@ package org.onap.so.sdcsimulator.providers;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
+import static org.onap.so.sdcsimulator.models.AssetType.RESOURCES;
+import static org.onap.so.sdcsimulator.utils.Constants.DOT_CSAR;
+import static org.onap.so.sdcsimulator.utils.Constants.FORWARD_SLASH;
+import static org.onap.so.sdcsimulator.utils.Constants.MAIN_RESOURCE_FOLDER;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +34,6 @@ import java.util.UUID;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.onap.so.sdcsimulator.utils.Constants;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StreamUtils;
@@ -39,7 +42,9 @@ import org.springframework.util.StreamUtils;
  * @author Waqas Ikram (waqas.ikram@est.tech)
  * @author Eoin Hanan (eoin.hanan@est.tech)
  */
-public class ResourceProviderImplTest {
+public class AssetProviderImplTest {
+
+    private static final String VNF_RESOURCE_ID = "73522444-e8e9-49c1-be29-d355800aa349";
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -51,38 +56,34 @@ public class ResourceProviderImplTest {
 
     @Test
     public void test_getResource_withValidPath_matchContent() throws IOException {
-        final File folder = temporaryFolder.newFolder();
+        final File folder = temporaryFolder.newFolder(RESOURCES.toString());
         final String uuid = UUID.randomUUID().toString();
-        final Path file = Files.createFile(folder.toPath().resolve(uuid + Constants.DOT_CSAR));
+        final Path file = Files.createFile(folder.toPath().resolve(uuid + DOT_CSAR));
 
         Files.write(file, DUMMY_CONTENT.getBytes());
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl(folder.getPath(), resourcePatternResolver);
+        final AssetProviderImpl objUnderTest = new AssetProviderImpl(folder.getPath(), resourcePatternResolver);
 
-        assertArrayEquals(DUMMY_CONTENT.getBytes(), objUnderTest.getResource(uuid).get());
+        assertArrayEquals(DUMMY_CONTENT.getBytes(), objUnderTest.getAsset(uuid, RESOURCES).get());
     }
 
     @Test
     public void test_getResource_withoutValidPath_matchContent() throws IOException {
-        final ClassPathResource classPathResource = new ClassPathResource(Constants.DEFAULT_CSAR_PATH, this.getClass());
+        final String validCsarPath = MAIN_RESOURCE_FOLDER + RESOURCES + FORWARD_SLASH + VNF_RESOURCE_ID + DOT_CSAR;
+        final ClassPathResource classPathResource = new ClassPathResource(validCsarPath, this.getClass());
 
         final byte[] expectedResult = StreamUtils.copyToByteArray(classPathResource.getInputStream());
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("", resourcePatternResolver);
+        final AssetProviderImpl objUnderTest = new AssetProviderImpl("", resourcePatternResolver);
 
-        assertArrayEquals(expectedResult, objUnderTest.getResource(Constants.DEFAULT_CSAR_NAME).get());
+        assertArrayEquals(expectedResult, objUnderTest.getAsset(VNF_RESOURCE_ID, RESOURCES).get());
     }
 
     @Test
     public void test_getResource_unbleToReadFileFromClasspath_emptyOptional() throws IOException {
 
-        final ResourceProviderImpl objUnderTest = new ResourceProviderImpl("", resourcePatternResolver) {
-            @Override
-            String getDefaultCsarPath() {
-                return "/some/dummy/path";
-            }
-        };
-        assertFalse(objUnderTest.getResource(UUID.randomUUID().toString()).isPresent());
+        final AssetProviderImpl objUnderTest = new AssetProviderImpl("", resourcePatternResolver);
+        assertFalse(objUnderTest.getAsset(UUID.randomUUID().toString(), RESOURCES).isPresent());
 
     }
 }

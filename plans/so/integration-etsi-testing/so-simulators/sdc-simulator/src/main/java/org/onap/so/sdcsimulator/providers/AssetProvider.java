@@ -22,15 +22,21 @@ package org.onap.so.sdcsimulator.providers;
 
 import java.util.Optional;
 import java.util.Set;
-import org.onap.so.sdcsimulator.models.ResourceArtifact;
+import org.onap.so.sdcsimulator.models.AssetInfo;
+import org.onap.so.sdcsimulator.models.AssetType;
+import org.onap.so.sdcsimulator.models.Metadata;
 
 /**
  * @author Eoin Hanan (eoin.hanan@est.tech)
+ * @author Waqas Ikram (waqas.ikram@est.tech)
+ *
  */
-public interface ResourceProvider {
+public interface AssetProvider {
 
-    Optional<byte[]> getResource(final String csarId);
+    Optional<byte[]> getAsset(final String csarId, final AssetType assetType);
 
-    Set<ResourceArtifact> getResource();
+    Set<AssetInfo> getAssetInfo(final AssetType assetType);
+    
+    Optional<Metadata> getMetadata(final String csarId, final AssetType assetType);
 
 }

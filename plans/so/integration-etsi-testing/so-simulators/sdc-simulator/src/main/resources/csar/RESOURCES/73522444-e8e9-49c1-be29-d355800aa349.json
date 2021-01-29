@@ -1,0 +1,116 @@
+{
+	"uuid": "73522444-e8e9-49c1-be29-d355800aa349",
+	"invariantUUID": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+	"name": "EtsiVnfCSIT3",
+	"version": "1.0",
+	"toscaModelURL": "/sdc/v1/catalog/resources/73522444-e8e9-49c1-be29-d355800aa349/toscaModel",
+	"category": "Generic",
+	"subCategory": "Network Service",
+	"resourceType": "VF",
+	"lifecycleState": "CERTIFIED",
+	"lastUpdaterUserId": "cs0008",
+	"lastUpdaterFullName": "Carlos Santana",
+	"toscaResourceName": "org.openecomp.resource.vf.Etsivnfcsit3",
+	"resources": [
+		{
+			"resourceInstanceName": "Cp_vgw_mux_gw_private_net",
+			"resourceName": "VDU Cp",
+			"resourceInvariantUUID": "3e4b8692-e6b1-44e9-90b1-6c5f1abf469c",
+			"resourceVersion": "1.0",
+			"resoucreType": "CP",
+			"resourceUUID": "72b9cd47-e8b7-4033-bb1a-fa30e45e3233"
+		},
+		{
+			"resourceInstanceName": "Cp_vgw_onap_private",
+			"resourceName": "VDU Cp",
+			"resourceInvariantUUID": "3e4b8692-e6b1-44e9-90b1-6c5f1abf469c",
+			"resourceVersion": "1.0",
+			"resoucreType": "CP",
+			"resourceUUID": "72b9cd47-e8b7-4033-bb1a-fa30e45e3233"
+		},
+		{
+			"resourceInstanceName": "LLU_VNF",
+			"resourceName": "VNF",
+			"resourceInvariantUUID": "a85aa428-cdb6-4e96-b873-0c20bfd22cac",
+			"resourceVersion": "1.0",
+			"resoucreType": "VFC",
+			"resourceUUID": "bbe67a58-6fd6-4849-abdf-f6a73dbdd594"
+		},
+		{
+			"resourceInstanceName": "VDU_vgw_0",
+			"resourceName": "VDU Compute",
+			"resourceInvariantUUID": "d211a1fd-ae0d-4b33-9076-76defafa7adc",
+			"resourceVersion": "1.0",
+			"resoucreType": "VFC",
+			"resourceUUID": "5dcd4cc9-2db5-49aa-a51a-a0eb4124df4c"
+		},
+		{
+			"resourceInstanceName": "VL_mux_gw_private_net",
+			"resourceName": "VnfVirtualLink",
+			"resourceInvariantUUID": "a9351632-8045-4422-bda6-fdbf4c472b2b",
+			"resourceVersion": "1.0",
+			"resoucreType": "VL",
+			"resourceUUID": "22ba6824-e467-4f6a-87df-ccc8bee01fe4"
+		},
+		{
+			"resourceInstanceName": "Cp_vgw_cpe_public",
+			"resourceName": "VDU Cp",
+			"resourceInvariantUUID": "3e4b8692-e6b1-44e9-90b1-6c5f1abf469c",
+			"resourceVersion": "1.0",
+			"resoucreType": "CP",
+			"resourceUUID": "72b9cd47-e8b7-4033-bb1a-fa30e45e3233"
+		},
+		{
+			"resourceInstanceName": "Cp_vgw_public",
+			"resourceName": "VDU Cp",
+			"resourceInvariantUUID": "3e4b8692-e6b1-44e9-90b1-6c5f1abf469c",
+			"resourceVersion": "1.0",
+			"resoucreType": "CP",
+			"resourceUUID": "72b9cd47-e8b7-4033-bb1a-fa30e45e3233"
+		},
+		{
+			"resourceInstanceName": "VL_cpe_public",
+			"resourceName": "VnfVirtualLink",
+			"resourceInvariantUUID": "a9351632-8045-4422-bda6-fdbf4c472b2b",
+			"resourceVersion": "1.0",
+			"resoucreType": "VL",
+			"resourceUUID": "22ba6824-e467-4f6a-87df-ccc8bee01fe4"
+		}
+	],
+	"artifacts": [
+		{
+			"artifactName": "vf-license-model.xml",
+			"artifactType": "VF_LICENSE",
+			"artifactURL": "/sdc/v1/catalog/resources/73522444-e8e9-49c1-be29-d355800aa349/artifacts/3e964c48-c539-41b6-b504-52905fbe1f93",
+			"artifactDescription": "VF license file",
+			"artifactChecksum": "MDAwOTQ0NWYzNzMzYjJmYjBlODc2ODUyY2MzOTIyMjQ=",
+			"artifactUUID": "3e964c48-c539-41b6-b504-52905fbe1f93",
+			"artifactVersion": "1",
+			"artifactLabel": "vflicense",
+			"artifactGroupType": "DEPLOYMENT"
+		},
+		{
+			"artifactName": "vgw6.csar",
+			"artifactType": "ETSI_PACKAGE",
+			"artifactURL": "/sdc/v1/catalog/resources/73522444-e8e9-49c1-be29-d355800aa349/artifacts/0737049a-204d-4009-932a-57a48119f5eb",
+			"artifactDescription": "Artifact created from csar",
+			"artifactChecksum": "ZjAyYjhmYzJkY2ExZjMyYzk1ZjlmNjk0YzkzNDNhY2Y=",
+			"artifactUUID": "0737049a-204d-4009-932a-57a48119f5eb",
+			"artifactVersion": "1",
+			"artifactLabel": "vgw6csar",
+			"artifactGroupType": "DEPLOYMENT"
+		},
+		{
+			"artifactName": "vendor-license-model.xml",
+			"artifactType": "VENDOR_LICENSE",
+			"artifactURL": "/sdc/v1/catalog/resources/73522444-e8e9-49c1-be29-d355800aa349/artifacts/f17c8eed-cf1f-44cd-a2b3-2caee9c34b17",
+			"artifactDescription": " Vendor license file",
+			"artifactChecksum": "NzY2ZGUzODNkNWEwNjM1MjRiMjNiNDY1ZWNkNWQyOTg=",
+			"artifactUUID": "f17c8eed-cf1f-44cd-a2b3-2caee9c34b17",
+			"artifactVersion": "1",
+			"artifactLabel": "vendorlicense",
+			"artifactGroupType": "DEPLOYMENT"
+		}
+	],
+	"description": "test"
+}

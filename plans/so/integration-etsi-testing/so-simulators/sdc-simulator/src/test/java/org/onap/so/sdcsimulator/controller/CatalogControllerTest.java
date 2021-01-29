@@ -23,13 +23,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.Base64;
-import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.onap.so.sdcsimulator.models.ResourceArtifact;
-import org.onap.so.sdcsimulator.providers.ResourceProvider;
+import org.onap.so.sdcsimulator.models.Metadata;
+import org.onap.so.sdcsimulator.models.ResourceAssetInfo;
+import org.onap.so.sdcsimulator.models.ServiceAssetInfo;
 import org.onap.so.sdcsimulator.utils.Constants;
 import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +58,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Configuration
 public class CatalogControllerTest {
 
+    private static final String SERVICE_ID = "9bb8c882-44a1-4b67-a12c-5a998e18d6ba";
+
+    private static final String RESOURCE_ID = "73522444-e8e9-49c1-be29-d355800aa349";
+
     private static final String PASSWORD = "Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U";
 
     @LocalServerPort
@@ -72,41 +76,89 @@ public class CatalogControllerTest {
     @Test
     public void test_getCsar_validCsarId_matchContent() {
 
-        final String url = getBaseUrl() + "/resources/" + Constants.DEFAULT_CSAR_NAME + "/toscaModel";
+        final String url = getBaseUrl() + "/resources/" + RESOURCE_ID + "/toscaModel";
 
         final ResponseEntity<byte[]> response =
                 restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), byte[].class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals(3982, response.getBody().length);
+        assertEquals(117247, response.getBody().length);
 
     }
 
     @Test
     public void test_getResources_validResourcesFromClassPath() {
 
-        final ResponseEntity<Set<ResourceArtifact>> response =
+        final ResponseEntity<Set<ResourceAssetInfo>> response =
                 restTemplate.exchange(getBaseUrl() + "/resources", HttpMethod.GET, new HttpEntity<>(getHttpHeaders()),
-                        new ParameterizedTypeReference<Set<ResourceArtifact>>() {});
+                        new ParameterizedTypeReference<Set<ResourceAssetInfo>>() {});
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals(3, response.getBody().size());
+        assertEquals(1, response.getBody().size());
 
     }
 
     @Test
-    public void test_getCsar_invalidCsar_internalServerError() {
-        final ResourceProvider mockedResourceProvider = Mockito.mock(ResourceProvider.class);
-        Mockito.when(mockedResourceProvider.getResource(Mockito.anyString())).thenReturn(Optional.empty());
-        final CatalogController objUnderTest = new CatalogController(mockedResourceProvider);
+    public void test_getServices_validServicesFromClassPath() {
 
-        final ResponseEntity<byte[]> response = objUnderTest.getCsar(Constants.DEFAULT_CSAR_NAME);
+        final ResponseEntity<Set<ServiceAssetInfo>> response =
+                restTemplate.exchange(getBaseUrl() + "/services", HttpMethod.GET, new HttpEntity<>(getHttpHeaders()),
+                        new ParameterizedTypeReference<Set<ServiceAssetInfo>>() {});
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals(1, response.getBody().size());
+
+    }
+
+    @Test
+    public void test_getResourceCsar_invalidCsar_internalServerError() {
+        final String url = getBaseUrl() + "/resources/" + UUID.randomUUID().toString() + "/toscaModel";
+
+        final ResponseEntity<byte[]> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), byte[].class);
+
 
         assertFalse(response.hasBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
+    @Test
+    public void test_getResourceMetadata_validMetadataFileInClasspath_matchContent() {
+
+        final String url = getBaseUrl() + "/resources/" + RESOURCE_ID + "/metadata";
+
+        final ResponseEntity<Metadata> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Metadata.class);
+
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        final Metadata actual = response.getBody();
+        assertEquals(8, actual.getResources().size());
+        assertEquals(3, actual.getArtifacts().size());
+
+    }
+
+    @Test
+    public void test_getServiceMetadata_validMetadataFileInClasspath_matchContent() {
+
+        final String url = getBaseUrl() + "/services/" + SERVICE_ID + "/metadata";
+
+        final ResponseEntity<Metadata> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Metadata.class);
+
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        final Metadata actual = response.getBody();
+        assertEquals(1, actual.getResources().size());
+        assertEquals(1, actual.getArtifacts().size());
+
+    }
+
 
     private String getBaseUrl() {
         return "http://localhost:" + port + Constants.CATALOG_URL;
