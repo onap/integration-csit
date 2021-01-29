@@ -9,7 +9,9 @@ services:
       POSTGRES_PASSWORD: $DB_PASSWORD
       POSTGRES_USER: $DB_USER
     networks:
-      pmsh-network:
+      dockercompose_net:
+        aliases:
+        - db
 
   aai:
     container_name: aai-sim
@@ -24,7 +26,9 @@ services:
       - ./assets/ssl_certs/mock_server_cacert.pem:/var/tmp/mock_server_cacert.pem
       - ./assets/ssl_certs/mock_server_key.pem:/var/tmp/mock_server_key.pem
     networks:
-      pmsh-network:
+      dockercompose_net:
+        aliases:
+        - aai-sim
 
   cbs-sim:
     container_name: cbs-sim
@@ -40,25 +44,13 @@ services:
       - ./assets/ssl_certs/mock_server_cacert.pem:/var/tmp/mock_server_cacert.pem
       - ./assets/ssl_certs/mock_server_key.pem:/var/tmp/mock_server_key.pem
     networks:
-      pmsh-network:
-
-  mr-sim:
-    container_name: mr-sim
-    image: mockserver/mockserver:mockserver-5.9.0
-    environment:
-      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mr-initializer.json
-      LOG_LEVEL: "DEBUG"
-      SERVER_PORT: 3095
-    volumes:
-      - ./assets/mr_sim/mr_mockserver.properties:/config/mockserver.properties
-      - ./assets/mr_sim/mr-initializer.json:/config/mr-initializer.json
-    networks:
-      pmsh-network:
+      dockercompose_net:
+        aliases:
+        - cbs-sim
 
   pmsh:
     container_name: pmsh
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pmsh:latest
+    image: onap/org.onap.dcaegen2.services.pmsh:latest
     depends_on:
       - db
     volumes:
@@ -74,8 +66,11 @@ services:
       AAI_SERVICE_PORT: 1080
       DCAE_CA_CERTPATH: '/opt/app/pmsh/etc/certs/cacert.pem'
     networks:
-      pmsh-network:
+      dockercompose_net:
+        aliases:
+        - pmsh
 
 networks:
-  pmsh-network:
-    driver: bridge
+  dockercompose_net:
+    external: true
+
