@@ -229,7 +229,9 @@ public class AssetInfo implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("class AssetInfo {\n");
+        sb.append("class ");
+        sb.append(this.getClass().getName());
+        sb.append(" {\n");
         sb.append("    uuid: ").append(uuid).append("\n");
         sb.append("    invariantUuid: ").append(invariantUuid).append("\n");
         sb.append("    name: ").append(name).append("\n");

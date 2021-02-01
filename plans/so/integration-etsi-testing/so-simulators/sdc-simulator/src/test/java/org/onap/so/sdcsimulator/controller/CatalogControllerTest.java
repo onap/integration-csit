@@ -29,7 +29,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.so.sdcsimulator.models.Metadata;
 import org.onap.so.sdcsimulator.models.ResourceAssetInfo;
+import org.onap.so.sdcsimulator.models.ResourceMetadata;
 import org.onap.so.sdcsimulator.models.ServiceAssetInfo;
+import org.onap.so.sdcsimulator.models.ServiceMetadata;
 import org.onap.so.sdcsimulator.utils.Constants;
 import org.onap.so.simulator.model.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Configuration
 public class CatalogControllerTest {
+
+    private static final String SUB_CATEGORY = "Network Service";
+
+    private static final String DISTRIBUTION_STATUS = "DISTRIBUTED";
 
     private static final String SERVICE_ID = "9bb8c882-44a1-4b67-a12c-5a998e18d6ba";
 
@@ -97,6 +103,7 @@ public class CatalogControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
         assertEquals(1, response.getBody().size());
+        assertEquals(SUB_CATEGORY, response.getBody().iterator().next().getSubCategory());
 
     }
 
@@ -110,6 +117,7 @@ public class CatalogControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
         assertEquals(1, response.getBody().size());
+        assertEquals(DISTRIBUTION_STATUS, response.getBody().iterator().next().getDistributionStatus());
 
     }
 
@@ -130,15 +138,16 @@ public class CatalogControllerTest {
 
         final String url = getBaseUrl() + "/resources/" + RESOURCE_ID + "/metadata";
 
-        final ResponseEntity<Metadata> response =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Metadata.class);
+        final ResponseEntity<ResourceMetadata> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ResourceMetadata.class);
 
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        final Metadata actual = response.getBody();
+        final ResourceMetadata actual = response.getBody();
         assertEquals(8, actual.getResources().size());
         assertEquals(3, actual.getArtifacts().size());
+        assertEquals(SUB_CATEGORY, actual.getSubCategory());
 
     }
 
@@ -147,15 +156,16 @@ public class CatalogControllerTest {
 
         final String url = getBaseUrl() + "/services/" + SERVICE_ID + "/metadata";
 
-        final ResponseEntity<Metadata> response =
-                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), Metadata.class);
+        final ResponseEntity<ServiceMetadata> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), ServiceMetadata.class);
 
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        final Metadata actual = response.getBody();
+        final ServiceMetadata actual = response.getBody();
         assertEquals(1, actual.getResources().size());
         assertEquals(1, actual.getArtifacts().size());
+        assertEquals(DISTRIBUTION_STATUS, actual.getDistributionStatus());
 
     }
 
