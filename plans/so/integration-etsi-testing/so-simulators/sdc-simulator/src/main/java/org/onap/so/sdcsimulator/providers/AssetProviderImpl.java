@@ -20,14 +20,12 @@
 
 package org.onap.so.sdcsimulator.providers;
 
-import static org.onap.so.sdcsimulator.utils.Constants.CATALOG_URL;
 import static org.onap.so.sdcsimulator.utils.Constants.DOT_CSAR;
 import static org.onap.so.sdcsimulator.utils.Constants.DOT_JSON;
 import static org.onap.so.sdcsimulator.utils.Constants.FORWARD_SLASH;
 import static org.onap.so.sdcsimulator.utils.Constants.MAIN_RESOURCE_FOLDER;
 import static org.onap.so.sdcsimulator.utils.Constants.WILD_CARD_REGEX;
 import static org.springframework.core.io.support.ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.DirectoryStream;
@@ -40,8 +38,6 @@ import java.util.Set;
 import org.onap.so.sdcsimulator.models.AssetInfo;
 import org.onap.so.sdcsimulator.models.AssetType;
 import org.onap.so.sdcsimulator.models.Metadata;
-import org.onap.so.sdcsimulator.models.ResourceAssetInfo;
-import org.onap.so.sdcsimulator.models.ServiceAssetInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +47,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Waqas Ikram (waqas.ikram@est.tech)
@@ -61,9 +55,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AssetProviderImpl implements AssetProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssetProvider.class);
-
-    private final ObjectMapper mapper =
-            new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);;
 
     private final String resourceLocation;
 
@@ -133,7 +124,7 @@ public class AssetProviderImpl implements AssetProvider {
             if (Files.exists(metadataFilePath)) {
                 LOGGER.info("Found metadata file on file system using path: {}", metadataFilePath);
 
-                return Optional.of(mapper.readValue(metadataFilePath.toFile(), Metadata.class));
+                return Optional.of(assetType.getMetadata(metadataFilePath.toFile()));
 
             }
         } catch (final IOException ioException) {
@@ -147,7 +138,7 @@ public class AssetProviderImpl implements AssetProvider {
             final ClassPathResource classPathResource = getClassPathResource(path);
             if (classPathResource.exists()) {
                 LOGGER.info("Found metadata file in classpath using path: {}", path);
-                return Optional.of(mapper.readValue(classPathResource.getInputStream(), Metadata.class));
+                return Optional.of(assetType.getMetadata(classPathResource));
             }
         } catch (final IOException ioException) {
             LOGGER.error("Unable to find metadata file in classpath", ioException);
@@ -161,15 +152,15 @@ public class AssetProviderImpl implements AssetProvider {
         final Resource jsonResource = resource.createRelative(filename + DOT_JSON);
 
         if (jsonResource != null && jsonResource.exists()) {
-            final AssetInfo assetInfo = getJsonAssetInfo(assetType, jsonResource);
+            final AssetInfo assetInfo = assetType.getAssetInfo(jsonResource);
             assetInfo.setUuid(filename);
-            assetInfo.setToscaModelUrl(getToscaModelUrl(filename, assetType));
+            assetInfo.setToscaModelUrl(assetType.getToscaModelUrl(filename));
             LOGGER.info("Found AssetInfo file in classpath: {}", assetInfo);
             return assetInfo;
 
         }
 
-        final AssetInfo assetInfo = getAssetInfo(filename, assetType);
+        final AssetInfo assetInfo = assetType.getDefaultAssetInfo(filename);
         LOGGER.info("Returning AssetInfo: {}", assetInfo);
         return assetInfo;
 
@@ -179,65 +170,16 @@ public class AssetProviderImpl implements AssetProvider {
             throws IOException {
         final Path assetJsonFilePath = entry.getParent().resolve(filename + DOT_JSON);
         if (Files.exists(assetJsonFilePath)) {
-            final AssetInfo assetInfo = getJsonAssetInfo(assetType, assetJsonFilePath.toFile());
+            final AssetInfo assetInfo = assetType.getAssetInfo(assetJsonFilePath.toFile());
             assetInfo.setUuid(filename);
-            assetInfo.setToscaModelUrl(getToscaModelUrl(filename, assetType));
+            assetInfo.setToscaModelUrl(assetType.getToscaModelUrl(filename));
             LOGGER.info("Found AssetInfo file on file system: {}", assetInfo);
             return assetInfo;
 
         }
-        final AssetInfo assetInfo = getAssetInfo(filename, assetType);
+        final AssetInfo assetInfo = assetType.getDefaultAssetInfo(filename);
         LOGGER.info("Returning AssetInfo: {}", assetInfo);
         return assetInfo;
-    }
-
-
-    private AssetInfo getJsonAssetInfo(final AssetType assetType, final Resource jsonResource) throws IOException {
-        if (AssetType.RESOURCES.equals(assetType)) {
-            return mapper.readValue(jsonResource.getInputStream(), ResourceAssetInfo.class);
-        }
-
-        if (AssetType.SERVICES.equals(assetType)) {
-            return mapper.readValue(jsonResource.getInputStream(), ServiceAssetInfo.class);
-        }
-
-        return mapper.readValue(jsonResource.getInputStream(), AssetInfo.class);
-    }
-
-
-    private AssetInfo getJsonAssetInfo(final AssetType assetType, final File file) throws IOException {
-        if (AssetType.RESOURCES.equals(assetType)) {
-            return mapper.readValue(file, ResourceAssetInfo.class);
-        }
-
-        if (AssetType.SERVICES.equals(assetType)) {
-            return mapper.readValue(file, ServiceAssetInfo.class);
-        }
-
-        return mapper.readValue(file, AssetInfo.class);
-    }
-
-    private AssetInfo getAssetInfo(final String filename, final AssetType assetType) {
-        return getAssetInfoObject(assetType).uuid(filename).invariantUuid(filename).name(filename).version("1.0")
-                .toscaModelUrl(getToscaModelUrl(filename, assetType)).category("Generic").lifecycleState("CERTIFIED")
-                .lastUpdaterUserId("SDC_SIMULATOR");
-    }
-
-    private AssetInfo getAssetInfoObject(final AssetType assetType) {
-        if (AssetType.RESOURCES.equals(assetType)) {
-            return new ResourceAssetInfo().subCategory("Network Service");
-        }
-
-        if (AssetType.SERVICES.equals(assetType)) {
-            return new ServiceAssetInfo().distributionStatus("DISTRIBUTED");
-        }
-
-        return new AssetInfo();
-    }
-
-    private String getToscaModelUrl(final String filename, final AssetType assetType) {
-        return CATALOG_URL + FORWARD_SLASH + assetType.toString().toLowerCase() + FORWARD_SLASH + filename
-                + "/toscaModel";
     }
 
     private String getFilenameWithoutExtension(final String filename) {
