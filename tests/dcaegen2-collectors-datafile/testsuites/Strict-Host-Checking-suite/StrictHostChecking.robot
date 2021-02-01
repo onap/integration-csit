@@ -90,7 +90,9 @@ Setup Strict Host Key Checking Test
     Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPES_SIMS              ftpes-server-vsftpd0:21
-    Set Environment Variable        HTTP_SIMS               http-server0:80
+    Set Environment Variable        HTTP_SIMS               http-https-server0:80
+    Set Environment Variable        HTTPS_SIMS              http-https-server0:443
+    Set Environment Variable        HTTPS_SIMS_NO_AUTH      http-https-server0:8080
 
     ${cli_cmd_output}=              Run Process     ./simulators-start.sh    cwd=${SIMGROUP_ROOT}
     Log To Console                  Simulator-start:
