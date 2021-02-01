@@ -90,7 +90,9 @@ Setup Strict Host Key Checking Test
     Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPES_SIMS              ftpes-server-vsftpd0:21
-    Set Environment Variable        HTTP_SIMS               http-server0:80
+    Set Environment Variable        HTTP_SIMS               http-https-server0:80
+    Set Environment Variable        HTTPS_SIMS              http-https-server0:443
+    Set Environment Variable        HTTPS_SIMS_NO_AUTH      http-https-server0:8080
 
     ${cli_cmd_output}=              Run Process     ./simulators-start.sh    cwd=${SIMGROUP_ROOT}
     Log To Console                  Simulator-start:
@@ -112,6 +114,6 @@ Setup Strict Host Key Checking Test
 
     Sleep                           10
 
-    ${cli_cmd_output}=              Run Process                    ${DFC_ROOT}/dfc-start.sh    cwd=${DFC_ROOT}    env:KNOWN_HOSTS=${known_hosts_file}
+    ${cli_cmd_output}=              Run Process                    ${DFC_ROOT}/dfc-start.sh    cwd=${DFC_ROOT}    env:KNOWN_HOSTS=${known_hosts_file}    env:SIMGROUP_ROOT=${SIMGROUP_ROOT}
     Log To Console                  Dfc-start:
     Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
