@@ -6,7 +6,7 @@ Library        Process
 Resource    ../../resources/common-keywords.robot
 
 *** Variables ***
-${CONSUL_UPL_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?dc=dc1 -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data-binary @${SIMGROUP_ROOT}/consul/c12_feed2_PM_MEAS.json
+${CONSUL_UPL_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?dc=dc1 -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data-binary @${SIMGROUP_ROOT}/consul/c12_feed2_PM_HTTPS.json
 ${CONSUL_GET_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?raw
 ${CBS_GET_MERGED_CONFIG}            /usr/bin/curl -v http://127.0.0.1:10000/service_component_all/dfc_app0
 
@@ -31,6 +31,25 @@ Verify single event with single 50MB HTTP file. From event poll to published fil
     [TAGS]                         DFC_FUNCTIONAL_22
     [Documentation]                Verify single event with single HTTP 50MB file from event poll to published file.
     Verify Single Event From Event Poll To Published File   50   --tc302    HTTP
+
+######## Single file, HTTP
+Verify single event with single 1MB HTTPS (basic authentication) file. From event poll to published file
+    [TAGS]                         DFC_FUNCTIONAL_30
+    [Documentation]                Verify single event with single HTTPS (basic authentication) 1MB file from event poll to published file.
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/../dfc-containers-clean.sh           stderr=STDOUT
+    Verify Single Event From Event Poll To Published File   1    --tc400    HTTPS
+
+
+Verify single event with single 5MB HTTPS (basic authentication) file. From event poll to published file
+    [TAGS]                         DFC_FUNCTIONAL_31
+    [Documentation]                Verify single event with single HTTPS (basic authentication) 5MB file from event poll to published file.
+    Verify Single Event From Event Poll To Published File   5    --tc401    HTTPS
+
+
+Verify single event with single 50MB HTTPS (basic authentication) file. From event poll to published file
+    [TAGS]                         DFC_FUNCTIONAL_32
+    [Documentation]                Verify single event with single HTTPS (basic authentication) 50MB file from event poll to published file.
+    Verify Single Event From Event Poll To Published File   50   --tc402    HTTPS
 
 
 *** Keywords ***
@@ -90,4 +109,6 @@ Set Default Environment Variables
     Set Environment Variable        DR_REDIR_SIM            drsim_redir
     Set Environment Variable        SFTP_SIMS               sftp-server0:22
     Set Environment Variable        FTPES_SIMS              ftpes-server-vsftpd0:21
-    Set Environment Variable        HTTP_SIMS               http-server0:80
+    Set Environment Variable        HTTP_SIMS               http-https-server0:80
+    Set Environment Variable        HTTPS_SIMS              http-https-server0:443
+    Set Environment Variable        HTTPS_SIMS_NO_AUTH      http-https-server0:8080
