@@ -1,12 +1,16 @@
 #!/bin/bash
 # Place the scripts in run order:
 
+source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-launch.sh
+dmaap_mr_launch
+DMAAP_MR_IP=${IP}
+
 export DB_USER=pmsh
 export DB_PASSWORD=pmsh
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim mr-sim
+docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."
@@ -82,7 +86,6 @@ for i in {0..5}; do
     fi
     if [[ $(docker inspect --format '{{ .State.Running }}' cbs-sim) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' aai-sim) ]] && \
-       [[ $(docker inspect --format '{{ .State.Running }}' mr-sim) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' db) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' pmsh) ]]
     then
@@ -91,9 +94,14 @@ for i in {0..5}; do
 done
 [[ "$containers_ok" == "false" ]] && echo "Error: required container not running." && exit 1
 
+# Create topics on MR
+curl -X POST http://${DMAAP_MR_IP}:3904/events/AAI_EVENT --header 'Content-Type: application/json' --data-raw '{"message": "dummy message"}'
+sleep 2
+curl -X POST http://${DMAAP_MR_IP}:3904/events/unauthenticated.PMSH_CL_INPUT --header 'Content-Type: application/json' --data-raw '{"message": "dummy message"}'
+
+
 DB_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db)
-MR_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" mr-sim)
 CBS_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" cbs-sim)
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP} -v MR_SIM_IP_ADDRESS:${MR_SIM_IP_ADDRESS} -v DB_IP_ADDRESS:${DB_IP_ADDRESS} -v CBS_SIM_IP_ADDRESS:${CBS_SIM_IP_ADDRESS}"
+ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP} -v MR_IP_ADDRESS:${DMAAP_MR_IP} -v DB_IP_ADDRESS:${DB_IP_ADDRESS} -v CBS_SIM_IP_ADDRESS:${CBS_SIM_IP_ADDRESS}"
