@@ -3,3 +3,4 @@
 dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Ftp-suite
 dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Http-suite
 dcaegen2-collectors-datafile/testsuites/Strict-Host-Checking-suite
+dcaegen2-collectors-datafile/testsuites/HTTPS-Various-Connection-Types-suite
