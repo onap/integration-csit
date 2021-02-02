@@ -44,23 +44,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CatalogController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CatalogController.class);
 
-    private AssetProvider resourceProvider;
+    private final AssetProvider assetProvider;
 
     @Autowired
-    public CatalogController(final AssetProvider resourceProvider) {
-        this.resourceProvider = resourceProvider;
+    public CatalogController(final AssetProvider assetProvider) {
+        this.assetProvider = assetProvider;
     }
 
     @GetMapping(value = "/resources", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getResources() {
         LOGGER.info("Running getResources ...");
-        return ResponseEntity.ok().body(resourceProvider.getAssetInfo(AssetType.RESOURCES));
+        return ResponseEntity.ok().body(assetProvider.getAssetInfo(AssetType.RESOURCES));
     }
 
     @GetMapping(value = "/resources/{csarId}/toscaModel", produces = MediaType.APPLICATION_OCTET_STREAM)
-    public ResponseEntity<byte[]> getCsar(@PathVariable("csarId") final String csarId) {
+    public ResponseEntity<byte[]> getResourceCsar(@PathVariable("csarId") final String csarId) {
         LOGGER.info("Running getCsar for {} ...", csarId);
-        final Optional<byte[]> resource = resourceProvider.getAsset(csarId, AssetType.RESOURCES);
+        final Optional<byte[]> resource = assetProvider.getAsset(csarId, AssetType.RESOURCES);
         if (resource.isPresent()) {
             return new ResponseEntity<>(resource.get(), HttpStatus.OK);
         }
@@ -73,7 +73,7 @@ public class CatalogController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<Metadata> getResourceMetadata(@PathVariable("csarId") final String csarId) {
         LOGGER.info("Running getResourceMetadata for {} ...", csarId);
-        final Optional<Metadata> resource = resourceProvider.getMetadata(csarId, AssetType.RESOURCES);
+        final Optional<Metadata> resource = assetProvider.getMetadata(csarId, AssetType.RESOURCES);
         if (resource.isPresent()) {
             return new ResponseEntity<>(resource.get(), HttpStatus.OK);
         }
@@ -86,14 +86,27 @@ public class CatalogController {
     @GetMapping(value = "/services", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getServices() {
         LOGGER.info("Running getServices ...");
-        return ResponseEntity.ok().body(resourceProvider.getAssetInfo(AssetType.SERVICES));
+        return ResponseEntity.ok().body(assetProvider.getAssetInfo(AssetType.SERVICES));
     }
+
+    @GetMapping(value = "/services/{csarId}/toscaModel", produces = MediaType.APPLICATION_OCTET_STREAM)
+    public ResponseEntity<byte[]> getServiceCsar(@PathVariable("csarId") final String csarId) {
+        LOGGER.info("Running getServiceCsar for {} ...", csarId);
+        final Optional<byte[]> resource = assetProvider.getAsset(csarId, AssetType.SERVICES);
+        if (resource.isPresent()) {
+            return new ResponseEntity<>(resource.get(), HttpStatus.OK);
+        }
+        LOGGER.error("Unable to find csar: {}", csarId);
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     @GetMapping(value = "/services/{csarId}/metadata",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<Metadata> getServiceMetadata(@PathVariable("csarId") final String csarId) {
         LOGGER.info("Running getServiceMetadata for {} ...", csarId);
-        final Optional<Metadata> resource = resourceProvider.getMetadata(csarId, AssetType.SERVICES);
+        final Optional<Metadata> resource = assetProvider.getMetadata(csarId, AssetType.SERVICES);
         if (resource.isPresent()) {
             return new ResponseEntity<>(resource.get(), HttpStatus.OK);
         }

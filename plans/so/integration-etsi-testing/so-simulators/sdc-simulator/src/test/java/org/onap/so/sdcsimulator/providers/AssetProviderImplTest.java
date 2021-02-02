@@ -62,7 +62,7 @@ public class AssetProviderImplTest {
 
         Files.write(file, DUMMY_CONTENT.getBytes());
 
-        final AssetProviderImpl objUnderTest = new AssetProviderImpl(folder.getPath(), resourcePatternResolver);
+        final AssetProviderImpl objUnderTest = new AssetProviderImpl(folder.getParent(), resourcePatternResolver);
 
         assertArrayEquals(DUMMY_CONTENT.getBytes(), objUnderTest.getAsset(uuid, RESOURCES).get());
     }

@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.UUID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.onap.so.sdcsimulator.models.Metadata;
 import org.onap.so.sdcsimulator.models.ResourceAssetInfo;
 import org.onap.so.sdcsimulator.models.ResourceMetadata;
 import org.onap.so.sdcsimulator.models.ServiceAssetInfo;
@@ -80,7 +79,7 @@ public class CatalogControllerTest {
     private UserCredentials userCredentials;
 
     @Test
-    public void test_getCsar_validCsarId_matchContent() {
+    public void test_getResourceCsar_validCsarId_matchContent() {
 
         final String url = getBaseUrl() + "/resources/" + RESOURCE_ID + "/toscaModel";
 
@@ -90,6 +89,20 @@ public class CatalogControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
         assertEquals(117247, response.getBody().length);
+
+    }
+
+    @Test
+    public void test_getServiceCsar_validCsarId_matchContent() {
+
+        final String url = getBaseUrl() + "/services/" + SERVICE_ID + "/toscaModel";
+
+        final ResponseEntity<byte[]> response =
+                restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHttpHeaders()), byte[].class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.hasBody());
+        assertEquals(147743, response.getBody().length);
 
     }
 

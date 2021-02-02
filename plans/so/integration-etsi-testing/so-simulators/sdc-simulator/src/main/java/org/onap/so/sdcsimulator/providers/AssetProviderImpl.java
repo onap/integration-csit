@@ -191,7 +191,7 @@ public class AssetProviderImpl implements AssetProvider {
     }
 
     private Optional<InputStream> getInputStream(final String csarId, final AssetType assetType) throws IOException {
-        final Path filePath = Paths.get(resourceLocation, csarId + DOT_CSAR);
+        final Path filePath = Paths.get(resourceLocation, assetType.toString(), csarId + DOT_CSAR);
         if (Files.exists(filePath)) {
             LOGGER.info("Found csar on file system using path: {}", filePath);
             return Optional.of(Files.newInputStream(filePath));
