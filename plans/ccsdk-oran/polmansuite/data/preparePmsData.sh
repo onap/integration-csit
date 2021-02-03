@@ -86,7 +86,7 @@ expect="Policy type 2 is OK.201"
 checkRes
 echo -e "\n"
 
-for i in {1..12}; do
+for i in {1..30}; do
 	echo "policy types from policy agent:"
     curlString="curl -skw %{http_code} $httpx://localhost:$policy_agent_port/a1-policy/v2/policy-types"
     res=$($curlString)
