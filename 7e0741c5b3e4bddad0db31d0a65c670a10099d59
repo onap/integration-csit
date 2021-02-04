@@ -22,6 +22,30 @@
       "revId": "7e0741c5b3e4bddad0db31d0a65c670a10099d59",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc45707_906dc418",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4875
+      },
+      "writtenOn": "2021-02-04T11:42:39Z",
+      "side": 1,
+      "message": "In the script run_csit.sh, there are code to login docker repo.\n\n# Sign in to nexus3 docker repo\ndocker login -u docker -p docker nexus3.onap.org:10001",
+      "parentUuid": "13bf244a_8aa3c2ef",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "7e0741c5b3e4bddad0db31d0a65c670a10099d59",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
