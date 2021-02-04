@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13bf244a_8aa3c2ef",
+        "filename": "plans/ccsdk-oran/polmansuite/sdnc/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-04T11:31:38Z",
+      "side": 1,
+      "message": "...wait, I didn\u0027t notice this in the original change in master. How does this work? Where and how is the image coming from if nexus3 repo isn\u0027t defined?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "7e0741c5b3e4bddad0db31d0a65c670a10099d59",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
