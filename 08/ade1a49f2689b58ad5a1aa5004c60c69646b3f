@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Waqas Ikram <waqas.ikram@est.tech>
+Code-Review+1: Byung-Woo Jun <byung-woo.jun@est.tech>
+Code-Review+1: Mukesh Kumar <mukeshsharma@est.tech>
+Code-Review+1: Gareth Roper <gareth.roper@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 04 Feb 2021 14:33:31 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/117442
+Project: integration/csit
+Branch: refs/heads/master
