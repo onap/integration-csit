@@ -99,6 +99,24 @@ Get VNF Package VNFD
     Remove Directory    ${TEMPDIR}${/}${TEST_DIR}    recursive=True
     Log To Console    \nexecuted with expected result
 
+Get A VNF Package Artifact
+    ${artifactPath}=    Convert To String    image
+    Create Session    so_vnfm_adapter_session    http://${REPO_IP}:9092
+    &{headers}=    Create Dictionary    Authorization=${BASIC_AUTH}    Content-Type=application/json    Accept=application/octet-stream
+    Log to Console    \nGetting ${artifactPath} artifact from Vnf Package with id ${vnf_package_id} from so-vnfm-adapter
+    ${response}=    Get On Session    so_vnfm_adapter_session    ${PACKAGE_MANAGEMENT_BASE_URL}/vnf_packages/${vnf_package_id}/artifacts/${artifactPath}    headers=${headers}
+    Log To Console    Response:${response}
+    Run Keyword If    '${response.status_code}' == '200'    Log To Console    \nexecuted with expected result
+    Should Be Equal As Strings    '${response.status_code}'    '200'
+    Create Directory    ${TEMPDIR}${/}${TEST_DIR}
+    Empty Directory    ${TEMPDIR}${/}${TEST_DIR}
+    Create Binary File    ${TEMPDIR}${/}${TEST_DIR}${/}${artifactPath}    ${response.content}
+    ${expectedArtifact}=    Get Binary File    ${CURDIR}${/}data${/}responses${/}expectedArtifacts${/}${artifactPath}
+    ${actualArtifact}=    Get Binary File    ${TEMPDIR}${/}${TEST_DIR}${/}${artifactPath}
+    Should Be Equal As Strings    ${expectedArtifact}    ${actualArtifact}
+    Remove Directory    ${TEMPDIR}${/}${TEST_DIR}    recursive=True
+    Log To Console    \nexecuted with expected result
+
 *** Keywords ***
 Should Be Equal File Size
     [Arguments]    ${file1}    ${file2}
