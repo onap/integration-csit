@@ -37,7 +37,7 @@ services:
         max-file: "5"
 
   a1-controller:
-    image: nexus3.onap.org:10003/onap/sdnc-image:2.0.5-STAGING-latest
+    image: onap/sdnc-image:2.0.4
     depends_on :
       - db
     container_name: a1-controller

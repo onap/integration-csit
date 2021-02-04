@@ -27,7 +27,7 @@ cd ${SHELL_FOLDER}/../
 docker-compose -f docker-compose.yml -f sdnc/docker-compose.yml up -d
 
 checkStatus(){
-    for i in {1..20}; do
+    for i in {1..30}; do
         res=$($1)
         echo "$res"
         expect=$2

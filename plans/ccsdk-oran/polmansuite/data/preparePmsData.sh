@@ -79,7 +79,7 @@ checkRes
 echo -e "\n"
 
 
-for i in {1..12}; do
+for i in {1..30}; do
 	echo "policy types from policy agent:"
     curlString="curl -skw %{http_code} $httpx://localhost:$policy_agent_port/v2/policy-types"
     res=$($curlString)
