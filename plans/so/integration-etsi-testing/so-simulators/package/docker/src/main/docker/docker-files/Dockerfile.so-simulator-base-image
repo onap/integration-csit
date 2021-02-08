@@ -1,4 +1,4 @@
-FROM docker.io/openjdk:8-jdk-alpine
+FROM onap/integration-java11:8.0.0
 
 ARG http_proxy
 ARG https_proxy
