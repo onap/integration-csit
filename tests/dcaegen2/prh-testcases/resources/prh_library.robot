@@ -57,7 +57,7 @@ Verify AAI not responding is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
     Set VES event in DMaaP    ${ves_event}
-    Wait for one of PRH log entries    90s    connection timed out: aai    Host is unreachable: aai    No route to host: aai
+    Wait for one of PRH log entries    90s    failed to resolve 'aai'
     [Teardown]    Ensure Container Is Running   aai_simulator
 
 Verify PNF re registration
