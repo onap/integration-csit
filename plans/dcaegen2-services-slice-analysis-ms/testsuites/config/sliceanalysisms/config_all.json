@@ -1,0 +1,86 @@
+{
+  "config": {
+    "streams_subscribes": {
+      "performance_management_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/unauthenticated.PERFORMANCE_MEASUREMENTS",
+          "client_role": "sliceanalysis-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-sliceanalysis-1"
+        },
+        "aaf_username": null
+      },
+      "dcae_cl_response_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/DCAE_CL_RSP",
+          "client_role": "sliceanalysis-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-sliceanalysis-1"
+        },
+        "aaf_username": null
+      },
+      "intelligent_slicing_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "http://message-router.onap.svc.cluster.local::3904/events/unauthenticated.ML_RESPONSE_TOPIC",
+          "client_role": "sliceanalysis-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-sliceanalysis-1"
+        },
+        "aaf_username": null
+      }
+    },
+    "streams_publishes": {
+      "CL_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "http://message-router.onap.svc.cluster.local::3904/events/unauthenticated.DCAE_CL_OUTPUT",
+          "client_role": "sliceanalysis-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-sliceanalysis-1"
+        },
+        "aaf_username": null
+      }
+    },
+    "postgres.password": "postgres",
+    "postgres.username": "sliceanalysisms_admin",
+    "postgres.host": "postgres",
+    "postgres.port": "5432",
+    "sliceanalysisms.dmaap.server": [
+      "dmaap"
+    ],
+    "cbsPollingInterval": 60,
+    "sliceanalysisms.cg": "sliceanalysisms-cg",
+    "sliceanalysisms.pollingInterval": 20,
+    "sliceanalysisms.samples": 3,
+    "sliceanalysisms.minPercentageChange": 5,
+    "sliceanalysisms.initialDelaySeconds": 300000,
+    "sliceanalysisms.pollingTimeout": 60,
+    "sliceanalysisms.cid": "sliceanalysisms-cid",
+    "sliceanalysisms.configDb.service": "http://configdb_sim:5000",
+    "service_calls": {
+      "policy-req": []
+    },
+    "trust_store_path": "/opt/app/sliceanalysisms/etc/cert/trust.jks",
+    "trust_store_pass_path": "/opt/app/sliceanalysisms/etc/cert/trust.pass"
+  },
+ "policies": {
+    "event": {
+      "action": "gathered",
+      "timestamp": "2019-09-18T14:57:55.320Z",
+      "update_id": "dbb88da8-8df1-489d-b51d-8d5cbbfbcd99",
+      "policies_count": 1
+    },
+    "items": [
+      {
+        "policyName": "com.Config_PCIMS_CONFIG_POLICY.1.xml"
+      }
+    ]
+  }
+}
