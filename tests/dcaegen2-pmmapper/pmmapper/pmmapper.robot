@@ -10,7 +10,7 @@ Test Setup        Create Session  mapper_session  ${PMMAPPER_BASE_URL}
 Test Teardown     CleanSessionsAndLogs
 
 *** Variables ***
-${CLI_EXEC_CLI_CONFIG}                   { head -n 10 | tail -5;} < /tmp/pmmapper.log
+${CLI_EXEC_CLI_CONFIG}                   { head -n 100 | tail -50;} < /tmp/pmmapper.log
 ${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
