@@ -40,6 +40,8 @@ vnfm-adapter:
    auth:
       name: vnfm
       password: password1$
+   base:
+      endpoint: http://so-vnfm-adapter.onap:9092
 vnfds:
    vnfdlist:
    -  vnfdid: 1

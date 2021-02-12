@@ -21,16 +21,16 @@ server:
   tomcat:
     max-threads: 50
   ssl:
-    client-auth: need
-    key-alias: so@so.onap.org
-    key--store-password: '7Em3&j4.19xYiMelhD5?xbQ.'
-    key-store: classpath:so-vnfm-simulator.p12
-    key-store-type: PKCS12
+    enabled: false
   request:
     grant:
-      auth: twowaytls
+      auth: none
   dns:
     name: so-vnfm-simulator
+
+vnfm-adapter:
+  base:
+    endpoint: http://so-vnfm-adapter.onap:9092
 
 vnfds:
   vnfdlist:

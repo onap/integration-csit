@@ -28,7 +28,7 @@ sdc:
   endpoint: http://sdc-simulator:9991/
   toscametapath: Artifacts/Deployment/OTHER/TOSCA.meta
 vnfmadapter:
-  endpoint: http://so-vnfm-adapter:9092
+  endpoint: http://so-vnfm-adapter.onap:9092
 etsi-catalog-manager:
   vnfpkgm:
     endpoint: http://modeling-etsicatalog:8806/api/vnfpkgm/v1

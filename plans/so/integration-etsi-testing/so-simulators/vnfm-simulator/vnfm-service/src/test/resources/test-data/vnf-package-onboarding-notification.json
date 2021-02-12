@@ -1,6 +1,7 @@
 {
   "id": "string",
   "notificationType": "VnfPackageOnboardingNotification",
+  "timeStamp":"2020-01-01 01:01:01",
   "subscriptionId": "string",
   "vnfPkgId": "string",
   "vnfdId": "string",

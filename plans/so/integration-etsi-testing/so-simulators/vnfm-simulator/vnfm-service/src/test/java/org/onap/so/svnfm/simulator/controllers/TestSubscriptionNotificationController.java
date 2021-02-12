@@ -31,17 +31,20 @@ import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.SubscriptionsFilter1;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.notification.model.VnfPackageOnboardingNotification;
 import org.onap.so.svnfm.simulator.config.SvnfmApplication;
+import org.onap.so.svnfm.simulator.controller.SubscriptionNotificationController;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -77,6 +80,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 public class TestSubscriptionNotificationController {
 
     private static final Logger LOGGER = getLogger(TestSubscriptionNotificationController.class);
+    private static final String SOL003_SUBSCRIPTION_URL = "http://so-vnfm-adapter.onap:9092" + VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT;
 
     @LocalServerPort
     private int port;
@@ -85,7 +89,6 @@ public class TestSubscriptionNotificationController {
     private RestTemplate restTemplate;
     private MockRestServiceServer mockRestServiceServer;
 
-    @Autowired
     private TestRestTemplate testRestTemplate;
 
     private Gson gson;
@@ -94,8 +97,11 @@ public class TestSubscriptionNotificationController {
     @Before
     public void setup() {
         mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
-        gson = new GsonBuilder().create();
+        gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
+                new SubscriptionNotificationController.LocalDateTimeTypeAdapter()).create();
         vnfmSimulatorCallbackUrl = getBaseUrl(port) + PACKAGE_MANAGEMENT_BASE_URL + NOTIFICATION_ENDPOINT;
+        testRestTemplate = new TestRestTemplate(
+                new RestTemplateBuilder().additionalMessageConverters(new GsonHttpMessageConverter(gson)));
     }
 
     @After
@@ -118,7 +124,7 @@ public class TestSubscriptionNotificationController {
                 new InlineResponse201().id("subscriptionId").filter(new SubscriptionsFilter1())
                         .callbackUri("callbackUri");
 
-        mockRestServiceServer.expect(requestTo(VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT)).andExpect(method(HttpMethod.POST))
+        mockRestServiceServer.expect(requestTo(SOL003_SUBSCRIPTION_URL)).andExpect(method(HttpMethod.POST))
                 .andExpect(content().json(gson.toJson(pkgmSubscriptionRequest)))
                 .andRespond(withSuccess(gson.toJson(inlineResponse), APPLICATION_JSON));
 
@@ -137,7 +143,7 @@ public class TestSubscriptionNotificationController {
                 new InlineResponse201().id("subscriptionId").filter(new SubscriptionsFilter1())
                         .callbackUri("callbackUri");
 
-        mockRestServiceServer.expect(requestTo(VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT)).andExpect(method(HttpMethod.POST))
+        mockRestServiceServer.expect(requestTo(SOL003_SUBSCRIPTION_URL)).andExpect(method(HttpMethod.POST))
                 .andExpect(content().json(gson.toJson(pkgmSubscriptionRequest)))
                 .andRespond(withSuccess(gson.toJson(inlineResponse), APPLICATION_JSON));
 
@@ -152,8 +158,6 @@ public class TestSubscriptionNotificationController {
         final VnfPackageOnboardingNotification vnfPackageOnboardingNotification =
                 gson.fromJson(getNotification(VNFPACKAGEONBOARDINGNOTIFICATION),
                         VnfPackageOnboardingNotification.class);
-        final LocalDateTime timestamp = LocalDateTime.of(2020, 1, 1, 1, 1, 1, 1);
-        vnfPackageOnboardingNotification.setTimeStamp(timestamp);
         final ResponseEntity<?> responseEntity = postNotification(vnfPackageOnboardingNotification);
         assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }

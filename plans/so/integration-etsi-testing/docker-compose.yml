@@ -159,6 +159,8 @@ services:
       - DB_ADMIN_PASSWORD=so_Admin123
     hostname:
       bpmn-infra.so.testlab.onap.org
+    links:
+      - "so-vnfm-adapter:so-vnfm-adapter.onap"
     depends_on:
       - mariadb
       - catalog-db-adapter
@@ -288,6 +290,8 @@ services:
       - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
       so-vnfm-simulator
+    links:
+      - "so-vnfm-adapter:so-vnfm-adapter.onap"
     depends_on:
       - mariadb
       - so-vnfm-adapter
@@ -361,6 +365,8 @@ services:
       - SDC_ADDR=http://sdc-simulator:9991
     hostname:
       modeling-etsicatalog
+    links:
+      - "so-vnfm-adapter:so-vnfm-adapter.onap"
     depends_on:
       - mariadb
       - sdc-simulator

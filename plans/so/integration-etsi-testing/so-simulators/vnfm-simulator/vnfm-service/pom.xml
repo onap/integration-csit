@@ -136,6 +136,11 @@
       <artifactId>httpclient</artifactId>
       <version>4.5.8</version>
     </dependency>
+    <dependency>
+      <groupId>org.onap.so.simulators</groupId>
+      <artifactId>common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

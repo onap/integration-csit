@@ -1,0 +1,23 @@
+{
+  "filter": {
+    "notificationTypes": [
+      "VnfPackageOnboardingNotification",
+      "VnfPackageChangeNotification"
+    ],
+    "vnfdId": [
+      "b1bb0ce7-2222-4fa7-95ed-4840d70a1177"
+    ],
+    "operationalState": ["ENABLED", "DISABLED"]
+  },
+  "callbackUri": "http://so-vnfm-simulator:9093/vnfpkgm/v1/notification",
+  "authentication": {
+    "authType": [
+      "OAUTH2_CLIENT_CREDENTIALS"
+    ],
+    "paramsOauth2ClientCredentials": {
+      "clientId": "vnfm",
+      "clientPassword": "password1$",
+      "tokenEndpoint": "http://so-vnfm-simulator:9093/oauth/token?grant_type=client_credentials"
+    }
+  }
+}

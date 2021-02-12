@@ -1,7 +1,10 @@
 package org.onap.so.svnfm.simulator.config;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.onap.so.svnfm.simulator.constants.Constant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationConfig implements ApplicationRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
     private static final String PORT = "local.server.port";
 
@@ -45,9 +49,18 @@ public class ApplicationConfig implements ApplicationRunner {
 
     @Bean
     public CacheManager cacheManager() {
-        final Cache inlineResponse201 = new ConcurrentMapCache(Constant.IN_LINE_RESPONSE_201_CACHE);
+        final Cache inlineResponse201 = getCache(Constant.IN_LINE_RESPONSE_201_CACHE);
+        final Cache vnfPkgOnboardingNotificationCache = getCache(Constant.VNF_PKG_ONBOARDING_NOTIFICATION_CACHE);
+        final List<Cache> caches = new ArrayList<>();
+        caches.add(inlineResponse201);
+        caches.add(vnfPkgOnboardingNotificationCache);
         final SimpleCacheManager manager = new SimpleCacheManager();
-        manager.setCaches(Arrays.asList(inlineResponse201));
+        manager.setCaches(caches);
         return manager;
+    }
+
+    private Cache getCache(final String name) {
+        LOGGER.info("Creating cache with name: {}", name);
+        return new ConcurrentMapCache(name);
     }
 }

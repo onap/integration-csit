@@ -37,6 +37,9 @@ public class SubscriptionManager {
     @Value("${vnfm-adapter.auth.password}")
     private String password;
 
+    @Value("${vnfm-adapter.base.endpoint:http://so-vnfm-adapter.onap:9092}")
+    private String baseEndpoint;
+
     @Autowired
     public SubscriptionManager(
             @Qualifier(SSL_BASED_CONFIGURABLE_REST_TEMPLATE) final RestTemplate restTemplate) {
@@ -52,7 +55,7 @@ public class SubscriptionManager {
     public InlineResponse201 createSubscription(final PkgmSubscriptionRequest pkgmSubscriptionRequest) {
         final byte[] encodedAuth = getBasicAuth(username, password);
         final String authHeader = "Basic " + new String(encodedAuth);
-        final String uri = Constant.VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT;
+        final String uri = baseEndpoint + Constant.VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT;
         final HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
         headers.add(HttpHeaders.AUTHORIZATION, authHeader);

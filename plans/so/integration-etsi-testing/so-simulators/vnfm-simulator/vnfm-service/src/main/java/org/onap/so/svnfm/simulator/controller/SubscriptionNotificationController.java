@@ -21,23 +21,39 @@
 package org.onap.so.svnfm.simulator.controller;
 
 import javax.ws.rs.core.MediaType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.InlineResponse201;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.PkgmSubscriptionRequest;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.SubscriptionsAuthentication;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.SubscriptionsAuthentication.AuthTypeEnum;
 import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.model.SubscriptionsAuthenticationParamsBasic;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.notification.model.VnfPackageChangeNotification;
+import org.onap.so.adapters.vnfmadapter.extclients.vnfm.packagemanagement.notification.model.VnfPackageOnboardingNotification;
 import org.onap.so.svnfm.simulator.constants.Constant;
 import org.onap.so.svnfm.simulator.services.SubscriptionManager;
+import org.onap.so.svnfm.simulator.services.providers.VnfPkgOnboardingNotificationCacheServiceProviderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 /**
  * @author Eoin Hanan (eoin.hanan@est.tech)
@@ -47,10 +63,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = Constant.PACKAGE_MANAGEMENT_BASE_URL, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
 public class SubscriptionNotificationController {
-    @Autowired
-    private SubscriptionManager subscriptionManager;
 
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionNotificationController.class);
+    private final Gson gson;
+    @Autowired
+    private SubscriptionManager subscriptionManager;
+    @Autowired
+    private VnfPkgOnboardingNotificationCacheServiceProviderImpl vnfPkgOnboardingNotificationCacheServiceProvider;
+
+    @Autowired
+    public SubscriptionNotificationController() {
+        this.gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter()).create();
+    }
 
     @Value("${spring.security.usercredentials[0].username}")
     private String username;
@@ -99,9 +123,94 @@ public class SubscriptionNotificationController {
      * @return
      */
     @PostMapping(value = Constant.NOTIFICATION_ENDPOINT, produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<?> postVnfPackageNotification(@RequestBody Object notification){
+    public ResponseEntity<?> postVnfPackageNotification(@RequestBody final Object notification){
         logger.info("Vnf Notification received:\n{}", notification);
+        final String notificationString = gson.toJson(notification);
+        addNotificationObjectToCache(notificationString);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Testing endpoint for checking that notifications have been received
+     *
+     * @param vnfPkgId
+     * @return
+     */
+    @GetMapping(value = Constant.NOTIFICATION_CACHE_TEST_ENDPOINT)
+    public ResponseEntity<?> getVnfPackageNotification(@PathVariable("vnfPkgId") final String vnfPkgId) {
+        logger.info("Getting notification with vnfPkgId: {}", vnfPkgId);
+        final Optional<VnfPackageOnboardingNotification> optionalVnfPackageOnboardingNotification =
+                vnfPkgOnboardingNotificationCacheServiceProvider.getVnfPkgOnboardingNotification(vnfPkgId);
+        if(optionalVnfPackageOnboardingNotification.isPresent()) {
+            VnfPackageOnboardingNotification vnfPackageOnboardingNotification =
+                    optionalVnfPackageOnboardingNotification.get();
+            logger.info("Return notification with vnfPkgId: {} and body {}", vnfPkgId, vnfPackageOnboardingNotification);
+            return ResponseEntity.ok().body(vnfPackageOnboardingNotification);
+        }
+        final String errorMessage = "No notification found with vnfPkgId: " + vnfPkgId;
+        logger.error(errorMessage);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+    }
+
+    private void addNotificationObjectToCache(final String notification) {
+        logger.info("addNotificationObjectToCache(): {}", notification);
+        final String notificationType = getNotificationType(notification);
+        if (VnfPackageOnboardingNotification.NotificationTypeEnum.VNFPACKAGEONBOARDINGNOTIFICATION.getValue()
+                .equals(notificationType)) {
+            final VnfPackageOnboardingNotification pkgOnboardingNotification =
+                    gson.fromJson(notification, VnfPackageOnboardingNotification.class);
+            logger.info("Onboarding notification received:\n{}", pkgOnboardingNotification);
+            final String vnfPkgId = pkgOnboardingNotification.getVnfPkgId();
+            vnfPkgOnboardingNotificationCacheServiceProvider.addVnfPkgOnboardingNotification(vnfPkgId, pkgOnboardingNotification);
+        } else if (VnfPackageChangeNotification.NotificationTypeEnum.VNFPACKAGECHANGENOTIFICATION.getValue()
+                .equals(notificationType)) {
+            final VnfPackageChangeNotification pkgChangeNotification =
+                    gson.fromJson(notification, VnfPackageChangeNotification.class);
+            logger.info("Change notification received:\n{}", pkgChangeNotification);
+        } else {
+            final String errorMessage = "An error occurred.  Notification type not supported for: " + notificationType;
+            logger.error(errorMessage);
+            throw new RuntimeException(errorMessage);
+        }
+    }
+
+    private String getNotificationType(final String notification) {
+        try {
+            logger.info("getNotificationType() notification: {}", notification);
+            final JsonParser parser = new JsonParser();
+            final JsonObject element = (JsonObject) parser.parse(notification);
+            return element.get("notificationType").getAsString();
+        } catch (final Exception e) {
+            logger.error("An error occurred processing notificiation: {}", e.getMessage());
+        }
+        throw new RuntimeException(
+                "Unable to parse notification type in object \n" + notification);
+    }
+
+    public static class LocalDateTimeTypeAdapter extends TypeAdapter<LocalDateTime> {
+
+        private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        @Override
+        public void write(final JsonWriter out, final LocalDateTime localDateTime) throws IOException {
+            if (localDateTime == null) {
+                out.nullValue();
+            } else {
+                out.value(FORMATTER.format(localDateTime));
+            }
+        }
+
+        @Override
+        public LocalDateTime read(final JsonReader in) throws IOException {
+            switch (in.peek()) {
+                case NULL:
+                    in.nextNull();
+                    return null;
+                default:
+                    final String dateTime = in.nextString();
+                    return LocalDateTime.parse(dateTime, FORMATTER);
+            }
+        }
     }
 
 }

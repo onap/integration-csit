@@ -358,7 +358,7 @@ spring:
 so:
   vnfm:
     adapter:
-      url: http://so-vnfm-adapter:9092/so/vnfm-adapter/v1/
+      url: http://so-vnfm-adapter.onap:9092/so/vnfm-adapter/v1/
       auth: Basic dm5mbTpwYXNzd29yZDEk
 org:
   onap:
