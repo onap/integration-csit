@@ -1,0 +1,47 @@
+aai:
+  auth: 221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885
+  version: v15
+  endpoint: https://aai-simulator:9993
+spring:
+  datasource:
+    hikari:
+      camunda:
+        jdbcUrl: jdbc:mariadb://mariadb:3306/camundabpmn
+        username: so_user
+        password: so_User123
+        driver-class-name: org.mariadb.jdbc.Driver
+        pool-name: bpmn-pool
+        registerMbeans: true
+      nfvo:
+        jdbcUrl: jdbc:mariadb://mariadb:3306/nfvo
+        username: so_admin
+        password: so_Admin123
+        driver-class-name: org.mariadb.jdbc.Driver
+        pool-name: nfvo-pool
+        registerMbeans: true
+  security:
+    usercredentials:
+    - username: so-etsi-nfvo-ns-lcm
+      password: $2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke
+      role: ETSI-NFVO-Client
+server:
+  port: 9095
+  tomcat:
+    max-threads: 50
+mso:
+  key: 07a7159d3bf51a0e53be7a8f89699be7
+so:
+  adapters:
+    sol003-adapter:
+      url: http://so-vnfm-adapter:9092/so/vnfm-adapter/v1
+      auth: Basic dm5mbTpwYXNzd29yZDEk
+etsi-catalog-manager:
+  base:
+    endpoint: http://modeling-etsicatalog:8806/api
+camunda:
+  bpm:
+    history-level: full
+    job-execution:
+      max-pool-size: 30
+      core-pool-size: 3
+      deployment-aware: true

@@ -376,3 +376,31 @@ services:
         max-size: "30m"
         max-file: "5"
     entrypoint: /bin/sh -c '/service/wait-for.sh -t 300 -h mariadb -p 3306 && /service/modeling/etsicatalog/docker/docker-entrypoint.sh'
+###############################################################################
+  so-etsi-nfvo-ns-lcm:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-etsi-nfvo-ns-lcm:${TAG}
+    ports:
+      - "9095:9095"
+    volumes:
+      - ${CONFIG_DIR_PATH}/override-files/so-etsi-nfvo-ns-lcm/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+    environment:
+      - APP=so-etsi-nfvo-ns-lcm
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      etsi.nfvo.ns.lcm
+    depends_on:
+      - mariadb
+      - aai-simulator
+      - sdc-simulator
+      - modeling-etsicatalog
+      - so-vnfm-adapter
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" mariadb:3306 -- "/app/start-app.sh"'
