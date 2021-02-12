@@ -102,7 +102,7 @@ public class CatalogControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals(147743, response.getBody().length);
+        assertEquals(147255, response.getBody().length);
 
     }
 

@@ -46,6 +46,17 @@ OnBoard VNF Package In Etsi Catalog
     Run Keyword If  '${actual_job_status}' == 'finished'  log to console   \nexecuted with expected result
     Should Be Equal As Strings    '${actual_job_status}'    'finished'
 
+Onboard Network Service Package In Etsi Catalog
+    Create Session   etsi_catalog_session  http://${REPO_IP}:8806
+    ${data}=    Get Binary File     ${CURDIR}${/}data${/}networkServicePackageOnboardRequest.json
+    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
+    ${resp}=    POST On Session    etsi_catalog_session    /api/catalog/v1/nspackages    data=${data}    headers=${headers}
+    log to console      ${resp.content}
+
+    Run Keyword If  '${resp.status_code}' == '202'  log to console  \nexecuted with expected result
+    Should Be Equal As Strings    '${resp.status_code}'    '202'
+
+
 Distribute Service Template
     Create Session   sdc_controller_session  http://${REPO_IP}:8085
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}distributeServiceTemplate.json
