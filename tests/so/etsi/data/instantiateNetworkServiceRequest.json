@@ -1,0 +1,14 @@
+{
+    "nsFlavourId": "default",
+    "locationConstraints": [{
+        "vnfProfileId": "b1bb0ce7-2222-4fa7-95ed-4840d70a1177"
+    }],
+    "additionalParamsForVnf": [{
+            "vnfProfileId": "b1bb0ce7-2222-4fa7-95ed-4840d70a1177",
+            "vnfInstanceName": "etsiNsVnfCsit1",
+            "vnfInstanceDescription": "test",
+            "additionalParams": {
+                "vim_id": "CloudOwner_EtsiCloudRegion_693c7729b2364a26a3ca602e6f66187d"
+            }
+    }]
+}
