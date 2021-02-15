@@ -1,0 +1,18 @@
+server:
+   port: 9996
+   tomcat:
+      max-threads: 4
+ssl-enable: false
+spring:
+   security:
+      users:
+      -  username: mso
+         #password: Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+         password: $2a$04$f8SB6cW/VI26QvYM6z.GXu7hlEmwnFtePenD8zF18mS3Atu3QNqr2
+         role: VID
+      -  username: admin
+         #password: Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+         password: $2a$04$f8SB6cW/VI26QvYM6z.GXu7hlEmwnFtePenD8zF18mS3Atu3QNqr2
+         role: VID
+   main:
+      allow-bean-definition-overriding: true

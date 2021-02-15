@@ -1,0 +1,161 @@
+{
+  "requestDetails": {
+    "requestInfo": {
+      "suppressRollback": false,
+      "productFamilyId": "1234",
+      "requestorId": "demo",
+      "instanceName": "CsitEtsiInstance",
+      "source": "VID"
+    },
+    "modelInfo": {
+      "modelType": "service",
+      "modelInvariantId": "b9202a74-4c16-4245-83ad-1cd53c813214",
+      "modelVersionId": "6f2c7614-571c-4482-aa2c-5eac0308aa16",
+      "modelName": "vfw_k8s_demo_CNF",
+      "modelVersion": "1.0"
+    },
+    "cloudConfiguration": {
+      "tenantId": "693c7729b2364a26a3ca602e6f66187d",
+      "cloudOwner": "CloudOwner",
+      "lcpCloudRegionId": "EtsiCloudRegion"
+    },
+    "subscriberInfo": {
+      "globalSubscriberId": "DemoCustomer"
+    },
+    "requestParameters": {
+      "subscriptionServiceType": "vCPE",
+      "userParams": [{
+        "Homing_Solution": "none"
+      }, {
+        "service": {
+          "instanceParams": [],
+          "instanceName": "CsitEtsiInstance",
+          "resources": {
+            "vnfs": [
+              {
+                "modelInfo": {
+                  "modelName": "VF_vfw_k8s_demo_CNF",
+                  "modelVersionId": "daeb6a5c-3a8a-40b0-a575-8cca71dd0b7c",
+                  "modelInvariantUuid": "517403c8-fab8-4cfe-9bc5-d94f5e34b257",
+                  "modelVersion": "1.0",
+                  "modelCustomizationId": "8b8b67bd-01a4-42f7-b0fc-1d3a0f2765fd",
+                  "modelInstanceName": "VF_vfw_k8s_demo_CNF 0"
+                },
+                "cloudConfiguration": {
+                  "tenantId": "693c7729b2364a26a3ca602e6f66187d",
+                  "cloudOwner": "CloudOwner",
+                  "lcpCloudRegionId": "EtsiCloudRegion"
+                },
+                "platform": {
+                  "platformName": "test"
+                },
+                "lineOfBusiness": {
+                  "lineOfBusinessName": "LOB-Demonstration"
+                },
+                "productFamilyId": "1234",
+                "instanceName": "VF_frankfurt_vfw_k8s_demo_final",
+                "instanceParams": [{
+                  "sdnc_model_name": "vFW_CNF_CDS",
+                  "sdnc_model_version": "1.0.45",
+                  "sdnc_artifact_name": "vnf"
+                }
+                ],
+                "vfModules": [
+                  {
+                    "modelInfo": {
+                      "modelName": "VfVfwK8sDemoCnf..base_template..module-0",
+                      "modelVersionId": "86224a10-c17e-42c9-9809-f3c31ba1b781",
+                      "modelInvariantUuid": "2bc34946-d57d-4053-9e9f-d60587c9aa12",
+                      "modelVersion": "1",
+                      "modelCustomizationId": "905ffa63-7011-4cbe-943c-237f303b4e9f"
+                    },
+                    "instanceName": "vf_frankfurt_vfw_k8s_demo_final0..VfFrankfurtVfwK8sDemoFinal..base_template..module-0",
+                    "instanceParams": [{
+                      "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                      "k8s-rb-profile-namespace": "test-vfw1",
+                      "sdnc_model_name": "vFW_CNF_CDS",
+                      "sdnc_model_version": "1.0.45",
+                      "vf_module_label": "base_template"
+                    }
+                    ]
+                  },
+                  {
+                    "modelInfo": {
+                      "modelName": "VfVfwK8sDemoCnf..vsn..module-1",
+                      "modelVersionId": "3c50323b-5f8c-4b31-938f-8e996a2e0001",
+                      "modelInvariantUuid": "11e50367-a4c9-4203-a838-518446ec816a",
+                      "modelVersion": "1",
+                      "modelCustomizationId": "1812807a-9f6b-42e4-b78c-814c3fea5a4c"
+                    },
+                    "instanceName": "vf_frankfurt_vfw_k8s_demo_final0..VfFrankfurtVfwK8sDemoFinal..vsn..module-1",
+                    "instanceParams": [{
+                      "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                      "k8s-rb-profile-namespace": "vfirewall",
+                      "sdnc_model_name": "vFW_CNF_CDS",
+                      "sdnc_model_version": "7.0.0",
+                      "vf_module_label": "vsn"
+                    }
+                    ]
+                  },
+                  {
+                    "modelInfo": {
+                      "modelName": "VfVfwK8sDemoCnf..vpkg..module-2",
+                      "modelVersionId": "104e8b4e-d404-4a5b-9beb-f92a217fd6ee",
+                      "modelInvariantUuid": "1782dcdb-2a4c-4665-8d04-be6b989fea8e",
+                      "modelVersion": "1",
+                      "modelCustomizationId": "02fb0319-f37d-4e8b-9009-263fffdb2549"
+                    },
+                    "instanceName": "vf_frankfurt_vfw_k8s_demo_final0..VfFrankfurtVfwK8sDemoFinal..vpkg..module-2",
+                    "instanceParams": [{
+                      "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                      "k8s-rb-profile-namespace": "vfirewall",
+                      "sdnc_model_name": "vFW_CNF_CDS",
+                      "sdnc_model_version": "7.0.0",
+                      "vf_module_label": "vpkg"
+                    }
+                    ]
+                  },
+                  {
+                    "modelInfo": {
+                      "modelName": "VfVfwK8sDemoCnf..vfw..module-3",
+                      "modelVersionId": "a5f678db-2e5f-47be-8fab-1540bc7482d8",
+                      "modelInvariantUuid": "c0869243-7667-4434-b9cc-84791f07a13a",
+                      "modelVersion": "1",
+                      "modelCustomizationId": "f144c7c8-da93-4e06-ba93-d26e69eba509"
+                    },
+                    "instanceName": "vf_frankfurt_vfw_k8s_demo_final0..VfFrankfurtVfwK8sDemoFinal..vfw..module-3",
+                    "instanceParams": [{
+                      "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                      "k8s-rb-profile-namespace": "vfirewall",
+                      "sdnc_model_name": "vFW_CNF_CDS",
+                      "sdnc_model_version": "7.0.0",
+                      "vf_module_label": "vfw"
+                    }
+                    ]
+                  }
+
+                ]
+              }
+            ]
+          },
+          "modelInfo": {
+            "modelVersion": "1.0",
+            "modelVersionId": "6f2c7614-571c-4482-aa2c-5eac0308aa16",
+            "modelInvariantId": "b9202a74-4c16-4245-83ad-1cd53c813214",
+            "modelName": "vfw_k8s_demo_CNF",
+            "modelType": "service"
+          }
+        }
+      }
+      ],
+      "aLaCarte": false
+    },
+    "project": {
+      "projectName": "etsiCsitProject"
+    },
+    "owningEntity": {
+      "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
+      "owningEntityName": "OE-Demonstration"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "string",
+  "notificationType": "VnfPackageOnboardingNotification",
+  "subscriptionId": "string",
+  "vnfPkgId": "string",
+  "vnfdId": "string",
+  "_links": {
+    "vnfPackage": {
+      "href": "string"
+    },
+    "subscription": {
+      "href": "string"
+    }
+  }
+}

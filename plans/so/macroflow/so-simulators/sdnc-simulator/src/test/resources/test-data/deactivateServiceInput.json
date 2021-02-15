@@ -1,0 +1,28 @@
+{
+    "input": {
+        "request-information": {
+            "request-action": "DeleteServiceInstance",
+            "source": "MSO",
+            "request-id": "33ebd358-a189-4664-90f5-cf9e23658e0a"
+        },
+        "sdnc-request-header": {
+            "svc-request-id": "04fc9f50-87b8-430d-a232-ef24bd6c4150",
+            "svc-action": "deactivate"
+        },
+        "service-information": {
+            "onap-model-information": {
+                "model-name": "Sol004Zip3Service",
+                "model-version": "2.0",
+                "model-uuid": "c112a499-6148-488b-ba82-3f5938cf26d2",
+                "model-invariant-uuid": "e9acd081-9c89-4b4d-bcb3-e0e2b9715b2a"
+            },
+            "subscription-service-type": "vCPE",
+            "service-id": "ccece8fe-13da-456a-baf6-41b3a4a2bc2b",
+            "global-customer-id": "NordixDemoCustomer",
+            "service-instance-id": "ccece8fe-13da-456a-baf6-41b3a4a2bc2b"
+        },
+        "service-request-input": {
+            "service-instance-name": "ServiceTest_24_07_2019"
+        }
+    }
+}

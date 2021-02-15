@@ -1,0 +1,30 @@
+logging:
+  path: logs
+
+spring:
+  datasource:
+     hikari:
+       driver-class-name: org.mariadb.jdbc.Driver
+       jdbcUrl: jdbc:mariadb://mariadb:3306/requestdb
+       username: requestuser
+       password: request123
+       pool-name: reqdb-pool
+       registerMbeans: true
+
+server:
+    port: 8084
+    tomcat:
+        max-threads: 50
+mso:
+  site-name: localSite
+  adapters:
+    requestDb:
+      endpoint: http://request-db-adapter:8083
+      auth: Basic YnBlbDpwYXNzd29yZDEk
+
+#Actuator
+management:
+  security:
+    enabled: false
+    basic:
+      enabled: false

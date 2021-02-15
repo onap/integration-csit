@@ -1,0 +1,11 @@
+server:
+   port: 9991
+   tomcat:
+      max-threads: 4
+ssl-enable: false
+spring:
+   security:
+      username: mso
+      #password: Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+      password: $2a$04$Lcu/DWdyXsl/a3A0iqHTfOX1.zHQ3DlQS/nOPfafT.9pWbeEqlF7W
+      role: mso

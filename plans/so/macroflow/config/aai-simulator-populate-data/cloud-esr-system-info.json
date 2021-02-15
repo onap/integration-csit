@@ -1,0 +1,14 @@
+{
+    "esr-system-info-id": "e6a0b318-9756-4f11-94e8-919312d6c2bd",
+    "system-name": "csit cloud vim",
+    "type": "OPENSTACK",
+    "vendor": "RedHat",
+    "version": "1",
+    "service-url": "https://csit.etsicloud.com:5000/v3/",
+    "user-name": "",
+    "password": "",
+    "system-type": "VIM",
+    "port": "example-port-val-93234",
+    "cloud-domain": "CCP_Domain_34466",
+    "default-tenant": "693c7729b2364a26a3ca602e6f66187d"
+}
