@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d916b2_25a2cfeb",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Separate conditional success logging seems somewhat redundant here as now the return code is logged anyway in the next step and its correctness is verified in the following one (you should get something like \"401\" !\u003d \"201\" to console from that anyway if it fails - and if it doesn\u0027t, do you have any reason to look at console output at all?)",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 125
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef82d23_63edc5bb",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Should the test fail if the response code is *not* 202? I don\u0027t see anything that would verify that now",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 131
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf35166_2e3cf5bf",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Should this iteration fail here if response is not 200?",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 120
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bcba44_98cc1436",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above, this looks redundant",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 109
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1123a21_8f4ddfc9",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above, should this fail?",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 129
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c044aab_b8204995",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above, consider \"Wait Until Keyword Succeeds\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 69
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bba94d9_a6bcc9da",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above - should this cause failure at least in this loop iteration?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 120
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10ec214_e1ddb618",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above - looks redundant",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 109
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f42431_62cdb77e",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T17:40:41Z",
+      "side": 1,
+      "message": "Like above - looks redundant",
+      "range": {
+        "startLine": 98,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 126
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
