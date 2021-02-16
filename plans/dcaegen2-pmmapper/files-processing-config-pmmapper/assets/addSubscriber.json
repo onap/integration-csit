@@ -1,0 +1,20 @@
+{
+    "delivery":{
+       "url":"http://dcae-pm-mapper:8081/delivery",
+       "user":"username",
+       "password":"password",
+       "use100":true
+    },
+    "follow_redirect":false,
+    "metadataOnly":false,
+    "suspend":false,
+    "groupid":0,
+    "links":{
+       "self": "https://dmaap-dr-prov/subscribe/1",
+       "log": "https://dmaap-dr-prov/feedlog/1",
+       "feed": "https://dmaap-dr-prov/feed/1"
+    },
+    "subscriber":"pmmapper",
+    "decompress":true,
+    "privilegedSubscriber": true
+ }
