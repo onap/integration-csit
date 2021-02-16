@@ -1,0 +1,12 @@
+{
+    "productName": "gnb",
+    "vendorName": "Ericsson",
+    "lastEpochMicrosec": "1538478000000",
+    "sourceName": "oteNB5309",
+    "startEpochMicrosec": "1538478900000",
+    "timeZoneOffset": "UTC+05.00",
+    "location": "ftpes://192.168.0.101:22/ftp/rop/A20161224.1045-1100.bin.gz",
+    "compression": "gzip",
+    "fileFormatType": "org.3GPP.32.435#measCollec",
+    "fileFormatVersion": "V9"
+  }
