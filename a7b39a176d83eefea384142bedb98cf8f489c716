@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82cd4bf5_ae207c3d",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T14:41:49Z",
+      "side": 1,
+      "message": "I don\u0027t see these being used anywhere",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 181
+      },
+      "revId": "a7b39a176d83eefea384142bedb98cf8f489c716",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9122a286_4317315b",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-16T14:41:49Z",
+      "side": 1,
+      "message": "Why log only successful case? If console logging about the response is wanted, it would be much more informative to log the response code in all situations",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 125
+      },
+      "revId": "a7b39a176d83eefea384142bedb98cf8f489c716",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
