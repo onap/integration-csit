@@ -2,6 +2,7 @@
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
 # Copyright (C) 2018-2019 NOKIA
+# Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +38,7 @@ Message Routing Suite Setup
 *** Test Cases ***
 Correct Messages Routing
     [Documentation]   VES-HV Collector should route all valid messages to topics specified in configuration
-    ...               and do not change message payload generated in XNF simulator
+    ...               without changing message payload generated in xNF simulator
 
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_FIXED_PAYLOAD_REQUEST}
 
@@ -47,7 +48,7 @@ Correct Messages Routing
 
 
 Too big payload message handling
-    [Documentation]   VES-HV Collector should interrupt the stream when encountered message with too big payload
+    [Documentation]   VES-HV Collector should interrupt the stream when a message with too big payload is encountered
 
     Send Messages From xNF Simulators   ${XNF_SIMULATOR}   ${XNF_TOO_BIG_PAYLOAD_REQUEST}
 

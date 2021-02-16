@@ -2,6 +2,7 @@
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
 # Copyright (C) 2018-2019 NOKIA
+# Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,11 +54,11 @@ Get xNF Simulators Using Valid Certificates
 
 Send Messages From xNF Simulators
     [Arguments]    ${XNF_HOSTS_LIST}   ${MESSAGE_FILEPATH}
-    :FOR   ${HOST}   IN    @{XNF_HOSTS_LIST}
-    \    ${XNF_SIM_API_ACCESS}=   Get xNF Sim Api Access Url   ${HTTP_METHOD_URL}   ${HOST}
-    \    ${XNF_SIM_API_URL}=  Catenate   SEPARATOR=   ${XNF_SIM_API_ACCESS}   ${XNF_SIM_API_PATH}
-    \    Send messages   ${XNF_SIM_API_URL}   ${MESSAGE_FILEPATH}
-
+    FOR   ${HOST}   IN    @{XNF_HOSTS_LIST}
+        ${XNF_SIM_API_ACCESS}=   Get xNF Sim Api Access Url   ${HTTP_METHOD_URL}   ${HOST}
+        ${XNF_SIM_API_URL}=  Catenate   SEPARATOR=   ${XNF_SIM_API_ACCESS}   ${XNF_SIM_API_PATH}
+        Send messages   ${XNF_SIM_API_URL}   ${MESSAGE_FILEPATH}
+    END
 
 VES-HV Collector Test Shutdown
     Reset DCAE App Simulator  ${DEFAULT_PERF3GPP_TOPIC}
