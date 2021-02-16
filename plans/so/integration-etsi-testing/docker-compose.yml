@@ -220,7 +220,7 @@ services:
       - request-db-adapter
 ################################################################################
   so-vnfm-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${TAG}
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
     ports:
       - "9092:9092"
     volumes:

@@ -26,7 +26,7 @@ services:
     image: onap/so/so-monitoring:${TAG}
 ################################################################################
   so-vnfm-adapter:
-    image: onap/so/vnfm-adapter:${TAG}
+    image: onap/so/vnfm-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
 ################################################################################
   modeling-etsicatalog:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/modeling/etsicatalog:${ETSI_CATALOG_IMAGE_VERSION}
