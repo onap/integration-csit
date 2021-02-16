@@ -23,12 +23,12 @@ import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSH
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
-import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_RESOURCE_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getResourceVersion;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
@@ -36,7 +36,6 @@ import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.Relationship;
-import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.ServiceInstance;
 import org.onap.aai.domain.yang.ServiceInstances;
 import org.onap.aai.domain.yang.ServiceSubscription;
@@ -75,8 +74,8 @@ public class BusinessController {
 
     @Autowired
     public BusinessController(final CustomerCacheServiceProvider cacheServiceProvider,
-            final NodesCacheServiceProvider nodesCacheServiceProvider,
-            final GenericVnfCacheServiceProvider genericVnfCacheServiceProvider) {
+                              final NodesCacheServiceProvider nodesCacheServiceProvider,
+                              final GenericVnfCacheServiceProvider genericVnfCacheServiceProvider) {
         this.cacheServiceProvider = cacheServiceProvider;
         this.nodesCacheServiceProvider = nodesCacheServiceProvider;
         this.genericVnfCacheServiceProvider = genericVnfCacheServiceProvider;
@@ -84,7 +83,7 @@ public class BusinessController {
 
     @GetMapping(value = "{global-customer-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getCustomer(@PathVariable("global-customer-id") final String globalCustomerId,
-            final HttpServletRequest request) {
+                                         final HttpServletRequest request) {
         LOGGER.info("Will retrieve customer for 'global customer id': {} ...", globalCustomerId);
 
         final Optional<Customer> optional = cacheServiceProvider.getCustomer(globalCustomerId);
@@ -101,7 +100,7 @@ public class BusinessController {
     @PutMapping(value = "/{global-customer-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putCustomer(@RequestBody final Customer customer,
-            @PathVariable("global-customer-id") final String globalCustomerId, final HttpServletRequest request) {
+                                         @PathVariable("global-customer-id") final String globalCustomerId, final HttpServletRequest request) {
         LOGGER.info("Will put customer for 'global customer id': {} ...", globalCustomerId);
 
         if (customer.getResourceVersion() == null || customer.getResourceVersion().isEmpty()) {
@@ -116,7 +115,7 @@ public class BusinessController {
     @GetMapping(value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getCustomer(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType, final HttpServletRequest request) {
+                                         @PathVariable("service-type") final String serviceType, final HttpServletRequest request) {
         LOGGER.info("Will retrieve service subscription for 'global customer id': {} and 'service type': {} ...",
                 globalCustomerId, serviceType);
 
@@ -136,8 +135,8 @@ public class BusinessController {
     @PutMapping(value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putServiceSubscription(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @RequestBody final ServiceSubscription serviceSubscription, final HttpServletRequest request) {
+                                                    @PathVariable("service-type") final String serviceType,
+                                                    @RequestBody final ServiceSubscription serviceSubscription, final HttpServletRequest request) {
         LOGGER.info("Will add service subscription for 'global customer id': {} and 'service type': {} ...",
                 globalCustomerId, serviceType);
 
@@ -155,9 +154,9 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getSericeInstances(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @RequestParam(name = "service-instance-name") final String serviceInstanceName,
-            @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
+                                                @PathVariable("service-type") final String serviceType,
+                                                @RequestParam(name = "service-instance-name") final String serviceInstanceName,
+                                                @RequestParam(name = "depth", required = false) final Integer depth, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will retrieve service instances for 'global customer id': {}, 'service type': {} and 'service instance name: '{} with depth: {}...",
@@ -180,12 +179,12 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestParam(name = "depth", required = false) final Integer depth,
-            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
-            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
-            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
+                                               @PathVariable("service-type") final String serviceType,
+                                               @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+                                               @RequestParam(name = "depth", required = false) final Integer depth,
+                                               @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+                                               @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+                                               @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will retrieve service instances for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with depth: {}, resultIndex:{}, resultSize: {} and format: {}...",
@@ -208,10 +207,10 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String invocationId,
-            @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
+                                               @PathVariable("service-type") final String serviceType,
+                                               @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+                                               @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String invocationId,
+                                               @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will add service instance for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
@@ -237,10 +236,10 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> patchSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
-            @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
+                                                 @PathVariable("service-type") final String serviceType,
+                                                 @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+                                                 @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
+                                                 @RequestBody final ServiceInstance serviceInstance, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will post service instance for 'global customer id': {}, 'service type': {}, 'service instance id: '{} and '{}': {}...",
@@ -261,35 +260,34 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}/related-to/generic-vnfs",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> getRelatedToGenericVnf(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestParam(name = "vnf-name", required = true) final String vnfName, final HttpServletRequest request) {
+                                                    @PathVariable("service-type") final String serviceType,
+                                                    @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+                                                    @RequestParam(name = "vnf-name", required = false) final String vnfName, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will retrieve generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
                 globalCustomerId, serviceType, serviceInstanceId, vnfName);
 
-        final Optional<Relationship> optional =
-                cacheServiceProvider.getRelationship(globalCustomerId, serviceType, serviceInstanceId, vnfName);
+        final List<String> relatedToVnfIds =
+                getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId, vnfName);
 
-        if (optional.isPresent()) {
 
-            final Relationship relationship = optional.get();
-            final Optional<RelationshipData> relationshipDataOptional = relationship.getRelationshipData().stream()
-                    .filter(existing -> GENERIC_VNF_VNF_ID.equals(existing.getRelationshipKey())).findFirst();
-
-            if (relationshipDataOptional.isPresent()) {
-                final RelationshipData relationshipData = relationshipDataOptional.get();
-                final String vnfId = relationshipData.getRelationshipValue();
+        if (!relatedToVnfIds.isEmpty()) {
+            final GenericVnfs genericVnfs = new GenericVnfs();
+            relatedToVnfIds.stream().forEach(vnfId -> {
                 final Optional<GenericVnf> genericVnfOptional = genericVnfCacheServiceProvider.getGenericVnf(vnfId);
                 if (genericVnfOptional.isPresent()) {
-                    final GenericVnfs genericVnfs = new GenericVnfs();
-                    genericVnfs.getGenericVnf().add(genericVnfOptional.get());
-                    LOGGER.info("found service instance  {} in cache", relationship);
-                    return ResponseEntity.ok(genericVnfs);
+                    final GenericVnf genericVnf = genericVnfOptional.get();
+                    LOGGER.info("found related-to generic-vnf {} in cache", genericVnf);
+                    genericVnfs.getGenericVnf().add(genericVnf);
                 }
+            });
+            if (!genericVnfs.getGenericVnf().isEmpty()) {
+                LOGGER.info("Found {} related generic-vnfs", genericVnfs.getGenericVnf().size());
+                return ResponseEntity.ok(genericVnfs);
             }
         }
+
         LOGGER.error(
                 "Couldn't find  generic vnf related to information for 'global customer id': {}, 'service type': {} and 'service instance id: '{} with vnfname: {}...",
                 globalCustomerId, serviceType, serviceInstanceId, vnfName);
@@ -330,9 +328,9 @@ public class BusinessController {
             value = "/{global-customer-id}/service-subscriptions/service-subscription/{service-type}/service-instances/service-instance/{service-instance-id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> deleteSericeInstance(@PathVariable("global-customer-id") final String globalCustomerId,
-            @PathVariable("service-type") final String serviceType,
-            @PathVariable(name = "service-instance-id") final String serviceInstanceId,
-            @RequestParam(name = "resource-version") final String resourceVersion, final HttpServletRequest request) {
+                                                  @PathVariable("service-type") final String serviceType,
+                                                  @PathVariable(name = "service-instance-id") final String serviceInstanceId,
+                                                  @RequestParam(name = "resource-version") final String resourceVersion, final HttpServletRequest request) {
 
         LOGGER.info(
                 "Will delete SericeInstance for 'global-customer-id': {}, 'service-type': {}, 'service-instance-id': {} and 'resource-version': {}",
@@ -352,5 +350,13 @@ public class BusinessController {
 
         return getRequestErrorResponseEntity(request);
 
+    }
+
+    private List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
+                                            final String serviceInstanceId, final String vnfName) {
+        if (vnfName != null) {
+            return cacheServiceProvider.getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId, vnfName);
+        }
+        return cacheServiceProvider.getRelatedToVnfIds(globalCustomerId, serviceType, serviceInstanceId);
     }
 }

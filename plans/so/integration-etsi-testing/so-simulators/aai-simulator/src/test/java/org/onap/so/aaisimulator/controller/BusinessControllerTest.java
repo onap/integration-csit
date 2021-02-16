@@ -380,6 +380,41 @@ public class BusinessControllerTest extends AbstractSpringBootTest {
                 .isPresent());
     }
 
+    @Test
+    public void test_putServiceInstanceRelatedTo_ableToRetrieveAllRelatedGenericVnfsFromCache() throws Exception {
+
+        final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
+
+        invokeCustomerEndPointAndAssertResponse();
+
+        invokeServiceInstanceEndPointAndAssertResponse();
+
+        final String relationShipUrl = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL,
+                BI_DIRECTIONAL_RELATIONSHIP_LIST_URL);
+
+        final ResponseEntity<Relationship> responseEntity2 = testRestTemplateService.invokeHttpPut(relationShipUrl,
+                TestUtils.getRelationShipJsonObject(), Relationship.class);
+
+        assertEquals(HttpStatus.ACCEPTED, responseEntity2.getStatusCode());
+
+        final String genericVnfUrl = getUrl(GENERIC_VNF_URL, VNF_ID);
+        final ResponseEntity<Void> genericVnfResponse =
+                testRestTemplateService.invokeHttpPut(genericVnfUrl, TestUtils.getGenericVnf(), Void.class);
+        assertEquals(HttpStatus.ACCEPTED, genericVnfResponse.getStatusCode());
+
+        final ResponseEntity<GenericVnfs> actual =
+                testRestTemplateService.invokeHttpGet(url + RELATED_TO_URL, GenericVnfs.class);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+
+        assertTrue(actual.hasBody());
+        final GenericVnfs genericVnfs = actual.getBody();
+        assertFalse(genericVnfs.getGenericVnf().isEmpty());
+        final GenericVnf genericVnf = genericVnfs.getGenericVnf().get(0);
+        assertEquals(GENERIC_VNF_NAME, genericVnf.getVnfName());
+    }
+
+
     private void invokeServiceInstanceEndPointAndAssertResponse() throws IOException {
         final String url = getUrl(CUSTOMERS_URL, SERVICE_SUBSCRIPTIONS_URL, SERVICE_INSTANCE_URL);
         final ResponseEntity<Void> responseEntity =
