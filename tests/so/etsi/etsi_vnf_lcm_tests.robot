@@ -3,6 +3,9 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Documentation    Test cases for VNF lifecycle management operations
+...              Note, relies on:
+...                -package being onboarded in etsi_package_onboarding_tests
 
 *** Variables ***
 ${SLEEP_INTERVAL_SEC}=   5

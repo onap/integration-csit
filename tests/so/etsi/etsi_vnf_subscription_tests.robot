@@ -3,6 +3,9 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Documentation    Test cases that tests subscription functionality for VNF package onboarding/change notifications
+...              Tests include subscribing for notifications, and querying that the subscriptions have been created
+...              Note: creates ACCESS_TOKEN and SUBSCRIPTION_ID variables used in later etsi_vnf_notification_tests
 
 *** Variables ***
 ${SLEEP_INTERVAL_SEC}=   5

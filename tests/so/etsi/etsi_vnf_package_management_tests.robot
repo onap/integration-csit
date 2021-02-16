@@ -4,6 +4,9 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
 Library     ArchiveLibrary
+Documentation    Test cases for VNF package management operations including get packages, package, content and artifacts
+...              Note, relies on:
+...                -package being onboarded in etsi_package_onboarding_tests
 
 *** Variables ***
 ${VNF_PACKAGE_ID}=    73522444-e8e9-49c1-be29-d355800aa349
