@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eada6559_864dd1fb",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-16T15:57:42Z",
+      "side": 1,
+      "message": "Ah apologies, I split the reviews and these are used in the FOR loops in the dependent review: https://gerrit.onap.org/r/c/integration/csit/+/117868\nI have removed these from here and moved them to the 2nd review.",
+      "parentUuid": "82cd4bf5_ae207c3d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 181
+      },
+      "revId": "a7b39a176d83eefea384142bedb98cf8f489c716",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9122a286_4317315b",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a7b39a176d83eefea384142bedb98cf8f489c716",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83df0d34_db1b5bd4",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-16T15:57:42Z",
+      "side": 1,
+      "message": "That is a great point, I\u0027ve added logging of the response to all cases.",
+      "parentUuid": "9122a286_4317315b",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 125
+      },
+      "revId": "a7b39a176d83eefea384142bedb98cf8f489c716",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
