@@ -3,6 +3,11 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Documentation    Test cases for VNF package subscription notifications and subscription cleanup
+...              Test include checking that VNF package notification was received and deleting the subscription
+...              Note, relies on:
+...                -subscription being created in etsi_vnf_subscription_tests and
+...                -package being onboarded in etsi_package_onboarding_tests
 
 *** Variables ***
 ${SLEEP_INTERVAL_SEC}=   5
