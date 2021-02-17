@@ -86,6 +86,7 @@ DeployPolicies
      Should Be Equal As Strings    ${resp.status_code}     200
      ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
      ...            responseTo    xacml    ACTIVE    onap.restart.tca
+     Should Be Equal As Integers        ${result.rc}    0
 
 GetStatisticsAfterDeployed
      [Documentation]    Runs Policy Xacml PDP Statistics after policy is deployed
