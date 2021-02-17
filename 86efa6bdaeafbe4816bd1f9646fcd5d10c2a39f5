@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28e7e4c_e32bb560",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-17T13:47:46Z",
+      "side": 1,
+      "message": "I don\u0027t see these used anywhere",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 181
+      },
+      "revId": "86efa6bdaeafbe4816bd1f9646fcd5d10c2a39f5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03aa2711_71c666d8",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-17T13:47:46Z",
+      "side": 1,
+      "message": "Is there some particular reason for this filename to have double dash in it?",
+      "range": {
+        "startLine": 14,
+        "startChar": 73,
+        "endLine": 14,
+        "endChar": 75
+      },
+      "revId": "86efa6bdaeafbe4816bd1f9646fcd5d10c2a39f5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8650baa4_1a208c00",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-17T13:47:46Z",
+      "side": 1,
+      "message": "Why log only successful case to console?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 99
+      },
+      "revId": "86efa6bdaeafbe4816bd1f9646fcd5d10c2a39f5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b236db3d_e52c9794",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-17T13:47:46Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 125
+      },
+      "revId": "86efa6bdaeafbe4816bd1f9646fcd5d10c2a39f5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
