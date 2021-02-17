@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f07ede17_c46663f1",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Ah yes that makes perfect sense, completely agree. Removed redundant conditional step and log statement.",
+      "parentUuid": "f4d916b2_25a2cfeb",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 125
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef82d23_63edc5bb",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950960fe_577fc0ae",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Yes, this test should fail if it receives anything other than 202 and further tests should fail in this case. Added a check here and updated check at the beginning of Terminate/Delete tests.",
+      "parentUuid": "9ef82d23_63edc5bb",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 131
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b4d9ad0_2227a721",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Removed this FOR loop and replaced with \"Wait Until Keyword Succeeds\" as you suggested below.",
+      "parentUuid": "adf35166_2e3cf5bf",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 120
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1bcba44_98cc1436",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697efbcc_e62ac939",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d1bcba44_98cc1436",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 109
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1ca95fd9_919665d7",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Same as above, added exit case.",
+      "parentUuid": "a1123a21_8f4ddfc9",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 129
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c044aab_b8204995",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad34d3da_354fbe24",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Implemented \"Wait Until Keyword Succeeds\" instead of FOR loop here. Also updated exit case at beginning of next tests to prevent wasting time when the Keyword cant succeed. Thanks for the advice here.",
+      "parentUuid": "6c044aab_b8204995",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 69
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f53d3ab7_2bd655a9",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Same as above. Removed FOR loop.",
+      "parentUuid": "5bba94d9_a6bcc9da",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 120
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d10ec214_e1ddb618",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e6294f26_177eadcf",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d10ec214_e1ddb618",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 109
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1f42431_62cdb77e",
         "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f231c02_d42bd443",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-02-17T16:21:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a1f42431_62cdb77e",
+      "range": {
+        "startLine": 98,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 126
+      },
+      "revId": "1ec04ba538c4b6d7efbfdbe6e5ce119dbd156257",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
