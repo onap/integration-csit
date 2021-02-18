@@ -2,7 +2,7 @@ version: '3'
 services:
 ################################################################################
   mariadb:
-    image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:10.1.11
+    image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:${MARIADB_VERSION}
     ports:
       - "3306:3306"
     volumes:

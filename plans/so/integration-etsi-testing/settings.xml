@@ -15,7 +15,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-<localRepository>${user.home}/.m2/repository</localRepository>
+  <localRepository>${user.home}/.m2/repository</localRepository>
   <profiles>
     <profile>
       <id>onap-settings</id>
@@ -95,7 +95,7 @@
       <repositories>
         <repository>
           <id>central</id>
-          <url>http://repo1.maven.org/maven2/</url>
+          <url>https://repo1.maven.org/maven2/</url>
         </repository>
         <repository>
           <id>onap-public</id>
@@ -112,7 +112,7 @@
       <pluginRepositories>
         <pluginRepository>
           <id>central</id>
-          <url>http://repo1.maven.org/maven2/</url>
+          <url>https://repo1.maven.org/maven2/</url>
         </pluginRepository>
         <pluginRepository>
           <id>onap-public</id>
@@ -168,4 +168,3 @@
   </activeProfiles>
 
 </settings>
-
