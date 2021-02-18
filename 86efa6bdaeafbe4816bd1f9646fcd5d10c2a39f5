@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "46e18ffb_0afc2599",
+        "filename": "plans/so/macroflow/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/configration/ApplicationConfigration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-02-18T09:47:45Z",
+      "side": 1,
+      "message": "Instead of copying code from ETSI CSIT (https://gerrit.onap.org/r/gitweb?p\u003dintegration/csit.git;a\u003dtree;f\u003dplans/so/integration-etsi-testing/so-simulators;h\u003d7ce209a95519120e4c1935dcf6fe5f07e1d27055;hb\u003drefs/heads/master) i would suggest to reuse it or move it to common",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "86efa6bdaeafbe4816bd1f9646fcd5d10c2a39f5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28e7e4c_e32bb560",
         "filename": "tests/so/sanity-check/macroflow.robot",
         "patchSetId": 1
