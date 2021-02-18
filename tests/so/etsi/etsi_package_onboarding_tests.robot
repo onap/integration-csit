@@ -3,11 +3,13 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
-Documentation    Test cases for onboarding and distributing a VNF package
-...              Note: onboarded VNF package is used in later VNF tests including:
-...                -etsi_vnf_lcm_tests.robot
-...                -etsi_vnf_package_management_tests.robot
-...                -etsi_vnf_notification_tests.robot
+Documentation    Test cases for onboarding a VNF and Network Service package and distributing the VNF Package
+...    Note: onboarded VNF package is used in later VNF tests including:
+...      -etsi_vnf_lcm_tests.robot
+...      -etsi_vnf_package_management_tests.robot
+...      -etsi_vnf_notification_tests.robot
+...    Note: onboarded Network Service package is used in later test:
+...      -etsi_nfvo_ns_lcm_tests.robot
 
 *** Variables ***
 ${SLEEP_INTERVAL_SEC}=   5

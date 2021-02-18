@@ -9,6 +9,12 @@ Library     ArchiveLibrary
 ${NFVO_NS_LCM_BASE_URL}=    /so/so-etsi-nfvo-ns-lcm/v1/api/nslcm/v1
 ${BASIC_AUTH}=    Basic c28tZXRzaS1uZnZvLW5zLWxjbTpwYXNzd29yZDEk
 
+Documentation    Test cases for ETSI NFVO NS Lifecycle Management Operations
+...    Create and Delete tests are syncronous
+...    Instantiate and Terminate tests are asyncronous, test status checked through request to NS_LCM_OP_OCCs endpoint
+...    Note, relies on:
+...      -Network Service package being onboarded in etsi_package_onboarding_tests
+
 *** Test Cases ***
 
 Invoke Create Network Service
