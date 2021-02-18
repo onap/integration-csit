@@ -93,6 +93,8 @@ Setup Strict Host Key Checking Test
     Set Environment Variable        HTTP_SIMS               http-https-server0:80
     Set Environment Variable        HTTPS_SIMS              http-https-server0:443
     Set Environment Variable        HTTPS_SIMS_NO_AUTH      http-https-server0:8080
+    Set Environment Variable        HTTP_JWT_SIMS           http-https-server0:32000
+    Set Environment Variable        HTTPS_JWT_SIMS          http-https-server0:32100
 
     ${cli_cmd_output}=              Run Process     ./simulators-start.sh    cwd=${SIMGROUP_ROOT}
     Log To Console                  Simulator-start:

@@ -22,15 +22,28 @@ Verify single event with single 1MB file with HTTPS connection (basic authentica
 
 Verify single event with single 1MB file HTTPS connection (client certificate authentication). From event poll to published file
     [TAGS]                         DFC_FUNCTIONAL_41
-    [Documentation]                Verify single event with single HTTPS (basic authentication) 5MB file from event poll to published file.
+    [Documentation]                Verify single event with single 1MB file HTTPS connection (client certificate authentication). From event poll to published file
     Verify Single Event From Event Poll To Published File   1    --tc403    HTTPS
 
 
 Verify single event with single 1MB file HTTPS (no authentication). From event poll to published file
     [TAGS]                         DFC_FUNCTIONAL_42
-    [Documentation]                Verify single event with single HTTPS (basic authentication) 50MB file from event poll to published file.
+    [Documentation]                Verify single event with single 1MB file HTTPS (no authentication). From event poll to published file
     Verify Single Event From Event Poll To Published File   1   --tc404    HTTPS
 
+
+Verify single event with single 1MB file with HTTP JWT. From event poll to published file
+    [TAGS]                         DFC_FUNCTIONAL_43
+    [Documentation]                Verify single event with single 1MB file with HTTP JWT. From event poll to published file
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/../dfc-containers-clean.sh           stderr=STDOUT
+    Verify Single Event From Event Poll To Published File   1    --tc303    HTTP
+
+
+Verify single event with single 1MB file with HTTPS JWT. From event poll to published file
+    [TAGS]                         DFC_FUNCTIONAL_44
+    [Documentation]                Verify single event with single 1MB file with HTTPS JWT. From event poll to published file
+    ${cli_cmd_output}=              Run Process             ${DFC_ROOT}/../dfc-containers-clean.sh           stderr=STDOUT
+    Verify Single Event From Event Poll To Published File   1    --tc405    HTTPS
 
 
 *** Keywords ***
@@ -93,3 +106,5 @@ Set Default Environment Variables
     Set Environment Variable        HTTP_SIMS               http-https-server0:80
     Set Environment Variable        HTTPS_SIMS              http-https-server0:443
     Set Environment Variable        HTTPS_SIMS_NO_AUTH      http-https-server0:8080
+    Set Environment Variable        HTTP_JWT_SIMS           http-https-server0:32000
+    Set Environment Variable        HTTPS_JWT_SIMS          http-https-server0:32100
