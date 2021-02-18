@@ -81,7 +81,7 @@ DeployPdpGroups
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Post Request     policy  /policy/pap/v1/pdps/deployments/batch    data=${postjson}     headers=${headers}
      Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
 
 UndeployPolicy
      [Documentation]    Runs Policy PAP Undeploy a Policy from PDP Groups
@@ -91,7 +91,7 @@ UndeployPolicy
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Delete Request     policy  /policy/pap/v1/pdps/policies/onap.restart.tca     headers=${headers}
      Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
 
 QueryPdpGroupsAfterUndeploy
      [Documentation]    Runs Policy PAP Query PDP Groups after Undeploy

@@ -83,7 +83,7 @@ DeployPolicies
      ${resp}=   Post Request   policy  /policy/pap/v1/pdps/policies  data=${postjson}   headers=${headers}
      Log    Received response from policy5 ${resp.text}
      ${postjsonobject}   To Json    ${postjson}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
      ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
      ...            responseTo    xacml    ACTIVE    onap.restart.tca
 
@@ -202,7 +202,7 @@ UndeployMonitorPolicy
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   Delete Request     policy  /policy/pap/v1/pdps/policies/onap.restart.tca     headers=${headers}
      Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
 
 GetStatisticsAfterUndeploy
      [Documentation]    Runs Policy Xacml PDP Statistics after policy is undeployed

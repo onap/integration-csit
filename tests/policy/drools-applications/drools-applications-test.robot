@@ -122,7 +122,7 @@ DeployXacmlPolicies
     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
     ${resp}=   Post Request     policy  /policy/pap/v1/pdps/deployments/batch    data=${postjson}     headers=${headers}
     Log    Received response from pap ${resp.text}
-    Should Be Equal As Strings    ${resp.status_code}     200
+    Should Be Equal As Strings    ${resp.status_code}     202
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    xacml    ACTIVE    restart
     Log    Received status ${result.stdout}
@@ -140,7 +140,7 @@ DeployDroolsPolicies
     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
     ${resp}=   Post Request     policy  /policy/pap/v1/pdps/deployments/batch    data=${postjson}     headers=${headers}
     Log    Received response from pap ${resp.text}
-    Should Be Equal As Strings    ${resp.status_code}     200
+    Should Be Equal As Strings    ${resp.status_code}     202
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    drools    ACTIVE
     Log    Received status ${result.stdout}
