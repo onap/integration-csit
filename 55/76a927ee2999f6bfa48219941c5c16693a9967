@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jim Hahn <jrh3@att.com>
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+2: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Submitted-by: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Submitted-at: Fri, 19 Feb 2021 08:59:39 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/118064
+Project: integration/csit
+Branch: refs/heads/master
