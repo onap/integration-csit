@@ -39,7 +39,9 @@ Verify that PM Mapper rejects correct number of messages 1 1
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           40s
-    Run Keyword Unless              ${6} < ${dropped_nr} < ${9}     PrintLogAndFail                               ${alllogs}          ${dropped_nr}
+    Log To Console                  Dropped:
+    Log To Console                  ${dropped_nr}
+    Run Keyword Unless              ${6} < ${dropped_nr} < ${9}     Fail
     ClearLogs
 
 Verify that PM Mapper rejects correct number of messages 4 1
@@ -57,7 +59,9 @@ Verify that PM Mapper rejects correct number of messages 4 1
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           25s
-    Run Keyword Unless              ${5} < ${dropped_nr} < ${7}     PrintLogAndFail                               ${alllogs}          ${dropped_nr}
+    Log To Console                  Dropped:
+    Log To Console                  ${dropped_nr}
+    Run Keyword Unless              ${5} < ${dropped_nr} < ${7}     Fail
     ClearLogs
 
 Verify that PM Mapper rejects correct number of messages 10 1
@@ -75,7 +79,9 @@ Verify that PM Mapper rejects correct number of messages 10 1
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           15s
-    Run Keyword Unless              ${dropped_nr} < ${3}            PrintLogAndFail                               ${alllogs}          ${dropped_nr}
+    Log To Console                  Dropped:
+    Log To Console                  ${dropped_nr}
+    Run Keyword Unless              ${dropped_nr} < ${3}            Fail
     ClearLogs
 
 Verify that PM Mapper rejects correct number of messages 1 10
@@ -93,7 +99,9 @@ Verify that PM Mapper rejects correct number of messages 1 10
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           15s
-    Run Keyword Unless              ${dropped_nr} < ${3}            PrintLogAndFail                               ${alllogs}          ${dropped_nr}
+    Log To Console                  Dropped:
+    Log To Console                  ${dropped_nr}
+    Run Keyword Unless              ${dropped_nr} < ${3}            Fail
     ClearLogs
 
 *** Keywords ***
