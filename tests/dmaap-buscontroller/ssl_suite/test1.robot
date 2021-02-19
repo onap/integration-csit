@@ -20,28 +20,28 @@ Dir Test
 
 Url Test
     [Documentation]    Check if www.onap.org can be reached
-    Create Session     openo          http://www.onap.org
+    Create Session     openo          http://www.onap.org    disable_warnings=True
     CheckUrl           openo          /                        200
 
 HTTPS Heartbeat Test
     [Documentation]        Check ${DBC_URI}/info SSL endpoint
-    Create Session         heartbeat          https://${DMAAPBC_IP}:8443
+    Create Session         heartbeat          https://${DMAAPBC_IP}:8443    disable_warnings=True
     CheckUrl               heartbeat          ${DBC_URI}/info   204
 
 HTTPS Dmaap Init Test
     [Documentation]        Check ${DBC_URI}/dmaap SSL endpoint
-    Create Session         heartbeat          https://${DMAAPBC_IP}:8443
-    CheckStatus               heartbeat          ${DBC_URI}/dmaap   "VALID"
+    Create Session         heartbeat          https://${DMAAPBC_IP}:8443    disable_warnings=True
+    CheckStatus            heartbeat          ${DBC_URI}/dmaap   "VALID"
 
 HTTPS Dmaap dcaeLocations Test
     [Documentation]        Check ${DBC_URI}/dcaeLocations SSL endpoint
-    Create Session         heartbeat          https://${DMAAPBC_IP}:8443
-    CheckStatus0               heartbeat          ${DBC_URI}/dcaeLocations   "VALID"
+    Create Session         heartbeat          https://${DMAAPBC_IP}:8443    disable_warnings=True
+    CheckStatus0           heartbeat          ${DBC_URI}/dcaeLocations   "VALID"
 
 HTTPS Dmaap mr_clusters Test
     [Documentation]        Check ${DBC_URI}/mr_clusters SSL endpoint
-    Create Session         heartbeat          https://${DMAAPBC_IP}:8443
-    CheckStatus0               heartbeat          ${DBC_URI}/mr_clusters   "VALID"
+    Create Session         heartbeat          https://${DMAAPBC_IP}:8443    disable_warnings=True
+    CheckStatus0           heartbeat          ${DBC_URI}/mr_clusters   "VALID"
 
 
 *** Keywords ***
@@ -51,12 +51,12 @@ CheckDir
 
 CheckUrl
     [Arguments]                  ${session}   ${path}     ${expect}
-    ${resp}=                     Get Request          ${session}               ${path}
+    ${resp}=                     RequestsLibrary.Get On Session          ${session}               ${path}
     Should Be Equal As Integers  ${resp.status_code}  ${expect}
 
 CheckStatus
     [Arguments]                  ${session}   ${path}     ${expect}
-    ${resp}=                     Get Request          ${session}               ${path}
+    ${resp}=                     RequestsLibrary.Get On Session          ${session}               ${path}
     log                          ${resp.content}
     ${val}=                      Get Json value       ${resp.content}     /status
     log                          ${val}
@@ -64,7 +64,7 @@ CheckStatus
 
 CheckStatus0
     [Arguments]                  ${session}   ${path}     ${expect}
-    ${resp}=                     Get Request          ${session}               ${path}
+    ${resp}=                     RequestsLibrary.Get On Session          ${session}               ${path}
     log                          ${resp.json()}
     log                          ${resp.content}
 # silliness to strip off the brackets returned for a List to get a Dict
