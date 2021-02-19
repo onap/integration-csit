@@ -33,6 +33,9 @@ TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
 DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
 TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
+CAMUNDA_SQL_SCRIPT_NAME=mariadb_engine_7.10.0.sql
+CAMUNDA_SQL_SCRIPT_DIR=$CONFIG_DIR/camunda-sql
+TEST_LAB_SQL_SCRIPTS_DIR=$TEST_LAB_DIR_PATH/volumes/mariadb/docker-entrypoint-initdb.d/db-sql-scripts
 
 MAVEN_DIR=$TEMP_DIR_PATH/maven
 INSTALLED_MAVEN_DIR=$MAVEN_DIR/$MAVEN_VERSION_DIR
@@ -49,7 +52,7 @@ echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
 export $(egrep -v '^#' $ENV_FILE | xargs)
 
-MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME", "ETSI_CATALOG_IMAGE_VERSION", "SOL_003_ADAPTER_IMAGE_VERSION")
+MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME", "ETSI_CATALOG_IMAGE_VERSION", "SOL_003_ADAPTER_IMAGE_VERSION", "ETSI_NFVO_NS_LCM_IMAGE_VERSION", "MARIADB_VERSION")
 
 for var in "${MANDATORY_VARIABLES_NAMES[@]}"
  do
@@ -136,6 +139,10 @@ fi
 
 git clone http://gerrit.onap.org/r/so/docker-config.git $TEST_LAB_DIR_PATH
 
+echo "Replacing $CAMUNDA_SQL_SCRIPT_NAME ..."
+rm -rf $TEST_LAB_SQL_SCRIPTS_DIR/$CAMUNDA_SQL_SCRIPT_NAME
+cp $CAMUNDA_SQL_SCRIPT_DIR/$CAMUNDA_SQL_SCRIPT_NAME $TEST_LAB_SQL_SCRIPTS_DIR
+
 export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$CONFIG_DIR
 
@@ -175,27 +182,20 @@ if [ $? -ne 0 ]; then
    exit 1
 fi
 
-API_INFRA_CONTAINER_NAME="api-handler-infra"
-echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $API_INFRA_CONTAINER_NAME container to start up"
-$WAIT_FOR_CONTAINER_SCRIPT -c "$API_INFRA_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
+PODS_NAMES=( "api-handler-infra" "modeling-etsicatalog" "so-etsi-nfvo-ns-lcm")
 
-if [ $? -ne 0 ]; then
-   echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
-   echo "Will stop running docker containers . . ."
-   $TEAR_DOWN_SCRIPT
-   exit 1
-fi
+for pod in "${PODS_NAMES[@]}"
+ do
+     echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $pod container to start up"
+     $WAIT_FOR_CONTAINER_SCRIPT -c "$pod" -t "300" -n "$DEFAULT_NETWORK_NAME"
 
-MODELING_ETSI_CATALOG_CONTAINER_NAME="modeling-etsicatalog"
-echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $MODELING_ETSI_CATALOG_CONTAINER_NAME container to start up"
-$WAIT_FOR_CONTAINER_SCRIPT -c "$MODELING_ETSI_CATALOG_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
-
-if [ $? -ne 0 ]; then
-   echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
-   echo "Will stop running docker containers . . ."
-   $TEAR_DOWN_SCRIPT
-   exit 1
-fi
+     if [ $? -ne 0 ]; then
+        echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT for pod: $pod failed"
+        echo "Will stop running docker containers . . ."
+        $TEAR_DOWN_SCRIPT
+        exit 1
+     fi
+done
 
 REPO_IP='127.0.0.1'
 ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"

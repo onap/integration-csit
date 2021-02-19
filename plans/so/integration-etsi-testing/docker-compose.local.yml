@@ -2,7 +2,7 @@ version: '3'
 services:
 ################################################################################
   mariadb:
-    image: mariadb:10.1.11
+    image: mariadb:${MARIADB_VERSION}
 ################################################################################
   catalog-db-adapter:
     image: onap/so/catalog-db-adapter:${TAG}
@@ -30,3 +30,6 @@ services:
 ################################################################################
   modeling-etsicatalog:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/modeling/etsicatalog:${ETSI_CATALOG_IMAGE_VERSION}
+################################################################################
+  so-etsi-nfvo-ns-lcm:
+    image: onap/so/so-etsi-nfvo-ns-lcm:${ETSI_NFVO_NS_LCM_IMAGE_VERSION}
