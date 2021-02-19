@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b75cc3a3_828d6e11",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-02-19T14:25:21Z",
+      "side": 1,
+      "message": "Plz check the spelling .",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "9400254b72805a9fa166011ff4fa0a48c612bff9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbde5511_e14a2a5b",
+        "filename": "tests/so/etsi/etsi_nfvo_ns_lcm_tests.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-02-19T14:25:21Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 14,
+        "startChar": 43,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "9400254b72805a9fa166011ff4fa0a48c612bff9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
