@@ -100,6 +100,29 @@
                             </build>
                         </image>
                         <image>
+                            <name>simulators/multicloud-simulator</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files</dockerFileDir>
+                                <dockerFile>Dockerfile.so-simulator-base-image</dockerFile>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <assembly>
+                                    <inline>
+                                        <dependencySets>
+                                            <dependencySet>
+                                                <includes>
+                                                    <include>org.onap.so.simulators:multicloud-simulator</include>
+                                                </includes>
+                                                <outputFileNameMapping>app.jar</outputFileNameMapping>
+                                            </dependencySet>
+                                        </dependencySets>
+                                    </inline>
+                                </assembly>
+                            </build>
+                        </image>
+                        <image>
                             <name>simulators/vnfm-simulator</name>
                             <build>
                                 <cleanup>try</cleanup>
@@ -168,6 +191,11 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>sdnc-simulator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>multicloud-simulator</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
