@@ -89,6 +89,8 @@ public class Constants {
     public static final String COMPOSED_OF = "org.onap.relationships.inventory.ComposedOf";
 
     public static final String GENERIC_VNF = "generic-vnf";
+    
+    public static final String VF_MODULE = "vf-module";
 
     public static final String PLATFORM = "platform";
 
