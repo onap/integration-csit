@@ -1,30 +1,11 @@
 #!/bin/bash
-#
-# ============LICENSE_START=======================================================
-#   Copyright (C) 2019 Nordix Foundation.
-# ================================================================================
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-#
-#  SPDX-License-Identifier: Apache-2.0
-# ============LICENSE_END=========================================================
-
-# @author Waqas Ikram (waqas.ikram@est.tech)
 
 MAVEN_VERSION_DIR="apache-maven-3.3.9"
 MAVEN_TAR_FILE="$MAVEN_VERSION_DIR-bin.tar.gz"
 MAVEN_TAR_LOCATION="https://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/$MAVEN_TAR_FILE"
 
-SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_HOME=$WORKSPACE/plans/so/integration-etsi-testing
 SCRIPT_NAME=$(basename $0)
 CONFIG_DIR=$SCRIPT_HOME/config
 ENV_FILE=$CONFIG_DIR/env
@@ -33,9 +14,9 @@ TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
 DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
 TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
-CAMUNDA_SQL_SCRIPT_NAME=mariadb_engine_7.10.0.sql
-CAMUNDA_SQL_SCRIPT_DIR=$CONFIG_DIR/camunda-sql
-TEST_LAB_SQL_SCRIPTS_DIR=$TEST_LAB_DIR_PATH/volumes/mariadb/docker-entrypoint-initdb.d/db-sql-scripts
+
+SQL_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SQL_PATH=$SQL_PATH/cloud_owner_sql
 
 MAVEN_DIR=$TEMP_DIR_PATH/maven
 INSTALLED_MAVEN_DIR=$MAVEN_DIR/$MAVEN_VERSION_DIR
@@ -52,7 +33,7 @@ echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
 export $(egrep -v '^#' $ENV_FILE | xargs)
 
-MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME", "ETSI_CATALOG_IMAGE_VERSION", "SOL_003_ADAPTER_IMAGE_VERSION", "ETSI_NFVO_NS_LCM_IMAGE_VERSION", "MARIADB_VERSION")
+MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME")
 
 for var in "${MANDATORY_VARIABLES_NAMES[@]}"
  do
@@ -121,7 +102,7 @@ fi
 cd $SCRIPT_HOME
 
 echo "Will build simulator project using $MVN_CLEAN_INSTALL -f $SIMULATOR_MAVEN_PROJECT_POM --settings $MVN_SETTINGS_XML"
-# $MVN_CLEAN_INSTALL -f $SIMULATOR_MAVEN_PROJECT_POM --settings $MVN_SETTINGS_XML
+$MVN_CLEAN_INSTALL -f $SIMULATOR_MAVEN_PROJECT_POM --settings $MVN_SETTINGS_XML
 
 if [ $? -ne 0 ]; then
         echo "Maven build failed"
@@ -138,10 +119,6 @@ if [[ -d "$TEST_LAB_DIR_PATH" ]]; then
 fi
 
 git clone http://gerrit.onap.org/r/so/docker-config.git $TEST_LAB_DIR_PATH
-
-echo "Replacing $CAMUNDA_SQL_SCRIPT_NAME ..."
-rm -rf $TEST_LAB_SQL_SCRIPTS_DIR/$CAMUNDA_SQL_SCRIPT_NAME
-cp $CAMUNDA_SQL_SCRIPT_DIR/$CAMUNDA_SQL_SCRIPT_NAME $TEST_LAB_SQL_SCRIPTS_DIR
 
 export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$CONFIG_DIR
@@ -160,7 +137,9 @@ fi
 echo "Sleeping for 3m"
 sleep 3m
 
-docker ps -a
+export SQL_DIR_PATH=$SQL_PATH
+docker cp $SQL_DIR_PATH/cloud_owner.sql $(docker container ls | grep mariadb | awk '{ print $1 }'):/
+docker exec $(docker container ls | grep mariadb | awk '{ print $1 }') sh -c 'mysql -u root -ppassword <  /cloud_owner.sql'
 
 echo "Will execute $WAIT_FOR_WORKAROUND_SCRIPT script"
 $WAIT_FOR_WORKAROUND_SCRIPT
@@ -182,25 +161,18 @@ if [ $? -ne 0 ]; then
    exit 1
 fi
 
-PODS_NAMES=( "api-handler-infra" "modeling-etsicatalog" "so-etsi-nfvo-ns-lcm")
+API_INFRA_CONTAINER_NAME="api-handler-infra"
+echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $API_INFRA_CONTAINER_NAME container to start up"
+$WAIT_FOR_CONTAINER_SCRIPT -c "$API_INFRA_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
 
-for pod in "${PODS_NAMES[@]}"
- do
-     echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $pod container to start up"
-     $WAIT_FOR_CONTAINER_SCRIPT -c "$pod" -t "300" -n "$DEFAULT_NETWORK_NAME"
-
-     if [ $? -ne 0 ]; then
-        echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT for pod: $pod failed"
-        echo "Will stop running docker containers . . ."
-        $TEAR_DOWN_SCRIPT
-        exit 1
-     fi
-done
+if [ $? -ne 0 ]; then
+   echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
+   echo "Will stop running docker containers . . ."
+   $TEAR_DOWN_SCRIPT
+   exit 1
+fi
 
 REPO_IP='127.0.0.1'
 ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
-
-# install required Robot libraries
-pip install robotframework-archivelibrary
 
 echo "Finished executing $SCRIPT_HOME/$SCRIPT_NAME"
