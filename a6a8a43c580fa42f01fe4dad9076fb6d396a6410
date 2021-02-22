@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351c4d2f_9737a460",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-22T09:03:47Z",
+      "side": 1,
+      "message": "I recommend clear separation of logging statements and success checks, like\nLog To Console    Received status code ${resp.status_code}\nShould Be Equal    \u0027${resp.status_code}\u0027     \u0027200\u0027",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "a6a8a43c580fa42f01fe4dad9076fb6d396a6410",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fdcdd0_93e817b0",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-22T09:03:47Z",
+      "side": 1,
+      "message": "Test case doesn\u0027t seem to be interested about the resp.content, so why would the reader of the console output be?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "a6a8a43c580fa42f01fe4dad9076fb6d396a6410",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dee1206_c3f4b928",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-22T09:03:47Z",
+      "side": 1,
+      "message": "What is this sleep for? Fixed sleeps without further checks are not recommended",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "a6a8a43c580fa42f01fe4dad9076fb6d396a6410",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4abfdb86_7968126b",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-22T09:03:47Z",
+      "side": 1,
+      "message": "Same as above - logging and success checks should be separated",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 110
+      },
+      "revId": "a6a8a43c580fa42f01fe4dad9076fb6d396a6410",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c297d1c9_f3efbcd1",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-02-22T09:03:47Z",
+      "side": 1,
+      "message": "Same as above - what is this output for?",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "a6a8a43c580fa42f01fe4dad9076fb6d396a6410",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
