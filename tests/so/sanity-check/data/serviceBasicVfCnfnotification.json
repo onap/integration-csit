@@ -1,0 +1,294 @@
+{
+  "distributionID": "2d6c5aa8-b644-4f30-a632-5577801ef959",
+  "serviceName": "vfw_k8s_demo_CNF",
+  "serviceVersion": "1.0",
+  "serviceUUID": "6f2c7614-571c-4482-aa2c-5eac0308aa16",
+  "serviceDescription": "service",
+  "serviceInvariantUUID": "b9202a74-4c16-4245-83ad-1cd53c813214",
+  "resources": [
+    {
+      "resourceInstanceName": "VF_vfw_k8s_demo_CNF 0",
+      "resourceName": "VF_vfw_k8s_demo_CNF",
+      "resourceVersion": "1.0",
+      "resoucreType": "VF",
+      "resourceUUID": "daeb6a5c-3a8a-40b0-a575-8cca71dd0b7c",
+      "resourceInvariantUUID": "517403c8-fab8-4cfe-9bc5-d94f5e34b257",
+      "resourceCustomizationUUID": "8b8b67bd-01a4-42f7-b0fc-1d3a0f2765fd",
+      "category": "Generic",
+      "subcategory": "Abstract",
+      "artifacts": [{
+          "artifactName": "vf_vfw_k8s_demo_cnf0_modules.json",
+          "artifactType": "VF_MODULES_METADATA",
+          "artifactURL": "/unzipped_sdc_csar/vf_vfw_k8s_demo_cnf0_modules.json",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "86224a10-c17e-42c9-9809-f3c31ba1b781",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vf_vfw_k8s_demo_cnf1_modules.json",
+          "artifactType": "VF_MODULES_METADATA",
+          "artifactURL": "/unzipped_sdc_csar/vf_vfw_k8s_demo_cnf0_modules.json",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "3c50323b-5f8c-4b31-938f-8e996a2e0001",
+          "artifactVersion": "1"
+        }, 
+
+{
+          "artifactName": "base_template.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/base_template.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "ede4c2de-133f-49e3-9daa-8c56b65b5c6b",
+          "artifactVersion": "1"
+        }, 
+{
+          "artifactName": "base_template_cloudtech_k8s_charts.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/base_template_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "6833f47d-e91b-4887-8b55-f68ef25bccf3",
+          "artifactVersion": "1"
+        },
+
+{
+          "artifactName": "base_template.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/base_template.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "7f1dbc99-849e-4af8-bdcb-6c214f939428",
+          "artifactVersion": "1"
+        }, 
+{
+          "artifactName": "base_template_cloudtech_k8s_charts.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/base_template_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "71607418-af27-4712-8e0c-cfe992b95a38",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vfw.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/vfw.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "406fe9df-aa4c-42c1-8f83-c7ac11169fd4",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vfw_cloudtech_k8s_charts.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/vfw_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "33f7aab2-3324-4523-b37a-625b0cf77dfe",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vpkg_cloudtech_k8s_charts.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/vpkg_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "8ab17b5a-3fbd-4142-a75f-c55ffd4c5af5",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vsn.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/vsn.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "e17c1e60-f7da-4767-9a0e-02c8ff9c0f2e",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vsn_cloudtech_k8s_charts.env",
+          "artifactType": "HEAT_ENV",
+          "artifactURL": "/unzipped_sdc_csar/vsn_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "989dbc01-2fa5-463b-abaa-cf73996ea12b",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "base_template_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/base_template_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "406fe9df-aa4c-42c1-8f83-c7ac11169fd4",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vfw_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/vfw_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "6833f47d-e91b-4887-8b55-f68ef25bccf3",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vpkg_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/vpkg_cloudtech_k8s_charts.env",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "406fe9df-aa4c-42c1-8f83-c7ac11169fd4",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vsn_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/vsn_cloudtech_k8s_charts.tgz",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "8ab17b5a-3fbd-4142-a75f-c55ffd4c5af5",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "vsn_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/vsn_cloudtech_k8s_charts.tgz",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "aaeee885-5821-4e08-8da6-0bb3b74f24e9",
+          "artifactVersion": "1"
+        },
+{
+          "artifactName": "vsn_cloudtech_k8s_charts.tgz",
+          "artifactType": "CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACT",
+          "artifactURL": "/unzipped_sdc_csar/vsn_cloudtech_k8s_charts.tgz",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "b4510b34-e39c-4239-bacc-7dd2f3c2a418",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "base_template.yaml",
+          "artifactType": "HEAT",
+          "artifactURL": "/unzipped_sdc_csar/base_template.yaml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "33f7aab2-3324-4523-b37a-625b0cf77dfe",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "vfw.yaml",
+          "artifactType": "HEAT",
+          "artifactURL": "/unzipped_sdc_csar/vfw.yaml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "6833f47d-e91b-4887-8b55-f68ef25bccf3",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "vpkg.yaml",
+          "artifactType": "HEAT",
+          "artifactURL": "/unzipped_sdc_csar/vpkg.yaml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "42b80d18-69ec-4233-8844-f0df6ebb6e3d",
+          "artifactVersion": "1"
+        }
+,
+{
+          "artifactName": "vsn.yaml",
+          "artifactType": "HEAT",
+          "artifactURL": "/unzipped_sdc_csar/vsn.yaml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "406fe9df-aa4c-42c1-8f83-c7ac11169fd4",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "vendor-license-model.xml",
+          "artifactType": "VENDOR_LICENSE",
+          "artifactURL": "/unzipped_sdc_csar/vendor-license-model.xml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "6e1dbc99-849e-4af8-bdcb-6c214f939491",
+          "artifactVersion": "1"
+        }
+
+,
+{
+          "artifactName": "vf-license-model.xml",
+          "artifactType": "VF_LICENSE",
+          "artifactURL": "/unzipped_sdc_csar/vf-license-model.xml",
+          "artifactChecksum": "MDJkYjNmNjEzM2Y1ZDgzNzZiZWUxMjZkMzA3YzkwZDI\u003d",
+          "artifactDescription": "Auto-generated VF Modules information artifact",
+          "artifactTimeout": 120,
+          "artifactUUID": "ede4c2de-133f-49e3-9daa-8c56b65b5c6b",
+          "artifactVersion": "1"
+        }
+
+]
+    }
+   
+   
+  ],
+  "serviceArtifacts": [
+    {
+      "artifactName": "service-VfwK8sDemoCnf-template.yml",
+      "artifactType": "TOSCA_TEMPLATE",
+      "artifactURL": "/unzipped_sdc_csar/service-VfwK8sDemoCnf-template.yml",
+      "artifactChecksum": "NTUzMDU5YzM3MTk4OGNiNjQ2OGRlMWY2YjU3MjE2YjM\u003d",
+      "artifactDescription": "TOSCA representation of the asset",
+      "artifactTimeout": 0,
+      "artifactUUID": "6f2c7614-571c-4482-aa2c-5eac0308aa16",
+      "artifactVersion": "1"
+    },
+    {
+      "artifactName": "service-VfwK8sDemoCnf-csar.csar",
+      "artifactType": "TOSCA_CSAR",
+      "artifactURL": "/unzipped_sdc_csar/service-VfwK8sDemoCnf-csar.csar",
+      "artifactChecksum": "ZTRhOGI0M2UxN2ZhYjQ0ODI5ZDZhZTExZTFkMGU3N2Y\u003d",
+      "artifactDescription": "TOSCA definition package of the asset",
+      "artifactTimeout": 0,
+      "artifactUUID": "6f2c7614-571c-4482-aa2c-5eac0308aa16",
+      "artifactVersion": "1"
+    }
+  ],
+  "workloadContext": "Production"
+}
+
