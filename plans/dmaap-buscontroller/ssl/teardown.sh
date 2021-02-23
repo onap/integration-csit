@@ -4,6 +4,7 @@
 # org.onap.dmaap
 # ================================================================================
 # Copyright (C) 2018 AT&T Intellectual Property. All rights reserved.
+# Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +20,5 @@
 # ============LICENSE_END=========================================================
 # 
 #
-kill-instance.sh aaf-mock
-kill-instance.sh drps-mock
-kill-instance.sh mrc-mock
 kill-instance.sh dmaapbc
 
