@@ -4,6 +4,7 @@
 # org.onap.dmaap
 # ================================================================================
 # Copyright (C) 2018 AT&T Intellectual Property. All rights reserved.
+# Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,24 +23,16 @@
 
 
 # Place the scripts in run order:
-source ${WORKSPACE}/scripts/dmaap-buscontroller/start-mock.sh
-start_mock "aaf" 
-AAF_IP=${IP}
-start_mock "mrc" 3905
-MRC_IP=${IP} 
-start_mock "drps" 8443
-DRPS_IP=${IP}
 
 source ${WORKSPACE}/scripts/dmaap-buscontroller/dmaapbc-launch.sh 
-dmaapbc_launch $AAF_IP $MRC_IP $DRPS_IP
+dmaapbc_launch
 DMAAPBC_IP=${IP}
 
-
-echo "AAF_IP=$AAF_IP MRC_IP=$MRC_IP DRPS_IP=$DRPS_IP DMAAPBC_IP=$DMAAPBC_IP"
+echo "DMAAPBC_IP=$DMAAPBC_IP"
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v AAF_IP:${AAF_IP} -v MRC_IP:${MRC_IP} -v DRPS_IP:${DRPS_IP} -v DMAAPBC_IP:${DMAAPBC_IP}"
+ROBOT_VARIABLES="-v DMAAPBC_IP:${DMAAPBC_IP}"
 
 set -x
-${WORKSPACE}/scripts/dmaap-buscontroller/dmaapbc-init.sh ${DMAAPBC_IP} ${DRPS_IP} ${MRC_IP} https
+${WORKSPACE}/scripts/dmaap-buscontroller/dmaapbc-init.sh ${DMAAPBC_IP} 0 0 https
 set +x
