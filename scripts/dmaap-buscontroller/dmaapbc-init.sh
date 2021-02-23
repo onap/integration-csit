@@ -1,11 +1,9 @@
 #!/bin/bash
 
 # $1 is the IP address of the buscontroller
-# $2 is the IP address of the DRPS
-# $3 is the IP address of the MRC
-# $4 is the protocol (defaults to http)
+# $2 is the protocol (defaults to http)
 
-PROTO=${4:-http}
+PROTO=${2:-http}
 if [ "$PROTO" = "http" ]
 then
 	PORT=8080
