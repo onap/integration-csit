@@ -5,14 +5,14 @@ server:
     ssl:
         key-alias: so@so.onap.org
         key--store-password: 'ywsqCy:EEo#j}HJHM7z^Rk[L'
-        key-store: classpath:so-vnfm-adapter.p12
+        key-store: file:/app/so-vnfm-adapter-certs/so-vnfm-adapter.p12
         key-store-type: PKCS12
         client-auth: need
 
 http:
   client:
     ssl:
-      trust-store: classpath:org.onap.so.trust.jks
+      trust-store: file:/app/so-vnfm-adapter-certs/org.onap.so.trust.jks
       trust-store-password: ',sx#.C*W)]wVgJC6ccFHI#:H'
 aai:
   auth: 221187EFA3AD4E33600DE0488F287099934CE65C3D0697BCECC00BB58E784E07CD74A24581DC31DBC086FF63DF116378776E9BE3D1325885

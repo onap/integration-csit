@@ -369,8 +369,8 @@ rest:
     client:
       configuration:
         ssl:
-          keyStore: classpath:org.onap.so.p12
+          keyStore: file:/app/bpmn-infra-certs/org.onap.so.p12
           keyStorePassword: 'RLe5ExMWW;Kd6GTSt0WQz;.Y'
-          trustStore: classpath:org.onap.so.trust.jks
-          trustStorePassword: '6V%8oSU$,%WbYp3IUe;^mWt4'
+          trustStore: file:/app/bpmn-infra-certs/org.onap.so.trust.jks
+          trustStorePassword: '[)3KV.k*!IlkFhWEq0Nv2dDa'
 
