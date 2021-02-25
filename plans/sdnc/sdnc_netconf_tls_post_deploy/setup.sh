@@ -29,9 +29,6 @@ chmod +x "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config
 # Export temp directory
 export TEMP_DIR_PATH=${TEMP_DIR_PATH}
 
-# Create temp directory to bind with docker containers
-mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
-mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
 
 export MTU=$(/sbin/ifconfig | grep MTU | sed 's/.*MTU://' | sed 's/ .*//' | sort -n | head -1)
 
@@ -59,54 +56,56 @@ pip install pyjks
 # Disable Proxy - for local run
 unset http_proxy https_proxy
 
-# Export AAF Certservice config path
-export AAF_INITIAL_CERTS
-export EJBCA_CERTPROFILE_PATH
-export AAF_CERTSERVICE_CONFIG_PATH
-export AAF_CERTSERVICE_SCRIPTS_PATH
-export CERT_PROFILE=${EJBCA_CERTPROFILE_PATH}
-export SCRIPTS_PATH=${AAF_CERTSERVICE_SCRIPTS_PATH}
-export CONFIGURATION_PATH=${AAF_CERTSERVICE_CONFIG_PATH}
+###################### Netconf Simulator Setup ######################
 
-# Generate Keystores, Truststores, Certificates and Keys
-make all -C ./certs/
-
-cp "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/root.crt "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/root.crt
-openssl pkcs12 -in "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer-keystore.p12 -clcerts -nokeys -password pass:secret | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' >"${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer.crt
-openssl pkcs12 -in "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer-keystore.p12 -nocerts -nodes -password pass:secret | sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' >"${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs/certServiceServer.key
-
-echo "Generated KeyStores, Server Certificate and Key"
-
-# Start EJBCA, AAF-CertService Containers with docker-compose and configuration from docker-compose.yml
-docker-compose -f "${SCRIPTS}"/sdnc/certservice/docker-compose.yml up -d
-
-# Check if AAF-Certservice Service is healthy and ready
-AAFCERT_IP='none'
-for i in {1..9}; do
-  AAFCERT_IP=$(get-instance-ip.sh aaf-cert-service)
-  RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret |
-    python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
-  if [[ "${RESP_CODE}" == "UP" ]]; then
-    echo "AAF Cert Service is Ready."
-    export AAFCERT_IP=${AAFCERT_IP}
-    docker exec aafcert-ejbca /opt/primekey/scripts/ejbca-configuration.sh
-    break
-  fi
-  echo "Waiting for AAF Cert Service to Start Up..."
-  sleep 2m
-done
-
-if [[ "${AAFCERT_IP}" == "none" || "${AAFCERT_IP}" == '' ||  "${RESP_CODE}" != "UP" ]]; then
-  echo "AAF CertService not started Could cause problems for testing activities...!"
+# Get integration/simulators
+if [ -d ${SCRIPTS}/sdnc/pnf-simulator ]
+then
+    rm -rf ${SCRIPTS}/sdnc/pnf-simulator
 fi
+mkdir ${SCRIPTS}/sdnc/pnf-simulator
+git clone "https://gerrit.onap.org/r/integration/simulators/pnf-simulator" ${SCRIPTS}/sdnc/pnf-simulator
+
+# Fix docker-compose to add nexus repo for onap dockers 
+mv ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml.orig
+cat ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml.orig | sed -e "s/image: onap/image: nexus3.onap.org:10001\/onap/" > ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml
+
+# Remove carriage returns (if any) from netopeer start script
+mv ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/netconf/initialize_netopeer.sh ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/netconf/initialize_netopeer.sh.orig
+cat ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/netconf/initialize_netopeer.sh.orig | sed -e "s/\r$//g" > ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/netconf/initialize_netopeer.sh
+chmod 755 ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/netconf/initialize_netopeer.sh
+
+
+# Start Netconf Simulator Container with docker-compose and configuration from docker-compose.yml
+docker-compose -f "${SCRIPTS}"/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml up -d
+
+# Add test user in netopeer container
+sleep 60
+docker exec netconfsimulator_netopeer_1 useradd --system test
+
 
 ############################## SDNC Setup ##############################
+
+# Copy client certs from netconf simulator to SDNC certs directory
+mkdir /tmp/keys0
+cp ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/tls/client.crt /tmp/keys0
+cp ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/tls/client.key /tmp/keys0
+cp ${SCRIPTS}/sdnc/pnf-simulator/netconfsimulator/tls/ca.crt /tmp/keys0/trustedCertificates.crt
+cwd=$(pwd)
+cd /tmp
+zip -r $SDNC_CERT_PATH/keys0.zip keys0
+rm -rf /tmp/keys0
 
 # Export Mariadb, SDNC tmp, cert directory path
 export SDNC_CERT_PATH=${SDNC_CERT_PATH}
 
 docker pull "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}"
 docker tag "${NEXUS_DOCKER_REPO}"/onap/sdnc-image:"${SDNC_IMAGE_TAG}" onap/sdnc-image:latest
+
+# Fix permissions on certs directory to guarantee directory is read/
+# writable and that files are readable
+chmod ugo+rwx ${SCRIPTS}/sdnc/sdnc/certs
+chmod ugo+r ${SCRIPTS}/sdnc/sdnc/certs/*
 
 # Start Mariadb, SDNC Containers with docker-compose and configuration from docker-compose.yml
 docker-compose -f "${SCRIPTS}"/sdnc/sdnc/docker-compose.yml up -d
@@ -128,30 +127,30 @@ if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]
 fi
 
 # Check if SDNC-ODL Karaf Session started
-for i in {1..15}; do
-  EXEC_RESP=$(docker exec -it sdnc /opt/opendaylight/current/bin/client system:start-level)
-  if grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-    echo "SDNC-ODL Karaf Session Started."
-    break
+TIME_OUT=300
+INTERVAL=10
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+
+  docker exec sdnc cat /opt/opendaylight/data/log/karaf.log | grep 'warp coils'
+
+  if [ $? == 0 ] ; then
+    echo SDNC karaf started in $TIME seconds
+    break;
   fi
-  echo "Waiting for SDNC-ODL Karaf Session to Start Up..."
-  sleep 2m
+
+  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
 done
 
-if ! grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-  echo "SDNC-ODL Karaf Session not Started, Could cause problems for testing activities...!"
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
 fi
 
-echo "Sleeping 5 minutes"
-sleep 5m
 
-###################### Netconf-PNP-Simulator Setup ######################
 
-# Export netconf-pnp simulator conf path
-export NETCONF_CONFIG_PATH=${NETCONF_CONFIG_PATH}
-
-# Start Netconf-Pnp-Simulator Container with docker-compose and configuration from docker-compose.yml
-docker-compose -f "${SCRIPTS}"/sdnc/netconf-pnp-simulator/docker-compose.yml up -d
 
 # Update default Networking bridge IP in mount.json file
 sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml

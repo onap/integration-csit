@@ -15,11 +15,8 @@
 # limitations under the License.
 #
 
-docker-compose -f "${SCRIPTS}"/sdnc/certservice/docker-compose.yml down -v
+
 docker-compose -f "${SCRIPTS}"/sdnc/sdnc/docker-compose.yml down -v
-docker-compose -f "${SCRIPTS}"/sdnc/netconf-pnp-simulator/docker-compose.yml down -v
+docker-compose -f "${SCRIPTS}"/sdnc/pnf-simulator/netconfsimulator/docker-compose.yml down -v
 
-make clear -C "${WORKSPACE}"/plans/sdnc/sdnc_netconf_tls_post_deploy/certs
 
-rm -rf "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
-rm -rf "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data

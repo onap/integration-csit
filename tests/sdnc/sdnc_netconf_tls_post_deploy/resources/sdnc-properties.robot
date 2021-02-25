@@ -28,7 +28,7 @@ ${SDNC_NETWORK_TOPOLOGY}                 /config/network-topology:network-topolo
 ${MOUNT_PATH}                            %{WORKSPACE}/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
 ${SDNC_CSR_FILE}                         %{WORKSPACE}/tests/sdnc/sdnc_netconf_tls_post_deploy/csr/sdnc_csr.env
 ${SDNC_MOUNT_PATH}                       /config/network-topology:network-topology/topology/topology-netconf/node/PNFDemo
-${PNFSIM_MOUNT_PATH}                     /config/network-topology:network-topology/topology/topology-netconf/node/PNFDemo/yang-ext:mount/mynetconf:netconflist
+${PNFSIM_MOUNT_PATH}                     /config/network-topology:network-topology/topology/topology-netconf/node/PNFDemo/yang-ext:mount/pnf-simulator
 
 # Netconf-Pnp-Simulator
 ${NETCONF_PNP_SIM_CONTAINER_NAME}        %{NETCONF_PNP_SIM_CONTAINER_NAME}
