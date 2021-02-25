@@ -29,6 +29,39 @@ chmod +x "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/libraries/config
 # Export temp directory
 export TEMP_DIR_PATH=${TEMP_DIR_PATH}
 
+# Set vars with default credentials
+export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-mySecretPassword}
+export MYSQL_USER=${MYSQL_USER:-sdnc}
+export MYSQL_PASSWORD=${MYSQL_PASSWORD:-test123}
+export MYSQL_DATABASE=${MYSQL_DATABASE:-sdncdb}
+export ODL_USER=${ODL_USER:-admin}
+export ODL_PASSWORD=${ODL_PASSWORD:-Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U}
+export ODL_ADMIN_USER=${ODL_ADMIN_USER:-${ODL_USER}}
+export ODL_ADMIN_PASSWORD=${ODL_ADMIN_PASSWORD:-${ODL_PASSWORD}}
+export DMAAP_USER=${DMAAP_USER:-admin}
+export DMAAP_PASSWORD=${DMAAP_PASSWORD:-admin}
+export DMAAP_AUTHKEY=${DMAAP_AUTHKEY:-""}
+export AAI_TRUSTSTORE_PASSWORD=${AAI_TRUSTSTORE_PASSWORD:-changeit}
+export AAI_CLIENT_NAME=${AAI_CLIENT_NAME:-sdnc@sdnc.onap.org}
+export AAI_CLIENT_PASSWORD=${AAI_CLIENT_PASSWORD:-demo123456!}
+export ANSIBLE_TRUSTSTORE_PASSWORD=${ANSIBLE_TRUSTSTURE_PASSWORD:-changeit}
+export HONEYCOMB_USER=${HONEYCOMB_USER:-admin}
+export HONEYCOMB_PASSWORD=${HONEYCOMB_PASSWORD:-admin}
+export TRUSTSTORE_PASSWORD=${TRUSTSTORE_PASSWORD:-changeit}
+export KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-adminadmin}
+export NENG_USER=${NENG_USER:-ccsdkapps}
+export NENG_PASSWORD=${NENG_PASSWORD:-ccsdkapps}
+export SO_USER=${SO_USER:-sdncaBpmn}
+export SO_PASSWORD=${SO_PASSWORD:-password1$}
+export CDS_USER=${CDS_USER:-ccsdkapps}
+export CDS_PASSWORD=${CDS_PASSWORD:-ccsdkapps}
+export ANSIBLE_USER=${ANSIBLE_USER:-sdnc}
+export ANSIBLE_PASSWORD=${ANSIBLE_PASSWORD:-sdnc}
+export SQL_CRYPTKEY=${SQL_CRYPTKEY:-fakECryptKey}
+export ASDC_USER=${ASDC_USER:-sdnc}
+export ASDC_PASSWORD=${ASDC_PASSWORD:-Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U}
+
+
 # Create temp directory to bind with docker containers
 mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/certs
 mkdir -m 755 -p "${WORKSPACE}"/tests/sdnc/sdnc_netconf_tls_post_deploy/cert-data
@@ -128,18 +161,26 @@ if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]
 fi
 
 # Check if SDNC-ODL Karaf Session started
-for i in {1..15}; do
-  EXEC_RESP=$(docker exec -it sdnc /opt/opendaylight/current/bin/client system:start-level)
-  if grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-    echo "SDNC-ODL Karaf Session Started."
-    break
+TIME_OUT=300
+INTERVAL=10
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+
+docker exec sdnc_controller_container cat /opt/opendaylight/data/log/karaf.log | grep 'warp coils'
+
+  if [ $? == 0 ] ; then
+    echo SDNC karaf started in $TIME seconds
+    break;
   fi
-  echo "Waiting for SDNC-ODL Karaf Session to Start Up..."
-  sleep 2m
+
+  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
 done
 
-if ! grep -q 'Level 100' <<<"${EXEC_RESP}"; then
-  echo "SDNC-ODL Karaf Session not Started, Could cause problems for testing activities...!"
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
 fi
 
 echo "Sleeping 5 minutes"
