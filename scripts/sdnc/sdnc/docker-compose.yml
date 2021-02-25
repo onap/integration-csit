@@ -30,11 +30,32 @@ services:
     hostname:
       sdnc
     environment:
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
       - SDNC_CONFIG_DIR=/opt/onap/sdnc/data/properties
-      - MYSQL_PASSWD=password
-      - ODL_ADMIN_USERNAME=admin
-      - ODL_ADMIN_PASSWORD=Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
+      - SDNC_BIN=/opt/onap/sdnc/bin
+      - ODL_CERT_DIR=/tmp
+      - ODL_ADMIN_USERNAME=${ODL_USER}
+      - ODL_ADMIN_PASSWORD=${ODL_PASSWORD}
+      - ODL_USER=${ODL_USER}
+      - ODL_PASSWORD=${ODL_PASSWORD}
+      - SDNC_DB_INIT=true  
+      - HONEYCOMB_USER=${HONEYCOMB_USER}
+      - HONEYCOMB_PASSWORD=${HONEYCOMB_PASSWORD}
+      - TRUSTSTORE_PASSWORD=${TRUSTSTORE_PASSWORD}
+      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+      - SO_USER=${SO_USER}
+      - SO_PASSWORD=${SO_PASSWORD}
+      - NENG_USER=${NENG_USER}
+      - NENG_PASSWORD=${NENG_PASSWORD}
+      - CDS_USER=${CDS_USER}
+      - CDS_PASSWORD=${CDS_PASSWORD}
+      - ANSIBLE_USER=${ANSIBLE_USER}
+      - ANSIBLE_PASSWORD=${ANSIBLE_PASSWORD}
+      - SQL_CRYPTKEY=${SQL_CRYPTKEY}
+      - A1_TRUSTSTORE_PASSWORD=a1adapter
     depends_on:
       - mariadb
     dns:

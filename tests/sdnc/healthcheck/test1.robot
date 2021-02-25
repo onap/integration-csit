@@ -6,7 +6,7 @@ Library     json
 Library     String
 
 *** Variables ***
-${SDN_APIDOCS_URI}    /apidoc/apis
+${SDN_APIDOCS_URI}    /apidoc/openapi3/18/apis/single
 ${SDN_HEALTHCHECK_OPERATION_PATH}    /operations/SLI-API:healthcheck
 
 *** Test Cases ***
