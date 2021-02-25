@@ -71,6 +71,25 @@ echo "MULTICLOUDSIM_IP=${MULTICLOUDSIM_IP}"
 
 ${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${MULTICLOUDSIM_IP} 8082
 
+
+# prepare sdcsim
+cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/sdcsim/
+
+# check Dockerfile content
+cat ./Dockerfile
+
+# build multicloudsim
+docker build -t sdcsim .
+
+# run multicloudsim
+docker run -d --name sdcsim -p 9595:9595  sdcsim
+
+SDCSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' sdcsim`
+echo "SDCSIM_IP=${SDCSIM_IP}"
+
+${WORKSPACE}/scripts/optf-has/has/wait_for_port.sh ${SDCSIM_IP} 9595
+
+
 # prepare aafsim
 echo "simulator_script: prepare aafsim "
 cd ${WORK_DIR}/has/conductor/conductor/tests/functional/simulators/aafsim/

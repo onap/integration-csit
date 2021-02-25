@@ -7,7 +7,6 @@
    "template": {
       "homing_template_version": "2020-08-13",
       "parameters": {
-         "coverage_area_ta_list": "Chennai",
          "latency": 5,
          "reliability": 99.9
       },
@@ -52,14 +51,7 @@
                      },
                      "unit": ""
                   },
-                  {
-                     "attribute": "coverage_area_ta_list",
-                     "operator": "eq",
-                     "threshold": {
-                        "get_param": "coverage_area_ta_list"
-                     },
-                     "unit": ""
-                  }
+     
                ]
             },
             "type": "threshold"
