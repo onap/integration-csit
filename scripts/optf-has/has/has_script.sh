@@ -31,7 +31,7 @@ cd ${DIR}
 COND_CONF=/tmp/conductor/properties/conductor.conf
 LOG_CONF=/tmp/conductor/properties/log.conf
 IMAGE_NAME=nexus3.onap.org:10001/onap/optf-has
-IMAGE_VER=2.1.2-SNAPSHOT-latest
+IMAGE_VER=2.1.3-SNAPSHOT-20210223T070938Z
 BUNDLE=/tmp/conductor/properties/AAF_RootCA.cer
 
 mkdir -p /tmp/conductor/properties
@@ -56,6 +56,13 @@ echo "AAISIM_IP=${AAISIM_IP}"
 
 # change AAI reference to the local instance
 sed  -i -e "s%localhost:8081/%${AAISIM_IP}:8081/%g" /tmp/conductor/properties/conductor.conf
+
+SDCSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' sdcsim`
+echo "SDCSIM_IP=${SDCSIM_IP}"
+
+# change SDC reference to the local instance
+sed  -i -e "s%localhost:9595/%${SDCSIM_IP}:9595/%g" /tmp/conductor/properties/conductor.conf
+
 
 MULTICLOUDSIM_IP=`docker inspect --format '{{ .NetworkSettings.Networks.bridge.IPAddress}}' multicloudsim`
 echo "MULTICLOUDSIM_IP=${MULTICLOUDSIM_IP}"

@@ -686,6 +686,40 @@ GetPlanWithNssiSelectionUnmatched
     Should Be Equal As Integers    ${resp.status_code}    200
     Should Be Equal    not found    ${resultStatus}
 
+# NST selection template
+SendPlanWithNSTSelection
+    [Documentation]    It sends a POST request to conductor
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    ${data}=         Get Binary File     ${CURDIR}${/}data${/}nst_selection_template.json
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Post Request        optf-cond   /v1/plans     data=${data}     headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    Log To Console              body = ${resp.text}
+    ${response_json}    json.loads    ${resp.content}
+    ${generatedPlanId}=    Convert To String      ${response_json['id']}
+    Set Global Variable     ${generatedPlanId}
+    Log To Console              generatedPlanId = ${generatedPlanId}
+    Should Be Equal As Integers    ${resp.status_code}    201
+    Sleep    60s    Wait Plan Resolution
+
+GetPlanWithNsTSelection
+    [Documentation]    It sends a REST GET request to capture recommendations
+    Create Session   optf-cond            ${COND_HOSTNAME}:${COND_PORT}
+    &{headers}=      Create Dictionary    Authorization=${HAS_Auth}    Content-Type=application/json  Accept=application/json
+    ${resp}=         Get Request        optf-cond   /v1/plans/${generatedPlanId}    headers=${headers}
+    Log To Console              *********************
+    Log To Console              response = ${resp}
+    ${response_json}    json.loads    ${resp.content}
+    ${resultStatus}=    Convert To String      ${response_json['plans'][0]['status']}
+    ${instance_name}=    Convert To String      ${response_json['plans'][0]['recommendations'][0]['nst_demand']['candidate']['model_name']}
+    Set Global Variable     ${resultStatus}
+    Log To Console              resultStatus = ${resultStatus}
+    Log To Console              body = ${resp.text}
+    Should Be Equal As Integers    ${resp.status_code}    200
+    Should Be Equal    done    ${resultStatus}
+    Should Be Equal    EmbbNst    ${instance_name}
+
 
 *** Keywords ***
 
