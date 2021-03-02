@@ -28,7 +28,7 @@ dr_cert_exists = False
 
 with open(cafile, 'r+b', buffering=0) as outfile:
     for line in outfile.readlines()[-35:-34]:
-        if "# Serial: 0x9EAEEDC0A7CEB59D" in line:
+        if '# Serial: 0x9EAEEDC0A7CEB59D'.encode() in line:
             dr_cert_exists = True
     if dr_cert_exists:
         outfile.seek(0, os.SEEK_END)
