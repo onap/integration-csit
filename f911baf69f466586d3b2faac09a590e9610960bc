@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1942eff_4483ad80",
+        "filename": "tests/dcaegen2-pmmapper/files-processing-config-pmmapper/assets/config_4_1.env",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-02T06:50:10Z",
+      "side": 1,
+      "message": "Could be removed",
+      "revId": "f911baf69f466586d3b2faac09a590e9610960bc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bdcacf_f718a76c",
+        "filename": "tests/dcaegen2-pmmapper/files-processing-config-pmmapper/files-processing-config-pmmapper.robot",
+        "patchSetId": 30
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-02T06:50:10Z",
+      "side": 1,
+      "message": "I think that \u0027count\u0027 sounds better.",
+      "range": {
+        "startLine": 29,
+        "startChar": 118,
+        "endLine": 29,
+        "endChar": 120
+      },
+      "revId": "f911baf69f466586d3b2faac09a590e9610960bc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ffaddb_34c1b901",
+        "filename": "tests/dcaegen2-pmmapper/files-processing-config-pmmapper/files-processing-config-pmmapper.robot",
+        "patchSetId": 30
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-02T06:50:10Z",
+      "side": 1,
+      "message": "10_1",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "f911baf69f466586d3b2faac09a590e9610960bc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
