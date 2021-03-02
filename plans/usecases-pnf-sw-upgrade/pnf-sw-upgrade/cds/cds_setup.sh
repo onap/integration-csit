@@ -26,9 +26,6 @@ cd $CDS_DATA_PATH
 export CDS_DOCKER_PATH=$CDS_DOCKER_PATH
 export APP_CONFIG_HOME=$APP_CONFIG_HOME
 
-docker pull $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG
-docker tag $NEXUS_DOCKER_REPO/onap/ccsdk-blueprintsprocessor:$BP_IMAGE_TAG onap/ccsdk-blueprintsprocessor:latest
-
 docker-compose -f $CDS_DATA_PATH/docker-compose.yml -p $PROJECT_NAME up -d 
 sleep 10
 ################# Check state of BP ####################
