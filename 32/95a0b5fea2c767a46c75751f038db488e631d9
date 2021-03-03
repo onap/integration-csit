@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Seshu Kumar M <seshu.kumar.m@huawei.com>
+Code-Review+2: Lukasz Rajewski <lukasz.rajewski@orange.com>
+Submitted-by: Lukasz Rajewski <lukasz.rajewski@orange.com>
+Submitted-at: Wed, 03 Mar 2021 07:06:13 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/118147
+Project: integration/csit
+Branch: refs/heads/master
