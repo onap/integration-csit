@@ -2,6 +2,7 @@
 #
 # ============LICENSE_START=======================================================
 #   Copyright (C) 2020 Nordix Foundation.
+#   Modification copyright (C) 2021 Samsung Electronics, Co., Ltd.
 # ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -119,11 +120,12 @@ for i in {1..10}; do
     break
   fi
   echo "Waiting for SDNC Service to Start Up..."
-  sleep 2m
+  sleep 30s
 done
 
 if [[ "${SDNC_IP}" == 'none' || "${SDNC_IP}" == '' || "${RESP_CODE}" != '200' ]]; then
-  echo "SDNC Service not started Could cause problems for testing activities...!"
+  echo "SDNC Service not started, setup failed"
+  exit 1
 fi
 
 # Check if SDNC-ODL Karaf Session started
@@ -149,16 +151,10 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    exit 1;
 fi
 
-
-
-
 # Update default Networking bridge IP in mount.json file
 sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
 
 #########################################################################
-
-echo "Sleeping additional for 3 minutes to give application time to finish"
-sleep 3m
 
 # Export SDNC, AAF-Certservice-Cient, Netconf-Pnp-Simulator Continer Names
 export REQUEST_DATA_PATH="${REQUEST_DATA_PATH}"
