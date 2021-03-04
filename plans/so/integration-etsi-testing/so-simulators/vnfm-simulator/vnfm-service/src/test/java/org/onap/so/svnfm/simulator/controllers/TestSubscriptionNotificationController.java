@@ -80,7 +80,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 public class TestSubscriptionNotificationController {
 
     private static final Logger LOGGER = getLogger(TestSubscriptionNotificationController.class);
-    private static final String SOL003_SUBSCRIPTION_URL = "http://so-vnfm-adapter.onap:9092" + VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT;
+    private static final String SOL003_SUBSCRIPTION_URL = "http://so-etsi-sol003-adapter.onap:9092" + VNFM_ADAPTER_SUBSCRIPTION_ENDPOINT;
 
     @LocalServerPort
     private int port;

@@ -41,7 +41,7 @@ vnfm-adapter:
       name: vnfm
       password: password1$
    base:
-      endpoint: http://so-vnfm-adapter.onap:9092
+      endpoint: http://so-etsi-sol003-adapter.onap:9092
 vnfds:
    vnfdlist:
    -  vnfdid: 1

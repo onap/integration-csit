@@ -190,7 +190,7 @@ services:
     hostname:
       bpmn-infra.so.testlab.onap.org
     links:
-      - "so-vnfm-adapter:so-vnfm-adapter.onap"
+      - "so-etsi-sol003-adapter:so-etsi-sol003-adapter.onap"
     depends_on:
       - mariadb
       - catalog-db-adapter
@@ -233,24 +233,24 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 #############################################################################
-  so-monitoring:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-monitoring:${TAG}
+  so-admin-cockpit:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-admin-cockpit:${SO_ADMIN_COCKPIT_IMAGE_VERSION}
     ports:
       - "30224:30224"
     volumes:
       - ${CONFIG_DIR_PATH}/override-files/so-monitoring/onapheat:/app/config
     environment:
-      - APP=so-monitoring
+      - APP=so-admin-cockpit
       - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
-      so-monitoring.so.testlab.onap.org
+      so-admin-cockpit.so.testlab.onap.org
     depends_on:
       - mariadb
       - catalog-db-adapter
       - request-db-adapter
 ################################################################################
-  so-vnfm-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/vnfm-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
+  so-etsi-sol003-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-etsi-sol003-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
     ports:
       - "9092:9092"
     volumes:
@@ -258,10 +258,10 @@ services:
       - ${CONFIG_DIR_PATH}/certificates/so-vnfm-adapter-certs:/app/so-vnfm-adapter-certs
       - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
     environment:
-    - APP=so-vnfm-adapter
+    - APP=so-etsi-sol003-adapter
     - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
-      so-vnfm-adapter
+      so-etsi-sol003-adapter
     depends_on:
       - request-db-adapter
     logging:
@@ -283,7 +283,7 @@ services:
       sdc-simulator
     depends_on:
       - mariadb
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     logging:
       driver: "json-file"
       options:
@@ -301,7 +301,7 @@ services:
       aai-simulator
     depends_on:
       - mariadb
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     logging:
       driver: "json-file"
       options:
@@ -321,10 +321,10 @@ services:
     hostname:
       so-vnfm-simulator
     links:
-      - "so-vnfm-adapter:so-vnfm-adapter.onap"
+      - "so-etsi-sol003-adapter:so-etsi-sol003-adapter.onap"
     depends_on:
       - mariadb
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     logging:
       driver: "json-file"
       options:
@@ -344,7 +344,7 @@ services:
       - CATALOG_DB=catalogdb
     depends_on:
       - mariadb
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     command:
       - "/config/apply-workarounds.sh"
 #################################################################################
@@ -359,7 +359,7 @@ services:
       sdnc-simulator
     depends_on:
       - mariadb
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     logging:
       driver: "json-file"
       options:
@@ -377,7 +377,7 @@ services:
       multicloud-simulator
     depends_on:
     - mariadb
-    - so-vnfm-adapter
+    - so-etsi-sol003-adapter
     logging:
       driver: "json-file"
       options:
@@ -414,7 +414,7 @@ services:
     hostname:
       modeling-etsicatalog
     links:
-      - "so-vnfm-adapter:so-vnfm-adapter.onap"
+      - "so-etsi-sol003-adapter:so-etsi-sol003-adapter.onap"
     depends_on:
       - mariadb
       - sdc-simulator
@@ -449,6 +449,6 @@ services:
       - aai-simulator
       - sdc-simulator
       - modeling-etsicatalog
-      - so-vnfm-adapter
+      - so-etsi-sol003-adapter
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" mariadb:3306 -- "/app/start-app.sh"'
