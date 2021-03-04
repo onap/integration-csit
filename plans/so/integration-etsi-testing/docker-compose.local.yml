@@ -22,11 +22,11 @@ services:
   api-handler-infra:
     image: onap/so/api-handler-infra:${TAG}
 #############################################################################
-  so-monitoring:
-    image: onap/so/so-monitoring:${TAG}
+  so-admin-cockpit:
+    image: onap/so/so-admin-cockpit:${SO_ADMIN_COCKPIT_IMAGE_VERSION}
 ################################################################################
-  so-vnfm-adapter:
-    image: onap/so/vnfm-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
+  so-etsi-sol003-adapter:
+    image: onap/so/so-etsi-sol003-adapter:${SOL_003_ADAPTER_IMAGE_VERSION}
 ################################################################################
   modeling-etsicatalog:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/modeling/etsicatalog:${ETSI_CATALOG_IMAGE_VERSION}

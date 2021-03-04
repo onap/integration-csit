@@ -37,7 +37,7 @@ public class SubscriptionManager {
     @Value("${vnfm-adapter.auth.password}")
     private String password;
 
-    @Value("${vnfm-adapter.base.endpoint:http://so-vnfm-adapter.onap:9092}")
+    @Value("${vnfm-adapter.base.endpoint:http://so-etsi-sol003-adapter.onap:9092}")
     private String baseEndpoint;
 
     @Autowired
