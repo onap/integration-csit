@@ -26,14 +26,6 @@
                                 "get_param": "reliability"
                             },
                             "unit": ""
-                        },
-                        {
-                            "attribute": "coverage_area_ta_list",
-                            "operator": "eq",
-                            "threshold": {
-                                "get_param": "coverage_area_ta_list"
-                            },
-                            "unit": ""
                         }
                     ]
                 },
@@ -63,8 +55,7 @@
                     "filtering_attributes": {
                         "service_profile": {
                                         "latency": {"value": {"get_param": "latency"}, "operator": "lte"},
-                                        "reliability": {"value": {"get_param": "reliability"}, "operator": "gte"},
-                                        "coverage_area_ta_list": {"value": {"get_param": "coverage_area_ta_list"}, "operator": "eq"}
+                                        "reliability": {"value": {"get_param": "reliability"}, "operator": "gte"}
                                   },
                         "subnets":{
                         "core": {
@@ -86,13 +77,7 @@
                             }
                         },
                         "ran": {
-                            "coverage_area_ta_list": {
-                                "values": [
-                                    {
-                                        "get_param": "coverage_area_ta_list"
-                                    }
-                                ]
-                            },
+          
                             "latency": {
                                 "max": {
                                     "get_param": "latency"
@@ -155,7 +140,6 @@
         "parameters": {
             "core_latency": 10,
             "core_reliability": 99.9,
-            "coverage_area_ta_list": "Chennai",
             "latency": 30,
             "ran_latency": 7,
             "ran_reliability": 99.9,
