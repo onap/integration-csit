@@ -13,6 +13,9 @@ services:
   sdnc-adapter:
     image: onap/so/sdnc-adapter:${TAG}
 ################################################################################
+  openstack-adapter:
+    image: onap/so/openstack-adapter:${TAG}
+################################################################################
   sdc-controller:
     image: onap/so/sdc-controller:${TAG}
 ################################################################################
@@ -29,5 +32,5 @@ services:
     image: onap/so/vnfm-adapter:${TAG}
 ################################################################################
   ve-vnfm-adapter:
-    image: onap/so/ve-vnfm-adapter:${TAG}
+    image: onap/so/ve-vnfm-adapter:${VE_VNFM_ADAPTER_IMAGE_VERSION}
 ################################################################################
