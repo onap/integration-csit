@@ -105,13 +105,43 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
+  openstack-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/openstack-adapter:${TAG}
+    ports:
+      - "8087:8087"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH}/override-files/openstack-adapter/onapheat:/app/config
+    environment:
+      - APP=openstack-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      openstack-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+################################################################################
   sdc-controller:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${TAG}
     ports:
       - "8085:8085"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${CONFIG_DIR_PATH}/distribution-test-zip/zipped_sdc_csar.tar.gz:/distribution-test-zip/zipped_sdc_csar.tar.gz
+      - ${CONFIG_DIR_PATH}/distribution-test-zip:/distribution-test-zip
       - ${CONFIG_DIR_PATH}/override-files/sdc-controller/onapheat:/app/config
     environment:
       - APP=sdc-controller
@@ -134,7 +164,7 @@ services:
         max-size: "30m"
         max-file: "5"
     user: root
-    entrypoint: /bin/sh -c 'mkdir -p /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && chmod 777 -R /distribution-test-zip/ && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+    entrypoint: /bin/sh -c 'mkdir -p /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/macro_zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && chmod 777 -R /distribution-test-zip/ && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
   bpmn-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}
@@ -327,6 +357,24 @@ services:
       options:
         max-size: "30m"
         max-file: "5"
+#################################################################################
+  multicloud-simulator:
+    image: simulators/multicloud-simulator:latest
+    ports:
+    - "9996:9996"
+    environment:
+    - APP=MULTICLOUD-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      multicloud-simulator
+    depends_on:
+    - mariadb
+    - so-vnfm-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
 ################################################################################
   populate-aai-config:
     image: jobs/workaround-job-container:latest
@@ -346,7 +394,7 @@ services:
         - "/config/populate-aai-simulator.sh"
 ################################################################################
   ve-vnfm-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/ve-vnfm-adapter:${TAG}
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/ve-vnfm-adapter:${VE_VNFM_ADAPTER_IMAGE_VERSION}
     ports:
       - "9098:9098"
     volumes:
