@@ -48,7 +48,10 @@ public class Output implements Serializable {
     private GenericResourceApiInstanceReference serviceResponseInformation = null;
 
     @JsonProperty("vnf-response-information")
-    private GenericResourceApiInstanceReference vnfResponseInformation = null;
+    private GenericResourceApiInstanceReference vnfResponseInformation = null; 
+    
+    @JsonProperty("vf-module-response-information")
+    private GenericResourceApiInstanceReference vfModuleResponseInformation = null;
 
     /**
      * @return the responseMessage
@@ -165,6 +168,11 @@ public class Output implements Serializable {
         return this;
 
     }
+    public Output vfModuleResponseInformation(final GenericResourceApiInstanceReference vfModuleResponseInformation) {
+        this.vfModuleResponseInformation = vfModuleResponseInformation;
+        return this;
+
+    }
 
     @JsonIgnore
     @Override
@@ -177,6 +185,7 @@ public class Output implements Serializable {
         sb.append("    responseCode: ").append(responseCode).append("\n");
         sb.append("    serviceResponseInformation: ").append(serviceResponseInformation).append("\n");
         sb.append("    vnfResponseInformation: ").append(vnfResponseInformation).append("\n");
+        sb.append("    vfModuleResponseInformation: ").append(vfModuleResponseInformation).append("\n");
         sb.append("}");
         return sb.toString();
     }
