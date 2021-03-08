@@ -151,6 +151,29 @@ if [ "$TIME" -ge "$TIME_OUT" ]; then
    exit 1;
 fi
 
+# Check if certificate installation is done
+TIME_OUT=300
+INTERVAL=10
+TIME=0
+while [ "$TIME" -lt "$TIME_OUT" ]; do
+
+  docker-compose -f "${SCRIPTS}"/sdnc/sdnc/docker-compose.yml logs sdnc | grep 'Everything OK in Certificate Installation'
+
+  if [ $? == 0 ] ; then
+    echo SDNC karaf started in $TIME seconds
+    break;
+  fi
+
+  echo Sleep: $INTERVAL seconds before testing if SDNC is up. Total wait time up now is: $TIME seconds. Timeout is: $TIME_OUT seconds
+  sleep $INTERVAL
+  TIME=$(($TIME+$INTERVAL))
+done
+
+if [ "$TIME" -ge "$TIME_OUT" ]; then
+   echo TIME OUT: karaf session not started in $TIME_OUT seconds, setup failed
+   exit 1;
+fi
+
 # Update default Networking bridge IP in mount.json file
 sed -i "s/pnfaddr/${LOCAL_IP}/g" "${REQUEST_DATA_PATH}"/mount.xml
 

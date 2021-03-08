@@ -55,8 +55,6 @@ Send Get Request And Validate TLS Connection Response
     &{headers1}=  Create Dictionary    Authorization=Basic YWRtaW46S3A4Yko0U1hzek0wV1hsaGFrM2VIbGNzZTJnQXc4NHZhb0dHbUp2VXkyVQ==    Content-Type=application/json    Accept=application/json
     ${resp1}=    Get Request    sdnc_restconf    ${PNFSIM_MOUNT_PATH}    headers=${headers1}
     Should Be Equal As Strings    ${resp1.status_code}    ${resp_code}
-    Should Contain  ${resp1.content}     netconf-id
-    Should Contain  ${resp1.content}     netconf-param
 
 Send Delete Request And Validate PNF Mount Deleted
     [Documentation]   Send request to passed url and validate received response
