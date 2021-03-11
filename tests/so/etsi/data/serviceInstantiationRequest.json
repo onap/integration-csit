@@ -1,33 +1,33 @@
 {
-    "requestDetails": {
-        "requestInfo": {
-            "instanceName": "CsitEtsiInstance",
-            "source": "VID",
-            "suppressRollback": false,
-            "requestorId": "demo"
-        },
-        "modelInfo": {
-            "modelType": "service",
-            "modelInvariantId": "0ddc448d-5513-44bc-8b02-5759d84600d5",
-            "modelVersionId": "28d4acf3-4791-4998-8d06-1cdf6d1767a9",
-            "modelName": "manualDistributionTestService",
-            "modelVersion": "1.0"
-        },
-        "requestParameters": {
-            "userParams": [],
-            "testApi": "GR_API",
-            "subscriptionServiceType": "vCPE",
-            "aLaCarte": true
-        },
-        "subscriberInfo": {
-            "globalSubscriberId": "DemoCustomer"
-        },
-        "project": {
-            "projectName": "etsiCsitProject"
-        },
-        "owningEntity": {
-            "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
-            "owningEntityName": "OE-Demonstration"
-        }
+  "requestDetails": {
+    "requestInfo": {
+      "instanceName": "CsitEtsiInstance",
+      "source": "VID",
+      "suppressRollback": false,
+      "requestorId": "demo"
+    },
+    "modelInfo": {
+      "modelType": "service",
+      "modelInvariantId": "10b3d278-e262-44ca-a0c0-4e663c2d7562",
+      "modelVersionId": "fdea6501-dabd-4428-b52c-623336a3b403",
+      "modelName": "EtsiServiceCSIT3",
+      "modelVersion": "1.0"
+    },
+    "requestParameters": {
+      "userParams": [],
+      "testApi": "GR_API",
+      "subscriptionServiceType": "vCPE",
+      "aLaCarte": true
+    },
+    "subscriberInfo": {
+      "globalSubscriberId": "DemoCustomer"
+    },
+    "project": {
+      "projectName": "etsiCsitProject"
+    },
+    "owningEntity": {
+      "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
+      "owningEntityName": "OE-Demonstration"
     }
+  }
 }

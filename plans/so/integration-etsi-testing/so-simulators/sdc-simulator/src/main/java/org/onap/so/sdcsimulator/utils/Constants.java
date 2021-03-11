@@ -25,6 +25,8 @@ package org.onap.so.sdcsimulator.utils;
  */
 public class Constants {
 
+    public static final String MAIN_RESOURCE_FOLDER = "/csar/";
+
     public static final String BASE_URL = "/sdc/v1";
 
     public static final String CATALOG_URL = BASE_URL + "/catalog";
@@ -35,11 +37,13 @@ public class Constants {
 
     public static final String DOT = ".";
 
+    public static final String WILD_CARD_REGEX = "*";
+
     public static final String DOT_CSAR = DOT + "csar";
 
     public static final String DEFAULT_CSAR_NAME_WITH_EXT = DEFAULT_CSAR_NAME + DOT_CSAR;
 
-    public static final String DEFAULT_CSAR_PATH = "/csar/" + DEFAULT_CSAR_NAME_WITH_EXT;
+    public static final String DEFAULT_CSAR_PATH = MAIN_RESOURCE_FOLDER + DEFAULT_CSAR_NAME_WITH_EXT;
 
     private Constants() {}
 }
