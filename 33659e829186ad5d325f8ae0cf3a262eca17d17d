@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "df752f19_9f632189",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-11T16:00:23Z",
+      "side": 1,
+      "message": "try to keep docker-compose file separate for your test-suite otherwise test execution time will increase for etsi test suite",
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dcb3631_4ac7b88a",
         "filename": "plans/so/macroflow/setup.sh",
         "patchSetId": 3
