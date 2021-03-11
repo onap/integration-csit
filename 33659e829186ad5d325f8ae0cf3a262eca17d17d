@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4134ed7_e8e0c8c5",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-11T16:05:05Z",
+      "side": 1,
+      "message": "Try not to create unnecessary dependency between two test-suites ETSI CSIT and macro CSIT",
+      "parentUuid": "df752f19_9f632189",
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dcb3631_4ac7b88a",
         "filename": "plans/so/macroflow/setup.sh",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2021-03-11T15:58:29Z",
       "side": 1,
       "message": "try to keep env file separate ... otherwise changing version for one test-suite will impact other",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed06c60a_e6deb8a3",
+        "filename": "plans/so/macroflow/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-11T16:05:05Z",
+      "side": 1,
+      "message": "Try not to create unnecessary dependency between two test-suites ETSI CSIT and macro CSIT",
+      "parentUuid": "7dcb3631_4ac7b88a",
       "range": {
         "startLine": 29,
         "startChar": 0,
