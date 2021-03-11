@@ -24,14 +24,14 @@
                   "^pnf.*",
                   "^vnf.*"
                 ],
-                "modelInvariantUUIDs": [
+                "modelInvariantIDs": [
                   "7129e420-d396-4efb-af02-6b83499b12f8"
                 ],
                 "modelVersionIDs": [
 
                 ],
                 "modelNames": [
-                  "pnf102"
+
                 ]
               },
               "measurementGroups": [
