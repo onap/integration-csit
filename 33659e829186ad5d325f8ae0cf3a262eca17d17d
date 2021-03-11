@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "af6eb318_760d4e92",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.local.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "not sure if TAG version will always be same for openstack adapter.\n\nExtract out these in new docker-compose",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1deef1_25955d0e",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.local.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "ve-vnfm-adapter is redundant if I am not wrong.",
+      "range": {
+        "startLine": 35,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df752f19_9f632189",
         "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
         "patchSetId": 3
@@ -31,6 +77,24 @@
       "side": 1,
       "message": "Try not to create unnecessary dependency between two test-suites ETSI CSIT and macro CSIT",
       "parentUuid": "df752f19_9f632189",
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337baeb3_810e788d",
+        "filename": "plans/so/integration-etsi-testing/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "I agree with @Waqas better to segregate docker-compose for additional test suite.",
+      "parentUuid": "e4134ed7_e8e0c8c5",
       "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -77,6 +141,76 @@
         "startChar": 0,
         "endLine": 29,
         "endChar": 24
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c044b66a_85d1ec91",
+        "filename": "plans/so/macroflow/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "agree with @Waqas , have a new env file for macroflow",
+      "parentUuid": "ed06c60a_e6deb8a3",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b8d6cb_75b00a6c",
+        "filename": "plans/so/macroflow/teardown.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee4b8a7_f3b0ef6d",
+        "filename": "plans/so/macroflow/teardown.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-11T16:45:29Z",
+      "side": 1,
+      "message": "As suggested in previous comment , try to have separate docker-compose for remote and local to avoid any conflict with existing test suites",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 72
       },
       "revId": "33659e829186ad5d325f8ae0cf3a262eca17d17d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
