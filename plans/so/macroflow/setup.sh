@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START=======================================================
-#   Copyright (C) 2019 Nordix Foundation.
+#   Copyright (C) 2021 Nordix Foundation.
 # ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -29,27 +29,27 @@ SCRIPT_NAME=$(basename $0)
 CONFIG_DIR=$SCRIPT_HOME/config
 ENV_FILE=$CONFIG_DIR/env
 TEMP_DIR_PATH=$SCRIPT_HOME/temp
-TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
+
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
-DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
 TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
+
+INTEGRATION_ETSI_TESTING_DIR=$WORKSPACE/plans/so/integration-etsi-testing
+INTEGRATION_ETSI_TESTING_CONFIG_DIR=$INTEGRATION_ETSI_TESTING_DIR/config
 
 MAVEN_DIR=$TEMP_DIR_PATH/maven
 INSTALLED_MAVEN_DIR=$MAVEN_DIR/$MAVEN_VERSION_DIR
 MVN=$INSTALLED_MAVEN_DIR/bin/mvn
 MVN_VERSION="$MVN -v"
-MVN_SETTINGS_XML="$SCRIPT_HOME/settings.xml"
+MVN_SETTINGS_XML="$INTEGRATION_ETSI_TESTING_DIR/settings.xml"
 MVN_CLEAN_INSTALL="$MVN clean install"
-SIMULATOR_MAVEN_PROJECT_POM="$SCRIPT_HOME/so-simulators/pom.xml"
-WAIT_FOR_WORKAROUND_SCRIPT=$CONFIG_DIR/"wait-for-workaround-job.sh"
-WAIT_FOR_POPULATE_AAI_SCRIPT=$CONFIG_DIR/"wait-for-aai-config-job.sh"
-WAIT_FOR_CONTAINER_SCRIPT=$CONFIG_DIR/"wait-for-container.sh"
+SIMULATOR_MAVEN_PROJECT_POM="$INTEGRATION_ETSI_TESTING_DIR/so-simulators/pom.xml"
+WAIT_FOR_CONTAINER_SCRIPT=$INTEGRATION_ETSI_TESTING_CONFIG_DIR/"wait-for-container.sh"
 
 echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 
 export $(egrep -v '^#' $ENV_FILE | xargs)
 
-MANDATORY_VARIABLES_NAMES=( "NEXUS_DOCKER_REPO_MSO" "DOCKER_ENVIRONMENT" "TAG" "TIME_OUT_DEFAULT_VALUE_SEC" "PROJECT_NAME" "DEFAULT_NETWORK_NAME" "ETSI_CATALOG_IMAGE_VERSION")
+MANDATORY_VARIABLES_NAMES=( "PROJECT_NAME" "DEFAULT_NETWORK_NAME" )
 
 for var in "${MANDATORY_VARIABLES_NAMES[@]}"
  do
@@ -125,68 +125,14 @@ if [ $? -ne 0 ]; then
         exit 1
 fi
 
-echo "Will clone docker-config project ... "
+docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME up -d
 
+echo "Sleeping for 1m"
+sleep 1m
 
-if [[ -d "$TEST_LAB_DIR_PATH" ]]; then
-       echo "$TEST_LAB_DIR_PATH already exists"
-       echo "Removing $TEST_LAB_DIR_PATH directory ..."
-       rm -rf $TEST_LAB_DIR_PATH
-fi
-
-git clone http://gerrit.onap.org/r/so/docker-config.git $TEST_LAB_DIR_PATH
-
-export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
-export CONFIG_DIR_PATH=$CONFIG_DIR
-
-if [ "$DOCKER_ENVIRONMENT" == "remote" ]; then
-  echo "Starting docker containers with remote images ..."
-  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME up -d
-elif [ "$DOCKER_ENVIRONMENT" == "local" ]; then
-  echo "Starting docker containers with local images ..."
-  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -f $DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE -p $PROJECT_NAME up -d
-else
-  echo "DOCKER_ENVIRONMENT not set correctly in $ENV_FILE.  Allowed values: local | remote"
-  exit 1
-fi
-
-echo "Sleeping for 3m"
-sleep 3m
-
-echo "Will execute $WAIT_FOR_WORKAROUND_SCRIPT script"
-$WAIT_FOR_WORKAROUND_SCRIPT
-
-if [ $? -ne 0 ]; then
-   echo "ERROR: $WAIT_FOR_WORKAROUND_SCRIPT failed"
-   echo "Will stop running docker containers . . ."
-   $TEAR_DOWN_SCRIPT
-   exit 1
-fi
-
-echo "Will execute $WAIT_FOR_POPULATE_AAI_SCRIPT script"
-$WAIT_FOR_POPULATE_AAI_SCRIPT
-
-if [ $? -ne 0 ]; then
-   echo "ERROR: $WAIT_FOR_POPULATE_AAI_SCRIPT failed"
-   echo "Will stop running docker containers . . ."
-   $TEAR_DOWN_SCRIPT
-   exit 1
-fi
-
-API_INFRA_CONTAINER_NAME="api-handler-infra"
-echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $API_INFRA_CONTAINER_NAME container to start up"
-$WAIT_FOR_CONTAINER_SCRIPT -c "$API_INFRA_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
-
-if [ $? -ne 0 ]; then
-   echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
-   echo "Will stop running docker containers . . ."
-   $TEAR_DOWN_SCRIPT
-   exit 1
-fi
-
-MODELING_ETSI_CATALOG_CONTAINER_NAME="modeling-etsicatalog"
-echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $MODELING_ETSI_CATALOG_CONTAINER_NAME container to start up"
-$WAIT_FOR_CONTAINER_SCRIPT -c "$MODELING_ETSI_CATALOG_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
+AAI_SIMULATOR_CONTAINER_NAME="aai-simulator"
+echo "Will execute $WAIT_FOR_CONTAINER_SCRIPT to wait for $AAI_SIMULATOR_CONTAINER_NAME container to start up"
+$WAIT_FOR_CONTAINER_SCRIPT -c "$AAI_SIMULATOR_CONTAINER_NAME" -t "300" -n "$DEFAULT_NETWORK_NAME"
 if [ $? -ne 0 ]; then
    echo "ERROR: $WAIT_FOR_CONTAINER_SCRIPT failed"
    echo "Will stop running docker containers . . ."

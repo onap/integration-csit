@@ -19,6 +19,7 @@
  */
 package org.onap.so.aaisimulator.service.providers;
 
+import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.Customer;
 import org.onap.aai.domain.yang.Relationship;
@@ -53,13 +54,16 @@ public interface CustomerCacheServiceProvider extends Clearable {
     boolean patchServiceInstance(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final ServiceInstance serviceInstance);
 
-    Optional<Relationship> getRelationship(final String globalCustomerId, final String serviceType,
-            final String serviceInstanceId, final String vnfName);
-
     Optional<Relationship> addRelationShip(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final Relationship relationship, final String requestUri);
 
     boolean deleteSericeInstance(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final String resourceVersion);
+
+    List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId, final String vnfName);
+
+    List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId);
 
 }

@@ -1,102 +1,52 @@
 {
-  "distributionID": "cfe30d6c-eb67-4ffb-ba98-4b654162223a",
-  "serviceName": "manualDistributionTestService",
-  "serviceVersion": "1.0",
-  "serviceUUID": "28d4acf3-4791-4998-8d06-1cdf6d1767a9",
-  "serviceDescription": "Test",
-  "serviceInvariantUUID": "0ddc448d-5513-44bc-8b02-5759d84600d5",
-  "resources": [
-    {
-      "resourceInstanceName": "manualDistributionTestVNF 0",
-      "resourceCustomizationUUID": "82ad3aa0-edc6-410c-a217-655fb064323f",
-      "resourceName": "manualDistributionTestVNF",
-      "resourceVersion": "1.0",
-      "resoucreType": "VF",
-      "resourceUUID": "e8e39dc4-4761-4da7-aedf-7d1fd3637772",
-      "resourceInvariantUUID": "0a0b9979-863d-4b7e-b7f4-d27725a182b3",
-      "category": "Application L4+",
-      "subcategory": "Media Servers",
-      "artifacts": [
+    "distributionID": "f0d0e9e2-10aa-4f66-a0cc-cf5ecb386b42",
+    "serviceName": "EtsiServiceCSIT3",
+    "serviceVersion": "1.0",
+    "serviceUUID": "fdea6501-dabd-4428-b52c-623336a3b403",
+    "serviceDescription": "test",
+    "serviceInvariantUUID": "10b3d278-e262-44ca-a0c0-4e663c2d7562",
+    "resources": [
         {
-          "artifactName": "manualdistributiontestvnf0_modules.json",
-          "artifactType": "VF_MODULES_METADATA",
-          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/manualdistributiontestvnf0_modules.json",
-          "artifactChecksum": "NTc0NDlkNzdmYzVmMDM3ZjMxMTE2NDBmYWJiMDM1NzY\u003d",
-          "artifactDescription": "Auto-generated VF Modules information artifact",
-          "artifactTimeout": 120,
-          "artifactVersion": "1",
-          "artifactUUID": "a10f397a-6546-4a27-843f-25821955ef3e",
-          "relatedArtifactsInfo": []
-        },
-        {
-          "artifactName": "base_ves_med1.yaml",
-          "artifactType": "HEAT",
-          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.yaml",
-          "artifactChecksum": "YTAwNTQ3NjczY2Y5MmUwZjUzZTY1ZjNhNTA0NGQyMDY\u003d",
-          "artifactDescription": "created from csar",
-          "artifactTimeout": 120,
-          "artifactVersion": "2",
-          "artifactUUID": "e216d9da-18c4-460f-8b2b-d7f8dd9e9295",
-          "generatedArtifact": {
-            "artifactName": "base_ves_med1.env",
-            "artifactType": "HEAT_ENV",
-            "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
-            "artifactChecksum": "Mjg5YTVhNTlmYTdjYTFlYjYxMDlhODYzNmJhZGJiZGE\u003d",
-            "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
-            "artifactTimeout": 120,
-            "artifactVersion": "2",
-            "artifactUUID": "6243747f-e794-4519-82b2-6399846f1951",
-            "generatedFromUUID": "e216d9da-18c4-460f-8b2b-d7f8dd9e9295"
-          },
-          "relatedArtifactsInfo": []
-        },
-        {
-          "artifactName": "base_ves_med1.env",
-          "artifactType": "HEAT_ENV",
-          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/base_ves_med1.env",
-          "artifactChecksum": "Mjg5YTVhNTlmYTdjYTFlYjYxMDlhODYzNmJhZGJiZGE\u003d",
-          "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
-          "artifactTimeout": 120,
-          "artifactVersion": "2",
-          "artifactUUID": "6243747f-e794-4519-82b2-6399846f1951",
-          "relatedArtifactsInfo": []
-        },
-        {
-          "artifactName": "TOSCA.meta",
-          "artifactType": "OTHER",
-          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/TOSCA.meta",
-          "artifactChecksum": "NWE2ODcyOWY0NGI2MzEyOGViYjUxNTEwMjU5OWRhZmI\u003d",
-          "artifactDescription": "created from csar",
-          "artifactTimeout": 120,
-          "artifactVersion": "1",
-          "artifactUUID": "6c64d38b-186f-4339-9a76-a266c40f40ec",
-          "relatedArtifactsInfo": []
-        },
-        {
-          "artifactName": "descriptor.yaml",
-          "artifactType": "OTHER",
-          "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/resourceInstances/manualdistributiontestvnf0/artifacts/descriptor.yaml",
-          "artifactChecksum": "YWZkNTg2ZGMzZjRhZjgxNzNkODJiNjgwZmRlZjlmNDE\u003d",
-          "artifactDescription": "created from csar",
-          "artifactTimeout": 120,
-          "artifactVersion": "1",
-          "artifactUUID": "4bd0cdf6-0b12-4d19-b3d8-6dbc34fe397e",
-          "relatedArtifactsInfo": []
+            "resourceInstanceName": "EtsiVnfCSIT3 0",
+            "resourceCustomizationUUID": "3341825c-837c-4e84-8a82-cc69033ca92f",
+            "resourceName": "EtsiVnfCSIT3",
+            "resourceVersion": "1.0",
+            "resourceUUID": "bb7ff27f-d609-4d02-9926-2f4c5eb89316",
+            "resourceInvariantUUID": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+            "category": "Generic",
+            "subcategory": "Network Service",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
         }
-      ]
-    }
-  ],
-  "serviceArtifacts": [
-    {
-      "artifactName": "service-Manualdistributiontestservice-csar.csar",
-      "artifactType": "TOSCA_CSAR",
-      "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Manualdistributiontestservice/1.0/artifacts/service-Manualdistributiontestservice-csar.csar",
-      "artifactChecksum": "YWYxNmUxNTlhMmE3MjA1NGVhNTBhYTdkMmU0OTZjNzM\u003d",
-      "artifactDescription": "TOSCA definition package of the asset",
-      "artifactTimeout": 0,
-      "artifactVersion": "1",
-      "artifactUUID": "e6e8c36a-b939-4845-995a-41c50be890a0"
-    }
-  ],
-  "workloadContext": "Production"
+    ],
+    "serviceArtifacts": [
+        {
+            "artifactName": "service-Etsiservicecsit3-csar.csar",
+            "artifactType": "TOSCA_CSAR",
+            "artifactURL": "/unzipped_sdc_csar/v1/catalog/services/Etsiservicecsit3/1.0/artifacts/service-Etsiservicecsit3-csar.csar",
+            "artifactChecksum": "NDcwMjRmZjg3MWYwY2FmMTAxN2RlZWEzMWE2OTU2ZjA=",
+            "artifactDescription": "TOSCA definition package ofthe asset",
+            "artifactTimeout": 0,
+            "artifactVersion": "1",
+            "artifactUUID": "587a89d9-ca2d-41b7-929e-de191fd4bf29",
+            "relatedArtifacts": []
+        }
+    ],
+    "workloadContext": "Production",
+    "resourcesImpl": [
+        {
+            "resourceInstanceName": "EtsiVnfCSIT3 0",
+            "resourceCustomizationUUID": "3341825c-837c-4e84-8a82-cc69033ca92f",
+            "resourceName": "EtsiVnfCSIT3",
+            "resourceVersion": "1.0",
+            "resourceUUID": "bb7ff27f-d609-4d02-9926-2f4c5eb89316",
+            "resourceInvariantUUID": "037f7b1b-5c62-44c1-b806-f92fe8970171",
+            "category": "Generic",
+            "subcategory": "Network Service",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
+        }
+    ]
 }

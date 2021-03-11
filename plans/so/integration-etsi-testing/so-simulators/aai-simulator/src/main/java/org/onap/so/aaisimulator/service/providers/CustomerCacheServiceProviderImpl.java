@@ -22,11 +22,14 @@ package org.onap.so.aaisimulator.service.providers;
 import static org.onap.so.aaisimulator.utils.CacheName.CUSTOMER_CACHE;
 import static org.onap.so.aaisimulator.utils.Constants.CUSTOMER_GLOBAL_CUSTOMER_ID;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
+import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_ID;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_INSTANCE_SERVICE_INSTANCE_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.SERVICE_SUBSCRIPTION_SERVICE_TYPE;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -279,7 +282,7 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
     }
 
     @Override
-    public Optional<Relationship> getRelationship(final String globalCustomerId, final String serviceType,
+    public List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
             final String serviceInstanceId, final String vnfName) {
         final Optional<ServiceInstance> optional = getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
 
@@ -289,20 +292,53 @@ public class CustomerCacheServiceProviderImpl extends AbstractCacheServiceProvid
             final RelationshipList relationshipList = serviceInstance.getRelationshipList();
 
             if (relationshipList != null) {
-                final List<Relationship> relationship = relationshipList.getRelationship();
-                return relationship.stream().filter(
+                final List<Relationship> relationships = relationshipList.getRelationship().stream().filter(
                         relationShip -> relationShip.getRelatedToProperty().stream().filter(relatedToProperty -> {
                             final String propertyKey = relatedToProperty.getPropertyKey();
                             final String propertyValue = relatedToProperty.getPropertyValue();
                             return GENERIC_VNF_VNF_NAME.equals(propertyKey) && propertyValue != null
                                     && propertyValue.equals(vnfName);
-                        }).findFirst().isPresent()).findFirst();
+                        }).findFirst().isPresent()).collect(Collectors.toList());
+                LOGGER.info("Found relationships {} for vnf-name: {}", relationships, vnfName);
+                return getGenericVnfIdsIfPresent(relationships);
             }
             LOGGER.warn("Relationship list is nulll ...");
         }
-        LOGGER.error("Unable to RelationShip with property value: {}... ", vnfName);
+        LOGGER.error("Unable to find generic-vnf relationships with property value: {}... ", vnfName);
+        return Collections.emptyList();
+    }
 
-        return Optional.empty();
+    @Override
+    public List<String> getRelatedToVnfIds(final String globalCustomerId, final String serviceType,
+            final String serviceInstanceId) {
+        final Optional<ServiceInstance> optional = getServiceInstance(globalCustomerId, serviceType, serviceInstanceId);
+
+        if (optional.isPresent()) {
+            LOGGER.info("Found service instance ...");
+            final ServiceInstance serviceInstance = optional.get();
+            final RelationshipList relationshipList = serviceInstance.getRelationshipList();
+
+            if (relationshipList != null) {
+                final List<Relationship> relationships = relationshipList.getRelationship();
+                LOGGER.info("Relationships found {}", relationships);
+                return getGenericVnfIdsIfPresent(relationships);
+            }
+            LOGGER.warn("Relationship list is nulll ...");
+        }
+        LOGGER.error("Unable to find generic-vnf relationships ... ");
+        return Collections.emptyList();
+    }
+
+    private List<String> getGenericVnfIdsIfPresent(final List<Relationship> relationships) {
+        final List<String> vnfIdsFound = new ArrayList<>();
+        relationships.stream().forEach(relationship -> {
+            relationship.getRelationshipData().stream()
+                    .filter(existing -> GENERIC_VNF_VNF_ID.equals(existing.getRelationshipKey())).findFirst()
+                    .ifPresent(consume -> {
+                        vnfIdsFound.add(consume.getRelationshipValue());
+                    });
+        });
+        return vnfIdsFound;
     }
 
     @Override
