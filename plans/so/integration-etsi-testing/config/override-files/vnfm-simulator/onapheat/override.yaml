@@ -54,3 +54,23 @@ vnfds:
        resourceTemplateId: vnfd2_vnfc4
        vduId: vnfd2_vduForVnfc4
        type: COMPUTE
+  -  vnfdid: b1bb0ce7-2222-4fa7-95ed-4840d70a1177
+     vnfclist:
+     -  vnfcid: VNFC5
+        resourceTemplateId: vnfd3_vnfc4
+        vduId: vnfd3_vduForVnfc4
+        type: COMPUTE
+     -  vnfcid: VNFC6
+        resourceTemplateId: vnfd3_vnfc5
+        vduId: vnfd3_vduForVnfc5
+        type: COMPUTE
+  -  vnfdid: 0c960b3a-d88f-11ea-87d0-0242ac130003
+     vnfclist:
+     -  vnfcid: VNFC7
+        resourceTemplateId: vnfd4_vnfc5
+        vduId: vnfd4_vduForVnfc5
+        type: COMPUTE
+     -  vnfcid: VNFC8
+        resourceTemplateId: vnfd4_vnfc6
+        vduId: vnfd4_vduForVnfc6
+        type: COMPUTE
