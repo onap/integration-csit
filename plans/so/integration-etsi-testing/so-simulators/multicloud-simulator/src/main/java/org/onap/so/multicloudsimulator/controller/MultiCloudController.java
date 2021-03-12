@@ -25,53 +25,52 @@ import java.net.URI;
 
 import static org.onap.so.multicloudsimulator.utils.Constants.BASE_URL;
 @RestController
-@RequestMapping(path = BASE_URL)
 public class MultiCloudController {
 
 	public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
 	private static final Logger LOGGER = LoggerFactory.getLogger(MultiCloudController.class);
 	public MulticloudCreateResponse multicloudCreateResponse = new MulticloudCreateResponse();
 
-	@PostMapping(value="/v1/instance")
+	@RequestMapping(value = "/v1/instance", method = RequestMethod.POST)
 	public ResponseEntity<?> createInstance(@RequestBody MulticloudInstanceRequest req){
-	   System.out.println("MultiCloud createInstance ");
+		System.out.println("MultiCloud createInstance ");
 		InstanceResponse InstanceResponse = new InstanceResponse();
-		
-		return ResponseEntity.ok(InstanceResponse);
+		LOGGER.info("able to get v1 instance post method");
+		return ResponseEntity.ok(req);
 	}
-	
-	@GetMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload", produces = {
-			MediaType.APPLICATION_JSON })
-    public ResponseEntity<?> getInstance(
-		@PathVariable("cloud-owner") String cloudOwner, @PathVariable("cloud-region-id") String cloudRegionId,
-		@RequestParam(value = "depth", required = false, defaultValue = "0") Integer depth,
-		@RequestParam(name = "format", required = false) final String name, final HttpServletRequest request) throws IOException {
-		
+
+	@RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload", method = RequestMethod.GET,
+			produces = "application/json")
+	public ResponseEntity<?> getInstance(
+			@PathVariable("cloud-owner") String cloudOwner, @PathVariable("cloud-region-id") String cloudRegionId,
+			@RequestParam(value = "depth", required = false, defaultValue = "0") Integer depth,
+			@RequestParam(name = "format", required = false) final String name, final HttpServletRequest request) throws IOException {
+
 		LOGGER.info("found CloudOwner {} in cache", cloudOwner);
 		LOGGER.info("found cloudRegionId {} in cache", cloudRegionId);
 		LOGGER.info("found name {} in cache", name);
-			JSONObject json = new JSONObject();
+		JSONObject json = new JSONObject();
 
-			json.put("template_type", "heat");
-			json.put("workload_id", "");
-			json.put("workload_status", "GET_COMPLETE");
-			JSONObject workload = new JSONObject();
-			workload.put("stacks", HeatStatus.NOTFOUND);
-			json.put("workload_status_reason", workload);
+		json.put("template_type", "heat");
+		json.put("workload_id", "");
+		json.put("workload_status", "GET_COMPLETE");
+		JSONObject workload = new JSONObject();
+		workload.put("stacks", HeatStatus.NOTFOUND);
+		json.put("workload_status_reason", workload);
 
-			return ResponseEntity.ok(json);
+		return ResponseEntity.ok(json);
 	}
 
-	@PostMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload",
-			consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
-			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload", method = RequestMethod.POST,
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+			consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ResponseEntity<?> postCreateInstance(
 			@RequestBody final MulticloudRequest inputRequest, @PathVariable("cloud-owner") final String cloudOwner,
 			@PathVariable("cloud-region-id") final String cloudRegionId,
 			@RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
 			final HttpServletRequest request) throws IOException {
 
-			LOGGER.info("input request {}: ",inputRequest.toString());
+		LOGGER.info("input request {}: ",inputRequest.toString());
 		String input = "{\n" +
 				"   \"template_type\": \"heat\",\n" +
 				"   \"workload_id\": \"sad_sammet\",\n" +
@@ -130,8 +129,8 @@ public class MultiCloudController {
 		return ResponseEntity.status(201).body(multiResponse);
 	}
 
-	@GetMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", produces = {
-			MediaType.APPLICATION_JSON })
+	@RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getInstanceName(
 			@PathVariable("cloud-owner") String cloudOwner, @PathVariable("cloud-region-id") String cloudRegionId,
 			@PathVariable("workload-id") String workloadId,
@@ -144,19 +143,19 @@ public class MultiCloudController {
 		LOGGER.info("found name {} in cache", name);
 		JSONObject json = new JSONObject();
 
-			json.put("template_type", "heat");
-			json.put("workload_id", "sad_sammet");
-			json.put("workload_status", "CREATE_COMPLETE");
-			JSONObject workload = new JSONObject();
-			workload.put("stacks", true);
-			json.put("workload_status_reason", null);
+		json.put("template_type", "heat");
+		json.put("workload_id", "sad_sammet");
+		json.put("workload_status", "CREATE_COMPLETE");
+		JSONObject workload = new JSONObject();
+		workload.put("stacks", true);
+		json.put("workload_status_reason", null);
 
-			return ResponseEntity.ok(json);
+		return ResponseEntity.ok(json);
 	}
 
-	@PostMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}",
-			consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
-			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", method = RequestMethod.POST,
+			produces = {MediaType.APPLICATION_JSON,
+					MediaType.APPLICATION_XML}, consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public ResponseEntity<?> postCreateInstanceName(
 			@RequestBody final MulticloudRequest inputRequest, @PathVariable("cloud-owner") final String cloudOwner,
 			@PathVariable("workload-id") String workloadId,
@@ -164,8 +163,8 @@ public class MultiCloudController {
 			@RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
 			final HttpServletRequest request) throws IOException {
 
-			LOGGER.info("Calling postCreateInstanceName");
+		LOGGER.info("Calling postCreateInstanceName");
 
-			return ResponseEntity.status(405).build();
+		return ResponseEntity.status(405).build();
 	}
 }
