@@ -1,0 +1,411 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5843f80f_4554a8f9",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd4ae69_808beded",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "use org.onap.aai.domain.yang.VfModules",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9b1b58_69d4467e",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "try not to use versioned POJO",
+      "range": {
+        "startLine": 44,
+        "startChar": 32,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eecc1db_0e8e9f4b",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "move it to method where it is used rather having at class level",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d5ba5b_1b0ae7d5",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "try use lambda instead of for loop and value.getVfModules() is used multiple places try extracted it out to local variable",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5572df72_b53b0fd6",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "would suggest not to add vfModule in GENERIC_VNF_CACHE, you have added in genericVnf which is enough i think",
+      "range": {
+        "startLine": 294,
+        "startChar": 12,
+        "endLine": 294,
+        "endChar": 44
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2f012a_8271e283",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "remove tabs from all classes and try to lambda functions",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6d82cb_73b3451d",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635e15e0_f5cb2c26",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/package/docker/src/main/docker/docker-files/Dockerfile.so-simulator-base-image",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "any reason why running the simulator as non-root? if you are making this change make sure all ETSI CSIT are passing",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be08a69e_b4104000",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "please make sure all ETSI CSIT test are still passing after this change",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd31c94_80f3c900",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "config related endpoint can move to its own controller no???",
+      "range": {
+        "startLine": 195,
+        "startChar": 26,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266aac84_7f9646c0",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "try keeping this class stateless because vfModuleList will not be shared across multiple beans/sessions",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f87f491_4a66392f",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "change method name ... it is not returning anything",
+      "range": {
+        "startLine": 633,
+        "startChar": 13,
+        "endLine": 633,
+        "endChar": 24
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c323fc_e75f8d29",
+        "filename": "plans/so/macroflow/config/env",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "rename this variable to something else ... testsuite is not etsi",
+      "range": {
+        "startLine": 5,
+        "startChar": 13,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa33bc5_68eb1b48",
+        "filename": "plans/so/macroflow/config/env",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "same here .. change it",
+      "range": {
+        "startLine": 6,
+        "startChar": 21,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0390ca0b_07146a02",
+        "filename": "plans/so/macroflow/docker-compose.local.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "remove ve-vnfm-adapter",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 4
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c353247f_58310609",
+        "filename": "plans/so/macroflow/docker-compose.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "ve-vnfm-adapter is deprecated .. remove it",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7eb4f2d_c33c84d5",
+        "filename": "plans/so/macroflow/setup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "you can use workaround job to run cloud_owner.sql no???",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b0a6c_1b1ebedd",
+        "filename": "plans/so/macroflow/teardown.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-15T16:47:43Z",
+      "side": 1,
+      "message": "why sleep ???",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 1
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
