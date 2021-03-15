@@ -23,28 +23,29 @@
 source ${SCRIPTS}/common_functions.sh
 
 # Clone DMaaP Data Router repo
-mkdir -p $WORKSPACE/archives/dmaapdr
-cd $WORKSPACE/archives/dmaapdr
+mkdir -p ${WORKSPACE}/archives/dmaapdr
+cd ${WORKSPACE}/archives/dmaapdr
 
 git clone --depth 1 https://gerrit.onap.org/r/dmaap/datarouter -b master
 cd datarouter
 git pull
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
-cp $WORKSPACE/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/docker-compose.yml .
-cp $WORKSPACE/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/provserver.properties ./prov_data/provserver.properties
-cp $WORKSPACE/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/node.properties ./node_data/node.properties
+cd ${WORKSPACE}/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+cp ${WORKSPACE}/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/docker-compose.yml .
+cp ${WORKSPACE}/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/provserver.properties ./prov_data/provserver.properties
+cp ${WORKSPACE}/plans/dmaap-datarouter/ssl-dr-suite/docker-compose/node.properties ./node_data/node.properties
+cp ${WORKSPACE}/scripts/dmaap-datarouter/* .
 
 # start DMaaP DR containers with docker compose and configuration from docker-compose.yml
 docker login -u docker -p docker nexus3.onap.org:10001
 docker-compose up -d
 
 # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
-for i in {1..10}; do
-    if [ $(docker inspect --format '{{ .State.Running }}' subscriber-node2) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' subscriber-node) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' mariadb) ]
+for i in 1 2 3 4 5 6 7 8 9 10; do
+    if [[ $(docker inspect --format '{{ .State.Running }}' subscriber-node2) ]] && \
+        [[ $(docker inspect --format '{{ .State.Running }}' subscriber-node) ]] && \
+        [[ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ]] && \
+        [[ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ]] && \
+        [[ $(docker inspect --format '{{ .State.Running }}' mariadb) ]]
     then
         echo "DR Service Running"
         break
@@ -55,8 +56,8 @@ for i in {1..10}; do
 done
 
 # Wait for healthy container datarouter-prov
-for i in {1..10}; do
-    if [ "$(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)" = 'healthy' ]
+for i in 1 2 3 4 5 6 7 8 9 10; do
+    if [[ "$(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)" = 'healthy' ]]
     then
         echo datarouter-prov.State.Health.Status is $(docker inspect --format '{{ .State.Health.Status }}' datarouter-prov)
         echo "DR Service Running, datarouter-prov container is healthy"
@@ -68,7 +69,7 @@ for i in {1..10}; do
         if [ $i = 10 ]
         then
             echo datarouter-prov container is not in healthy state - the test is not made, teardown...
-            cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+            cd ${WORKSPACE}/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
             docker-compose rm -sf
             exit 1
         fi
@@ -90,7 +91,7 @@ echo DR_GATEWAY_IP=${DR_GATEWAY_IP}
 sudo sed -i "$ a $DR_PROV_IP dmaap-dr-prov" /etc/hosts
 sudo sed -i "$ a $DR_NODE_IP dmaap-dr-node" /etc/hosts
 
-python $WORKSPACE/scripts/dmaap-datarouter/update_ca.py
+python -c 'import update_ca; update_ca.add_onap_ca_cert()'
 
 docker exec -i datarouter-prov sh -c "curl -k -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 

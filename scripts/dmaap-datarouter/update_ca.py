@@ -21,13 +21,47 @@
 import certifi
 import os
 
-cafile = certifi.where()
-dir_path = os.path.dirname(os.path.realpath(__file__))
-datarouter_ca = dir_path + '/datarouterCA.crt'
-with open(datarouter_ca, 'rb') as infile:
-    customca = infile.read()
 
-with open(cafile, 'ab') as outfile:
-    outfile.write(customca)
+def add_onap_ca_cert():
+    cafile = certifi.where()
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    datarouter_ca = dir_path + '/onap_ca_cert.pem'
+    with open(datarouter_ca, 'rb') as infile:
+        customca = infile.read()
 
-print("Added DR Cert to CA")
+    with open(cafile, 'ab') as outfile:
+        outfile.write(customca)
+
+    print("Added DR Cert to CA")
+
+
+def remove_onap_ca_cert():
+    cafile = certifi.where()
+    number_of_lines_to_delete = 39
+    count = 0
+    dr_cert_exists = False
+
+    with open(cafile, 'r+b', buffering=0) as outfile:
+        for line in outfile.readlines()[-35:-34]:
+            if '# Serial: 0x9EAEEDC0A7CEB59D'.encode() in line:
+                dr_cert_exists = True
+        if dr_cert_exists:
+            outfile.seek(0, os.SEEK_END)
+            end = outfile.tell()
+            while outfile.tell() > 0:
+                outfile.seek(-1, os.SEEK_CUR)
+                char = outfile.read(1)
+                if char == b'\n':
+                    count += 1
+                if count == number_of_lines_to_delete:
+                    outfile.truncate()
+                    print(
+                        "Removed " + str(number_of_lines_to_delete) + " lines from end of CA File")
+                    exit(0)
+                outfile.seek(-1, os.SEEK_CUR)
+        else:
+            print("No DR cert in CA File to remove")
+
+    if count < number_of_lines_to_delete + 1:
+        print("Number of lines in file less than number of lines to delete. Exiting...")
+        exit(1)

@@ -23,4 +23,4 @@ cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/res
 sudo sed -i".bak" '/dmaap-dr-prov/d' /etc/hosts
 sudo sed -i".bak" '/dmaap-dr-node/d' /etc/hosts
 docker-compose rm -sf
-python $WORKSPACE/scripts/dmaap-datarouter/remove_cert_from_ca.py
+python -c 'import update_ca; update_ca.remove_onap_ca_cert()'
