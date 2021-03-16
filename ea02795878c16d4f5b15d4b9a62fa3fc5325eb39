@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "690644c0_a9826460",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "make them final",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ea222b_3678b574",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "missing final",
+      "range": {
+        "startLine": 59,
+        "startChar": 23,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcd4ae69_808beded",
         "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
         "patchSetId": 5
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "ee74b642_fd5135d1",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "duplicate log statement",
+      "range": {
+        "startLine": 270,
+        "startChar": 8,
+        "endLine": 271,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d5ba5b_1b0ae7d5",
         "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
         "patchSetId": 5
@@ -105,6 +174,29 @@
       "writtenOn": "2021-03-15T16:47:43Z",
       "side": 1,
       "message": "try use lambda instead of for loop and value.getVfModules() is used multiple places try extracted it out to local variable",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78de2b4_18c2ab48",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "would prefer to extract out to private method",
+      "range": {
+        "startLine": 272,
+        "startChar": 8,
+        "endLine": 279,
+        "endChar": 9
+      },
       "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -151,6 +243,29 @@
     },
     {
       "key": {
+        "uuid": "396f2f29_e899cacc",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "put the appropriate description",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f6d82cb_73b3451d",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/pom.xml",
         "patchSetId": 5
@@ -167,6 +282,213 @@
         "startChar": 1,
         "endLine": 44,
         "endChar": 2
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ea1bf5_f31acc49",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "extract out all versions to properties and then use",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c70aff_df2ca128",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "put a INFO log statement at startup",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dda259b_c65ac5c0",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplication.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d44bc24_5dac663a",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/InstanceResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs and commented line",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccc9fce_345f1861",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "import only used classes not all",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab3c07f_fcdb4367",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 18
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd579a3_9643a600",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/resources/application.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041bb4e8_2aff0bc6",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/resources/application.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 63
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868f01ed_4d9f82c9",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/test/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplicationTests.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
       },
       "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
@@ -243,6 +565,29 @@
     },
     {
       "key": {
+        "uuid": "c5337f49_31c4bb4a",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266aac84_7f9646c0",
         "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
         "patchSetId": 5
@@ -254,6 +599,29 @@
       "writtenOn": "2021-03-15T16:47:43Z",
       "side": 1,
       "message": "try keeping this class stateless because vfModuleList will not be shared across multiple beans/sessions",
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e5ed56_2b8e2aca",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 525,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 5
+      },
       "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -329,6 +697,167 @@
     },
     {
       "key": {
+        "uuid": "4dbed49a_e23019b7",
+        "filename": "plans/so/macroflow/config/env",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "i guess , it is redundant ,  not using VE VNFM Adapter",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6ca706_d4bbfc0d",
+        "filename": "plans/so/macroflow/config/override-files/bpmn-infra/onapheat/override.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "same here it is http now",
+      "range": {
+        "startLine": 361,
+        "startChar": 6,
+        "endLine": 361,
+        "endChar": 59
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cea2fdc_70567a04",
+        "filename": "plans/so/macroflow/config/override-files/bpmn-infra/onapheat/override.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "not secure communication anymore , it is http communication to bpmn-infra? remove it and test",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 56
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec34168_04218be3",
+        "filename": "plans/so/macroflow/config/override-files/so-vnfm-adapter/onapheat/override.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "it is http communication not https , remove and test",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe59e14e_e3ce62f2",
+        "filename": "plans/so/macroflow/config/override-files/so-vnfm-adapter/onapheat/override.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "it is http communication not https",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f9c20e_dab94d9a",
+        "filename": "plans/so/macroflow/config/override-files/ve-vnfm-adapter/onapheat/override.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "ve-vnfm-adapter is redundant , there is no test now",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345b6ff8_5b6096b7",
+        "filename": "plans/so/macroflow/docker-compose.local.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "extract it out to env",
+      "range": {
+        "startLine": 5,
+        "startChar": 19,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0390ca0b_07146a02",
         "filename": "plans/so/macroflow/docker-compose.local.yml",
         "patchSetId": 5
@@ -345,6 +874,52 @@
         "startChar": 0,
         "endLine": 35,
         "endChar": 4
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cf7bb4_6fa13fa0",
+        "filename": "plans/so/macroflow/docker-compose.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "a question , do you really need all images for macroflow ??",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdd2a57_619da6ac",
+        "filename": "plans/so/macroflow/docker-compose.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-16T10:31:25Z",
+      "side": 1,
+      "message": "extract it out to env",
+      "range": {
+        "startLine": 5,
+        "startChar": 44,
+        "endLine": 5,
+        "endChar": 51
       },
       "revId": "ea02795878c16d4f5b15d4b9a62fa3fc5325eb39",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
