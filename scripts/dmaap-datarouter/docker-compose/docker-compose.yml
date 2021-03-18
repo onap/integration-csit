@@ -1,6 +1,6 @@
 #
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 Nordix Foundation.
+#  Copyright (C) 2019-21 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,11 +29,12 @@ services:
     - "8443:8443"
     - "8080:8080"
     volumes:
-    - ./prov_data/provserver.properties:/opt/app/datartr/etc/provserver.properties
-    - ./prov_data/addSubscriber.txt:/opt/app/datartr/addSubscriber.txt
-    - ./prov_data/addFeed3.txt:/opt/app/datartr/addFeed3.txt
+    - ./provserver.properties:/opt/app/datartr/etc/provserver.properties
+    - ../dr_certs/dr_prov/truststore.jks:/opt/app/osaaf/local/truststore.jks
+    - ../dr_certs/dr_prov/org.onap.dmaap-dr-prov.p12:/opt/app/osaaf/local/org.onap.dmaap-dr-prov.p12
+    - ../dr_certs/dr_prov/org.onap.dmaap-dr.cred.props:/opt/app/osaaf/local/org.onap.dmaap-dr.cred.props
     depends_on:
-      mariadb_container:
+      mariadb:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://dmaap-dr-prov:8080/internal/prov"]
@@ -53,7 +54,10 @@ services:
     - "9443:8443"
     - "9090:8080"
     volumes:
-    - ./node_data/node.properties:/opt/app/datartr/etc/node.properties
+    - ./node.properties:/opt/app/datartr/etc/node.properties
+    - ../dr_certs/dr_node/truststore.jks:/opt/app/osaaf/local/truststore.jks
+    - ../dr_certs/dr_node/org.onap.dmaap-dr-node.p12:/opt/app/osaaf/local/org.onap.dmaap-dr-node.p12
+    - ../dr_certs/dr_node/org.onap.dmaap-dr.cred.props:/opt/app/osaaf/local/org.onap.dmaap-dr.cred.props
     depends_on:
       datarouter-prov:
         condition: service_healthy
@@ -69,7 +73,7 @@ services:
     ports:
     - "7070:7070"
     volumes:
-    - ./subscriber_data/subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
+    - ./subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
     networks:
       testing_net:
         aliases:
@@ -82,13 +86,13 @@ services:
     ports:
     - "7071:7070"
     volumes:
-    - ./subscriber_data/subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
+    - ./subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
     networks:
       testing_net:
         aliases:
         - subscriber2.com
 
-  mariadb_container:
+  mariadb:
     image: mariadb:10.2.14
     container_name: mariadb
     hostname: datarouter-mariadb

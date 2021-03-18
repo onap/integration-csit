@@ -1,8 +1,7 @@
 #!/bin/bash
-#
-# ============LICENSE_START=======================================================
-#  Copyright (C) 2019 Nordix Foundation.
-# ================================================================================
+# ============LICENSE_START===================================================
+#  Copyright (C) 2019-2021 Nordix Foundation.
+# ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -16,11 +15,18 @@
 # limitations under the License.
 #
 # SPDX-License-Identifier: Apache-2.0
-# ============LICENSE_END=========================================================
-#
+# ============LICENSE_END=====================================================
 
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
+cd ${WORKSPACE}/archives/dmaap/dr
+rm -rf last_run_logs/*
+docker cp datarouter-prov:/opt/app/datartr/logs last_run_logs/prov_logs
+docker cp datarouter-node:/opt/app/datartr/logs last_run_logs/node_event_logs
+docker cp datarouter-node:/var/log/onap/datarouter last_run_logs/node_server_logs
+docker cp subscriber-node:/var/log/onap/datarouter last_run_logs/sub1_logs
+docker cp subscriber-node2:/var/log/onap/datarouter last_run_logs/sub2_logs
+cd ${WORKSPACE}/scripts/dmaap-datarouter/docker-compose
 sudo sed -i".bak" '/dmaap-dr-prov/d' /etc/hosts
 sudo sed -i".bak" '/dmaap-dr-node/d' /etc/hosts
 docker-compose rm -sf
-python $WORKSPACE/scripts/dmaap-datarouter/remove_cert_from_ca.py
+cd ${WORKSPACE}/scripts/dmaap-datarouter/robot_ssl
+python -c 'import update_ca; update_ca.remove_onap_ca_cert()'
