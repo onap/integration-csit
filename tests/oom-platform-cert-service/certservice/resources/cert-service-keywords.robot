@@ -63,9 +63,10 @@ Check Message Recieved On Success
 List Should Contain Certificates
     [Documentation]  Verify if list contains certificates
     [Arguments]  @{list}
-    :FOR    ${content}    IN    @{list}
-    \    Should Contain  ${content}  BEGIN CERTIFICATE
-    \    Should Contain  ${content}  END CERTIFICATE
+    FOR    ${content}    IN    @{list}
+        Should Contain  ${content}  BEGIN CERTIFICATE
+        Should Contain  ${content}  END CERTIFICATE
+    END
 
 Send Get Request with Header And Expect Error
     [Documentation]   Send request to passed url and validate received response
