@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Gareth Roper <gareth.roper@est.tech>
+Code-Review+1: Mukesh Kumar <mukeshsharma@est.tech>
+Code-Review+1: Byung-Woo Jun <byung-woo.jun@est.tech>
+Code-Review+2: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Submitted-by: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Submitted-at: Fri, 19 Mar 2021 13:47:27 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/119149
+Project: integration/csit
+Branch: refs/heads/guilin
