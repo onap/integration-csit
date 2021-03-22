@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.VfModule;
 import org.springframework.http.HttpHeaders;
 
 /**
@@ -49,5 +50,9 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
 
     boolean deleteGenericVnf(final String vnfId, final String resourceVersion);
 
+    void putVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule);
 
+    Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId);
+
+    boolean patchVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule);
 }

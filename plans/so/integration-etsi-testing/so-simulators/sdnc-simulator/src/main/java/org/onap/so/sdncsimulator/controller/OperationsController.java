@@ -31,6 +31,7 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiSdncrequestheader
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
@@ -145,6 +146,38 @@ public class OperationsController {
             }
         }
         return cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
+    }
+
+    @PostMapping(value = "/GENERIC-RESOURCE-API:vf-module-topology-operation/",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> postVfModuleOperationInformation(
+            @RequestBody final InputRequest<GenericResourceApiVfModuleOperationInformation> inputRequest,
+            final HttpServletRequest request) {
+        LOGGER.info("Request Received for VfModule : {}  ...", inputRequest);
+
+        final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation = inputRequest.getInput();
+        if (apiVfModuleOperationInformation == null) {
+            LOGGER.error("Invalid input request: {}", inputRequest);
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Output output = getOutput(apiVfModuleOperationInformation);
+        final OutputRequest outputRequest = new OutputRequest(output);
+
+        if (output.getResponseCode().equals(HTTP_STATUS_OK)) {
+            LOGGER.info("Sucessfully executed request vnf sending response: {}", outputRequest);
+            return ResponseEntity.ok(outputRequest);
+        }
+
+        LOGGER.error("Unable to execute input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
+        return ResponseEntity.badRequest().body(outputRequest);
+
+    }
+
+    private Output getOutput(final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation) {
+
+        return cacheServiceProvider.putVfModuleOperationInformation(apiVfModuleOperationInformation);
     }
 
 }

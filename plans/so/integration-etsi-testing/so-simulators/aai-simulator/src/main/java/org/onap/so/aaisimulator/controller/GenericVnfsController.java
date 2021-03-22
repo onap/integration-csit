@@ -22,6 +22,7 @@ package org.onap.so.aaisimulator.controller;
 import static org.onap.so.aaisimulator.utils.Constants.APPLICATION_MERGE_PATCH_JSON;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
+import static org.onap.so.aaisimulator.utils.Constants.VF_MODULE;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
@@ -35,6 +36,8 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.Relationship;
+import org.onap.aai.domain.yang.VfModule;
+import org.onap.aai.domain.yang.VfModules;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
@@ -47,6 +50,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -210,6 +214,66 @@ public class GenericVnfsController {
                 resourceVersion);
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
 
+    }
+    
+    
+    @GetMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getVfModule(@PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId,
+            @RequestParam(name = "depth", required = false) final Integer depth,
+            @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
+            @RequestParam(name = "resultSize", required = false) final Integer resultSize,
+            @RequestParam(name = "format", required = false) final String format, final HttpServletRequest request) {
+        LOGGER.info(
+                "Will get VfModule for 'vf-module-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format: {} ...",
+                vnfId, vfModuleId, depth, resultIndex, resultSize, format);
+
+        final Optional<VfModule> optional = cacheServiceProvider.getVfModule(vnfId, vfModuleId);
+
+        if (optional.isPresent()) {
+            final VfModule vfModule = optional.get();
+            LOGGER.info("found VfModule {} in cache", vfModule);
+            return ResponseEntity.ok(vfModule);
+        }
+
+        LOGGER.error(
+                "Unable to find VfModule in cache for 'vf-module-id': {} with depth: {}, resultIndex: {}, resultSize:{}, format:{} ...",
+                vnfId, vfModuleId, depth, resultIndex, resultSize, format);
+        return getRequestErrorResponseEntity(request, VF_MODULE);
+
+    }
+
+
+    @PutMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putVfModule(@RequestBody final VfModule vfModule,
+            @PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId, final HttpServletRequest request) {
+        LOGGER.info("Will add VfModule to cache with 'vf-module-id': {} ...", vfModuleId);
+
+        cacheServiceProvider.putVfModule(vnfId, vfModuleId, vfModule);
+        return ResponseEntity.accepted().build();
+    }
+    
+    @PostMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, APPLICATION_MERGE_PATCH_JSON},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> patchVfModule(@RequestBody final VfModule vfModule,
+            @PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId,
+            @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
+            final HttpServletRequest request) {
+
+        LOGGER.info("Will post VfModule to cache with 'vf-module-id': {} and '{}': {} ...", vfModuleId, X_HTTP_METHOD_OVERRIDE,
+                xHttpHeaderOverride);
+        
+        if (HttpMethod.PATCH.toString().equalsIgnoreCase(xHttpHeaderOverride)) {
+            if (cacheServiceProvider.patchVfModule(vnfId, vfModuleId, vfModule)) {
+                return ResponseEntity.accepted().build();
+            }
+            LOGGER.error("Unable to apply patch to VmModule using 'vf-module-id': {} ... ", vfModule);
+            return getRequestErrorResponseEntity(request, VF_MODULE);
+        }
+        LOGGER.error("{} not supported ... ", xHttpHeaderOverride);
+
+        return getRequestErrorResponseEntity(request, VF_MODULE);
     }
 
 }
