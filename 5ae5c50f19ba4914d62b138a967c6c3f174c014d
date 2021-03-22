@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc52942_fa3077a7",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "move this within the method",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215ce4a1_3466b482",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "rename the variable to vfModule",
+      "range": {
+        "startLine": 269,
+        "startChar": 26,
+        "endLine": 269,
+        "endChar": 39
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddf5117_10ea5741",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "by having class level variable, you are adding all the vfModules from different GenericVnfs to a single vfModules and then sharing across all GenericVnfs",
+      "range": {
+        "startLine": 287,
+        "startChar": 12,
+        "endLine": 287,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99865506_6faa4055",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "make all these variable final and please do the same for all methods",
+      "range": {
+        "startLine": 293,
+        "startChar": 33,
+        "endLine": 293,
+        "endChar": 83
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10765af_126feea3",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "remove tabs",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c7454e_7d8684e5",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/ApplicationConfigration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "wrong license header",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9406ba_623288a7",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/ApplicationConfigration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "please don\u0027t put my name of the class i never wrote",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4981ecdf_9c1f1a48",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/WebSecurityConfigImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "fix license header",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf13a36_87f97dfd",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/WebSecurityConfigImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "remove my name",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4e1649_2496a523",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "instead of creating json yourself let spring boot handle it .. and same for rest of the methods in this class",
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a12bfc_3eda6b42",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/test/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplicationTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "why empty test?",
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfefaa1_dda56a85",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/package/docker/src/main/docker/docker-files/Dockerfile.multicloud-simulator-base-image",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "i thought we agreed on changing the java version of all simulators no?",
+      "range": {
+        "startLine": 1,
+        "startChar": 27,
+        "endLine": 1,
+        "endChar": 28
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54b3592_a0e7e427",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-22T13:43:27Z",
+      "side": 1,
+      "message": "why not use OPERATIONS_URL",
+      "range": {
+        "startLine": 54,
+        "startChar": 23,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
