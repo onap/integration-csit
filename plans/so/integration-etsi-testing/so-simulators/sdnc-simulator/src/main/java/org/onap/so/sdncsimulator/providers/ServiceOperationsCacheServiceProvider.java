@@ -19,10 +19,14 @@
  */
 package org.onap.so.sdncsimulator.providers;
 
+import java.util.List;
 import java.util.Optional;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServicemodelinfrastructureService;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleTopology;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfTopology;
 import org.onap.so.sdncsimulator.models.Output;
 
 /**
@@ -43,6 +47,12 @@ public interface ServiceOperationsCacheServiceProvider {
     Output putVnfOperationInformation(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation);
 
     Output deleteVnfOperationInformation(final GenericResourceApiVnfOperationInformation apiVnfOperationInformation);
+
+    Output putVfModuleOperationInformation(final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation);
+
+    public GenericResourceApiVfModuleTopology getGenericResourceApiVfModuleTopology();
+
+    public GenericResourceApiVnfTopology getGenericResourceApiVnfTopology();
 
     void clearAll();
 
