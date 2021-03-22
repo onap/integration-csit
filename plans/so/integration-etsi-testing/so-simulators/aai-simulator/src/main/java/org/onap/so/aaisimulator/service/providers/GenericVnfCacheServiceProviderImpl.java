@@ -37,6 +37,8 @@ import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
 import org.onap.aai.domain.yang.RelationshipList;
+import org.onap.aai.domain.yang.VfModule;
+import org.onap.aai.domain.yang.VfModules;
 import org.onap.so.aaisimulator.utils.ShallowBeanCopy;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -58,6 +60,7 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericVnfCacheServiceProviderImpl.class);
 
     private final HttpRestServiceProvider httpRestServiceProvider;
+    final VfModules vfModules = new VfModules();
 
     @Autowired
     public GenericVnfCacheServiceProviderImpl(final CacheManager cacheManager,
@@ -255,4 +258,56 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         clearCache(GENERIC_VNF_CACHE.getName());
     }
 
+    @Override
+    public Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId) {
+        LOGGER.info("Getting vfModule from cache for vnfId: {} and vfModuleId: {}",
+                vnfId, vfModuleId);
+        final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
+        final GenericVnf value = genericVnfOptional.get();
+        final VfModules vfmodules = value.getVfModules();
+        if (vfmodules != null) {
+            for (VfModule vfModule : vfmodules.getVfModule()) {
+                 if (vfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)){
+                    return Optional.of(vfModule);
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    @Override
+    public void putVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule) {
+        LOGGER.info("Adding vfModule for vnfId: {} and vfModuleId: {}",
+                vnfId, vfModuleId);
+        final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
+        if (genericVnfOptional.isPresent()) {
+            final GenericVnf genericVnf = genericVnfOptional.get();
+
+            vfModules.getVfModule().add(vfModule);
+            genericVnf.setVfModules(vfModules);
+        }
+    }
+
+    @Override
+    public boolean patchVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule) {
+        final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
+        LOGGER.info("Create vfModule for vnfId: {} and vfModuleId: {}",
+                vnfId, vfModuleId);
+        if (genericVnfOptional.isPresent()) {
+            final GenericVnf cachedGenericVnf = genericVnfOptional.get();
+            final VfModules vfmodules = cachedGenericVnf.getVfModules();
+            LOGGER.info("vfModuleId is Matched");
+            try {
+                vfmodules.getVfModule().stream().filter(tempVfModule ->
+                        tempVfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)).forEach(tempVfModule ->
+                        tempVfModule.setOrchestrationStatus(vfModule.getOrchestrationStatus()));
+                return true;
+            } catch (final Exception exception) {
+                LOGGER.error("Unable to update VfModule for vfModuleId: {}", vfModule, exception);
+            }
+        }
+        LOGGER.error("Unable to find VfModule ...");
+        return false;
+    }
 }

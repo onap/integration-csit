@@ -60,6 +60,17 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfinformationVnf
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfrequestinputVnfRequestInput;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyVnfTopology;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnftopologyidentifierstructureVnfTopologyIdentifierStructure;
+
+import org.onap.sdnc.northbound.client.model.GenericResourceApiServicedataServicedataVnfsVnfVnfdataVfmodulesVfmoduleVfModuleData;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleTopology;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfTopology;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfmoduleinformationVfModuleInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfmoduletopologyVfModuleTopology;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfmoduletopologyidentifierVfModuleTopologyIdentifier;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiParam;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiParamParam;
+
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.simulator.cache.provider.AbstractCacheServiceProvider;
 import org.slf4j.Logger;
@@ -82,6 +93,8 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
     private static final String HTTP_STATUS_OK = Integer.toString(HttpStatus.OK.value());
     private static final String EMPTY_STRING = "";
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceOperationsCacheServiceProviderimpl.class);
+    final GenericResourceApiVfModuleTopology genericResourceApiVfModuleTopology = new GenericResourceApiVfModuleTopology();
+    final GenericResourceApiVnfTopology genericResourceApiVnfTopology = new GenericResourceApiVnfTopology();
 
     @Autowired
     public ServiceOperationsCacheServiceProviderimpl(final CacheManager cacheManager) {
@@ -198,7 +211,7 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
                     if (ifVnfNotExists(vnfId, svcAction, vnfsList)) {
                         vnfsList.add(getGenericResourceApiServicedataVnf(serviceInstanceId, vnfId, input));
-
+                        setVnfsData(vnfsList);
                         final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
 
                         return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
@@ -507,4 +520,127 @@ public class ServiceOperationsCacheServiceProviderimpl extends AbstractCacheServ
 
     }
 
+    @Override
+    public Output putVfModuleOperationInformation(
+            GenericResourceApiVfModuleOperationInformation input) {
+
+        final GenericResourceApiServiceinformationServiceInformation serviceInformation = input.getServiceInformation();
+        final GenericResourceApiVnfinformationVnfInformation vnfInformation = input.getVnfInformation();
+        final GenericResourceApiVfmoduleinformationVfModuleInformation vfModuleInformation = input.getVfModuleInformation();
+        // Call getVfModule to make a vfList for get the vf-module-information while GET reqest
+        getVfModule(input);
+
+        final GenericResourceApiSdncrequestheaderSdncRequestHeader requestHeader = input.getSdncRequestHeader();
+        final String svcRequestId = getSvcRequestId(requestHeader);
+
+        if (serviceInformation != null && isValid(serviceInformation.getServiceInstanceId()) && vnfInformation != null
+                && isValid(vnfInformation.getVnfId()) && vfModuleInformation !=null && isValid(vfModuleInformation.getVfModuleId())) {
+
+
+            final String serviceInstanceId = serviceInformation.getServiceInstanceId();
+            final String vnfId = vnfInformation.getVnfId();
+            final String vfModuleId =  vfModuleInformation.getVfModuleId();
+
+            final Optional<GenericResourceApiServicemodelinfrastructureService> optional =
+                    getGenericResourceApiServicemodelinfrastructureService(serviceInstanceId);
+            if (optional.isPresent()) {
+                final GenericResourceApiServicemodelinfrastructureService service = optional.get();
+                final GenericResourceApiServicedataServiceData serviceData = service.getServiceData();
+                if (serviceData != null) {
+
+                    final GenericResourceApiServicestatusServiceStatus serviceStatus = service.getServiceStatus();
+
+                    return new Output().ackFinalIndicator(serviceStatus.getFinalIndicator())
+                            .responseCode(serviceStatus.getResponseCode())
+                            .responseMessage(serviceStatus.getResponseMessage()).svcRequestId(svcRequestId)
+                            .serviceResponseInformation(new GenericResourceApiInstanceReference()
+                                    .instanceId(serviceInstanceId).objectPath(getObjectPath(serviceInstanceId)))
+                            .vnfResponseInformation(new GenericResourceApiInstanceReference().instanceId(vnfId)
+                                    .objectPath(getObjectPath(serviceInstanceId, vnfId)))
+                            .vfModuleResponseInformation(new GenericResourceApiInstanceReference().instanceId(vfModuleId)
+                                    .objectPath(getObjectPath(vnfId, vfModuleId)));
+                }
+            }
+            LOGGER.error(
+                    "Unable to find existing GenericResourceApiServiceModelInfrastructure in cache using service instance id: {}",
+                    serviceInstanceId);
+        }
+        LOGGER.error(
+                "Unable to add GenericResourceApiServiceOperationInformation in cache due to invalid input: {}... ",
+                input);
+        return new Output().ackFinalIndicator(YES).responseCode(HTTP_STATUS_BAD_REQUEST)
+                .responseMessage("Unable to add vfModule").svcRequestId(svcRequestId);
+    }
+
+    private List<GenericResourceApiServicedataServicedataVnfsVnfVnfdataVfmodulesVfmoduleVfModuleData> getVfModule(GenericResourceApiVfModuleOperationInformation input) {
+
+        final GenericResourceApiVfmoduletopologyVfModuleTopology apiVfModuletopologyVfModuleTopology =
+                new GenericResourceApiVfmoduletopologyVfModuleTopology();
+
+        final GenericResourceApiServicedataServicedataVnfsVnfVnfdataVfmodulesVfmoduleVfModuleData vfModuleData =
+                new GenericResourceApiServicedataServicedataVnfsVnfVnfdataVfmodulesVfmoduleVfModuleData();
+        vfModuleData.setVfModuleInformation(input.getVfModuleInformation());
+        vfModuleData.setVfModuleRequestInput(input.getVfModuleRequestInput());
+
+        final GenericResourceApiVfmoduletopologyVfModuleTopology vfModuleTopology = new GenericResourceApiVfmoduletopologyVfModuleTopology();
+
+        vfModuleTopology.setSdncGeneratedCloudResources(true);
+        final GenericResourceApiParam vfModuleParametersData = new GenericResourceApiParam();
+        final List<GenericResourceApiParamParam> params = new ArrayList<GenericResourceApiParamParam>();
+        final GenericResourceApiParamParam param = new GenericResourceApiParamParam();
+        param.setName("k8s-rb-profile-name");
+        param.setValue("k8s-rb-profile-value");
+
+        params.add(param);
+        vfModuleParametersData.setParam(params);
+        vfModuleTopology.setVfModuleParameters(vfModuleParametersData);
+
+        vfModuleTopology.setOnapModelInformation(vfModuleData.getVfModuleInformation().getOnapModelInformation());
+        vfModuleTopology.setVfModuleParameters(vfModuleData.getVfModuleRequestInput().getVfModuleInputParameters());
+        vfModuleTopology.setAicClli(vfModuleData.getVfModuleRequestInput().getAicClli());
+        vfModuleTopology.setAicCloudRegion(vfModuleData.getVfModuleRequestInput().getAicCloudRegion());
+        vfModuleTopology.setCloudOwner(vfModuleData.getVfModuleRequestInput().getCloudOwner());
+
+        apiVfModuletopologyVfModuleTopology.vfModuleTopologyIdentifier(getVfModuleTopologyIdentifierStructure(input));
+
+        vfModuleTopology.setVfModuleTopologyIdentifier(apiVfModuletopologyVfModuleTopology.getVfModuleTopologyIdentifier());
+        vfModuleTopology.setTenant(vfModuleData.getVfModuleRequestInput().getTenant());
+
+        genericResourceApiVfModuleTopology.setVfModuleTopology(vfModuleTopology);
+
+        return null;
+    }
+
+    public GenericResourceApiVfModuleTopology getGenericResourceApiVfModuleTopology() {
+        return genericResourceApiVfModuleTopology;
+    }
+
+    private GenericResourceApiVfmoduletopologyidentifierVfModuleTopologyIdentifier getVfModuleTopologyIdentifierStructure(
+            @Valid final GenericResourceApiVfModuleOperationInformation input) {
+
+        final GenericResourceApiVfmoduleinformationVfModuleInformation vfModuleInformation = input.getVfModuleInformation();
+        return new GenericResourceApiVfmoduletopologyidentifierVfModuleTopologyIdentifier()
+                .vfModuleId(vfModuleInformation.getVfModuleId()).vfModuleType(vfModuleInformation.getVfModuleType()).vfModuleName(input.getVfModuleRequestInput().getVfModuleName());
+    }
+
+    public GenericResourceApiVnfTopology getGenericResourceApiVnfTopology() {
+        return genericResourceApiVnfTopology;
+    }
+
+    public void setVnfsData(List<GenericResourceApiServicedataServicedataVnfsVnf> vnfsList) {
+
+        final GenericResourceApiVnftopologyVnfTopology vnfTopology = new GenericResourceApiVnftopologyVnfTopology();
+        LOGGER.info(String.valueOf(vnfsList));
+        vnfTopology.setOnapModelInformation(vnfsList.get(0).getVnfData().getVnfInformation().getOnapModelInformation());
+        vnfTopology.setAicClli(String.valueOf(vnfsList.get(0).getVnfData().getVnfRequestInput().getAicClli()));
+        vnfTopology.setAicCloudRegion(String.valueOf(vnfsList.get(0).getVnfData().getVnfRequestInput().getAicCloudRegion()));
+        vnfTopology.setCloudOwner(String.valueOf(vnfsList.get(0).getVnfData().getVnfRequestInput().getCloudOwner()));
+        vnfTopology.setTenant(String.valueOf(vnfsList.get(0).getVnfData().getVnfRequestInput().getTenant()));
+        vnfTopology.setVnfResourceAssignments(vnfsList.get(0).getVnfData().getVnfTopology().getVnfResourceAssignments());
+        vnfTopology.setVnfTopologyIdentifierStructure(vnfsList.get(0).getVnfData().getVnfTopology().getVnfTopologyIdentifierStructure());
+        vnfTopology.setVnfParametersData(vnfsList.get(0).getVnfData().getVnfTopology().getVnfParametersData());
+        vnfTopology.setSdncGeneratedCloudResources(vnfsList.get(0).getVnfData().getVnfTopology().getSdncGeneratedCloudResources());
+
+        genericResourceApiVnfTopology.setVnfTopology(vnfTopology);
+    }
 }

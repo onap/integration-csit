@@ -1,0 +1,8 @@
+{
+    "workload_status_reason": {
+        "stacks": "NOTFOUND"
+    },
+    "template_type": "heat",
+    "workload_id": "",
+    "workload_status": "GET_COMPLETE"
+}

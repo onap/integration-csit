@@ -22,7 +22,7 @@ package org.onap.so.sdncsimulator.controller;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETESERVICEINSTANCE;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETEVNFINSTANCE;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration.DELETE;
-import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
+import static org.onap.so.sdncsimulator.utils.Constants.BASE_URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration;
@@ -31,6 +31,7 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiSdncrequestheader
 import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
+import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleOperationInformation;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
@@ -50,7 +51,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping(path = OPERATIONS_URL)
+@RequestMapping(path = BASE_URL)
 public class OperationsController {
     private static final String HTTP_STATUS_OK = HttpStatus.OK.value() + "";
 
@@ -63,7 +64,7 @@ public class OperationsController {
         this.cacheServiceProvider = cacheServiceProvider;
     }
 
-    @PostMapping(value = "/GENERIC-RESOURCE-API:service-topology-operation/",
+    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:service-topology-operation/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postServiceOperationInformation(
@@ -90,7 +91,7 @@ public class OperationsController {
 
     }
 
-    @PostMapping(value = "/GENERIC-RESOURCE-API:vnf-topology-operation/",
+    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:vnf-topology-operation/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postVnfOperationInformation(
@@ -145,6 +146,38 @@ public class OperationsController {
             }
         }
         return cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
+    }
+
+    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:vf-module-topology-operation/",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> postVfModuleOperationInformation(
+            @RequestBody final InputRequest<GenericResourceApiVfModuleOperationInformation> inputRequest,
+            final HttpServletRequest request) {
+        LOGGER.info("Request Received for VfModule : {}  ...", inputRequest);
+
+        final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation = inputRequest.getInput();
+        if (apiVfModuleOperationInformation == null) {
+            LOGGER.error("Invalid input request: {}", inputRequest);
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Output output = getOutput(apiVfModuleOperationInformation);
+        final OutputRequest outputRequest = new OutputRequest(output);
+
+        if (output.getResponseCode().equals(HTTP_STATUS_OK)) {
+            LOGGER.info("Sucessfully executed request vnf sending response: {}", outputRequest);
+            return ResponseEntity.ok(outputRequest);
+        }
+
+        LOGGER.error("Unable to execute input request: {}, will send OutputRequest: {}", inputRequest, outputRequest);
+        return ResponseEntity.badRequest().body(outputRequest);
+
+    }
+
+    private Output getOutput(final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation) {
+
+        return cacheServiceProvider.putVfModuleOperationInformation(apiVfModuleOperationInformation);
     }
 
 }
