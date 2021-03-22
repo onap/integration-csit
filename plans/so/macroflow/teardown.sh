@@ -23,13 +23,40 @@
 
 SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_NAME=$(basename $0)
-CONFIG_DIR=$SCRIPT_HOME/config
-ENV_FILE=$CONFIG_DIR/env
+INTEGRATION_ETSI_TESTING_DIR=$WORKSPACE/plans/so/integration-etsi-testing
+INTEGRATION_ETSI_TESTING_CONFIG_DIR=$INTEGRATION_ETSI_TESTING_DIR/config
+
+# Macroflow Path
+SCRIPT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CONFIG_DIR_MACRO=$SCRIPT_HOME/config
+ENV_FILE=$CONFIG_DIR_MACRO/env
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
+DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
+
+TEMP_DIR_PATH=$MACRO_HOME/temp
+TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
+
+
 
 echo "Running $SCRIPT_HOME/$SCRIPT_NAME ..."
 export $(egrep -v '^#' $ENV_FILE | xargs)
+export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
+export CONFIG_DIR_PATH=$INTEGRATION_ETSI_TESTING_CONFIG_DIR
+export CONFIG_DIR_PATH_MACRO=$CONFIG_DIR_MACRO
 
-echo "Tearing down docker containers ..."
-docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+echo "Sleeping 1m for completing the macroflow task"
+sleep 1m
+
+if [ "$DOCKER_ENVIRONMENT" == "remote" ]; then
+  echo "Tearing down docker containers from remote images ..."
+  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+elif [ "$DOCKER_ENVIRONMENT" == "local" ]; then
+  echo "Tearing down docker containers from local images ..."
+  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -f $DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE -p $PROJECT_NAME down
+else
+  echo "Couldn't find valid property for DOCKER_ENVIRONMENT in $ENV_FILE."
+  echo "Attempting normal teardown ..."
+  docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
+fi
+
 echo "Finished executing $SCRIPT_HOME/$SCRIPT_NAME"
