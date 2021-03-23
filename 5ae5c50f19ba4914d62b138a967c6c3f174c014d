@@ -456,6 +456,23 @@
     },
     {
       "key": {
+        "uuid": "a184f5ba_b6ece55a",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2021-03-23T14:44:57Z",
+      "side": 1,
+      "message": "consider extracting this String to a file and reading it from there.",
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9fc90c2_a96e82b0",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/utils/Constants.java",
         "patchSetId": 2
@@ -558,6 +575,69 @@
         "startChar": 61,
         "endLine": 159,
         "endChar": 92
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63483728_c2ae6d75",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2021-03-23T14:44:57Z",
+      "side": 1,
+      "message": "reason these aren\u0027t final?\nsame question for local variables in newly added methods.\nsame question for method parameters in newly added methods.",
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bf75c3_9f540ce2",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2021-03-23T14:44:57Z",
+      "side": 1,
+      "message": "rather long method. consider refactoring to shorten.",
+      "range": {
+        "startLine": 524,
+        "startChar": 18,
+        "endLine": 524,
+        "endChar": 49
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a507a994_5fe4c85f",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 5656
+      },
+      "writtenOn": "2021-03-23T14:44:57Z",
+      "side": 1,
+      "message": "method name does not appear to reflect what method does. consider renaming.",
+      "range": {
+        "startLine": 630,
+        "startChar": 16,
+        "endLine": 630,
+        "endChar": 24
       },
       "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
