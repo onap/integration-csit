@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "c373a052_69880b44",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "same here , make these final",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 78
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ddf5117_10ea5741",
         "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
         "patchSetId": 2
@@ -140,6 +163,144 @@
     },
     {
       "key": {
+        "uuid": "d484ece3_50c32e9e",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "wrong header",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 42
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22ccc07_7c99126d",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "you can have application startup info log",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 68
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0bf978_291b1cec",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "tabs",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa8e5b6_8327d26e",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/Resource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "don\u0027t need it",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b7fd2f_f7ae5a92",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/Resource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "don\u0027t need this",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a85fbd3_92ff6b83",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/Resource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77c7454e_7d8684e5",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/ApplicationConfigration.java",
         "patchSetId": 2
@@ -225,6 +386,29 @@
         "startChar": 0,
         "endLine": 31,
         "endChar": 1
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82735d5_823af91d",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6750
+      },
+      "writtenOn": "2021-03-23T10:21:29Z",
+      "side": 1,
+      "message": "format and indent the class",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 124
       },
       "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
