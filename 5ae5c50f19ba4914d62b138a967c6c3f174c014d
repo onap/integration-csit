@@ -347,6 +347,29 @@
     },
     {
       "key": {
+        "uuid": "374cb744_7fa72df3",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/ApplicationConfigration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-03-23T10:57:15Z",
+      "side": 1,
+      "message": "Refactor \"ApplicationConfigration\" to \"ApplicationConfiguration\" and associated directory.",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4981ecdf_9c1f1a48",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/configration/WebSecurityConfigImpl.java",
         "patchSetId": 2
@@ -433,6 +456,29 @@
     },
     {
       "key": {
+        "uuid": "b9fc90c2_a96e82b0",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/utils/Constants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-03-23T10:57:15Z",
+      "side": 1,
+      "message": "Need to update license header here also",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 40
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4a12bfc_3eda6b42",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/test/java/org/onap/so/multicloudsimulator/MultiCloudSimulatorApplicationTests.java",
         "patchSetId": 2
@@ -489,6 +535,29 @@
         "startChar": 23,
         "endLine": 54,
         "endChar": 31
+      },
+      "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b2619e_11834eaf",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/OperationsController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3895
+      },
+      "writtenOn": "2021-03-23T10:57:15Z",
+      "side": 1,
+      "message": "Refactor variable to correct spelling to improve readability:\napiVfModuleOperationInformation",
+      "range": {
+        "startLine": 159,
+        "startChar": 61,
+        "endLine": 159,
+        "endChar": 92
       },
       "revId": "5ae5c50f19ba4914d62b138a967c6c3f174c014d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
