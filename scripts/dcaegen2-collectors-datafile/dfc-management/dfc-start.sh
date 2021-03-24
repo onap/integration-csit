@@ -25,17 +25,6 @@ set -x
 DOCKER_SIM_NWNAME="dfcnet"
 echo "Creating docker network $DOCKER_SIM_NWNAME, if needed"
 docker network ls | grep $DOCKER_SIM_NWNAME >/dev/null || docker network create $DOCKER_SIM_NWNAME
-
-if [ $HTTP_TYPE = "HTTPS" ]
-	then
-    docker run \
-      --name oom-certservice-post-processor \
-      --env-file $SIMGROUP_ROOT/../certservice/merger/merge-certs.env \
-      --mount type=bind,src=$SIMGROUP_ROOT/tls,dst=/opt/app/datafile/etc/cert \
-      --mount type=bind,src=$SIMGROUP_ROOT/../certservice/generated-certs/dfc-p12,dst=/opt/app/datafile/etc/ \
-      nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-post-processor:latest
-fi
-
 docker-compose up -d
 
 DFC_APP="$(docker ps -q --filter='name=dfc_app0')"
