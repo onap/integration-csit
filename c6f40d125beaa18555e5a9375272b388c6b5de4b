@@ -206,6 +206,52 @@
       "revId": "c6f40d125beaa18555e5a9375272b388c6b5de4b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d352afa6_faf38e1b",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/controller/ConfigController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-25T09:32:55Z",
+      "side": 1,
+      "message": "change author name",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "c6f40d125beaa18555e5a9375272b388c6b5de4b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98461723_a218b112",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/sdnc-simulator/src/main/java/org/onap/so/sdncsimulator/providers/ServiceOperationsCacheServiceProviderimpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-25T09:32:55Z",
+      "side": 1,
+      "message": "remove class level variable and try to keep this class stateless",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 108
+      },
+      "revId": "c6f40d125beaa18555e5a9375272b388c6b5de4b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
