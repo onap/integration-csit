@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0bdde6c_c37d3516",
+        "filename": "plans/integration/netconf-server/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-03-25T13:02:43Z",
+      "side": 1,
+      "message": "could you pls create structure:\nplans/integration/nfsimulator/netconf-server ?",
+      "revId": "2c5ec8ca4820accaa5b99e45de467d7ee6de8c9c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
