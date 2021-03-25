@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "10743ba1_67b768cd",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/aai-simulator/src/main/java/org/onap/so/aaisimulator/service/providers/GenericVnfCacheServiceProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-03-25T11:19:11Z",
+      "side": 1,
+      "message": "You may re-write putVfModule method as follows and remove line 63\n\n\n    @Override\n    public void putVfModule(String vnfId, String vfModuleId, VfModule vfModule) {\n        LOGGER.info(\"Adding vfModule from cache for vnfId: {} and vfModuleId: {}\", vnfId, vfModuleId);\n        final Optional\u003cGenericVnf\u003e genericVnfOptional \u003d getGenericVnf(vnfId);\n        final Cache cache \u003d getCache(GENERIC_VNF_CACHE.getName());\n        if (genericVnfOptional.isPresent()) {\n            final GenericVnf genericVnf \u003d genericVnfOptional.get();\n\n            VfModules vfModules \u003d null;\n            if (genericVnf.getVfModules() \u003d\u003d null) {\n                vfModules \u003d new VfModules();\n                genericVnf.setVfModules(vfModules);\n            } else {\n                vfModules \u003d genericVnf.getVfModules();\n            }\n\n            vfModules.getVfModule().add(vfModule);\n            cache.put(vfModuleId, vfModule);\n        }\n    }",
+      "parentUuid": "8cec0fed_e627223c",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "c6f40d125beaa18555e5a9375272b388c6b5de4b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd50a79_c82ba28c",
         "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/InstanceNameOutput.java",
         "patchSetId": 3
