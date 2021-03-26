@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4de6478_94a2486d",
+        "filename": "plans/sdc/sdc-helm-validator/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-26T14:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a846b7e_32ec0f1b",
+      "range": {
+        "startLine": 8,
+        "startChar": 56,
+        "endLine": 8,
+        "endChar": 121
+      },
+      "revId": "92d942a96873e701251809584672e41e12b75197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06423a8_43ad5619",
         "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "92d942a96873e701251809584672e41e12b75197",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594e39cc_02030e5b",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-26T14:21:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06423a8_43ad5619",
+      "range": {
+        "startLine": 76,
+        "startChar": 82,
+        "endLine": 76,
+        "endChar": 91
+      },
+      "revId": "92d942a96873e701251809584672e41e12b75197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
