@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  netconf-server:
+    container_name: netconf-server
+    image: onap/org.onap.integration.nfsimulator.netconfserver:latest
+    environment:
+     - ENABLE_TLS=true
+    ports:
+     - "830:830"
+     - "6513:6513"
+     - "6555:6555"
