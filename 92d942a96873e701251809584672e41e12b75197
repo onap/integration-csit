@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a846b7e_32ec0f1b",
+        "filename": "plans/sdc/sdc-helm-validator/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-26T12:33:01Z",
+      "side": 1,
+      "message": "Please use it as variable",
+      "range": {
+        "startLine": 8,
+        "startChar": 56,
+        "endLine": 8,
+        "endChar": 121
+      },
+      "revId": "92d942a96873e701251809584672e41e12b75197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06423a8_43ad5619",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-26T12:33:01Z",
+      "side": 1,
+      "message": "Please Use something like \"wrong/notsuppored/bad\" instead off spaghetti ;)",
+      "range": {
+        "startLine": 76,
+        "startChar": 82,
+        "endLine": 76,
+        "endChar": 91
+      },
+      "revId": "92d942a96873e701251809584672e41e12b75197",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
