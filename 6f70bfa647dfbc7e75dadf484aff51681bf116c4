@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ee28ac7_40f70797",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094b1f5c_1a5ac7b6",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac8b32c5_db60be89",
         "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37dc3a69_24707e5a",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8b32c5_db60be89",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64a4f443_852dd564",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00601a44_3069f448",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ad81d5_babd52d5",
         "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d21e3d_2f88e92e",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ad81d5_babd52d5",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4e3c17bc_c7db0359",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cfbf4d_5110c246",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "784caac7_457cfd8f",
         "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff85e154_695c50f0",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-29T13:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784caac7_457cfd8f",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
