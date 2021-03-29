@@ -10,3 +10,12 @@ Run Healthcheck
     ${resp}=  GET On Session  netconf_server_session  /healthcheck
     Should Be Equal As Strings 	${resp.status_code}  200
     Should Be Equal As Strings  ${resp.text}  UP
+
+Run Readiness 
+    [Documentation]  Run Readiness
+    Create Session    netconf_server_session    ${NETCONF_SERVER_URL}
+    ${resp}=  GET On Session  netconf_server_session  /readiness 
+    Should Be Equal As Strings 	${resp.status_code}  200
+    Should Be Equal As Strings  ${resp.text}  Ready
+
+
