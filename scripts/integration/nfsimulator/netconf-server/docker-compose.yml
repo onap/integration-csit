@@ -1,13 +1,43 @@
 version: '3'
 
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - netconfnetwork
+
+  kafka1:
+    image: wurstmeister/kafka:1.1.0
+    ports:
+      - "9092:9092"
+    hostname: kafka1
+    networks:
+      - netconfnetwork
+    environment:
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ADVERTISED_HOST_NAME: kafka1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "config:1:1"
+      KAFKA_DELETE_RETENTION_MS: 604800000
+      KAFKA_LOG_CLEANER_DELETE_RETENTION_MS: 604800000
+    depends_on:
+      - zookeeper
 
   netconf-server:
     container_name: netconf-server
     image: nexus3.onap.org:10003/onap/org.onap.integration.nfsimulator.netconfserver:latest
-    environment:
-     - ENABLE_TLS=true
     ports:
-     - "830:830"
-     - "6513:6513"
-     - "6555:6555"
+      - "830:830"
+      - "6513:6513"
+      - "6555:6555"
+    networks:
+      - netconfnetwork
+    depends_on:
+      - zookeeper
+      - kafka1
+
+networks:
+  netconfnetwork:
+    driver: bridge

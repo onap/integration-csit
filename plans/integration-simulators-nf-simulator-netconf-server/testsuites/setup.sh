@@ -25,7 +25,7 @@ NETCONF_SERVER_REST_PORT=6555
 for i in {1..9}
 do
    NETCONF_SERVER_IP=`get-instance-ip.sh $NETCONF_SERVER_NAME`
-   RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  http://${NETCONF_SERVER_IP}:${NETCONF_SERVER_REST_PORT}/healthcheck)
+   RESP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}"  http://${NETCONF_SERVER_IP}:${NETCONF_SERVER_REST_PORT}/readiness)
    if [[ "$RESP_CODE" == '200' ]]; then
        echo 'Netconf Server is ready'
        export NETCONF_SERVER_IP=${NETCONF_SERVER_IP}
