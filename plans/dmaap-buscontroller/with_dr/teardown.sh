@@ -18,9 +18,17 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-if [ "$KEEP_DMAAP" != "Y" ]
-then
-kill-instance.sh dmaapbc
-cd $WORKSPACE/archives/dmaapdr/datarouter/datarouter-docker-compose/src/main/resources
-docker-compose down -v
-fi
+#kill-instance.sh dmaapbc
+cd ${WORKSPACE}/archives/dmaap/dr
+rm -rf last_run_logs/*
+docker cp datarouter-prov:/opt/app/datartr/logs last_run_logs/prov_logs
+docker cp datarouter-node:/opt/app/datartr/logs last_run_logs/node_event_logs
+docker cp datarouter-node:/var/log/onap/datarouter last_run_logs/node_server_logs
+docker cp subscriber-node:/var/log/onap/datarouter last_run_logs/sub1_logs
+docker cp subscriber-node2:/var/log/onap/datarouter last_run_logs/sub2_logs
+docker cp dmaap-bc:/opt/app/dmaapbc/logs/ONAP last_run_logs/bc_logs
+
+sudo sed -i".bak" '/dmaap-dr-prov/d' /etc/hosts
+sudo sed -i".bak" '/dmaap-dr-node/d' /etc/hosts
+docker-compose -f ${WORKSPACE}/scripts/dmaap-datarouter/docker-compose/docker-compose.yml rm -sf
+docker-compose -f ${WORKSPACE}/scripts/dmaap-buscontroller/docker-compose/docker-compose-bc.yml rm -sf

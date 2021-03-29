@@ -23,14 +23,13 @@ function dmaap_dr_launch() {
 
     subscribers_required=$1
     mkdir -p ${WORKSPACE}/archives/dmaap/dr/last_run_logs
-    cd ${WORKSPACE}/scripts/dmaap-datarouter/docker-compose
 
     # start DMaaP DR containers with docker compose and configuration from docker-compose.yml
     docker login -u docker -p docker nexus3.onap.org:10001
     if [[ ${subscribers_required} == true ]]; then
-		docker-compose up -d
+		docker-compose -f ${WORKSPACE}/scripts/dmaap-datarouter/docker-compose/docker-compose.yml up -d
     else
-        docker-compose up -d datarouter-prov datarouter-node mariadb
+        docker-compose -f ${WORKSPACE}/scripts/dmaap-datarouter/docker-compose/docker-compose.yml up -d datarouter-prov datarouter-node mariadb
 	fi
 
     # Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
@@ -85,6 +84,7 @@ function dmaap_dr_launch() {
     sudo sed -i "$ a $DR_PROV_IP dmaap-dr-prov" /etc/hosts
     sudo sed -i "$ a $DR_NODE_IP dmaap-dr-node" /etc/hosts
 
+    docker exec -i datarouter-prov sh -c "curl -k -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$DR_GATEWAY_IP"
     docker exec -i datarouter-prov sh -c "curl -k -X PUT https://$DR_PROV_IP:8443/internal/api/PROV_AUTH_ADDRESSES?val=dmaap-dr-prov\|$DR_GATEWAY_IP"
 
     #Pass any variables required by Robot test suites in ROBOT_VARIABLES

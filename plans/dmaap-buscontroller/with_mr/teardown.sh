@@ -19,12 +19,12 @@
 # ============LICENSE_END=========================================================
 # 
 #
+cd ${WORKSPACE}/archives/dmaapmr
 source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-teardown.sh
-
-if [ "$KEEP_DMAAP" != "Y" ]
-then
 dmaap_mr_teardown
-kill-instance.sh dmaapbc
-kill-instance.sh aaf-mock
-fi
+rm -rf last_run_logs/*
+docker cp dmaap-bc:/opt/app/dmaapbc/logs/ONAP last_run_logs/bc_logs
+docker-compose -f ${WORKSPACE}/scripts/dmaap-buscontroller/docker-compose/docker-compose-bc.yml rm -sf
+
+
 
