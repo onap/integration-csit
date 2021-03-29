@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "094b1f5c_1a5ac7b6",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "please enlarge test cases description. Write what is entry and what is excatly expected. With current description is hard to understand what tests should validate and what is expected behaviour",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8b32c5_db60be89",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "it would be nice to validate content of response. Currently every (even wrong) message which can be inside response body will pass",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00601a44_3069f448",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "example of description. It would be nice to have how correct chart looks like and which version is expected here",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ad81d5_babd52d5",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "it would be nice to put here some not supported version number, like \"v10\". Current message \"Bad is not supported\" is confusing",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cfbf4d_5110c246",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "please use any validation which checks error text, like Should Contain",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784caac7_457cfd8f",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2021-03-29T09:48:50Z",
+      "side": 1,
+      "message": "please use any validation which checks error text, like Should Contain",
+      "revId": "6f70bfa647dfbc7e75dadf484aff51681bf116c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
