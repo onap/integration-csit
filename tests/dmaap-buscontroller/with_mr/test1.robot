@@ -9,9 +9,8 @@ Library           String
 
 
 *** Variables ***
-${MESSAGE}    Hello, world!
-${DBC_URI}    webapi
-${DBC_URL}    http://${DMAAPBC_IP}:8080/${DBC_URI}
+${DBC_URI}      webapi
+${DBC_URL}      http://${DMAAP_BC_IP}:8080/${DBC_URI}
 ${TOPIC_NS}     org.onap.dmaap.onapCSIT
 ${LOC}          csit-sanfrancisco
 ${PUB_CORE}     "dcaeLocationName": "${LOC}", "clientRole": "org.onap.dmaap.client.pub", "action": [ "pub", "view" ] 
@@ -25,14 +24,7 @@ ${PUB3_DATA}    { "fqtn": "${TOPIC_NS}.singleMRtopic3", ${PUB_CORE} }
 ${SUB3_DATA}    { "fqtn": "${TOPIC_NS}.singleMRtopic3", ${SUB_CORE} }
 
 
-
 *** Test Cases ***
-Url Test
-    [Documentation]    Check if www.onap.org can be reached
-    Create Session     sanity          http://onap.readthedocs.io
-    ${resp}=           Get Request   sanity    /  
-    Should Be Equal As Integers  ${resp.status_code}  200
-
 (DMAAP-293)
     [Documentation]        Create Topic w no clients POST ${DBC_URI}/topics endpoint
     ${resp}=         PostCall    ${DBC_URL}/topics    ${TOPIC1_DATA}
@@ -55,42 +47,33 @@ Url Test
 (DMAAP-297)
     [Documentation]    Query for all topics and specific topic
     Create Session     get          ${DBC_URL}
-    ${resp}=           Get Request   get    /topics  
+    ${resp}=           GET On Session   get    /topics
     Should Be Equal As Integers  ${resp.status_code}  200
-    ${resp}=           Get Request   get    /topics/${TOPIC_NS}.singleMRtopic3
+    ${resp}=           GET On Session   get    /topics/${TOPIC_NS}.singleMRtopic3
     Should Be Equal As Integers  ${resp.status_code}  200
 
 (DMAAP-301)
     [Documentation]    Delete a subscriber
     Create Session     get          ${DBC_URL}
-    ${resp}=           Get Request   get    /topics/${TOPIC_NS}.singleMRtopic3
+    ${resp}=           GET On Session   get    /topics/${TOPIC_NS}.singleMRtopic3
     Should Be Equal As Integers  ${resp.status_code}  200
-	${tmp}=            Get Json Value      ${resp.text}           /clients/1/mrClientId
-	${clientId}=       Remove String       ${tmp}         \"
+    ${JSON}=           Evaluate      json.loads(r"""${resp.content}""", strict=False)
+    ${clientId}=       Set Variable  ${JSON['clients'][1]['mrClientId']}
     ${resp}=           DelCall   ${DBC_URL}/mr_clients/${clientId}
     Should Be Equal As Integers  ${resp.status_code}  204
 
 (DMAAP-302)
     [Documentation]    Delete a publisher
     Create Session     get          ${DBC_URL}
-    ${resp}=           Get Request   get    /topics/${TOPIC_NS}.singleMRtopic3
+    ${resp}=           GET On Session   get    /topics/${TOPIC_NS}.singleMRtopic3
     Should Be Equal As Integers  ${resp.status_code}  200
-	${tmp}=            Get Json Value      ${resp.text}           /clients/0/mrClientId
-	${clientId}=       Remove String       ${tmp}         \"
+    ${JSON}=           Evaluate      json.loads(r"""${resp.content}""", strict=False)
+    ${clientId}=       Set Variable  ${JSON['clients'][0]['mrClientId']}
     ${resp}=           DelCall   ${DBC_URL}/mr_clients/${clientId}
     Should Be Equal As Integers  ${resp.status_code}  204
 
 
 *** Keywords ***
-CheckDir
-    [Arguments]                 ${path}
-    Directory Should Exist      ${path}
-
-CheckUrl
-    [Arguments]                  ${session}   ${path}     ${expect}
-    ${resp}=                     Get  Request          ${session} ${path} 
-    Should Be Equal As Integers  ${resp.status_code}  ${expect}
-
 PostCall
     [Arguments]    ${url}           ${data}
     ${headers}=    Create Dictionary    Accept=application/json    Content-Type=application/json

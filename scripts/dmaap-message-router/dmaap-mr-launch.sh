@@ -31,101 +31,101 @@ source ${SCRIPTS}/common_functions.sh
 # (kafka and zk containers are not called externally)
 
 function dmaap_mr_launch() {
-		#
-		# the default prefix for docker containers is the directory name containing the docker-compose.yml file.
-		# It can be over-written by an env variable COMPOSE_PROJECT_NAME.  This env var seems to be set in the Jenkins CSIT environment
-		COMPOSE_PREFIX=${COMPOSE_PROJECT_NAME:-dockercompose}
-		export COMPOSE_PROJECT_NAME=$COMPOSE_PREFIX
-		echo "COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME"
-		echo "COMPOSE_PREFIX=$COMPOSE_PREFIX"
+        #
+        # the default prefix for docker containers is the directory name containing the docker-compose.yml file.
+        # It can be over-written by an env variable COMPOSE_PROJECT_NAME.  This env var seems to be set in the Jenkins CSIT environment
+        COMPOSE_PREFIX=${COMPOSE_PROJECT_NAME:-dockercompose}
+        export COMPOSE_PROJECT_NAME=$COMPOSE_PREFIX
+        echo "COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME"
+        echo "COMPOSE_PREFIX=$COMPOSE_PREFIX"
 
-		# Clone DMaaP Message Router repo
-		mkdir -p $WORKSPACE/archives/dmaapmr
-		cd $WORKSPACE/archives/dmaapmr
-		#unset http_proxy https_proxy
-		git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
-		cd messageservice
-		git pull
-		cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
-		cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
-
-
-		# start DMaaP MR containers with docker compose and configuration from docker-compose.yml
-		docker login -u docker -p docker nexus3.onap.org:10001
-		docker-compose up -d
-		docker ps
-
-		# Wait for initialization of Docker contaienr for DMaaP MR, Kafka and Zookeeper
-		for i in {1..50}; do
-			if [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_zookeeper_1) ] && \
-				[ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ] 
-			then
-				echo "DMaaP Service Running"	
-				break    		
-			else 
-				echo sleep $i		
-				sleep $i
-			fi
-		done
+        # Clone DMaaP Message Router repo
+        mkdir -p $WORKSPACE/archives/dmaapmr
+        cd $WORKSPACE/archives/dmaapmr
+        #unset http_proxy https_proxy
+        git clone --depth 1 http://gerrit.onap.org/r/dmaap/messagerouter/messageservice -b master
+        cd messageservice
+        git pull
+        cd $WORKSPACE/archives/dmaapmr/messageservice/src/main/resources/docker-compose
+        cp $WORKSPACE/archives/dmaapmr/messageservice/bundleconfig-local/etc/appprops/MsgRtrApi.properties /var/tmp/
 
 
-		DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_dmaap_1)
-		IP=${DMAAP_MR_IP}
-		KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_kafka_1)
-		ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_zookeeper_1)
+        # start DMaaP MR containers with docker compose and configuration from docker-compose.yml
+        docker login -u docker -p docker nexus3.onap.org:10001
+        docker-compose up -d
+        docker ps
 
-		echo DMAAP_MR_IP=${DMAAP_MR_IP}
-		echo IP=${IP}
-		echo KAFKA_IP=${KAFKA_IP}
-		echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
+        # Wait for initialization of Docker contaienr for DMaaP MR, Kafka and Zookeeper
+        for i in {1..50}; do
+            if [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ] && \
+                [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_zookeeper_1) ] && \
+                [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ]
+            then
+                echo "DMaaP Service Running"
+                break
+            else
+                echo sleep $i
+                sleep $i
+            fi
+        done
 
-		# Initial docker-compose up and down is for populating kafka and zookeeper IPs in /var/tmp/MsgRtrApi.properites
-		docker-compose down 
 
-		# Update kafkfa and zookeeper properties in MsgRtrApi.propeties which will be copied to DMaaP Container
-		sed -i -e 's/<zookeeper_host>/zookeeper/' /var/tmp/MsgRtrApi.properties
-		sed -i -e 's/<kafka_host>:<kafka_port>/kafka:9092/' /var/tmp/MsgRtrApi.properties
+        DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_dmaap_1)
+        IP=${DMAAP_MR_IP}
+        KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_kafka_1)
+        ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_zookeeper_1)
 
-		docker-compose build
-		docker login -u docker -p docker nexus3.onap.org:10001
-		docker-compose up -d 
-		docker ps
+        echo DMAAP_MR_IP=${DMAAP_MR_IP}
+        echo IP=${IP}
+        echo KAFKA_IP=${KAFKA_IP}
+        echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
 
-		# Wait for initialization of Docker containers
-		for i in {1..50}; do
-				if [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ] && \
-						[ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_zookeeper_1) ] && \
-						[ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ]
-				then
-						echo "DMaaP Service Running"
-						break
-				else
-						echo sleep $i
-						sleep $i
-				fi
-		done
-		DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_dmaap_1)
-		IP=${DMAAP_MR_IP}
-		KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_kafka_1)
-		ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_zookeeper_1)
+        # Initial docker-compose up and down is for populating kafka and zookeeper IPs in /var/tmp/MsgRtrApi.properites
+        docker-compose down
 
-		echo "After restart of ZK and Kafka..."
-		echo DMAAP_MR_IP=${DMAAP_MR_IP}
-		echo IP=${IP}
-		echo KAFKA_IP=${KAFKA_IP}
-		echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
+        # Update kafkfa and zookeeper properties in MsgRtrApi.propeties which will be copied to DMaaP Container
+        sed -i -e 's/<zookeeper_host>/zookeeper/' /var/tmp/MsgRtrApi.properties
+        sed -i -e 's/<kafka_host>:<kafka_port>/kafka:9092/' /var/tmp/MsgRtrApi.properties
+
+        docker-compose build
+        docker login -u docker -p docker nexus3.onap.org:10001
+        docker-compose up -d
+        docker ps
+
+        # Wait for initialization of Docker containers
+        for i in {1..50}; do
+                if [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ] && \
+                        [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_zookeeper_1) ] && \
+                        [ $(docker inspect --format '{{ .State.Running }}' ${COMPOSE_PREFIX}_dmaap_1) ]
+                then
+                        echo "DMaaP Service Running"
+                        break
+                else
+                        echo sleep $i
+                        sleep $i
+                fi
+        done
+        DMAAP_MR_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_dmaap_1)
+        IP=${DMAAP_MR_IP}
+        KAFKA_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_kafka_1)
+        ZOOKEEPER_IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${COMPOSE_PREFIX}_zookeeper_1)
+
+        echo "After restart of ZK and Kafka..."
+        echo DMAAP_MR_IP=${DMAAP_MR_IP}
+        echo IP=${IP}
+        echo KAFKA_IP=${KAFKA_IP}
+        echo ZOOKEEPER_IP=${ZOOKEEPER_IP}
 
         source ${SCRIPTS}/common_functions.sh
         bypass_ip_adress ${DMAAP_MR_IP}
         bypass_ip_adress ${KAFKA_IP}
         bypass_ip_adress ${ZOOKEEPER_IP}
 
-		# Wait for initialization of docker services
-		for i in {1..50}; do
-			curl -sS -m 1 ${DMAAP_MR_IP}:3904/events/TestTopic && break 
-			echo sleep $i
-			sleep $i
-		done
+        # Wait for initialization of docker services
+        for i in {1..50}; do
+            curl -sS -m 1 ${DMAAP_MR_IP}:3904/events/TestTopic && break
+            echo sleep $i
+            sleep $i
+        done
 }
 

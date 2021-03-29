@@ -1,0 +1,25 @@
+version: '2.1'
+services:
+  dmaap-bc:
+    container_name: dmaap-bc
+    hostname: dmaap-bc
+    image: nexus3.onap.org:10001/onap/dmaap/dmaap-bc
+    ports:
+    - "30241:8080"
+    - "30242:8443"
+    volumes:
+    - ./buscontroller.env:/opt/app/config/conf/buscontroller.env
+    - ./dmaapbc.properties:/opt/app/config/conf/dmaapbc.properties
+    - ./cadi_aaf:/opt/app/osaaf/local
+    - ./logback.xml:/opt/app/dmaapbc/etc/logback.xml
+    networks:
+      dockercompose_net:
+        aliases:
+          - dmaap-bc
+    extra_hosts:
+      - dmaap-dr-prov:$dmaap_prov_ip
+      - message-router:$dmaap_prov_ip
+
+networks:
+  dockercompose_net:
+    external: true

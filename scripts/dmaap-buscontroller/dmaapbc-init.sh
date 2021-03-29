@@ -1,56 +1,38 @@
 #!/bin/bash
 
 # $1 is the IP address of the buscontroller
-# $2 is the IP address of the DRPS
-# $3 is the IP address of the MRC
-# $4 is the protocol (defaults to http)
-
-PROTO=${4:-http}
-if [ "$PROTO" = "http" ]
-then
-	PORT=8080
-	CURLOPT="-v"
-	MRPORT=3904
-	DRPORT=8080
-else
-	PORT=8443
-	CURLOPT="-v -k"
-	MRPORT=3905
-	DRPORT=8443
-fi
 
 # INITIALIZE: dmaap object
 JSON=/tmp/$$.dmaap
 cat << EOF > $JSON
 {
-	"version": "1",
-	"topicNsRoot": "org.onap.dmaap",
-	"drProvUrl": "${PROTO}://dmaap-dr-prov:${DRPORT}",
-	"dmaapName": "onapCSIT",
-	"bridgeAdminTopic": "MM_AGENT_PROV"
+    "version": "1",
+    "topicNsRoot": "org.onap.dmaap",
+    "drProvUrl": "https://dmaap-dr-prov:8443",
+    "dmaapName": "onapCSIT",
+    "bridgeAdminTopic": "MM_AGENT_PROV"
 
 }
 EOF
 
 echo "Initializing /dmaap endpoint"
-curl ${CURLOPT} -X POST -d @${JSON} -H "Content-Type: application/json" ${PROTO}://$1:${PORT}/webapi/dmaap 
-
+curl -v -k  -X POST -d @${JSON} -H "Content-Type: application/json" https://$1:8443/webapi/dmaap
 
 
 # INITIALIZE: dcaeLocation object
 JSON=/tmp/$$.loc
 cat << EOF > $JSON
 {
-	"dcaeLocationName": "csit-sanfrancisco",
-	"dcaeLayer": "central-cloud",
-	"clli": "CSIT12345",
-	"zone": "zoneA"
+    "dcaeLocationName": "csit-sanfrancisco",
+    "dcaeLayer": "central-cloud",
+    "clli": "CSIT12345",
+    "zone": "zoneA"
 
 }
 EOF
 
 echo "Initializing /dcaeLocations endpoint"
-curl ${CURLOPT} -X POST -d @${JSON} -H "Content-Type: application/json" ${PROTO}://$1:${PORT}/webapi/dcaeLocations 
+curl -v -k  -X POST -d @${JSON} -H "Content-Type: application/json" https://$1:8443/webapi/dcaeLocations
 
 
 # INITIALIZE: MR object in 1 site
@@ -64,13 +46,13 @@ DOCKER_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+' | head -1 )
 JSON=/tmp/$$.mrc
 cat << EOF > $JSON
 {
-	"dcaeLocationName": "csit-sanfrancisco",
-	"fqdn": "$DOCKER_HOST",
-	"topicProtocol" : "http",
-	"topicPort": "${MRPORT}"
+    "dcaeLocationName": "csit-sanfrancisco",
+    "fqdn": "message-router",
+    "topicProtocol" : "http",
+    "topicPort": "3904"
 
 }
 EOF
 
 echo "Initializing /mr_clusters endpoint"
-curl ${CURLOPT} -X POST -d @${JSON} -H "Content-Type: application/json" ${PROTO}://$1:${PORT}/webapi/mr_clusters
+curl -v -k  -X POST -d @${JSON} -H "Content-Type: application/json" https://$1:8443/webapi/mr_clusters
