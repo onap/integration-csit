@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24fd678_0f69dad8",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-29T05:31:06Z",
+      "side": 1,
+      "message": "Consider extracting to method",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 167
+      },
+      "revId": "fbf2e44146a8addb74e2965ce6d7c885528157e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb81c20_d1ff0d27",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-29T05:31:06Z",
+      "side": 1,
+      "message": "Different formatting here",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 110
+      },
+      "revId": "fbf2e44146a8addb74e2965ce6d7c885528157e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f908672_28067a90",
+        "filename": "tests/sdc/sdc-helm-validator/sdc-helm-validator.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-29T05:31:06Z",
+      "side": 1,
+      "message": "Consider using constants for the key values (or creating some methods), that way when the name changes, you only have to change its value in one spot.",
+      "range": {
+        "startLine": 116,
+        "startChar": 97,
+        "endLine": 116,
+        "endChar": 107
+      },
+      "revId": "fbf2e44146a8addb74e2965ce6d7c885528157e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
