@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "92e84296_73dd49fb",
+        "filename": "scripts/dmaap-buscontroller/docker-compose/docker-compose-bc.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-03-30T11:22:59Z",
+      "side": 1,
+      "message": "Yes they will remain here for now. DR could be moved but MR and BC cannot yet due to +1 repos for each.\n\nI completely understand your frustration here and I am looking for a solution.\nThe fact that pm-mapper is broken due to the \"latest\" tagging in docker-stage is an issue.\nThis will break the BC suite also.\nCould there be a way to disable the cron jobs for the older branches and maybe add a magic word to trigger if needed?",
+      "parentUuid": "c08470a5_adbc3e85",
+      "range": {
+        "startLine": 6,
+        "startChar": 11,
+        "endLine": 6,
+        "endChar": 52
+      },
+      "revId": "211a9e674159009e28f49b9a762c7ceafb1e30de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b680b891_b3c9117c",
         "filename": "scripts/dmaap-datarouter/datarouter-launch.sh",
         "patchSetId": 1
