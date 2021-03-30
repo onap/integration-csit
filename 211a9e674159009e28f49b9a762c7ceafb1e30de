@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d0efa04_fd0bf9bc",
+        "filename": "scripts/dmaap-buscontroller/docker-compose/docker-compose-bc.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-03-30T09:55:48Z",
+      "side": 1,
+      "message": "This seems wrong. I can see that most of the other projects are defaulting to latest tag also.\nThe fact that we need to maintain legacy branches in the jjb\u0027s causes this issue.\n\nIf we are specifying versions then it would require a patch to the csits every time an image is released.",
+      "parentUuid": "0a4233b6_e4293390",
+      "range": {
+        "startLine": 6,
+        "startChar": 11,
+        "endLine": 6,
+        "endChar": 52
+      },
+      "revId": "211a9e674159009e28f49b9a762c7ceafb1e30de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b680b891_b3c9117c",
         "filename": "scripts/dmaap-datarouter/datarouter-launch.sh",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "211a9e674159009e28f49b9a762c7ceafb1e30de",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02026d0a_f2bebf7d",
+        "filename": "scripts/dmaap-datarouter/datarouter-launch.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-03-30T09:55:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b680b891_b3c9117c",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "211a9e674159009e28f49b9a762c7ceafb1e30de",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
