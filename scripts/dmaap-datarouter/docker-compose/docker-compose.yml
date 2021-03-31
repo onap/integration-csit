@@ -42,7 +42,7 @@ services:
       timeout: 30s
       retries: 5
     networks:
-      testing_net:
+      net:
         aliases:
         - dmaap-dr-prov
 
@@ -62,7 +62,7 @@ services:
       datarouter-prov:
         condition: service_healthy
     networks:
-      testing_net:
+      net:
         aliases:
         - dmaap-dr-node
 
@@ -75,7 +75,7 @@ services:
     volumes:
     - ./subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
     networks:
-      testing_net:
+      net:
         aliases:
         - subscriber.com
 
@@ -88,7 +88,7 @@ services:
     volumes:
     - ./subscriber.properties:/opt/app/subscriber/etc/subscriber.properties
     networks:
-      testing_net:
+      net:
         aliases:
         - subscriber2.com
 
@@ -109,10 +109,10 @@ services:
       timeout: 30s
       retries: 5
     networks:
-      testing_net:
+      net:
         aliases:
         - datarouter-mariadb
 
 networks:
-  testing_net:
+  net:
     driver: bridge
