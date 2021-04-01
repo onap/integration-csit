@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dc93763_49d36d70",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T09:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffabc7ea_4e6f2d71",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cc807a_acd38c12",
         "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e450ea_8eab40e8",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T09:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10cc807a_acd38c12",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf59a7d4_639ced95",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T09:05:43Z",
+      "side": 1,
+      "message": "My bad. It should be removed.",
+      "parentUuid": "6068a1fc_1605ad70",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e59dd8_64e4de9d",
         "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2021-04-01T08:35:45Z",
       "side": 1,
       "message": "Is there anything more specific about the response that could be verified?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f285c2_44fb3233",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T09:05:43Z",
+      "side": 1,
+      "message": "Yes, there is. I will add such assertion.",
+      "parentUuid": "87e59dd8_64e4de9d",
       "range": {
         "startLine": 38,
         "startChar": 4,
