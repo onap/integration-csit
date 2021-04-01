@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b6f2bb84_6f09ed9d",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T12:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf59a7d4_639ced95",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e59dd8_64e4de9d",
         "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
         "patchSetId": 1
@@ -187,6 +211,30 @@
       "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0a5841_94e13ce2",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-01T12:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f285c2_44fb3233",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "12434b1f6699c4fccaf5847ab7e0c98fc8a38d87",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
