@@ -241,9 +241,8 @@ public class GenericVnfsController {
         return getRequestErrorResponseEntity(request, VF_MODULE);
 
     }
-    
-    
-    
+
+
     @PutMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putVfModule(@RequestBody final VfModule vfModule,

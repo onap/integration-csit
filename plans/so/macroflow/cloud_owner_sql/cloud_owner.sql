@@ -1,2 +1,0 @@
-Use catalogdb; 
-insert into cloud_sites(ID, REGION_ID, IDENTITY_SERVICE_ID, CLOUD_VERSION, CLLI, ORCHESTRATOR) values("EtsiCloudRegion", "EtsiCloudRegion", "DEFAULT_KEYSTONE", "2.5", "clli2", "multicloud");

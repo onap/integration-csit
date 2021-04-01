@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ * Copyright 2021 Huawei Technologies Co., Ltd.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.multicloudsimulator.configration;
+package org.onap.so.multicloudsimulator.configuration;
 
 import static org.onap.so.multicloudsimulator.utils.Constants.OPERATIONS_URL;
 import org.onap.so.simulator.configuration.SimulatorSecurityConfigurer;
@@ -27,10 +25,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-/**
- * @author waqas.ikram@ericsson.com
- *
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfigImpl extends SimulatorSecurityConfigurer {

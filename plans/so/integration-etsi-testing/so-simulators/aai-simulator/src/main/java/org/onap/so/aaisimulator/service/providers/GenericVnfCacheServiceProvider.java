@@ -24,8 +24,6 @@ import java.util.Optional;
 import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.VfModule;
-import org.onap.aai.domain.yang.VfModules;
-import org.onap.aai.domain.yang.v10.VolumeGroup;
 import org.springframework.http.HttpHeaders;
 
 /**
@@ -52,9 +50,9 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
 
     boolean deleteGenericVnf(final String vnfId, final String resourceVersion);
 
-	void putVfModule(String vnfId, String vfModuleId, VfModule vfModule);
+    void putVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule);
 
-	Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId);
+    Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId);
 
-	boolean patchVfModule(String vnfId, String vfModuleId, VfModule vfModule);
+    boolean patchVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule);
 }

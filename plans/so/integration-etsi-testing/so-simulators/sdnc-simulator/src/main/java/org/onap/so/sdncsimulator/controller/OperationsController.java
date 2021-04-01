@@ -23,15 +23,8 @@ import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestAct
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration.DELETEVNFINSTANCE;
 import static org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration.DELETE;
 import static org.onap.so.sdncsimulator.utils.Constants.OPERATIONS_URL;
-import static org.onap.so.sdncsimulator.utils.Constants.BASE_URL;
-import static org.onap.so.sdncsimulator.utils.Constants.RESTCONF_CONFIG_END_POINT;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
-
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiRequestinformationRequestInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiSdncrequestheaderSdncRequestHeader;
@@ -39,8 +32,6 @@ import org.onap.sdnc.northbound.client.model.GenericResourceApiServiceOperationI
 import org.onap.sdnc.northbound.client.model.GenericResourceApiSvcActionEnumeration;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfOperationInformation;
 import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleOperationInformation;
-import org.onap.sdnc.northbound.client.model.GenericResourceApiVnfTopology;
-import org.onap.sdnc.northbound.client.model.GenericResourceApiVfModuleTopology;
 import org.onap.so.sdncsimulator.models.InputRequest;
 import org.onap.so.sdncsimulator.models.Output;
 import org.onap.so.sdncsimulator.models.OutputRequest;
@@ -51,8 +42,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +51,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping(path = BASE_URL)
+@RequestMapping(path = OPERATIONS_URL)
 public class OperationsController {
     private static final String HTTP_STATUS_OK = HttpStatus.OK.value() + "";
 
@@ -75,7 +64,7 @@ public class OperationsController {
         this.cacheServiceProvider = cacheServiceProvider;
     }
 
-    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:service-topology-operation/",
+    @PostMapping(value = "/GENERIC-RESOURCE-API:service-topology-operation/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postServiceOperationInformation(
@@ -102,7 +91,7 @@ public class OperationsController {
 
     }
 
-    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:vnf-topology-operation/",
+    @PostMapping(value = "/GENERIC-RESOURCE-API:vnf-topology-operation/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postVnfOperationInformation(
@@ -159,7 +148,7 @@ public class OperationsController {
         return cacheServiceProvider.putVnfOperationInformation(apiVnfOperationInformation);
     }
 
-    @PostMapping(value = "/operations/GENERIC-RESOURCE-API:vf-module-topology-operation/",
+    @PostMapping(value = "/GENERIC-RESOURCE-API:vf-module-topology-operation/",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postVfModuleOperationInformation(
@@ -167,13 +156,13 @@ public class OperationsController {
             final HttpServletRequest request) {
         LOGGER.info("Request Received for VfModule : {}  ...", inputRequest);
 
-        final GenericResourceApiVfModuleOperationInformation apiVfModuleperationInformation = inputRequest.getInput();
-        if (apiVfModuleperationInformation == null) {
+        final GenericResourceApiVfModuleOperationInformation apiVfModuleOperationInformation = inputRequest.getInput();
+        if (apiVfModuleOperationInformation == null) {
             LOGGER.error("Invalid input request: {}", inputRequest);
             return ResponseEntity.badRequest().build();
         }
 
-        final Output output = getOutput(apiVfModuleperationInformation);
+        final Output output = getOutput(apiVfModuleOperationInformation);
         final OutputRequest outputRequest = new OutputRequest(output);
 
         if (output.getResponseCode().equals(HTTP_STATUS_OK)) {
@@ -191,28 +180,4 @@ public class OperationsController {
         return cacheServiceProvider.putVfModuleOperationInformation(apiVfModuleOperationInformation);
     }
 
-    
-    @GetMapping(value = "/config/GENERIC-RESOURCE-API:services/service/{service-id}/service-data/vnfs/vnf/{vnf-id}/vnf-data/vnf-topology/")
-	public ResponseEntity<?> getVNf(@PathVariable("service-id") String serviceId,
-			@PathVariable("vnf-id") String vnfId) {
-
-    	LOGGER.info("Get vnf-topology with serviceId {} and vnfId {}",serviceId, vnfId);
-		GenericResourceApiVnfTopology genericResourceApiVnfTopology = new GenericResourceApiVnfTopology();
-		
-		genericResourceApiVnfTopology = cacheServiceProvider.getGenericResourceApiVnfTopology();
-		return ResponseEntity.ok(genericResourceApiVnfTopology);
-	}
-
-	@GetMapping(value = "/config/GENERIC-RESOURCE-API:services/service/{service-id}/service-data/vnfs/vnf/{vnf-id}/vnf-data/vf-modules/vf-module/{vf-module-id}/vf-module-data/vf-module-topology/", produces = {
-			MediaType.APPLICATION_JSON })
-	public ResponseEntity<?> getVFmodule(@PathVariable("service-id") String serviceId,
-			@PathVariable("vnf-id") String vnfId, @PathVariable("vf-module-id") String vfModuleId) {
-		LOGGER.info("Get vfModule-topology with serviceId {}, vnfId {} and vfModuleId {}",serviceId, vnfId,vfModuleId);
-
-		GenericResourceApiVfModuleTopology genericResourceApiVfModuleTopology = new GenericResourceApiVfModuleTopology();
-
-		genericResourceApiVfModuleTopology = cacheServiceProvider.getGenericResourceApiVfModuleTopology();
-		return ResponseEntity.ok(genericResourceApiVfModuleTopology);
-
-	}
 }
