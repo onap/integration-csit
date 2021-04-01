@@ -34,7 +34,7 @@ ${RESP_KEY_LINT_WARNING}            lintWarning
 *** Test Cases ***
 
 Verify That Sdc Helm Validator Correctly Responds With Supported Versions Array
-    [Tags]                          SDC_HELM_VALIDATOR_1
+    [Tags]                          VERSIONS_ENDPOINT
     [Documentation]                 Verify that validator correctly responds with supported helm versions array.
     ...                             Send GET request to ask for supported versions array.
     ...                             Should reply with JSON containing an array of Helm versions that are supported by the validator.
@@ -51,7 +51,7 @@ Verify That Sdc Helm Validator Correctly Responds With Supported Versions Array
     END
 
 Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation Request With Default Version
-    [Tags]                          SDC_HELM_VALIDATOR_2
+    [Tags]                          VALIDATE_ENDPOINT    DEPLOYABLE
     [Documentation]                 Verify that validator correctly responds for correct chart validation request with default version.
     ...                             Send POST request to validate correct chart. Input: Helm chart with api version v2, no additional data.
     ...                             Should reply with JSON containing the following information: used version = 3.x.x, deployable = true, render errors = []
@@ -76,7 +76,7 @@ Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation R
     Should Be Empty                 ${errors}
 
 Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation Request With Given V3 Version
-    [Tags]                          SDC_HELM_VALIDATOR_3
+    [Tags]                          VALIDATE_ENDPOINT    DEPLOYABLE
     [Documentation]                 Verify that validator correctly responds for correct chart validation request with given v3 version.
     ...                             Send POST request to validate correct chart. Input: Helm chart with api version v2, desired version = v3.
     ...                             Should reply with JSON containing the following information: used version = 3.x.x, deployable = true, render errors = [].
@@ -97,7 +97,7 @@ Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation R
     Should Be Empty                 ${errors}
 
 Verify That Sdc Helm Validator Responds With Error For Chart Validation Request With Invalid Version
-    [Tags]                          SDC_HELM_VALIDATOR_4
+    [Tags]                          VALIDATE_ENDPOINT    ERROR
     [Documentation]                 Verify that validator responds with error and 400 status code for validation request with invalid version.
     ...                             Send POST request with correct chart but not supported Helm version. Input: Correct helm chart, desired version = v10.
     ...                             Should reply with JSON containing error message with information regarding not supported Helm version. Response code should be 400.
@@ -112,7 +112,7 @@ Verify That Sdc Helm Validator Responds With Error For Chart Validation Request 
     Should Be Equal As Strings      ${resp.text}                   {"message":"Version: 10 is not supported"}
 
 Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation Request With Random Supported Version
-    [Tags]                          SDC_HELM_VALIDATOR_5
+    [Tags]                          VERSIONS_ENDPOINT    VALIDATE_ENDPOINT
     [Documentation]                 Verify that validator correctly responds for correct chart validation request with random supported version.
     ...                             Send GET request to ask for supported versions array.
     ...                             Should reply with JSON containing an array of Helm versions that are supported by the validator.
@@ -133,7 +133,7 @@ Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation R
     Status Should Be                200                            ${resp}
 
 Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation Request With Lint
-    [Tags]                          SDC_HELM_VALIDATOR_6
+    [Tags]                          VALIDATE_ENDPOINT    LINT    DEPLOYABLE    VALID
     [Documentation]                 Verify that validator correctly responds for correct chart validation request with lint.
     ...                             Send POST request to validate correct chart and lint. Input: Helm chart with api version v2, linted = true.
     ...                             Should reply with JSON containing the following information: deployable = true, valid = true, render errors = [], lint errors = [], lint warnings = [].
@@ -160,7 +160,7 @@ Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation R
     Should Be Empty                 ${lintWarnings}
 
 Verify That Sdc Helm Validator Correctly Responds For Chart Validation Request With Lint Warnings
-    [Tags]                          SDC_HELM_VALIDATOR_7
+    [Tags]                          VALIDATE_ENDPOINT    LINT    DEPLOYABLE    VALID
     [Documentation]                 Verify that validator correctly responds for chart validation request with lint warnings.
     ...                             Send POST request to validate chart and lint. Input: Helm chart that should cause lint warning, linted = true.
     ...                             Should reply with JSON containing the following information: deployable = true, valid = true, render errors = [], lint warning = [not empty]
@@ -188,7 +188,7 @@ Verify That Sdc Helm Validator Correctly Responds For Chart Validation Request W
     Should Contain                  @{lintWarnings}                [WARNING] templates/: directory not found
 
 Verify That Sdc Helm Validator Correctly Responds For Chart Validation Request With Lint Strict Checking
-    [Tags]                          SDC_HELM_VALIDATOR_8
+    [Tags]                          VALIDATE_ENDPOINT    STRICT_LINT    DEPLOYABLE    NON_VALID
     [Documentation]                 Verify that validator correctly responds for chart validation request with lint strict checking.
     ...                             Send POST request to validate chart and strictly lint. Input: Helm chart that should cause lint warning, linted = true, strict linted = true.
     ...                             Should reply with JSON containing the following information: deployable = true, valid = false, render errors = [], lint warning = [not empty].
@@ -216,7 +216,7 @@ Verify That Sdc Helm Validator Correctly Responds For Chart Validation Request W
     Should Contain                  @{lintWarnings}                [WARNING] templates/: directory not found
 
 Verify That Sdc Helm Validator Correctly Responds For Chart Validation Request With Lint And Render Errors
-    [Tags]                          SDC_HELM_VALIDATOR_9
+    [Tags]                          VALIDATE_ENDPOINT    STRICT_LINT    NON_DEPLOYABLE    NON_VALID
     [Documentation]                 Verify that validator correctly responds for chart validation request with lint and render errors.
     ...                             Send POST request to validate chart and strictly lint. Input: Helm chart that should cause lint and render errors, linted = true, strict linted = true.
     ...                             Should reply with JSON containing the following information: deployable = false, valid = false, render errors = [not empty], lint errors = [not empty], lint warnings = [].
