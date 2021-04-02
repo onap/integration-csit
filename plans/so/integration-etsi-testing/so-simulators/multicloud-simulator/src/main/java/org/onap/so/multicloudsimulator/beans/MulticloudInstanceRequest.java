@@ -1,3 +1,20 @@
+/*-
+ * ============LICENSE_START=======================================================
+ * Copyright 2021 Huawei Technologies Co., Ltd.
+ * ================================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END=========================================================
+ */
 package org.onap.so.multicloudsimulator.beans;
 
 import java.util.Map;
@@ -32,7 +49,7 @@ public class MulticloudInstanceRequest {
         return cloudRegion;
     }
 
-    public void setCloudRegion(String cloudRegion) {
+    public void setCloudRegion(final String cloudRegion) {
         this.cloudRegion = cloudRegion;
     }
 
@@ -40,7 +57,7 @@ public class MulticloudInstanceRequest {
         return rbName;
     }
 
-    public void setRbName(String rbName) {
+    public void setRbName(final String rbName) {
         this.rbName = rbName;
     }
 
@@ -48,7 +65,7 @@ public class MulticloudInstanceRequest {
         return rbVersion;
     }
 
-    public void setRbVersion(String rbVersion) {
+    public void setRbVersion(final String rbVersion) {
         this.rbVersion = rbVersion;
     }
 
@@ -56,7 +73,7 @@ public class MulticloudInstanceRequest {
         return profileName;
     }
 
-    public void setProfileName(String profileName) {
+    public void setProfileName(final String profileName) {
         this.profileName = profileName;
     }
 
@@ -80,7 +97,7 @@ public class MulticloudInstanceRequest {
         return vfModuleUuid;
     }
 
-    public void setVfModuleUuid(String vfModuleUuid) {
+    public void setVfModuleUuid(final String vfModuleUuid) {
         this.vfModuleUuid = vfModuleUuid;
     }
 

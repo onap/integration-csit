@@ -1,8 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- * ONAP - SO
- * ================================================================================
- * Copyright (C) 2019 Intel Corp. All rights reserved.
+ * Copyright 2021 Huawei Technologies Co., Ltd.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,130 +27,119 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.woorea.openstack.heat.model.CreateStackParam;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"generic-vnf-id", "vf-module-id", "vf-module-model-invariant-id", "vf-module-model-version-id",
+@JsonPropertyOrder({ "generic-vnf-id", "vf-module-id", "vf-module-model-invariant-id", "vf-module-model-version-id",
         "vf-module-model-customization-id", "oof_directives", "sdnc_directives", "user_directives", "template_type",
-        "template_data"})
+        "template_data" })
 public class MulticloudRequest implements Serializable {
     private static final long serialVersionUID = -5215028275577848311L;
 
     @JsonProperty("generic-vnf-id")
     private String genericVnfId;
+
     @JsonProperty("vf-module-id")
     private String vfModuleId;
+
     @JsonProperty("vf-module-model-invariant-id")
     private String vfModuleModelInvariantId;
+
     @JsonProperty("vf-module-model-version-id")
     private String vfModuleModelVersionId;
+
     @JsonProperty("vf-module-model-customization-id")
     private String vfModuleModelCustomizationId;
+
     @JsonProperty("oof_directives")
     private JsonNode oofDirectives;
+
     @JsonProperty("sdnc_directives")
     private JsonNode sdncDirectives;
+
     @JsonProperty("user_directives")
     private JsonNode userDirectives;
+
     @JsonProperty("template_type")
     private String templateType;
+
     @JsonProperty("template_data")
     private CreateStackParam templateData;
 
-
-    @JsonProperty("generic-vnf-id")
     public String getGenericVnfId() {
         return genericVnfId;
     }
 
-    @JsonProperty("generic-vnf-id")
-    public void setGenericVnfId(String genericVnfId) {
+    public void setGenericVnfId(final String genericVnfId) {
         this.genericVnfId = genericVnfId;
     }
 
-    @JsonProperty("vf-module-id")
     public String getVfModuleId() {
         return vfModuleId;
     }
 
-    @JsonProperty("vf-module-id")
-    public void setVfModuleId(String vfModuleId) {
+    public void setVfModuleId(final String vfModuleId) {
         this.vfModuleId = vfModuleId;
     }
 
-    @JsonProperty("vf-module-model-invariant-id")
     public String getVfModuleModelInvariantId() {
         return vfModuleModelInvariantId;
     }
 
-    @JsonProperty("vf-module-model-invariant-id")
-    public void setVfModuleModelInvariantId(String vfModuleModelInvariantId) {
+    public void setVfModuleModelInvariantId(final String vfModuleModelInvariantId) {
         this.vfModuleModelInvariantId = vfModuleModelInvariantId;
     }
 
-    @JsonProperty("vf-module-model-version-id")
     public String getVfModuleModelVersionId() {
         return vfModuleModelVersionId;
     }
 
-    @JsonProperty("vf-module-model-version-id")
-    public void setVfModuleModelVersionId(String vfModuleModelVersionId) {
+    public void setVfModuleModelVersionId(final String vfModuleModelVersionId) {
         this.vfModuleModelVersionId = vfModuleModelVersionId;
     }
 
-    @JsonProperty("vf-module-model-customization-id")
     public String getVfModuleModelCustomizationId() {
         return vfModuleModelCustomizationId;
     }
 
     @JsonProperty("vf-module-model-customization-id")
-    public void setVfModuleModelCustomizationId(String vfModuleModelCustomizationId) {
+    public void setVfModuleModelCustomizationId(final String vfModuleModelCustomizationId) {
         this.vfModuleModelCustomizationId = vfModuleModelCustomizationId;
     }
 
-    @JsonProperty("oof_directives")
     public JsonNode getOofDirectives() {
         return oofDirectives;
     }
 
-    @JsonProperty("oof_directives")
-    public void setOofDirectives(JsonNode oofDirectives) {
+    public void setOofDirectives(final JsonNode oofDirectives) {
         this.oofDirectives = oofDirectives;
     }
 
-    @JsonProperty("sdnc_directives")
     public JsonNode getSdncDirectives() {
         return sdncDirectives;
     }
 
-    @JsonProperty("sdnc_directives")
-    public void setSdncDirectives(JsonNode sdncDirectives) {
+    public void setSdncDirectives(final JsonNode sdncDirectives) {
         this.sdncDirectives = sdncDirectives;
     }
 
-    @JsonProperty("user_directives")
     public JsonNode getUserDirectives() {
         return userDirectives;
     }
 
-    @JsonProperty("user_directives")
-    public void setUserDirectives(JsonNode userDirectives) {
+    public void setUserDirectives(final JsonNode userDirectives) {
         this.userDirectives = userDirectives;
     }
 
-    @JsonProperty("template_type")
     public String getTemplateType() {
         return templateType;
     }
 
-    @JsonProperty("template_type")
-    public void setTemplateType(String templateType) {
+    public void setTemplateType(final String templateType) {
         this.templateType = templateType;
     }
 
-    @JsonProperty("template_data")
     public CreateStackParam getTemplateData() {
         return templateData;
     }
 
-    @JsonProperty("template_data")
     public void setTemplateData(CreateStackParam templateData) {
         this.templateData = templateData;
     }

@@ -4,6 +4,9 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
 
+*** Variables ***
+${SLEEP_INTERVAL_SEC}=   60
+
 *** Test Cases ***
 Distribute Service Template
     Create Session   sdc_controller_session  http://${REPO_IP}:8085
@@ -23,3 +26,4 @@ Macroflow
     Log To Console     Received status code: ${service_instantiation_request.status_code}
     Run Keyword If  '${service_instantiation_request.status_code}' == '202'  log to console   \nexecuted with expected result
     Should Be Equal As Strings    '${service_instantiation_request.status_code}'    '202'
+    SLEEP   ${SLEEP_INTERVAL_SEC}s

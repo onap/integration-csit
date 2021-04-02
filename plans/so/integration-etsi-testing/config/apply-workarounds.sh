@@ -109,6 +109,8 @@ mysql -h $DB_HOST -uroot -p$MYSQL_ROOT_PASSWORD $CATALOG_DB << EOF
 
  UPDATE orchestration_status_state_transition_directive SET FLOW_DIRECTIVE='CONTINUE' WHERE RESOURCE_TYPE='VNF' AND ORCHESTRATION_STATUS='CREATED' AND TARGET_ACTION='ACTIVATE' AND FLOW_DIRECTIVE='FAIL';
 
+ insert into cloud_sites(ID, REGION_ID, IDENTITY_SERVICE_ID, CLOUD_VERSION, CLLI, ORCHESTRATOR) values("EtsiCloudRegion", "EtsiCloudRegion", "DEFAULT_KEYSTONE", "2.5", "clli2", "multicloud");
+
  COMMIT;
 EOF
 

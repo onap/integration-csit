@@ -1,8 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- * ONAP - SO
- * ================================================================================
- * Copyright (C) 2020 Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2021 Huawei Technologies Co., Ltd.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +22,10 @@ public class Response {
 
     private String errorMsg;
 
-    public Response(String errorMsg) {
+    public Response(final String errorMsg) {
         this.errorMsg = errorMsg;
     }
-    
+
     public Response() {
     }
 
@@ -35,7 +33,7 @@ public class Response {
         return errorMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
+    public void setErrorMsg(final String errorMsg) {
         this.errorMsg = errorMsg;
     }
 

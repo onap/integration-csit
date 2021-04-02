@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ * Copyright 2021 Huawei Technologies Co., Ltd.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.so.multicloudsimulator.configration;
+package org.onap.so.multicloudsimulator.configuration;
 
-import static org.onap.so.multicloudsimulator.utils.Constants.SERVICE_TOPOLOGY_OPERATION_CACHE;
+import static org.onap.so.multicloudsimulator.utils.Constants.MULTICLOUD_CACHE;
 import java.util.Arrays;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -28,17 +26,13 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author Waqas Ikram (waqas.ikram@est.tech)
- *
- */
 @Configuration
-public class ApplicationConfigration {
+public class ApplicationConfiguration {
 
     @Bean
     public CacheManager cacheManager() {
         final SimpleCacheManager manager = new SimpleCacheManager();
-        manager.setCaches(Arrays.asList(getCache(SERVICE_TOPOLOGY_OPERATION_CACHE)));
+        manager.setCaches(Arrays.asList(getCache(MULTICLOUD_CACHE)));
         return manager;
     }
 
