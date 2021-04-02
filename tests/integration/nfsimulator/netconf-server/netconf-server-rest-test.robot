@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Run healthcheck
 Library 	      RequestsLibrary
+Library           Collections
 Resource          ./resources/netconf-server-keywords.robot
 
 
@@ -23,4 +24,7 @@ Netconf Module Configuration Update
     Sleep   20s     Wait for message distribution in Kafka
     Verify That Change Is Available In NetConf Module Change Configuration History  200
 
-
+Netconf Module Configuration Get
+    [Tags]      Netconf-Server
+    [Documentation]   Run Get Configuration
+    Get NetConf Module Configuration  200
