@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e56db04_7b39fde4",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-06T11:06:55Z",
+      "side": 1,
+      "message": "Copyright should be updated",
+      "revId": "3c7f5ceb9809b67981fe16508b2c9fe3d06c46ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad001af8_28ce3f12",
+        "filename": "run-csit.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-06T11:06:55Z",
+      "side": 1,
+      "message": "tabs to spaces",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 123
+      },
+      "revId": "3c7f5ceb9809b67981fe16508b2c9fe3d06c46ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
