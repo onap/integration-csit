@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daa261f6_0cdeb343",
+        "filename": "plans/so/integration-etsi-testing/config/apply-workarounds.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-06T08:33:39Z",
+      "side": 1,
+      "message": "File was modified, why copyright wasn\u0027t updated? (this applies to a few following files as well)",
+      "revId": "cfa8b96c1b28a7dc4f846bb74dc68d036ec431cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4969c68f_379930e8",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/InstanceResponse.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-06T08:33:39Z",
+      "side": 1,
+      "message": "Existing copyright shouldn\u0027t be replaced with new one - instead, you should append to the existing one with \"Modification copyright\" statement, or, if the company is the same, extend the years (2020-2021 in this case)",
+      "revId": "cfa8b96c1b28a7dc4f846bb74dc68d036ec431cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8647980_c4c3f6d0",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/beans/MulticloudRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-06T08:33:39Z",
+      "side": 1,
+      "message": "Existing copyright shouldn\u0027t be replaced - instead, you should do \n\nCopyright (C) 2019 Intel Corp. All rights reserved.\nModification copyright 2021 Huawei Technologies Co., Ltd.\n\nThis applies to a few other files as well, please check them all",
+      "revId": "cfa8b96c1b28a7dc4f846bb74dc68d036ec431cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
