@@ -73,7 +73,7 @@ services:
 
   db:
     container_name: db
-    image: postgres
+    image: nexus3.onap.org:10001/library/postgres:10
     restart: always
     environment:
       POSTGRES_PASSWORD: $DB_PASSWORD
@@ -85,7 +85,7 @@ services:
 
   aai:
     container_name: aai-sim
-    image: mockserver/mockserver:mockserver-5.9.0
+    image: nexus3.onap.org:10001/mockserver/mockserver:latest
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/aai-initializer.json
@@ -102,12 +102,13 @@ services:
 
   cbs-sim:
     container_name: cbs-sim
-    image: mockserver/mockserver:mockserver-5.9.0
+    image: nexus3.onap.org:10001/mockserver/mockserver:latest
+    command: -logLevel DEBUG -serverPort 10443
+    ports:
+      - 10443:1080
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/cbs-initializer.json
-      LOG_LEVEL: "DEBUG"
-      SERVER_PORT: 10443
     volumes:
       - ./assets/cbs_sim/cbs_mockserver.properties:/config/mockserver.properties
       - ./assets/cbs_sim/cbs-initializer.json:/config/cbs-initializer.json

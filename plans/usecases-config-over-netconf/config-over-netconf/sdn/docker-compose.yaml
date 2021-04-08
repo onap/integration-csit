@@ -9,7 +9,7 @@ networks:
 
 services:
   db:
-    image: mysql/mysql-server:5.6
+    image: nexus3.onap.org:10001/mysql/mysql-server:5.6
     container_name: sdnc_db_container
     ports:
       - "3306"
