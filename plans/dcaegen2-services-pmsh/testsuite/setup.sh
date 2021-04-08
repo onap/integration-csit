@@ -32,7 +32,7 @@ PMSH_IP=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{
 
 # Slow machine running CSITs can affect PMSH coming up before CSITs are run
 echo "Waiting for PMSH to come up..."
-for i in {1..30}; do
+for i in {1..5}; do
     pmsh_response=$(curl -k -s -o /dev/null -w "%{http_code}" https://${PMSH_IP}:8443/healthcheck)
     if [[ "$pmsh_response" == "200" ]]
     then
