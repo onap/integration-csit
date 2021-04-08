@@ -93,7 +93,7 @@ services:
         - subscriber2.com
 
   mariadb:
-    image: mariadb:10.2.14
+    image: nexus3.onap.org:10001/library/mariadb:10.2.14
     container_name: mariadb
     hostname: datarouter-mariadb
     ports:
