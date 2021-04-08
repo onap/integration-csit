@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6a3e0a_bca3fefb",
+        "filename": "tests/integration/nfsimulator/netconf-server/netconf-server-rest-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-08T06:37:40Z",
+      "side": 1,
+      "message": "Netconf Module Configuration History Get",
+      "revId": "37649c6f1d91aa1480defd92b6e91ebc9d51a22e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c594e66e_75b8ad6a",
+        "filename": "tests/integration/nfsimulator/netconf-server/netconf-server-rest-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-08T06:37:40Z",
+      "side": 1,
+      "message": "Configuration History should be returned",
+      "revId": "37649c6f1d91aa1480defd92b6e91ebc9d51a22e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd385fc5_71b107b6",
+        "filename": "tests/integration/nfsimulator/netconf-server/netconf-server-rest-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-08T06:37:40Z",
+      "side": 1,
+      "message": "Here is fetch action and where is set?",
+      "revId": "37649c6f1d91aa1480defd92b6e91ebc9d51a22e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9107d0d_c635337b",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-08T06:37:40Z",
+      "side": 1,
+      "message": "Verify That Configuration History Is Available",
+      "revId": "37649c6f1d91aa1480defd92b6e91ebc9d51a22e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58974bd_e8b91060",
+        "filename": "tests/integration/nfsimulator/netconf-server/resources/netconf-server-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3433
+      },
+      "writtenOn": "2021-04-08T06:37:40Z",
+      "side": 1,
+      "message": "Verify that configuration is available",
+      "revId": "37649c6f1d91aa1480defd92b6e91ebc9d51a22e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
