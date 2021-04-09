@@ -46,6 +46,30 @@
       "revId": "7186e7654b18551792455639bceda7d580973065",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267ae6ca_b9fe7956",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-09T12:12:18Z",
+      "side": 1,
+      "message": "...ok, that needs to be raised with aai-sim responsibles (this directly ties into some doubts I raised about simulator best practices in integration meeting last week, so let\u0027s take this outside of this review)\nI\u0027m not familiar with making 3rd party images available in nexus so that probably also needs to be handled outside",
+      "parentUuid": "5547b8df_ddce22a7",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "7186e7654b18551792455639bceda7d580973065",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
