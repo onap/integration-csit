@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation     Run healthcheck
 Library 	      RequestsLibrary
+Library           Collections
 Resource          ./resources/netconf-server-keywords.robot
 
 
@@ -23,4 +24,8 @@ Netconf Module Configuration Update
     Sleep   20s     Wait for message distribution in Kafka
     Verify That Change Is Available In NetConf Module Change Configuration History  200
 
-
+Netconf Module Configuration History Get
+    [Tags]      Netconf-Server
+    [Documentation]   Configuration History should be returned
+    Update NetConf Module Configuration  pnf-simulator  ${PNF_SIMULATOR_DATA_XML}  202
+    Verify That Configuration History Is Available  200

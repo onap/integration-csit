@@ -37,3 +37,13 @@ Verify That Change Is Available In NetConf Module Change Configuration History
     Should Be Equal As Strings    ${resp.status_code}    ${resp_code}
     ${actual_data}=  Convert To String  ${resp.json()}
     Should Be Equal  ${actual_data}  [{u'new': {u'path': u'/pnf-simulator:config/itemValue1', u'value': 42}, u'type': u'ChangeCreated'}, {u'new': {u'path': u'/pnf-simulator:config/itemValue2', u'value': 35}, u'type': u'ChangeCreated'}]
+
+Verify That Configuration History Is Available
+    [Documentation]  Verify that configuration is available
+    [Arguments]   ${resp_code}
+
+    Create Session    netconf_server_session    ${NETCONF_SERVER_URL}
+    ${resp}=  GET On Session  netconf_server_session  /get_config/pnf-simulator
+    Should Be Equal As Strings    ${resp.status_code}    ${resp_code}
+    Dictionary Should Contain Item   ${resp.json()['config']}  itemValue1  ${42}
+    Dictionary Should Contain Item   ${resp.json()['config']}  itemValue2  ${35}
