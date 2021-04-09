@@ -22,6 +22,30 @@
       "revId": "7186e7654b18551792455639bceda7d580973065",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5547b8df_ddce22a7",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-04-09T11:48:01Z",
+      "side": 1,
+      "message": "Seems to be the only tag hosted in onap nexus.\nAlso, in the pm-mapper compose we ref node:10-slim which isn\u0027t in onap nexus. Any solution there?",
+      "parentUuid": "0158b569_a0cf9853",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "7186e7654b18551792455639bceda7d580973065",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
