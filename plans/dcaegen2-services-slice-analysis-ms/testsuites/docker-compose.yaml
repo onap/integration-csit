@@ -87,9 +87,6 @@ services:
      - "8080:8080"
     volumes:
      - ./config/sliceanalysisms/config_all.json:/etc/config_all.json
-     - ./config/sliceanalysisms/trust12.jks:/opt/app/sliceanalysisms/etc/cert/trust.jks
-     - ./config/sliceanalysisms/trust.pass:/opt/app/sliceanalysisms/etc/cert/trust.pass
-    # - ./config/sliceanalysisms/trust.jks:/opt/app/sliceanalysisms/etc/cert/trustjss.jks
     depends_on:
      - postgres
     networks:
