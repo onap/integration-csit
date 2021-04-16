@@ -1,0 +1,3 @@
+# Test suites are relative paths under csit-mt/tests/.
+# Place the suites in run order.
+multitenancy
