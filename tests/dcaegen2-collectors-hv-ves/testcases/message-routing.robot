@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018-2019 NOKIA
+# Copyright (C) 2018-2021 NOKIA
 # Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -46,6 +46,15 @@ Correct Messages Routing
     ...    Assert Dcae App Consumed   ${DEFAULT_PERF3GPP_TOPIC}   ${AMOUNT_25000}
     Assert Dcae App Consumed Proper Messages   ${DEFAULT_PERF3GPP_TOPIC}   ${DCAE_FIXED_PAYLOAD_REQUEST}
 
+Correct StndDefined Messages Routing
+    [Documentation]   VES-HV Collector should route all valid messages to stndDefined topics specified in configuration
+    ...               without changing message payload generated in xNF simulator
+
+    Send Messages From xNF Simulators   ${XNF_SIMULATOR}    ${XNF_STNDDEFINED_PAYLOAD_REQUEST}
+
+    Wait until keyword succeeds   60 sec   5 sec
+    ...    Assert Dcae App Consumed   ${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}   ${AMOUNT_25000}
+    Assert Dcae App Consumed Proper Messages   ${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}   ${DCAE_STNDDEFINED_PAYLOAD_REQUEST}
 
 Too big payload message handling
     [Documentation]   VES-HV Collector should interrupt the stream when a message with too big payload is encountered
@@ -93,12 +102,14 @@ ${XNF_SIM_API_PATH}                            /simulator/async
 
 ${HV_VES_SCENARIOS}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources/scenarios
 ${XNF_FIXED_PAYLOAD_REQUEST}                   ${HV_VES_SCENARIOS}/fixed-payload/xnf-fixed-payload-request.json
+${XNF_STNDDEFINED_PAYLOAD_REQUEST}             ${HV_VES_SCENARIOS}/stnd-defined/xnf-stnd-defined-payload-request.json
 ${XNF_TOO_BIG_PAYLOAD_REQUEST}                 ${HV_VES_SCENARIOS}/too-big-payload/xnf-too-big-payload-request.json
 ${XNF_INVALID_WIRE_FRAME_REQUEST}              ${HV_VES_SCENARIOS}/invalid-wire-frame/xnf-invalid-wire-frame-request.json
 ${XNF_INVALID_GPB_DATA_REQUEST}                ${HV_VES_SCENARIOS}/invalid-gpb-data/xnf-invalid-gpb-data-request.json
 ${XNF_UNSUPPORTED_DOMAIN_REQUEST}              ${HV_VES_SCENARIOS}/unsupported-domain/xnf-unsupported-domain-request.json
 
 ${DCAE_FIXED_PAYLOAD_REQUEST}                  ${HV_VES_SCENARIOS}/fixed-payload/dcae-fixed-payload-request.json
+${DCAE_STNDDEFINED_PAYLOAD_REQUEST}            ${HV_VES_SCENARIOS}/stnd-defined/dcae-stnd-defined-payload-request.json
 ${DCAE_TOO_BIG_PAYLOAD_REQUEST}                ${HV_VES_SCENARIOS}/too-big-payload/dcae-too-big-payload-request.json
 ${DCAE_INVALID_WIRE_FRAME_REQUEST}             ${HV_VES_SCENARIOS}/invalid-wire-frame/dcae-invalid-wire-frame-request.json
 ${DCAE_INVALID_GPB_DATA_REQUEST}               ${HV_VES_SCENARIOS}/invalid-gpb-data/dcae-invalid-gpb-data-request.json

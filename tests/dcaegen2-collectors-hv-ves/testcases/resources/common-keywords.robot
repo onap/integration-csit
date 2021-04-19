@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018-2019 NOKIA
+# Copyright (C) 2018-2021 NOKIA
 # Modification copyright (C) 2021 Samsung Electronics Co., Ltd.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,6 +63,7 @@ Send Messages From xNF Simulators
 VES-HV Collector Test Shutdown
     Reset DCAE App Simulator  ${DEFAULT_PERF3GPP_TOPIC}
     Reset DCAE App Simulator  ${SECOND_PERF3GPP_TOPIC}
+    Reset DCAE App Simulator  ${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}
 
 
 VES-HV Collector Suite Teardown

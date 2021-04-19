@@ -10,6 +10,17 @@
         "bootstrap_servers": "kafka:9092",
         "topic_name": "TEST_HV_VES_PERF3GPP"
       }
+    },
+    "ves-3gpp-heartbeat": {
+      "type": "kafka",
+      "aaf_credentials": {
+        "username": "admin",
+        "password": "admin_secret"
+      },
+      "kafka_info": {
+        "bootstrap_servers": "kafka:9092",
+        "topic_name": "TEST_SEC_3GPP_HEARTBEAT_OUTPUT"
+      }
     }
   }
 }
