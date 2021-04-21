@@ -14,20 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Place the scripts in run order:
-source ${WORKSPACE}/scripts/multitenancy/script1.sh
+docker pull registry-dev.nso.lab-services.ca/nso-image/multi-tenancy-test-suite:latest
+docker run --name multi-tenancy -d registry-dev.nso.lab-services.ca/nso-image/multi-tenancy-test-suite:latest
 
-# CLI internet speed test
-curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
-
-# Test download a 100 MB file to check network speed to nexus.onap.org
-wget -O /dev/null https://nexus.onap.org/content/repositories/releases/org/onap/appc/appc-dg-shared-installer/1.3.0/appc-dg-shared-installer-1.3.0.zip
-
-# Test download a 100 MB file to check network speed to nexus3.onap.org
-wget -O /dev/null https://nexus3.onap.org/repository/docker.release/v2/-/blobs/sha256:04dc4b8163487bb1c40df1ce16f349b507c262d6e2f202baa2e66a42eb8c64a1
-
-docker run --name i-mock -d jamesdbloom/mockserver
-MOCK_IP=`get-instance-ip.sh i-mock`
+MOCK_IP=`get-instance-ip.sh multi-tenancy`
 
 # Wait for initialization
 for i in {1..10}; do
@@ -40,4 +30,7 @@ ${WORKSPACE}/scripts/multitenancy/mock-hello.sh ${MOCK_IP}
 
 # Pass any variables required by Robot test suites in ROBOT_VARIABLES
 ROBOT_VARIABLES="-v MOCK_IP:${MOCK_IP}"
+
+
+
 

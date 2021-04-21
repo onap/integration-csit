@@ -14,4 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+#docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+CONTAINER_ID=$(docker run --name multi-tenancy -d registry-dev.nso.lab-services.ca/nso-image/multi-tenancy-test-suite:latest)
+docker exec -it CONTAINER_ID  /bin/sh
+mvn gatling:test
+
+
