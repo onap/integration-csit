@@ -6,9 +6,7 @@ Resource          ./resources/vnfsdk_keywords.robot
 Perform vnf refrepo healthcheck
     [Documentation]    Check if vnf refrepo is up and running
 
-    Create Session   refrepo  ${base_url}
-    ${response}=    Get Request    refrepo   /PackageResource/healthcheck
-    Should Be Equal As Strings  ${response.status_code}     200
+    ${response}=    GET  url=${base_url}/PackageResource/healthcheck   expected_status=200
 
 Validate correct, no security CSAR
     [Documentation]    Valid CSAR with no security should PASS validation and should return no error
