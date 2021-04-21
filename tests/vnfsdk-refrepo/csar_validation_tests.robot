@@ -7,7 +7,7 @@ Perform vnf refrepo healthcheck
     [Documentation]    Check if vnf refrepo is up and running
 
     Create Session   refrepo  ${base_url}
-    ${response}=    Get Request    refrepo   /PackageResource/healthcheck
+    ${response}=    GET On Session    refrepo   /PackageResource/healthcheck
     Should Be Equal As Strings  ${response.status_code}     200
 
 Validate correct, no security CSAR
