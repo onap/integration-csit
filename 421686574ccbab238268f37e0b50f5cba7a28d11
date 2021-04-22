@@ -22,6 +22,30 @@
       "revId": "421686574ccbab238268f37e0b50f5cba7a28d11",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0def75_895faf80",
+        "filename": "plans/multitenancy/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-04-22T08:10:34Z",
+      "side": 1,
+      "message": "Note that this is *test-suite* docker image. Are you intending to introduce your scala/gatling tests as a separate docker container and run the tests from there? This complicates things somewhat.\n\nAlso, regardless of the above, this is all still happening in the wrong repository.",
+      "parentUuid": "d412cf7a_a8a5ac3d",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 86
+      },
+      "revId": "421686574ccbab238268f37e0b50f5cba7a28d11",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
