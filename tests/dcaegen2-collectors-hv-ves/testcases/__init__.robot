@@ -1,7 +1,7 @@
 # ============LICENSE_START=======================================================
 # csit-dcaegen2-collectors-hv-ves
 # ================================================================================
-# Copyright (C) 2018-2019 NOKIA
+# Copyright (C) 2018-2021 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,9 +39,11 @@ Configure collector
 
 Configure Dcae App
     Wait until keyword succeeds   10 sec   5 sec
-    ...    Configure Dcae App Simulator To Consume Messages From Topics   ${DEFAULT_PERF3GPP_TOPIC},${SECOND_PERF3GPP_TOPIC}
+    ...    Configure Dcae App Simulator To Consume Messages From Topics
+    ...    ${DEFAULT_PERF3GPP_TOPIC},${SECOND_PERF3GPP_TOPIC},${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}
     Set Suite Variable   ${DEFAULT_PERF3GPP_TOPIC}   children=True
     Set Suite Variable   ${SECOND_PERF3GPP_TOPIC}    children=True
+    Set Suite Variable   ${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}    children=True
 
 
 *** Variables ***
@@ -53,6 +55,7 @@ ${CONSUL_HV_VES_CONFIGURATION_KEY_PATH}        /v1/kv/dcae-hv-ves-collector
 
 ${DEFAULT_PERF3GPP_TOPIC}                      TEST_HV_VES_PERF3GPP
 ${SECOND_PERF3GPP_TOPIC}                       TEST_HV_VES_PERF3GPP_BUT_WITH_EXTRA_WORDS
+${DEFAULT_STNDDEFINED_3GPP_HEARTBEAT_TOPIC}    TEST_SEC_3GPP_HEARTBEAT_OUTPUT
 
 ${HV_VES_RESOURCES}                            %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
 ${HV_VES_CONFIGURATION_JSON_FILEPATH}          ${HV_VES_RESOURCES}/hv-ves-configuration.json
