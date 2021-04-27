@@ -64,6 +64,9 @@
     "sliceanalysisms.pollingTimeout": 60,
     "sliceanalysisms.cid": "sliceanalysisms-cid",
     "sliceanalysisms.configDb.service": "http://configdb_sim:5000",
+    "sliceanalysisms.aai.url": "http://configdb_sim:5000/aai/v21",
+    "sliceanalysisms.cps.url": "http://configdb_sim:5000",
+    "sliceanalysisms.configDbEnabled": "true",
     "service_calls": {
       "policy-req": []
     },
