@@ -25,6 +25,3 @@ services:
   api-handler-infra:
     image: onap/so/api-handler-infra:${TAG}
 #############################################################################
-  so-monitoring:
-    image: onap/so/so-monitoring:${TAG}
-################################################################################
