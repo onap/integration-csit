@@ -227,22 +227,6 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 #############################################################################
-  so-monitoring:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-monitoring:${TAG}
-    ports:
-      - "30224:30224"
-    volumes:
-      - ${CONFIG_DIR_PATH_MACRO}/override-files/so-monitoring/onapheat:/app/config
-    environment:
-      - APP=so-monitoring
-      - JVM_ARGS=-Xms64m -Xmx512m
-    hostname:
-      so-monitoring.so.testlab.onap.org
-    depends_on:
-      - mariadb
-      - catalog-db-adapter
-      - request-db-adapter
-################################################################################
   sdc-simulator:
     image: simulators/sdc-simulator:latest
     ports:
