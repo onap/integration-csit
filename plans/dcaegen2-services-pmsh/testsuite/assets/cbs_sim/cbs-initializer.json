@@ -13,77 +13,75 @@
       "body": {
         "type": "JSON",
         "json": {
-          "policy": {
-            "subscription": {
-              "subscriptionName": "ExtraPM-All-gNB-R2B",
-              "administrativeState": "LOCKED",
-              "fileBasedGP": 15,
-              "fileLocation": "/pm/pm.xml",
-              "nfFilter": {
-                "nfNames": [
-                  "^pnf.*",
-                  "^vnf.*"
-                ],
-                "modelInvariantIDs": [
-                  "7129e420-d396-4efb-af02-6b83499b12f8"
-                ],
-                "modelVersionIDs": [
-
-                ],
-                "modelNames": [
-
-                ]
-              },
-              "measurementGroups": [
-                {
-                  "measurementGroup": {
-                    "measurementTypes": [
-                      {
-                        "measurementType": "countera"
-                      },
-                      {
-                        "measurementType": "counterb"
-                      }
-                    ],
-                    "managedObjectDNsBasic": [
-                      {
-                        "DN": "dna"
-                      },
-                      {
-                        "DN": "dnb"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "measurementGroup": {
-                    "measurementTypes": [
-                      {
-                        "measurementType": "counterc"
-                      },
-                      {
-                        "measurementType": "counterd"
-                      }
-                    ],
-                    "managedObjectDNsBasic": [
-                      {
-                        "DN": "dnc"
-                      },
-                      {
-                        "DN": "dnd"
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
           "config": {
             "control_loop_name": "pmsh-control-loop",
             "operational_policy_name": "pmsh-operational-policy",
             "cert_path": "/opt/app/pmsh/etc/certs/cert.pem",
             "enable_tls": true,
             "ca_cert_path": "/opt/app/pmsh/etc/certs/cacert.pem",
+            "pmsh_policy": {
+              "subscription": {
+                "subscriptionName": "ExtraPM-All-gNB-R2B",
+                "administrativeState": "LOCKED",
+                "fileBasedGP": 15,
+                "fileLocation":"\/pm\/pm.xml",
+                "nfFilter": {
+                  "nfNames": [
+                    "^pnf.*",
+                    "^vnf.*"
+                  ],
+                  "modelInvariantIDs": [
+                    "7129e420-d396-4efb-af02-6b83499b12f8"
+                  ],
+                  "modelVersionIDs": [
+                  ],
+                  "modelNames": [
+                  ]
+                },
+                "measurementGroups": [
+                  {
+                    "measurementGroup": {
+                      "measurementTypes": [
+                        {
+                          "measurementType": "countera"
+                        },
+                        {
+                          "measurementType": "counterb"
+                        }
+                      ],
+                      "managedObjectDNsBasic": [
+                        {
+                          "DN": "dna"
+                        },
+                        {
+                          "DN": "dnb"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "measurementGroup": {
+                      "measurementTypes": [
+                        {
+                          "measurementType": "counterc"
+                        },
+                        {
+                          "measurementType": "counterd"
+                        }
+                      ],
+                      "managedObjectDNsBasic": [
+                        {
+                          "DN": "dnc"
+                        },
+                        {
+                          "DN": "dnd"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
             "streams_publishes": {
               "policy_pm_publisher": {
                 "dmaap_info": {
