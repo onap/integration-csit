@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Mukesh Kumar <mukeshsharma@est.tech>
+Submitted-by: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Submitted-at: Fri, 07 May 2021 13:27:35 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/121068
+Project: integration/csit
+Branch: refs/heads/master
