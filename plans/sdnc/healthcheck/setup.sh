@@ -23,7 +23,7 @@ export NEXUS_USERNAME=docker
 export NEXUS_PASSWD=docker
 export NEXUS_DOCKER_REPO=nexus3.onap.org:10001
 export DMAAP_TOPIC=AUTO
-export DOCKER_IMAGE_VERSION=2.1-STAGING-latest
+export DOCKER_IMAGE_VERSION=2.2-STAGING-latest
 export CCSDK_DOCKER_IMAGE_VERSION=1.1.5
 
 # Set credentials
