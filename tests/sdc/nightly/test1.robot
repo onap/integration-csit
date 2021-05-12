@@ -12,5 +12,6 @@ Get Requests health check ok
     ${resp}=    Get Request    sdc-fe    /sdc1/rest/healthCheck    headers=&{headers}
     Should Be Equal As Strings    ${resp.status_code}    200
     @{ITEMS}=    Copy List    ${resp.json()['componentsInfo']}
-    : FOR    ${ELEMENT}    IN    @{ITEMS}
-    \    Log    ${ELEMENT['healthCheckComponent']} ${ELEMENT['healthCheckStatus']}
+    FOR    ${ELEMENT}    IN    @{ITEMS}
+        Log    ${ELEMENT['healthCheckComponent']} ${ELEMENT['healthCheckStatus']}
+    END

@@ -106,9 +106,9 @@ Verify That Sdc Helm Validator Responds With Error For Chart Validation Request 
     ${chart_path}                   Catenate                       SEPARATOR=                    ${CHARTS_PATH}                    ${CHART_CORRECT_V2}
     ${files}=                       Create Multi Part              ${chart_path}
     ${other_data}=                  Create Dictionary              ${REQ_KEY_VERSION_DESIRED}=v10
-    ${resp}=                        Post Request                   ${VALIDATOR_SESSION}          ${VALIDATE_ENDPOINT}              files=${files}    data=${other_data}
+    ${resp}=                        POST On Session                ${VALIDATOR_SESSION}          ${VALIDATE_ENDPOINT}              files=${files}    data=${other_data}     expected_status=anything
 
-    Should Be Equal As Strings      ${resp.status_code}            400
+    Status Should Be                400                            ${resp}
     Should Be Equal As Strings      ${resp.text}                   {"message":"Version: 10 is not supported"}
 
 Verify That Sdc Helm Validator Correctly Responds For Correct Chart Validation Request With Random Supported Version
