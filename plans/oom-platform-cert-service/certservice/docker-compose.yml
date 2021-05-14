@@ -2,7 +2,7 @@ version: "2.1"
 
 services:
   ejbca:
-    image: primekey/ejbca-ce:6.15.2.5
+    image: primekey/ejbca-ce:7.4.3.2
     hostname: cahostname
     container_name: oomcert-ejbca
     ports:
