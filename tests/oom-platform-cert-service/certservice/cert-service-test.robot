@@ -33,6 +33,18 @@ Generate Certificate with all Sans types In RA Mode For CA Name
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
     Send Get Request with Header And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${VALID_RA_ALL_SANS_CSR_FILE}  ${VALID_RA_ALL_SANS_PK_FILE}
 
+Generate Certificate In RA Mode For CA Name With Requested Sans
+    [Tags]      OOM-CERT-SERVICE
+    [Documentation]   Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint, expect 200 and verify all Sans in certificate
+    ${sans}=  Create List  IP:127.0.0.1  DNS:example.com  email:onap@onap.org  URI:onap://cluster.local/
+    Send Request With Sans And Validate Response  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${sans}
+
+Generate Certificate In RA Mode For CA Name With IPv6 In Sans
+    [Tags]      OOM-CERT-SERVICE
+    [Documentation]   Send request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} endpoint, expect 200 and verify all Sans in certificate
+    ${sans}=  Create List  IP:2001:0db8:85a3:0000:0000:8a2e:0370:7334  IP:127.0.0.1  DNS:example.com  email:onap@onap.org  URI:onap://cluster.local/
+    Send Request With Sans And Validate Response  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${sans}
+
 Report Not Found Error When Path To Service Is Not Valid
     [Tags]      OOM-CERT-SERVICE
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT} endpoint and expect 404
