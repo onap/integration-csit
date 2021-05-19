@@ -9,6 +9,7 @@ Library           ../libraries/CertClientManager.py  ${MOUNT_PATH}  ${TRUSTSTORE
 Library           ../libraries/P12ArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/JksArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/PemArtifactsValidator.py  ${MOUNT_PATH}
+Library           ../libraries/PemHelper.py
 
 *** Keywords ***
 
@@ -87,6 +88,19 @@ Send Post Request And Validate Response
     [Arguments]   ${path}  ${resp_code}
     ${resp}= 	Post Request 	${https_valid_cert_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
+
+Send Request With Sans And Validate Response
+    [Documentation]  Send Request With Given Sans And Verify If Certificate Contains All Of Them
+    [Arguments]  ${path}  ${sans}
+    ${csr}  ${pk}=  Generate Csr And Pk With Sans  ${sans}
+    ${headers}=  Create Dictionary  CSR=${csr}  PK=${pk}
+    ${resp}= 	Get Request 	${https_valid_cert_session}  ${path}  headers=${headers}
+    Should Be Equal As Strings 	${resp.status_code} 	200
+    ${resp_content}=  Parse Json  ${resp.content}
+    Dictionary Should Contain Key  ${resp_content}  certificateChain
+    @{list}=  Get From Dictionary  ${resp_content}  certificateChain
+    ${contains_all_sans}=  Validate Cert Contains Sans  ${list}  ${sans}
+    Should Be True  ${contains_all_sans}  Certificate doesn't contain all given SANS
 
 Run Cert Service Client And Validate PKCS12 File Creation And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
