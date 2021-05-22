@@ -135,6 +135,36 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
+  so-cnf-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-cnf-adapter:1.8.0-STAGING-latest
+    ports:
+      - "8090:8090"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH_MACRO}/override-files/cnf-adapter/onapheat:/app/config
+    environment:
+      - APP=so-cnf-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      so-cnf-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+####################################################################################
   sdc-controller:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${TAG}
     ports:
@@ -164,7 +194,7 @@ services:
         max-size: "30m"
         max-file: "5"
     user: root
-    entrypoint: /bin/sh -c 'mkdir -p /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/macro_zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && chmod 777 -R /distribution-test-zip/ && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+    entrypoint: /bin/sh -c 'mkdir -p /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/macro_zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/macro_helm_zipped_sdc_csar.tar.gz -C /distribution-test-zip/unzipped && chmod 777 -R /distribution-test-zip/ && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
   bpmn-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${TAG}
@@ -294,17 +324,17 @@ services:
         max-size: "30m"
         max-file: "5"
 #################################################################################
-  multicloud-simulator:
+  multicloud-k8s:
     image: simulators/multicloud-simulator:latest
     ports:
-    - "9996:9996"
+      - "9015:9015"
     environment:
-    - APP=MULTICLOUD-SIMULATOR
+    - APP=multicloud-k8s
     - JVM_ARGS=-Xms64m -Xmx512m
     hostname:
-      multicloud-simulator
+      multicloud-k8s
     depends_on:
-    - mariadb    
+    - mariadb
     logging:
       driver: "json-file"
       options:

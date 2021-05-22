@@ -1,0 +1,56 @@
+# Copyright 2020 Huawei Technologies Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+logging:
+  path: logs
+
+server:
+    port: 8090
+    tomcat:
+        max-threads: 50
+
+mso:
+  auth: BEA8637716A7EB617DF472BA6552D22F68C1CB17B0D094D77DDA562F4ADAAC4457CAB848E1A4
+  msoKey: 07a7159d3bf51a0e53be7a8f89699be7
+  logPath: ./logs/cnf
+  msb-ip: multicloud-k8s
+  msb-port: 9015
+  msb-scheme: http
+spring:
+  security:
+    usercredentials:
+    -
+      username: apihBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: sdncaBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: poBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: wmaBpmn
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: BPMN-Client
+    -
+      username: sniro
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: SNIRO-Client
+    -
+      username: mso_admin
+      password: '$2a$10$Fh9ffgPw2vnmsghsRD3ZauBL1aKXebigbq3BB1RPWtE62UDILsjke'
+      role: ACTUATOR

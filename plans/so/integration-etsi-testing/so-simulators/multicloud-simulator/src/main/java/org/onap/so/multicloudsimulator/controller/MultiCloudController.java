@@ -30,14 +30,13 @@ import org.onap.so.multicloudsimulator.beans.MulticloudRequest;
 import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,22 +44,22 @@ import java.io.InputStream;
 import static org.onap.so.multicloudsimulator.utils.Constants.BASE_URL;
 
 @RestController
-@RequestMapping(path = BASE_URL)
 public class MultiCloudController {
 
     public static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiCloudController.class);
 
-    @PostMapping(value = "/v1/instance")
+    @RequestMapping(value = "/v1/instance", method = RequestMethod.POST)
     public ResponseEntity<?> createInstance(@RequestBody MulticloudInstanceRequest req) {
         System.out.println("MultiCloud createInstance ");
         final InstanceResponse InstanceResponse = new InstanceResponse();
 
-        LOGGER.info("Calling createInstance");
-        return ResponseEntity.ok(InstanceResponse);
+        LOGGER.info("Calling v1 instance method");
+        return ResponseEntity.ok(req);
     }
 
-    @GetMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload", produces = { MediaType.APPLICATION_JSON })
+    @RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload", method = RequestMethod.GET,
+            produces = "application/json")
     public ResponseEntity<?> getInstance(@PathVariable("cloud-owner") String cloudOwner,
             @PathVariable("cloud-region-id") String cloudRegionId,
             @RequestParam(value = "depth", required = false, defaultValue = "0") Integer depth,
@@ -76,8 +75,9 @@ public class MultiCloudController {
         return ResponseEntity.ok(output);
     }
 
-    @PostMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload", consumes = { MediaType.APPLICATION_JSON,
-            MediaType.APPLICATION_XML }, produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload", method = RequestMethod.POST,
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postCreateInstance(@RequestBody final MulticloudCreateResponse inputRequest,
             @PathVariable("cloud-owner") final String cloudOwner,
             @PathVariable("cloud-region-id") final String cloudRegionId,
@@ -94,8 +94,8 @@ public class MultiCloudController {
         return ResponseEntity.status(201).body(inputRequest);
     }
 
-    @GetMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", produces = {
-            MediaType.APPLICATION_JSON })
+    @RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getInstanceName(@PathVariable("cloud-owner") final String cloudOwner,
             @PathVariable("cloud-region-id") final String cloudRegionId, @PathVariable("workload-id") final String workloadId,
             @RequestParam(value = "depth", required = false, defaultValue = "0") final Integer depth,
@@ -112,9 +112,9 @@ public class MultiCloudController {
         return ResponseEntity.ok(output);
     }
 
-    @PostMapping(value = "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", consumes = {
-            MediaType.APPLICATION_JSON,
-            MediaType.APPLICATION_XML }, produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @RequestMapping(value = BASE_URL + "/{cloud-owner}/{cloud-region-id}/infra_workload/{workload-id}", method = RequestMethod.POST,
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> postCreateInstanceName(@RequestBody final MulticloudRequest inputRequest,
             @PathVariable("cloud-owner") final String cloudOwner, @PathVariable("workload-id") String workloadId,
             @PathVariable("cloud-region-id") final String cloudRegionId,
