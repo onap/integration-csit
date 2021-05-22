@@ -16,6 +16,9 @@ services:
   openstack-adapter:
     image: onap/so/openstack-adapter:${TAG}
 ################################################################################
+  so-cnf-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-cnf-adapter:${TAG}
+################################################################################
   sdc-controller:
     image: onap/so/sdc-controller:${TAG}
 ################################################################################

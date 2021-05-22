@@ -1,5 +1,5 @@
 server:
-   port: 9996
+   port: 9015
    tomcat:
       max-threads: 4
 ssl-enable: false

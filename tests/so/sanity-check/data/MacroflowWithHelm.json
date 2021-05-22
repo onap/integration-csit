@@ -1,0 +1,183 @@
+{
+            "requestDetails": {
+               "modelInfo": {
+                  "modelInvariantId": "12f78123-0fe3-4691-8621-152b1aeb740b",
+                  "modelType": "service",
+                  "modelName": "vfw_k8s_demo_CNF_e2e_native_2",
+                  "modelVersion": "1.0",
+                  "modelVersionId": "623d4032-89ec-4f14-a655-31943fb002fa",
+                  "modelUuid": "623d4032-89ec-4f14-a655-31943fb002fa",
+                  "modelInvariantUuid": "12f78123-0fe3-4691-8621-152b1aeb740b"
+               },
+               "requestInfo": {
+                  "productFamilyId": "1234",
+                  "source": "VID",
+                  "instanceName": "INSTANCE_vfw_k8s_demo_CNF_e2e_native_2",
+                  "suppressRollback": false,
+                  "requestorId": "demo"
+               },
+               "subscriberInfo": {
+                  "globalSubscriberId": "DemoCustomer"
+               },
+               "cloudConfiguration": {
+                  "tenantId": "693c7729b2364a26a3ca602e6f66187d",
+                  "cloudOwner": "CloudOwner",
+                  "lcpCloudRegionId": "EtsiCloudRegion"
+               },
+               "requestParameters": {
+                  "subscriptionServiceType": "vCPE",
+                  "userParams": [
+                     {
+                        "Homing_Solution": "none"
+                     },
+                     {
+                        "service": {
+                           "instanceParams": [],
+                           "instanceName": "INSTANCE_vfw_k8s_demo_CNF_e2e_native_2",
+                           "resources": {
+                              "vnfs": [
+                                 {
+                                    "modelInfo": {
+                                       "modelName": "VF_vfw_k8s_demo_CNF_e2e_native_2",
+                                       "modelVersionId": "9b6c36da-e4bb-4d58-b22e-5f0198a1813e",
+                                       "modelInvariantUuid": "d65aeed1-1980-44dd-bdeb-ee78ea5ab842",
+                                       "modelVersion": "1.0",
+                                       "modelCustomizationId": "28aeaced-a71c-48ce-a3ae-58ab9eb4dd9f",
+                                       "modelInstanceName": "VF_vfw_k8s_demo_CNF_e2e_native_2"
+                                    },
+                                    "cloudConfiguration": {
+                                       "tenantId": "693c7729b2364a26a3ca602e6f66187d",
+                                       "cloudOwner": "CloudOwner",
+                                       "lcpCloudRegionId": "EtsiCloudRegion"
+                                    },
+                                    "platform": {
+                                       "platformName": "test"
+                                    },
+                                    "lineOfBusiness": {
+                                       "lineOfBusinessName": "LOB-Demonstration"
+                                    },
+                                    "productFamilyId": "1234",
+                                    "instanceName": "VF_vfw_k8s_demo_CNF_e2e_native_2",
+                                    "instanceParams": [
+                                       {
+                                          "sdnc_model_name": "vFW_CNF_CDS",
+                                          "sdnc_model_version": "7.1.0",
+                                          "sdnc_artifact_name": "vnf"
+                                       }
+                                    ],
+                                    "vfModules": [
+                                       {
+                                          "modelInfo": {
+                                             "modelName": "VfVfwK8sDemoCnfE2eNative2..helm_vpkg..module-2",
+                                             "modelVersionId": "b3e97d36-8e10-411f-a682-8551844e04ea",
+                                             "modelInvariantUuid": "f753b92d-2a70-488d-b53a-300435d6a455",
+                                             "modelVersion": "1",
+                                             "modelCustomizationId": "30ce403e-99cc-43c2-8782-15499895d157"
+                                          },
+                                          "instanceName": "vf_vfw_k8s_demo_cnf_e2e_native_20..VfVfwK8sDemoCnfE2eNative2..helm_vpkg..module-2",
+                                          "instanceParams": [
+                                             {
+                                                "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                                                "k8s-rb-profile-namespace": "vfirewall",
+                                                "sdnc_model_name": "vFW_CNF_CDS",
+                                                "sdnc_model_version": "7.1.0",
+                                                "vf_module_label": "helm_vpkg"
+                                             }
+                                          ]
+                                       },
+                                       {
+                                          "modelInfo": {
+                                             "modelName": "VfVfwK8sDemoCnfE2eNative2..helm_base_template..module-4",
+                                             "modelVersionId": "bb944b26-d331-4e01-9e1a-47355b162bc8",
+                                             "modelInvariantUuid": "12ac8bc6-330a-4071-a34b-65aab99539ec",
+                                             "modelVersion": "1",
+                                             "modelCustomizationId": "95db0408-b8df-44fb-8199-37394c1085d8"
+                                          },
+                                          "instanceName": "vf_vfw_k8s_demo_cnf_e2e_native_20..VfVfwK8sDemoCnfE2eNative2..helm_base_template..module-4",
+                                          "instanceParams": [
+                                             {
+                                                "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                                                "k8s-rb-profile-namespace": "vfirewall",
+                                                "sdnc_model_name": "vFW_CNF_CDS",
+                                                "sdnc_model_version": "7.1.0",
+                                                "vf_module_label": "helm_base_template"
+                                             }
+                                          ]
+                                       },
+                                       {
+                                          "modelInfo": {
+                                             "modelName": "VfVfwK8sDemoCnfE2eNative2..helm_vfw..module-3",
+                                             "modelVersionId": "79cfcc33-1456-438b-b362-a2a8587a80f8",
+                                             "modelInvariantUuid": "e46c710f-ad4b-49a5-bbae-4e0f16fc4a98",
+                                             "modelVersion": "1",
+                                             "modelCustomizationId": "b87081da-c8e0-4c20-aefa-2da23c998502"
+                                          },
+                                          "instanceName": "vf_vfw_k8s_demo_cnf_e2e_native_20..VfVfwK8sDemoCnfE2eNative2..helm_vfw..module-3",
+                                          "instanceParams": [
+                                             {
+                                                "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                                                "k8s-rb-profile-namespace": "vfirewall",
+                                                "sdnc_model_name": "vFW_CNF_CDS",
+                                                "sdnc_model_version": "7.1.0",
+                                                "vf_module_label": "helm_vfw"
+                                             }
+                                          ]
+                                       },
+                                       {
+                                          "modelInfo": {
+                                             "modelName": "VfVfwK8sDemoCnfE2eNative2..helm_vsn..module-1",
+                                             "modelVersionId": "efa8355e-d011-4f90-b17a-3542d2cf8321",
+                                             "modelInvariantUuid": "502a434b-f718-4332-a8d2-2e689f8ceb22",
+                                             "modelVersion": "1",
+                                             "modelCustomizationId": "0dc8a6d0-fe90-4f77-bf2a-4dcd4b82f548"
+                                          },
+                                          "instanceName": "vf_vfw_k8s_demo_cnf_e2e_native_20..VfVfwK8sDemoCnfE2eNative2..helm_vsn..module-1",
+                                          "instanceParams": [
+                                             {
+                                                "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                                                "k8s-rb-profile-namespace": "vfirewall",
+                                                "sdnc_model_name": "vFW_CNF_CDS",
+                                                "sdnc_model_version": "7.1.0",
+                                                "vf_module_label": "helm_vsn"
+                                             }
+                                          ]
+                                       },
+                                       {
+                                          "modelInfo": {
+                                             "modelName": "VfVfwK8sDemoCnfE2eNative2..base_template_dummy_ignore..module-0",
+                                             "modelVersionId": "67b3b9a9-23cf-4212-a482-3fb5d9521247",
+                                             "modelInvariantUuid": "f7b40081-9ddc-4885-a409-5f57685c4a46",
+                                             "modelVersion": "1",
+                                             "modelCustomizationId": "c25ecd21-31a6-4a9d-8bc1-945570f7d2aa"
+                                          },
+                                          "instanceName": "vf_vfw_k8s_demo_cnf_e2e_native_20..VfVfwK8sDemoCnfE2eNative2..base_template_dummy_ignore..module-0",
+                                          "instanceParams": [
+                                             {}
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           },
+                           "modelInfo": {
+                              "modelVersion": "1.0",
+                              "modelVersionId": "623d4032-89ec-4f14-a655-31943fb002fa",
+                              "modelInvariantId": "12f78123-0fe3-4691-8621-152b1aeb740b",
+                              "modelName": "vfw_k8s_demo_CNF_e2e_native_2",
+                              "modelType": "service"
+                           }
+                        }
+                     }
+                  ],
+                  "aLaCarte": false,
+                  "usePreload": false
+               },
+               "project": {
+                  "projectName": "etsiCsitProject"
+               },
+               "owningEntity": {
+                  "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
+                  "owningEntityName": "OE-Demonstration"
+               }
+            }
+         }
