@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bbcee2a_2345c273",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Please use `POST On Session` instead (see warning in the console output)",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d3aed3_f8b1e5ee",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "This is completely redundant output, unless you specifically need to see this information from console (and if so, why not output expected *and* received response status code regardless of result? That would be much more useful)",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 99
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d76ec2_ee856ff4",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Please use `POST On Session` instead (see warning in the console output)",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f441660c_39474ae5",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Redundant output",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 125
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c833ca_79c73eee",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "What\u0027s the point of this sleep?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ea0453_cc154f14",
+        "filename": "tests/so/sanity-check/macroflow_helm.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Please use `POST On Session` instead (see warning in the console output)",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b670f8dd_d2c3476f",
+        "filename": "tests/so/sanity-check/macroflow_helm.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Redundant output",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 99
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba23f94_413a2745",
+        "filename": "tests/so/sanity-check/macroflow_helm.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Please use `POST On Session` instead (see warning in the console output)",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e7569a_8d0449d3",
+        "filename": "tests/so/sanity-check/macroflow_helm.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "Redundant output",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 125
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c665495_64721702",
+        "filename": "tests/so/sanity-check/macroflow_helm.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-24T11:46:32Z",
+      "side": 1,
+      "message": "What\u0027s the sleep for?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
