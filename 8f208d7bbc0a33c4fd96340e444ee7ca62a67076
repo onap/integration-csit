@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "83f17f8f_40a34c88",
+        "filename": "plans/so/macroflow/config/override-files/openstack-adapter/onapheat/override.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-05-25T12:06:09Z",
+      "side": 1,
+      "message": "why change it to k8s???",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0c0073_b8ee09e5",
+        "filename": "plans/so/macroflow/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-05-25T12:06:09Z",
+      "side": 1,
+      "message": "please don\u0027t hardcore image versions",
+      "range": {
+        "startLine": 139,
+        "startChar": 59,
+        "endLine": 139,
+        "endChar": 79
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bbcee2a_2345c273",
         "filename": "tests/so/sanity-check/macroflow.robot",
         "patchSetId": 1
