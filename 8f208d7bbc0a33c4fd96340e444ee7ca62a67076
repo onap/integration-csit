@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f0adae9_c62e9981",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-05-25T12:03:03Z",
+      "side": 1,
+      "message": "use logger instead of println",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 57
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f392c2b3_fb56a348",
+        "filename": "plans/so/integration-etsi-testing/so-simulators/multicloud-simulator/src/main/java/org/onap/so/multicloudsimulator/controller/MultiCloudController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-05-25T12:03:03Z",
+      "side": 1,
+      "message": "PostMapping annotation is more readable revert it back to PostMapping.. please do the same for other methods",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bbcee2a_2345c273",
         "filename": "tests/so/sanity-check/macroflow.robot",
         "patchSetId": 1
