@@ -1,7 +1,0 @@
-{
-    "ID": "cbs",
-    "Name": "config_binding_service",
-    "Tags": ["cbs"],
-    "Address": "ipaddress",
-    "Port": 10000
-}
