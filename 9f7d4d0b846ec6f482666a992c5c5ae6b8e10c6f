@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2770a300_886ab609",
+        "filename": "tests/so/sanity-check/macroflow.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-05-31T14:26:46Z",
+      "side": 1,
+      "message": "try to add some documentation for all the test suites\nsee https://gerrit.onap.org/r/gitweb?p\u003dintegration/csit.git;a\u003dblob;f\u003dtests/so/etsi/etsi_nfvo_ns_lcm_tests.robot;h\u003d23995d93ab861144ab48a2e35901f4f0134ffd62;hb\u003drefs/heads/master#l12 for example",
+      "revId": "9f7d4d0b846ec6f482666a992c5c5ae6b8e10c6f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
