@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "844c8377_ca6ec6b8",
+        "filename": "plans/so/macroflow/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-31T12:52:22Z",
+      "side": 1,
+      "message": "...yes to which? It can\u0027t be *both* \"supporting\" *and* \"to be tested\"",
+      "parentUuid": "f2efb287_c25c6c0f",
+      "range": {
+        "startLine": 139,
+        "startChar": 59,
+        "endLine": 139,
+        "endChar": 79
+      },
+      "revId": "8f208d7bbc0a33c4fd96340e444ee7ca62a67076",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bbcee2a_2345c273",
         "filename": "tests/so/sanity-check/macroflow.robot",
         "patchSetId": 1
