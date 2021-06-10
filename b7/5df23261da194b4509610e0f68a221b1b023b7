@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Verified+1: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Code-Review+1: Alexander Mazuruk <a.mazuruk@samsung.com>
+Code-Review+1: Bartosz Gardziejewski <bartosz.gardziejewski@nokia.com>
+Code-Review+1: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-by: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-at: Thu, 10 Jun 2021 14:55:23 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/121752
+Project: integration/csit
+Branch: refs/heads/master
