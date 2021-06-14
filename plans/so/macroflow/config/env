@@ -4,4 +4,5 @@ TAG=1.8.0-STAGING-latest
 TIME_OUT_DEFAULT_VALUE_SEC=1200
 PROJECT_NAME=macroflowintegrationtesting
 DEFAULT_NETWORK_NAME=macroflowintegrationtesting_default
+CNF_ADAPTER_IMAGE_VERSION=1.8.2
 MARIADB_VERSION=10.5.8
