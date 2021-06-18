@@ -49,6 +49,7 @@ class DmaapLibrary(object):
 
     @staticmethod
     def cleanup_ves_events():
+        DmaapLibrary.dmaap_server.reset_dmaap_succesfull_code()
         if DmaapLibrary.server_thread is not None:
             DmaapLibrary.dmaap_queue.clean_up_event()
             logger.console("DMaaP event queue is cleaned up")
@@ -77,3 +78,7 @@ class DmaapLibrary(object):
                 return 'true'
             evt_str = DmaapLibrary.dmaap_queue.deque_event()
         return 'false'
+
+    @staticmethod
+    def set_successfull_dmaap_code(code):
+        DmaapLibrary.dmaap_server.set_dmaap_successfull_code(int(code))

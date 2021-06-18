@@ -19,8 +19,10 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-
 class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+
+    DEFAULT_SUCCES_RESPONSE_CODE=200
+    succes_response_code=DEFAULT_SUCCES_RESPONSE_CODE
 
     def __init__(self, dmaap_simulator, *args):
         self.dmaap_simulator = dmaap_simulator
@@ -66,7 +68,7 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if 'clientThrottlingState' in self.requestline:
             self.send_response(204)
         else:
-            self.send_response(200)
+            self.send_response(self.succes_response_code)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
             self.wfile.write("{'count': 1, 'serverTimeMs': 3}")
