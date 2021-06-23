@@ -60,10 +60,15 @@ ${VES_STND_DEFINED_NO_VALUE}             %{WORKSPACE}/tests/dcaegen2/testcases/a
 ${VES_STND_DEFINED_INVALID_TYPE_DATA}    %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves_stdnDefined_invalid_type_data_field.json
 ${VES_CERT_BASIC_AUTH_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_basic_auth.properties
 ${VES_DISABLED_STNDDEFINED_COLLECTOR_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_stnd_defined.properties
+${VES_BACKWARDS_COMPATIBILITY_PROPERTIES}  %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_backwards_compatibility.properties
 ${VES_ADD_REFERENCE_TO_OTHER_SCHEMAS}   %{WORKSPACE}/tests/dcaegen2/testcases/resources/collector_stnd_defined_new_schema_map.properties
 ${VES_VALID_JSON_WITH_RFERENCE_TO_VALID_SCHEMA}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid_eventWithStndDefinedFields_with_valid_schema_ref.json
 ${VES_VALID_JSON_V7_STND_DEF_FIELDS_WRONG_SCHEMA_FILE_REF}   %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid_eventWithStndDefinedFields_to_schema_with_wrong_file_ref.json
 ${VES_VALID_JSON_V7_STND_DEF_FIELDS_WRONG_SCHEMA_INTERNAL_REF}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_valid_eventWithStndDefinedFields_to_schema_with_wrong_internal_ref.json
+${VES_BATCH_TWO_DIFFERENT_DOMAIN}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_with_different_domain.json
+${VES_BATCH_STND_DEFINED_TWO_DIFFERENT_STND_NAMESPACE}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_stdnDefined_withDifferentStndDefinedNamespace.json
+${VES_BATCH_STND_DEFINED_VALID}  %{WORKSPACE}/tests/dcaegen2/testcases/assets/json_events/ves7_batch_stdnDefined_valid.json
+${ERROR_MESSAGE_CODE}  The following service error occurred: %1. Error code is %2
 
 #DCAE Health Check
 ${CONFIG_BINDING_URL}                    http://localhost:8443

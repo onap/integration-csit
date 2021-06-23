@@ -70,6 +70,16 @@ Publish Single VES Event With Invalid Type Of Multiply StndDefined Data Fields
     [Documentation]   Post single event with invalid stndDefined data fields and return error
     Send Request And Validate Response And Error Message  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_EVENTLISTENER_V7}  ${VES_STND_DEFINED_INVALID_TYPE_DATA}  400  The following service error occurred: %1. Error code is %2
 
+Publish VES Batch Event With Different StndDefinedNamespace Parameters
+    [Tags]    DCAE-VESC-R1 DCAE-VESC-STNDDEFINED
+    [Documentation]   Post batch event with invalid data (different stndDefinedNamespace values in events) to /eventListener/v7/eventBatch endpoint, expect 400 Response Status Code and "Value of stndDefinedNamespace fields have to be same when domain is stndDefined" message
+    Send Request And Validate Response And Error Message  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_BATCH_STND_DEFINED_TWO_DIFFERENT_STND_NAMESPACE}    400   Value of stndDefinedNamespace fields have to be same when domain is stndDefined
+
+Publish Batch VES Event With Correct Data
+    [Tags]    DCAE-VESC-R1 DCAE-VESC-STNDDEFINED
+    [Documentation]   Post single event with correct stndDefined data
+    Send Request And Validate Response  Publish Event To VES Collector  ${https_basic_auth_session}  ${VES_BATCH_EVENT_ENDPOINT_V7}  ${VES_BATCH_STND_DEFINED_VALID}  202
+
 
 #####################################################
 ## Section for tests with stndDefined validation OFF
