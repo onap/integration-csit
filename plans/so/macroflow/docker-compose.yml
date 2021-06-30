@@ -81,7 +81,7 @@ services:
       - "8086:8086"
     volumes:
       - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/sdnc-adapter/onapheat:/app/config
+      - ${CONFIG_DIR_PATH_MACRO}/override-files/sdnc-adapter/onapheat:/app/config
     environment:
       - APP=sdnc-adapter
       - JVM_ARGS=-Xms64m -Xmx512m
