@@ -201,9 +201,9 @@ services:
     ports:
       - "8081:8081"
     volumes:
-      - ${CONFIG_DIR_PATH_MACRO}/override-files/bpmn-infra/onapheat:/app/config
-      - ${CONFIG_DIR_PATH}/certificates/bpmn-infra-certs:/app/bpmn-infra-certs
-      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+      - ${CONFIG_DIR_PATH_MACRO}/override-files/bpmn-infra/onapheat:/camunda/app/config
+      - ${CONFIG_DIR_PATH}/certificates/bpmn-infra-certs:/camunda/app/bpmn-infra-certs
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/camunda/app/ca-certificates/root-ca.crt
     environment:
       - APP=bpmn-infra
       - JVM_ARGS=-Xms64m -Xmx512m
@@ -225,7 +225,7 @@ services:
         max-size: "30m"
         max-file: "5"
     user: root
-    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+    entrypoint: /bin/sh -c '/camunda/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/camunda/start-app.sh"'
 ################################################################################
   api-handler-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
