@@ -201,7 +201,7 @@ services:
         max-size: "30m"
         max-file: "5"
     user: root
-    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/camunda/camunda.sh"'
 ################################################################################
   api-handler-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
