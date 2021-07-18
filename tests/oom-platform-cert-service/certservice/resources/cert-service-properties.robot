@@ -6,27 +6,36 @@ ${OOMCERT_URL}                           https://localhost:${cert_service_port}
 ${CLIENT_CA_NAME}                        Client
 ${RA_CA_NAME}                            RA
 ${CERT_SERVICE_ENDPOINT}                 /v1/certificate/
-${ROOTCA}                                %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/certs/root.crt
-${CERTSERVICE_SERVER_CRT}                %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/certs/certServiceServer.crt
-${CERTSERVICE_SERVER_KEY}                %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/certs/certServiceServer.key
-${VALID_CLIENT_CSR_FILE}                 %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client.csr
-${VALID_CLIENT_PK_FILE}                  %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client.pk
-${VALID_RA_CSR_FILE}                     %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra.csr
-${VALID_RA_PK_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra.pk
-${VALID_RA_ALL_SANS_CSR_FILE}            %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra_all_sans.csr
-${VALID_RA_ALL_SANS_PK_FILE}             %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_ra_all_sans.pk
-${INVALID_CSR_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid.csr
-${INVALID_PK_FILE}                       %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid.key
-
+${CERT_SERVICE_UPDATE_ENDPOINT}          /v1/certificate-update/
+${ASSETS_DIR}                            %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets
+${ROOTCA}                                ${ASSETS_DIR}/certs/root.crt
+${CERTSERVICE_SERVER_CRT}                ${ASSETS_DIR}/certs/certServiceServer.crt
+${CERTSERVICE_SERVER_KEY}                ${ASSETS_DIR}/certs/certServiceServer.key
+${VALID_CLIENT_CSR_FILE}                 ${ASSETS_DIR}/valid_client.csr
+${VALID_CLIENT_PK_FILE}                  ${ASSETS_DIR}/valid_client.pk
+${VALID_RA_CSR_FILE}                     ${ASSETS_DIR}/valid_ra.csr
+${VALID_RA_PK_FILE}                      ${ASSETS_DIR}/valid_ra.pk
+${VALID_RA_ALL_SANS_CSR_FILE}            ${ASSETS_DIR}/valid_ra_all_sans.csr
+${VALID_RA_ALL_SANS_PK_FILE}             ${ASSETS_DIR}/valid_ra_all_sans.pk
+${INVALID_CSR_FILE}                      ${ASSETS_DIR}/invalid.csr
+${INVALID_PK_FILE}                       ${ASSETS_DIR}/invalid.csr
+${VALID_IR_CSR_FOR_UPDATE}               ${ASSETS_DIR}/valid_ir_for_update.csr
+${VALID_IR_KEY_FOR_UPDATE}               ${ASSETS_DIR}/valid_ir_for_update.key
+${VALID_KUR_CSR}                         ${ASSETS_DIR}/valid_kur.csr
+${VALID_KUR_KEY}                         ${ASSETS_DIR}/valid_kur.key
+${VALID_CR_CSR}                          ${ASSETS_DIR}/valid_cr.csr
+${VALID_CR_KEY}                          ${ASSETS_DIR}/valid_cr.key
+${EXPECTED_KUR_LOG}                      Preparing Key Update Request
+${EXPECTED_CR_LOG}                       Preparing Certification Request
 
 ${CERT_SERVICE_ADDRESS}                  https://${CERT_SERVICE_CONTAINER_NAME}:${CERT_SERVICE_PORT}
-${VALID_ENV_FILE}                        %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker.env
-${VALID_ENV_FILE_JKS}                    %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker_jks.env
-${VALID_ENV_FILE_P12}                    %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker_p12.env
-${VALID_ENV_FILE_PEM}                    %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker_pem.env
-${VALID_ENV_FILE_ALL_SANS_TYPES}         %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/valid_client_docker_all_sans_types.env
-${INVALID_ENV_FILE_OUTPUT_TYPE}          %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid_client_docker_output_type.env
-${INVALID_ENV_FILE}                      %{WORKSPACE}/tests/oom-platform-cert-service/certservice/assets/invalid_client_docker.env
+${VALID_ENV_FILE}                        ${ASSETS_DIR}/valid_client_docker.env
+${VALID_ENV_FILE_JKS}                    ${ASSETS_DIR}/valid_client_docker_jks.env
+${VALID_ENV_FILE_P12}                    ${ASSETS_DIR}/valid_client_docker_p12.env
+${VALID_ENV_FILE_PEM}                    ${ASSETS_DIR}/valid_client_docker_pem.env
+${VALID_ENV_FILE_ALL_SANS_TYPES}         ${ASSETS_DIR}/valid_client_docker_all_sans_types.env
+${INVALID_ENV_FILE_OUTPUT_TYPE}          ${ASSETS_DIR}/invalid_client_docker_output_type.env
+${INVALID_ENV_FILE}                      ${ASSETS_DIR}/invalid_client_docker.env
 ${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.oom.platform.cert-service.oom-certservice-client:2.3.3
 ${CLIENT_CONTAINER_NAME}                 %{ClientContainerName}
 ${CERT_SERVICE_NETWORK}                  certservice_certservice

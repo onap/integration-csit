@@ -53,6 +53,18 @@ Report Bad Request Error When PK Is Not Valid
     [Documentation]  Send request to ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME} endpoint and expect 400
     Send Get Request with Header And Expect Error  ${CERT_SERVICE_ENDPOINT}${CLIENT_CA_NAME}  ${VALID_CLIENT_CSR_FILE}  ${INVALID_PK_FILE}  400
 
+Update Certificate With Key Update Request In RA Mode Should Succeed
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE_UPDATE
+    [Documentation]  Send Initialization Request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} then for received certificate send Key Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
+    Send Initialization Request And Key Update Request And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}
+
+Update Certificate With Certification Request In RA Mode Should Succeed
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE_UPDATE
+    [Documentation]  Send Initialization Request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} then for received certificate send Key Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
+    Send Initialization Request And Certification Request And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}  ${VALID_CR_CSR}  ${VALID_CR_KEY}
+
 Cert Service Client successfully creates keystore.p12 and truststore.p12
     [Tags]      OOM-CERT-SERVICE
     [Documentation]  Run with correct env and expected exit code 0

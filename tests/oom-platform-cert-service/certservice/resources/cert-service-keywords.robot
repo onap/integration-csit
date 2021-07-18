@@ -5,10 +5,13 @@ Resource          ./cert-service-properties.robot
 Library 	      RequestsLibrary
 Library           HttpLibrary.HTTP
 Library           Collections
+Library           Process
+Library           DateTime
 Library           ../libraries/CertClientManager.py  ${MOUNT_PATH}  ${TRUSTSTORE_PATH}
 Library           ../libraries/P12ArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/JksArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/PemArtifactsValidator.py  ${MOUNT_PATH}
+Library           ../libraries/ResponseParser.py
 
 *** Keywords ***
 
@@ -87,6 +90,68 @@ Send Post Request And Validate Response
     [Arguments]   ${path}  ${resp_code}
     ${resp}= 	Post Request 	${https_valid_cert_session}  ${path}
     Should Be Equal As Strings 	${resp.status_code} 	${resp_code}
+
+Send Initialization Request And Key Update Request And Expect Success
+    [Documentation]   Send initialization request and then key update request to passed urls and validate received response
+    [Arguments]   ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}
+    ${start_time}=  Get Current Timestamp For Docker Log
+    Send Initialization Request And Update Request And Expect Success  ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}
+    Verify Key Update Request Sent By Cert Service  ${start_time}
+
+Send Initialization Request And Certification Request And Expect Success
+    [Documentation]   Send initialization request and then certification request to passed urls and validate received response
+    [Arguments]   ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}
+    ${start_time}=  Get Current Timestamp For Docker Log
+    Send Initialization Request And Update Request And Expect Success  ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}
+    Verify Certification Request Sent By Cert Service  ${start_time}
+
+Send Initialization Request And Update Request And Expect Success
+    [Documentation]   Send certificate update request and expect success
+    [Arguments]   ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}
+    ${old_cert}=  Send Certificate Initialization Request And Return Certificate  ${path}  ${csr_file}  ${pk_file}
+    ${resp}=  Send Certificate Update Request And Return Response  ${update_path}  ${update_csr_file}  ${update_pk_file}  ${old_cert}  ${pk_file}
+    Should Be Equal As Strings 	${resp.status_code}  200
+
+Send Certificate Initialization Request And Return Certificate
+    [Documentation]   Send certificate initialization request and return base64 encoded certificate from response
+    [Arguments]   ${path}  ${csr_file}  ${pk_file}
+    [Return]    ${base64Certificate}
+    ${resp}= 	Send Get Request with Header  ${path}  ${csr_file}  ${pk_file}
+    ${json}=    Parse Json      ${resp.content}
+    ${base64Certificate}=    Parse Response    ${json}
+
+Send Certificate Update Request And Return Response
+    [Documentation]   Send certificate update request and return response code
+    [Arguments]   ${path}   ${csr_file}  ${pk_file}  ${old_cert}  ${old_pk_file}
+    [Return]  ${resp}
+    ${headers}=  Create Header for Certificate Update  ${csr_file}  ${pk_file}  ${old_cert}  ${old_pk_file}
+    ${resp}=  Get Request  ${https_valid_cert_session}  ${path}  headers=${headers}
+
+Create Header for Certificate Update
+    [Documentation]  Create header with CSR and PK, OLD_CERT and OLD_PK
+    [Arguments]  ${csr_file}  ${pk_file}  ${old_cert}  ${old_pk_file}
+    [Return]     ${headers}
+    ${csr}=  Get Data From File  ${csr_file}
+    ${pk}=  Get Data From File  ${pk_file}
+    ${old_pk}=  Get Data From File  ${old_pk_file}
+    ${headers}=  Create Dictionary  CSR=${csr}  PK=${pk}  OLD_CERT=${old_cert}  OLD_PK=${old_pk}
+
+Verify Key Update Request Sent By Cert Service
+    [Documentation]  Verify that request was key update request
+    [Arguments]  ${start_time}
+    ${result}=  Run Process  docker logs oomcert-service --since ${start_time}  shell=yes
+    Should Contain  ${result.stdout}  Preparing Key Update Request
+
+Verify Certification Request Sent By Cert Service
+    [Documentation]  Verify that request was certification request
+    [Arguments]  ${start_time}
+    ${result}=  Run Process  docker logs oomcert-service --since ${start_time}  shell=yes
+    Should Contain  ${result.stdout}  Preparing Certification Request
+
+Get Current Timestamp For Docker Log
+    [Documentation]  Gets current timestamp valid for docker
+    [Return]  ${timestamp}
+    ${timestamp}=  Get Current Date  result_format=%Y-%m-%dT%H:%M:%S.%f
 
 Run Cert Service Client And Validate PKCS12 File Creation And Client Exit Code
     [Documentation]  Run Cert Service Client Container And Validate Exit Code
