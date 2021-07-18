@@ -3,8 +3,7 @@
     {
       "caName": "Client",
       "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmp",
-      "issuerDN": "CN=ManagementCA",
-      "caMode": "CLIENT",
+      "issuerDN": "O=EJBCA Container Quickstart,CN=ManagementCA,UID=12345",
       "authentication": {
         "iak": "mypassword",
         "rv": "mypassword"
@@ -13,8 +12,7 @@
     {
       "caName": "RA",
       "url": "http://oomcert-ejbca:8080/ejbca/publicweb/cmp/cmpRA",
-      "issuerDN": "CN=ManagementCA",
-      "caMode": "RA",
+      "issuerDN": "O=EJBCA Container Quickstart,CN=ManagementCA,UID=12345",
       "authentication": {
         "iak": "mypassword",
         "rv": "mypassword"
