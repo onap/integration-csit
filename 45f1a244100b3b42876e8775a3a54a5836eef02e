@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f75eaa49_0b700a7c",
+        "filename": "tests/oom-platform-cert-service/certservice/resources/cert-service-properties.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-07-19T08:07:11Z",
+      "side": 1,
+      "message": "Const unused.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "45f1a244100b3b42876e8775a3a54a5836eef02e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
