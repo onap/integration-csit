@@ -71,6 +71,13 @@ Update Certificate With Certification Request When Sans Changed In RA Mode Shoul
     Send Initialization Request And Certification Request And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
     ...  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}  ${VALID_CR_CSR_CHANGED_SANS}  ${VALID_CR_KEY_CHANGED_SANS}
 
+Update Certificate with wrong old certificate should fail
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Initialization Request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} then for received certificate send Key Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint and expect 200
+    Send Certificate Initialization Request And Return Certificate  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}
+    ${resp}=  Send Certificate Update Request And Return Response  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${INVALID_OLD_CERT}  ${VALID_IR_KEY_FOR_UPDATE}
+    Should Be Equal As Strings 	${resp.status_code}  400
+
 Cert Service Client successfully creates keystore.p12 and truststore.p12
     [Tags]      OOM-CERT-SERVICE    OOM-CERT-SERVICE-CLIENT
     [Documentation]  Run with correct env and expected exit code 0

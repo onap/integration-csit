@@ -27,6 +27,7 @@ ${VALID_CR_CSR_CHANGED_SUBJECT}          ${ASSETS_DIR}/valid_cr_changed_subject.
 ${VALID_CR_KEY_CHANGED_SUBJECT}          ${ASSETS_DIR}/valid_cr_changed_subject.key
 ${VALID_CR_CSR_CHANGED_SANS}             ${ASSETS_DIR}/valid_cr_changed_sans.csr
 ${VALID_CR_KEY_CHANGED_SANS}             ${ASSETS_DIR}/valid_cr_changed_sans.key
+${INVALID_OLD_CERT}                      ${ASSETS_DIR}/invalid_old_cert.pem
 ${EXPECTED_KUR_LOG}                      Preparing Key Update Request
 ${EXPECTED_CR_LOG}                       Preparing Certification Request
 
