@@ -71,6 +71,60 @@ Update Certificate With Certification Request When Sans Changed In RA Mode Shoul
     Send Initialization Request And Certification Request And Expect Success  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
     ...  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}  ${VALID_CR_CSR_CHANGED_SANS}  ${VALID_CR_KEY_CHANGED_SANS}
 
+Update Certificate With Key Update Request In RA Mode Should Fail When Wrong Old Private Key Is Used
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Initialization Request to ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME} then for received certificate send Key Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint and expect 500
+    Send Initialization Request And Key Update Request With Wrong Old Private Key And Expect Error  ${CERT_SERVICE_ENDPOINT}${RA_CA_NAME}  ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_IR_CSR_FOR_UPDATE}  ${VALID_IR_KEY_FOR_UPDATE}  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${INVALID_IR_KEY_FOR_UPDATE}
+
+Update Certificate In RA Mode Should Fail When OLD_CERT Header Is Incorrect
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with wrong OLD_CERT header and expect 400
+    Send Update Request With Wrong Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${INVALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}
+
+Update Certificate In RA Mode Should Fail When OLD_CERT Header Is Missing
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with missing OLD_CERT header and expect 400
+    Send Update Request With Missing Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}  OLD_CERT
+
+Update Certificate In RA Mode Should Fail When OLD_PK Header Is Incorrect
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with wrong OLD_PK header and expect 400
+    Send Update Request With Wrong Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${INVALID_PK_FILE}
+
+Update Certificate In RA Mode Should Fail When OLD_PK Header Is Missing
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with missing OLD_PK header and expect 400
+    Send Update Request With Missing Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}  OLD_PK
+
+Update Certificate In RA Mode Should Fail When CSR Header Is Incorrect
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with wrong CSR header and expect 400
+    Send Update Request With Wrong Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${INVALID_CSR_FILE}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}
+
+Update Certificate In RA Mode Should Fail When CSR Header Is Missing
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with missing CSR header and expect 400
+    Send Update Request With Missing Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}  CSR
+
+Update Certificate In RA Mode Should Fail When PK Header Is Incorrect
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with wrong PK header and expect 400
+    Send Update Request With Wrong Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${INVALID_PK_FILE}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}
+
+Update Certificate In RA Mode Should Fail When PK Header Is Missing
+    [Tags]      OOM-CERT-SERVICE    CERTIFICATE-UPDATE
+    [Documentation]  Send Update Request to ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME} endpoint with missing PK header and expect 400
+    Send Update Request With Missing Header And Expect Error   ${CERT_SERVICE_UPDATE_ENDPOINT}${RA_CA_NAME}
+    ...  ${VALID_KUR_CSR}  ${VALID_KUR_KEY}  ${VALID_OLD_CERT_BASE64}  ${VALID_IR_KEY_FOR_UPDATE}  PK
+
 Cert Service Client successfully creates keystore.p12 and truststore.p12
     [Tags]      OOM-CERT-SERVICE    OOM-CERT-SERVICE-CLIENT
     [Documentation]  Run with correct env and expected exit code 0
