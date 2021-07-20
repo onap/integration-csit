@@ -87,7 +87,7 @@
                 "dmaap_info": {
                   "client_id": "1475976809466",
                   "client_role": "org.onap.dcae.pmPublisher",
-                  "topic_url": "http://dmaap:3904/events/unauthenticated.DCAE_CL_OUTPUT",
+                  "topic_url": "http://dmaap-mr:3904/events/unauthenticated.DCAE_CL_OUTPUT",
                   "location": "san-francisco"
                 },
                 "type": "message_router"
@@ -99,14 +99,14 @@
                 "dmaap_info": {
                   "client_id": "1575976809466",
                   "client_role": "org.onap.dcae.aaiSub",
-                  "topic_url": "http://dmaap:3904/events/AAI_EVENT",
+                  "topic_url": "http://dmaap-mr:3904/events/AAI_EVENT",
                   "location": "san-francisco"
                 }
               },
               "policy_pm_subscriber": {
                 "dmaap_info": {
                   "location": "san-francisco",
-                  "topic_url": "http://dmaap:3904/events/unauthenticated.PMSH_CL_INPUT",
+                  "topic_url": "http://dmaap-mr:3904/events/unauthenticated.PMSH_CL_INPUT",
                   "client_role": "org.onap.dcae.pmSubscriber",
                   "client_id": "1575876809456"
                 },
