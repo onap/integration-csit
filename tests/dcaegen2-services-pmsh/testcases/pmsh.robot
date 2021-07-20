@@ -7,8 +7,6 @@ Library           String
 Library           Process
 
 Resource          ../../common.robot
-
-Test Setup        CreateSessions
 Test Teardown     Delete All Sessions
 
 
@@ -44,7 +42,7 @@ Verify database tables exist and are empty
     [Tags]                          PMSH_02
     [Documentation]                 Verify database has been created and is empty
     [Timeout]                       10 seconds
-    ${resp}=                        Get Request     pmsh_session    ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTIONS_ENDPOINT}
     Should Be True                  ${resp.status_code} == 200
     Should Contain                  ${resp.text}                     []
 
@@ -53,8 +51,8 @@ Verify PNF detected in AAI when administrative state unlocked
     [Documentation]                 Verify PNF detected when administrative state unlocked
     [Timeout]                       60 seconds
     SetAdministrativeStateToUnlocked
-    Sleep                           31      Allow PMSH time to pick up changes in CBS config
-    ${resp}=                        Get Request     pmsh_session    ${SUBSCRIPTIONS_ENDPOINT}
+    Sleep                           31             Allow PMSH time to pick up changes in CBS config
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['subscription_status']}                        UNLOCKED
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_name']}            pnf-existing
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_sub_status']}      PENDING_CREATE
@@ -65,7 +63,7 @@ Verify Policy response on MR is handled
     [Timeout]                       60 seconds
     SimulatePolicyResponse          ${MR_POLICY_RESPONSE_PNF_EXISTING}
     Sleep                           31 seconds      Ensure Policy response on MR is picked up
-    ${resp}=                        Get Request     pmsh_session    ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][0]['nf_sub_status']}      CREATED
 
 Verify AAI event on MR detailing new PNF being detected is handled
@@ -74,7 +72,7 @@ Verify AAI event on MR detailing new PNF being detected is handled
     [Timeout]                       60 seconds
     SimulateNewPNF                  ${MR_AAI_PNF_CREATED}
     Sleep                           31 seconds      Ensure AAI event on MR is picked up
-    ${resp}=                        Get Request     pmsh_session    ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_name']}            pnf_newly_discovered
     Should Be Equal As Strings      ${resp.json()[0]['network_functions'][1]['nf_sub_status']}      PENDING_CREATE
 
@@ -84,29 +82,25 @@ Verify AAI event on MR detailing PNF being deleted is handled
     [Timeout]                       60 seconds
     SimulateDeletedPNF              ${MR_AAI_PNF_REMOVED}
     Sleep                           31 seconds      Ensure AAI event on MR is picked up
-    ${resp}=                        Get Request     pmsh_session    ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
     Should Not Contain              ${resp.text}    pnf_newly_discovered
 
 *** Keywords ***
 
-CreateSessions
-    Create Session  pmsh_session     ${PMSH_BASE_URL}
-    Create Session  mr_sim_session   ${MR_BASE_URL}
-    Create Session  cbs_sim_session  ${CBS_BASE_URL}
-
 SetAdministrativeStateToUnlocked
     ${data}=            Get Data From File      ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}
-    ${resp} =           Put Request             cbs_sim_session  /clear  data={"path": "/service_component_all/.*"}
+    Create Session      cbs_sim_session   ${CBS_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    cbs_sim_session    url=/clear  data={"path": "/service_component_all/.*"}
     Should Be True      ${resp.status_code} == 200
-    Sleep               2                       Allow CBS time to set expectation
-    ${resp} =           Put Request             cbs_sim_session  /expectation     data=${data}
+    Sleep               2                 Allow CBS time to set expectation
+    ${resp} =           PUT On Session    cbs_sim_session    url=/expectation     data=${data}
     Should Be True      ${resp.status_code} == 201
 
 
 SimulatePolicyResponse
     [Arguments]                     ${expected_contents}
     ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostCall      					${POLICY_PUBLISH_MR_TOPIC}     ${json_value}
+    ${resp}=    			  	  	PostMrCall      			    ${POLICY_PUBLISH_MR_TOPIC}     ${json_value}
     log    				          	${resp.text}
     Should Be Equal As Strings    	${resp.status_code}           	200
     ${count}=    	              	Evaluate     					$resp.json().get('count')
@@ -115,7 +109,7 @@ SimulatePolicyResponse
 SimulateNewPNF
     [Arguments]                     ${expected_contents}
     ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostCall      					${AAI_MR_TOPIC}      ${json_value}
+    ${resp}=    			  	  	PostMrCall      				${AAI_MR_TOPIC}      ${json_value}
     log    				          	${resp.text}
     Should Be Equal As Strings    	${resp.status_code}           	200
     ${count}=    	              	Evaluate     					$resp.json().get('count')
@@ -124,14 +118,21 @@ SimulateNewPNF
 SimulateDeletedPNF
     [Arguments]                     ${expected_contents}
     ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostCall      					${AAI_MR_TOPIC}      ${json_value}
+    ${resp}=    			  	  	PostMrCall      				${AAI_MR_TOPIC}      ${json_value}
     log    				          	${resp.text}
     Should Be Equal As Strings    	${resp.status_code}           	200
     ${count}=    	              	Evaluate     					$resp.json().get('count')
     log    				  			'JSON Response Code:'${resp}
 
-PostCall
+PostMrCall
     [Arguments]     ${url}     ${data}
-    ${headers}=    Create Dictionary    Accept=application/json     Content-Type=application/json
-    ${resp}=       Post Request         mr_sim_session     ${url}     json=${data}     headers=${headers}
-    [Return]       ${resp}
+    Create Session  mr_sim_session       ${MR_BASE_URL}    verify=false
+    ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
+    ${resp}=        POST On Session      mr_sim_session    url=${url}    json=${data}     headers=${headers}
+    [Return]        ${resp}
+
+GetSubsCall
+    [Arguments]     ${url}
+    Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
+    ${resp}=        GET On Session    pmsh_session        url=${url}
+    [Return]        ${resp}
