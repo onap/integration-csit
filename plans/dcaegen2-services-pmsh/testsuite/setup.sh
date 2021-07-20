@@ -1,16 +1,11 @@
 #!/bin/bash
-# Place the scripts in run order:
-
-source ${WORKSPACE}/scripts/dmaap-message-router/dmaap-mr-launch.sh
-dmaap_mr_launch
-DMAAP_MR_IP=${IP}
 
 export DB_USER=pmsh
 export DB_PASSWORD=pmsh
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim
+docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d zookeeper kafka dmaap-mr db aai cbs-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."
@@ -25,6 +20,20 @@ for i in {1..30}; do
     fi
 done
 [[ "$db_response" != "0" ]] && echo "Error: postgres db not accessible" && exit 1
+
+DMAAP_MR_IP=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" dmaap-mr)
+
+echo "Waiting for dmaap-message-router to come up ..."
+for i in {1..20}; do
+    dmaap_state=$(curl --write-out '%{http_code}' --silent --output /dev/null $DMAAP_MR_IP:3904/topics)
+    if [[ ${dmaap_state} == "200" ]]
+    then
+      break
+    else
+      sleep 5
+    fi
+done
+[[ "$dmaap_state" != "200" ]] && echo "Error: DMaaP MR container state not healthy" && exit 1
 
 docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d pmsh
 
