@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6a31027_c7b05043",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-07-21T09:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6998861c_42b06ae0",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "cac9da6d9c4ca47fd5f0e9be5474336c945d0648",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2fb12b3_bb186d21",
         "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2021-07-21T08:40:56Z",
       "side": 1,
       "message": "Should the dmaap-message-router not come up after 20x5sec the script still continues. I believe you\u0027re missing \"exit 1\" after \"if\" conditional body? i.e.\n\n    sleep 5\n  fi\n  echo \"Failed to boot\"\n  exit 1\ndone\n\n\nI can see it\u0027s also the case for postgres boot check loop and below for PMSH.",
+      "revId": "cac9da6d9c4ca47fd5f0e9be5474336c945d0648",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f3bebc_757d1ed1",
+        "filename": "plans/dcaegen2-services-pmsh/testsuite/setup.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2021-07-21T09:39:41Z",
+      "side": 1,
+      "message": "Adding a check for 200 from MR.\nChecks in place for DB and PMSH I believe ie.\n[[ \"$pmsh_response\" !\u003d \"200\" ]] \u0026\u0026 echo \"Error: PMSH container state not healthy\" \u0026\u0026 exit 1",
+      "parentUuid": "b2fb12b3_bb186d21",
       "revId": "cac9da6d9c4ca47fd5f0e9be5474336c945d0648",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
