@@ -22,6 +22,30 @@
       "revId": "a63f896110e4f16bbc6a6270a731c8a7b6bf81ed",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62f92d1_82d5a4d0",
+        "filename": "tests/oom-platform-cert-service/certservice/resources/cert-service-keywords.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-07-22T08:53:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6748da_59673127",
+      "range": {
+        "startLine": 111,
+        "startChar": 97,
+        "endLine": 111,
+        "endChar": 123
+      },
+      "revId": "a63f896110e4f16bbc6a6270a731c8a7b6bf81ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
