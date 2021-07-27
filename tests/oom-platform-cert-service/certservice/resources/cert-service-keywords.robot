@@ -107,6 +107,29 @@ Send Initialization Request And Certification Request And Expect Success
     ...  ${update_csr_file}  ${update_pk_file}  200
     Verify Certification Request Sent By Cert Service  ${start_time}
 
+Send Initialization Request And Key Update Request With Wrong Old Private Key And Expect Error
+    [Documentation]   Send initialization request and then key update request to passed urls and expect status code 500
+    [Arguments]   ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}  ${wrong_old_pk_file}
+    ${start_time}=  Get Current Timestamp For Docker Log
+    ${old_cert}=  Send Certificate Initialization Request And Return Certificate  ${path}  ${csr_file}  ${pk_file}
+    ${resp}=  Send Certificate Update Request And Return Response  ${update_path}  ${update_csr_file}  ${update_pk_file}  ${old_cert}  ${wrong_old_pk_file}
+    Should Be Equal As Strings 	${resp.status_code}  500
+    Verify Key Update Request Sent By Cert Service  ${start_time}
+
+Send Update Request With Wrong Header And Expect Error
+    [Documentation]   Send update request to passed url and expect wrong header response
+    [Arguments]  ${update_path}  ${update_csr_file}  ${update_pk_file}  ${old_cert_base64}  ${old_pk_file}
+    ${resp}=  Send Certificate Update Request And Return Response  ${update_path}  ${update_csr_file}  ${update_pk_file}  ${old_cert_base64}  ${old_pk_file}
+    Should Be Equal As Strings 	${resp.status_code}  400
+
+Send Update Request With Missing Header And Expect Error
+    [Documentation]   Send update request to passed url and expect wrong header response
+    [Arguments]  ${update_path}  ${update_csr_file}  ${update_pk_file}  ${old_cert_base64}  ${old_pk_file}  ${header_to_remove}
+    ${headers}=  Create Header for Certificate Update  ${update_csr_file}  ${update_pk_file}  ${old_cert_base64}  ${old_pk_file}
+    Remove From Dictionary  ${headers}  ${header_to_remove}
+    ${resp}=  Get Request  ${https_valid_cert_session}  ${update_path}  headers=${headers}
+    Should Be Equal As Strings 	${resp.status_code}  400
+
 Send Initialization Request And Update Request And Check Status Code
     [Documentation]   Send certificate update request and check status code
     [Arguments]   ${path}  ${update_path}   ${csr_file}  ${pk_file}  ${update_csr_file}  ${update_pk_file}  ${expected_status_code}
