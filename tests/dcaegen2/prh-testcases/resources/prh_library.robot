@@ -50,7 +50,7 @@ Verify missing AAI record is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Add PNF entry in AAI    ${incorrect_aai_entry}
     Set VES event in DMaaP    ${ves_event}
-    Wait for PRH log entry    20s    Request failed for URL 'https://aai:3334/aai/v12/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
+    Wait for PRH log entry    20s    Request failed for URL 'https://aai:3334/aai/v23/network/pnfs/pnf/NOK6061ZW8'. Response code: 404 Not Found
 
 Verify AAI not responding is logged
     [Arguments]    ${test_case_directory}

@@ -25,7 +25,7 @@
             {
                 "related-to": "service-instance",
                 "relationship-label": "org.onap.relationships.inventory.ComposedOf",
-                "related-link": "/aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service",
+                "related-link": "/aai/v23/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service",
                 "relationship-data": [
                     {
                         "relationship-key": "customer.global-customer-id",
@@ -50,7 +50,7 @@
             {
                 "related-to": "logical-link",
                 "relationship-label": "org.onap.relationships.inventory.BridgedTo",
-                "related-link": "/aai/v12/network/logical-links/logical-link/bbs-link",
+                "related-link": "/aai/v23/network/logical-links/logical-link/bbs-link",
                 "relationship-data": [
                     {
                         "relationship-key": "logical-link.link-name",

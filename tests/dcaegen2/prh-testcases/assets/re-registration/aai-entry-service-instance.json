@@ -12,7 +12,7 @@
       {
         "related-to": "pnf",
         "relationship-label": "org.onap.relationships.inventory.ComposedOf",
-        "related-link": "/aai/v12/network/pnfs/pnf/NOK6061ZW9",
+        "related-link": "/aai/v23/network/pnfs/pnf/NOK6061ZW9",
         "relationship-data": [
           {
             "relationship-key": "pnf.pnf-name",
