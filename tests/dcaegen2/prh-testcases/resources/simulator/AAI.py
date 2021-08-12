@@ -108,25 +108,25 @@ class AAIHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            if re.search('/aai/v12/network/pnfs/pnf/[^/]*$', self.path):
+            if re.search('/aai/v23/network/pnfs/pnf/[^/]*$', self.path):
                 pnf_name = basename(self.path)
                 if pnf_name in pnf_entries:
                     httpServerLib.set_response_200_ok(self, payload = pnf_entries[pnf_name])
-                    logger.debug('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
+                    logger.debug('AAIHandler GET /aai/v23/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
                 else:
                     httpServerLib.set_response_404_not_found(self)
-                    logger.info('AAIHandler GET /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
-            elif re.search('/aai/v12/network/logical-links/logical-link/[^/]*$', self.path):
+                    logger.info('AAIHandler GET /aai/v23/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
+            elif re.search('/aai/v23/network/logical-links/logical-link/[^/]*$', self.path):
                 logical_link_name = basename(self.path)
                 if json.loads(created_logical_link).get("link-name") == logical_link_name:
                     httpServerLib.set_response_200_ok(self, payload = created_logical_link)
-                    logger.debug('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
+                    logger.debug('AAIHandler GET /aai/v23/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
                 else:
                     httpServerLib.set_response_404_not_found(self)
-                    logger.info('AAIHandler GET /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 404 Not found, actual link: ' + created_logical_link)
-            elif re.search('aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
+                    logger.info('AAIHandler GET /aai/v23/network/logical-links/logical-link/' + logical_link_name + ' -> 404 Not found, actual link: ' + created_logical_link)
+            elif re.search('aai/v23/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service', self.path):
                 httpServerLib.set_response_200_ok(self, payload = json.dumps(service_instance).encode('utf-8'))
-                logger.debug('AAIHandler GET aai/v12/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
+                logger.debug('AAIHandler GET aai/v23/business/customers/customer/Demonstration/service-subscriptions/service-subscription/vFW/service-instances/service-instance/bbs_service -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler GET ' + self.path + ' -> 404 Not found')
@@ -136,17 +136,17 @@ class AAIHandler(BaseHTTPRequestHandler):
 
     def do_PATCH(self):
         try:
-            if re.search('/aai/v12/network/pnfs/pnf/[^/]*$', self.path):
+            if re.search('/aai/v23/network/pnfs/pnf/[^/]*$', self.path):
                 pnf_name = basename(self.path)
                 if pnf_name in pnf_entries:
                     global patched_pnf
                     patched_pnf = httpServerLib.get_payload(self)
 
                     httpServerLib.set_response_200_ok(self)
-                    logger.debug('AAIHandler PATCH /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
+                    logger.debug('AAIHandler PATCH /aai/v23/network/pnfs/pnf/' + pnf_name + ' -> 200 OK')
                 else:
                     httpServerLib.set_response_404_not_found(self)
-                    logger.info('AAIHandler PATCH /aai/v12/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
+                    logger.info('AAIHandler PATCH /aai/v23/network/pnfs/pnf/' + pnf_name + ' -> 404 Not found, actual entries: ' + str(pnf_entries.keys()))
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler PATCH ' + self.path + ' -> 404 Not found')
@@ -156,14 +156,14 @@ class AAIHandler(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         try:
-            if re.search('/aai/v12/network/logical-links/logical-link/[^/]*$', self.path):
+            if re.search('/aai/v23/network/logical-links/logical-link/[^/]*$', self.path):
                 global created_logical_link
                 created_logical_link = httpServerLib.get_payload(self)
 
                 httpServerLib.set_response_200_ok(self)
 
                 logical_link_name = basename(self.path)
-                logger.debug('AAIHandler PUT /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
+                logger.debug('AAIHandler PUT /aai/v23/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler PUT ' + self.path + ' -> 404 Not found')
@@ -173,7 +173,7 @@ class AAIHandler(BaseHTTPRequestHandler):
 
     def do_DELETE(self):
         try:
-            if re.search('/aai/v12/network/logical-links/logical-link/[^/]*\?resource-version=\d+$', self.path):
+            if re.search('/aai/v23/network/logical-links/logical-link/[^/]*\?resource-version=\d+$', self.path):
                 httpServerLib.set_response_200_ok(self)
                 logical_link_name = re.search('.+?(?=\?)', basename(self.path)).group(0)
 
@@ -181,7 +181,7 @@ class AAIHandler(BaseHTTPRequestHandler):
                 if json.loads(created_logical_link).get("link-name") == logical_link_name:
                     created_logical_link = AAI_RESOURCE_NOT_FOUND
 
-                logger.debug('AAIHandler DELETE /aai/v12/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
+                logger.debug('AAIHandler DELETE /aai/v23/network/logical-links/logical-link/' + logical_link_name + ' -> 200 OK')
             else:
                 httpServerLib.set_response_404_not_found(self)
                 logger.info('AAIHandler DELETE ' + self.path + ' -> 404 Not found')
