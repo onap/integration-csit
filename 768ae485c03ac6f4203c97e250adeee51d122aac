@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554f84ea_07ac17d8",
+        "filename": "plans/so/integration-etsi-testing/config/wait-for-container.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2021-08-16T07:31:56Z",
+      "side": 1,
+      "message": "please remove this commented line if you are changing it",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 131
+      },
+      "revId": "768ae485c03ac6f4203c97e250adeee51d122aac",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
