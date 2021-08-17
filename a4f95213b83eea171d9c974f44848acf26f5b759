@@ -22,6 +22,30 @@
       "revId": "a4f95213b83eea171d9c974f44848acf26f5b759",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcf1d92_7cb12af8",
+        "filename": "tests/dcaegen2/prh-testcases/resources/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-08-17T06:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c2a60a_b7e3be68",
+      "range": {
+        "startLine": 4,
+        "startChar": 84,
+        "endLine": 4,
+        "endChar": 89
+      },
+      "revId": "a4f95213b83eea171d9c974f44848acf26f5b759",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
