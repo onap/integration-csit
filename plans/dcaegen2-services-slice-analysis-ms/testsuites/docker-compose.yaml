@@ -77,14 +77,14 @@ services:
     networks:
      - slice-analysis-ms-default
   sliceanalysisms:
-    image: "nexus3.onap.org:10003/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest"
+    image: "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest"
     container_name: sliceanalysisms
     hostname: sliceanalysisms
     environment:
      - STANDALONE=true
      - CONFIG_FILE=/etc/config_all.json
     ports:
-     - "8080:8080"
+     - "8099:8080"
     volumes:
      - ./config/sliceanalysisms/config_all.json:/etc/config_all.json
     depends_on:
