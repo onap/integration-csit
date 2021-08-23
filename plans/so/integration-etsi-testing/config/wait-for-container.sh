@@ -133,7 +133,8 @@ process_arguments()
    exit 1
  fi
 
- PORT=$(docker port $CONTAINER_NAME | cut -c1-$(docker port $CONTAINER_NAME | grep -aob '/' | grep -oE '[0-9]+'))
+PORT=$((docker port $CONTAINER_NAME | cut -c1-$(docker port $CONTAINER_NAME | grep -aob '/' | grep -oE '[0-9]+' | sed 1q)) | sed 1q)
+
 
  if [ $? -ne 0 ] || [ -z $PORT ] ; then
    echo "$SCRIPT_NAME $(current_timestamp) ERROR: Unable to find PORT using project name: $PROJECT_NAME and container name: $CONTAINER_NAME"
