@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Integration tests for PRH when cert auth for dmaap and aai is disabled.
 Suite Setup       Run keywords   Create Headers  AND  Create sessions   AND
-...               Set PRH CBS config from file    ${CONFIGS_DIR}/prh-no-auth-config.json
+...               Set PRH config from file    ${CONFIGS_DIR}/prh-no-auth-config.yaml
 Test Teardown     Reset Simulators
 Test Timeout      2 minutes
 

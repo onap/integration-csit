@@ -7,6 +7,7 @@ services:
       - "8433:8433"
     volumes:
       - ./simulator/certs:/tmp/certs
+      - ./prh_configs/prh_config_volume:/app-config
     environment:
       - HOSTNAME=dcae-prh
       - CONSUL_HOST                # not in use, but still required by SDK - should be removed later on
@@ -14,8 +15,6 @@ services:
       - CONFIG_BINDING_SERVICE_SERVICE_PORT
     container_name: prh
     depends_on:
-      cbs:
-        condition: service_healthy
       dmaap-mr:
         condition: service_started
       aai:
@@ -40,47 +39,3 @@ services:
       - "3334:3334"
       - "3335:3335"
     container_name: aai_simulator
-
-  consul:
-    image: consul:1.0.6
-    ports:
-      - "8500:8500"
-    command: ["agent", "-bootstrap", "-client=0.0.0.0", "-server", "-ui", "-config-dir=/consul/consul.d"]
-    volumes:
-      - ./consul.d/:/consul/consul.d
-    container_name: consul
-
-  consul-cfg:
-    image: consul:1.0.6
-    restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-prh", "@/prh_configs/prh-config.json"]
-    container_name: consul-cfg
-    volumes:
-      - ./prh_configs/:/prh_configs:Z
-    depends_on:
-      - consul
-
-  consul-cfg-dcae-ves-collector:
-    image: consul:1.0.6
-    restart: on-failure
-    command: ["kv", "put", "-http-addr=http://consul:8500", "dcae-ves-collector", "@/prh_configs/dcae-ves-collector-config.json"]
-    container_name: consul-cfg-dcae-ves-collector
-    volumes:
-      - ./prh_configs/:/prh_configs:Z
-    depends_on:
-      - consul
-
-  cbs:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.2.4
-    ports:
-      - "10000:10000"
-    environment:
-      - CONSUL_HOST
-    depends_on:
-      - consul-cfg
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:10000/service_component_all/dcae-prh"]
-      interval: 3s
-      timeout: 2s
-      retries: 20
-    container_name: cbs

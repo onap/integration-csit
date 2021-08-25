@@ -12,7 +12,6 @@ Verify PNF ready sent
     ${expected_pnf_ready_event}=    Get Data From File    ${test_case_directory}/expected-pnf-ready-event.json
     Add PNF entry in AAI    ${pnf_entry}
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
 
 Verify PNF ready sent and old logical link replaced in AAI
@@ -87,7 +86,6 @@ Verify PNF ready sent when service instance non active
     Add service instance entry in AAI    ${service_instance}
 
     Set VES event in DMaaP    ${ves_event}
-    Wait Until Keyword Succeeds    10x    3000ms    Check CBS ready
     Wait Until Keyword Succeeds    10x    3000ms    Check created PNF_READY notification    ${expected_pnf_ready_event}
 
 Check logical link not modified
@@ -95,12 +93,6 @@ Check logical link not modified
     ${expected_logical_link}=    Get Data From File  ${test_case_directory}/logical-link.json
     ${existing_logical_link}=    Get Request    ${aai_session}    /verify/logical-link    headers=${suite_headers}
     Should Be Equal As JSON  ${expected_logical_link}    ${existing_logical_link.content}
-
-Check CBS ready
-    ${resp}=    Get Request    ${consul_session}    /v1/catalog/services
-    Should Be Equal As Strings    ${resp.status_code}    200
-    Log    Service Catalog response: ${resp.content}
-    Dictionary Should Contain Key    ${resp.json()}    cbs    |Consul service catalog should contain CBS entry
 
 Check created PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dmaap}
