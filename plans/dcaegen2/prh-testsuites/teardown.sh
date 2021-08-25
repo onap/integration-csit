@@ -21,3 +21,6 @@ kill-instance.sh aai_simulator
 kill-instance.sh consul
 kill-instance.sh consul-cfg
 kill-instance.sh cbs
+
+#Cleanup PRH config volume
+rm -rf ${WORKSPACE}/tests/dcaegen2/prh-testcases/resources/prh_configs/prh_config_volume

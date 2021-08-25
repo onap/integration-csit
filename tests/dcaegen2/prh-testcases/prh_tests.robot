@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Integration tests for PRH.
 ...               PRH receive events from DMaaP and produce or not PNF_READY notification depends on required fields in received event.
-Suite Setup       Run keywords   Create Headers  AND  Create sessions   AND    Set default PRH CBS config
+Suite Setup       Run keywords   Create Headers  AND  Create sessions   AND    Set default PRH config
 Test Teardown     Reset Simulators
 Test Timeout      2 minutes
 
