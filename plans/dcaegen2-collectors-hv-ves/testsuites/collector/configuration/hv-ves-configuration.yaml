@@ -1,0 +1,17 @@
+streams_publishes:
+  perf3gpp:
+    aaf_credentials:
+      password: admin_secret
+      username: admin
+    kafka_info:
+      bootstrap_servers: kafka:9092
+      topic_name: TEST_HV_VES_PERF3GPP
+    type: kafka
+  ves-3gpp-heartbeat:
+    aaf_credentials:
+      password: admin_secret
+      username: admin
+    kafka_info:
+      bootstrap_servers: kafka:9092
+      topic_name: TEST_SEC_3GPP_HEARTBEAT_OUTPUT
+    type: kafka
