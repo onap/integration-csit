@@ -20,6 +20,7 @@
 Library       DcaeAppSimulatorLibrary
 Library       ConsulLibrary
 Library       BuiltIn
+Library       OperatingSystem
 
 Resource      resources/common-keywords.robot
 
@@ -35,9 +36,13 @@ Configuration Changes Suite Setup
 
 Change Configuration
     [Arguments]   ${CONFIGURATION_JSON_FILEPATH}   ${MESSAGES_TOPIC}
-    Publish HV VES Configuration In Consul    ${CONSUL_API_URL}   ${CONFIGURATION_JSON_FILEPATH}
+    Set New Mounted Configuration    ${CONFIGURATION_JSON_FILEPATH}
     # Assure configuration fetch in hv-ves
     Sleep  10
+
+Set New Mounted Configuration
+    [Arguments]   ${NEW_CONFIGURATION_FILE_PATH}
+    Copy File   ${NEW_CONFIGURATION_FILE_PATH}    ${HV_VES_MOUNTED_CONFIGURATION_FILE_PATH}
 
 *** Test Cases ***
 Configuration change
@@ -79,5 +84,7 @@ ${HV_VES_SCENARIOS}                                 %{WORKSPACE}/tests/dcaegen2-
 ${XNF_VALID_MESSAGES_REQUEST}                       ${HV_VES_SCENARIOS}/configuration-change/xnf-valid-messages-request.json
 
 ${HV_VES_RESOURCES}                                 %{WORKSPACE}/tests/dcaegen2-collectors-hv-ves/testcases/resources
-${HV_VES_CONFIGURATION_JSON_FILEPATH}               ${HV_VES_RESOURCES}/hv-ves-configuration.json
-${DIFFERENT_TOPIC_CONFIGURATION_JSON_FILEPATH}      ${HV_VES_RESOURCES}/hv-ves-configuration-with-different-topic.json
+${HV_VES_CONFIGURATION_JSON_FILEPATH}               ${HV_VES_RESOURCES}/hv-ves-configuration.yaml
+${DIFFERENT_TOPIC_CONFIGURATION_JSON_FILEPATH}      ${HV_VES_RESOURCES}/hv-ves-configuration-with-different-topic.yaml
+
+${HV_VES_MOUNTED_CONFIGURATION_FILE_PATH}           %{WORKSPACE}/plans/dcaegen2-collectors-hv-ves/testsuites/collector/configuration/hv-ves-configuration.yaml

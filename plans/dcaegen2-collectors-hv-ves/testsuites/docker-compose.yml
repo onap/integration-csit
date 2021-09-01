@@ -71,30 +71,6 @@ services:
       - hv-ves-default
 
   #
-  # Consul / CBS
-  #
-
-  consul-server:
-    image: docker.io/consul:1.0.6
-    ports:
-      - "8500:8500"
-    volumes:
-      - ./consul/:/consul/config
-    networks:
-      - hv-ves-default
-
-  config-binding-service:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding:2.5.2
-    ports:
-      - "10000:10000"
-    environment:
-      - CONSUL_HOST
-    depends_on:
-      - consul-server
-    networks:
-      - hv-ves-default
-
-  #
   # DCAE HV VES Collector
   #
 
@@ -110,6 +86,7 @@ services:
       - CONSUL_HOST
       - CONFIG_BINDING_SERVICE
       - CONFIG_BINDING_SERVICE_SERVICE_PORT
+      - CBS_CLIENT_CONFIG_PATH=/etc/ves-hv/configuration/hv-ves-configuration.yaml
     healthcheck:
       interval: 10s
       timeout: 5s
@@ -118,7 +95,6 @@ services:
     volumes:
       - ./collector/:/etc/ves-hv/
     depends_on:
-      - config-binding-service
       - kafka
     networks:
       - hv-ves-default
@@ -135,6 +111,7 @@ services:
       - CONSUL_HOST
       - CONFIG_BINDING_SERVICE
       - CONFIG_BINDING_SERVICE_SERVICE_PORT
+      - CBS_CLIENT_CONFIG_PATH=/etc/ves-hv/configuration/hv-ves-configuration.yaml
     healthcheck:
       interval: 10s
       timeout: 5s
@@ -143,7 +120,6 @@ services:
     volumes:
       - ./collector/:/etc/ves-hv/
     depends_on:
-      - config-binding-service
       - kafka
     networks:
       - hv-ves-default
