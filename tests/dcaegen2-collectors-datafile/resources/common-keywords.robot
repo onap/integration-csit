@@ -13,6 +13,7 @@ ${CLI_DRSIM_CTR_QUERY_NOT_PUBLISHED}        curl --connect-timeout 10 -X GET htt
 ${CLI_DRSIM_CTR_PUBLISHED_FILES}            curl --connect-timeout 10 -X GET http://${SIM_IP}:3906/ctr_published_files
 ${CLI_DR_REDIR_SIM_DOWNLOADED_VOLUME}       curl --connect-timeout 10 -X GET http://${SIM_IP}:3908/dwl_volume
 
+${DFC_CONFIG_VOLUME_FILE}                  ${SIMGROUP_ROOT}/dfc_config_volume/application_config.yaml
 *** Keywords ***
 
 MR Sim Emitted Files Equal
@@ -45,6 +46,13 @@ Start DFC
     Log To Console              Dfc-start:
     Log To Console              ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
 
+Set DFC config
+    [Documentation]				    Set DFC configuration
+    [Arguments]            		    ${dfc_config_file}
+    Copy File                       ${dfc_config_file}                      ${DFC_CONFIG_VOLUME_FILE}
+    ${dfc_config_file_content}=     Get File                                ${DFC_CONFIG_VOLUME_FILE}
+    Log To Console                  APP configuration:
+    Log To Console                  ${dfc_config_file_content}
 
 Test Teardown
 	[Documentation]				Cleanup containers
