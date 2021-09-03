@@ -17,6 +17,7 @@ services:
       dfcnet: null
     volumes:
       - $SIMGROUP_ROOT/tls/:/opt/app/datafile/etc/cert/
+      - $SIMGROUP_ROOT/dfc_config_volume:/app-config
     environment:
       CONSUL_HOST: "consul-server"
       CONSUL_PORT: 8500

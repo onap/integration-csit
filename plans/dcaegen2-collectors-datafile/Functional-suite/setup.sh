@@ -22,6 +22,9 @@ else
 	echo "Using SIM_ROOT from environmental variable: " $SIM_ROOT
 fi
 
+#Prepare DFC config volume
+mkdir $SIM_ROOT/simulator-group/dfc_config_volume || true
+
 #Location of the above simulators when run as a group. For start+config and stop.
 SIMGROUP_ROOT=$SIM_ROOT/simulator-group
 

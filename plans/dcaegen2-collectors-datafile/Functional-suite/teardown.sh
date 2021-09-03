@@ -5,6 +5,8 @@ running_images=$(docker images -q)
 docker exec dfc_app0 cat /var/log/ONAP/application.log >> $WORKSPACE/archives/dfc_app0_application.log
 docker logs dfc_mr-sim >> $WORKSPACE/archives/dfc_mr-sim.log
 
+rm -rf $SIM_ROOT/simulator-group/dfc_config_volume || true
+
 if [ -z "$running_containers" ]
 then
     echo "No container requires termination"

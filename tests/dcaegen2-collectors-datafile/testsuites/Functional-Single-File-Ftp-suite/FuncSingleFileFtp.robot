@@ -6,9 +6,8 @@ Library        Process
 Resource    ../../resources/common-keywords.robot
 
 *** Variables ***
-${CONSUL_UPL_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?dc=dc1 -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data-binary @${SIMGROUP_ROOT}/consul/c12_feed2_PM_MEAS.json
-${CONSUL_GET_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?raw
-${CBS_GET_MERGED_CONFIG}            /usr/bin/curl -v http://127.0.0.1:10000/service_component_all/dfc_app0
+${DFC_CONFIG_FILE}                         ${SIMGROUP_ROOT}/dfc_configs/c12_feed2_PM_MEAS.yaml
+${DFC_CONFIG_VOLUME_FILE}                  ${SIMGROUP_ROOT}/dfc_config_volume/application_config.yaml
 
 *** Test Cases ***
 
@@ -64,19 +63,10 @@ Verify Single Event From Event Poll To Published File
     MR Sim Emitted Files Equal      0                                                                                   #Verify 0 file emitted from MR sim
     DR Sim Published Files Equal    0                                                                                   #Verify 0 file published to DR sim
 
-    ${cli_cmd_output}=              Run Process                     ${CONSUL_UPL_APP}           shell=yes
-    Log To Console                  Consul APP write:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    ${cli_cmd_output}=              Run Process                     ${CONSUL_GET_APP}           shell=yes
-    Log To Console                  Consul APP read:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    ${cli_cmd_output}=              Run Process                     ${CBS_GET_MERGED_CONFIG}    shell=yes
-    Log To Console                  CBS merged configuration:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    Sleep                           10
+    Copy File                       ${DFC_CONFIG_FILE}                      ${DFC_CONFIG_VOLUME_FILE}
+    ${dfc_config_file_content}=     Get File                                ${DFC_CONFIG_VOLUME_FILE}
+    Log To Console                  APP configuration:
+    Log To Console                  ${dfc_config_file_content}
 
     Start DFC
 

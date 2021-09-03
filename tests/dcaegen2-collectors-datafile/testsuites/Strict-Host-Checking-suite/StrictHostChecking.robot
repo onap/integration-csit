@@ -8,10 +8,9 @@ Resource    ../../resources/common-keywords.robot
 Test Teardown
 
 *** Variables ***
-${CONSUL_UPL_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?dc=dc1 -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data-binary @${SIMGROUP_ROOT}/consul/c12_feed2_PM_MEAS.json
-${CONSUL_UPL_APP_INSECURE_SFTP}     /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?dc=dc1 -X PUT -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data-binary @${SIMGROUP_ROOT}/consul/c12_feed2_PM_MEAS_no_strict_host_key_checking.json
-${CONSUL_GET_APP}                   /usr/bin/curl -v http://127.0.0.1:8500/v1/kv/dfc_app0?raw
-${CBS_GET_MERGED_CONFIG}            /usr/bin/curl -v http://127.0.0.1:10000/service_component_all/dfc_app0
+${DFC_CONFIG_FILE}                         ${SIMGROUP_ROOT}/dfc_configs/c12_feed2_PM_MEAS.yaml
+${DFC_CONFIG_FILE_INSECURE_SFTP}           ${SIMGROUP_ROOT}/dfc_configs/c12_feed2_PM_MEAS_no_strict_host_key_checking.yaml
+${DFC_CONFIG_VOLUME_FILE}                  ${SIMGROUP_ROOT}/dfc_config_volume/application_config.yaml
 
 *** Test Cases ***
 
@@ -20,7 +19,7 @@ ${CBS_GET_MERGED_CONFIG}            /usr/bin/curl -v http://127.0.0.1:10000/serv
 Verify single event with SFTP file, when host known and strict host key checking enabled. From event poll to published file
     [TAGS]                          DFC_STRICT_HOST_KEY_CHECKING_1
     [Documentation]                 Verify single event with SFTP file, when host known and strict host key checking enabled. From event poll to published file.
-    [Setup]  Setup Strict Host Key Checking Test  ${CONSUL_UPL_APP}  all_hosts_keys
+    [Setup]  Setup Strict Host Key Checking Test  ${DFC_CONFIG_FILE}  all_hosts_keys
 
     Wait Until Keyword Succeeds     1 minute      10 sec    MR Sim Emitted Files Equal          1                       #Verify 1 file emitted from MR sim
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
@@ -32,7 +31,7 @@ Verify single event with SFTP file, when host known and strict host key checking
 Verify single event with SFTP file, when host unknown and strict host key checking disabled. From event poll to published file
     [TAGS]                          DFC_STRICT_HOST_KEY_CHECKING_2
     [Documentation]                 Verify single event with SFTP file, when host unknown and strict host key checking disabled. From event poll to published file.
-    [Setup]  Setup Strict Host Key Checking Test  ${CONSUL_UPL_APP_INSECURE_SFTP}  known_hosts_empty
+    [Setup]  Setup Strict Host Key Checking Test  ${DFC_CONFIG_FILE_INSECURE_SFTP}  known_hosts_empty
 
     Wait Until Keyword Succeeds     1 minute      10 sec    MR Sim Emitted Files Equal          1                       #Verify 1 file emitted from MR sim
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
@@ -44,7 +43,7 @@ Verify single event with SFTP file, when host unknown and strict host key checki
 Verify single event with SFTP file, when no known hosts file and strict host key checking enabled. From event poll to published file
     [TAGS]                          DFC_STRICT_HOST_KEY_CHECKING_3
     [Documentation]                 Verify single event with SFTP file, when host unknown and strict host key checking enabled. File not published.
-    [Setup]  Setup Strict Host Key Checking Test  ${CONSUL_UPL_APP}  no_known_hosts_file
+    [Setup]  Setup Strict Host Key Checking Test  ${DFC_CONFIG_FILE}  no_known_hosts_file
 
     Wait Until Keyword Succeeds     1 minute      10 sec    MR Sim Emitted Files Equal          1                       #Verify 1 file emitted from MR sim
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
@@ -58,7 +57,7 @@ Verify single event with SFTP file, when no known hosts file and strict host key
 Verify single event with SFTP file, when host unknown and strict host key checking enabled. File not published
     [TAGS]                          DFC_STRICT_HOST_KEY_CHECKING_4
     [Documentation]                 Verify single event with SFTP file, when host unknown and strict host key checking enabled. File not published.
-    [Setup]  Setup Strict Host Key Checking Test  ${CONSUL_UPL_APP}  known_hosts_empty
+    [Setup]  Setup Strict Host Key Checking Test  ${DFC_CONFIG_FILE}  known_hosts_empty
     Wait Until Keyword Succeeds     1 minute      10 sec    MR Sim Emitted Files Equal          1                       #Verify 1 file emitted from MR sim
     Wait Until Keyword Succeeds     1 minute      10 sec    DR Sim Query Not Published Equal    1                       #Verify 1 query response for not published files
     Sleep                           60
@@ -69,7 +68,7 @@ Verify single event with SFTP file, when host unknown and strict host key checki
 
 Setup Strict Host Key Checking Test
     [Documentation]                 Sets up strict host key checking test with single 1MB file
-    [Arguments]                     ${consul_config_request}  ${known_hosts_file}
+    [Arguments]                     ${dfc_config_path}  ${known_hosts_file}
     Set Environment Variable        MR_TC                   --tc100
     Set Environment Variable        DR_TC                   --tc normal
     Set Environment Variable        DR_REDIR_TC             --tc normal
@@ -102,19 +101,10 @@ Setup Strict Host Key Checking Test
     MR Sim Emitted Files Equal      0                                                                                   #Verify 0 file emitted from MR sim
     DR Sim Published Files Equal    0                                                                                   #Verify 0 file published to DR sim
 
-    ${cli_cmd_output}=              Run Process                     ${consul_config_request}    shell=yes
-    Log To Console                  Consul APP write:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    ${cli_cmd_output}=              Run Process                     ${CONSUL_GET_APP}           shell=yes
-    Log To Console                  Consul APP read:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    ${cli_cmd_output}=              Run Process                     ${CBS_GET_MERGED_CONFIG}    shell=yes
-    Log To Console                  CBS merged configuration:
-    Log To Console                  ${cli_cmd_output.stdout} ${cli_cmd_output.stderr}
-
-    Sleep                           10
+    Copy File                       ${dfc_config_path}                      ${DFC_CONFIG_VOLUME_FILE}
+    ${dfc_config_file_content}=     Get File                                ${DFC_CONFIG_VOLUME_FILE}
+    Log To Console                  APP configuration:
+    Log To Console                  ${dfc_config_file_content}
 
     ${cli_cmd_output}=              Run Process                    ${DFC_ROOT}/dfc-start.sh    cwd=${DFC_ROOT}    env:KNOWN_HOSTS=${known_hosts_file}    env:SIMGROUP_ROOT=${SIMGROUP_ROOT}
     Log To Console                  Dfc-start:
