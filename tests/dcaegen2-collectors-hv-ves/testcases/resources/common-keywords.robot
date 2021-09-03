@@ -23,6 +23,8 @@ Library       VesHvContainersUtilsLibrary
 Library       KafkaLibrary
 Library       Collections
 
+Library       OperatingSystem
+
 *** Keywords ***
 Configure Single xNF Simulator
     ${XNF_PORTS_LIST}=    Create List    7000
@@ -70,8 +72,13 @@ VES-HV Collector Suite Teardown
     Log Kafka Status
     Stop And Remove All Xnf Simulators   ${SUITE NAME}
 
+Set New Mounted Configuration
+    [Arguments]   ${NEW_CONFIGURATION_FILE_PATH}
+    Copy File   ${NEW_CONFIGURATION_FILE_PATH}    ${HV_VES_MOUNTED_CONFIGURATION_FILE_PATH}
+
 *** Variables ***
 ${HTTP_METHOD_URL}                             http://
 
 ${XNF_SIM_API_PATH}                            /simulator/async
 
+${HV_VES_MOUNTED_CONFIGURATION_FILE_PATH}      %{WORKSPACE}/plans/dcaegen2-collectors-hv-ves/testsuites/collector/configuration/hv-ves-configuration.yaml
