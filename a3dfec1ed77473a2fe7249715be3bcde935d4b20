@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742545ed_ed7658c0",
+        "filename": "tests/dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Ftp-suite/FuncSingleFileFtp.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-09-07T10:21:23Z",
+      "side": 1,
+      "message": "Add sleep after copy, to make sure that configuration was reloaded. Consider add KeyWord to avoid duplication in other test-cases",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 101
+      },
+      "revId": "a3dfec1ed77473a2fe7249715be3bcde935d4b20",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
