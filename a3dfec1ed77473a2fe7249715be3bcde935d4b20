@@ -22,6 +22,30 @@
       "revId": "a3dfec1ed77473a2fe7249715be3bcde935d4b20",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6dc9886_c264e325",
+        "filename": "tests/dcaegen2-collectors-datafile/testsuites/Functional-Single-File-Ftp-suite/FuncSingleFileFtp.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6592
+      },
+      "writtenOn": "2021-09-08T12:46:57Z",
+      "side": 1,
+      "message": "Setting configuration logic has been moved. I suppose sleep isn\u0027t necessary, because we start DFC after loading configuration.",
+      "parentUuid": "742545ed_ed7658c0",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 101
+      },
+      "revId": "a3dfec1ed77473a2fe7249715be3bcde935d4b20",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
