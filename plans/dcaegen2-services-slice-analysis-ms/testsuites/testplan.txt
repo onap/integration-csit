@@ -1,3 +1,4 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
-dcaegen2-services-slice-analysis-ms/testcases
+#dcaegen2-services-slice-analysis-ms/testcases/slice-analysis-ms-test.robot
+dcaegen2-services-slice-analysis-ms/testcases/slice-analysis-ms-test-cps-aai.robot

@@ -1,0 +1,704 @@
+{
+  "ran-network": {
+    "NearRTRIC": [
+      {
+        "idNearRTRIC": 11,
+        "attributes": {
+          "near-rt-ric-url": "10.165.160.47:6080",
+          "trackingArea": "Kingston",
+          "rANNFNSSIList": [
+            "e893-e93r-c0f2-kj76",
+            "m93ed-e93e-c0f2-9i7y"
+          ],
+          "RRMPolicyRatio": [
+            {
+              "id": "33",
+              "attributes": {
+                "resourceType": "sharing",
+                "rRMPolicyMemberList": [
+                  {
+                    "idx": 33,
+                    "mcc": "310",
+                    "mnc": "410",
+                    "sNSSAI": 101
+                  }
+                ],
+                "quotaType": "STRICT",
+                "rRMPolicyMaxRatio": 22,
+                "rRMPolicyMinRatio": 3,
+                "rRMPolicyDedicatedRatio": 4
+              }
+            }
+          ],
+          "pLMNInfoList": [
+            {
+              "mcc": "310",
+              "mnc": "410",
+              "sNSSAIList": [
+                {
+                  "sNssai": "001-00110",
+                  "status": "ACTIVE",
+                  "configData": [
+                    {
+                      "configParameter": "maxNumberOfConns",
+                      "configValue": 10
+                    },
+                    {
+                      "configParameter": "uLThptPerSlice",
+                      "configValue": 10
+                    },
+                    {
+                      "configParameter": "dLThptPerSlice",
+                      "configValue": 10
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sliceProfilesList": [
+            {
+              "sliceProfileId": "b594-e98r-c7f2-ij79",
+              "sNSSAI": 101,
+              "maxNumberofUEs": 24,
+              "latency": 2,
+              "uLThptPerSlice": 30,
+              "dLThptPerSlice": 60,
+              "maxNumberofConns": 22,
+              "uEMobilityLevel": "high",
+              "coverageAreaList": [
+                "CA1",
+                "CA2"
+              ],
+              "resourceSharingLevel": "Shared"
+            }
+          ]
+        },
+        "GNBDUFunction": [
+          {
+            "idGNBDUFunction": "1",
+            "attributes": {
+              "gNBDUFunction-url": "10.165.160.13:6080",
+              "gNBIdLength": 23,
+              "gNBDUName": "gnbdu1",
+              "gNBDUId": "1",
+              "gNBId": 98763,
+              "RRMPolicyRatio": [
+                {
+                  "id": "34",
+                  "attributes": {
+                    "resourceType": "sharing",
+                    "rRMPolicyMemberList": [
+                      {
+                        "idx": 34,
+                        "mcc": "211",
+                        "mnc": "111",
+                        "sNSSAI": 102
+                      }
+                    ],
+                    "quotaType": "STRICT",
+                    "rRMPolicyMaxRatio": 23,
+                    "rRMPolicyMinRatio": 4,
+                    "rRMPolicyDedicatedRatio": 5
+                  }
+                }
+              ],
+              "userLabel": "user",
+              "sAP": [
+                {
+                  "host": "localhost",
+                  "port": 8080
+                }
+              ]
+            },
+            "NRCellDU": [
+              {
+                "idNRCellDU": "11220",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 11220,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "001-00110",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 11
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 12
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 13
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              },
+              {
+                "idNRCellDU": "11221",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 11221,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "001-00110",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 11
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 12
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 13
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              },
+              {
+                "idNRCellDU": "11222",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 11222,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "001-00110",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 11
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 12
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 13
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "idNearRTRIC": 22,
+        "attributes": {
+          "near-rt-ric-url": "10.165.160.47:6080",
+          "trackingArea": "Kingston",
+          "rANNFNSSIList": [
+            "e893-e93r-c0f2-kj76",
+            "m93ed-e93e-c0f2-9i7y"
+          ],
+          "RRMPolicyRatio": [
+            {
+              "id": "33",
+              "attributes": {
+                "resourceType": "sharing",
+                "rRMPolicyMemberList": [
+                  {
+                    "idx": 33,
+                    "mcc": "310",
+                    "mnc": "410",
+                    "sNSSAI": 101
+                  }
+                ],
+                "quotaType": "STRICT",
+                "rRMPolicyMaxRatio": 22,
+                "rRMPolicyMinRatio": 3,
+                "rRMPolicyDedicatedRatio": 4
+              }
+            }
+          ],
+          "pLMNInfoList": [
+            {
+              "mcc": "311",
+              "mnc": "411",
+              "sNSSAIList": [
+                {
+                  "sNssai": "111-1111",
+                  "status": "ACTIVE",
+                  "configData": [
+                    {
+                      "configParameter": "maxNumberOfConns",
+                      "configValue": 20
+                    },
+                    {
+                      "configParameter": "uLThptPerSlice",
+                      "configValue": 20
+                    },
+                    {
+                      "configParameter": "dLThptPerSlice",
+                      "configValue": 20
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "sliceProfilesList": [
+            {
+              "sliceProfileId": "b594-e98r-c7f2-ij79",
+              "sNSSAI": 101,
+              "maxNumberofUEs": 24,
+              "latency": 2,
+              "uLThptPerSlice": 30,
+              "dLThptPerSlice": 60,
+              "maxNumberofConns": 22,
+              "uEMobilityLevel": "high",
+              "coverageAreaList": [
+                "CA1",
+                "CA2"
+              ],
+              "resourceSharingLevel": "Shared"
+            }
+          ]
+        },
+        "GNBDUFunction": [
+          {
+            "idGNBDUFunction": "2",
+            "attributes": {
+              "gNBDUFunction-url": "10.165.160.13:6080",
+              "gNBIdLength": 23,
+              "gNBDUName": "gnbdu1",
+              "gNBDUId": "2",
+              "gNBId": 98763,
+              "RRMPolicyRatio": [
+                {
+                  "id": "34",
+                  "attributes": {
+                    "resourceType": "sharing",
+                    "rRMPolicyMemberList": [
+                      {
+                        "idx": 34,
+                        "mcc": "211",
+                        "mnc": "111",
+                        "sNSSAI": 102
+                      }
+                    ],
+                    "quotaType": "STRICT",
+                    "rRMPolicyMaxRatio": 23,
+                    "rRMPolicyMinRatio": 4,
+                    "rRMPolicyDedicatedRatio": 5
+                  }
+                }
+              ],
+              "userLabel": "user",
+              "sAP": [
+                {
+                  "host": "localhost",
+                  "port": 8080
+                }
+              ]
+            },
+            "NRCellDU": [
+              {
+                "idNRCellDU": "12230",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 12230,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "111-1111",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 21
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              },
+              {
+                "idNRCellDU": "12231",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 12231,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "111-1111",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 21
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              },
+              {
+                "idNRCellDU": "12232",
+                "attributes": {
+                  "nRCellDU-url": "10.165.160.15:8083",
+                  "cellLocalId": 12232,
+                  "operationalState": "ENABLED",
+                  "administrativeState": "UNLOCKED",
+                  "cellState": "ACTIVE",
+                  "RRMPolicyRatio": [
+                    {
+                      "id": "34",
+                      "attributes": {
+                        "resourceType": "sharing",
+                        "rRMPolicyMemberList": [
+                          {
+                            "idx": 34,
+                            "mcc": "211",
+                            "mnc": "111",
+                            "sNSSAI": 102
+                          }
+                        ],
+                        "quotaType": "STRICT",
+                        "rRMPolicyMaxRatio": 23,
+                        "rRMPolicyMinRatio": 4,
+                        "rRMPolicyDedicatedRatio": 5
+                      }
+                    }
+                  ],
+                  "pLMNInfoList": [
+                    {
+                      "mcc": "211",
+                      "mnc": "211",
+                      "sNSSAIList": [
+                        {
+                          "sNssai": "111-1111",
+                          "status": "active",
+                          "configData": [
+                            {
+                              "configParameter": "maxNumberOfConns",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "dLThptPerSlice",
+                              "configValue": 21
+                            },
+                            {
+                              "configParameter": "uLThptPerSlice",
+                              "configValue": 21
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "nRPCI": 11,
+                  "nRTAC": 14777,
+                  "arfcnDL": 1,
+                  "arfcnUL": 2,
+                  "arfcnSUL": 3,
+                  "bSChannelBwDL": 4,
+                  "bSChannelBwUL": 5,
+                  "bSChannelBwSUL": 6,
+                  "ssbFrequency": 7,
+                  "ssbSubCarrierSpacing": 15,
+                  "ssbOffset": 9,
+                  "ssbDuration": 4,
+                  "nRSectorCarrierRef": [
+                    "OU=Sales"
+                  ],
+                  "userLabel": "user",
+                  "sAP": [
+                    {
+                      "host": "localhost",
+                      "port": 8080
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
