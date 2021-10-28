@@ -5,6 +5,7 @@ docker login -u docker -p docker nexus3.onap.org:10001
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-slice-analysis-ms/testsuites
 TEST_SCRIPTS_DIR=$WORKSPACE/scripts/dcaegen2-services-slice-analysis-ms/slice-analysis-ms
 TEST_ROBOT_DIR=$WORKSPACE/tests/dcaegen2-services-slice-analysis-ms/testcases
+TEST_SCRIPTS_CPS_DIR=$WORKSPACE/scripts/dcaegen2-services-slice-analysis-ms/slice-analysis-ms/cps-aai
 
 docker-compose up -d
 
@@ -56,5 +57,9 @@ sleep 10
 CONFIGDB_SIM_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' configdb_sim)
 echo "CONFIGDB_SIM_IP=${CONFIGDB_SIM_IP}"
 
+# CPS & AAI set up
+cd $TEST_SCRIPTS_CPS_DIR
+sh cps-aai-setup.sh
 
 ROBOT_VARIABLES="-v ZOOKEEPER_IP:${ZOOKEEPER_IP} -v KAFKA_IP:${KAFKA_IP} -v DMAAP_IP:${DMAAP_IP} -v SLICE_ANALYSIS_MS_POSTGRES_IP:${SLICE_ANALYSIS_MS_POSTGRES_IP} -v SLICE_ANALYSIS_MS_IP:${SLICE_ANALYSIS_MS_IP} -v CONFIGDB_SIM_IP:${CONFIGDB_SIM_IP} -v TEST_ROBOT_DIR:${TEST_ROBOT_DIR}"
+
