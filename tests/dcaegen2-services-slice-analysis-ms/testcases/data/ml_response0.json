@@ -1,0 +1,18 @@
+{
+  "snssai": "001-00110",
+  "data": [
+    {
+      "gNBCUName": "cucpserver1",
+      "cellCUList": [
+        {
+          "cellLocalId": 11220,
+          "configData": {
+            "maxNumberofConns": "20",
+            "predictedMaxNumberofConns": "25",
+            "lastUpdatedTS": "yyyy/MM/dd HH:mm:ss"
+          }
+        }
+      ]
+    }
+  ]
+}

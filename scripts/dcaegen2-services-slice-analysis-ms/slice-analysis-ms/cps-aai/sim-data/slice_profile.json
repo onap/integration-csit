@@ -1,0 +1,9 @@
+{
+	"profile-id":"684hf846f-863b-4901-b202-0ab86a638555",
+	"latency":30,
+	"max-number-of-UEs":200,
+	"coverage-area-TA-list":"[1, 2, 3, 4]",
+	"resource-sharing-level":"non-shared",
+	"exp-data-rate-UL":40,
+	"exp-data-rate-DL":50
+}

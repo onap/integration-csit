@@ -64,9 +64,9 @@
     "sliceanalysisms.pollingTimeout": 60,
     "sliceanalysisms.cid": "sliceanalysisms-cid",
     "sliceanalysisms.configDb.service": "http://configdb_sim:5000",
-    "sliceanalysisms.aai.url": "http://configdb_sim:5000/aai/v21",
-    "sliceanalysisms.cps.url": "http://configdb_sim:5000",
-    "sliceanalysisms.configDbEnabled": "true",
+    "sliceanalysisms.aai.url": "https://aai-resources:8447/aai/v21",
+    "sliceanalysisms.cps.url": "http://cps-tbdmt:8080/execute/ran-network",
+    "sliceanalysisms.configDbEnabled": "false",
     "service_calls": {
       "policy-req": []
     },
