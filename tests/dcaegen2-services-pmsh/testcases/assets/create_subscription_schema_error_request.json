@@ -1,0 +1,43 @@
+{
+  "subscription": {
+    "subscriptionName": "subs_01",
+    "operationalPolicyName":"pmsh-operational-policy",
+    "controlLoopName":"pmsh-control-loop",
+    "nfFilter": {
+      "nfNames": [
+        "^pnf.*",
+        "^vnf.*"
+      ],
+      "modelInvariantIDs": [
+        "8lk4578-d396-4efb-af02-6b83499b12f8",
+        "687kj45-d396-4efb-af02-6b83499b12f8"
+
+      ],
+      "modelVersionIDs": [
+        "e80a6ae3-cafd-4d24-850d-e14c084a5ca9"
+      ],
+      "modelNames": [
+        "PNF102"
+      ]
+    },
+    "measurementGroups": [
+      {
+        "measurementGroup": {
+            "measurementGroupName": "msrmt_grp_name",
+            "fileBasedGP":15,
+            "fileLocation":"pm.xml",
+          "measurementTypes": [
+            {
+              "measurementType": "counter_a"
+            }
+          ],
+          "managedObjectDNsBasic": [
+            {
+              "DN": "string"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
