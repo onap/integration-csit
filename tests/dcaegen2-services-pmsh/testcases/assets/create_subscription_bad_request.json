@@ -1,0 +1,37 @@
+{
+  "subscription": {
+    "subscriptionName": "subs_02",
+    "operationalPolicyName":"pmsh-operational-policy",
+    "controlLoopName":"pmsh-control-loop",
+    "nfFilter": {
+      "nfNames": [
+      ],
+      "modelInvariantIDs": [
+      ],
+      "modelVersionIDs": [
+      ],
+      "modelNames": [
+      ]
+    },
+    "measurementGroups": [
+      {
+        "measurementGroup": {
+            "measurementGroupName": "msrmt_grp_name",
+            "fileBasedGP":15,
+            "fileLocation":"pm.xml",
+            "administrativeState": "UNLOCKED",
+          "measurementTypes": [
+            {
+              "measurementType": "counter_a"
+            }
+          ],
+          "managedObjectDNsBasic": [
+            {
+              "DN": "string"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
