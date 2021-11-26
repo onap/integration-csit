@@ -77,7 +77,7 @@ services:
     networks:
      - slice-analysis-ms-default
   sliceanalysisms:
-    image: "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest"
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:1.0.6
     container_name: sliceanalysisms
     hostname: sliceanalysisms
     environment:
