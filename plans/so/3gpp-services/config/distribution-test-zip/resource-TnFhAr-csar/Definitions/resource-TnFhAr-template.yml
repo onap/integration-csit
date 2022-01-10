@@ -1,0 +1,139 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+metadata:
+  invariantUUID: 971566a2-4762-4460-8a9a-50765c0457dd
+  UUID: 4d26b78c-79e1-4f64-a4dc-f55db351edbb
+  name: TN_FH_AR
+  description: TN_FH_AR
+  category: Allotted Resource
+  type: VF
+  subcategory: Allotted Resource
+  resourceVendor: ONAP
+  resourceVendorRelease: '1.0'
+  reourceVendorModelNumber: ''
+imports:
+- nodes:
+    file: nodes.yml
+- datatypes:
+    file: data.yml
+- capabilities:
+    file: capabilities.yml
+- relationships:
+    file: relationships.yml
+- groups:
+    file: groups.yml
+- policies:
+    file: policies.yml
+- annotations:
+    file: annotations.yml
+- resource-TN_FH_AR-interface:
+    file: resource-TnFhAr-template-interface.yml
+- resource-AllottedResource:
+    file: resource-Allottedresource-template.yml
+topology_template:
+  inputs:
+    skip_post_instantiation_configuration:
+      default: true
+      type: boolean
+      required: false
+    nf_naming:
+      default:
+        ecomp_generated_naming: true
+      type: org.openecomp.datatypes.Naming
+      required: false
+    multi_stage_design:
+      default: false
+      type: boolean
+      required: false
+    nf_naming_code:
+      type: string
+      required: false
+    nf_function:
+      type: string
+      required: false
+    controller_actor:
+      default: SO-REF-DATA
+      type: string
+      required: false
+    availability_zone_max_count:
+      default: 1
+      type: integer
+      required: false
+    sdnc_artifact_name:
+      type: string
+      required: false
+    max_instances:
+      type: integer
+      required: false
+    nf_type:
+      type: string
+      required: false
+    sdnc_model_version:
+      type: string
+      required: false
+    nf_role:
+      type: string
+      required: false
+    min_instances:
+      type: integer
+      required: false
+    sdnc_model_name:
+      type: string
+      required: false
+  node_templates:
+    AllottedResource 0:
+      type: org.openecomp.resource.vfc.AllottedResource
+      metadata:
+        invariantUUID: a380e014-ed30-4ced-bec4-dfb8b3448d28
+        UUID: 9ec10fad-7978-4b81-8a2a-438db59112d2
+        name: AllottedResource
+        description: Allotted Resource base type all other allotted resources node
+          types derive from
+        category: Allotted Resource
+        version: '1.0'
+        customizationUUID: 82bf0e83-14e8-4c87-9186-0f1cd11bc362
+        type: VFC
+        subcategory: Allotted Resource
+        resourceVendor: ONAP (Tosca)
+        resourceVendorRelease: 1.0.0.wd03
+        reourceVendorModelNumber: ''
+      properties:
+        providing_service_invariant_uuid: 33910888-9241-4fde-9faf-24b56289d34a
+        providing_service_uuid: 40c5b892-b965-4a90-bfee-584fe752d53c
+        providing_service_name: TN_Network_Req_T
+        max_instances: 1
+        min_instances: 1
+  substitution_mappings:
+    node_type: org.openecomp.resource.vf.TnFhAr
+    capabilities:
+      allottedresource0.feature:
+      - AllottedResource 0
+      - feature
+    properties:
+      nf_naming:
+      - nf_naming
+      skip_post_instantiation_configuration:
+      - skip_post_instantiation_configuration
+      multi_stage_design:
+      - multi_stage_design
+      nf_function:
+      - nf_function
+      nf_naming_code:
+      - nf_naming_code
+      controller_actor:
+      - controller_actor
+      availability_zone_max_count:
+      - availability_zone_max_count
+      sdnc_artifact_name:
+      - sdnc_artifact_name
+      max_instances:
+      - max_instances
+      nf_type:
+      - nf_type
+      sdnc_model_version:
+      - sdnc_model_version
+      nf_role:
+      - nf_role
+      min_instances:
+      - min_instances
+      sdnc_model_name:
+      - sdnc_model_name

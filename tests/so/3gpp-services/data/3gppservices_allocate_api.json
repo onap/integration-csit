@@ -1,0 +1,50 @@
+{
+  "name": "nssi_anTest",
+  "modelInvariantUuid": "2adfc2fb-6dd4-4264-a03a-236e281797c3",
+  "modelUuid": "7ab9fd01-7937-404e-8f14-fc9f5aa1b7b9",
+  "globalSubscriberId": "5GCustomer",
+  "subscriptionServiceType": "5G",
+  "networkType": "an",
+  "sst": "embb",
+  "additionalProperties": {
+    "nsstId": "c8c1ba78-b7a2-4d72-a82a-75eb79d95347",
+    "nssiName": "nssi_anTest1",
+    "sliceProfile": {
+      "sliceProfileId": "11a9195f-c060-49dd-8f1b-6a4c8ab5d01a",
+      "snssaiList": [
+        "01-8DFF42"
+      ],
+      "pLMNIdList": [
+        "39-00"
+      ],
+      "perfReq": {
+        "perfReqEmbbList ": [
+          {
+            "expDataRateDL": 1920000,
+            "expDataRateUL": 1600000,
+            "activityFactor": 20
+          }
+        ]
+      },
+      "maxNumberofUEs": 200,
+      "coverageAreaTAList": [
+        32492,
+        -26477,
+        -32451
+      ],
+      "latency": 20,
+      "uEMobilityLevel": "stationary",
+      "resourceSharingLevel": "non-shared",
+      "maxNumberofPDUSession": 12000
+    },
+    "nsiInfo": {
+      "nsiName": "nsi_Test1",
+      "nsiId": "e1d6be1e-63af-4fd1-b33e-467d6651dfd7"
+    },
+    "endPoint": {
+      "ipAddress": "10.31.4.45",
+      "logicInterfaceId": "12",
+      "nextHopInfo": "networkId-providerId-10-clientId-0-topologyId-2-nodeId-10.1.1.1-ltpId-512"
+    }
+  }
+}

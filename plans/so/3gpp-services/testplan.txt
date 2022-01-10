@@ -1,0 +1,4 @@
+# Test suites are relative paths under [integration/csit.git]/tests/.
+# Place the suites in run order.
+so/3gpp-services/3gpp-service-distribution.robot
+so/3gpp-services/3gpp-service-apis.robot

@@ -1,0 +1,123 @@
+{
+  "distributionID": "2d6c5aa8-b644-4f30-a632-5577801ef9",
+  "serviceName": "TESTRANTOPNSST",
+  "serviceVersion": "1.0",
+  "serviceUUID": "7ab9fd01-7937-404e-8f14-fc9f5aa1b7b9",
+  "serviceDescription": "TESTRANTOPNSST",
+  "serviceInvariantUUID": "2adfc2fb-6dd4-4264-a03a-236e281797c3",
+  "resources": [
+    {
+      "resourceInstanceName": "tn-mh-nsst-proxy 0",
+      "resourceCustomizationUUID": "ae04d96a-033b-4d31-b9f9-2bc2d0cd7c0b",
+      "resourceName": "TN_MH_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    },
+    {
+      "resourceInstanceName": "tn_fh_nsst_proxy 0",
+      "resourceCustomizationUUID": "01da19e4-7022-4bcd-a759-4d67eded7331",
+      "resourceName": "TN_FH_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    },
+    {
+      "resourceInstanceName": "ran_nf_nsst_proxy 0",
+      "resourceCustomizationUUID": "d4c2c8a3-0165-4955-bd37-27cf29693b9a",
+      "resourceName": "RAN_NF_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    }
+  ],
+  "serviceArtifacts": [
+    {
+      "artifactName": "service-Testrantopnsst-csar.csar",
+      "artifactType": "TOSCA_CSAR",
+      "artifactURL": "/unzipped_Testrantopnsst_csar/service-Testrantopnsst-csar.csar",
+      "artifactChecksum": "",
+      "artifactDescription": "TOSCA definition package of the asset",
+      "artifactTimeout": 0,
+      "artifactVersion": "1.0",
+      "artifactUUID": "OWFmMjljYzg5OTI3M2Y5MDRkZTEyOWMyMDNjZGZhODc= ",
+      "relatedArtifacts": []
+    }
+  ]
+}{
+  "distributionID": "2d6c5aa8-b644-4f30-a632-5577801ef9",
+  "serviceName": "TESTRANTOPNSST",
+  "serviceVersion": "1.0",
+  "serviceUUID": "7ab9fd01-7937-404e-8f14-fc9f5aa1b7b9",
+  "serviceDescription": "TESTRANTOPNSST",
+  "serviceInvariantUUID": "2adfc2fb-6dd4-4264-a03a-236e281797c3",
+  "resources": [
+    {
+      "resourceInstanceName": "tn-mh-nsst-proxy 0",
+      "resourceCustomizationUUID": "ae04d96a-033b-4d31-b9f9-2bc2d0cd7c0b",
+      "resourceName": "TN_MH_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    },
+    {
+      "resourceInstanceName": "tn_fh_nsst_proxy 0",
+      "resourceCustomizationUUID": "01da19e4-7022-4bcd-a759-4d67eded7331",
+      "resourceName": "TN_FH_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    },
+    {
+      "resourceInstanceName": "ran_nf_nsst_proxy 0",
+      "resourceCustomizationUUID": "d4c2c8a3-0165-4955-bd37-27cf29693b9a",
+      "resourceName": "RAN_NF_NSST Service Proxy",
+      "resourceVersion": "1.0",
+      "resourceUUID": "5777a8d5-7a17-4b32-a72a-16fc34fc7aac",
+      "resourceInvariantUUID": "d845bfbe-76f4-4af4-9e1e-a2a84deb1c42",
+      "category": "generic",
+      "subcategory": "abstract",
+      "artifacts": [],
+      "artifactsImpl": [],
+      "resourceType": "Service Proxy"
+    }
+  ],
+  "serviceArtifacts": [
+    {
+      "artifactName": "service-Testrantopnsst-csar.csar",
+      "artifactType": "TOSCA_CSAR",
+      "artifactURL": "/unzipped_Testrantopnsst_csar/service-Testrantopnsst-csar.csar",
+      "artifactChecksum": "",
+      "artifactDescription": "TOSCA definition package of the asset",
+      "artifactTimeout": 0,
+      "artifactVersion": "1.0",
+      "artifactUUID": "OWFmMjljYzg5OTI3M2Y5MDRkZTEyOWMyMDNjZGZhODc= ",
+      "relatedArtifacts": []
+    }
+  ]
+}

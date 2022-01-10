@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  oof-simulator:
+      image: oof-simulator
+      ports: 
+        - "9997:9997"
+     

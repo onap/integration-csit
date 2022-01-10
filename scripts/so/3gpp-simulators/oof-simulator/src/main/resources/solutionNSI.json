@@ -1,0 +1,60 @@
+{
+  "solutions": [
+    {
+      "existingNSI": false,
+      "newNSISolution": {
+        "sliceProfiles": [
+          {
+            "latency": 10,
+            "maxThroughput": 90,
+            "snssaiList": [
+              "01-63459CBE"
+            ],
+            "pLMNIdList": [
+              "39-00"
+            ],
+            "sST": "embb",
+            "resourceSharingLevel": "non-shared",
+            "domainType": "TN_FH"
+          },
+          {
+            "latency": 5,
+            "maxThroughput": 90,
+            "snssaiList": [
+              "01-63459CBE"
+            ],
+            "pLMNIdList": [
+              "39-00"
+            ],
+            "sST": "embb",
+            "resourceSharingLevel": "non-shared",
+            "domainType": "TN_MH"
+          },
+          {
+            "latency": 5,
+            "maxThroughput": 90,
+            "maxNumberofUEs": 200,
+            "termDensity": 40,
+            "snssaiList": [
+              "01-63459CBE"
+            ],
+            "pLMNIdList": [
+              "39-00"
+            ],
+            "coverageAreaTAList": [
+              101,
+              202,
+              303
+            ],
+            "sST": "embb",
+            "expDataRateDL": 1440000,
+            "expDataRateUL": 1200000,
+            "maxNumberofPDUSession": 12000,
+            "resourceSharingLevel": "non-shared",
+            "domainType": "AN_NF"
+          }
+        ]
+      }
+    }
+  ]
+}

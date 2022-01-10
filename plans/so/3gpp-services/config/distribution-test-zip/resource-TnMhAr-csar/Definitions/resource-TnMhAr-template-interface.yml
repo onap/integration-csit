@@ -1,0 +1,90 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+imports:
+- nodes:
+    file: nodes.yml
+- datatypes:
+    file: data.yml
+- capabilities:
+    file: capabilities.yml
+- relationships:
+    file: relationships.yml
+- groups:
+    file: groups.yml
+- policies:
+    file: policies.yml
+- annotations:
+    file: annotations.yml
+node_types:
+  org.openecomp.resource.vf.TnMhAr:
+    derived_from: org.openecomp.resource.abstract.nodes.VF
+    properties:
+      skip_post_instantiation_configuration:
+        default: true
+        type: boolean
+        required: false
+      nf_naming:
+        default:
+          ecomp_generated_naming: true
+        type: org.openecomp.datatypes.Naming
+        required: false
+      multi_stage_design:
+        default: false
+        type: boolean
+        required: false
+      nf_naming_code:
+        type: string
+        required: false
+      nf_function:
+        type: string
+        required: false
+      controller_actor:
+        default: SO-REF-DATA
+        type: string
+        required: false
+      availability_zone_max_count:
+        default: 1
+        type: integer
+        required: false
+      sdnc_artifact_name:
+        type: string
+        required: false
+      max_instances:
+        type: integer
+        required: false
+      nf_type:
+        type: string
+        required: false
+      sdnc_model_version:
+        type: string
+        required: false
+      nf_role:
+        type: string
+        required: false
+      min_instances:
+        type: integer
+        required: false
+      sdnc_model_name:
+        type: string
+        required: false
+    capabilities:
+      allottedresource0.feature:
+        type: tosca.capabilities.Node
+        occurrences:
+        - 0
+        - UNBOUNDED
+        valid_source_types: [
+          ]
+    requirements:
+    - allottedresource0.dependency:
+        occurrences:
+        - 0
+        - UNBOUNDED
+        capability: tosca.capabilities.Node
+        node: tosca.nodes.Root
+        relationship: tosca.relationships.DependsOn
+    - allottedresource0.service_dependency:
+        occurrences:
+        - 0
+        - UNBOUNDED
+        capability: org.openecomp.capabilities.AllottedResource
+        relationship: tosca.relationships.DependsOn

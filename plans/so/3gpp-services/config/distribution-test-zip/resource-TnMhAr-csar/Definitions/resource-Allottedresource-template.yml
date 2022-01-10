@@ -1,0 +1,73 @@
+tosca_definitions_version: tosca_simple_yaml_1_3
+metadata:
+  invariantUUID: a380e014-ed30-4ced-bec4-dfb8b3448d28
+  UUID: 9ec10fad-7978-4b81-8a2a-438db59112d2
+  name: AllottedResource
+  description: Allotted Resource base type all other allotted resources node types
+    derive from
+  category: Allotted Resource
+  type: VFC
+  subcategory: Allotted Resource
+  resourceVendor: ONAP (Tosca)
+  resourceVendorRelease: 1.0.0.wd03
+  reourceVendorModelNumber: ''
+imports:
+- nodes:
+    file: nodes.yml
+- datatypes:
+    file: data.yml
+- capabilities:
+    file: capabilities.yml
+- relationships:
+    file: relationships.yml
+- groups:
+    file: groups.yml
+- policies:
+    file: policies.yml
+- annotations:
+    file: annotations.yml
+node_types:
+  org.openecomp.resource.vfc.AllottedResource:
+    derived_from: tosca.nodes.Root
+    description: Allotted Resource base type all other allotted resources node types
+      derive from
+    properties:
+      target_network_role:
+        type: string
+        description: Target network role
+        required: true
+      providing_service_invariant_uuid:
+        type: string
+        description: The depending service invariant uuid in order to map the allotted
+          resource to the specific service version
+        required: true
+      role:
+        type: string
+        description: Unique label that defines the role that this allotted resource
+          performs
+        required: true
+      providing_service_uuid:
+        type: string
+        description: The depending service uuid in order to map the allotted resource
+          to the specific service version
+        required: true
+      providing_service_name:
+        type: string
+        description: The depending service name in order to map the allotted resource
+          to the specific service version
+        required: true
+      min_instances:
+        default: 1
+        type: integer
+        required: false
+      max_instances:
+        default: 1
+        type: integer
+        required: false
+    requirements:
+    - service_dependency:
+        occurrences:
+        - 0
+        - UNBOUNDED
+        capability: org.openecomp.capabilities.AllottedResource
+        relationship: tosca.relationships.DependsOn

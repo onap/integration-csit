@@ -1,0 +1,34 @@
+logging:
+  path: logs
+server:
+  port: 8070
+  tomcat:
+    max-threads: 50
+
+mso:
+  site-name: localSite
+  logPath: ./logs/oof-adapter
+  msb-ip: msb-iag.onap
+  msb-port: 80
+  msoKey:  07a7159d3bf51a0e53be7a8f89699be7
+  camundaURL: http://bpmn-infra:8081
+  camundaAuth: AE2E9BE6EF9249085AF98689C4EE087736A5500629A72F35068FFB88813A023581DD6E765071F1C04075B36EA4213A
+  workflow:
+    message:
+      endpoint: http://bpmn-infra:8081/mso/WorkflowMessage
+  oof:
+    endpoint: http://10.31.4.45:9997
+#Actuator
+management:
+  endpoints:
+    web:
+      base-path: /manage
+      exposure:
+        include: "*"
+  metrics:
+    se-global-registry: false
+    export:
+      prometheus:
+        enabled: true # Whether exporting of metrics to Prometheus is enabled.
+        step: 1m # Step size (i.e. reporting frequency) to use.
+

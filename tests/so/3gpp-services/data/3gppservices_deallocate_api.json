@@ -1,0 +1,14 @@
+{
+  "serviceInstanceID": "c55be121-7c73-4b27-ad7a-f3847d36f681",
+  "networkType": "an",
+  "globalSubscriberId": "5GCustomer",
+  "subscriptionServiceType": "5G",
+  "additionalProperties": {
+    "snssaiList": [
+      "01-8DFF42"
+    ],
+    "sliceProfileId": "11a9195f-c060-49dd-8f1b-6a4c8ab5d01a",
+    "scriptName": "AN1",
+    "nsiId": "e1d6be1e-63af-4fd1-b33e-467d6651dfd7"
+  }
+}

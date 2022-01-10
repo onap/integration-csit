@@ -1,0 +1,29 @@
+{
+	"reason": {
+		"message": "Successful execution of instantiateRANSice RPC"
+	},
+	"nfIds": {
+		"CUCPs": {
+			"response": [{
+				"gNBCUName": "cucpserver1"
+			}]
+		},
+		"CUUPs": {
+			"response": [{
+				"gNBCUUPId": "1111"
+			}]
+		},
+		"DUs": {
+			"response": [{
+					"gNBDUId": "110"
+				},
+				{
+					"gNBDUId": "220"
+				},
+				{
+					"gNBDUId": "330"
+				}
+			]
+		}
+	}
+}
