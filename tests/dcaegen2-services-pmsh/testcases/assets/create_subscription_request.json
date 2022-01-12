@@ -19,7 +19,7 @@
     "measurementGroups": [
       {
         "measurementGroup": {
-            "measurementGroupName": "msrmt_grp_name",
+            "measurementGroupName": "msg_grp_01",
             "fileBasedGP":15,
             "fileLocation":"pm.xml",
             "administrativeState": "UNLOCKED",
@@ -37,7 +37,7 @@
       },
       {
         "measurementGroup": {
-            "measurementGroupName": "msrmt_grp_name1",
+            "measurementGroupName": "msg_grp_02",
             "fileBasedGP":15,
             "fileLocation":"pm.xml",
             "administrativeState": "UNLOCKED",
