@@ -22,6 +22,30 @@
       "revId": "41f10413d4a1670c0e1fb58ce6aa0858fe0b7221",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968d8f1a_9ce63350",
+        "filename": "tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_request.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7746
+      },
+      "writtenOn": "2022-01-12T12:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccde5071_e2e78811",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "41f10413d4a1670c0e1fb58ce6aa0858fe0b7221",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
