@@ -15,7 +15,6 @@ Test Teardown     Delete All Sessions
 ${PMSH_BASE_URL}                    https://${PMSH_IP}:8443
 ${MR_BASE_URL}                      http://${MR_IP_ADDRESS}:3904
 ${CBS_BASE_URL}                     https://${CBS_SIM_IP_ADDRESS}:10443
-${SUBSCRIPTIONS_ENDPOINT}           /subscriptions
 ${SUBSCRIPTION_ENDPOINT}            /subscription
 ${POLICY_PUBLISH_MR_TOPIC}          /events/unauthenticated.PMSH_CL_INPUT
 ${AAI_MR_TOPIC}                     /events/AAI_EVENT
@@ -32,19 +31,21 @@ ${CLI_EXEC_GET_CBS_CONFIG_FIRST}    docker exec pmsh /bin/sh -c "grep -m 1 'PMSH
 
 *** Test Cases ***
 
-Verify Create Subscription API
+Verify Create Subscriptions API
     [Tags]                          PMSH_07
     [Documentation]                 Verify Create Subscription API
     [Timeout]                       60 seconds
     ${json_value}=                  json_from_file                  ${CREATE_SUBSCRIPTION_DATA}
     ${resp}=                        PostSubscriptionCall     ${SUBSCRIPTION_ENDPOINT}   ${json_value}
     Should Be True                  ${resp.status_code} == 201
+     ${resp}=                       GetSubsCall    ${SUBSCRIPTION_ENDPOINT}   "/subs_01"
+    Should Be Equal As Strings      ${resp.json()[0]['subscription']['subscriptionName']}       subs_01
 
 Verify database tables exist and are empty
     [Tags]                          PMSH_02
     [Documentation]                 Verify database has been created and is empty
     [Timeout]                       10 seconds
-    ${resp}=                        GetSubsCall    ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}     ""
     Should Be True                  ${resp.status_code} == 200
     Should Contain                  ${resp.text}                     []
 
@@ -54,10 +55,11 @@ Verify PNF detected in AAI when administrative state unlocked
     [Timeout]                       60 seconds
     SetAdministrativeStateToUnlocked
     Sleep                           31             Allow PMSH time to pick up changes in CBS config
-    ${resp}=                        GetSubsCall    ${SUBSCRIPTIONS_ENDPOINT}
-    Should Be Equal As Strings      ${resp.json()[1]['subscription_status']}                        UNLOCKED
-    Should Be Equal As Strings      ${resp.json()[1]['network_functions'][0]['nf_name']}            pnf-existing
-    Should Be Equal As Strings      ${resp.json()[1]['network_functions'][0]['nf_sub_status']}      PENDING_CREATE
+    ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}            pnf-existing
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfMgStatus']}      PENDING_CREATE
 
 Verify Policy response on MR is handled
     [Tags]                          PMSH_04
@@ -65,8 +67,11 @@ Verify Policy response on MR is handled
     [Timeout]                       60 seconds
     SimulatePolicyResponse          ${MR_POLICY_RESPONSE_PNF_EXISTING}
     Sleep                           31 seconds      Ensure Policy response on MR is picked up
-    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
-    Should Be Equal As Strings      ${resp.json()[1]['network_functions'][0]['nf_sub_status']}      CREATED
+    ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}            pnf-existing
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfMgStatus']}     CREATED
 
 Verify AAI event on MR detailing new PNF being detected is handled
     [Tags]                          PMSH_05
@@ -74,9 +79,11 @@ Verify AAI event on MR detailing new PNF being detected is handled
     [Timeout]                       60 seconds
     SimulateNewPNF                  ${MR_AAI_PNF_CREATED}
     Sleep                           31 seconds      Ensure AAI event on MR is picked up
-    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
-    Should Be Equal As Strings      ${resp.json()[1]['network_functions'][1]['nf_name']}            pnf_newly_discovered
-    Should Be Equal As Strings      ${resp.json()[1]['network_functions'][1]['nf_sub_status']}      PENDING_CREATE
+    ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][1]['nfName']}            pnf_newly_discovered
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][1]['nfMgStatus']}      PENDING_CREATE
 
 Verify AAI event on MR detailing PNF being deleted is handled
     [Tags]                          PMSH_06
@@ -84,7 +91,7 @@ Verify AAI event on MR detailing PNF being deleted is handled
     [Timeout]                       60 seconds
     SimulateDeletedPNF              ${MR_AAI_PNF_REMOVED}
     Sleep                           31 seconds      Ensure AAI event on MR is picked up
-    ${resp}=                        GetSubsCall     ${SUBSCRIPTIONS_ENDPOINT}
+    ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Not Contain              ${resp.text}    pnf_newly_discovered
 
 Verify Create Subscription API for duplicate subscription Id
@@ -161,6 +168,12 @@ PostMrCall
     [Return]        ${resp}
 
 GetSubsCall
+    [Arguments]     ${url}      ${url_path_param}
+    Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
+    ${resp}=        GET On Session    pmsh_session        url=${url}    data={"path": {url_path_param}}
+    [Return]        ${resp}
+
+GetMeasGrpCall
     [Arguments]     ${url}
     Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
     ${resp}=        GET On Session    pmsh_session        url=${url}

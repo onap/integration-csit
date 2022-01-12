@@ -5,7 +5,8 @@
    "target":"DCAE",
    "version":"0.0.1",
    "status":{
-      "subscriptionName":"ExtraPM-All-gNB-R2B",
+      "subscriptionName":"subs_01",
+      "measurementGroupName": "msg_grp_01",
       "nfName":"pnf-existing",
       "changeType":"CREATE",
       "message":"success"
