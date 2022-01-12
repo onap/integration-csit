@@ -49,7 +49,7 @@ NslcmSwaggerTest
     [Documentation]    query swagger info of nslcm
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${queryswagger_url}
+    ${resp}=   GET On Session    web_session    ${queryswagger_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -60,7 +60,7 @@ NslcmSwaggerByMSBTest
     [Documentation]    query swagger info of nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${queryswagger_url}
+    ${resp}=   GET On Session    web_session    ${queryswagger_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -100,7 +100,7 @@ QueryVnfTest
     [Documentation]    Query vnf function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${vnfs_url}/${vnfInstId}
+    ${resp}=   GET On Session    web_session    ${vnfs_url}/${vnfInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -167,7 +167,7 @@ GetJobTest
     [Documentation]    Query Ns Job function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${get_job_url}/${jobInstId}
+    ${resp}=   GET On Session    web_session    ${get_job_url}/${jobInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -205,7 +205,7 @@ LcmHealthCheckTest
     [Documentation]    check health for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${healthcheck_url}
+    ${resp}=   GET On Session    web_session    ${healthcheck_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -216,7 +216,7 @@ LcmGetNsTest
     [Documentation]    get ns instances for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${ns_url}
+    ${resp}=   GET On Session    web_session    ${ns_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -224,7 +224,7 @@ QueryAllPnfsTest
     [Documentation]    Query all pnfs function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${pnfs_url}
+    ${resp}=   GET On Session    web_session    ${pnfs_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -246,7 +246,7 @@ QueryNSInstancesTest
     [Documentation]    Query Ns Instances function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${ns_instances_url}
+    ${resp}=   GET On Session    web_session    ${ns_instances_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -288,6 +288,6 @@ LcmGetSubscriptionsTest
     [Documentation]    get subscriptions for nslcm by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=  Get Request    web_session    ${get_subscriptions_url}
+    ${resp}=   GET On Session    web_session    ${get_subscriptions_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
