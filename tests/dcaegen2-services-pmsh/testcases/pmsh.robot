@@ -121,6 +121,20 @@ Verify Create Subscription API for filter values missing
     Should Be True                  ${resp.status_code} == 400
     Should Contain                  ${resp.json()}      At least one filter within nfFilter must not be empty
 
+Verify Get Measurement Group with Network Functions
+    [Tags]                          PMSH_11
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${resp}=                        GetMeasGrpCallwithNFS     /subscription/subs_01/measurementGroups/msg_grp_01
+    ${nf_length}=                   Get length  ${resp.json()['networkFunctions']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
+    Should be equal as numbers      ${nf_length}  1
+
+
+
 *** Keywords ***
 
 SetAdministrativeStateToUnlocked
@@ -174,6 +188,12 @@ GetSubsCall
     [Return]        ${resp}
 
 GetMeasGrpCall
+    [Arguments]     ${url}
+    Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
+    ${resp}=        GET On Session    pmsh_session        url=${url}
+    [Return]        ${resp}
+
+GetMeasGrpCallwithNFS
     [Arguments]     ${url}
     Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
     ${resp}=        GET On Session    pmsh_session        url=${url}
