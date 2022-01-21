@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Gerard Nugent <gerard.nugent@est.tech>
+Code-Review+1: Vijay Venkatesh Kumar <vv770d@att.com>
+Code-Review+1: Sagar Shetty <sagar.shetty@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 21 Jan 2022 09:42:46 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/126647
+Project: integration/csit
+Branch: refs/heads/master
