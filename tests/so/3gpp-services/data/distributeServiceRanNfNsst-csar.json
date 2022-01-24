@@ -1,0 +1,52 @@
+{
+    "distributionID": "f0d0e9e2-10aa-4f66-a0cc-cf5ecb386b42",
+    "serviceName": "RAN_NF_NSST",
+    "serviceVersion": "1.0",
+    "serviceUUID": "0a82d759-0d0b-4fca-a5a2-af271de9d496",
+    "serviceDescription": "RAN_NF_NSST",
+    "serviceInvariantUUID": "830fad65-5b2f-411d-b3ff-6f2192aff7d1",
+    "resources": [
+        {
+            "resourceInstanceName": "CUUP_Resource 0",
+            "resourceCustomizationUUID": "392dd422-ca9b-4a50-8fe4-a1d47e8d74b9",
+            "resourceName": "CUUP_Resource",
+            "resourceVersion": "1.0",
+            "resourceUUID": "fecfd342-10e1-45fa-aef6-d220d9fb97e3",
+            "resourceInvariantUUID": "798a3dd8-d67c-44d3-9a79-78fc52868d6d",
+            "category": "Generic",
+            "subcategory": "Network Elements",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
+        }
+    ],
+    "serviceArtifacts": [
+        {
+            "artifactName": "service-RanNfNsst-csar.csar",
+            "artifactType": "TOSCA_CSAR",
+            "artifactURL": "/unzipped_RanNfNsst_csar/service-RanNfNsst-csar.csar",
+            "artifactChecksum": "MmM2Y2NkMThlNTYzNDcwNDRkNmVlZmQxN2Q2NmZlNjQ= ",
+            "artifactDescription": "TOSCA definition package of the asset",
+            "artifactTimeout": 0,
+            "artifactVersion": "1",
+            "artifactUUID": "fecfd342-10e1-45fa-aef6-d220d9fb97e3",
+            "relatedArtifacts": [] 
+        }
+    ],
+    "workloadContext": "Production",
+    "resourcesImpl": [
+        {
+            "resourceInstanceName": "CUUP_Resource 0",
+            "resourceCustomizationUUID": "392dd422-ca9b-4a50-8fe4-a1d47e8d74b9",
+            "resourceName": "CUUP_Resource",
+            "resourceVersion": "1.0",
+            "resourceUUID": "fecfd342-10e1-45fa-aef6-d220d9fb97e3",
+            "resourceInvariantUUID": "798a3dd8-d67c-44d3-9a79-78fc52868d6d",
+            "category": "Generic",
+            "subcategory": "Network Elements",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
+        }
+    ]
+}

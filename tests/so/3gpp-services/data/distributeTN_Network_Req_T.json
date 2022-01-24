@@ -1,0 +1,21 @@
+{
+    "distributionID": "2d6c5aa8-b644-4f30-a632-5577801ef959",
+    "serviceName": "TN_Network_Req_T",
+    "serviceVersion": "1.0",
+    "serviceUUID": "40c5b892-b965-4a90-bfee-584fe752d53c",
+    "serviceDescription": "TN_Network_Req_T",
+    "serviceInvariantUUID": "33910888-9241-4fde-9faf-24b56289d34a",
+    "serviceArtifacts": [
+        {
+            "artifactName": "service-TnNetworkReqT-csar.csar",
+            "artifactType": "TOSCA_CSAR",
+            "artifactURL": "/unzipped_TnNetworkReq_T_csar/service-TnNetworkReqT-csar.csar",
+            "artifactChecksum": "OTEzOTYwOTRmOGQ2MDE4ZGIxMzQ3M2MxODM0YzkzOWM=",
+            "artifactDescription": "TOSCA definition package of the asset",
+            "artifactTimeout": 0,
+            "artifactVersion": "1",
+            "artifactUUID": "77726de2-d0f7-4a81-b249-febd07b99a84",
+            "relatedArtifacts": []
+        }
+    ]
+}

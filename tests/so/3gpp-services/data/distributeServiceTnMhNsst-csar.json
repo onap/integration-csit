@@ -1,0 +1,52 @@
+{
+    "distributionID": "2d6c5aa8-b644-4f30-a632-5577801ef962",
+    "serviceName": "TN_MH_NSST",
+    "serviceVersion": "1.0",
+    "serviceUUID": "0d232769-cee4-4052-961b-fe237d813b43",
+    "serviceDescription": "TN_MH_NSST",
+    "serviceInvariantUUID": "011beaf2-255c-4a30-b377-8859382589a2",
+    "resources": [
+        {
+            "resourceInstanceName": "TN_MH_AR 0",
+            "resourceCustomizationUUID": "864d28a4-0404-426a-83d7-4f4294d04fc1",
+            "resourceName": "TN_MH_AR",
+            "resourceVersion": "1.0",
+            "resourceUUID": "304a8bc9-2f76-4690-85c0-dc0ff26b729a",
+            "resourceInvariantUUID": "1ae92af8-6f7c-4f50-93f8-9362705d747b",
+            "category": "Allotted Resource",
+            "subcategory": "Allotted Resource",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
+        }
+    ],
+    "serviceArtifacts": [
+        {
+            "artifactName": "service-TnMhNsst-csar.csar",
+            "artifactType": "TOSCA_CSAR",
+            "artifactURL": "/unzipped_TnMhNsst_csar/service-TnMhNsst-csar.csar",
+            "artifactChecksum": " Y2FhYjQ2MTY5ZmE1MzBiZWFkOWNjZGM4MTNjZGYzZjA=",
+            "artifactDescription": "TOSCA definition package of the asset",
+            "artifactTimeout": 0,
+            "artifactVersion": "1",
+            "artifactUUID": "b73ee69c-127c-4e26-8298-9ae21b01be94",
+            "relatedArtifacts": []
+        }
+    ],
+    "workloadContext": "Production",
+    "resourcesImpl": [
+        {
+            "resourceInstanceName": "TN_MH_AR 0",
+            "resourceCustomizationUUID": "864d28a4-0404-426a-83d7-4f4294d04fc1",
+            "resourceName": "TN_MH_AR",
+            "resourceVersion": "1.0",
+            "resourceUUID": "304a8bc9-2f76-4690-85c0-dc0ff26b729a",
+            "resourceInvariantUUID": "1ae92af8-6f7c-4f50-93f8-9362705d747b",
+            "category": "Allotted Resource",
+            "subcategory": "Allotted Resource",
+            "artifacts": [],
+            "artifactsImpl": [],
+            "resourceType": "VF"
+        }
+    ]
+}

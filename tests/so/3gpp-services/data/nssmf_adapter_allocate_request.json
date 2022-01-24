@@ -1,0 +1,17 @@
+{
+  "responseId": "",
+  "esrInfo": {
+    "vendor": "ONAP_internal",
+    "networkType": "tn"
+  },
+  "serviceInfo": {
+    "nssiName": "TN_MH_NSST",
+    "subscriptionServiceType": "5G",
+    "sST": "embb",
+    "globalSubscriberId": "5GCustomer",
+    "serviceInvariantUuid": "011beaf2-255c-4a30-b377-8859382589a2",
+    "nsiId": "e1d6be1e-63af-4fd1-b33e-467d6651dfd7",
+    "PLMNIdList": "[\"39-00\"]",
+    "serviceUuid": "0d232769-cee4-4052-961b-fe237d813b43"
+  }
+}

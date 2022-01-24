@@ -1,0 +1,13 @@
+{
+  "responseId": "1",
+  "esrInfo": {
+    "vendor": "ONAP_internal",
+    "networkType": "tn"
+  },
+  "serviceInfo": {
+    "subscriptionServiceType": "5G",
+    "nssiId": "",
+    "globalSubscriberId": "5GCustomer",
+    "nsiId": "e1d6be1e-63af-4fd1-b33e-467d6651dfd7"
+  }
+}
