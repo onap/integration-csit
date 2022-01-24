@@ -133,6 +133,25 @@ Verify Get Measurement Group with Network Functions
     Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
     Should be equal as numbers      ${nf_length}  1
 
+Verify Get single subscription with Network Functions
+    [Tags]                          PMSH_12
+    [Documentation]                 Verify Get single subscription with Network Functions by using subscription name
+    [Timeout]                       60 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}/subs_01  ""
+    ${nf_length}=                   Get length  ${resp.json()['subscription']['nfs']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscription']['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['subscription']['nfs'][0]}      pnf-existing
+	Should Be Equal As Strings      ${resp.json()['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_02
+    Should be equal as numbers      ${nf_length}  1
+
+Verify Get single subscription with Network Functions None
+    [Tags]                          PMSH_13
+    [Documentation]                 Verify Get single subscription with Network Functions when there is no defined subscription
+    [Timeout]                       60 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}/sub_none  ""
+    Should Be True                  ${resp.status_code} == 404
+    Should Be Equal As Strings      ${resp.json()['error']}     Subscription was not defined with the name : sub_none
 
 
 *** Keywords ***
@@ -184,7 +203,7 @@ PostMrCall
 GetSubsCall
     [Arguments]     ${url}      ${url_path_param}
     Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
-    ${resp}=        GET On Session    pmsh_session        url=${url}    data={"path": {url_path_param}}
+    ${resp}=        GET On Session    pmsh_session        url=${url}    data={"path": {url_path_param}}    expected_status=any
     [Return]        ${resp}
 
 GetMeasGrpCall
