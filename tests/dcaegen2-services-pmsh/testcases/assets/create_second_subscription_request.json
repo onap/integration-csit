@@ -1,0 +1,58 @@
+{
+  "subscription": {
+    "subscriptionName": "subs_02",
+    "operationalPolicyName":"pmsh-operational-policy",
+    "controlLoopName":"pmsh-control-loop",
+    "nfFilter": {
+      "nfNames": [
+        "^pnf.*",
+        "^vnf.*"
+      ],
+      "modelInvariantIDs": [
+
+      ],
+      "modelVersionIDs": [
+      ],
+      "modelNames": [
+      ]
+    },
+    "measurementGroups": [
+      {
+        "measurementGroup": {
+            "measurementGroupName": "msg_grp_03",
+            "fileBasedGP":15,
+            "fileLocation":"pm.xml",
+            "administrativeState": "UNLOCKED",
+          "measurementTypes": [
+            {
+              "measurementType": "counter_a"
+            }
+          ],
+          "managedObjectDNsBasic": [
+            {
+              "DN": "string"
+            }
+          ]
+        }
+      },
+      {
+        "measurementGroup": {
+            "measurementGroupName": "msg_grp_04",
+            "fileBasedGP":15,
+            "fileLocation":"pm.xml",
+            "administrativeState": "UNLOCKED",
+          "measurementTypes": [
+            {
+              "measurementType": "counter_a"
+            }
+          ],
+          "managedObjectDNsBasic": [
+            {
+              "DN": "string"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

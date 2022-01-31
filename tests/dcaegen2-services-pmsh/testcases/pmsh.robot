@@ -24,12 +24,20 @@ ${MR_AAI_PNF_REMOVED}                       %{WORKSPACE}/tests/dcaegen2-services
 ${MR_POLICY_RESPONSE_PNF_EXISTING}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-created-pnf-existing.json
 ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}     %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/cbs-expectation-unlocked-config.json
 ${CREATE_SUBSCRIPTION_DATA}                 %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_request.json
+${CREATE_SECOND_SUBSCRIPTION_DATA}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_second_subscription_request.json
 ${CREATE_SUBSCRIPTION_BAD_DATA}             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_bad_request.json
 ${CREATE_SUBSCRIPTION_SCHEMA_ERROR_DATA}    %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_schema_error_request.json
 ${ADMIN_STATE_LOCKED_PATTERN}       'administrativeState': 'LOCKED'
 ${CLI_EXEC_GET_CBS_CONFIG_FIRST}    docker exec pmsh /bin/sh -c "grep -m 1 'PMSH config from CBS' /var/log/ONAP/dcaegen2/services/pmsh/application.log"
 
 *** Test Cases ***
+Verify Get subscriptions with Network Functions None
+    [Tags]                          PMSH_01
+    [Documentation]                 Verify Get all subscriptions when there are no defined subscriptions
+    [Timeout]                       10 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}     ""
+    Should Be True                  ${resp.status_code} == 200
+    Should Contain                  ${resp.text}                     []
 
 Verify Create Subscriptions API
     [Tags]                          PMSH_07
@@ -133,6 +141,44 @@ Verify Get Measurement Group with Network Functions
     Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
     Should be equal as numbers      ${nf_length}  1
 
+Verify Get single subscription with Network Functions
+    [Tags]                          PMSH_12
+    [Documentation]                 Verify Get single subscription with Network Functions by using subscription name
+    [Timeout]                       60 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}/subs_01  ""
+    ${nf_length}=                   Get length  ${resp.json()['subscription']['nfs']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscription']['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['subscription']['nfs'][0]}      pnf-existing
+	Should Be Equal As Strings      ${resp.json()['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_02
+    Should be equal as numbers      ${nf_length}  1
+
+Verify Get single subscription with Network Functions None
+    [Tags]                          PMSH_13
+    [Documentation]                 Verify Get single subscription with Network Functions when there is no defined subscription
+    [Timeout]                       60 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}/sub_none  ""
+    Should Be True                  ${resp.status_code} == 404
+    Should Be Equal As Strings      ${resp.json()['error']}     Subscription was not defined with the name : sub_none
+
+Verify Get subscriptions with Network Functions
+    [Tags]                          PMSH_14
+    [Documentation]                 Verify Get all defined subscriptions with associated Network Functions
+    [Timeout]                       60 seconds
+    ${json_value}=                  json_from_file                  ${CREATE_SECOND_SUBSCRIPTION_DATA}
+    ${resp_post}=                   PostSubscriptionCall     ${SUBSCRIPTION_ENDPOINT}   ${json_value}
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}  ""
+    ${nf_length_first}=             Get length  ${resp.json()[0]['subscription']['nfs']}
+    ${nf_length_second}=            Get length  ${resp.json()[1]['subscription']['nfs']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()[0]['subscription']['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()[0]['subscription']['nfs'][0]}      pnf-existing
+	Should Be Equal As Strings      ${resp.json()[0]['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_02
+    Should be equal as numbers      ${nf_length_first}  1
+    Should Be Equal As Strings      ${resp.json()[1]['subscription']['subscriptionName']}      subs_02
+    Should Be Equal As Strings      ${resp.json()[1]['subscription']['nfs'][0]}      pnf-existing
+	Should Be Equal As Strings      ${resp.json()[1]['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_04
+    Should be equal as numbers      ${nf_length_second}  1
 
 
 *** Keywords ***
@@ -184,7 +230,7 @@ PostMrCall
 GetSubsCall
     [Arguments]     ${url}      ${url_path_param}
     Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
-    ${resp}=        GET On Session    pmsh_session        url=${url}    data={"path": {url_path_param}}
+    ${resp}=        GET On Session    pmsh_session        url=${url}    data={"path": {url_path_param}}    expected_status=any
     [Return]        ${resp}
 
 GetMeasGrpCall
