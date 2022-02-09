@@ -1,0 +1,14 @@
+{
+   "name":"ResponseEvent",
+   "nameSpace":"org.onap.policy.apex.onap.pmcontrol",
+   "source":"APEX",
+   "target":"DCAE",
+   "version":"0.0.1",
+   "status":{
+      "subscriptionName":"subs_01",
+      "measurementGroupName": "msg_grp_01",
+      "nfName":"pnf-existing",
+      "changeType":"DELETE",
+      "message":"success"
+   }
+}

@@ -22,6 +22,7 @@ ${AAI_MR_TOPIC}                     /events/AAI_EVENT
 ${MR_AAI_PNF_CREATED}                       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/aai-pnf-create.json
 ${MR_AAI_PNF_REMOVED}                       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/aai-pnf-delete.json
 ${MR_POLICY_RESPONSE_PNF_EXISTING}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-created-pnf-existing.json
+${MR_POLICY_RESPONSE_PNF_DELETED}           %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-deleted-pnf-existing.json
 ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}     %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/cbs-expectation-unlocked-config.json
 ${CREATE_SUBSCRIPTION_DATA}                 %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_request.json
 ${CREATE_SECOND_SUBSCRIPTION_DATA}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_second_subscription_request.json
@@ -161,8 +162,111 @@ Verify Get single subscription with Network Functions None
     Should Be True                  ${resp.status_code} == 404
     Should Be Equal As Strings      ${resp.json()['error']}     Subscription was not defined with the name : sub_none
 
-Verify Get subscriptions with Network Functions
+Verify Update Measurement Group admin status from Unlocked to Locking
     [Tags]                          PMSH_14
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "LOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_01/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 200
+    Should Contain                  ${resp.json()}      Successfully updated admin state
+    ${resp}=                        GetMeasGrpWithNFSCall     /subscription/subs_01/measurementGroups/msg_grp_01
+    ${nf_length}=                   Get length  ${resp.json()['networkFunctions']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       LOCKING
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfMgStatus']}      PENDING_DELETE
+    Should be equal as numbers      ${nf_length}  1
+
+Verify Update Measurement Group admin status with locking in progress
+    [Tags]                          PMSH_15
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "LOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_01/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 409
+    Should Contain                  ${resp.json()}  Cannot update admin status as Locked request is in progress for sub name: subs_01  and meas group name: msg_grp_01
+
+Verify Measurement Group admin status update from Locking to Locked
+    [Tags]                          PMSH_16
+    [Documentation]                 Verify policy response on MR is handled
+    [Timeout]                       60 seconds
+    SimulatePolicyResponse          ${MR_POLICY_RESPONSE_PNF_DELETED}
+    Sleep                           31 seconds      Ensure Policy response on MR is picked up
+    ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       LOCKED
+    ${nf_length}=                   Get length  ${resp.json()['networkFunctions']}
+    Should be equal as numbers      ${nf_length}  0
+
+Verify Update Measurement Group admin status to unlocked with no Network Functions in Subscription
+    [Tags]                          PMSH_17
+    [Documentation]                 Verify Get single subscription with Network Functions by using subscription name
+    [Timeout]                       60 seconds
+    ${resp}=                        GetSubsCall    ${SUBSCRIPTION_ENDPOINT}/subs_01  ""
+    ${nf_length}=                   Get length  ${resp.json()['subscription']['nfs']}
+    Should be equal as numbers      ${nf_length}  0
+    ${json_string}=                 Set Variable    {"administrativeState": "UNLOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_01/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 200
+    Should Contain                  ${resp.json()}      Successfully updated admin state
+    ${resp}=                        GetMeasGrpWithNFSCall     /subscription/subs_01/measurementGroups/msg_grp_01
+    ${nf_length}=                   Get length  ${resp.json()['networkFunctions']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_01
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfMgStatus']}      PENDING_CREATE
+    Should be equal as numbers      ${nf_length}  1
+
+Verify Update Measurement Group admin status from Locked to Unlocked with Network function present in subscription
+    [Tags]                          PMSH_18
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "UNLOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_02/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 200
+    Should Contain                  ${resp.json()}      Successfully updated admin state
+    ${resp}=                        GetMeasGrpWithNFSCall     /subscription/subs_01/measurementGroups/msg_grp_02
+    ${nf_length}=                   Get length  ${resp.json()['networkFunctions']}
+    Should Be True                  ${resp.status_code} == 200
+    Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
+    Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_02
+    Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfName']}      pnf-existing
+    Should Be Equal As Strings      ${resp.json()['networkFunctions'][0]['nfMgStatus']}      PENDING_CREATE
+    Should be equal as numbers      ${nf_length}  1
+
+Verify Update Measurement Group admin status with no change
+    [Tags]                          PMSH_19
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "UNLOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_01/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 400
+    Should Contain                  ${resp.json()}  Measurement group is already in UNLOCKED state for sub name: subs_01  and meas group name: msg_grp_01
+
+Verify Update Measurement Group admin status for invalid measurement group
+    [Tags]                          PMSH_20
+    [Documentation]                 Verify Get Measurement Group with Network Functions by using MGName and SubName
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "LOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    ${resp}=                        PutMsgGrpStatusCall     /subscription/subs_01/measurementGroups/msg_grp_11/adminState   ${json}
+    Should Be True                  ${resp.status_code} == 400
+    Should Contain                  ${resp.json()}  Requested measurement group not available for admin status update
+
+Verify Get subscriptions with Network Functions
+    [Tags]                          PMSH_21
     [Documentation]                 Verify Get all defined subscriptions with associated Network Functions
     [Timeout]                       60 seconds
     ${json_value}=                  json_from_file                  ${CREATE_SECOND_SUBSCRIPTION_DATA}
@@ -179,7 +283,6 @@ Verify Get subscriptions with Network Functions
     Should Be Equal As Strings      ${resp.json()[1]['subscription']['nfs'][0]}      pnf-existing
 	Should Be Equal As Strings      ${resp.json()[1]['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_04
     Should be equal as numbers      ${nf_length_second}  1
-
 
 *** Keywords ***
 
@@ -250,4 +353,11 @@ PostSubscriptionCall
     Create Session  pmsh_sub_session       ${PMSH_BASE_URL}    verify=false
     ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
     ${resp}=        POST On Session      pmsh_sub_session    url=${url}    json=${data}     headers=${headers}  expected_status=anything
+    [Return]        ${resp}
+
+PutMsgGrpStatusCall
+    [Arguments]     ${url}     ${data}
+    Create Session  pmsh_sub_session       ${PMSH_BASE_URL}    verify=false
+    ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
+    ${resp}=        PUT On Session      pmsh_sub_session    url=${url}    json=${data}     headers=${headers}  expected_status=anything
     [Return]        ${resp}
