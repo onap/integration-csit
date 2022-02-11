@@ -16,6 +16,24 @@
       "revId": "2d17356d08bbee184fa72e0d96a8125173ec743f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9438b7de_b74bad3d",
+        "filename": "tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-deleted-pnf-existing.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 7746
+      },
+      "writtenOn": "2022-02-11T09:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f90d2f76_ae8aff5f",
+      "revId": "2d17356d08bbee184fa72e0d96a8125173ec743f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
