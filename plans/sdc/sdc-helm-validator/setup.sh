@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export SDC_HELM_VALIDATOR="sdc-helm-validator"
-export SDC_HELM_VALIDATOR_IMAGE="nexus3.onap.org:10001/onap/org.onap.sdc.sdc-helm-validator:latest"
+export SDC_HELM_VALIDATOR_IMAGE="nexus3.onap.org:10001/onap/sdc-helm-validator:latest"
 
 unset http_proxy
 unset https_proxy
