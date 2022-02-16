@@ -10,14 +10,14 @@ services:
   request-db-adapter:
     image: onap/so/request-db-adapter:${TAG}
 ################################################################################
-  sdnc-adapter:
-    image: onap/so/sdnc-adapter:${TAG}
-################################################################################
   sdc-controller:
     image: onap/so/sdc-controller:${TAG}
 ################################################################################
   bpmn-infra:
     image: onap/so/bpmn-infra:${TAG}
+################################################################################
+  sdnc-adapter:
+    image: onap/so/sdnc-adapter:${TAG}
 ################################################################################
   api-handler-infra:
     image: onap/so/api-handler-infra:${TAG}

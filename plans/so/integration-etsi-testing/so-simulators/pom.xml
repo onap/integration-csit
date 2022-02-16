@@ -15,6 +15,7 @@
         <jaxb.version>2.3.0</jaxb.version>
         <javax.version>1.1.1</javax.version>
         <java.version>11</java.version>
+        <springboot-version>2.1.5.RELEASE</springboot-version>
     </properties>
     <modules>
         <module>common</module>
@@ -30,7 +31,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>2.1.5.RELEASE</version>
+                <version>${springboot-version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -74,12 +75,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>android-json</artifactId>
-                        <groupId>com.vaadin.external.google</groupId>
-                    </exclusion>
-                </exclusions>
+            <exclusions>
+                <exclusion>
+                    <artifactId>android-json</artifactId>
+                    <groupId>com.vaadin.external.google</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,4 +92,16 @@
             <version>${jax.ws.rs}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot-version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
