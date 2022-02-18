@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa7721d_79ebd824",
+        "filename": "tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-created-pnf-existing.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T15:55:09Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "26f4a5bf4bbcf06bbb8c6e263cc8cca8a15386a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
