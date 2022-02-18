@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tony Hansen <tony@att.com>
+Code-Review+1: RAVITEJA KARUMURI <raviteja.karumuri@est.tech>
+Code-Review+1: Gerard Nugent <gerard.nugent@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Fri, 18 Feb 2022 13:12:47 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/127039
+Project: integration/csit
+Branch: refs/heads/master
