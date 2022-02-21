@@ -18,7 +18,8 @@
 		},
 		"requestParameters": {
 			"userParams": [],
-			"testApi": "GR_API"
+			"testApi": "GR_API",
+			"aLaCarte": true
 		},
 		"cloudConfiguration": {
 			"lcpCloudRegionId": "EtsiCloudRegion",

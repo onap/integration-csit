@@ -79,38 +79,8 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" catalog-db-adapter:8082 -- "/app/start-app.sh"'
 ################################################################################
-  sdnc-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdnc-adapter:${TAG}
-    ports:
-      - "8086:8086"
-    volumes:
-      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
-      - ${TEST_LAB_DIR}/volumes/so/config/sdnc-adapter/onapheat:/app/config
-    environment:
-      - APP=sdnc-adapter
-      - JVM_ARGS=-Xms64m -Xmx512m
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_USERNAME=so_user
-      - DB_PASSWORD=so_User123
-      - DB_ADMIN_USERNAME=so_admin
-      - DB_ADMIN_PASSWORD=so_Admin123
-    hostname:
-      sdnc-adapter.so.testlab.onap.org
-    depends_on:
-      - mariadb
-      - catalog-db-adapter
-      - request-db-adapter
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "30m"
-        max-file: "5"
-    user: root
-    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
-################################################################################
   openstack-adapter:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/openstack-adapter:1.8.0-STAGING-latest
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/openstack-adapter:${TAG}
     ports:
       - "8087:8087"
     volumes:
@@ -203,6 +173,37 @@ services:
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
 ################################################################################
+  sdnc-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdnc-adapter:${TAG}
+    ports:
+      - "8086:8086"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH}/override-files/sdnc-adapter/onapheat:/app/config
+    environment:
+      - APP=sdnc-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      sdnc-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+      - bpmn-infra
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" bpmn-infra:8081 -- "/app/start-app.sh"'
+################################################################################
   api-handler-infra:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
     ports:
@@ -225,13 +226,14 @@ services:
       - mariadb
       - catalog-db-adapter
       - request-db-adapter
+      - bpmn-infra
     logging:
       driver: "json-file"
       options:
         max-size: "30m"
         max-file: "5"
     user: root
-    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" bpmn-infra:8081 -- "/app/start-app.sh"'
 #############################################################################
   so-admin-cockpit:
     image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-admin-cockpit:${SO_ADMIN_COCKPIT_IMAGE_VERSION}
