@@ -1,76 +1,6 @@
 version: '3.3'
 
 services:
-  zookeeper:
-    image: nexus3.onap.org:10001/onap/dmaap/zookeeper:6.1.0
-    container_name: dmaap-zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-     ZOOKEEPER_REPLICAS: 1
-     ZOOKEEPER_TICK_TIME: 2000
-     ZOOKEEPER_SYNC_LIMIT: 5
-     ZOOKEEPER_INIT_LIMIT: 10
-     ZOOKEEPER_MAX_CLIENT_CNXNS: 200
-     ZOOKEEPER_AUTOPURGE_SNAP_RETAIN_COUNT: 3
-     ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: 24
-     ZOOKEEPER_CLIENT_PORT: 2181
-     KAFKA_OPTS: -Djava.security.auth.login.config=/etc/zookeeper/secrets/jaas/zk_server_jaas.conf -Dzookeeper.kerberos.removeHostFromPrincipal=true -Dzookeeper.kerberos.removeRealmFromPrincipal=true -Dzookeeper.authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider -Dzookeeper.requireClientAuthScheme=sasl -Dzookeeper.4lw.commands.whitelist=*
-     ZOOKEEPER_SERVER_ID: 1
-    volumes:
-      -  ./assets/zk/zk_server_jaas.conf:/etc/zookeeper/secrets/jaas/zk_server_jaas.conf
-    networks:
-      net:
-        aliases:
-        - zookeeper
-
-  kafka:
-   image: nexus3.onap.org:10001/onap/dmaap/kafka111:1.1.0
-   container_name: dmaap-kafka
-   ports:
-    - "9092:9092"
-   environment:
-    enableCadi: 'false'
-    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 40000
-    KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: 40000
-    KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL_PLAINTEXT:PLAINTEXT,EXTERNAL_PLAINTEXT:PLAINTEXT
-    KAFKA_ADVERTISED_LISTENERS: INTERNAL_PLAINTEXT://kafka:9092
-    KAFKA_LISTENERS: INTERNAL_PLAINTEXT://0.0.0.0:9092
-    KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL_PLAINTEXT
-    KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE: 'false'
-    KAFKA_OPTS: -Djava.security.auth.login.config=/etc/kafka/secrets/jaas/zk_client_jaas.conf
-    KAFKA_ZOOKEEPER_SET_ACL: 'true'
-    KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    # Reduced the number of partitions only to avoid the timeout error for the first subscribe call in slow environment
-    KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 1
-   volumes:
-     -  ./assets/kafka/zk_client_jaas.conf:/etc/kafka/secrets/jaas/zk_client_jaas.conf
-   networks:
-     net:
-       aliases:
-       - kafka
-   depends_on:
-    - zookeeper
-
-  dmaap-mr:
-    image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.3.0
-    container_name: dmaap-mr
-    ports:
-      - "3904:3904"
-      - "3905:3905"
-    environment:
-     enableCadi: 'false'
-    volumes:
-      - ./assets/mr/MsgRtrApi.properties:/appl/dmaapMR1/bundleconfig/etc/appprops/MsgRtrApi.properties
-    networks:
-      net:
-        aliases:
-        - dmaap-mr
-    depends_on:
-      - zookeeper
-      - kafka
-
   db:
     container_name: db
     image: nexus3.onap.org:10001/library/postgres:10
@@ -118,12 +48,30 @@ services:
       net:
         aliases:
         - cbs-sim
+  mr-sim:
+    container_name: mr-sim
+    image: nexus3.onap.org:10001/mockserver/mockserver:latest
+    command: -logLevel DEBUG -serverPort 3904
+    ports:
+      - 3904:1080
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mr-initializer.json
+    volumes:
+      - ./assets/mr_sim/mr_mockserver.properties:/config/mockserver.properties
+      - ./assets/mr_sim/mr-initializer.json:/config/mr-initializer.json
+    networks:
+      net:
+        aliases:
+        - mr-sim
 
   pmsh:
     container_name: pmsh
     image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pmsh:latest
     depends_on:
       - db
+    ports:
+      - 8443:8443
     volumes:
       - ./assets/ssl_certs/cert.pem:/opt/app/pmsh/etc/certs/cert.pem
       - ./assets/ssl_certs/key.pem:/opt/app/pmsh/etc/certs/key.pem

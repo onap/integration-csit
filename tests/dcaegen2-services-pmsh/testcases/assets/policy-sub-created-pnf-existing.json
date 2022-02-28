@@ -1,14 +1,64 @@
-{
-   "name":"ResponseEvent",
-   "nameSpace":"org.onap.policy.apex.onap.pmcontrol",
-   "source":"APEX",
-   "target":"DCAE",
-   "version":"0.0.1",
-   "status":{
-      "subscriptionName":"subs_01",
-      "measurementGroupName": "msg_grp_01",
-      "nfName":"pnf-existing",
-      "changeType":"CREATE",
-      "message":"success"
+[
+   {
+      "id":"mr_aai_event",
+      "httpRequest":{
+         "method":"GET",
+         "path":"/events/AAI-EVENT/.*",
+         "queryStringParameters":{
+            "timeout":[
+               "5000"
+            ]
+         }
+      },
+      "httpResponse":{
+         "statusCode":200,
+         "headers":{
+            "content-type":[
+               "application/json"
+            ]
+         },
+         "body":{
+            "type":"JSON",
+            "json":{
+
+            }
+         }
+      }
+   },
+   {
+      "id":"pmsh_cl_input_event",
+      "httpRequest":{
+         "path":"/events/unauthenticated.PMSH_CL_INPUT/.*",
+         "method":"GET",
+         "queryStringParameters":{
+            "timeout":[
+               "5000"
+            ]
+         }
+      },
+      "httpResponse":{
+         "statusCode":200,
+         "headers":{
+            "content-type":[
+               "application/json"
+            ]
+         },
+         "body":{
+            "type":"JSON",
+            "json":[
+               "{\"name\":\"ResponseEvent\",\"nameSpace\":\"org.onap.policy.apex.onap.pmcontrol\",\"source\":\"APEX\",\"target\":\"DCAE\",\"version\":\"0.0.1\",\"status\":{\"subscriptionName\":\"subs_01\",\"measurementGroupName\": \"msg_grp_01\",\"nfName\":\"pnf-existing\",\"changeType\":\"CREATE\",\"message\":\"success\"}}"
+            ]
+         }
+      }
+   },
+   {
+      "id":"dcae_cl_output_event",
+      "httpRequest":{
+         "path":"/events/unauthenticated.DCAE_CL_OUTPUT/.*",
+         "method":"POST"
+      },
+      "httpResponse":{
+         "statusCode":200
+      }
    }
-}
+]
