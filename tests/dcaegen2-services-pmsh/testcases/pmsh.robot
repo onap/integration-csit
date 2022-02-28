@@ -13,12 +13,11 @@ Test Teardown     Delete All Sessions
 *** Variables ***
 
 ${PMSH_BASE_URL}                    https://${PMSH_IP}:8443
-${MR_BASE_URL}                      http://${MR_IP_ADDRESS}:3904
+${MR_SIM_BASE_URL}                  http://${MR_SIM_IP_ADDRESS}:3904
 ${CBS_BASE_URL}                     https://${CBS_SIM_IP_ADDRESS}:10443
 ${SUBSCRIPTION_ENDPOINT}            /subscription
-${POLICY_PUBLISH_MR_TOPIC}          /events/unauthenticated.PMSH_CL_INPUT
-${AAI_MR_TOPIC}                     /events/AAI_EVENT
 
+${MR_SIM_RESET}                             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-sim-reset.json
 ${MR_AAI_PNF_CREATED}                       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/aai-pnf-create.json
 ${MR_AAI_PNF_REMOVED}                       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/aai-pnf-delete.json
 ${MR_POLICY_RESPONSE_PNF_EXISTING}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-created-pnf-existing.json
@@ -28,8 +27,6 @@ ${CREATE_SUBSCRIPTION_DATA}                 %{WORKSPACE}/tests/dcaegen2-services
 ${CREATE_SECOND_SUBSCRIPTION_DATA}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_second_subscription_request.json
 ${CREATE_SUBSCRIPTION_BAD_DATA}             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_bad_request.json
 ${CREATE_SUBSCRIPTION_SCHEMA_ERROR_DATA}    %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_schema_error_request.json
-${ADMIN_STATE_LOCKED_PATTERN}       'administrativeState': 'LOCKED'
-${CLI_EXEC_GET_CBS_CONFIG_FIRST}    docker exec pmsh /bin/sh -c "grep -m 1 'PMSH config from CBS' /var/log/ONAP/dcaegen2/services/pmsh/application.log"
 
 *** Test Cases ***
 Verify Get subscriptions with Network Functions None
@@ -74,8 +71,9 @@ Verify Policy response on MR is handled
     [Tags]                          PMSH_04
     [Documentation]                 Verify policy response on MR is handled
     [Timeout]                       60 seconds
-    SimulatePolicyResponse          ${MR_POLICY_RESPONSE_PNF_EXISTING}
+    AddCreatePolicyResponeToMrSim
     Sleep                           31 seconds      Ensure Policy response on MR is picked up
+    ResetMrSim
     ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
     Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
@@ -86,8 +84,9 @@ Verify AAI event on MR detailing new PNF being detected is handled
     [Tags]                          PMSH_05
     [Documentation]                 Verify PNF created AAI event on MR is handled
     [Timeout]                       60 seconds
-    SimulateNewPNF                  ${MR_AAI_PNF_CREATED}
-    Sleep                           31 seconds      Ensure AAI event on MR is picked up
+    AddNewPnfToMrSim
+    Sleep                           25 seconds     Give sim time to set expectation
+    ResetMrSim
     ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
     Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
@@ -98,8 +97,9 @@ Verify AAI event on MR detailing PNF being deleted is handled
     [Tags]                          PMSH_06
     [Documentation]                 Verify PNF deleted AAI event on MR is handled
     [Timeout]                       60 seconds
-    SimulateDeletedPNF              ${MR_AAI_PNF_REMOVED}
-    Sleep                           31 seconds      Ensure AAI event on MR is picked up
+    RemoveNewPnfFromMrSim
+    Sleep                           21 seconds      Ensure AAI event on MR is picked up
+    ResetMrSim
     ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Not Contain              ${resp.text}    pnf_newly_discovered
 
@@ -195,8 +195,9 @@ Verify Measurement Group admin status update from Locking to Locked
     [Tags]                          PMSH_16
     [Documentation]                 Verify Measurement Group admin status update from Locking to Locked
     [Timeout]                       60 seconds
-    SimulatePolicyResponse          ${MR_POLICY_RESPONSE_PNF_DELETED}
+    AddDeletePolicyResponeToMrSim
     Sleep                           31 seconds      Ensure Policy response on MR is picked up
+    ResetMrSim
     ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Be Equal As Strings      ${resp.json()['measurementGroupName']}      msg_grp_01
     Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
@@ -295,40 +296,49 @@ SetAdministrativeStateToUnlocked
     ${resp} =           PUT On Session    cbs_sim_session    url=/expectation     data=${data}
     Should Be True      ${resp.status_code} == 201
 
+AddCreatePolicyResponeToMrSim
+    ${data}=            Get Data From File      ${MR_POLICY_RESPONSE_PNF_EXISTING}
+    Create Session      mr_sim_session   ${MR_SIM_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    mr_sim_session    url=/clear  data={"id" : "pmsh_cl_input_event"}
+    Should Be True      ${resp.status_code} == 200
+    Sleep               2                 Allow MR_SIM time to set expectation
+    ${resp} =           PUT On Session    mr_sim_session    url=/expectation     data=${data}
+    Should Be True      ${resp.status_code} == 201
 
-SimulatePolicyResponse
-    [Arguments]                     ${expected_contents}
-    ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostMrCall      			    ${POLICY_PUBLISH_MR_TOPIC}     ${json_value}
-    log    				          	${resp.text}
-    Should Be Equal As Strings    	${resp.status_code}           	200
-    ${count}=    	              	Evaluate     					$resp.json().get('count')
-    log    				  			'JSON Response Code:'${resp}
+AddDeletePolicyResponeToMrSim
+    ${data}=            Get Data From File      ${MR_POLICY_RESPONSE_PNF_DELETED}
+    Create Session      mr_sim_session   ${MR_SIM_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    mr_sim_session    url=/clear  data={"id" : "pmsh_cl_input_event"}
+    Should Be True      ${resp.status_code} == 200
+    Sleep               2                 Allow MR_SIM time to set expectation
+    ${resp} =           PUT On Session    mr_sim_session    url=/expectation     data=${data}
+    Should Be True      ${resp.status_code} == 201
 
-SimulateNewPNF
-    [Arguments]                     ${expected_contents}
-    ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostMrCall      				${AAI_MR_TOPIC}      ${json_value}
-    log    				          	${resp.text}
-    Should Be Equal As Strings    	${resp.status_code}           	200
-    ${count}=    	              	Evaluate     					$resp.json().get('count')
-    log    				  			'JSON Response Code:'${resp}
+AddNewPnfToMrSim
+    ${data}=            Get Data From File      ${MR_AAI_PNF_CREATED}
+    Create Session      mr_sim_session   ${MR_SIM_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    mr_sim_session    url=/clear  data={"id" : "mr_aai_event"}
+    Should Be True      ${resp.status_code} == 200
+    Sleep               2                 Allow MR_SIM time to set expectation
+    ${resp} =           PUT On Session    mr_sim_session    url=/expectation     data=${data}
+    Should Be True      ${resp.status_code} == 201
 
-SimulateDeletedPNF
-    [Arguments]                     ${expected_contents}
-    ${json_value}=                  json_from_file                  ${expected_contents}
-    ${resp}=    			  	  	PostMrCall      				${AAI_MR_TOPIC}      ${json_value}
-    log    				          	${resp.text}
-    Should Be Equal As Strings    	${resp.status_code}           	200
-    ${count}=    	              	Evaluate     					$resp.json().get('count')
-    log    				  			'JSON Response Code:'${resp}
+RemoveNewPnfFromMrSim
+    ${data}=            Get Data From File      ${MR_AAI_PNF_REMOVED}
+    Create Session      mr_sim_session   ${MR_SIM_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    mr_sim_session    url=/clear  data={"id" : "mr_aai_event"}
+    Should Be True      ${resp.status_code} == 200
+    Sleep               2                 Allow MR_SIM time to set expectation
+    ${resp} =           PUT On Session    mr_sim_session    url=/expectation     data=${data}
+    Should Be True      ${resp.status_code} == 201
 
-PostMrCall
-    [Arguments]     ${url}     ${data}
-    Create Session  mr_sim_session       ${MR_BASE_URL}    verify=false
-    ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
-    ${resp}=        POST On Session      mr_sim_session    url=${url}    json=${data}     headers=${headers}
-    [Return]        ${resp}
+ResetMrSim
+    ${data}=            Get Data From File      ${MR_SIM_RESET}
+    Create Session      mr_sim_session   ${MR_SIM_BASE_URL}    verify=false
+    ${resp}=            PUT On Session    mr_sim_session    url=/reset
+    Should Be True      ${resp.status_code} == 200
+    ${resp}=            PUT On Session    mr_sim_session    url=/expectation     data=${data}
+    Should Be True      ${resp.status_code} == 201
 
 GetSubsCall
     [Arguments]     ${url}      ${url_path_param}
