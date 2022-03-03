@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Sagar Shetty <sagar.shetty@est.tech>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-at: Thu, 03 Mar 2022 09:54:28 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/127381
+Project: integration/csit
+Branch: refs/heads/master
