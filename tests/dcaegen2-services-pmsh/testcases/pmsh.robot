@@ -14,7 +14,6 @@ Test Teardown     Delete All Sessions
 
 ${PMSH_BASE_URL}                    https://${PMSH_IP}:8443
 ${MR_SIM_BASE_URL}                  http://${MR_SIM_IP_ADDRESS}:3904
-${CBS_BASE_URL}                     https://${CBS_SIM_IP_ADDRESS}:10443
 ${SUBSCRIPTION_ENDPOINT}            /subscription
 
 ${MR_SIM_RESET}                             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/mr-sim-reset.json
@@ -22,7 +21,6 @@ ${MR_AAI_PNF_CREATED}                       %{WORKSPACE}/tests/dcaegen2-services
 ${MR_AAI_PNF_REMOVED}                       %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/aai-pnf-delete.json
 ${MR_POLICY_RESPONSE_PNF_EXISTING}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-created-pnf-existing.json
 ${MR_POLICY_RESPONSE_PNF_DELETED}           %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/policy-sub-deleted-pnf-existing.json
-${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}     %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/cbs-expectation-unlocked-config.json
 ${CREATE_SUBSCRIPTION_DATA}                 %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_request.json
 ${CREATE_SECOND_SUBSCRIPTION_DATA}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_second_subscription_request.json
 ${CREATE_SUBSCRIPTION_BAD_DATA}             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_bad_request.json
@@ -59,8 +57,6 @@ Verify PNF detected in AAI when administrative state unlocked
     [Tags]                          PMSH_03
     [Documentation]                 Verify PNF detected when administrative state unlocked
     [Timeout]                       60 seconds
-    SetAdministrativeStateToUnlocked
-    Sleep                           31             Allow PMSH time to pick up changes in CBS config
     ${resp}=                        GetMeasGrpCall    /subscription/subs_01/measurementGroups/msg_grp_01
     Should Be Equal As Strings      ${resp.json()['subscriptionName']}      subs_01
     Should Be Equal As Strings      ${resp.json()['administrativeState']}       UNLOCKED
@@ -286,15 +282,6 @@ Verify Get subscriptions with Network Functions
     Should be equal as numbers      ${nf_length_second}  1
 
 *** Keywords ***
-
-SetAdministrativeStateToUnlocked
-    ${data}=            Get Data From File      ${CBS_EXPECTATION_ADMIN_STATE_UNLOCKED}
-    Create Session      cbs_sim_session   ${CBS_BASE_URL}    verify=false
-    ${resp}=            PUT On Session    cbs_sim_session    url=/clear  data={"path": "/service_component_all/.*"}
-    Should Be True      ${resp.status_code} == 200
-    Sleep               2                 Allow CBS time to set expectation
-    ${resp} =           PUT On Session    cbs_sim_session    url=/expectation     data=${data}
-    Should Be True      ${resp.status_code} == 201
 
 AddCreatePolicyResponeToMrSim
     ${data}=            Get Data From File      ${MR_POLICY_RESPONSE_PNF_EXISTING}
