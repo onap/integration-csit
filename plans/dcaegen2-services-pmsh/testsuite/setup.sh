@@ -5,7 +5,7 @@ export DB_PASSWORD=pmsh
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-pmsh/testsuite
 
-docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai cbs-sim mr-sim
+docker-compose -f ${TEST_PLANS_DIR}/docker-compose.yml up -d db aai mr-sim
 
 # Slow machine running CSITs can affect db coming up in time for PMSH
 echo "Waiting for postgres db to come up..."
@@ -79,8 +79,7 @@ for i in {0..5}; do
     else
         sleep ${i}
     fi
-    if [[ $(docker inspect --format '{{ .State.Running }}' cbs-sim) ]] && \
-       [[ $(docker inspect --format '{{ .State.Running }}' aai-sim) ]] && \
+    if [[ $(docker inspect --format '{{ .State.Running }}' aai-sim) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' mr-sim) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' db) ]] && \
        [[ $(docker inspect --format '{{ .State.Running }}' pmsh) ]]
@@ -91,8 +90,7 @@ done
 [[ "$containers_ok" == "false" ]] && echo "Error: required container not running." && exit 1
 
 DB_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db)
-CBS_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" cbs-sim)
 MR_SIM_IP_ADDRESS=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" mr-sim)
 
 #Pass any variables required by Robot test suites in ROBOT_VARIABLES
-ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP} -v MR_SIM_IP_ADDRESS:${MR_SIM_IP_ADDRESS} -v DB_IP_ADDRESS:${DB_IP_ADDRESS} -v CBS_SIM_IP_ADDRESS:${CBS_SIM_IP_ADDRESS}"
+ROBOT_VARIABLES="-v PMSH_IP:${PMSH_IP} -v MR_SIM_IP_ADDRESS:${MR_SIM_IP_ADDRESS} -v DB_IP_ADDRESS:${DB_IP_ADDRESS}"

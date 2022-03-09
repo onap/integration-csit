@@ -30,24 +30,6 @@ services:
         aliases:
         - aai-sim
 
-  cbs-sim:
-    container_name: cbs-sim
-    image: nexus3.onap.org:10001/mockserver/mockserver:latest
-    command: -logLevel DEBUG -serverPort 10443
-    ports:
-      - 10443:1080
-    environment:
-      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/cbs-initializer.json
-    volumes:
-      - ./assets/cbs_sim/cbs_mockserver.properties:/config/mockserver.properties
-      - ./assets/cbs_sim/cbs-initializer.json:/config/cbs-initializer.json
-      - ./assets/ssl_certs/mock_server_cacert.pem:/var/tmp/mock_server_cacert.pem
-      - ./assets/ssl_certs/mock_server_key.pem:/var/tmp/mock_server_key.pem
-    networks:
-      net:
-        aliases:
-        - cbs-sim
   mr-sim:
     container_name: mr-sim
     image: nexus3.onap.org:10001/mockserver/mockserver:latest
@@ -76,14 +58,15 @@ services:
       - ./assets/ssl_certs/cert.pem:/opt/app/pmsh/etc/certs/cert.pem
       - ./assets/ssl_certs/key.pem:/opt/app/pmsh/etc/certs/key.pem
       - ./assets/ssl_certs/mock_server_cacert.pem:/opt/app/pmsh/etc/certs/cacert.pem
+      - ./assets/cbs_sim/application_config.yaml:/app-config/application_config.yaml
     environment:
       HOSTNAME: "dcae-pmsh"
-      CONFIG_BINDING_SERVICE: cbs-sim
       PMSH_PG_URL: db
       PMSH_PG_USERNAME: $DB_USER
       PMSH_PG_PASSWORD: $DB_PASSWORD
       AAI_SERVICE_PORT: 1080
       DCAE_CA_CERTPATH: '/opt/app/pmsh/etc/certs/cacert.pem'
+      CBS_CLIENT_CONFIG_PATH: '/app-config/application_config.yaml'
     networks:
       net:
         aliases:
