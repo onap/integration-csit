@@ -63,10 +63,13 @@
     "sliceanalysisms.initialDelaySeconds": 300000,
     "sliceanalysisms.pollingTimeout": 60,
     "sliceanalysisms.cid": "sliceanalysisms-cid",
-    "sliceanalysisms.configDb.service": "http://configdb_sim:5000",
+    "sliceanalysisms.configDb.service": "http://configdb_des_sim:5000",
     "sliceanalysisms.aai.url": "https://aai-resources:8447/aai/v21",
     "sliceanalysisms.cps.url": "http://cps-tbdmt:8080/execute/ran-network",
     "sliceanalysisms.configDbEnabled": "false",
+    "sliceanalysisms.rannfnssiDetailsTemplateId": "get-rannfnssiid-details",
+    "sliceanalysisms.desUrl": "http://configdb_des_sim:5000/datalake/v1/exposure/pm_data",
+    "sliceanalysisms.pmDataDurationInWeeks": 4,
     "service_calls": {
       "policy-req": []
     },

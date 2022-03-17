@@ -70,6 +70,17 @@ def get_subscriber_details_for_nssai(snssai):
         return {"Error": "Unable to read file"}, 503
     return data, None
 
+def get_pm_data_for_snssai(snssai):
+    if str(snssai) == 'SM.PrbUsedDl.01-06E442':
+        with open('pm_data_01_06E442.json') as pm_data:
+            data = json.load(pm_data)
+    else:
+        with open('pm_data_01_B989BD.json') as pm_data:
+            data = json.load(pm_data)
+    if not data:
+        return {"Error": "Unable to read file"}, 503
+    return data, None
+
 
 @app.route("/api/sdnc-config-db/v4/du-list/<snssai>", methods=["GET"])
 def get_du_list(snssai):
@@ -111,5 +122,17 @@ def get_subscriber_details(snssai):
         return jsonify(data)
     return data, 503
 
+@app.route("/datalake/v1/exposure/pm_data",
+           methods=["POST"])
+def get_pm_data():
+    request_data = request.get_json()
+    snssai = None
+    if request_data:
+        if 'snssai' in request_data:
+            snssai = request_data['snssai']
+            data, status = get_pm_data_for_snssai(snssai)
+    if not status:
+        return jsonify(data)
+    return data, 503
 
 app.run(host='0.0.0.0')

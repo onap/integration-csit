@@ -9,11 +9,13 @@ Suite Teardown  Delete All Sessions
 
 *** Variables ***
 ${SLICE_ANALYSIS_MS_BASE_URL}             http://${SLICE_ANALYSIS_MS_IP}:8080
+${SLICE_CONFIG_ENDPOINT}                  ${SLICE_ANALYSIS_MS_BASE_URL}/api/v1/slices-config
 ${HEALTHCHECK_ENDPOINT}                   /healthcheck
 ${DMAAP_URL}                              http://${DMAAP_IP}:3904/events
 ${unauthenticated.DCAE_CL_OUTPUT}         /unauthenticated.DCAE_CL_OUTPUT/23/23
 ${POST_DMAAP_EVENT_FOR_ML_NOTIF_URL}      http://${DMAAP_IP}:3904/events/unauthenticated.ML_RESPONSE_TOPIC
 ${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}      http://${DMAAP_IP}:3904/events/unauthenticated.PERFORMANCE_MEASUREMENTS
+&{headers}                                Content-Type=application/json
 
 
 *** Test Cases ***
@@ -21,7 +23,7 @@ ${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}      http://${DMAAP_IP}:3904/events/unauthe
 HealthCheck
 
         Create Session  sliceanalysisms  ${SLICE_ANALYSIS_MS_BASE_URL}
-        ${resp}=  Get Request   sliceanalysisms   ${HEALTHCHECK_ENDPOINT}
+        ${resp}=  Get On Session  sliceanalysisms   ${HEALTHCHECK_ENDPOINT}
         Should Be Equal As Strings  ${resp.status_code}  200
 
 
@@ -36,7 +38,7 @@ Post ml notification to dmaap
 Verify ml notification trigger
         Create Session  dmaap  ${DMAAP_URL}
         FOR    ${i}    IN RANGE   30
-                ${result}=  Get Request  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
+                ${result}=  Get On Session  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
                 Exit For Loop If    ${result.json()} != @{EMPTY}
                 Log     Waiting for slice-analysis-ms to handle trigger...         console=${True}
                 Sleep   5s
@@ -62,7 +64,7 @@ Post pm notification-1 to dmaap
 Verify pm notification-1 trigger
         Create Session  dmaap  ${DMAAP_URL}
         FOR    ${i}    IN RANGE   20
-                ${result}=  Get Request  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
+                ${result}=  Get On Session  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
                 Exit For Loop If    ${result.json()} != @{EMPTY}
                 Log     Waiting for sliceanalysisms to handle trigger...         console=${True}
                 Sleep   30s
@@ -76,3 +78,11 @@ Verify pm notification-1 trigger
         ${actual_payload}=       Evaluate     json.loads("""${actual_payload_str}""")     json
         set to dictionary    ${expected_payload['additionalProperties']['nsiInfo']}   nsiId=${actual_payload['additionalProperties']['nsiInfo']['nsiId']}
         Should Be True   """${actual_payload}""".strip() == """${expected_payload}""".strip()
+
+
+Verify slice utilization respose
+        ${data}=      Get File       ${TEST_ROBOT_DIR}/data/slice_config_request.json
+        ${result}=    Evaluate       requests.get('${SLICE_CONFIG_ENDPOINT}', data=$data, headers=${headers})
+        ${expected_slice_config}=    Get File            ${TEST_ROBOT_DIR}/data/slice_config_response.json
+        ${actual_slice_config}=  Convert To String  ${result.content}
+        Should Be True   """${actual_slice_config}""".strip() == """${expected_slice_config}""".strip()

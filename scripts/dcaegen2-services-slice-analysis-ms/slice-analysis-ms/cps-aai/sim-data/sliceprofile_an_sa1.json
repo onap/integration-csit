@@ -1,0 +1,12 @@
+{
+   "service-instance-id":"b2ae730f-1d5f-495a-8112-dac017a7348c",
+   "service-instance-name":"sliceprofile_an_sa1",
+   "service-type":"embb",
+   "service-role":"slice-profile",
+   "environment-context":"01-06E442",
+   "workload-context":"AN",
+   "created-at":"2022-02-16 09:12:27",
+   "service-instance-location-id":"39-00",
+   "orchestration-status":"deactivated",
+   "service-function":"non-shared"
+}
