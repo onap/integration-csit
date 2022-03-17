@@ -49,13 +49,13 @@ http://$DMAAP_IP:3904/events/unauthenticated.DCAE_CL_OUTPUT
 
 #build configdb-sim image
 cd $TEST_SCRIPTS_DIR
-docker build -t configdb_sim .
+docker build -t configdb_des_sim .
 
 #run configdb-sim
-docker run -d --name configdb_sim --network=testsuites_slice-analysis-ms-default -p "5000:5000"  configdb_sim:latest;
+docker run -d --name configdb_des_sim --network=testsuites_slice-analysis-ms-default -p "5000:5000"  configdb_des_sim:latest;
 sleep 10
-CONFIGDB_SIM_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' configdb_sim)
-echo "CONFIGDB_SIM_IP=${CONFIGDB_SIM_IP}"
+CONFIGDB_DES_SIM_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' configdb_des_sim)
+echo "CONFIGDB_DES_SIM_IP=${CONFIGDB_DES_SIM_IP}"
 
 # CPS & AAI set up
 cd $TEST_SCRIPTS_CPS_DIR

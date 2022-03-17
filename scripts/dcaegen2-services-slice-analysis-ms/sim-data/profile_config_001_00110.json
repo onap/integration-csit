@@ -1,9 +1,0 @@
-{
-
-"maxNumberOfConns":3000,
-
-"dLThptPerSlice":50,
-
-"uLThptPerSlice":40
-
-}
