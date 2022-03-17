@@ -1,6 +1,6 @@
 FROM python:alpine3.7
 
-ADD configdb-sim.py /
+ADD configdb-des-sim.py /
 
 ADD ./sim-data /
 
@@ -12,4 +12,4 @@ EXPOSE 5000
 
 CMD ["flask", "run", "--host", "0.0.0.0"]
 
-CMD [ "python", "./configdb-sim.py" ]
+CMD [ "python", "./configdb-des-sim.py" ]

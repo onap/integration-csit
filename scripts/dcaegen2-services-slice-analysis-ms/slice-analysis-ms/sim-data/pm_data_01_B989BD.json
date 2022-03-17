@@ -1,0 +1,17 @@
+{
+   "result":[
+      {
+         "measValuesList":"[[\"11230\",\"false\",[[1.0,\"85\"],[2.0,\"94\"]]],[\"11231\",\"false\",[[1.0,\"86\"],[2.0,\"95\"]]],[\"11232\",\"false\",[[1.0,\"100\"],[2.0,\"105\"]]]]",
+         "sMeasTypesList":"[\"SM.PrbUsedDl.01-B989BD\",\"SM.PrbUsedUl.01-B989BD\"]"
+      },
+      {
+         "measValuesList":"[[\"11235\",\"false\",[[1.0,\"185\"],[2.0,\"194\"]]],[\"11234\",\"false\",[[1.0,\"186\"],[2.0,\"195\"]]],[\"11232\",\"false\",[[1.0,\"115\"],[2.0,\"110\"]]]]",
+         "sMeasTypesList":"[\"SM.PrbUsedDl.01-B989BD\",\"SM.PrbUsedUl.0-B989BD\"]"
+      }
+   ],
+   "request":{
+      "snssai":"SM.PrbUsedDl.01-B989BD",
+      "time":"1538478000000"
+   },
+   "result_count":2
+}
