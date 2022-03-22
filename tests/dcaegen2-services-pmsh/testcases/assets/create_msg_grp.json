@@ -1,0 +1,14 @@
+{
+  "measurementGroup": {
+    "measurementGroupName": "msg_grp_05",
+    "fileBasedGP": 15,
+    "fileLocation": "pm.xml",
+    "administrativeState": "LOCKED",
+    "measurementTypes": [{
+      "measurementType": "counter_a"
+    }],
+    "managedObjectDNsBasic": [{
+      "DN": "string"
+    }]
+  }
+}

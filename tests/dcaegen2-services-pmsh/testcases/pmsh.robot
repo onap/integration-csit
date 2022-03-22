@@ -25,6 +25,7 @@ ${CREATE_SUBSCRIPTION_DATA}                 %{WORKSPACE}/tests/dcaegen2-services
 ${CREATE_SECOND_SUBSCRIPTION_DATA}          %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_second_subscription_request.json
 ${CREATE_SUBSCRIPTION_BAD_DATA}             %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_bad_request.json
 ${CREATE_SUBSCRIPTION_SCHEMA_ERROR_DATA}    %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_subscription_schema_error_request.json
+${CREATE_MSG_GRP_DATA}                      %{WORKSPACE}/tests/dcaegen2-services-pmsh/testcases/assets/create_msg_grp.json
 
 *** Test Cases ***
 Verify Get subscriptions with Network Functions None
@@ -278,6 +279,46 @@ Verify Get subscriptions with Network Functions
 	Should Be Equal As Strings      ${resp.json()[1]['subscription']['measurementGroups'][0]['measurementGroup']['measurementGroupName']}  msg_grp_04
     Should be equal as numbers      ${nf_length_second}  1
 
+Verify Delete Measurement Group with Administrative State unlocked
+    [Tags]                          PMSH_22
+    [Documentation]                 Verify Delete Measurement Group with Administrative State unlocked
+    [Timeout]                       60 seconds
+    ${json_string}=                 Set Variable    {"administrativeState": "UNLOCKED"}
+    ${json}=                        evaluate        json.loads('''${json_string}''')    json
+    PutMsgGrpStatusCall             /subscription/subs_01/measurementGroups/msg_grp_02/adminState   ${json}
+    ${resp}=                        DeleteMeasGrpCall   /subscription/subs_01/measurementGroups/msg_grp_02
+    Should Be True                  ${resp.status_code} == 409
+
+Verify Delete Measurement Group with incorrect Measurement Group name server error
+    [Tags]                          PMSH_23
+    [Documentation]                 Verify Delete Measurement Group with incorrect Measurement Group Name
+    [Timeout]                       60 seconds
+    ${resp}=                        DeleteMeasGrpCall   /subscription/subs_01/measurementGroups/nonexistent
+    Should Be True                  ${resp.status_code} == 500
+
+Verify Create Measurement Group successful
+    [Tags]                          PMSH_24
+    [Documentation]                 Verify Create Measurement Group successful
+    [Timeout]                       60 seconds
+    ${json_value}=                  json_from_file                  ${CREATE_MSG_GRP_DATA}
+    ${resp}=                        PostMsgGrpCall      /subscription/subs_01/measurementGroups/msg_grp_05  ${json_value}
+    Should Be True                  ${resp.status_code} == 201
+
+Verify Create Measurement Group unsuccessful
+    [Tags]                          PMSH_25
+    [Documentation]                 Verify Create Measurement Group successful
+    [Timeout]                       60 seconds
+    ${json_value}=                  json_from_file                  ${CREATE_MSG_GRP_DATA}
+    ${resp}=                        PostMsgGrpCall      /subscription/subs_01/measurementGroups/msg_grp_05  ${json_value}
+    Should Be True                  ${resp.status_code} == 409
+
+Verify Delete Measurement Group successful
+    [Tags]                          PMSH_26
+    [Documentation]                 Verify Delete Measurement Group successful
+    [Timeout]                       60 seconds
+    ${resp}=                        DeleteMeasGrpCall   /subscription/subs_01/measurementGroups/msg_grp_05
+    Should Be True                  ${resp.status_code} == 204
+
 *** Keywords ***
 
 AddCreatePolicyResponeToMrSim
@@ -342,7 +383,20 @@ GetMeasGrpWithNFSCall
     ${resp}=        GET On Session    pmsh_session        url=${url}
     [Return]        ${resp}
 
+DeleteMeasGrpCall
+    [Arguments]     ${url}
+    Create Session  pmsh_session      ${PMSH_BASE_URL}    verify=false
+    ${resp}=        DELETE On Session    pmsh_session        url=${url}     expected_status=anything
+    [Return]        ${resp}
+
 PostSubscriptionCall
+    [Arguments]     ${url}     ${data}
+    Create Session  pmsh_sub_session       ${PMSH_BASE_URL}    verify=false
+    ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
+    ${resp}=        POST On Session      pmsh_sub_session    url=${url}    json=${data}     headers=${headers}  expected_status=anything
+    [Return]        ${resp}
+
+PostMsgGrpCall
     [Arguments]     ${url}     ${data}
     Create Session  pmsh_sub_session       ${PMSH_BASE_URL}    verify=false
     ${headers}=     Create Dictionary    Accept=application/json     Content-Type=application/json
