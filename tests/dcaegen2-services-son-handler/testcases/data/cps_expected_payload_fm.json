@@ -1,0 +1,2 @@
+
+{"Configurations":[{"data":{"FAPService":{"alias":"15176","X0005b9Lte":{"phyCellIdInUse":3,"pnfName":"220"},"CellConfig":{"LTE":{"RAN":{"Common":{"CellIdentity":"15176"}}}}}}},{"data":{"FAPService":{"alias":"15174","X0005b9Lte":{"phyCellIdInUse":1,"pnfName":"220"},"CellConfig":{"LTE":{"RAN":{"Common":{"CellIdentity":"15174"}}}}}}}]}

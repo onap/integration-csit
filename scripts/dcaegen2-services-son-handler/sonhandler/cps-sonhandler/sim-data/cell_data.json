@@ -1,0 +1,13 @@
+{
+	"neighbor": ["Chn0066", "Chn0067", "Chn0068", "Chn0069", "Chn0070", "Chn0072", "Chn0073", "Chn0074", "Chn0075", "Chn0076", "Chn0077", "Chn0078", "Chn0079", "Chn0080"],
+	"Cell": {
+		"networkId": "ran-1",
+		"nodeId": "Chn0071",
+		"physicalCellId": 1,
+		"pnfId": "ncserver5",
+		"sectorNumber": null,
+		"latitude": "27.55626304907802",
+		"longitude": "-58.48690415723466",
+		"notes": "NA"
+	}
+}
