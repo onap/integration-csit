@@ -15,7 +15,7 @@
 			"lastEpochMicrosec": 1551790542000000,
 			"nfNamingCode": "RansimAgent",
 			"nfVendorName": "Wipro",
-			"vesEventListenerVersion": "7.0.1",
+			"vesEventListenerVersion": "7.2",
 			"timeZoneOffset": "UTC-05:30"
 		},
 		"measurementFields": {
