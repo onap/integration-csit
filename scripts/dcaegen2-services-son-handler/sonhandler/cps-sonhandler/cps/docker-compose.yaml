@@ -1,0 +1,86 @@
+#    ============LICENSE_START=======================================================
+#    cps-tdmt
+#    ================================================================================
+#     Copyright (C) 2022 Wipro Limited.
+#    ==============================================================================
+#       Licensed under the Apache License, Version 2.0 (the "License");
+#       you may not use this file except in compliance with the License.
+#       You may obtain a copy of the License at
+#
+#            http://www.apache.org/licenses/LICENSE-2.0
+#
+#       Unless required by applicable law or agreed to in writing, software
+#       distributed under the License is distributed on an "AS IS" BASIS,
+#       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#       See the License for the specific language governing permissions and
+#       limitations under the License.
+#    ============LICENSE_END=========================================================
+
+
+version: "3.3"
+networks:
+  testsuites_sonhms-default:
+    external: TRUE
+services:
+  cps-and-ncmp:
+    container_name: cps-and-ncmp
+    hostname: cps-and-ncmp
+    image: ${DOCKER_REPO:-nexus3.onap.org:10003}/onap/cps-and-ncmp:${VERSION:-latest}
+    ports:
+            - "8883:8080"
+            - "8887:8081"
+    networks:
+            - testsuites_sonhms-default
+    environment:
+            CPS_USERNAME: ${CPS_USERNAME:-cpsuser}
+            CPS_PASSWORD: ${CPS_PASSWORD:-cpsr0cks!}
+            DB_HOST: dbpostgresql
+            DB_USERNAME: ${DB_USERNAME:-cps}
+            DB_PASSWORD: ${DB_PASSWORD:-cps}
+            DMI_USERNAME: ${DMI_USERNAME:-cpsuser}
+            DMI_PASSWORD: ${DMI_PASSWORD:-cpsr0cks!}
+    restart: unless-stopped
+    depends_on:
+            - dbpostgresql
+                     
+  dbpostgresql:
+    container_name: dbpostgresql
+    image: postgres:13.2-alpine
+    ports:
+            - '5432:5432'
+    networks:
+            - testsuites_sonhms-default
+    environment:
+            POSTGRES_DB: cpsdb
+            POSTGRES_USER: ${DB_USERNAME:-cps}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-cps}
+  postgres:
+    image: 'postgres:12.4-alpine'
+    container_name: cps-tbdmt-postgres
+    hostname: postgres
+    environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=cps_template_db
+    ports:
+            - 5432
+    healthcheck:
+            test: ["CMD", "nc", "-z", "localhost", "5432"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+    networks:
+            - testsuites_sonhms-default
+  cps-tbdmt:
+    image: ${DOCKER_REPO:-nexus3.onap.org:10003}/onap/cps-tbdmt:${VERSION:-latest}
+    container_name: cps-tbdmt
+    hostname: cps-tbdmt
+    ports:
+            - "8088:8080"
+    volumes:
+            - "./application.yml:/app/resources/application.yml"
+    depends_on:
+            - postgres
+    restart: on-failure:10
+    networks:
+            - testsuites_sonhms-default

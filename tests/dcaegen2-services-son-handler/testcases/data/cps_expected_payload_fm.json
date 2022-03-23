@@ -1,0 +1,2 @@
+
+{"Configurations":[{"data":{"FAPService":{"alias":"Chn0008","X0005b9Lte":{"phyCellIdInUse":0,"pnfName":"cucpserver1"},"CellConfig":{"LTE":{"RAN":{"Common":{"CellIdentity":"Chn0008"}}}}}}},{"data":{"FAPService":{"alias":"Chn0009","X0005b9Lte":{"phyCellIdInUse":3,"pnfName":"cucpserver1"},"CellConfig":{"LTE":{"RAN":{"Common":{"CellIdentity":"Chn0009"}}}}}}}]}
