@@ -3,8 +3,9 @@
 docker login -u docker -p docker nexus3.onap.org:10001
 
 TEST_PLANS_DIR=$WORKSPACE/plans/dcaegen2-services-son-handler/testsuites
-TEST_SCRIPTS_DIR=$WORKSPACE/scripts/dcaegen2-services-son-handler/sonhandler
+TEST_SCRIPTS_DIR=$WORKSPACE/scripts/dcaegen2-services-son-handler/sonhandler/cps-sonhandler
 TEST_ROBOT_DIR=$WORKSPACE/tests/dcaegen2-services-son-handler/testcases
+TEST_SCRIPTS_CPS_DIR=$WORKSPACE/scripts/dcaegen2-services-son-handler/sonhandler/cps-sonhandler/cps
 
 docker-compose up -d
 
@@ -56,6 +57,10 @@ docker run -d --name configdb_oof_sim --network=testsuites_sonhms-default -p "50
 sleep 60
 CONFIGDB_OOF_SIM_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' configdb_oof_sim)
 echo "CONFIGDB_OOF_SIM_IP=${CONFIGDB_OOF_SIM_IP}"
+
+# CPS set up
+cd $TEST_SCRIPTS_CPS_DIR
+sh cps-setup.sh
 
 
 ROBOT_VARIABLES="-v ZOOKEEPER_IP:${ZOOKEEPER_IP} -v KAFKA_IP:${KAFKA_IP} -v DMAAP_IP:${DMAAP_IP} -v SONHMS_POSTGRES_IP:${SONHMS_POSTGRES_IP} -v SONHMS_IP:${SONHMS_IP} -v CONFIGDB_OOF_SIM_IP:${CONFIGDB_OOF_SIM_IP} -v TEST_ROBOT_DIR:${TEST_ROBOT_DIR}"

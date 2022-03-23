@@ -1,0 +1,247 @@
+{
+  "cps-ran-schema-model:cps-ran-schema": {
+    "Regions": [
+      {
+        "regionId": "10000000",
+        "cps-region-cell-mapping": {
+          "NRCellCU": [
+            {
+              "idNRCellCU": "Chn0005",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "Chn0004",
+                  "attributes": {
+                    "nRTCI": "Chn0004",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0006",
+                  "attributes": {
+                    "nRTCI": "Chn0006",
+                    "nRPCI": 2,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0009",
+                  "attributes": {
+                    "nRTCI": "Chn0009",
+                    "nRPCI": 4,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            },
+            {
+              "idNRCellCU": "Chn0004",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "Chn0005",
+                  "attributes": {
+                    "nRTCI": "Chn0005",
+                    "nRPCI": 1,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0006",
+                  "attributes": {
+                    "nRTCI": "Chn0006",
+                    "nRPCI": 2,
+                    "isHOAllowed": true
+                  }
+                }
+                
+              ]
+            },
+            {
+              "idNRCellCU": "Chn0009",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "Chn0005",
+                  "attributes": {
+                    "nRTCI": "Chn0005",
+                    "nRPCI": 1,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0008",
+                  "attributes": {
+                    "nRTCI": "Chn0008",
+                    "nRPCI": 3,
+                    "isHOAllowed": true
+                  }
+                }
+                
+              ]
+            },
+            {
+              "idNRCellCU": "Chn0008",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "Chn0009",
+                  "attributes": {
+                    "nRTCI": "Chn0009",
+                    "nRPCI": 4,
+                    "isHOAllowed": true
+                  }
+                }   
+              ]
+            },
+            {
+              "idNRCellCU": "Chn0006",
+              "attributes": {
+                "cellLocalId" : "12345"
+               },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "Chn0005",
+                  "attributes": {
+                    "nRTCI": "Chn0005",
+                    "nRPCI": 1,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0009",
+                  "attributes": {
+                    "nRTCI": "Chn0009",
+                    "nRPCI": 4,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "Chn0004",
+                  "attributes": {
+                    "nRTCI": "Chn0004",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "regionId": "netw2000",
+        "cps-region-cell-mapping": {
+          "NRCellCU": [
+            {
+              "idNRCellCU": "cell20",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "cell21",
+                  "attributes": {
+                    "nRTCI": "cell21",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "cell22",
+                  "attributes": {
+                    "nRTCI": "cell22",
+                    "nRPCI": 1,
+                    "isHOAllowed": true
+                  }
+                },
+                {
+                  "idNRCellRelation": "cell23",
+                  "attributes": {
+                    "nRTCI": "cell23",
+                    "nRPCI": 2,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            },
+            {
+              "idNRCellCU": "cell21",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "cell20",
+                  "attributes": {
+                    "nRTCI": "cell20",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            },
+            {
+              "idNRCellCU": "cell22",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "cell20",
+                  "attributes": {
+                    "nRTCI": "cell20",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            },
+            {
+              "idNRCellCU": "cell23",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "cell24",
+                  "attributes": {
+                    "nRTCI": "cell24",
+                    "nRPCI": 0,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            },
+            {
+              "idNRCellCU": "cell24",
+              "attributes": {
+                "cellLocalId" : "12345"
+              },
+              "NRCellRelation": [
+                {
+                  "idNRCellRelation": "cell23",
+                  "attributes": {
+                    "nRTCI": "cell23",
+                    "nRPCI": 2,
+                    "isHOAllowed": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "NearRTRIC": []
+  }
+}

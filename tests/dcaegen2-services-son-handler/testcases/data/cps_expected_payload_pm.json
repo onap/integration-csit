@@ -1,0 +1,1 @@
+{"Configurations":[{"data":{"FAPService":{"alias":"Chn0002","CellConfig":{"LTE":{"RAN":{"Common":{"CellIdentity":"Chn0002"},"NeighborListInUse":{"LTECell":[{"PNFName":"ncserver1","PLMNID":"plmnid1","CID":"Chn0004","PhyCellID":0,"Blacklisted":"true"},{"PNFName":"ncserver1","CID":"Chn0001","PhyCellID":0,"Blacklisted":"true"}],"LTECellNumberOfEntries":"2"}}}}}}}]}
