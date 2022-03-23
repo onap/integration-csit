@@ -1,3 +1,5 @@
 # Test suites are relative paths under [integration/csit.git]/tests/.
 # Place the suites in run order.
-dcaegen2-services-son-handler/testcases
+# dcaegen2-services-son-handler/testcases
+# dcaegen2-services-son-handler/testcases/sonhandler-test.robot
+dcaegen2-services-son-handler/testcases/son-handler-test-cps.robot

@@ -16,6 +16,7 @@ ${POST_DMAAP_EVENT_FOR_FM_NOTIF_URL}      http://${DMAAP_IP}:3904/events/unauthe
 ${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}      http://${DMAAP_IP}:3904/events/unauthenticated.VES_MEASUREMENT_OUTPUT
 ${POST_DMAAP_EVENT_FOR_POLICY_RESPONSE}   http://${DMAAP_IP}:3904/events/DCAE_CL_RSP
 
+
 *** Test Cases ***
 
 HealthCheck
@@ -28,7 +29,7 @@ HealthCheck
 Post fm notification to dmaap
 	Create Session  dmaap  ${DMAAP_URL}
 	${headers}=    Create Dictionary    Content-Type    application/json
-        ${data}=   Get File      ${TEST_ROBOT_DIR}/data/fault_notification.json
+        ${data}=   Get File      ${TEST_ROBOT_DIR}/data/cps_fault_notification.json
         ${response}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_FM_NOTIF_URL}', data=$data)
 	Should Be Equal As Strings  ${response.status_code}  200
 
@@ -41,7 +42,7 @@ Verify fm notification trigger in sonhms
 		Log     Waiting for sonhms to handle trigger...         console=${True}
 		Sleep   30s
 	END
-        ${expected_payload}=   Get File            ${TEST_ROBOT_DIR}/data/expected_payload_fm.json
+        ${expected_payload}=   Get File            ${TEST_ROBOT_DIR}/data/cps_expected_payload_fm.json
         ${result}=  Convert To String  ${result.content}
         ${result_string}=    Get Substring    ${result}    2    -2
         ${actual_data}=    Evaluate     json.loads("""${result_string}""")    json
@@ -63,8 +64,8 @@ Verify pm notification trigger in sonhms
 		Log     Waiting for sonhms to handle trigger...         console=${True}
 		Sleep   30s
 	END
-        ${expected_payload}=   Get File            ${TEST_ROBOT_DIR}/data/expected_payload_pm.json
-	${result}=  Convert To String  ${result.content}
+	${expected_payload}=   Get File            ${TEST_ROBOT_DIR}/data/cps_expected_payload_pm.json
+        ${result}=  Convert To String  ${result.content}
 	${result_string}=    Get Substring    ${result}    2    -2
 	${actual_data}=    Evaluate     json.loads("""${result_string}""")    json
 	${actual_payload}=    Set Variable     ${actual_data['payload']}
@@ -80,6 +81,12 @@ Post policy negative acknowledgement to dmaap
 
 
 Oof trigger for fixed Pci cells
+
+	Create Session  dmaap  ${DMAAP_URL}
+        ${headers}=    Create Dictionary    Content-Type    application/json
+        ${data}=   Get File      ${TEST_ROBOT_DIR}/data/cps_fault_notification.json
+        ${response}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_FM_NOTIF_URL}', data=$data)
+
         Create Session  dmaap  ${DMAAP_URL}
         FOR    ${i}    IN RANGE   15
                 ${result}=  Get Request  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
@@ -87,7 +94,7 @@ Oof trigger for fixed Pci cells
                 Log	Waiting for sonhms to handle trigger...		console=${True}
                 Sleep   30s
         END
-        ${expected_payload}=   Get File    ${TEST_ROBOT_DIR}/data/expected_payload_fm.json
+        ${expected_payload}=   Get File    ${TEST_ROBOT_DIR}/data/cps_expected_payload_fm.json
         ${result}=  Convert To String  ${result.content}
         ${result_string}=    Get Substring    ${result}    2    -2
         ${actual_data}=    Evaluate     json.loads("""${result_string}""")    json
