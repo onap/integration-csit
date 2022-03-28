@@ -20,7 +20,7 @@ SwaggerFuncTest
     [Documentation]    query swagger info rest test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${SERVICE_IP}:8482    headers=${headers}
-    ${resp}=  Get Request    web_session    ${queryswagger_url}
+    ${resp}=  GET On Session    web_session    ${queryswagger_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}

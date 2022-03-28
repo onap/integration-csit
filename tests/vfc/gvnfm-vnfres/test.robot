@@ -14,7 +14,7 @@ VnfresSwaggerTest
     [Documentation]    query vnfres swagger info rest test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${VNFRES_IP}:8802    headers=${headers}
-    ${resp}=  Get Request    web_session    ${queryswagger_url}
+    ${resp}=  GET On Session    web_session    ${queryswagger_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -25,7 +25,7 @@ VnfResHealthCheckTest
     [Documentation]    check health for vnfres by MSB
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${VNFRES_IP}:8802    headers=${headers}
-    ${resp}=  Get Request    web_session    ${healthcheck_url}
+    ${resp}=  GET On Session    web_session    ${healthcheck_url}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
