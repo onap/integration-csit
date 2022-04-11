@@ -1,0 +1,8 @@
+{
+  "network-policy-id": "933dacc1-56e0-4b94-8808-4d099ebc4de5",
+  "network-policy-fqdn": "cll-101",
+  "name": "TSCi policy",
+  "type": "SLA",
+  "latency": 2,
+  "max-bandwidth": 3000
+}

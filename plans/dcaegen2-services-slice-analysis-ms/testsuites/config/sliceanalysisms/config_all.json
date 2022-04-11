@@ -5,7 +5,7 @@
         "aaf_password": null,
         "type": "message-router",
         "dmaap_info": {
-          "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/unauthenticated.PERFORMANCE_MEASUREMENTS",
+          "topic_url": "http://dmaap:3904/events/unauthenticated.PERFORMANCE_MEASUREMENTS",
           "client_role": "sliceanalysis-subscriber",
           "location": "onap",
           "client_id": "sdnr-sliceanalysis-1"
@@ -16,7 +16,7 @@
         "aaf_password": null,
         "type": "message-router",
         "dmaap_info": {
-          "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/DCAE_CL_RSP",
+          "topic_url": "http://dmaap:3904/events/DCAE_CL_RSP",
           "client_role": "sliceanalysis-subscriber",
           "location": "onap",
           "client_id": "sdnr-sliceanalysis-1"
@@ -27,12 +27,41 @@
         "aaf_password": null,
         "type": "message-router",
         "dmaap_info": {
-          "topic_url": "http://message-router.onap.svc.cluster.local::3904/events/unauthenticated.ML_RESPONSE_TOPIC",
+          "topic_url": "http://dmaap:3904/events/unauthenticated.ML_RESPONSE_TOPIC",
           "client_role": "sliceanalysis-subscriber",
           "location": "onap",
           "client_id": "sdnr-sliceanalysis-1"
         },
         "aaf_username": null
+      },
+      "ves_ccvpn_notification_topic": {
+        "aaf_password": null,
+        "type": "message-router",
+        "dmaap_info": {
+          "topic_url": "http://dmaap:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT",
+          "client_role": "sliceanalysis-subscriber",
+          "location": "onap",
+          "client_id": "sdnr-sliceanalysis-1"
+        },
+        "aaf_username": null
+      },
+      "aai_subscriber":{
+        "type":"message_router",
+        "aaf_username": null,
+        "aaf_password": null,
+        "api_key" : null,
+        "api_secret" : null,
+        "servers" : ["dmaap:3904"],
+        "consumer_group" : "dcae_ccvpn_cl",
+        "consumer_instance" : "dcae_ccvpn_cl_aaievent",
+        "fetch_timeout" : 15000,
+        "fetch_limit" : 100,
+        "dmaap_info":{
+          "topic_url":"http://dmaap:3904/events/AAI-EVENT",
+          "client_role":"org.onap.dcae.aaiSub",
+          "location":"onap",
+          "client_id":"sdnr-sliceanalysis-1"
+        }
       }
     },
     "streams_publishes": {
@@ -40,7 +69,7 @@
         "aaf_password": null,
         "type": "message-router",
         "dmaap_info": {
-          "topic_url": "http://message-router.onap.svc.cluster.local::3904/events/unauthenticated.DCAE_CL_OUTPUT",
+          "topic_url": "http://dmaap:3904/events/unauthenticated.DCAE_CL_OUTPUT",
           "client_role": "sliceanalysis-subscriber",
           "location": "onap",
           "client_id": "sdnr-sliceanalysis-1"
@@ -67,13 +96,27 @@
     "sliceanalysisms.aai.url": "https://aai-resources:8447/aai/v21",
     "sliceanalysisms.cps.url": "http://cps-tbdmt:8080/execute/ran-network",
     "sliceanalysisms.configDbEnabled": "false",
+    "sliceanalysisms.rannfnssiDetailsTemplateId": "get-rannfnssiid-details",
+    "sliceanalysisms.desUrl": "http://dl-des:1681/datalake/v1/exposure/pm_data",
+    "sliceanalysisms.pmDataDurationInWeeks": 4,
+    "sliceanalysisms.vesNotifPollingInterval": 5,
+    "sliceanalysisms.vesNotifChangeIdentifier": "PM_BW_UPDATE",
+    "sliceanalysisms.vesNotifChangeType": "BandwidthChanged",
+    "sliceanalysisms.aaiNotif.targetAction" : "UPDATE",
+    "sliceanalysisms.aaiNotif.targetSource" : "UUI",
+    "sliceanalysisms.aaiNotif.targetEntity" : "service-instance",
+    "sliceanalysisms.ccvpnEvalInterval": 5,
+    "sliceanalysisms.ccvpnEvalThreshold": 0.8,
+    "sliceanalysisms.ccvpnEvalPrecision": 100.0,
+    "sliceanalysisms.ccvpnEvalPeriodicCheckOn": true,
+    "sliceanalysisms.ccvpnEvalOnDemandCheckOn": true,
     "service_calls": {
       "policy-req": []
     },
     "trust_store_path": "/opt/app/sliceanalysisms/etc/cert/trust.jks",
     "trust_store_pass_path": "/opt/app/sliceanalysisms/etc/cert/trust.pass"
   },
- "policies": {
+  "policies": {
     "event": {
       "action": "gathered",
       "timestamp": "2019-09-18T14:57:55.320Z",

@@ -49,6 +49,7 @@ services:
   dmaap:
     image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.8
     container_name: dmaap
+    hostname: dmaap
     ports:
       - "3904:3904"
       - "3905:3905"
@@ -77,7 +78,7 @@ services:
     networks:
      - slice-analysis-ms-default
   sliceanalysisms:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest
+    image: nexus3.onap.org:10003/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest
     container_name: sliceanalysisms
     hostname: sliceanalysisms
     environment:
@@ -90,5 +91,5 @@ services:
     depends_on:
      - postgres
     networks:
-     - slice-analysis-ms-default    
-    
+     - slice-analysis-ms-default
+

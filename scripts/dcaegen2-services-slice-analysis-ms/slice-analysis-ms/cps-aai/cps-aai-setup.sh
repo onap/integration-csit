@@ -57,8 +57,8 @@ http://$CPS_TBDMT_IP:8080/templates \
 
 ##Uploading aai data
 AAI_RESOURCES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aai-resources )
-
-echo "\nUploading data to aai-resources"
+echo "\n\nAAI_RESOURCES_IP=${AAI_RESOURCES_IP}"
+echo "Uploading data to aai-resources"
 curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
 https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer \
 -d @sim-data/customers.json
@@ -75,3 +75,12 @@ curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H
 https://$AAI_RESOURCES_IP:8447/aai/v24/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84/slice-profiles/slice-profile/684hf846f-863b-4901-b202-0ab86a638555 \
 -d @sim-data/slice_profile.json
 
+##Uploading CCVPN/IBN aai data
+curl --location --request PUT https://$AAI_RESOURCES_IP:8447/aai/v24/network/network-policies/network-policy/933dacc1-56e0-4b94-8808-4d099ebc4de5 \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic QUFJOkFBSQ==' \
+--header 'Content-Type: application/json' \
+--header 'X-FromAppId: AAI' \
+--header 'X-TransactionId: 808b54e3-e563-4144-a1b9-e24e2ed93d4f' \
+--header 'cache-control: no-cache' \
+-k -d @sim-data/network_policy.json

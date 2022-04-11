@@ -47,6 +47,11 @@ curl --header "Content-type: application/json" \
 --data '{"topicName": "unauthenticated.DCAE_CL_OUTPUT"}' \
 http://$DMAAP_IP:3904/events/unauthenticated.DCAE_CL_OUTPUT
 
+curl --header "Content-type: application/json" \
+--request POST \
+--data '{"topicName": "AAI-EVENT"}' \
+http://$DMAAP_IP:3904/events/AAI-EVENT
+
 #build configdb-sim image
 cd $TEST_SCRIPTS_DIR
 docker build -t configdb_sim .
