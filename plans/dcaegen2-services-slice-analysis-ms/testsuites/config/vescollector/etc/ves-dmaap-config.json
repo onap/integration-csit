@@ -1,0 +1,42 @@
+{
+    "ves-pnfRegistration": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.VES_PNFREG_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-3gpp-fault-supervision": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_3GPP_FAULTSUPERVISION_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-notification": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-3gpp-heartbeat": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_3GPP_HEARTBEAT_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-3gpp-performance-assurance": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_3GPP_PERFORMANCEASSURANCE_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-3gpp-provisioning": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_3GPP_PROVISIONING_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-fault": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_FAULT_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-heartbeat": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_HEARTBEAT_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-other": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.SEC_OTHER_OUTPUT"},
+        "type": "message_router"
+    },
+    "ves-measurement": {
+        "dmaap_info": {"topic_url": "http://dmaap:3904/events/unauthenticated.VES_MEASUREMENT_OUTPUT"},
+        "type": "message_router"
+    }
+}

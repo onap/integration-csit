@@ -2,6 +2,7 @@
 #    slice-analysis-ms
 #    ================================================================================
 #     Copyright (C) 2020 Wipro Limited.
+#     Copyright (C) 2022 Huawei Canada Limited.
 #     ==============================================================================
 #       Licensed under the Apache License, Version 2.0 (the "License");
 #       you may not use this file except in compliance with the License.
@@ -49,6 +50,7 @@ services:
   dmaap:
     image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.8
     container_name: dmaap
+    hostname: dmaap
     ports:
       - "3904:3904"
       - "3905:3905"
@@ -76,8 +78,22 @@ services:
       retries: 5
     networks:
      - slice-analysis-ms-default
+  vescollector:
+    image: 'nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:1.11.0'
+    container_name: vescollector
+    hostname: vescollector
+    ports:
+      - "8444:8443"
+    volumes:
+      - ./config/vescollector/etc:/etc
+      - ./config/vescollector/app-config:/app-config
+      - ./config/vescollector/dcae-certificate:/opt/app/dcae-certificate
+    depends_on:
+      - dmaap
+    networks:
+      - slice-analysis-ms-default
   sliceanalysisms:
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:1.0.7
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.components.slice-analysis-ms:latest
     container_name: sliceanalysisms
     hostname: sliceanalysisms
     environment:
@@ -90,5 +106,5 @@ services:
     depends_on:
      - postgres
     networks:
-     - slice-analysis-ms-default    
-    
+     - slice-analysis-ms-default
+

@@ -1,0 +1,45 @@
+{
+  "cambria.partition": "AAI",
+  "event-header": {
+    "severity": "NORMAL",
+    "entity-type": "service-instance",
+    "top-entity-type": "customer",
+    "entity-link": "/aai/v24/business/customers/customer/IBNCustomer/service-subscriptions/service-subscription/IBN/service-instances/service-instance/test",
+    "event-type": "AAI-EVENT",
+    "domain": "dev",
+    "action": "UPDATE",
+    "sequence-number": "0",
+    "id": "48c2016e-12cb-4f9f-ab25-5eaaf8da9fe8",
+    "source-name": "UUI",
+    "version": "v24",
+    "timestamp": "20220406-19:53:41:550"
+  },
+  "entity":{
+    "global-customer-id": "IBNCustomer",
+    "subscriber-name": "IBNCustomer",
+    "service-subscriptions": {
+      "service-subscription": [
+        {
+          "service-type": "IBN",
+          "service-instances": {
+            "service-instance": [
+              {
+                "model-version-id": "6790ab0e-034f-11eb-adc1-0242ac120002",
+                "service-instance-id": "test",
+                "resource-version": "1649274821478",
+                "service-type": "IBN",
+                "service-instance-location-id": "cll-101",
+                "service-role": "TN",
+                "environment-context": "001-100001",
+                "bandwidth-total": "4000",
+                "model-invariant-id": "6790ab0e-034f-11eb-adc1-0242ac120002",
+                "service-instance-name": "decheng-test-001",
+                "orchestration-status": "allocated"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

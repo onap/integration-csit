@@ -14,6 +14,7 @@ KAFKA_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{
 DMAAP_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dmaap)
 SLICE_ANALYSIS_MS_POSTGRES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' slice-analysis-ms-postgres)
 SLICE_ANALYSIS_MS_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sliceanalysisms)
+VESCOLLECTOR_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' vescollector)
 
 echo "Waiting for dmaap to come up ..."
 for i in {1..10}; do
@@ -47,6 +48,16 @@ curl --header "Content-type: application/json" \
 --data '{"topicName": "unauthenticated.DCAE_CL_OUTPUT"}' \
 http://$DMAAP_IP:3904/events/unauthenticated.DCAE_CL_OUTPUT
 
+curl --header "Content-type: application/json" \
+--request POST \
+--data '{"topicName": "unauthenticated.VES_NOTIFICATION_OUTPUT"}' \
+http://$DMAAP_IP:3904/events/unauthenticated.VES_NOTIFICATION_OUTPUT
+
+curl --header "Content-type: application/json" \
+--request POST \
+--data '{"topicName": "AAI-EVENT"}' \
+http://$DMAAP_IP:3904/events/AAI-EVENT
+
 #build configdb-sim image
 cd $TEST_SCRIPTS_DIR
 docker build -t configdb_des_sim .
@@ -60,6 +71,9 @@ echo "CONFIGDB_DES_SIM_IP=${CONFIGDB_DES_SIM_IP}"
 # CPS & AAI set up
 cd $TEST_SCRIPTS_CPS_DIR
 sh cps-aai-setup.sh
-
-ROBOT_VARIABLES="-v ZOOKEEPER_IP:${ZOOKEEPER_IP} -v KAFKA_IP:${KAFKA_IP} -v DMAAP_IP:${DMAAP_IP} -v SLICE_ANALYSIS_MS_POSTGRES_IP:${SLICE_ANALYSIS_MS_POSTGRES_IP} -v SLICE_ANALYSIS_MS_IP:${SLICE_ANALYSIS_MS_IP} -v CONFIGDB_SIM_IP:${CONFIGDB_SIM_IP} -v TEST_ROBOT_DIR:${TEST_ROBOT_DIR}"
+AAI_RESOURCES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aai-resources )
+ROBOT_VARIABLES="-v ZOOKEEPER_IP:${ZOOKEEPER_IP} -v KAFKA_IP:${KAFKA_IP} -v DMAAP_IP:${DMAAP_IP} \
+-v SLICE_ANALYSIS_MS_POSTGRES_IP:${SLICE_ANALYSIS_MS_POSTGRES_IP} -v SLICE_ANALYSIS_MS_IP:${SLICE_ANALYSIS_MS_IP} \
+-v CONFIGDB_SIM_IP:${CONFIGDB_SIM_IP} -v TEST_ROBOT_DIR:${TEST_ROBOT_DIR} -v VESCOLLECTOR_IP:${VESCOLLECTOR_IP} \
+-v AAI_RESOURCES_IP:${AAI_RESOURCES_IP}"
 
