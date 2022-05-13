@@ -3,7 +3,6 @@
    "service-instance-name":"nsi_sa1",
    "service-type":"embb",
    "service-role":"nsi",
-   "environment-context":"01-06E443",
    "orchestration-status":"deactivated",
    "service-function":"non-shared",
    "relationship-list":{

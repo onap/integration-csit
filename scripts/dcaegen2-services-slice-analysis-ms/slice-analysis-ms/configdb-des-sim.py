@@ -71,8 +71,8 @@ def get_subscriber_details_for_nssai(snssai):
     return data, None
 
 def get_pm_data_for_snssai(snssai):
-    if str(snssai) == 'SM.PrbUsedDl.01-06E442':
-        with open('pm_data_01_06E442.json') as pm_data:
+    if str(snssai) == 'SM.PrbUsedDl.01-3C5C90':
+        with open('pm_data_01-3C5C90.json') as pm_data:
             data = json.load(pm_data)
     else:
         with open('pm_data_01_B989BD.json') as pm_data:

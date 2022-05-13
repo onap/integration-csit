@@ -3,7 +3,7 @@
    "service-instance-name":"sa1",
    "service-type":"embb",
    "service-role":"service-profile",
-   "environment-context":"01-06E442",
+   "environment-context":"01-3C5C90",
    "orchestration-status":"deactivated",
    "relationship-list":{
       "relationship":[

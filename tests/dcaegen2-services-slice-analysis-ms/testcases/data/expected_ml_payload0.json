@@ -1,38 +1,141 @@
 {
-  "name": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
-  "serviceInstanceID": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
-  "globalSubscriberId": "5GCustomer",
-  "subscriptionServiceType": "5G",
-  "networkType": "AN",
-  "additionalProperties": {
-    "modifyAction": "reconfigure",
-    "snssaiList": [
-      "001-00110"
-    ],
-    "sliceProfileId": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd83",
-    "resourceConfig": {
-      "snssai": "001-00110",
-      "data": [
-        {
-          "gNBCUName": "cucpserver1",
-          "nearRTRICId": "11",
-          "cellCUList": [
+   "name":"3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
+   "serviceInstanceID":"3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
+   "globalSubscriberId":"5GCustomer",
+   "subscriptionServiceType":"5G",
+   "networkType":"AN",
+   "additionalProperties":{
+      "modifyAction":"reconfigure",
+      "snssaiList":[
+         "01-8C2B9A"
+      ],
+      "resourceConfig":{
+         "snssai":"01-8C2B9A",
+         "data":[
             {
-              "cellLocalId": 11220,
-              "configData": {
-                "maxNumberofConns": "20",
-                "predictedMaxNumberofConns": "25",
-                "lastUpdatedTS": "yyyy/MM/dd HH:mm:ss"
-              }
+               "gNBCUName":"cucpserver2",
+               "nearRTRICId":"22",
+               "cellCUList":[
+                  {
+                     "cellLocalId":10896,
+                     "configData":{
+                        "maxNumberofConns":"59",
+                        "predictedMaxNumberofConns":"37",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":10897,
+                     "configData":{
+                        "maxNumberofConns":"18",
+                        "predictedMaxNumberofConns":"6",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":11561,
+                     "configData":{
+                        "maxNumberofConns":"15",
+                        "predictedMaxNumberofConns":"66",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":11562,
+                     "configData":{
+                        "maxNumberofConns":"34",
+                        "predictedMaxNumberofConns":"15",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":11568,
+                     "configData":{
+                        "maxNumberofConns":"10",
+                        "predictedMaxNumberofConns":"7",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":11569,
+                     "configData":{
+                        "maxNumberofConns":"55",
+                        "predictedMaxNumberofConns":"37",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":13905,
+                     "configData":{
+                        "maxNumberofConns":"43",
+                        "predictedMaxNumberofConns":"33",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":13910,
+                     "configData":{
+                        "maxNumberofConns":"27",
+                        "predictedMaxNumberofConns":"29",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":14655,
+                     "configData":{
+                        "maxNumberofConns":"52",
+                        "predictedMaxNumberofConns":"35",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":14656,
+                     "configData":{
+                        "maxNumberofConns":"21",
+                        "predictedMaxNumberofConns":"55",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":15360,
+                     "configData":{
+                        "maxNumberofConns":"46",
+                        "predictedMaxNumberofConns":"36",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":15361,
+                     "configData":{
+                        "maxNumberofConns":"29",
+                        "predictedMaxNumberofConns":"50",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":15548,
+                     "configData":{
+                        "maxNumberofConns":"43",
+                        "predictedMaxNumberofConns":"21",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  },
+                  {
+                     "cellLocalId":15549,
+                     "configData":{
+                        "maxNumberofConns":"10",
+                        "predictedMaxNumberofConns":"14",
+                        "lastUpdatedTS":"22/04/2022 13:43:10"
+                     }
+                  }
+               ]
             }
-          ]
-        }
-      ]
-    },
-    "nsiInfo": {
-      "nsiName": "",
-      "nsiId": "36575a3f-c18c-4bf1-908e-e498ee481853"
-    },
-    "scriptName": "AN"
-  }
+         ]
+      },
+      "nsiInfo":{
+         "nsiName":"",
+         "nsiId":"d0fbe995-547d-492c-8c83-ad3317366057"
+      },
+      "scriptName":"AN"
+   }
 }

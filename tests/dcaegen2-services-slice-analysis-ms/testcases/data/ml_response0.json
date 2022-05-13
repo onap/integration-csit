@@ -1,18 +1,1 @@
-{
-  "snssai": "001-00110",
-  "data": [
-    {
-      "gNBCUName": "cucpserver1",
-      "cellCUList": [
-        {
-          "cellLocalId": 11220,
-          "configData": {
-            "maxNumberofConns": "20",
-            "predictedMaxNumberofConns": "25",
-            "lastUpdatedTS": "yyyy/MM/dd HH:mm:ss"
-          }
-        }
-      ]
-    }
-  ]
-}
+{"snssai":"01-8C2B9A","data":[{"gNBCUName":"cucpserver2","cellCUList":[{"configData":{"maxNumberofConns":59,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":37},"cellLocalId":"10896"},{"configData":{"maxNumberofConns":18,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":6},"cellLocalId":"10897"},{"configData":{"maxNumberofConns":15,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":66},"cellLocalId":"11561"},{"configData":{"maxNumberofConns":34,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":15},"cellLocalId":"11562"},{"configData":{"maxNumberofConns":10,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":7},"cellLocalId":"11568"},{"configData":{"maxNumberofConns":55,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":37},"cellLocalId":"11569"},{"configData":{"maxNumberofConns":43,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":33},"cellLocalId":"13905"},{"configData":{"maxNumberofConns":27,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":29},"cellLocalId":"13910"},{"configData":{"maxNumberofConns":52,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":35},"cellLocalId":"14655"},{"configData":{"maxNumberofConns":21,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":55},"cellLocalId":"14656"},{"configData":{"maxNumberofConns":46,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":36},"cellLocalId":"15360"},{"configData":{"maxNumberofConns":29,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":50},"cellLocalId":"15361"},{"configData":{"maxNumberofConns":43,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":21},"cellLocalId":"15548"},{"configData":{"maxNumberofConns":10,"lastUpdatedTS":"22/04/2022 13:43:10","predictedMaxNumberofConns":14},"cellLocalId":"15549"}]}]}
