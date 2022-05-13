@@ -3,7 +3,7 @@
    "service-instance-name":"sliceprofile_cn_sa1",
    "service-type":"embb",
    "service-role":"slice-profile",
-   "environment-context":"01-06E442",
+   "environment-context":"01-3C5C90",
    "workload-context":"CN",
    "created-at":"2022-02-16 09:14:30",
    "service-instance-location-id":"39-00",

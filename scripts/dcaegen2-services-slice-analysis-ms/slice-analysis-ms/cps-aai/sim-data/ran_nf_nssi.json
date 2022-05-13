@@ -1,0 +1,10 @@
+{
+         "service-instance-id":"3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
+         "service-instance-name":"an_sp_1",
+	 "service-type":"00-000",
+         "service-role":"nssi",
+         "environment-context":"01-3C5C90",
+         "workload-context":"AN-NF",
+         "service-instance-location-id":"[\"460-00\",\"460-01\"]",
+         "orchestration-status":"deactivated"
+}

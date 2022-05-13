@@ -26,17 +26,29 @@ curl --location --user cpsuser:cpsr0cks! \
 --request POST \
 http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/schema-sets --form 'file=@"ran-network.zip"' --form 'schema-set-name="ran-network"'
 
+curl --location --user cpsuser:cpsr0cks! \
+--request POST \
+http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/schema-sets --form 'file=@"cps-ran.zip"' --form 'schema-set-name="ran-inventory"' -i
+
 echo "\nCreating anchor: "
 curl --location --user cpsuser:cpsr0cks!  --request POST \
 http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/anchors?schema-set-name=ran-network \
--d anchor-name=ran-network-anchor
+-d anchor-name=11
+
+curl --location --user cpsuser:cpsr0cks!  --request POST \
+http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/anchors?schema-set-name=ran-inventory \
+-d anchor-name=ran-inventory-anchor -i
 
 echo "\nUploading cps payload "
 curl --location --user cpsuser:cpsr0cks! --request POST \
-http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/anchors/ran-network-anchor/nodes \
+http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/anchors/11/nodes \
 --header 'Content-Type: application/json' \
 -d @sim-data/payload-ran-network.json
 
+curl --location --user cpsuser:cpsr0cks! --request POST \
+http://$CPS_IP:8080/cps/api/v1/dataspaces/E2EDemo/anchors/ran-inventory-anchor/nodes \
+--header 'Content-Type: application/json' \
+-d @sim-data/payload-ran-inventory.json -i
 
 echo "\nuploading tbdmt-templates"
 curl --location --request POST \
@@ -54,10 +66,24 @@ http://$CPS_TBDMT_IP:8080/templates \
 --header 'Content-Type: application/json' \
 --data-raw '{"templateId": "get-nrcelldu-by-snssai","model": "ran-network","requestType": "query-cps-path","xpathTemplate": "//sNSSAIList[@sNssai='\''{{sNssai}}'\'']/ancestor::NearRTRIC","includeDescendants": true,"transformParam":"NearRTRIC"}'
 
+curl --location --request POST \
+http://$CPS_TBDMT_IP:8080/templates \
+--header 'Content-Type: application/json' \
+ --data-raw '{"templateId": "get-plmnid","model": "ran-inventory","requestType": "query-cps-path","xpathTemplate": "//sliceProfilesList[@sliceProfileId='\''{{sliceProfileId}}'\'']","includeDescendants": true,"transformParam":"sliceProfilesList,pLMNIdList"}'
+
+curl --location --request POST \
+http://$CPS_TBDMT_IP:8080/templates \
+--header 'Content-Type: application/json' \
+ --data-raw '{"templateId": "patch-configData","model": "ran-network","requestType": "patch","xpathTemplate":"/ran-network/NearRTRIC[@idNearRTRIC='\''{{idNearRTRIC}}'\'']/attributes/pLMNInfoList[@mcc='\''{{mcc}}'\'' and @mnc='\''{{mnc}}'\'']/sNSSAIList[@sNssai='\''{{sNssai}}'\'']","includeDescendants": true}' -i
+
+curl --location --request POST \
+http://$CPS_TBDMT_IP:8080/templates \
+--header 'Content-Type: application/json' \
+ --data-raw '{"templateId": "patch-cell-configData","model": "ran-network","requestType": "patch","xpathTemplate": "/ran-network/NearRTRIC[@idNearRTRIC='\''{{idNearRTRIC}}'\'']/GNBCUCPFunction[@idGNBCUCPFunction='\''{{idGNBCUCPFunction}}'\'']/NRCellCU[@idNRCellCU='\''{{idNRCellCU}}'\'']/attributes/pLMNInfoList[@mcc='\''{{mcc}}'\'' and @mnc='\''{{mnc}}'\'']/sNSSAIList[@sNssai='\''{{sNssai}}'\'']","includeDescendants": true}' -i
+
 
 ##Uploading aai data
 AAI_RESOURCES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' aai-resources )
-echo "\n\nAAI_RESOURCES_IP=${AAI_RESOURCES_IP}"
 echo "\nUploading data to aai-resources"
 curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
 https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer \
@@ -69,10 +95,14 @@ https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer/se
 
 curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
 https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84 \
--d @sim-data/service_instances.json -i
+-d @sim-data/ran_nf_nssi.json -i
 
 curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
-https://$AAI_RESOURCES_IP:8447/aai/v24/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84/slice-profiles/slice-profile/684hf846f-863b-4901-b202-0ab86a638555 \
+https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/2125ad2f-c074-4342-b81e-db99ce0e4ed5 \
+-d @sim-data/slice_profile_instance.json -i
+
+curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
+https://$AAI_RESOURCES_IP:8447/aai/v24/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/2125ad2f-c074-4342-b81e-db99ce0e4ed5/slice-profiles/slice-profile/684hf846f-863b-4901-b202-0ab86a638555 \
 -d @sim-data/slice_profile.json -i
 
 curl --request PUT -H "X-FromAppId:AAI " -H  "X-TransactionId:get_aai_subscr" -H "Accept:application/json" -H "Content-Type:application/json" -k \
@@ -104,11 +134,11 @@ https://$AAI_RESOURCES_IP:8447/aai/v21/business/customers/customer/5GCustomer/se
 -d @sim-data/nsi.json -i
 
 ##Uploading CCVPN/IBN aai data
-curl --location --request PUT https://$AAI_RESOURCES_IP:8447/aai/v24/network/network-policies/network-policy/933dacc1-56e0-4b94-8808-4d099ebc4de5 \
---header 'Accept: application/json' \
---header 'Authorization: Basic QUFJOkFBSQ==' \
---header 'Content-Type: application/json' \
---header 'X-FromAppId: AAI' \
---header 'X-TransactionId: 808b54e3-e563-4144-a1b9-e24e2ed93d4f' \
---header 'cache-control: no-cache' \
--k -d @sim-data/network_policy.json
+-curl --location --request PUT https://$AAI_RESOURCES_IP:8447/aai/v24/network/network-policies/network-policy/933dacc1-56e0-4b94-8808-4d099ebc4de5 \
+---header 'Accept: application/json' \
+---header 'Authorization: Basic QUFJOkFBSQ==' \
+---header 'Content-Type: application/json' \
+---header 'X-FromAppId: AAI' \
+---header 'X-TransactionId: 808b54e3-e563-4144-a1b9-e24e2ed93d4f' \
+---header 'cache-control: no-cache' \
+--k -d @sim-data/network_policy.json

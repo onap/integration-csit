@@ -41,9 +41,8 @@ Verify ml notification trigger
                 ${result}=  Get On Session  dmaap   ${unauthenticated.DCAE_CL_OUTPUT}
                 Exit For Loop If    ${result.json()} != @{EMPTY}
                 Log     Waiting for slice-analysis-ms to handle trigger...         console=${True}
-                Sleep   5s
+                Sleep   20s
         END
-
         ${expected_string}=   Get File            ${TEST_ROBOT_DIR}/data/expected_ml_payload0.json
         ${expected_payload}=    Evaluate     json.loads("""${expected_string}""")     json
         ${result}=  Convert To String  ${result.content}
@@ -51,15 +50,31 @@ Verify ml notification trigger
         ${actual_data}=      Evaluate     json.loads("""${result_string}""")     json
         ${actual_payload_str}=    Set Variable     ${actual_data['payload']}
         ${actual_payload}=       Evaluate     json.loads("""${actual_payload_str}""")     json
+        set to dictionary    ${expected_payload['additionalProperties']['nsiInfo']}   nsiId=${actual_payload['additionalProperties']['nsiInfo']['nsiId']}
+        Should Be True   """${actual_payload}""".strip() == """${expected_payload}""".strip()
 
 Post pm notification-1 to dmaap
-        ${data}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification0.json
-        FOR    ${j}    IN RANGE   6
-                ${response}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data)
-                Sleep   10s
+        ${data1}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_1.json
+        ${data2}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_3.json
+        ${data3}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_2.json
+        ${data4}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_4.json
+        ${data5}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_5.json
+        ${data6}=   Get File      ${TEST_ROBOT_DIR}/data/performance_notification_6.json
+        FOR    ${j}    IN RANGE   4
+                ${response1}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data1)
+                ${response2}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data2)
+                ${response3}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data3)
+                ${response4}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data4)
+                ${response5}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data5)
+                ${response6}=    Evaluate    requests.post('${POST_DMAAP_EVENT_FOR_PM_NOTIF_URL}', data=$data6)
+                Sleep   20s
         END
-        Should Be Equal As Strings  ${response.status_code}  200
-
+        Should Be Equal As Strings  ${response1.status_code}  200
+        Should Be Equal As Strings  ${response2.status_code}  200
+        Should Be Equal As Strings  ${response3.status_code}  200
+        Should Be Equal As Strings  ${response4.status_code}  200
+        Should Be Equal As Strings  ${response5.status_code}  200
+        Should Be Equal As Strings  ${response6.status_code}  200
 
 Verify pm notification-1 trigger
         Create Session  dmaap  ${DMAAP_URL}
@@ -77,6 +92,7 @@ Verify pm notification-1 trigger
         ${actual_payload_str}=    Set Variable     ${actual_data['payload']}
         ${actual_payload}=       Evaluate     json.loads("""${actual_payload_str}""")     json
         set to dictionary    ${expected_payload['additionalProperties']['nsiInfo']}   nsiId=${actual_payload['additionalProperties']['nsiInfo']['nsiId']}
+        set to dictionary    ${expected_payload['additionalProperties']['resourceConfig']}   data=${actual_payload['additionalProperties']['resourceConfig']['data']}
         Should Be True   """${actual_payload}""".strip() == """${expected_payload}""".strip()
 
 

@@ -1,28 +1,23 @@
 {
-  "name": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
-  "serviceInstanceID": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
-  "globalSubscriberId": "5GCustomer",
-  "subscriptionServiceType": "5G",
-  "networkType": "AN",
-  "additionalProperties": {
-    "modifyAction": "reconfigure",
-    "snssaiList": [
-      "001-00110"
-    ],
-    "sliceProfileId": "3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
-    "resourceConfig": {
-      "data": [
-        {
-          "nearRTRICId": 11,
-          "dLThptPerSlice": 40,
-          "uLThptPerSlice": 50
-        }
-      ]
-    },
-    "nsiInfo": {
-      "nsiName": "",
-      "nsiId": "7455d0de-fc43-4260-b8d4-5b57d357ea57"
-    },
-    "scriptName": "AN"
-  }
+   "name":"3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
+   "serviceInstanceID":"3f2f23fa-c567-4dd8-8f15-f95ae3e6fd84",
+   "globalSubscriberId":"5GCustomer",
+   "subscriptionServiceType":"5G",
+   "networkType":"AN",
+   "additionalProperties":{
+      "modifyAction":"reconfigure",
+      "snssaiList":[
+         "01-3C5C90"
+      ],
+      "sliceProfileId":"2125ad2f-c074-4342-b81e-db99ce0e4ed5",
+      "resourceConfig":{
+         "data":[
+         ]
+      },
+      "nsiInfo":{
+         "nsiName":"",
+         "nsiId":"1380819f-58f9-43ae-8cbe-d06facaf147a"
+      },
+      "scriptName":"AN"
+   }
 }
