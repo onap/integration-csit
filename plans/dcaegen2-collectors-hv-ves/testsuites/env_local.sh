@@ -26,12 +26,9 @@ export CONFIG_BINDING_SERVICE="config-binding-service"
 export CONFIG_BINDING_SERVICE_SERVICE_PORT="10000"
 export CBS_CLIENT_CONFIG_PATH=/etc/ves-hv/configuration/hv-ves-configuration.yaml
 
-export ONAP_NEXUS_REGISTRY="nexus3.onap.org:10001"
-export DOCKER_REGISTRY=${ONAP_NEXUS_REGISTRY}
+export DOCKER_REGISTRY="nexus3.onap.org:10001"
 export DOCKER_REGISTRY_PREFIX="${DOCKER_REGISTRY}/"
-
-export KAFKA_IMAGE_FULL_NAME="${ONAP_NEXUS_REGISTRY}/onap/dmaap/kafka111:0.0.6"
-export ZOOKEEPER_IMAGE_FULL_NAME="${ONAP_NEXUS_REGISTRY}/onap/dmaap/zookeeper:4.0.0"
+export DOCKER_IO_REGISTRY="docker.io"
 
 export CONTAINERS_NETWORK="hv-ves-${RANDOM}"
 export HV_VES_SERVICE_NAME="hv-ves-collector"
