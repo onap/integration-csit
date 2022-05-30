@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cbb527f_56a02f11",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/docker-compose.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 7661
+      },
+      "writtenOn": "2022-05-30T14:13:05Z",
+      "side": 1,
+      "message": "This change involves some minor changes with respect to recent bug fix for son-handler. Will commit the new patch set again.",
+      "parentUuid": "0a2ee4de_f7e42b4c",
+      "range": {
+        "startLine": 81,
+        "startChar": 78,
+        "endLine": 81,
+        "endChar": 83
+      },
+      "revId": "40744a12067ada767f84760016627af54c34ff66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1aa61be7_fe322c65",
         "filename": "plans/dcaegen2-services-son-handler/testsuites/testplan.txt",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2022-05-25T17:58:39Z",
       "side": 1,
       "message": "why are these tests commented?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 63
+      },
+      "revId": "40744a12067ada767f84760016627af54c34ff66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbd54a6_a81a3801",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/testplan.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7661
+      },
+      "writtenOn": "2022-05-30T14:13:05Z",
+      "side": 1,
+      "message": "One of the tests is with ConfigDB and the uncommented one is with CPS, since son-handler has both the clients.",
+      "parentUuid": "1aa61be7_fe322c65",
       "range": {
         "startLine": 4,
         "startChar": 0,
