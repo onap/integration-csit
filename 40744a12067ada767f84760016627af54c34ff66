@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9a091c99_2b60538b",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/docker-compose.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-05-31T19:22:30Z",
+      "side": 1,
+      "message": "Okay; once the latest patchset with version revision is done (either latest/2.1.7), this change should be good to go.",
+      "parentUuid": "1cbb527f_56a02f11",
+      "range": {
+        "startLine": 81,
+        "startChar": 78,
+        "endLine": 81,
+        "endChar": 83
+      },
+      "revId": "40744a12067ada767f84760016627af54c34ff66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1aa61be7_fe322c65",
         "filename": "plans/dcaegen2-services-son-handler/testsuites/testplan.txt",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "40744a12067ada767f84760016627af54c34ff66",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be33b3bc_1592f87c",
+        "filename": "plans/dcaegen2-services-son-handler/testsuites/testplan.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-05-31T19:22:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffbd54a6_a81a3801",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 63
+      },
+      "revId": "40744a12067ada767f84760016627af54c34ff66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
