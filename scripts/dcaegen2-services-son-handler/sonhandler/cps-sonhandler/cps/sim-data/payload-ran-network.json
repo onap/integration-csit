@@ -1,0 +1,1633 @@
+{
+	"ran-network:ran-network": {
+		"NearRTRIC": [{
+				"idNearRTRIC": "11",
+				"GNBCUUPFunction": [{
+					"idGNBCUUPFunction": "1111",
+					"attributes": {
+						"sAP": [{
+							"host": "localhost",
+							"port": 8080
+						}],
+						"gNBId": 25
+					}
+				}],
+				"GNBCUCPFunction": [{
+					"idGNBCUCPFunction": "cucpserver1",
+					"attributes": {
+						"gNBCUName": "cucpserver1",
+						"sAP": [{
+							"host": "localhost",
+							"port": 8080
+						}],
+						"gNBIdLength": 25,
+						"gNBId": 25
+					},
+					"NRCellCU": [{
+							"idNRCellCU": "15289",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15289
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15290",
+									"attributes": {
+										"nRTCI": "15290",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15296",
+									"attributes": {
+										"nRTCI": "15296",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15687",
+									"attributes": {
+										"nRTCI": "15687",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15290",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15290
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15687",
+									"attributes": {
+										"nRTCI": "15687",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15289",
+									"attributes": {
+										"nRTCI": "15",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15296",
+									"attributes": {
+										"nRTCI": "15296",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15296",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15296
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15290",
+									"attributes": {
+										"nRTCI": "15290",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15289",
+									"attributes": {
+										"nRTCI": "15289",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15687",
+									"attributes": {
+										"nRTCI": "15687",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15687",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15687
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15289",
+									"attributes": {
+										"nRTCI": "15289",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15290",
+									"attributes": {
+										"nRTCI": "15290",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15296",
+									"attributes": {
+										"nRTCI": "15296",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15689",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15689
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15825",
+									"attributes": {
+										"nRTCI": "15825",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15826",
+									"attributes": {
+										"nRTCI": "15826",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13999",
+									"attributes": {
+										"nRTCI": "13999",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15155",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15155
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15176",
+									"attributes": {
+										"nRTCI": "15176",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15174",
+									"attributes": {
+										"nRTCI": "15174",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15175",
+									"attributes": {
+										"nRTCI": "15175",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15174",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15174
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15175",
+									"attributes": {
+										"nRTCI": "15175",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15176",
+									"attributes": {
+										"nRTCI": "15176",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15155",
+									"attributes": {
+										"nRTCI": "15155",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15175",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15175
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15174",
+									"attributes": {
+										"nRTCI": "15174",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15176",
+									"attributes": {
+										"nRTCI": "15176",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15155",
+									"attributes": {
+										"nRTCI": "15155",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15176",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15176
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15155",
+									"attributes": {
+										"nRTCI": "15155",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15174",
+									"attributes": {
+										"nRTCI": "15174",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15175",
+									"attributes": {
+										"nRTCI": "15175",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15825",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15825
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15826",
+									"attributes": {
+										"nRTCI": "15826",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15689",
+									"attributes": {
+										"nRTCI": "15689",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13999",
+									"attributes": {
+										"nRTCI": "13999",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15826",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15826
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15689",
+									"attributes": {
+										"nRTCI": "15689",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13999",
+									"attributes": {
+										"nRTCI": "13999",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15825",
+									"attributes": {
+										"nRTCI": "15825",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15425",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15425
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15426",
+									"attributes": {
+										"nRTCI": "15426",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14000",
+									"attributes": {
+										"nRTCI": "14000",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15426",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15426
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15425",
+									"attributes": {
+										"nRTCI": "15425",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14000",
+									"attributes": {
+										"nRTCI": "14000",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "13999",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 13999
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15825",
+									"attributes": {
+										"nRTCI": "15825",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15826",
+									"attributes": {
+										"nRTCI": "15826",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15689",
+									"attributes": {
+										"nRTCI": "15689",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "14000",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 14000
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15425",
+									"attributes": {
+										"nRTCI": "15425",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15426",
+									"attributes": {
+										"nRTCI": "15426",
+										"isHOAllowed": true
+									}
+								}
+							]
+						}
+					]
+				}],
+				"GNBDUFunction": [{
+						"idGNBDUFunction": "110",
+						"attributes": {
+							"gNBDUId": 110,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver1",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "15296",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15296,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 2,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15689",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15689,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 11,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15687",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15687,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 3,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15289",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15289,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 0,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15290",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15290,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 1,
+									"nRTAC": 310
+								}
+							}
+						]
+					},
+					{
+						"idGNBDUFunction": "330",
+						"attributes": {
+							"gNBDUId": 330,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver3",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "15425",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15425,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 14,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15826",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15826,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 5,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "13999",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 13999,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 6,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15426",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15426,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 12,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "14000",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 14000,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 13,
+									"nRTAC": 310
+								}
+							}
+						]
+					},
+					{
+						"idGNBDUFunction": "220",
+						"attributes": {
+							"gNBDUId": 220,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver2",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "15174",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15174,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 8,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15175",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15175,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 9,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15825",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15825,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 4,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15176",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15176,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 7,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15155",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15155,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 10,
+									"nRTAC": 310
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"idNearRTRIC": "22",
+				"GNBCUUPFunction": [{
+					"idGNBCUUPFunction": "2222",
+					"attributes": {
+						"sAP": [{
+							"host": "localhost",
+							"port": 8080
+						}],
+						"gNBId": 25
+					}
+				}],
+				"GNBCUCPFunction": [{
+					"idGNBCUCPFunction": "cucpserver2",
+					"attributes": {
+						"gNBCUName": "cucpserver2",
+						"sAP": [{
+							"host": "localhost",
+							"port": 8080
+						}],
+						"gNBIdLength": 25,
+						"gNBId": 25
+					},
+					"NRCellCU": [{
+							"idNRCellCU": "11561",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 11561
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "11562",
+									"attributes": {
+										"nRTCI": "11562",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11568",
+									"attributes": {
+										"nRTCI": "11568",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11569",
+									"attributes": {
+										"nRTCI": "11569",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "11562",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 11562
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "11568",
+									"attributes": {
+										"nRTCI": "11568",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11569",
+									"attributes": {
+										"nRTCI": "11569",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11561",
+									"attributes": {
+										"nRTCI": "11561",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "11568",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 11568
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "11569",
+									"attributes": {
+										"nRTCI": "11569",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11562",
+									"attributes": {
+										"nRTCI": "11562",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11561",
+									"attributes": {
+										"nRTCI": "11561",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "11569",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 11569
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "11568",
+									"attributes": {
+										"nRTCI": "11568",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11562",
+									"attributes": {
+										"nRTCI": "11562",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "11561",
+									"attributes": {
+										"nRTCI": "11561",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "10896",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 10896
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "14655",
+									"attributes": {
+										"nRTCI": "14655",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14656",
+									"attributes": {
+										"nRTCI": "14656",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "10897",
+									"attributes": {
+										"nRTCI": "10897",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "10897",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 10897
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "10896",
+									"attributes": {
+										"nRTCI": "10896",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14656",
+									"attributes": {
+										"nRTCI": "14656",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14655",
+									"attributes": {
+										"nRTCI": "14655",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "14655",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 14655
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "14656",
+									"attributes": {
+										"nRTCI": "14656",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "10896",
+									"attributes": {
+										"nRTCI": "10896",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "10897",
+									"attributes": {
+										"nRTCI": "10897",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "14656",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 14656
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "14655",
+									"attributes": {
+										"nRTCI": "14655",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "10896",
+									"attributes": {
+										"nRTCI": "10896",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "10897",
+									"attributes": {
+										"nRTCI": "10897",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "13905",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 13905
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "13910",
+									"attributes": {
+										"nRTCI": "13910",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15360",
+									"attributes": {
+										"nRTCI": "15360",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15361",
+									"attributes": {
+										"nRTCI": "15361",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "13910",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 13910
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15360",
+									"attributes": {
+										"nRTCI": "15360",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15361",
+									"attributes": {
+										"nRTCI": "15361",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13905",
+									"attributes": {
+										"nRTCI": "13905",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15360",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15360
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "13905",
+									"attributes": {
+										"nRTCI": "13905",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13910",
+									"attributes": {
+										"nRTCI": "13910",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15361",
+									"attributes": {
+										"nRTCI": "15361",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15361",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15361
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15360",
+									"attributes": {
+										"nRTCI": "15360",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13910",
+									"attributes": {
+										"nRTCI": "13910",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13905",
+									"attributes": {
+										"nRTCI": "13905",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15548",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15548
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15549",
+									"attributes": {
+										"nRTCI": "15549",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14427",
+									"attributes": {
+										"nRTCI": "14427",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "15549",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 15549
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "14427",
+									"attributes": {
+										"nRTCI": "14427",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15548",
+									"attributes": {
+										"nRTCI": "15548",
+										"isHOAllowed": true
+									}
+								}
+							]
+						},
+						{
+							"idNRCellCU": "14427",
+							"attributes": {
+								"sAP": [{
+									"host": "localhost",
+									"port": 8080
+								}],
+								"cellLocalId": 14427
+							},
+							"NRCellRelation": [{
+									"idNRCellRelation": "15549",
+									"attributes": {
+										"nRTCI": "15549",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15548",
+									"attributes": {
+										"nRTCI": "15548",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15425",
+									"attributes": {
+										"nRTCI": "15425",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15296",
+									"attributes": {
+										"nRTCI": "15296",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15155",
+									"attributes": {
+										"nRTCI": "15155",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13999",
+									"attributes": {
+										"nRTCI": "13999",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "14000",
+									"attributes": {
+										"nRTCI": "14000",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15825",
+									"attributes": {
+										"nRTCI": "15825",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15548",
+									"attributes": {
+										"nRTCI": "15548",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "13905",
+									"attributes": {
+										"nRTCI": "13905",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15361",
+									"attributes": {
+										"nRTCI": "15361",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15174",
+									"attributes": {
+										"nRTCI": "15174",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15175",
+									"attributes": {
+										"nRTCI": "15175",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15176",
+									"attributes": {
+										"nRTCI": "15176",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15426",
+									"attributes": {
+										"nRTCI": "15426",
+										"isHOAllowed": true
+									}
+								},
+								{
+									"idNRCellRelation": "15360",
+									"attributes": {
+										"nRTCI": "15360",
+										"isHOAllowed": true
+									}
+								}
+							]
+						}
+					]
+				}],
+				"GNBDUFunction": [{
+						"idGNBDUFunction": "660",
+						"attributes": {
+							"gNBDUId": 660,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver6",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "15361",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15361,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 25,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15360",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15360,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 24,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "14427",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 14427,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 28,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15549",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15549,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 27,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "15548",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 15548,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 29,
+									"nRTAC": 310
+								}
+							}
+						]
+					},
+					{
+						"idGNBDUFunction": "550",
+						"attributes": {
+							"gNBDUId": 550,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver5",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "14655",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 14655,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 19,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "13905",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 13905,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 26,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "14656",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 14656,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 20,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "10897",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 10897,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 21,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "13910",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 13910,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 23,
+									"nRTAC": 310
+								}
+							}
+						]
+					},
+					{
+						"idGNBDUFunction": "440",
+						"attributes": {
+							"gNBDUId": 440,
+							"sAP": [{
+								"host": "localhost",
+								"port": 8080
+							}],
+							"gNBDUName": "gnduserver4",
+							"gNBIdLength": 25
+						},
+						"NRCellDU": [{
+								"idNRCellDU": "11561",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 11561,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 15,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "11569",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 11569,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 18,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "11562",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 11562,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 16,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "10896",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 10896,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 22,
+									"nRTAC": 310
+								}
+							},
+							{
+								"idNRCellDU": "11568",
+								"attributes": {
+									"sAP": [{
+										"host": "localhost",
+										"port": 8080
+									}],
+									"nRSectorCarrierRef": [
+										"OU=Sales"
+									],
+									"cellLocalId": 11568,
+									"administrativeState": "UNLOCKED",
+									"nRPCI": 17,
+									"nRTAC": 310
+								}
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
