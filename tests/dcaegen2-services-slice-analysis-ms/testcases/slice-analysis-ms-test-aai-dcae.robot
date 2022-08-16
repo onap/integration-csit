@@ -50,6 +50,7 @@ Verify periodic checking from dmaap
         ${expected_payload}=    Evaluate     json.loads("""${expected_string}""")     json
         ${result}=  Convert To String  ${result.content}
         ${result_string}=    Get Substring    ${result}  2    -2
+        ${result_string}=    RemoveExtraByte    ${result_string}
         ${actual_data}=      Evaluate     json.loads("""${result_string}""")     json
         ${actual_payload_str}=    Set Variable     ${actual_data['payload']}
         ${actual_payload}=       Evaluate     json.loads("""${actual_payload_str}""")     json
@@ -86,6 +87,7 @@ Verify ccvpn modification from dmaap
         ${expected_payload}=    Evaluate     json.loads("""${expected_string}""")     json
         ${result}=  Convert To String  ${result.content}
         ${result_string}=    Get Substring    ${result}  2    -2
+        ${result_string}=    RemoveExtraByte    ${result_string}
         ${actual_data}=      Evaluate     json.loads("""${result_string}""")     json
         ${actual_payload_str}=    Set Variable     ${actual_data['payload']}
         ${actual_payload}=       Evaluate     json.loads("""${actual_payload_str}""")     json
@@ -94,3 +96,11 @@ Verify ccvpn modification from dmaap
 *** Keywords ***
 Provided precondition
     Setup system under test
+
+RemoveExtraByte	
+    [Arguments]     ${result_string}
+    ${result_string}=    Get Substring     ${result_string}    2       -2
+    ${result_string}=    Replace String    ${result_string}    \\\"    \"
+    ${result_string}=    Replace String    ${result_string}    \\\\    \\
+    [Return]        ${result_string}
+
