@@ -60,6 +60,6 @@ cp -r ../ftpes-sftp-server/tls .
 
 cd ../ftpes-sftp-server
 docker build -t ftpes_vsftpd:latest -f Dockerfile-ftpes .
-
+#test
 #All containers will be started and stopped via the robot tests.
 
