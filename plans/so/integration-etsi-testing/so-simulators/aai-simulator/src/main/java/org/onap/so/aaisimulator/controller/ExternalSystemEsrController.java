@@ -156,7 +156,7 @@ public class ExternalSystemEsrController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putEsrVnfmRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("vnfm-id") final String vnfmId, final HttpServletRequest request) {
-        LOGGER.info("Will put RelationShip for 'vnfm-id': {} ...", vnfmId);
+        LOGGER.info("Will add {} relationship for for 'vnfm-id': {}...", relationship.getRelatedLink(), vnfmId);
 
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();

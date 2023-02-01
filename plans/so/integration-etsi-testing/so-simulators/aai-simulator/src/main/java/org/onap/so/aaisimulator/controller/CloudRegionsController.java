@@ -34,6 +34,7 @@ import javax.ws.rs.core.MediaType;
 import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
+import org.onap.aai.domain.yang.K8SResource;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.aai.domain.yang.Vserver;
@@ -44,6 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -117,7 +119,7 @@ public class CloudRegionsController {
     public ResponseEntity<?> putRelationShip(@PathVariable("cloud-owner") final String cloudOwner,
             @PathVariable("cloud-region-id") final String cloudRegionId, @RequestBody final Relationship relationship,
             final HttpServletRequest request) {
-        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+        LOGGER.info("Will add {} bi-directional relationship to : {} ...", relationship.getRelatedTo());
 
         final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
 
@@ -188,9 +190,11 @@ public class CloudRegionsController {
             @PathVariable("tenant-id") final String tenantId, final HttpServletRequest request) {
 
         final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
-        LOGGER.info("Will put RelationShip for key : {} and tenant-id:{} ...", key, tenantId);
+        LOGGER.info("Will add {} relationship for key : {} and tenant-id:{} ...", relationship.getRelatedLink(), key,
+                tenantId);
 
         if (relationship.getRelatedLink() != null) {
+
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
             final HttpHeaders incomingHeader = getHeaders(request);
             final boolean result = cacheServiceProvider.addRelationShip(incomingHeader, targetBaseUrl,
@@ -352,7 +356,9 @@ public class CloudRegionsController {
             @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
         final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
-        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+
+        LOGGER.info("Will add {} relationship for key : {}, tenant-id: {} and vserver-id: {}...",
+                relationship.getRelatedLink(), key, tenantId, vServerId);
 
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
@@ -364,7 +370,7 @@ public class CloudRegionsController {
                 return ResponseEntity.accepted().build();
             }
         }
-        LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedTo(), key);
+        LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedLink(), key);
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
 
     }
@@ -379,7 +385,7 @@ public class CloudRegionsController {
             @PathVariable("tenant-id") final String tenantId, @PathVariable("vserver-id") final String vServerId,
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
         final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
-        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+        LOGGER.info("Will add {} bi-directional relationship to : {} ...", relationship.getRelatedTo());
 
         final Optional<Relationship> optional = cacheServiceProvider.addvServerRelationShip(key, tenantId, vServerId,
                 relationship, request.getRequestURI());
@@ -393,4 +399,101 @@ public class CloudRegionsController {
         return getRequestErrorResponseEntity(request, CLOUD_REGION);
 
     }
+
+
+    @PutMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/k8s-resources/k8s-resource/{id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putK8sResource(@RequestBody final K8SResource k8sResource,
+            @PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("id") final String id,
+            final HttpServletRequest request) {
+
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+
+        if (key.isValid()) {
+            LOGGER.info("Will add K8s Resource to cache with key 'key': {} ....", key);
+            if (k8sResource.getResourceVersion() == null || k8sResource.getResourceVersion().isEmpty()) {
+                k8sResource.setResourceVersion(getResourceVersion());
+            }
+            if (cacheServiceProvider.putK8sResource(key, tenantId, id, k8sResource)) {
+                return ResponseEntity.accepted().build();
+            }
+        }
+
+        LOGGER.error("Unable to add K8s Resource in cache using key {}", key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @GetMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/k8s-resources/k8s-resource/{id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getK8sResource(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("id") final String id,
+            final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Retrieving K8SResource using key : {}, tenant-id:{} and id: {}...", key, tenantId, id);
+        if (key.isValid()) {
+            final Optional<K8SResource> optional = cacheServiceProvider.getK8sResource(key, tenantId, id);
+            if (optional.isPresent()) {
+                final K8SResource tenant = optional.get();
+                LOGGER.info("found K8SResource {} in cache", tenant);
+                return ResponseEntity.ok(tenant);
+            }
+        }
+        LOGGER.error("Unable to find K8SResource in cache key : {},tenant-id:{} and id: {}...", key, tenantId, id);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
+    @PutMapping(
+            value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/k8s-resources/k8s-resource/{id}"
+                    + RELATIONSHIP_LIST_RELATIONSHIP_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putK8sResourceRelationShip(@PathVariable("cloud-owner") final String cloudOwner,
+            @PathVariable("cloud-region-id") final String cloudRegionId,
+            @PathVariable("tenant-id") final String tenantId, @PathVariable("id") final String id,
+            @RequestBody final Relationship relationship, final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Will add {} relationship for key : {}, tenant-id: {} and id: {}...", relationship.getRelatedLink(),
+                key, tenantId, id);
+
+        if (relationship.getRelatedLink() != null) {
+            final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
+            final HttpHeaders incomingHeader = getHeaders(request);
+            final boolean result = cacheServiceProvider.addK8sResourceRelationShip(incomingHeader, targetBaseUrl,
+                    request.getRequestURI(), key, tenantId, id, relationship);
+            if (result) {
+                LOGGER.info("added created bi directional relationship with {}", relationship.getRelatedLink());
+                return ResponseEntity.accepted().build();
+            }
+        }
+        LOGGER.error("Couldn't add {} relationship for 'key': {} ...", relationship.getRelatedLink(), key);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+
+    }
+
+    @DeleteMapping(value = "{cloud-owner}/{cloud-region-id}/tenants/tenant/{tenant-id}/k8s-resources/k8s-resource/{id}",
+        produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> deleteK8sResource(@PathVariable("cloud-owner") final String cloudOwner,
+                                               @PathVariable("cloud-region-id") final String cloudRegionId,
+                                               @PathVariable("tenant-id") final String tenantId, @PathVariable("id") final String id,
+                                               @RequestParam(name = "resource-version") final String resourceVersion,
+                                               final HttpServletRequest request) {
+        final CloudRegionKey key = new CloudRegionKey(cloudOwner, cloudRegionId);
+        LOGGER.info("Removing K8SResource using key : {}, tenant-id:{} and id: {}...", key, tenantId, id);
+        if (key.isValid()) {
+            final boolean result = cacheServiceProvider.deleteK8sResource(key, tenantId, id, resourceVersion);
+            if (result) {
+                LOGGER.info("Deleted K8SResource from cache related to tenant ID: {}", tenantId);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }  else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        }
+        LOGGER.error("Unable to find K8SResource in cache key : {},tenant-id:{} and id: {}...", key, tenantId, id);
+        return getRequestErrorResponseEntity(request, CLOUD_REGION);
+    }
+
 }

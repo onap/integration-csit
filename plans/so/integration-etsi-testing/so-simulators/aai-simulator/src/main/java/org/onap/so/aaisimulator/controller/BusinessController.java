@@ -306,7 +306,7 @@ public class BusinessController {
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
 
         LOGGER.info(
-                "Will add {} relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
+                "Will add {} bi-directional relationship for 'global customer id': {}, 'service type': {} and 'service instance id: '{} ...",
                 relationship.getRelatedTo(), globalCustomerId, serviceType, serviceInstanceId);
         final Optional<Relationship> optional = cacheServiceProvider.addRelationShip(globalCustomerId, serviceType,
                 serviceInstanceId, relationship, request.getRequestURI());

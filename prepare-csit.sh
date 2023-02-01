@@ -37,7 +37,7 @@ else
     rm -f ${WORKSPACE}/env.properties
     cd /tmp
     git clone "https://gerrit.onap.org/r/ci-management"
-    source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
+    source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework-py3.sh
 fi
 
 # install required Robot libraries
