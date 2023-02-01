@@ -200,6 +200,8 @@ done
 REPO_IP='127.0.0.1'
 ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
 
+pip install cPython
+
 # install required Robot libraries
 pip install robotframework-archivelibrary
 

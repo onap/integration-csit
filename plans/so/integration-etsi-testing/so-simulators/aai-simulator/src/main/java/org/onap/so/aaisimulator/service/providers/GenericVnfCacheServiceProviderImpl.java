@@ -24,6 +24,9 @@ import static org.onap.so.aaisimulator.utils.Constants.COMPOSED_OF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_ID;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF_VNF_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.USES;
+import static org.onap.so.aaisimulator.utils.Constants.VF_MODULE;
+import static org.onap.so.aaisimulator.utils.Constants.VF_MODULE_VF_MODULE_ID;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getBiDirectionalRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getRelationShipListRelatedLink;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getTargetUrl;
@@ -186,34 +189,27 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     }
 
     @Override
-    public List<GenericVnf> getGenericVnfs(final String selflink) {
+    public List<GenericVnf> getGenericVnfs() {
         final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
         if (cache != null) {
             final Object nativeCache = cache.getNativeCache();
             if (nativeCache instanceof ConcurrentHashMap) {
                 @SuppressWarnings("unchecked")
                 final ConcurrentHashMap<Object, Object> concurrentHashMap =
-                        (ConcurrentHashMap<Object, Object>) nativeCache;
+                    (ConcurrentHashMap<Object, Object>) nativeCache;
                 final List<GenericVnf> result = new ArrayList<>();
 
-                concurrentHashMap.keySet().stream().forEach(key -> {
+                concurrentHashMap.keySet().forEach(key -> {
                     final Optional<GenericVnf> optional = getGenericVnf(key.toString());
                     if (optional.isPresent()) {
                         final GenericVnf genericVnf = optional.get();
-                        final String genericVnfSelfLink = genericVnf.getSelflink();
-                        final String genericVnfId = genericVnf.getSelflink();
-
-                        if (genericVnfSelfLink != null && genericVnfSelfLink.equals(selflink)) {
-                            LOGGER.info("Found matching vnf for selflink: {}, vnf-id: {}", genericVnfSelfLink,
-                                    genericVnfId);
-                            result.add(genericVnf);
-                        }
+                        result.add(genericVnf);
                     }
                 });
                 return result;
             }
         }
-        LOGGER.error("No match found for selflink: {}", selflink);
+        LOGGER.error("No match found");
         return Collections.emptyList();
     }
 
@@ -259,14 +255,13 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
 
     @Override
     public Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId) {
-        LOGGER.info("Getting vfModule from cache for vnfId: {} and vfModuleId: {}",
-                vnfId, vfModuleId);
+        LOGGER.info("Getting vfModule from cache for vnfId: {} and vfModuleId: {}", vnfId, vfModuleId);
         final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
         final GenericVnf value = genericVnfOptional.get();
         final VfModules vfmodules = value.getVfModules();
         if (vfmodules != null) {
-            for (VfModule vfModule : vfmodules.getVfModule()) {
-                 if (vfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)){
+            for (final VfModule vfModule : vfmodules.getVfModule()) {
+                if (vfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)) {
                     return Optional.of(vfModule);
                 }
             }
@@ -277,14 +272,13 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
 
     @Override
     public void putVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule) {
-        LOGGER.info("Adding vfModule for vnfId: {} and vfModuleId: {}",
-                vnfId, vfModuleId);
+        LOGGER.info("Adding vfModule for vnfId: {} and vfModuleId: {}", vnfId, vfModuleId);
         final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
         final Cache cache = getCache(GENERIC_VNF_CACHE.getName());
         if (genericVnfOptional.isPresent()) {
             final GenericVnf genericVnf = genericVnfOptional.get();
             VfModules vfModules = null;
-            if(genericVnf.getVfModules()==null){
+            if (genericVnf.getVfModules() == null) {
                 vfModules = new VfModules();
                 genericVnf.setVfModules(vfModules);
             } else {
@@ -299,16 +293,15 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
     @Override
     public boolean patchVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule) {
         final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
-        LOGGER.info("Create vfModule for vnfId: {} and vfModuleId: {}",
-                vnfId, vfModuleId);
+        LOGGER.info("Create vfModule for vnfId: {} and vfModuleId: {}", vnfId, vfModuleId);
         if (genericVnfOptional.isPresent()) {
             final GenericVnf cachedGenericVnf = genericVnfOptional.get();
             final VfModules vfmodules = cachedGenericVnf.getVfModules();
             LOGGER.info("vfModuleId is Matched");
             try {
-                vfmodules.getVfModule().stream().filter(tempVfModule ->
-                        tempVfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)).forEach(tempVfModule ->
-                        tempVfModule.setOrchestrationStatus(vfModule.getOrchestrationStatus()));
+                vfmodules.getVfModule().stream()
+                        .filter(tempVfModule -> tempVfModule.getVfModuleId().equalsIgnoreCase(vfModuleId)).forEach(
+                                tempVfModule -> tempVfModule.setOrchestrationStatus(vfModule.getOrchestrationStatus()));
                 return true;
             } catch (final Exception exception) {
                 LOGGER.error("Unable to update VfModule for vfModuleId: {}", vfModule, exception);
@@ -317,4 +310,59 @@ public class GenericVnfCacheServiceProviderImpl extends AbstractCacheServiceProv
         LOGGER.error("Unable to find VfModule ...");
         return false;
     }
+
+    @Override
+    public Optional<Relationship> addRelationShip(final String vnfId, final String vfModuleId,
+            final Relationship relationship, final String requestURI) {
+        final Optional<VfModule> optional = getVfModule(vnfId, vfModuleId);
+        if (optional.isPresent()) {
+            final VfModule vfModule = optional.get();
+
+            RelationshipList relationshipList = vfModule.getRelationshipList();
+            if (relationshipList == null) {
+                relationshipList = new RelationshipList();
+                vfModule.setRelationshipList(relationshipList);
+            }
+            relationshipList.getRelationship().add(relationship);
+            LOGGER.info("Successfully added relation to VfModule for vnfId: {} and vfModuleId: {}", vnfId, vfModuleId);
+
+            final String relatedLink = getBiDirectionalRelationShipListRelatedLink(requestURI);
+
+            final Relationship resultantRelationship = new Relationship();
+            resultantRelationship.setRelatedTo(VF_MODULE);
+            resultantRelationship.setRelationshipLabel(USES);
+            resultantRelationship.setRelatedLink(relatedLink);
+
+            final RelationshipData genericVnfRelationshipData = new RelationshipData();
+            genericVnfRelationshipData.setRelationshipKey(GENERIC_VNF_VNF_ID);
+            genericVnfRelationshipData.setRelationshipValue(vnfId);
+            resultantRelationship.getRelationshipData().add(genericVnfRelationshipData);
+
+            final RelationshipData vfModuleRelationshipData = new RelationshipData();
+            vfModuleRelationshipData.setRelationshipKey(VF_MODULE_VF_MODULE_ID);
+            vfModuleRelationshipData.setRelationshipValue(vfModuleId);
+            resultantRelationship.getRelationshipData().add(vfModuleRelationshipData);
+            return Optional.of(resultantRelationship);
+        }
+
+        LOGGER.error("Unable to find VfModule ...");
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean deleteVfModule(final String vnfId, final String vfModuleId, final String resourceVersion) {
+        final Optional<GenericVnf> genericVnfOptional = getGenericVnf(vnfId);
+        final Optional<VfModule> vfModuleOptional = getVfModule(vnfId, vfModuleId);
+        if (genericVnfOptional.isPresent() && vfModuleOptional.isPresent()) {
+            final GenericVnf genericVnf = genericVnfOptional.get();
+            final VfModule vfModule = vfModuleOptional.get();
+            if (genericVnf.getVfModules() != null && vfModule.getResourceVersion().equals(resourceVersion)) {
+                LOGGER.info("VfModule: {} deleted from the Generic VNF: {}",vfModuleId, vnfId);
+                return genericVnf.getVfModules().getVfModule().remove(vfModule);
+            }
+        }
+        LOGGER.error("There are no VfModules associated to vnf ID: {}", vnfId);
+        return false;
+    }
+
 }
