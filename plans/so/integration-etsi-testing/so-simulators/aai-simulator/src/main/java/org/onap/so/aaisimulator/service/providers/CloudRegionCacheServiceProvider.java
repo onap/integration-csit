@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
+import org.onap.aai.domain.yang.K8SResource;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.Tenant;
 import org.onap.aai.domain.yang.Vserver;
@@ -63,7 +64,20 @@ public interface CloudRegionCacheServiceProvider extends Clearable {
     Optional<Relationship> addvServerRelationShip(final CloudRegionKey key, final String tenantId,
             final String vServerId, final Relationship relationship, final String requestUri);
 
-    boolean addVServerRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl, final String requestURI, final CloudRegionKey key,
-            final String tenantId, final String vServerId, final Relationship relationship);
+    boolean addVServerRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestURI, final CloudRegionKey key, final String tenantId, final String vServerId,
+            final Relationship relationship);
+
+    boolean putK8sResource(final CloudRegionKey key, final String tenantId, final String id,
+            final K8SResource k8sResource);
+
+    Optional<K8SResource> getK8sResource(final CloudRegionKey key, final String tenantId, final String id);
+
+    boolean addK8sResourceRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestURI, final CloudRegionKey key, final String tenantId, final String id,
+            final Relationship relationship);
+
+    boolean deleteK8sResource(final CloudRegionKey key, final String tenantId, final String id,
+                              final String resourceVersion);
 
 }

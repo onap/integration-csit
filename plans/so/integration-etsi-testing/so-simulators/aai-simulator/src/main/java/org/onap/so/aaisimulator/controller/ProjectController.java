@@ -116,7 +116,8 @@ public class ProjectController {
     public ResponseEntity<?> putProjectRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("project-name") final String projectName, final HttpServletRequest request) {
 
-        LOGGER.info("adding relationship for project-name: {} ...", projectName);
+        LOGGER.info("Will add {} relationship for for 'project-name': {}...", relationship.getRelatedLink(),
+                projectName);
 
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();

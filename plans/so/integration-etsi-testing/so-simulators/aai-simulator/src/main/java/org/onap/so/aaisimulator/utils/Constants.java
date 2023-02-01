@@ -89,8 +89,10 @@ public class Constants {
     public static final String COMPOSED_OF = "org.onap.relationships.inventory.ComposedOf";
 
     public static final String GENERIC_VNF = "generic-vnf";
-    
+
     public static final String VF_MODULE = "vf-module";
+
+    public static final String VF_MODULE_VF_MODULE_ID = "vf-module.vf-module-id";
 
     public static final String PLATFORM = "platform";
 
@@ -143,6 +145,12 @@ public class Constants {
     public static final String HOSTED_ON = "tosca.relationships.HostedOn";
 
     public static final String VSERVER = "vserver";
+
+    public static final String K8S_RESOURCE = "k8s-resource";
+
+    public static final String K8S_RESOURCE_ID = "k8s-resource.id";
+
+    public static final String K8S_RESOURCE_NAME = "k8s-resource.name";
 
     private Constants() {}
 

@@ -46,7 +46,7 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
 
     boolean patchGenericVnf(final String vnfId, final GenericVnf genericVnf);
 
-    List<GenericVnf> getGenericVnfs(final String selflink);
+    List<GenericVnf> getGenericVnfs();
 
     boolean deleteGenericVnf(final String vnfId, final String resourceVersion);
 
@@ -55,4 +55,9 @@ public interface GenericVnfCacheServiceProvider extends Clearable {
     Optional<VfModule> getVfModule(final String vnfId, final String vfModuleId);
 
     boolean patchVfModule(final String vnfId, final String vfModuleId, final VfModule vfModule);
+
+    Optional<Relationship> addRelationShip(String vnfId, String vfModuleId, Relationship relationship,
+            String requestURI);
+
+    boolean deleteVfModule(final String vnfId, final String vfModuleId, final String resourceVersion);
 }
