@@ -114,7 +114,7 @@ public class PlatformController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putRelationShip(@PathVariable("platform-name") final String platformName,
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
-        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+        LOGGER.info("Will add {} bi-directional relationship to : {} ...", relationship.getRelatedTo());
 
         final Optional<Relationship> optional =
                 cacheServiceProvider.addRelationShip(platformName, relationship, request.getRequestURI());
