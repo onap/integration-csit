@@ -1,0 +1,105 @@
+{
+    "uuid": "8839a41e-8644-46c0-a08f-206d8b0edff2",
+    "invariantUUID": "ef54671d-31e4-43e0-86e2-c3ab73c2a5a7",
+    "name": "ericsson-demo-service-1",
+    "version": "1.0",
+    "toscaModelURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/toscaModel",
+    "category": "Network L1-3",
+    "lifecycleState": "CERTIFIED",
+    "lastUpdaterUserId": "cs0008",
+    "distributionStatus": "DISTRIBUTED",
+    "lastUpdaterFullName": "Carlos Santana",
+    "resources": [
+        {
+            "resourceInstanceName": "ericsson-vsp-cnf-1 0",
+            "resourceName": "ericsson-vsp-cnf-1",
+            "resourceInvariantUUID": "198ab85b-ad8d-42e5-889d-4bdf486dfc91",
+            "resourceVersion": "1.0",
+            "resoucreType": "VF",
+            "resourceUUID": "14dbe730-b3b9-4b51-9983-76a96233228c",
+            "artifacts": [
+                {
+                    "artifactName": "vf-license-model.xml",
+                    "artifactType": "VF_LICENSE",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/6a456db8-f06b-455c-aa86-d95eea809479",
+                    "artifactDescription": "VF license file",
+                    "artifactChecksum": "N2JiNzQ1ZTE0ZDM0ZmYyNjQzYzQyZTIyYzcxZTdmZjE=",
+                    "artifactUUID": "6a456db8-f06b-455c-aa86-d95eea809479",
+                    "artifactVersion": "1",
+                    "artifactLabel": "vflicense",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "nginx-12.0.4.tgz",
+                    "artifactType": "HELM",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/2d8319c2-e0a5-42da-ac20-c9cabe7d3af7",
+                    "artifactDescription": "Artifact created from csar",
+                    "artifactTimeout": 30,
+                    "artifactChecksum": "Yjk0MWUxNTRlMmVmM2E1ZmI3OGRjNDc4YTVmYzEwMGM=",
+                    "artifactUUID": "2d8319c2-e0a5-42da-ac20-c9cabe7d3af7",
+                    "artifactVersion": "1",
+                    "artifactLabel": "nginx1204tgz",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "mariadb-11.0.13.env",
+                    "artifactType": "HEAT_ENV",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/61de4c88-8085-40bd-bdcb-b4d05652b587",
+                    "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
+                    "artifactChecksum": "MTA2MjAxNDAyMmY0NmMwYTlmMDMyN2FjZDUxODkzNWI=",
+                    "artifactUUID": "61de4c88-8085-40bd-bdcb-b4d05652b587",
+                    "artifactVersion": "2",
+                    "generatedFromUUID": "49acb97e-8577-4840-982b-8986ad40f446.mariadb11013tgz",
+                    "artifactLabel": "mariadb11013tgzenv",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "vendor-license-model.xml",
+                    "artifactType": "VENDOR_LICENSE",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/d1eae10b-c5cd-4fee-8eb2-b7ea7ce514bb",
+                    "artifactDescription": " Vendor license file",
+                    "artifactChecksum": "ODg3YTc0YjhiYzVjZTJjNGM2NzRmZDE2ZDc0MWNjOGQ=",
+                    "artifactUUID": "d1eae10b-c5cd-4fee-8eb2-b7ea7ce514bb",
+                    "artifactVersion": "1",
+                    "artifactLabel": "vendorlicense",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "nginx-12.0.4.env",
+                    "artifactType": "HEAT_ENV",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/7dbe6f73-41e9-4d59-9ae2-9d9889339f80",
+                    "artifactDescription": "Auto-generated HEAT Environment deployment artifact",
+                    "artifactChecksum": "MTA2MjAxNDAyMmY0NmMwYTlmMDMyN2FjZDUxODkzNWI=",
+                    "artifactUUID": "7dbe6f73-41e9-4d59-9ae2-9d9889339f80",
+                    "artifactVersion": "2",
+                    "generatedFromUUID": "49acb97e-8577-4840-982b-8986ad40f446.nginx1204tgz",
+                    "artifactLabel": "nginx1204tgzenv",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "asd_modified.csar",
+                    "artifactType": "ETSI_PACKAGE",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/25c0a778-2dd7-4495-b7b5-cd37605d1087",
+                    "artifactDescription": "Artifact created from csar",
+                    "artifactChecksum": "MDM4NmQzNmNhODdkNTY0NDczMGMyZDNlMmE4MWU1MTQ=",
+                    "artifactUUID": "25c0a778-2dd7-4495-b7b5-cd37605d1087",
+                    "artifactVersion": "1",
+                    "artifactLabel": "asdmodifiedcsar",
+                    "artifactGroupType": "DEPLOYMENT"
+                },
+                {
+                    "artifactName": "mariadb-11.0.13.tgz",
+                    "artifactType": "HELM",
+                    "artifactURL": "/sdc/v1/catalog/services/8839a41e-8644-46c0-a08f-206d8b0edff2/resourceInstances/ericssonvspcnf10/artifacts/769dba94-6b7b-4bf3-a9cf-2b7727abb50a",
+                    "artifactDescription": "Artifact created from csar",
+                    "artifactTimeout": 30,
+                    "artifactChecksum": "OWYxMGI4MDZlN2JmM2VhY2VkMmI2Y2M3MDRjZDYzZDA=",
+                    "artifactUUID": "769dba94-6b7b-4bf3-a9cf-2b7727abb50a",
+                    "artifactVersion": "1",
+                    "artifactLabel": "mariadb11013tgz",
+                    "artifactGroupType": "DEPLOYMENT"
+                }
+            ]
+        }
+    ]
+}

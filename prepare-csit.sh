@@ -30,8 +30,8 @@ TESTPLANDIR=${WORKSPACE}/${TESTPLAN}
 if [ -f ${WORKSPACE}/env.properties ]; then
     source ${WORKSPACE}/env.properties
 fi
-if [ -f ${ROBOT_VENV}/bin/activate ]; then
-    source ${ROBOT_VENV}/bin/activate
+if [ -f ${ROBOT3_VENV}/bin/activate ]; then
+    source ${ROBOT3_VENV}/bin/activate
 else
     rm -rf /tmp/ci-management
     rm -f ${WORKSPACE}/env.properties
@@ -41,18 +41,18 @@ else
 fi
 
 # install required Robot libraries
-pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1
+pip install robotframework-extendedselenium2library==0.9.1
 
 # install eteutils
-mkdir -p ${ROBOT_VENV}/src/onap
-rm -rf ${ROBOT_VENV}/src/onap/testsuite
+mkdir -p ${ROBOT3_VENV}/src/onap
+rm -rf ${ROBOT3_VENV}/src/onap/testsuite
 pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==11.0.0.*' --pre
 
 pip freeze
 
 # install chrome driver
-if [ ! -x ${ROBOT_VENV}/bin/chromedriver ]; then
-    pushd ${ROBOT_VENV}/bin
+if [ ! -x ${ROBOT3_VENV}/bin/chromedriver ]; then
+    pushd ${ROBOT3_VENV}/bin
     wget -N http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
     chmod +x chromedriver

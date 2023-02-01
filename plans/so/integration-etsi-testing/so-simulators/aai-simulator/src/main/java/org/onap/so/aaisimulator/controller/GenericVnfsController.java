@@ -22,9 +22,9 @@ package org.onap.so.aaisimulator.controller;
 import static org.onap.so.aaisimulator.utils.Constants.APPLICATION_MERGE_PATCH_JSON;
 import static org.onap.so.aaisimulator.utils.Constants.BI_DIRECTIONAL_RELATIONSHIP_LIST_URL;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNF;
-import static org.onap.so.aaisimulator.utils.Constants.VF_MODULE;
 import static org.onap.so.aaisimulator.utils.Constants.GENERIC_VNFS_URL;
 import static org.onap.so.aaisimulator.utils.Constants.RELATIONSHIP_LIST_RELATIONSHIP_URL;
+import static org.onap.so.aaisimulator.utils.Constants.VF_MODULE;
 import static org.onap.so.aaisimulator.utils.Constants.X_HTTP_METHOD_OVERRIDE;
 import static org.onap.so.aaisimulator.utils.HttpServiceUtils.getHeaders;
 import static org.onap.so.aaisimulator.utils.RequestErrorResponseUtils.getRequestErrorResponseEntity;
@@ -37,7 +37,6 @@ import org.onap.aai.domain.yang.GenericVnf;
 import org.onap.aai.domain.yang.GenericVnfs;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.VfModule;
-import org.onap.aai.domain.yang.VfModules;
 import org.onap.so.aaisimulator.service.providers.GenericVnfCacheServiceProvider;
 import org.onap.so.aaisimulator.utils.HttpServiceUtils;
 import org.onap.so.aaisimulator.utils.RequestErrorResponseUtils;
@@ -46,11 +45,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -122,7 +121,7 @@ public class GenericVnfsController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putGenericVnfRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("vnf-id") final String vnfId, final HttpServletRequest request) {
-        LOGGER.info("Will put RelationShip for 'vnf-id': {} ...", vnfId);
+        LOGGER.info("Will add {} relationship for for 'vnf-id': {}...", relationship.getRelatedLink(), vnfId);
 
         if (relationship.getRelatedLink() != null) {
             final String targetBaseUrl = HttpServiceUtils.getBaseUrl(request).toString();
@@ -143,7 +142,7 @@ public class GenericVnfsController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putBiDirectionalRelationShip(@RequestBody final Relationship relationship,
             @PathVariable("vnf-id") final String vnfId, final HttpServletRequest request) {
-        LOGGER.info("Will put RelationShip for 'vnf-id': {} ...", vnfId);
+        LOGGER.info("Will put bi-directional relationship for 'vnf-id': {} ...", vnfId);
 
         final Optional<Relationship> optional =
                 cacheServiceProvider.addRelationShip(vnfId, relationship, request.getRequestURI());
@@ -182,16 +181,9 @@ public class GenericVnfsController {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<?> getGenericVnfs(@RequestParam(name = "selflink") final String selflink,
-            final HttpServletRequest request) {
-        LOGGER.info("will retrieve GenericVnfs using selflink: {}", selflink);
-
-        final List<GenericVnf> genericVnfList = cacheServiceProvider.getGenericVnfs(selflink);
-
-        if (genericVnfList.isEmpty()) {
-            LOGGER.error("No matching generic vnfs found using selflink: {}", selflink);
-            return getRequestErrorResponseEntity(request, GENERIC_VNF);
-        }
+    public ResponseEntity<?> getAllGenericVnfs(final HttpServletRequest request) {
+        LOGGER.info("will retrieve all GenericVnfs");
+        final List<GenericVnf> genericVnfList = cacheServiceProvider.getGenericVnfs();
 
         LOGGER.info("found {} GenericVnfs in cache", genericVnfList.size());
         final GenericVnfs genericVnfs = new GenericVnfs();
@@ -215,10 +207,11 @@ public class GenericVnfsController {
         return getRequestErrorResponseEntity(request, GENERIC_VNF);
 
     }
-    
-    
-    @GetMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ResponseEntity<?> getVfModule(@PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId,
+
+    @GetMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> getVfModule(@PathVariable("vnf-id") final String vnfId,
+            @PathVariable("vf-module-id") final String vfModuleId,
             @RequestParam(name = "depth", required = false) final Integer depth,
             @RequestParam(name = "resultIndex", required = false) final Integer resultIndex,
             @RequestParam(name = "resultSize", required = false) final Integer resultSize,
@@ -243,16 +236,20 @@ public class GenericVnfsController {
     }
 
 
-    @PutMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}", consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+    @PutMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}",
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putVfModule(@RequestBody final VfModule vfModule,
-            @PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId, final HttpServletRequest request) {
+            @PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId,
+            final HttpServletRequest request) {
         LOGGER.info("Will add VfModule to cache with 'vf-module-id': {} ...", vfModuleId);
-
+        if (vfModule.getResourceVersion() == null || vfModule.getResourceVersion().isEmpty()) {
+            vfModule.setResourceVersion(getResourceVersion());
+        }
         cacheServiceProvider.putVfModule(vnfId, vfModuleId, vfModule);
         return ResponseEntity.accepted().build();
     }
-    
+
     @PostMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, APPLICATION_MERGE_PATCH_JSON},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -261,9 +258,9 @@ public class GenericVnfsController {
             @RequestHeader(value = X_HTTP_METHOD_OVERRIDE, required = false) final String xHttpHeaderOverride,
             final HttpServletRequest request) {
 
-        LOGGER.info("Will post VfModule to cache with 'vf-module-id': {} and '{}': {} ...", vfModuleId, X_HTTP_METHOD_OVERRIDE,
-                xHttpHeaderOverride);
-        
+        LOGGER.info("Will post VfModule to cache with 'vf-module-id': {} and '{}': {} ...", vfModuleId,
+                X_HTTP_METHOD_OVERRIDE, xHttpHeaderOverride);
+
         if (HttpMethod.PATCH.toString().equalsIgnoreCase(xHttpHeaderOverride)) {
             if (cacheServiceProvider.patchVfModule(vnfId, vfModuleId, vfModule)) {
                 return ResponseEntity.accepted().build();
@@ -276,4 +273,42 @@ public class GenericVnfsController {
         return getRequestErrorResponseEntity(request, VF_MODULE);
     }
 
+
+    @PutMapping(
+            value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}" + BI_DIRECTIONAL_RELATIONSHIP_LIST_URL,
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML},
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> putBiDirectionalVfModuleRelationShip(@RequestBody final Relationship relationship,
+            @PathVariable("vnf-id") final String vnfId, @PathVariable("vf-module-id") final String vfModuleId,
+            final HttpServletRequest request) {
+        LOGGER.info("Will add {} bi-directional relationship to : {} ...", relationship.getRelatedTo());
+
+        final Optional<Relationship> optional =
+                cacheServiceProvider.addRelationShip(vnfId, vfModuleId, relationship, request.getRequestURI());
+
+        if (optional.isPresent()) {
+            final Relationship resultantRelationship = optional.get();
+            LOGGER.info("Relationship add, sending resultant relationship: {} in response ...", resultantRelationship);
+            return ResponseEntity.accepted().body(resultantRelationship);
+        }
+
+        LOGGER.error("Unable to add relationship for related link: {}", relationship.getRelatedLink());
+        return RequestErrorResponseUtils.getRequestErrorResponseEntity(request, GENERIC_VNF);
+    }
+
+    @DeleteMapping(value = "/generic-vnf/{vnf-id}/vf-modules/vf-module/{vf-module-id}",
+        produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public ResponseEntity<?> deleteVfModule(@PathVariable("vnf-id") final String vnfId,
+                                            @PathVariable("vf-module-id") final String vfModuleId,
+                                            @RequestParam(name = "resource-version") final String resourceVersion,
+                                            final HttpServletRequest request) {
+        LOGGER.info("Deleting VfModule from cache with 'vf-module-id': {} ...", vfModuleId);
+
+        boolean response = cacheServiceProvider.deleteVfModule(vnfId, vfModuleId, resourceVersion);
+        if(response){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

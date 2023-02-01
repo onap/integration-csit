@@ -1,0 +1,82 @@
+{
+    "uuid": "14dbe730-b3b9-4b51-9983-76a96233228c",
+    "invariantUUID": "198ab85b-ad8d-42e5-889d-4bdf486dfc91",
+    "name": "ericsson-vsp-cnf-1",
+    "version": "1.0",
+    "toscaModelURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/toscaModel",
+    "category": "Generic",
+    "subCategory": "Network Elements",
+    "resourceType": "VF",
+    "lifecycleState": "CERTIFIED",
+    "lastUpdaterUserId": "cs0008",
+    "lastUpdaterFullName": "Carlos Santana",
+    "toscaResourceName": "org.openecomp.resource.vf.EricssonVspCnf1",
+    "resources": [
+        {
+            "resourceInstanceName": "applicationServiceDescriptor",
+            "resourceName": "asd",
+            "resourceInvariantUUID": "12deb51f-0829-4b77-aacb-69bb114d4d1b",
+            "resourceVersion": "1.0",
+            "resoucreType": "VFC",
+            "resourceUUID": "09a8c85c-0d45-4604-987f-d3cd7ee16656"
+        }
+    ],
+    "artifacts": [
+        {
+            "artifactName": "vf-license-model.xml",
+            "artifactType": "VF_LICENSE",
+            "artifactURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/artifacts/6a456db8-f06b-455c-aa86-d95eea809479",
+            "artifactDescription": "VF license file",
+            "artifactChecksum": "N2JiNzQ1ZTE0ZDM0ZmYyNjQzYzQyZTIyYzcxZTdmZjE=",
+            "artifactUUID": "6a456db8-f06b-455c-aa86-d95eea809479",
+            "artifactVersion": "1",
+            "artifactLabel": "vflicense",
+            "artifactGroupType": "DEPLOYMENT"
+        },
+        {
+            "artifactName": "nginx-12.0.4.tgz",
+            "artifactType": "HELM",
+            "artifactURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/artifacts/2d8319c2-e0a5-42da-ac20-c9cabe7d3af7",
+            "artifactDescription": "Artifact created from csar",
+            "artifactChecksum": "Yjk0MWUxNTRlMmVmM2E1ZmI3OGRjNDc4YTVmYzEwMGM=",
+            "artifactUUID": "2d8319c2-e0a5-42da-ac20-c9cabe7d3af7",
+            "artifactVersion": "1",
+            "artifactLabel": "nginx1204tgz",
+            "artifactGroupType": "DEPLOYMENT"
+        },
+        {
+            "artifactName": "vendor-license-model.xml",
+            "artifactType": "VENDOR_LICENSE",
+            "artifactURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/artifacts/d1eae10b-c5cd-4fee-8eb2-b7ea7ce514bb",
+            "artifactDescription": " Vendor license file",
+            "artifactChecksum": "ODg3YTc0YjhiYzVjZTJjNGM2NzRmZDE2ZDc0MWNjOGQ=",
+            "artifactUUID": "d1eae10b-c5cd-4fee-8eb2-b7ea7ce514bb",
+            "artifactVersion": "1",
+            "artifactLabel": "vendorlicense",
+            "artifactGroupType": "DEPLOYMENT"
+        },
+        {
+            "artifactName": "asd_modified.csar",
+            "artifactType": "ETSI_PACKAGE",
+            "artifactURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/artifacts/25c0a778-2dd7-4495-b7b5-cd37605d1087",
+            "artifactDescription": "Artifact created from csar",
+            "artifactChecksum": "MDM4NmQzNmNhODdkNTY0NDczMGMyZDNlMmE4MWU1MTQ=",
+            "artifactUUID": "25c0a778-2dd7-4495-b7b5-cd37605d1087",
+            "artifactVersion": "1",
+            "artifactLabel": "asdmodifiedcsar",
+            "artifactGroupType": "DEPLOYMENT"
+        },
+        {
+            "artifactName": "mariadb-11.0.13.tgz",
+            "artifactType": "HELM",
+            "artifactURL": "/sdc/v1/catalog/resources/14dbe730-b3b9-4b51-9983-76a96233228c/artifacts/769dba94-6b7b-4bf3-a9cf-2b7727abb50a",
+            "artifactDescription": "Artifact created from csar",
+            "artifactChecksum": "OWYxMGI4MDZlN2JmM2VhY2VkMmI2Y2M3MDRjZDYzZDA=",
+            "artifactUUID": "769dba94-6b7b-4bf3-a9cf-2b7727abb50a",
+            "artifactVersion": "1",
+            "artifactLabel": "mariadb11013tgz",
+            "artifactGroupType": "DEPLOYMENT"
+        }
+    ],
+    "description": "ericsson-vsp-cnf-1"
+}
