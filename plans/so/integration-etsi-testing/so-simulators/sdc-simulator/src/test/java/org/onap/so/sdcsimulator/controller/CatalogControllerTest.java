@@ -115,8 +115,8 @@ public class CatalogControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals(1, response.getBody().size());
-        assertEquals(SUB_CATEGORY, response.getBody().iterator().next().getSubCategory());
+        assertEquals(2, response.getBody().size());
+        assertTrue(response.getBody().stream().anyMatch(predicate -> SUB_CATEGORY.equals(predicate.getSubCategory())));
 
     }
 
@@ -129,8 +129,9 @@ public class CatalogControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
-        assertEquals(1, response.getBody().size());
-        assertEquals(DISTRIBUTION_STATUS, response.getBody().iterator().next().getDistributionStatus());
+        assertEquals(2, response.getBody().size());
+        assertTrue(response.getBody().stream()
+            .anyMatch(predicate -> DISTRIBUTION_STATUS.equals(predicate.getDistributionStatus())));
 
     }
 

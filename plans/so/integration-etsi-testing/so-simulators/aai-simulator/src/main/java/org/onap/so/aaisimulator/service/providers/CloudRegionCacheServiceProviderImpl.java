@@ -26,10 +26,14 @@ import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_OWNER;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_CLOUD_REGION_ID;
 import static org.onap.so.aaisimulator.utils.Constants.CLOUD_REGION_OWNER_DEFINED_TYPE;
 import static org.onap.so.aaisimulator.utils.Constants.HOSTED_ON;
+import static org.onap.so.aaisimulator.utils.Constants.K8S_RESOURCE;
+import static org.onap.so.aaisimulator.utils.Constants.K8S_RESOURCE_ID;
+import static org.onap.so.aaisimulator.utils.Constants.K8S_RESOURCE_NAME;
 import static org.onap.so.aaisimulator.utils.Constants.LOCATED_IN;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_ID;
 import static org.onap.so.aaisimulator.utils.Constants.TENANT_TENANT_NAME;
+import static org.onap.so.aaisimulator.utils.Constants.USES;
 import static org.onap.so.aaisimulator.utils.Constants.VSERVER;
 import static org.onap.so.aaisimulator.utils.Constants.VSERVER_VSERVER_ID;
 import static org.onap.so.aaisimulator.utils.Constants.VSERVER_VSERVER_NAME;
@@ -41,6 +45,8 @@ import java.util.Optional;
 import org.onap.aai.domain.yang.CloudRegion;
 import org.onap.aai.domain.yang.EsrSystemInfo;
 import org.onap.aai.domain.yang.EsrSystemInfoList;
+import org.onap.aai.domain.yang.K8SResource;
+import org.onap.aai.domain.yang.K8SResources;
 import org.onap.aai.domain.yang.RelatedToProperty;
 import org.onap.aai.domain.yang.Relationship;
 import org.onap.aai.domain.yang.RelationshipData;
@@ -66,8 +72,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServiceProvider
         implements CloudRegionCacheServiceProvider {
-
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudRegionCacheServiceProviderImpl.class);
 
@@ -332,6 +336,112 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
     }
 
     @Override
+    public boolean putK8sResource(final CloudRegionKey key, final String tenantId, final String id,
+            final K8SResource k8sResource) {
+        final Optional<Tenant> optional = getTenant(key, tenantId);
+        if (optional.isPresent()) {
+            final Tenant tenant = optional.get();
+            K8SResources k8sResources = tenant.getK8SResources();
+            if (k8sResources == null) {
+                k8sResources = new K8SResources();
+                tenant.setK8SResources(k8sResources);
+            }
+
+
+            final Optional<K8SResource> existingK8sResource = k8sResources.getK8SResource().stream()
+                    .filter(entry -> entry.getId() != null && entry.getId().equalsIgnoreCase(id)).findFirst();
+
+            if (existingK8sResource.isEmpty()) {
+                LOGGER.info("Adding k8sResources to cache...");
+                return k8sResources.getK8SResource().add(k8sResource);
+            }
+
+            LOGGER.warn("K8SResource already exists existingK8sResource: {}...", existingK8sResource.get());
+            return false;
+        }
+
+        LOGGER.error("Unable to add K8s Resource using key: {}, tenantId: {} and id: {}...", key, tenantId, id);
+        return false;
+    }
+
+    @Override
+    public Optional<K8SResource> getK8sResource(final CloudRegionKey key, final String tenantId, final String id) {
+        final Optional<Tenant> optional = getTenant(key, tenantId);
+
+        if (optional.isPresent()) {
+
+            final Tenant tenant = optional.get();
+            final K8SResources k8sResources = tenant.getK8SResources();
+            if (k8sResources != null) {
+                return k8sResources.getK8SResource().stream()
+                        .filter(entry -> entry.getId() != null && entry.getId().equalsIgnoreCase(id)).findFirst();
+            }
+
+        }
+        LOGGER.error("Unable to find K8sResource using key: {}, tenantId: {} and id: {}...", key, tenantId, id);
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean addK8sResourceRelationShip(final HttpHeaders incomingHeader, final String targetBaseUrl,
+            final String requestUriString, final CloudRegionKey key, final String tenantId, final String id,
+            final Relationship relationship) {
+        try {
+            final Optional<K8SResource> optional = getK8sResource(key, tenantId, id);
+            if (optional.isPresent()) {
+                final K8SResource k8sResource = optional.get();
+                final String targetUrl = getTargetUrl(targetBaseUrl, relationship.getRelatedLink());
+                final Relationship outGoingRelationShip =
+                        getRelationship(key, tenantId, k8sResource, getRelationShipListRelatedLink(requestUriString));
+                final Optional<Relationship> optionalRelationship = httpRestServiceProvider.put(incomingHeader,
+                        outGoingRelationShip, targetUrl, Relationship.class);
+
+                if (optionalRelationship.isPresent()) {
+                    final Relationship resultantRelationship = optionalRelationship.get();
+
+                    RelationshipList relationshipList = k8sResource.getRelationshipList();
+                    if (relationshipList == null) {
+                        relationshipList = new RelationshipList();
+                        k8sResource.setRelationshipList(relationshipList);
+                    }
+                    if (relationshipList.getRelationship().add(resultantRelationship)) {
+                        LOGGER.info("added relationship {} in cache successfully", resultantRelationship);
+                        return true;
+                    }
+                }
+
+            }
+        } catch (final Exception exception) {
+            LOGGER.error("Unable to add two-way relationship for key: {}, tenantId: {} and id: {}", key, tenantId, id,
+                    exception);
+        }
+        LOGGER.error("Unable to add K8sResource relationship for key: {}, tenantId: {} and id: {}...", key, tenantId,
+                id);
+        return false;
+    }
+
+    private Relationship getRelationship(final CloudRegionKey key, final String tenantId, final K8SResource k8sResource,
+            final String relatedLink) {
+        final Relationship relationShip = new Relationship();
+        relationShip.setRelatedTo(K8S_RESOURCE);
+        relationShip.setRelationshipLabel(USES);
+        relationShip.setRelatedLink(relatedLink);
+
+        final List<RelationshipData> relationshipDataList = relationShip.getRelationshipData();
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_OWNER, key.getCloudOwner()));
+        relationshipDataList.add(getRelationshipData(CLOUD_REGION_CLOUD_REGION_ID, key.getCloudRegionId()));
+        relationshipDataList.add(getRelationshipData(TENANT_TENANT_ID, tenantId));
+        relationshipDataList.add(getRelationshipData(K8S_RESOURCE_ID, k8sResource.getId()));
+
+        final RelatedToProperty relatedToProperty = new RelatedToProperty();
+        relatedToProperty.setPropertyKey(K8S_RESOURCE_NAME);
+        relatedToProperty.setPropertyValue(k8sResource.getName());
+        relationShip.getRelatedToProperty().add(relatedToProperty);
+
+        return relationShip;
+    }
+
+    @Override
     public Optional<Relationship> addvServerRelationShip(final CloudRegionKey key, final String tenantId,
             final String vServerId, final Relationship relationship, final String requestUri) {
         final Optional<Vserver> optional = getVserver(key, tenantId, vServerId);
@@ -468,4 +578,29 @@ public class CloudRegionCacheServiceProviderImpl extends AbstractCacheServicePro
 
     }
 
+    @Override
+    public boolean deleteK8sResource(final CloudRegionKey key, final String tenantId, final String id,
+                                     final String resourceVersion) {
+        final Optional<Tenant> optional = getTenant(key, tenantId);
+        if (optional.isPresent()) {
+            final Tenant tenant = optional.get();
+            K8SResources k8sResources = tenant.getK8SResources();
+            if (k8sResources != null) {
+                final Optional<K8SResource> existingK8sResource = k8sResources.getK8SResource().stream()
+                    .filter(entry -> entry.getId() != null && entry.getId().equalsIgnoreCase(id)).findFirst();
+
+                if (existingK8sResource.isPresent()
+                    && existingK8sResource.get().getResourceVersion().equals(resourceVersion)) {
+                    LOGGER.info("k8sResources found in cache and removing the same.");
+                    return k8sResources.getK8SResource().remove(existingK8sResource.get());
+                }
+            }
+            else {
+                return true;
+            }
+        }
+
+        LOGGER.error("Unable to add K8s Resource using key: {}, tenantId: {} and id: {}...", key, tenantId, id);
+        return false;
+    }
 }

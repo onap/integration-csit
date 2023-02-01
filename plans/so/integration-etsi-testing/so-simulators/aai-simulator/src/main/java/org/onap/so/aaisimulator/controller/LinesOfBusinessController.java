@@ -117,7 +117,7 @@ public class LinesOfBusinessController {
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public ResponseEntity<?> putRelationShip(@PathVariable("line-of-business-name") final String lineOfBusinessName,
             @RequestBody final Relationship relationship, final HttpServletRequest request) {
-        LOGGER.info("Will add {} relationship to : {} ...", relationship.getRelatedTo());
+        LOGGER.info("Will add {} bi-directional relationship to : {} ...", relationship.getRelatedTo());
 
         final Optional<Relationship> optional =
                 cacheServiceProvider.addRelationShip(lineOfBusinessName, relationship, request.getRequestURI());
