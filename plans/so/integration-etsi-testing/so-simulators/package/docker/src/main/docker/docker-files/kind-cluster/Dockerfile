@@ -1,0 +1,28 @@
+FROM alpine:3.18
+
+RUN apk -U upgrade && apk add       ca-certificates       util-linux  gnupg       curl       make       kmod       procps  bash  && gpg --keyserver https://download.docker.com/linux/debian/gpg --recv-keys && apk update && apk add docker openrc && rm -rf /var/lib/apt/lists/*
+RUN update-alternatives --set iptables  /usr/sbin/iptables-legacy || true &&     update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy || true &&     update-alternatives --set arptables /usr/sbin/arptables-legacy || true
+RUN addgroup --system dockremap &&     adduser --system --ingroup dockremap dockremap &&     echo 'dockremap:165536:65536' >> /etc/subuid &&     echo 'dockremap:165536:65536' >> /etc/subgid
+
+VOLUME /var/lib/docker
+VOLUME /var/log/docker
+ENV container=docker
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
+
+ARG KUBECTL_VERSION=v1.21.2
+ARG KIND_VERSION=v0.11.1
+
+RUN curl -Lso /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" &&     chmod +x /usr/bin/kubectl &&     curl -Lso /usr/bin/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64" &&     chmod +x /usr/bin/kind # buildkit
+
+COPY kind-config.yaml /kind-config.yaml
+RUN chmod 777 /kind-config.yaml
+
+EXPOSE 30001
+
+COPY entrypoint-original.sh /entrypoint-original.sh
+RUN chmod 777 /entrypoint-original.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["tail", "-f", "/dev/null"]

@@ -23,6 +23,13 @@
                     <pushRegistry>${docker.push.registry}</pushRegistry>
                     <images>
                         <image>
+                            <name>kind-cluster</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files/kind-cluster</dockerFileDir>
+                            </build>
+                        </image>
+                        <image>
                             <name>jobs/workaround-job-container</name>
                             <build>
                                 <cleanup>try</cleanup>

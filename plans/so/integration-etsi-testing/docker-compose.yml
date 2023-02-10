@@ -454,3 +454,10 @@ services:
       - so-etsi-sol003-adapter
     user: root
     entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" mariadb:3306 -- "/app/start-app.sh"'
+#############################################################################
+  kind-cluster:
+    image: kind-cluster:latest
+    ports:
+      - "30001:30001"
+    user: root
+    privileged: true
