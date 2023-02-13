@@ -1,0 +1,12 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Waqas Ikram <waqas.ikram@est.tech>
+Code-Review+1: Nadeeshani Jayathilake <nadeeshani.jayathilake@est.tech>
+Code-Review+1: Gerard Nugent <gerard.nugent@est.tech>
+Code-Review+1: RAVITEJA KARUMURI <raviteja.karumuri@est.tech>
+Code-Review+1: Byung-Woo Jun <byung-woo.jun@est.tech>
+Code-Review+2: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Mon, 13 Feb 2023 13:33:03 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/integration/csit/+/133124
+Project: integration/csit
+Branch: refs/heads/master
