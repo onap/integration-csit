@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60863483_fc1757dc",
+        "filename": "tests/integration/vCPE/test1.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2023-02-15T16:22:32Z",
+      "side": 1,
+      "message": "Will all \"Get Request\" calls need to converted to \"Get On Session\"?",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "0eade46c24728e7e09e259e7fe64e0fcc8c57741",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
