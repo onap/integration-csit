@@ -17,10 +17,10 @@ SO ServiceInstance health check
     ${session}=    Create Session    so    http://${SO_IP}:8080
     ${uuid}=    Generate UUID4
     ${headers}=    Create Dictionary    Accept=text/html    Content-Type=text/html    X-TransactionId=${GLOBAL_APPLICATION_ID}-${uuid}    X-FromAppId=${GLOBAL_APPLICATION_ID}
-    ${resp}=    Get Request    so    /ecomp/mso/infra/globalhealthcheck    headers=${headers}
+    ${resp}=     Get On Session    so    /ecomp/mso/infra/globalhealthcheck    headers=${headers}    expected_status=any
     &{headers}=    Create Dictionary    Authorization=Basic SW5mcmFQb3J0YWxDbGllbnQ6cGFzc3dvcmQxJA==    Content-Type=application/json    Accept=application/json
-    ${resp}=    Get Request    so    /ecomp/mso/infra/orchestrationRequests/v2    headers=${headers}
-    Should Not Contain    ${resp.content}    null
+    ${resp}=     Get On Session    so    /ecomp/mso/infra/orchestrationRequests/v2    headers=${headers}    expected_status=any
+    Should Not Contain    ${resp.text}    null
 
 *** Keywords ***
 Run Docker
@@ -48,7 +48,7 @@ Kill Docker
 CheckUrl
     [Arguments]    ${url}
     Create Session    session    ${url}    disable_warnings=True
-    ${resp}=    Get Request    session    /
+    ${resp}=    Get On Session   session    /
     Should Be Equal As Integers    ${resp.status_code}    200
 
 Suite Setup
