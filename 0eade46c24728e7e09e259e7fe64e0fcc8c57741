@@ -22,6 +22,30 @@
       "revId": "0eade46c24728e7e09e259e7fe64e0fcc8c57741",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13f0d75_c31b42e5",
+        "filename": "tests/integration/vCPE/test1.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2023-02-15T16:25:20Z",
+      "side": 1,
+      "message": "Get Request is depreciated ... at some stage it will be removed so better move to \"Get on Session\" if possible ",
+      "parentUuid": "60863483_fc1757dc",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "0eade46c24728e7e09e259e7fe64e0fcc8c57741",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
