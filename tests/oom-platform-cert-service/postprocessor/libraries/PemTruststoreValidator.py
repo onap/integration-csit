@@ -16,4 +16,5 @@ class PemTruststoreValidator:
 
 
   def get_list_of_pem_certificates(self, path):
-    return re.findall(BEGIN_CERT + '(.+?)' + END_CERT, open(path, 'rb').read(), re.DOTALL)
+    content = open(path, 'rb').read().decode("utf-8")
+    return re.findall(BEGIN_CERT + '(.+?)' + END_CERT, content, re.DOTALL)
