@@ -38,7 +38,7 @@ pip install -U docker==2.7.0
 #reinstall pyopenssl library
 echo "Reinstall pyopenssl library."
 pip uninstall pyopenssl -y
-pip install pyopenssl==17.5.0
+pip install pyopenssl==23.0.0
 
 #install pyjks for .jks files management
 pip install pyjks
@@ -92,7 +92,7 @@ for i in {1..9}
 do
    OOMCERT_IP=`get-instance-ip.sh oomcert-service`
    RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret | \
-   python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
+   python3 -c 'import json,sys;obj=json.load(sys.stdin);print (obj["status"])')
    if [[ "$RESP_CODE" == "UP" ]]; then
        echo 'OOM Cert Service is ready'
        export OOMCERT_IP=${OOMCERT_IP}

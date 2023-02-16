@@ -40,7 +40,7 @@ class PostProcessorDockerContainerUtils:
   def remove_container_and_save_logs(self, container_name, log_file_name):
     client = docker.from_env()
     container = client.containers.get(container_name)
-    text_file = open(ARCHIVES_PATH + "certservice_postprocessor_container_" + log_file_name + ".log", "w")
+    text_file = open(ARCHIVES_PATH + "certservice_postprocessor_container_" + log_file_name + ".log", "wb")
     text_file.write(container.logs())
     text_file.close()
     container.remove()

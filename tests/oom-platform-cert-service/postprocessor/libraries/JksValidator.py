@@ -4,7 +4,8 @@ import jks
 class JksValidator:
 
   def get_jks_entries(self, jks_path, password_path):
-    store = jks.KeyStore.load(jks_path, open(password_path, 'rb').read())
+    passphrase = open(password_path, 'rb').read().decode("utf-8")
+    store = jks.KeyStore.load(jks_path, passphrase)
     return store.entries
 
   def assert_jks_truststores_equal(self, result_truststore_path, password_path, expected_truststore_path):
