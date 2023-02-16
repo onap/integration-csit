@@ -87,12 +87,12 @@ echo "Generated server key"
 docker-compose up -d
 
 OOMCERT_IP='none'
-# Wait container ready
+# Wait container ready?
 for i in {1..9}
 do
    OOMCERT_IP=`get-instance-ip.sh oomcert-service`
    RESP_CODE=$(curl -s https://localhost:8443/actuator/health --cacert ./certs/root.crt --cert-type p12 --cert ./certs/certServiceServer-keystore.p12 --pass secret | \
-   python2 -c 'import json,sys;obj=json.load(sys.stdin);print obj["status"]')
+   python3 -c 'import json,sys;obj=json.load(sys.stdin);print (obj["status"])')
    if [[ "$RESP_CODE" == "UP" ]]; then
        echo 'OOM Cert Service is ready'
        export OOMCERT_IP=${OOMCERT_IP}

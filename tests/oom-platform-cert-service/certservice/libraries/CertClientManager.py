@@ -21,6 +21,7 @@ class CertClientManager:
         self.create_mount_dir()
         client = docker.from_env()
         environment = EnvsReader().read_env_list_from_file(path_to_env)
+
         environment.append("REQUEST_URL=" + request_url)
         container = client.containers.run(
             image=client_image,
@@ -38,7 +39,7 @@ class CertClientManager:
     def remove_client_container_and_save_logs(self, container_name, log_file_name):
         client = docker.from_env()
         container = client.containers.get(container_name)
-        text_file = open(ARCHIVES_PATH + "client_container_" + log_file_name + ".log", "w")
+        text_file = open(ARCHIVES_PATH + "client_container_" + log_file_name + ".log", "wb")
         text_file.write(container.logs())
         text_file.close()
         container.remove()

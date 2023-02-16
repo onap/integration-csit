@@ -3,7 +3,6 @@
 Resource          ../../../common.robot
 Resource          ./cert-service-properties.robot
 Library 	      RequestsLibrary
-Library           HttpLibrary.HTTP
 Library           Collections
 Library           Process
 Library           DateTime
@@ -12,6 +11,7 @@ Library           ../libraries/P12ArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/JksArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/PemArtifactsValidator.py  ${MOUNT_PATH}
 Library           ../libraries/ResponseParser.py
+Library           json
 
 *** Keywords ***
 
@@ -30,8 +30,9 @@ Run Healthcheck
 Validate Recieved Response
     [Documentation]  Validare message that has been received
     [Arguments]  ${resp}  ${key}  ${expected_value}
-    ${json}=    Parse Json      ${resp.content}
+    ${json}=    Evaluate     json.loads(r"""${resp.content}""", strict=False)    json
     ${value}=  Get From Dictionary  ${json}  ${key}
+    Log To Console    ${value}
     Should Be Equal As Strings    ${value}    ${expected_value}
 
 Send Get Request And Validate Response
@@ -57,7 +58,7 @@ Send Get Request with Header And Expect Success
 Check Message Recieved On Success
     [Documentation]  Check if correct messsage has been sent on successful request
     [Arguments]  ${content}
-    ${resp_content}=  Parse Json  ${content}
+    ${resp_content}=    Evaluate     json.loads(r"""${content}""", strict=False)    json
     Dictionary Should Contain Key  ${resp_content}  certificateChain
     @{list}=  Get From Dictionary  ${resp_content}  certificateChain
     List Should Contain Certificates  @{list}
@@ -142,7 +143,7 @@ Send Certificate Initialization Request And Return Certificate
     [Arguments]   ${path}  ${csr_file}  ${pk_file}
     [Return]    ${base64Certificate}
     ${resp}= 	Send Get Request with Header  ${path}  ${csr_file}  ${pk_file}
-    ${json}=    Parse Json      ${resp.content}
+    ${json}=    Evaluate     json.loads(r"""${resp.content}""", strict=False)    json
     ${base64Certificate}=    Parse Response    ${json}
 
 Send Certificate Update Request And Return Response

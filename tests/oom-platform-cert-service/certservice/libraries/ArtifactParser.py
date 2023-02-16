@@ -37,7 +37,7 @@ class ArtifactParser:
     return SANS_DELIMITER.join(sans_strings)
 
   def remove_nones_from_dict(self, dictionary):
-    return dict((k, v) for k, v in dictionary.iteritems() if k is not None)
+    return dict((k, v) for k, v in dictionary.items() if k is not None)
 
   def get_list_of_pairs_by_mappings(self, list):
     mappings = self.get_mappings()
