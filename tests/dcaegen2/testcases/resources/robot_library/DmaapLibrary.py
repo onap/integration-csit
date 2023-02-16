@@ -1,10 +1,10 @@
-from Queue import Queue
+from queue import Queue
 
 import robot.api.logger as logger
 import threading
 import time
 
-import DcaeVariables
+from robot_library import DcaeVariables
 from robot_library.dmaap_simulator import DMaaPServer
 from robot_library.dmaap_simulator.DMaaPQueue import DMaaPQueue
 

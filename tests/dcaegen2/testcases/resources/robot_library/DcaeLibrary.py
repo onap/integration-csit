@@ -73,7 +73,7 @@ class DcaeLibrary(object):
             return DcaeLibrary.extract_list_of_items_from_json_string(jsonstr, keyval)
         except Exception as e:
             logger.info("Json data parsing fails")
-            print str(e)
+            print (str(e))
             return []
 
     @staticmethod
@@ -108,5 +108,5 @@ if __name__ == '__main__':
     lib.enable_vesc_https_auth()
     
     ret = lib.setup_dmaap_server()
-    print ret
+    print (ret)
     time.sleep(100000)
