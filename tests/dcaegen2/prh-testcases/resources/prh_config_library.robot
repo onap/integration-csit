@@ -57,5 +57,5 @@ Set logging level in config
     Put key-value to config    logging.level.${logger}    ${level}
 
 Generate random value
-    ${some_random_value}     evaluate    random.randint(sys.maxint/10, sys.maxint)    modules=random,sys
+    ${some_random_value}     evaluate    random.randint(sys.maxsize/10, sys.maxsize)    modules=random,sys
     [Return]    ${some_random_value}

@@ -56,7 +56,7 @@ Verify AAI not responding is logged
     ${ves_event}=    Get Data From File    ${test_case_directory}/ves-event.json
     Ensure Container Is Exited    aai_simulator
     Set VES event in DMaaP    ${ves_event}
-    Wait for one of PRH log entries    90s    connection timed out: aai    Host is unreachable: aai    No route to host: aai    failed to resolve 'aai'
+    Wait for one of PRH log entries    90s    connection timed out: aai    Host is unreachable: aai    No route to host: aai    Failed to resolve 'aai'
     [Teardown]    Ensure Container Is Running   aai_simulator
 
 Verify PNF re registration
@@ -98,20 +98,20 @@ Check created PNF_READY notification
     [Arguments]    ${expected_event_pnf_ready_in_dmaap}
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_ready    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_ready_in_dmaap}
+    Should Be Equal As JSON    ${resp.text}    ${expected_event_pnf_ready_in_dmaap}
 
 Check created PNF_UPDATE notification
     [Arguments]    ${expected_event_pnf_update_in_dmaap}
     ${resp}=    Get Request    ${dmaap_session}    /verify/pnf_update    headers=${suite_headers}
-    Log    Response from DMaaP: ${resp.content}
+    Log    Response from DMaaP: ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As JSON    ${resp.content}    ${expected_event_pnf_update_in_dmaap}
+    Should Be Equal As JSON    ${resp.text}    ${expected_event_pnf_update_in_dmaap}
 
 Check created Logical Link
     [Arguments]    ${expected_logical_link_in_aai}
     ${resp}=    Get Request    ${aai_session}    /verify/logical-link    headers=${suite_headers}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Should Be Equal As JSON    ${resp.content}    ${expected_logical_link_in_aai}
+    Should Be Equal As JSON    ${resp.text}    ${expected_logical_link_in_aai}
 
 Wait for PRH log entry
     [Arguments]    ${timeout}    ${log_entry}
@@ -199,7 +199,7 @@ Verify logging level
     [Arguments]    ${logger}    ${expected_log_level}
     ${resp}=    Get Request    prh_session  /actuator/loggers/${logger}
     Should Be Equal As Integers    ${resp.status_code}    200
-    Log    ${resp.content}
+    Log    ${resp.text}
     Should Be Equal As Strings   ${resp.json()["configuredLevel"]}    ${expected_log_level}    ignore_case=true
 
 Verify logs with heartbeat
@@ -207,6 +207,7 @@ Verify logs with heartbeat
     Verify PRH logs contains    Heartbeat request received
 
 Verify PRH logs contains
-   [Arguments]    ${expected_entry}
-   ${log}=    Get docker logs since test start    prh
-   Should Contain    ${log}    ${expected_entry}
+    [Arguments]    ${expected_entry}
+    ${log}=    Get docker logs since test start    prh
+    ${logStr}=  Convert To String    ${log}
+    Should Contain    ${logStr}    ${expected_entry}

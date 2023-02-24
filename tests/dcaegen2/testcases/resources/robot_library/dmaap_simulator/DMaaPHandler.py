@@ -5,9 +5,9 @@ Created on Aug 15, 2017
 '''
 import os
 import posixpath
-import BaseHTTPServer
+import http.server
 import urllib
-import urlparse
+from urllib.parse import urlparse
 import cgi
 import sys
 import shutil
@@ -15,18 +15,18 @@ import mimetypes
 from robot_library import DcaeVariables
 
 try:
-    from cStringIO import StringIO
+    import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
-class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class DMaaPHandler(http.server.BaseHTTPRequestHandler):
 
     DEFAULT_SUCCES_RESPONSE_CODE=200
     succes_response_code=DEFAULT_SUCCES_RESPONSE_CODE
 
     def __init__(self, dmaap_simulator, *args):
         self.dmaap_simulator = dmaap_simulator
-        BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, *args)
+        http.server.BaseHTTPRequestHandler.__init__(self, *args)
 
     def do_POST(self):
         if 'POST' not in self.requestline:
@@ -42,13 +42,13 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def parse_the_posted_data(self):
         topic = self.extract_topic_from_path()
         content_len = self.get_content_length()
-        post_body = self.rfile.read(content_len)
+        post_body = self.rfile.read(content_len).decode("utf-8")
         post_body = self.get_json_part_of_post_body(post_body)
         event = "{\"" + topic + "\":" + post_body + "}"
         if self.dmaap_simulator.enque_event(event):
             resp_code = 0
         else:
-            print "enque event fails"
+            print ("enque event fails")
             resp_code = 500
         return resp_code
 
@@ -62,7 +62,7 @@ class DMaaPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return self.path["/events/".__len__():]
 
     def get_content_length(self):
-        return int(self.headers.getheader('content-length', 0))
+        return int(self.headers.get('content-length', 0))
 
     def send_successful_response(self):
         if 'clientThrottlingState' in self.requestline:

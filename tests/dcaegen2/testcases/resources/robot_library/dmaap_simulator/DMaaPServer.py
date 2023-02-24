@@ -1,18 +1,18 @@
-import BaseHTTPServer
-import DMaaPHandler
+import http.server
+from robot_library.dmaap_simulator import DMaaPHandler
 
 
-class DMaaPServer(BaseHTTPServer.HTTPServer):
+class DMaaPServer(http.server.HTTPServer):
 
     def __init__(self, server_address, protocol, dmaap_simulator):
 
         def handler_class_constructor(*args):
             DMaaPHandler.DMaaPHandler(dmaap_simulator, *args)
         DMaaPHandler.protocol_version = protocol
-        BaseHTTPServer.HTTPServer.__init__(self, server_address, handler_class_constructor)
+        http.server.HTTPServer.__init__(self, server_address, handler_class_constructor)
 
         serer_address = self.socket.getsockname()
-        print "Serving HTTP on", serer_address[0], "port", serer_address[1], "..."
+        print ("Serving HTTP on", serer_address[0], "port", serer_address[1], "...")
 
     def set_dmaap_successfull_code(self,code_number):
         DMaaPHandler.DMaaPHandler.succes_response_code=code_number

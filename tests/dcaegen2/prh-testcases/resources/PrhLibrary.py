@@ -35,7 +35,7 @@ class PrhLibrary(object):
         for line in container.logs(stream=True, since=self.test_start_time):
             print(line)
             for searched_entry in searched_entries:
-                if searched_entry in line.strip():
+                if searched_entry in line.decode(encoding='utf-8').strip():
                     return True
         else:
             return False
@@ -173,14 +173,14 @@ class PrhLibrary(object):
     def __extract_json(line, pattern):
         full_message = PrhLibrary.__extract_full_message_from_line(line)
         if full_message is not None:
-            match = pattern.match(full_message)
+            match = pattern.match(full_message.decode(encoding='utf-8'))
             if match:
                 return match.group(1).replace("\\n", "\n").replace("\\t", "\t")
         return None
 
     @staticmethod
     def __extract_full_message_from_line(line):
-        split = line.split("|")
+        split = line.split(bytes('|', 'utf-8'))
         if len(split) > 3:
             return split[3]
         return None
