@@ -4,7 +4,6 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
-Library     HttpLibrary.HTTP
 Library     ONAPLibrary.Utilities
 
 *** Variables ***
@@ -69,12 +68,10 @@ NslcmSwaggerByMSBTest
 
 CreateNSTest
     [Documentation]    Create NS function test
-    ${json_value}=     json_from_file      ${create_ns_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${create_ns_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_url}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_url}   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -83,13 +80,13 @@ CreateNSTest
 
 CreateVnfTest
     [Documentation]    Create vnf function test
-    ${json_value}=     json_from_file      ${create_vnf_json}
+    ${data}=    Get Binary File     ${create_vnf_json}
+    ${json_value}=    Evaluate    json.loads(r'''${data}''', strict=False)    json
     Set To Dictionary    ${json_value}    nsInstanceId=${nsInstId}
-    ${json_string}=     string_from_json   ${json_value}
+    ${json_string}=     Evaluate    json.dumps(${json_value})    json
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${vnfs_url}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${vnfs_url}   data=${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -106,24 +103,22 @@ QueryVnfTest
 
 TerminateVnfTest
     [Documentation]    Terminate vnf function test
-    ${json_value}=     json_from_file      ${terminate_vnf_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${terminate_vnf_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${terminate_vnfs_url}/${vnfInstId}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${terminate_vnfs_url}/${vnfInstId}   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 CreateVlTest
     [Documentation]    Create vl function test
-    ${json_value}=     json_from_file      ${create_vl_json}
+    ${data}=    Get Binary File     ${create_vl_json}
+    ${json_value}=    Evaluate    json.loads(r'''${data}''', strict=False)    json
     Set To Dictionary    ${json_value}    nsInstanceId=${nsInstId}
-    ${json_string}=     string_from_json   ${json_value}
+    ${json_string}=     Evaluate    json.dumps(${json_value})    json
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${vls_url}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${vls_url}   data=${json_string}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -134,29 +129,25 @@ DeleteVlTest
     [Documentation]    Delete vl function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=    Delete Request    web_session     ${vls_url}/${vlInstId}
+    ${resp}=    Delete On Session    web_session    ${vls_url}/${vlInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 ScaleNSTest
     [Documentation]    Scale Ns function test
-    ${json_value}=     json_from_file      ${scale_ns_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${scale_ns_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/scale    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_url}/${nsInstId}/scale   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 HealNSTest
     [Documentation]    Heal Ns function test
-    ${json_value}=     json_from_file      ${heal_ns_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${heal_ns_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/heal    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_url}/${nsInstId}/heal   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -173,23 +164,19 @@ GetJobTest
 
 UpdateNSTest
     [Documentation]    Scale Ns function test
-    ${json_value}=     json_from_file      ${update_ns_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${update_ns_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/update    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_url}/${nsInstId}/update   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 TerminateNSTest
     [Documentation]    Terminate Ns function test
-    ${json_value}=     json_from_file      ${terminate_ns_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${terminate_ns_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_url}/${nsInstId}/terminate    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_url}/${nsInstId}/terminate   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -197,7 +184,7 @@ DeleteNSTest
     [Documentation]    Delete NS function test
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    ${resp}=    Delete Request    web_session     ${ns_url}/${nsInstId}
+    ${resp}=    Delete On Session    web_session    ${ns_url}/${nsInstId}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
@@ -230,12 +217,10 @@ QueryAllPnfsTest
 
 CreateNSInstanceTest
     [Documentation]    Create NS Instance function test
-    ${json_value}=     json_from_file      ${create_ns_instance_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${create_ns_instance_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json    globalcustomerid=global-customer-id-test1    servicetype=service-type-test1
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_instances_url}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_instances_url}   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
     ${response_json}    json.loads    ${resp.content}
@@ -252,35 +237,28 @@ QueryNSInstancesTest
 
 UpdateNSInstanceTest
     [Documentation]    Scale Ns Instance function test
-    ${json_value}=     json_from_file      ${update_ns_instance_json}
-    ${json_string}=     string_from_json   ${json_value}
-    Log    ${json_string}
+    ${data}=    Get Binary File     ${update_ns_instance_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_instances_url}/${nsInstId}/update    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_instances_url}/${nsInstId}/update   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 TerminateNSInstanceTest
     [Documentation]    Terminate Ns Instance function test
-    ${json_value}=     json_from_file      ${terminate_ns_instance_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${terminate_ns_instance_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${ns_instances_url}/${nsInstanceId}/terminate    ${json_string}
+    ${resp}=    POST On Session    web_session    ${ns_instances_url}/${nsInstanceId}/terminate   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
 LcmCreateSubscriptionsTest
     [Documentation]    Postdeal Ns function test
-    ${json_value}=     json_from_file      ${create_subscriptions_json}
-    ${json_string}=     string_from_json   ${json_value}
+    ${data}=    Get Binary File     ${create_subscriptions_json}
     ${headers}    Create Dictionary    Content-Type=application/json    Accept=application/json
     Create Session    web_session    http://${NSLCM_IP}:8403    headers=${headers}
-    Set Request Body    ${json_string}
-    ${resp}=    Post Request    web_session     ${get_subscriptions_url}    ${json_string}
+    ${resp}=    POST On Session    web_session    ${get_subscriptions_url}   data=${data}
     ${responese_code}=     Convert To String      ${resp.status_code}
     List Should Contain Value    ${return_ok_list}   ${responese_code}
 
