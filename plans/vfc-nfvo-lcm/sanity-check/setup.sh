@@ -56,7 +56,7 @@ for i in {1..3}; do
     sleep $i
 done
 
-docker ps > ps.txt
+docker ps -a > ps.txt
 cat ps.txt
 echo "****************************"
 docker logs -f vfc-db > db.txt &
