@@ -9,16 +9,22 @@
     <artifactId>docker</artifactId>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
+
+    <properties>
+        <skip-kind-cluster>true</skip-kind-cluster>
+        <version-fabric8>0.28.0</version-fabric8>
+        <version-apiVersion>1.23</version-apiVersion>
+    </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.28.0</version>
+                <version>${version-fabric8}</version>
                 <configuration>
                     <verbose>true</verbose>
-                    <apiVersion>1.23</apiVersion>
+                    <apiVersion>${version-apiVersion}</apiVersion>
                     <pullRegistry>${docker.pull.registry}</pullRegistry>
                     <pushRegistry>${docker.push.registry}</pushRegistry>
                     <images>
@@ -143,6 +149,15 @@
                                         </dependencySets>
                                     </inline>
                                 </assembly>
+                            </build>
+                        </image>
+                        <image>
+                            <name>kind-cluster</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFileDir>docker-files/kind-cluster</dockerFileDir>
+                                <dockerFile>Dockerfile.kind-cluster</dockerFile>
+                                <skip>${skip-kind-cluster}</skip>
                             </build>
                         </image>
                     </images>
