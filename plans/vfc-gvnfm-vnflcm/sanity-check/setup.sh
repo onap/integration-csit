@@ -63,6 +63,7 @@ sleep 30
 # start vfc-vnflcm
 docker run -d --name vfc-vnflcm -e MSB_ADDR=${MSB_IAG_IP}:80 -e MYSQL_ADDR=${VFC_DB_IP}:3306 -e REDIS_HOST=${VFC_REDIS_IP} nexus3.onap.org:10001/onap/vfc/vnflcm
 VNFLCM_IP=`get-instance-ip.sh vfc-vnflcm`
+echo VNFLCM_IP=${VNFLCM_IP}
 
 # Wait for initialization
 for i in {1..10}; do
