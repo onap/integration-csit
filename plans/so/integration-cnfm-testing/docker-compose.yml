@@ -1,0 +1,287 @@
+version: '3'
+services:
+################################################################################
+  mariadb:
+    image: ${NEXUS_DOCKER_REPO_MSO}/mariadb:${MARIADB_VERSION}
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql
+      - ${TEST_LAB_DIR}/volumes/mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ${TEST_LAB_DIR}/volumes/mariadb/conf.d:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=etsicatalog
+      - MYSQL_PASSWORD=etsicatalog
+      - MYSQL_DATABASE=etsicatalog
+    hostname:
+      mariadb.so.testlab.onap.org
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  catalog-db-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/catalog-db-adapter:${SO_IMAGE_VERSION}
+    ports:
+      - "8082:8082"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/catalog-db-adapter/onapheat:/app/config
+    environment:
+      - APP=catalog-db-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      catalog-db-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" mariadb:3306 -- "/app/start-app.sh"'
+################################################################################
+  request-db-adapter:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/request-db-adapter:${SO_IMAGE_VERSION}
+    ports:
+      - "8083:8083"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${TEST_LAB_DIR}/volumes/so/config/request-db-adapter/onapheat:/app/config
+    environment:
+      - APP=request-db-adapter
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      request-db-adapter.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" catalog-db-adapter:8082 -- "/app/start-app.sh"'
+################################################################################
+  sdc-controller:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/sdc-controller:${SO_IMAGE_VERSION}
+    ports:
+      - "8085:8085"
+    volumes:
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+      - ${CONFIG_DIR_PATH_CNFM}/distribution-test-zip:/distribution-test-zip
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/sdc-controller/onapheat:/app/config
+    environment:
+      - APP=sdc-controller
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      sdc-controller.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c 'mkdir -p /distribution-test-zip/unzipped && tar -xvzf /distribution-test-zip/zipped_cnf_csar.tar.gz -C /distribution-test-zip/unzipped &&  chmod 777 -R /distribution-test-zip/ && /app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+################################################################################
+  bpmn-infra:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/bpmn-infra:${SO_IMAGE_VERSION}
+    ports:
+      - "8081:8081"
+    volumes:
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/bpmn-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/bpmn-infra-certs:/app/bpmn-infra-certs
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+    environment:
+      - APP=bpmn-infra
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      bpmn-infra.so.testlab.onap.org
+    links:
+      - "so-cnfm-lcm:so-cnfm-lcm.onap"
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" request-db-adapter:8083 -- "/app/start-app.sh"'
+################################################################################
+  api-handler-infra:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${SO_IMAGE_VERSION}
+    #${NEXUS_DOCKER_REPO_MSO}/onap/so/api-handler-infra:${TAG}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/api-handler-infra/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+    environment:
+      - APP=api-handler-infra
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      api-handler-infra.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+      - bpmn-infra
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" bpmn-infra:8081 -- "/app/start-app.sh"'
+#############################################################################
+  so-admin-cockpit:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-admin-cockpit:${SO_ADMIN_COCKPIT_IMAGE_VERSION}
+    ports:
+      - "30224:30224"
+    volumes:
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/so-monitoring/onapheat:/app/config
+    environment:
+      - APP=so-admin-cockpit
+      - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      so-admin-cockpit.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+#############################################################################
+  so-cnfm-lcm:
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-cnfm-as-lcm:${SO_CNFM_AS_LCM}
+    ports:
+      - "9888:9888"
+    volumes:
+      - ${CONFIG_DIR_PATH_CNFM}/override-files/so-cnfm/onapheat:/app/config
+      - ${CONFIG_DIR_PATH}/certificates/truststore/root-ca.crt:/app/ca-certificates/root-ca.crt
+      - ${TEST_LAB_DIR}/volumes/so/ca-certificates/onapheat:/app/ca-certificates
+    environment:
+      - APP=so-cnfm-lcm
+      - JVM_ARGS=-Xms64m -Xmx512m
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=so_user
+      - DB_PASSWORD=so_User123
+      - DB_ADMIN_USERNAME=so_admin
+      - DB_ADMIN_PASSWORD=so_Admin123
+    hostname:
+      so-cnfm-lcm.so.testlab.onap.org
+    depends_on:
+      - mariadb
+      - catalog-db-adapter
+      - request-db-adapter
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+    user: root
+    entrypoint: /bin/sh -c '/app/wait-for.sh -q -t "300" bpmn-infra:8081 -- "/app/start-app.sh"'
+#############################################################################
+  kind-cluster:
+    image: kind-cluster:latest
+    ports:
+      - "30001:30001"
+    depends_on:
+      - so-cnfm-lcm
+    user: root
+    privileged: true
+################################################################################
+  sdc-simulator:
+    image: simulators/sdc-simulator:latest
+    ports:
+      - "9991:9991"
+    environment:
+    - APP=SDC-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      sdc-simulator
+    depends_on:
+      - mariadb
+      - so-cnfm-lcm
+      - kind-cluster
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  aai-simulator:
+    image: simulators/aai-simulator:latest
+    ports:
+      - "9993:9993"
+    environment:
+    - APP=AAI-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      aai-simulator
+    depends_on:
+      - mariadb
+      - so-cnfm-lcm
+      - kind-cluster
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
+################################################################################
+  populate-aai-config:
+    image: jobs/workaround-job-container:latest
+    ports:
+       - "9995:9995"
+    volumes:
+      - ${CONFIG_DIR_PATH}/populate-aai-simulator.sh:/config/populate-aai-simulator.sh
+      - ${CONFIG_DIR_PATH}/wait-for.sh:/config/wait-for.sh
+      - ${CONFIG_DIR_PATH}/aai-simulator-populate-data:/config/aai-simulator-populate-data/
+    environment:
+      - AAI_SIMULATOR_HOST=aai-simulator
+      - AAI_SIMULATOR_PORT=9993
+      - TIMEOUT_IN_SECONDS=300 #5 mins
+    depends_on:
+      - aai-simulator
+    command:
+        - "/config/populate-aai-simulator.sh"

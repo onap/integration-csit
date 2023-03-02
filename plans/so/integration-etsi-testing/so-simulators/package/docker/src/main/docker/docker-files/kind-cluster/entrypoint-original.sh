@@ -40,7 +40,7 @@ fi
 # Check cgroupfs.
 # Verify the filesystem.
 if [ ! -d /sys/fs/cgroup/ ]; then
-    echo >&2 'Cgroupfs is not mounted'
+    echo >&2 'ERROR: Cgroupfs is not mounted'
     exit 1
 fi
 

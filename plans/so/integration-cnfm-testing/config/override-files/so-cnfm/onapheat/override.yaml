@@ -1,0 +1,40 @@
+aai:
+   auth: 2A11B07DB6214A839394AA1EC5844695F5114FC407FF5422625FB00175A3DCB8A1FF745F22867EFA72D5369D599BBD88DA8BED4233CF5586
+   version: v19
+   endpoint: https://aai-simulator:9993
+spring:
+   datasource:
+      hikari:
+         camunda:
+            jdbcUrl: jdbc:mariadb://${DB_HOST}:${DB_PORT}/camundabpmn
+            username: ${DB_USERNAME}
+            password: ${DB_PASSWORD}
+            driver-class-name: org.mariadb.jdbc.Driver
+            pool-name: bpmn-pool
+            registerMbeans: true
+         cnfm:
+            jdbcUrl: jdbc:mariadb://${DB_HOST}:${DB_PORT}/cnfm
+            username: ${DB_ADMIN_USERNAME}
+            password: ${DB_ADMIN_PASSWORD}
+            driver-class-name: org.mariadb.jdbc.Driver
+            pool-name: cnfm-pool
+            registerMbeans: true
+server:
+   port: 9888
+   tomcat:
+      max-threads: 50
+camunda:
+   bpm:
+      history-level: full
+      job-execution:
+         max-pool-size: 30
+         core-pool-size: 3
+         deployment-aware: true
+sdc:
+  username: mso
+  password: 76966BDD3C7414A03F7037264FF2E6C8EEC6C28F2B67F2840A1ED857C0260FEE731D73F47F828E5527125D29FD25D3E0DE39EE44C058906BF1657DE77BF897EECA93BDC07FA64F
+  key: 566B754875657232314F5548556D3665
+  endpoint: http://sdc-simulator:9991
+
+so-cnfm-lcm:
+  endpoint: http://so-cnfm-lcm:9888
