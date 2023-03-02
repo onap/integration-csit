@@ -1,0 +1,26 @@
+version: '3'
+services:
+################################################################################
+  mariadb:
+    image: mariadb:${MARIADB_VERSION}
+################################################################################
+  catalog-db-adapter:
+    image: onap/so/catalog-db-adapter:${SO_IMAGE_VERSION}
+################################################################################
+  request-db-adapter:
+    image: onap/so/request-db-adapter:${SO_IMAGE_VERSION}
+################################################################################
+  sdc-controller:
+    image: onap/so/sdc-controller:${SO_IMAGE_VERSION}
+################################################################################
+  bpmn-infra:
+    image: onap/so/bpmn-infra:${SO_IMAGE_VERSION}
+################################################################################
+  api-handler-infra:
+    image: onap/so/api-handler-infra:${SO_IMAGE_VERSION}
+#############################################################################
+  so-admin-cockpit:
+    image: onap/so/so-admin-cockpit:${SO_ADMIN_COCKPIT_IMAGE_VERSION}
+#############################################################################
+  so-cnfm-lcm:
+    image: onap/so/so-cnfm-as-lcm:${SO_CNFM_AS_LCM}

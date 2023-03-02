@@ -69,4 +69,5 @@ done < "$HOME/.kube/config"
 
 CONFIG_ADDRESS=$HOME/.kube/config
 
+echo "Finished Setting up KIND cluster $CONFIG_ADDRESS"
 exec "$@"
