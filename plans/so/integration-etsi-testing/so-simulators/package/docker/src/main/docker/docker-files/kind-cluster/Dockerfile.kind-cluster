@@ -24,5 +24,4 @@ EXPOSE 30001
 COPY entrypoint-original.sh /entrypoint-original.sh
 RUN chmod 777 /entrypoint-original.sh
 
-ENTRYPOINT ["/bin/bash", "-c", "/entrypoint.sh; if [ $? -eq 0 ]; then echo 'Successfully created kind cluster'; else echo 'Failed creating kind cluster'; fi"]
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/bin/bash", "-c", "/entrypoint.sh; if [ $? -eq 0 ]; then echo 'Successfully created kind cluster'; tail -f /dev/null; else echo 'Failed creating kind cluster'; exit 1; fi"]

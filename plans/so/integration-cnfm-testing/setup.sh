@@ -30,6 +30,8 @@ TEST_LAB_DIR_PATH=$TEMP_DIR_PATH/test_lab
 DOCKER_COMPOSE_FILE_PATH=$SCRIPT_HOME/docker-compose.yml
 DOCKER_COMPOSE_LOCAL_OVERRIDE_FILE=$SCRIPT_HOME/docker-compose.local.yml
 TEAR_DOWN_SCRIPT=$SCRIPT_HOME/teardown.sh
+WAIT_FOR_KIND_CLUSTER_CONTAINER_SCRIPT=$CONFIG_DIR_CNFM/"wait-for-kind-cluster-container.sh"
+KIND_CLUSTER_KUBE_CONFIG_FILE="$TEMP_DIR_PATH/kind-cluster-kube-config.yaml"
 
 # INTEGRATION_ETSI
 INTEGRATION_ETSI_TESTING_DIR="$(realpath "$SCRIPT_HOME"/../integration-etsi-testing)"
@@ -184,7 +186,38 @@ for pod in "${PODS_NAMES[@]}"
      fi
 done
 
+echo "Will execute $WAIT_FOR_KIND_CLUSTER_CONTAINER_SCRIPT script"
+$WAIT_FOR_KIND_CLUSTER_CONTAINER_SCRIPT
+if [ $? -ne 0 ]; then
+   echo "ERROR: $WAIT_FOR_KIND_CLUSTER_CONTAINER_SCRIPT failed"
+   echo "Will stop running docker containers . . ."
+   $TEAR_DOWN_SCRIPT
+   exit 1
+fi
+
+if [ -f "$KIND_CLUSTER_KUBE_CONFIG_FILE" ]; then
+  echo "Old Kube-config file exits $KIND_CLUSTER_KUBE_CONFIG_FILE will remove it"
+  rm "$KIND_CLUSTER_KUBE_CONFIG_FILE"
+fi
+
+CONTAINER_NAME=$(docker ps -aqf "name=kind-cluster" --format "{{.Names}}")
+if [ -z "$CONTAINER_NAME" ]; then
+   echo "Unable to find kind-cluster docker container id CONTAINER_NAME=$CONTAINER_NAME"
+   exit 1
+fi
+
+echo "Copying kube-config from $CONTAINER_NAME container"
+docker cp "$CONTAINER_NAME":/root/.kube/config "$KIND_CLUSTER_KUBE_CONFIG_FILE"
+
+if [ $? -ne 0 ] || [ ! -f "$KIND_CLUSTER_KUBE_CONFIG_FILE" ]; then
+   echo "ERROR: Failed to copy kube-config file from $CONTAINER_NAME"
+   echo "Will stop running docker containers . . ."
+   $TEAR_DOWN_SCRIPT
+   exit 1
+fi
+
+# Pass variables required in robot test suites in ROBOT_VARIABLES
 REPO_IP='127.0.0.1'
-ROBOT_VARIABLES="-v REPO_IP:${REPO_IP}"
+ROBOT_VARIABLES="-v REPO_IP:${REPO_IP} -v KIND_CLUSTER_KUBE_CONFIG_FILE:${KIND_CLUSTER_KUBE_CONFIG_FILE}"
 
 echo "Finished executing $SCRIPT_HOME/$SCRIPT_NAME"
