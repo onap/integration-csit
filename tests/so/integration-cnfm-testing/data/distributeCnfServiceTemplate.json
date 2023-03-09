@@ -1,0 +1,31 @@
+{
+  "distributionID": "1b64ac59-fd55-484b-993c-2661d26f9808",
+  "serviceName": "ericsson-demo-service-1",
+  "serviceVersion": "1.0",
+  "serviceUUID": "8839a41e-8644-46c0-a08f-206d8b0edff2",
+  "serviceDescription": "ericsson-demo-service-1",
+  "serviceInvariantUUID": "ef54671d-31e4-43e0-86e2-c3ab73c2a5a7",
+  "resources": [{
+    "resourceInstanceName": "ericsson-vsp-cnf-1 0",
+    "resourceName": "ericsson-vsp-cnf-1",
+    "resourceVersion": "1.0",
+    "resoucreType": "VF",
+    "resourceUUID": "f49326bd-b21d-4d21-8d42-ecc6f9753151",
+    "resourceInvariantUUID": "198ab85b-ad8d-42e5-889d-4bdf486dfc91",
+    "resourceCustomizationUUID": "083a388f-a00b-403a-b8a2-a0f3167e94e1",
+    "category": "Generic",
+    "subcategory": "Network Elements",
+    "artifacts": []
+  }],
+  "serviceArtifacts": [{
+    "artifactName": "service-EricssonDemoService1-csar.csar",
+    "artifactType": "TOSCA_CSAR",
+    "artifactURL": "/unzipped_cnf_csar/v1/catalog/services/EricssonDemoService1/1.0/artifacts/service-EricssonDemoService1-csar.csar",
+    "artifactChecksum": "NGZjNGY3YjRkYmNiNmQxMzc2ZWIzYmE2Y2NjZmM0M2Y\u003d",
+    "artifactDescription": "TOSCA definition package of the asset",
+    "artifactTimeout": 0,
+    "artifactUUID": "ae71c138-b9d0-4b37-acb5-99daf5e19efe",
+    "artifactVersion": "1"
+  }],
+  "workloadContext": "Production"
+}
