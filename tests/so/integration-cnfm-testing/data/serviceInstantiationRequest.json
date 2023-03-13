@@ -1,0 +1,33 @@
+{
+  "requestDetails": {
+    "requestInfo": {
+      "instanceName": "DemoServiceInstance",
+      "source": "CSIT",
+      "suppressRollback": false,
+      "requestorId": "demo"
+    },
+    "modelInfo": {
+      "modelType": "service",
+      "modelInvariantId": "ef54671d-31e4-43e0-86e2-c3ab73c2a5a7",
+      "modelVersionId": "8839a41e-8644-46c0-a08f-206d8b0edff2",
+      "modelName": "ericsson-demo-service-1",
+      "modelVersion": "1.0"
+    },
+    "requestParameters": {
+      "userParams": [],
+      "testApi": "GR_API",
+      "subscriptionServiceType": "vCPE",
+      "aLaCarte": true
+    },
+    "subscriberInfo": {
+      "globalSubscriberId": "DemoCustomer"
+    },
+    "project": {
+      "projectName": "etsiCsitProject"
+    },
+    "owningEntity": {
+      "owningEntityId": "f2e1071e-3d47-4a65-94d4-e473ec03326a",
+      "owningEntityName": "OE-Demonstration"
+    }
+  }
+}

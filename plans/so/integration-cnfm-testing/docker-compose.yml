@@ -268,6 +268,23 @@ services:
       options:
         max-size: "30m"
         max-file: "5"
+#################################################################################
+  sdnc-simulator:
+    image: simulators/sdnc-simulator:latest
+    ports:
+      - "9994:9994"
+    environment:
+    - APP=SDNC-SIMULATOR
+    - JVM_ARGS=-Xms64m -Xmx512m
+    hostname:
+      sdnc-simulator
+    depends_on:
+      - mariadb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"
 ################################################################################
   populate-aai-config:
     image: jobs/workaround-job-container:latest

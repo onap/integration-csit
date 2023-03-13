@@ -1,0 +1,67 @@
+{
+  "requestDetails": {
+    "requestInfo": {
+      "instanceName": "DemoCnfInstance",
+      "source": "CSIT",
+      "suppressRollback": false,
+      "requestorId": "demo",
+      "productFamilyId": "f13844f4-dbf8-4d0e-a979-45204f3ddb4e"
+    },
+    "modelInfo": {
+      "modelType": "cnf",
+      "modelInvariantId": "198ab85b-ad8d-42e5-889d-4bdf486dfc91",
+      "modelVersionId": "14dbe730-b3b9-4b51-9983-76a96233228c",
+      "modelName": "ericsson-vsp-cnf-1",
+      "modelVersion": "1.0",
+      "modelCustomizationName": "ericsson-vsp-cnf-1 0"
+    },
+    "requestParameters": {
+      "userParams": [{
+        "deploymentItems":[{
+          "deploymentItemsId": "1",
+          "lifecycleParameterKeyValues":{
+            "primary.service.ports.mysql": "3306",
+            "primary.service.nodePorts.mysql": "3306"
+          }
+        },
+          {
+            "deploymentItemsId": "2",
+            "lifecycleParameterKeyValues":{
+              "service.ports.http": "80",
+              "service.ports.https": "443",
+              "service.nodePorts.http": "30001",
+              "service.nodePorts.https": "30002"
+            }
+          }]
+      }
+      ],
+      "testApi": "GR_API",
+      "aLaCarte": true
+    },
+    "cloudConfiguration": {
+      "lcpCloudRegionId": "EtsiCloudRegion",
+      "cloudOwner": "CloudOwner",
+      "tenantId": "693c7729b2364a26a3ca602e6f66187d"
+    },
+    "lineOfBusiness": {
+      "lineOfBusinessName": "EtsiCsitLineOfBusiness"
+    },
+    "platform": {
+      "platformName": "EtsiCsitPlatform"
+    },
+    "relatedInstanceList": [
+      {
+        "relatedInstance": {
+          "instanceId": "",
+          "modelInfo": {
+            "modelType": "service",
+            "modelName": "ericsson-demo-service-1",
+            "modelVersion": "1.0",
+            "modelInvariantId": "ef54671d-31e4-43e0-86e2-c3ab73c2a5a7",
+            "modelVersionId": "8839a41e-8644-46c0-a08f-206d8b0edff2"
+          }
+        }
+      }
+    ]
+  }
+}

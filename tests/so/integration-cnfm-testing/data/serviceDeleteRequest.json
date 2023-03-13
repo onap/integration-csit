@@ -1,0 +1,19 @@
+{
+    "requestDetails": {
+         "modelInfo": {
+              "modelType": "service",
+              "modelInvariantId": "ef54671d-31e4-43e0-86e2-c3ab73c2a5a7",
+              "modelVersionId": "8839a41e-8644-46c0-a08f-206d8b0edff2",
+              "modelName": "ericsson-demo-service-1",
+              "modelVersion": "1.0"
+         },
+        "requestInfo": {
+             "source": "CSIT",
+             "requestorId": "demo"
+        },
+        "requestParameters": {
+            "testApi": "GR_API",
+            "aLaCarte": true
+        }
+    }
+}
