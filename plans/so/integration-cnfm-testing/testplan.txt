@@ -2,3 +2,4 @@
 # Place the suites in run order.
 so/integration-cnfm-testing/cnf_kind_cluster_registration_tests.robot
 so/integration-cnfm-testing/cnf_package_onboarding_tests.robot
+so/integration-cnfm-testing/cnf_lcm_tests.robot

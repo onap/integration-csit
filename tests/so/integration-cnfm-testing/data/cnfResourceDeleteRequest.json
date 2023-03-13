@@ -1,0 +1,26 @@
+{
+  "requestDetails": {
+    "modelInfo": {
+      "modelType": "cnf",
+      "modelInvariantId": "198ab85b-ad8d-42e5-889d-4bdf486dfc91",
+      "modelVersionId": "14dbe730-b3b9-4b51-9983-76a96233228c",
+      "modelName": "ericsson-vsp-cnf-1",
+      "modelVersion": "1.0",
+      "modelCustomizationId": "083a388f-a00b-403a-b8a2-a0f3167e94e1",
+      "modelCustomizationName": "ericsson-vsp-cnf-1 0"
+    },
+    "requestInfo": {
+      "source": "VID",
+      "requestorId": "demo"
+    },
+    "requestParameters": {
+      "testApi": "GR_API",
+      "aLaCarte": true
+    },
+    "cloudConfiguration": {
+      "lcpCloudRegionId": "EtsiCloudRegion",
+      "cloudOwner": "CloudOwner",
+      "tenantId": "693c7729b2364a26a3ca602e6f66187d"
+    }
+  }
+}
