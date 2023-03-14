@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9790b55_3a4ba7f9",
+        "filename": "tests/so/integration-cnfm-testing/data/cnfResourceDeleteRequest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2023-03-14T09:46:36Z",
+      "side": 1,
+      "message": "VID is not used in these tests ... this just a dummy value",
+      "parentUuid": "54edb87b_5bc872b3",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "f1c824090f116787e4d22b92f2876247e7fd7cf2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb8fc818_74a1056a",
         "filename": "tests/so/integration-cnfm-testing/data/cnfResourceInstantiationRequest.json",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2023-03-13T20:25:45Z",
       "side": 1,
       "message": "No more VID in ONAP",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "f1c824090f116787e4d22b92f2876247e7fd7cf2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8836ff_ce9f4de8",
+        "filename": "tests/so/integration-cnfm-testing/data/cnfResourceInstantiationRequest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2023-03-14T09:46:36Z",
+      "side": 1,
+      "message": "VID is not used in tests this is just a dummy value",
+      "parentUuid": "bb8fc818_74a1056a",
       "range": {
         "startLine": 5,
         "startChar": 17,
