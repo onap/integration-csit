@@ -37,6 +37,10 @@ export TEST_LAB_DIR=$TEST_LAB_DIR_PATH
 export CONFIG_DIR_PATH=$INTEGRATION_ETSI_TESTING_CONFIG_DIR
 export CONFIG_DIR_PATH_CNFM=$CONFIG_DIR_CNFM
 
+docker ps -a
+echo "Getting sdc-controller logs for debugging"
+docker logs cnfmintegrationtesting_sdc-controller_1
+
 if [ "$DOCKER_ENVIRONMENT" == "remote" ]; then
   echo "Tearing down docker containers from remote images ..."
   docker-compose -f $DOCKER_COMPOSE_FILE_PATH -p $PROJECT_NAME down
