@@ -3,6 +3,7 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Library     libraries/KubernetesClient.py
 
 Documentation    Test cases for CNF lifecycle management operations
 ...              Note, relies on:
@@ -16,6 +17,14 @@ ${SERVICE_INSTANTIATION_TEMPLATE}=         ${CURDIR}${/}data${/}serviceInstantia
 ${CNF_RESOURCE_INSTANTIATION_TEMPLATE}=    ${CURDIR}${/}data${/}cnfResourceInstantiationRequest.json
 ${CNF_RESOURCE_DELETE_TEMPLATE}=           ${CURDIR}${/}data${/}cnfResourceDeleteRequest.json
 ${SERVICE_DELETE_TEMPLATE}=                ${CURDIR}${/}data${/}serviceDeleteRequest.json
+
+${LABEL_NAME}=                                       app.kubernetes.io/instance
+${MARIADB_LABEL_SELECTOR}=                           ${LABEL_NAME}=democnfinstance-mariadb-db-1
+${EXPECTED_NUM_OF_RESOURCES_AFTER_INSTANTIATION}=    1
+
+${NGINX_LABEL_SELECTOR}=                             ${LABEL_NAME}=democnfinstance-nginx-services-2
+${EXPECTED_NUM_OF_RESOURCES_AFTER_DELETE}=           0
+
 
 *** Test Cases ***
 Invoke Service Instantiation
@@ -68,7 +77,7 @@ Invoke CNF Instantiation
     ${request_ID}=          Set Variable         ${cnf_instantiate_json_response}[requestReferences][requestId]
     ${actual_request_state}=    Set Variable    ""
     ${cnf_instance_Id}=     Set Variable       ${cnf_instantiate_json_response}[requestReferences][instanceId]
-    SET GLOBAL VARIABLE       ${cnf_instance_Id}
+    Set Global Variable       ${cnf_instance_Id}
 
     FOR    ${INDEX}    IN RANGE    ${MAXIMUM_ATTEMPTS_BEFORE_TIMEOUT}
        ${orchestration_status_request}=   Get On Session  api_handler_session   /onap/so/infra/orchestrationRequests/v7/${request_ID}
@@ -84,6 +93,8 @@ Invoke CNF Instantiation
     ${service_instance_Id}=     Set Variable       ${orchestration_json_response}[request][instanceReferences][serviceInstanceId]
     Log To Console     Final repsonse status received: ${actual_request_state}
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
+
+    Verify Kubernetes Resources    ${EXPECTED_NUM_OF_RESOURCES_AFTER_INSTANTIATION}
 
 Invoke CNF Delete
     Run Keyword If      "${cnf_instance_Id}" != "${EMPTY}"      Log to Console    CNF Instance ID :${cnf_instance_Id} received
@@ -109,13 +120,15 @@ Invoke CNF Delete
        Log To Console      ${orchestration_status_request.content}
        ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
        ${actual_request_state}=     Set Variable       ${orchestration_json_response}[request][requestStatus][requestState]
-       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       Run Keyword If   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
        Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
        SLEEP   ${SLEEP_INTERVAL_SEC}s
     END
 
     Log To Console     Final repsonse status received: ${actual_request_state}
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
+
+    Verify Kubernetes Resources    ${EXPECTED_NUM_OF_RESOURCES_AFTER_DELETE}
 
 Delete Service Instance
     Run Keyword If      "${service_instance_Id}" != "${EMPTY}"      Log to Console    CNF Instance ID :${service_instance_Id} received
@@ -139,10 +152,32 @@ Delete Service Instance
        Log To Console      ${orchestration_status_request.content}
        ${orchestration_json_response}=    Evaluate     json.loads(r"""${orchestration_status_request.content}""")    json
        ${actual_request_state}=     Set Variable       ${orchestration_json_response}[request][requestStatus][requestState]
-       RUN KEYWORD IF   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
+       Run Keyword If   '${actual_request_state}' == 'COMPLETE' or '${actual_request_state}' == 'FAILED'      Exit For Loop
        Log To Console  Will try again after ${SLEEP_INTERVAL_SEC} seconds
        SLEEP   ${SLEEP_INTERVAL_SEC}s
     END
 
     Log To Console     Final repsonse status received: ${actual_request_state}
     Should Be Equal As Strings    '${actual_request_state}'    'COMPLETE'
+
+*** Keywords ***
+Verify Kubernetes Resources
+    [Arguments]    ${expected_number_resources}
+
+    Create Api Client    ${KIND_CLUSTER_KUBE_CONFIG_FILE}
+
+    Log To Console    Retrieving number of services using selector '${MARIADB_LABEL_SELECTOR}'
+    ${no_of_mariadb_services}=    Get Number Of Services In Namespace    label_selector=${MARIADB_LABEL_SELECTOR}
+    Should Be Equal As Integers      ${no_of_mariadb_services}    ${expected_number_resources}    Unexpected number of services received for ${MARIADB_LABEL_SELECTOR}
+
+    Log To Console    Retrieving number of stateful set using selector '${MARIADB_LABEL_SELECTOR}'
+    ${no_of_mariadb_stateful_set}=    Get Number Of Stateful Set In Namespace    label_selector=${MARIADB_LABEL_SELECTOR}
+    Should Be Equal As Integers      ${no_of_mariadb_stateful_set}    ${expected_number_resources}    Unexpected number of stateful sets received for ${MARIADB_LABEL_SELECTOR}
+
+    Log To Console    Retrieving number of services using selector '${NGINX_LABEL_SELECTOR}'
+    ${no_of_nginx_services}=    Get Number Of Services In Namespace    label_selector=${NGINX_LABEL_SELECTOR}
+    Should Be Equal As Integers      ${no_of_nginx_services}    ${expected_number_resources}    Unexpected number of services received for ${NGINX_LABEL_SELECTOR}
+
+    Log To Console    Retrieving number of deployments using selector '${NGINX_LABEL_SELECTOR}'
+    ${no_of_nginx_deployments}=    Get Number Of Deployments In Namespace    label_selector=${NGINX_LABEL_SELECTOR}
+    Should Be Equal As Integers      ${no_of_nginx_deployments}    ${expected_number_resources}    Unexpected number of deployments received for ${NGINX_LABEL_SELECTOR}
