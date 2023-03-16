@@ -216,6 +216,10 @@ if [ $? -ne 0 ] || [ ! -f "$KIND_CLUSTER_KUBE_CONFIG_FILE" ]; then
    exit 1
 fi
 
+# install required libraries
+echo "Installing kubernetes python client library"
+pip install kubernetes
+
 # Pass variables required in robot test suites in ROBOT_VARIABLES
 REPO_IP='127.0.0.1'
 ROBOT_VARIABLES="-v REPO_IP:${REPO_IP} -v KIND_CLUSTER_KUBE_CONFIG_FILE:${KIND_CLUSTER_KUBE_CONFIG_FILE}"
