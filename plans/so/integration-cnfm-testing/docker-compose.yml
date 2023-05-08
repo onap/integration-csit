@@ -192,7 +192,7 @@ services:
       - request-db-adapter
 #############################################################################
   so-cnfm-lcm:
-    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-cnfm-as-lcm:${SO_CNFM_AS_LCM}
+    image: ${NEXUS_DOCKER_REPO_MSO}/onap/so/so-cnfm-as-lcm:${SO_IMAGE_VERSION}
     ports:
       - "9888:9888"
     volumes:
