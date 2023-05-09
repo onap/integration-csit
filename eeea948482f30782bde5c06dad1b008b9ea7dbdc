@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7fbe13_0a3a8c6f",
+        "filename": "plans/so/integration-cnfm-testing/config/env",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3237
+      },
+      "writtenOn": "2023-05-09T07:52:29Z",
+      "side": 0,
+      "message": "revert this ... keep separate variable for CNFM images",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "eeea948482f30782bde5c06dad1b008b9ea7dbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
