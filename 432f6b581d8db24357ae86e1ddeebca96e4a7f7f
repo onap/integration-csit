@@ -22,6 +22,30 @@
       "revId": "432f6b581d8db24357ae86e1ddeebca96e4a7f7f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d40dc6_8c0d6a19",
+        "filename": "plans/so/integration-cnfm-testing/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 4893
+      },
+      "writtenOn": "2023-05-09T08:07:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363e2649_7d714ab8",
+      "range": {
+        "startLine": 195,
+        "startChar": 59,
+        "endLine": 195,
+        "endChar": 78
+      },
+      "revId": "432f6b581d8db24357ae86e1ddeebca96e4a7f7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

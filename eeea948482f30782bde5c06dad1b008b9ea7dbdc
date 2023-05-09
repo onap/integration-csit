@@ -22,6 +22,30 @@
       "revId": "eeea948482f30782bde5c06dad1b008b9ea7dbdc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20b5f1f_f3a750b0",
+        "filename": "plans/so/integration-cnfm-testing/config/env",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4893
+      },
+      "writtenOn": "2023-05-09T08:07:08Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1c7fbe13_0a3a8c6f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "eeea948482f30782bde5c06dad1b008b9ea7dbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
